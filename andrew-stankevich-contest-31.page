@@ -6,7 +6,11 @@
 
 ## B. Chip Reconstruction [Solved, Xiaoxu Guo]
 
+贪心构造方案。
+
 ## C. Convex Hull
+
+交点的运动是匀速直线运动，三点共线作为事件，事件点之间面积是时间的二次函数，直接积分即可。
 
 ## D. Discussions [Solved, Bin Jin]
 
@@ -14,11 +18,15 @@
 
 ## E. Yet Another Game with Words [Solved, Xiaoxu Guo]
 
+动态规划，预处理转移。
+
 ## F. Merge [Solved, Bin Jin]
 
 $$ a_k = \min_{i+j=k} \max(x_i, y_j) $$
 
 ## G. The Most Relevant Pattern [Solved, Xiaoxu Guo]
+
+枚举左端点，直接用最小表示的算法。按照长度分阶段可以达到线性空间。
 
 ## H. Straight or Flush [Solved, Bin Jin]
 
