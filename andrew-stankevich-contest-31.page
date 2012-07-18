@@ -2,19 +2,27 @@
 
 ## A. Casino [Solved, Bin Jin]
 
+迭代
+
 ## B. Chip Reconstruction [Solved, Xiaoxu Guo]
 
 ## C. Convex Hull
 
 ## D. Discussions [Solved, Bin Jin]
 
+枚举$m$，对于给定$m$二分$n$，预处理$n$比较小的情况，要高精度
+
 ## E. Yet Another Game with Words [Solved, Xiaoxu Guo]
 
 ## F. Merge [Solved, Bin Jin]
 
+$$ a_k = \min_{i+j=k} \max(x_i, y_j) $$
+
 ## G. The Most Relevant Pattern [Solved, Xiaoxu Guo]
 
 ## H. Straight or Flush [Solved, Bin Jin]
+
+DP，按照ranks的顺序处理Straight，按照suits的顺序处理Flush，数个数，要高精度
 
 ## I. No Term Repetition Exactly One Satisfiability [Solved, Xiaoxu Guo]
 
@@ -22,3 +30,4 @@
 
 ## K. Parse Tree [Solved, Bin Jin]
 
+模拟，递归之后合并
