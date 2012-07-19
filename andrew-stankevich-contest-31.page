@@ -8,7 +8,7 @@
 
 贪心构造方案。
 
-## C. Convex Hull
+## C. Convex Hull [Solved, Xiaoxu Guo]
 
 交点的运动是匀速直线运动，三点共线作为事件，事件点之间面积是时间的二次函数，直接积分即可。
 
