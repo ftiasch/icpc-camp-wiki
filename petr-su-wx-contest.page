@@ -10,7 +10,7 @@
 
 带入$n+1$个值用行列式算出$y_i=f(x_i)$，再用多项式插值求出多项式系数。
 
-官方解法：设$t_k = \mathrm{Tr}(A^k)$， $|A - \lambda E| = c_0 + c_1 \lambda + \cdots + c_n \lambda^n$，则有：
+官方解法：设$t_k = \mathrm{Tr}(A^k)$， $|A - \lambda E| = (-1)^n(c_n + c_{n - 1} \lambda + \cdots + \lambda^n)$，则有：
 $$ t_1 + c_1 = 0 $$
 $$ t_k + c_1 t_{k - 1} + c_2 t_{k - 2} + \cdots + c_{k - 1} t_1 + k c_k = 0$$
 
