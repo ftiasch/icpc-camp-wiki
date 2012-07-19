@@ -1,0 +1,32 @@
+# Petrozavodsk SU Wx Contest
+
+## A. You\'re in the Army Now [Solved, Jingbo Shang]
+
+贪心。
+
+## B. Art
+
+## C. Ballistic [Solved, Bin Jin]
+
+## D. Castle [Solved, Xiaoxu Guo]
+
+二分，$O(\log N)$判断点在凸多边形内。
+
+## E. Creeping [Solved, Jingbo Shang]
+
+状态压缩动态规划。
+
+## F. Lock [Solved, Bin Jin]
+
+搜索。
+
+## G. Princess [Solved, Bin Jin]
+
+数学。
+
+## H. Runes
+
+## I. Spell
+
+## J. Orcish Transportation
+
