@@ -1,0 +1,5 @@
+# 犯错列表
+
+## Bin Jin
+
+* 2012-07-19, Problem F - Lock, `bool dfs()`最后没有`return false`，建议以后用`-Wall`
