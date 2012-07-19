@@ -28,7 +28,7 @@ $$ t_k + c_1 t_{k - 1} + c_2 t_{k - 2} + \cdots + c_{k - 1} t_1 + k c_k = 0$$
 
 ## G. Princess [Solved, Bin Jin]
 
-数学，$\max_{n} n \times x^{\frac{1}{n}}$ 。
+数学，$\min_{n} n \times x^{\frac{1}{n}}$ 。
 
 ## H. Runes
 
