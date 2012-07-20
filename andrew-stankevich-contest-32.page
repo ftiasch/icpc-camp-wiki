@@ -2,11 +2,15 @@
 
 ## A. Graph Theory [Solved, Xiaoxu Guo]
 
+构造长度为$2r$的环，加上一条长度为$d - r$的链即可。特判$r = 1$的情况。
+
 ## B. Minimal Matrix [Solved, Bin Jin]
 
 枚举列的offset，然后行上用线性的环状最小表示算法。$O(n^3)$
 
 ## C. Nothing On TV
+
+把圆反演，然后可以发现到原点的距离是一个拓扑序。在确定的过程中，需要查询半平面内是否有点，可以动态维护凸包，也可以分治。
 
 ## D. Avoiding Partitions [Solved, Jingbo Shang]
 
@@ -17,7 +21,11 @@
 
 ## F. Reversing Prefixes [Solved, Xiaoxu Guo]
 
+贪心，每次选尽量靠后字典序最小的字符，把选中的字符倒着输出，没选中的正着输出即可。
+
 ## G. Inverse Range Minimum Query [Solved, Xiaoxu Guo]
+
+贪心，把区间从小到大放，要求每次区间内都至少有一个空位，放完把区间覆盖即可。
 
 ## H. Road Signs
 
