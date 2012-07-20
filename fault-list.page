@@ -4,14 +4,14 @@
 
 * 2012-07-19, Problem F - Lock, `bool dfs()`最后没有`return false`，建议以后用`-Wall`
 
-* 2012-07-20, Problem B - Minimum Matrix `int compare..` 最后`return 0`（拷贝代码要再查一遍，比较异同）
+* 2012-07-20, Problem B - Minimum Matrix, `int compare..` 最后`return 0`（拷贝代码要再查一遍，比较异同）
 
 ## Xiaoxu Guo
 
-* 2012-07-20, Problem C - Nothing On TV double判断精度要统一到一倍模长上。
+* 2012-07-20, Problem C - Nothing On TV, double判断精度要统一到一倍模长上。
 
 ## Jingbo Shang
 
-* 2012-07-20， Problem A - Graph Theory 证明结论的时候要从题目定义出发，不能自己yy。
+* 2012-07-20， Problem A - Graph Theory, 证明结论的时候要从题目定义出发，不能自己yy。
 
-* 2012-07-20， Problem D - Avoding Partitions 队友没有理解算法时不要着急，要耐心讲给他听；Java抛异常的地方要exit(-1)。
+* 2012-07-20， Problem D - Avoding Partitions, 队友没有理解算法时不要着急，要耐心讲给他听；Java抛异常的地方要exit(-1)。
