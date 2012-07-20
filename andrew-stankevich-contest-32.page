@@ -4,11 +4,16 @@
 
 ## B. Minimal Matrix [Solved, Bin Jin]
 
+枚举列的offset，然后行上用线性的环状最小表示算法。$O(n^3)$
+
 ## C. Nothing On TV
 
 ## D. Avoiding Partitions [Solved, Jingbo Shang]
 
 ## E. Points and Lines [Solved, Bin Jin]
+
+博弈树。状态中需要记录的有，留下的奇数大小的连通块个数，偶数大小的连通块个数，
+以及现在不影响连通性所能连的边的条数的奇偶性。$O(n^2)$
 
 ## F. Reversing Prefixes [Solved, Xiaoxu Guo]
 
@@ -20,4 +25,14 @@
 
 ## J. Wikipidia [Solved, Bin Jin]
 
+只有一层嵌套，`<i>`在`<b>`中或者`<b>`在`<i>`中。所以每个位置共有三种状态
+
+* 当前栈为空
+* 当前栈为`<i>`
+* 当前栈为`<b>`
+
+这样就可以做到线性
+
 ## K. XOR [Solved, Bin Jin]
+
+动态规划，状态为前$n$个数字的异或有$m$个$1$
