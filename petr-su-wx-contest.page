@@ -34,7 +34,9 @@ $$ t_k + c_1 t_{k - 1} + c_2 t_{k - 2} + \cdots + c_{k - 1} t_1 + k c_k = 0$$
 
 ## I. Spell
 
-## J. Orcish Transportation
+后缀数组或者后缀自动机
+
+## J. Orcish Transportation [Solved, Jingbo Shang]
 
 一个和2SAT类似的对称的图求最大流，要求对称的边流量相等。
 直接用Dinic推流，但是每次同时增广两个对称的增广路。公共的的残量除以二取min。
