@@ -27,7 +27,7 @@
 
 ## G. Inverse Range Minimum Query [Solved, Xiaoxu Guo]
 
-贪心，把区间从小到大放，要求每次区间内都至少有一个空位，放完把区间覆盖即可。
+贪心，把区间从大到小放，要求每次区间内都至少有一个空位，放完把区间标记为不可行。
 
 ## H. Road Signs
 
