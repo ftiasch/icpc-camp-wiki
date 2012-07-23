@@ -28,7 +28,9 @@
 
 广搜。
 
-## H. Light the Room
+## H. Light the Room [Solved, Xiaoxu Guo]
+
+几何，先计算不反射照亮的区间，再计算反射后照亮的区间。我们知道区间的端点必然是线段的端点，直接拿出所有线段端点，取中线判断即可。
 
 ## I. The Phantom
 
