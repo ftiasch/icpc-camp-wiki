@@ -2,17 +2,25 @@
 
 ## A. Balls [Solved, Xiaoxu Guo]
 
+动态规划，要高精度。
+
 ## B. Checkers
 
 ## C. Checkers 2
 
 ## D. Contest [Solved, Xiaoxu Guo]
 
+动态规划。
+
 ## E. K-th Divisor [Solved, Xiaoxu Guo]
+
+枚举。
 
 ## F. Fence [Solved, Jingbo Shang]
 
 ## G. Good Graph [Solved, Xiaoxu Guo]
+
+动态规划，构图的过程是一棵树，计算每颗子树的最大独立集和最大团。
 
 ## H. Graph  [Solved, Bin Jin]
 
@@ -26,6 +34,8 @@
 
 ## K. Segments [Solved, Xiaoxu Guo]
 
+树状数组。
+
 ## L. Subsequence [Solved, Bin Jin]
 
 动态规划。先离散化，预处理每个位置之后某个数第一次出现的位置，状态为到位置和最后
@@ -36,3 +46,5 @@
 由于$sum$的最大值为$9\times 10^6$，可以枚举素数用快速幂检验
 
 ## N. Byteland Tour [Solved, Jingbo Shang]
+
+
