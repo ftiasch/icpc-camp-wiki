@@ -2,17 +2,27 @@
 
 ## A. Balls [Solved, Xiaoxu Guo]
 
+动态规划，要高精度。
+
 ## B. Checkers
 
 ## C. Checkers 2
 
 ## D. Contest [Solved, Xiaoxu Guo]
 
+动态规划。
+
 ## E. K-th Divisor [Solved, Xiaoxu Guo]
+
+枚举。
 
 ## F. Fence [Solved, Jingbo Shang]
 
+枚举所有的pair，考虑斜率和长度，相同斜率按法向量点积值排序，然后排序统计一下。
+
 ## G. Good Graph [Solved, Xiaoxu Guo]
+
+动态规划，构图的过程是一棵树，计算每颗子树的最大独立集和最大团。
 
 ## H. Graph  [Solved, Bin Jin]
 
@@ -24,7 +34,11 @@
 
 ## J. Permutations [Solved, Jingbo Shang]
 
+求给定序列的循环节，设长度为$i$的有$c_i$个，答案就是$\prod_{i}{i^{c_i}*{c_i}!}$
+
 ## K. Segments [Solved, Xiaoxu Guo]
+
+树状数组。
 
 ## L. Subsequence [Solved, Bin Jin]
 
@@ -36,3 +50,6 @@
 由于$sum$的最大值为$9\times 10^6$，可以枚举素数用快速幂检验
 
 ## N. Byteland Tour [Solved, Jingbo Shang]
+
+wu。考虑必要条件：图要双连通、random walk要有解（random walk通过给点标定等级，贪心走）。猜想正则图才有解。
+
