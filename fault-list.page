@@ -1,5 +1,9 @@
 # 犯错列表
 
+## General 
+
+* 上题前估时，尽量精确到5分钟内
+
 ## Bin Jin
 
 * 2012-07-19, Problem F - Lock, `bool dfs()`最后没有`return false`，建议以后用`-Wall`
@@ -9,6 +13,8 @@
 ## Xiaoxu Guo
 
 * 2012-07-20, Problem C - Nothing On TV, double判断精度要统一到一倍模长上。
+
+* 2012-07-24, Problem K - Segments, 读input和output。
 
 ## Jingbo Shang
 
