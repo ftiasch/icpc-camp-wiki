@@ -1,4 +1,3 @@
-
 # Last Contest
 
 ## A. Bread [Solved, Xiaoxu Guo]
@@ -9,14 +8,21 @@
 
 ## D. Dogs [Solved, Bin Jin]
 
+把坐标算出来之后简单的BFS即可
+
 ## E. Gallery [Solved, Xiaoxu Guo]
 
 ## F. Strong Inversion [Solved, Xiaoxu Guo]
 
 ## G. L-Game [Solved, Bin Jin]
 
+把18000左右个状态全部预处理出来之后，从终止的必败状态开始，必败直接
+可以从必胜到达，如果一个节点到达的点都是必胜，则必败
+
 ## H. Sewers [Solved, Xiaoxu Guo]
 
 ## I. Slurm [Solved, Bin Jin]
+
+简单的parser
 
 ## J. Squares [Solved, Xiaoxu Guo]
