@@ -10,6 +10,8 @@
 
 ## C. Coefficients
 
+$$(x^2+x+1)^n = (x^2-2x+1)^n = (x-1)^{2n}$
+
 ## D. Dogs [Solved, Bin Jin]
 
 把坐标算出来之后简单的BFS即可
