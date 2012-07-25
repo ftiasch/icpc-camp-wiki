@@ -2,6 +2,8 @@
 
 ## A. Bread [Solved, Xiaoxu Guo]
 
+暴力。
+
 ## B. Bridges [Solved, Jingbo Shang]
 
 ## C. Coefficients
@@ -12,7 +14,11 @@
 
 ## E. Gallery [Solved, Xiaoxu Guo]
 
+半平面交。
+
 ## F. Strong Inversion [Solved, Xiaoxu Guo]
+
+平衡树。
 
 ## G. L-Game [Solved, Bin Jin]
 
@@ -21,8 +27,12 @@
 
 ## H. Sewers [Solved, Xiaoxu Guo]
 
+先随意把奇度点配对，然后将每个联通分量欧拉回路并入路径。
+
 ## I. Slurm [Solved, Bin Jin]
 
 简单的parser
 
 ## J. Squares [Solved, Xiaoxu Guo]
+
+枚举对角线。
