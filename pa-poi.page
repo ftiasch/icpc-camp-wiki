@@ -1,3 +1,9 @@
 # Polish Olympiad in Informatics 
 
+## POI X
+
+### ~~Trinomial(tro)~~
+
+求$(1 + x + x^2)^n$展开式中$x^i$的系数除以$3$的余数。
+
 # Polish Algorithm Engagement
