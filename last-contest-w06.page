@@ -8,7 +8,7 @@
 
 每次找当前方案最少的搜。
 
-## C. Coefficients
+## C. Coefficients [Solved, Bin Jin]
 
 $(x^2+x+1)^n = (x^2-2x+1)^n = (x-1)^{2n}$
 
