@@ -3,13 +3,19 @@
 
 ## A. Generalized Assignment [Solved, Xiaoxu Guo]
 
+最小费用最大流。
+
 ## B. Bandits [Solved, Jingbo Shang]
 
 ## C. Matrix Game [Solved, Xiaoxu Guo]
 
+把零和游戏转化为线性规划，注意到这个线性规划的约束很少，枚举哪些约束取得等号，高斯消元得到可行域，注意需要用极大的可行域（加入新约束之后会导致无解），更新答案就好。
+
 ## D. Paper Mosaic
 
 ## E. Shortest Path [Solved, Xiaoxu Guo]
+
+SPFA，入队超过$n$次的点不再入队，最后再把入队超过$n$次的点可达的点标为有负环。
 
 ## F. Cutting Puzzle [Solved, Bin Jin]
 
@@ -18,5 +24,7 @@
 ## H. Sand-Glass [Solved, Bin Jin]
 
 ## I. Solid Tilings [Solved, Xiaoxu Guo]
+
+状态压缩动态规划。
 
 ## J. Lucky Tickets [Solved, Bin Jin]
