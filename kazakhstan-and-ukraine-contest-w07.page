@@ -1,15 +1,32 @@
-
 # Kazakhstan and Ukraine contest
 
-## A. Maximal Convex Subset
-## B. Death Star
+## A. Maximal Convex Subset [Solved, Xiaoxu Guo]
+
+## B. Death Star [Solved, Bin Jin]
+
 ## C. Elevator
-## D. Numbers
-## E. Pareto's Domination
+
+## D. Numbers [Solved, Bin Jin]
+
+容斥原理，数有多少对在一起，答案是
+
+$$\sum_{i=0}^{n} \binom{n}{i}2n(2n-i-1)!(-2)^i$$
+
+## E. Pareto's Domination [Solved, Xiaoxu Guo]
+
 ## F. Unexperienced Soldiers
-## G. Stocks Dynamics
-## H. Vader's trouble
-## I. War of the Empires
-## J. One Way
-## K. Wheels
+
+## G. Stocks Dynamics [Solved, Xiaoxu Guo]
+
+## H. Vader's trouble [Solved, Xiaoxu Guo]
+
+## I. War of the Empires [Solved, Bin Jin]
+
+随机一个向量，对所有点做点积，如果区间不相交，则找到一种区分方式
+
+## J. One Way [Solved, Bin Jin]
+
+枚举源点到左侧的所有边是否存在，可以风别的算出右侧每个点是否可达，进一步可以算出终点是否可达
+
+## K. Wheels [Solved, Jingbo Shang]
 
