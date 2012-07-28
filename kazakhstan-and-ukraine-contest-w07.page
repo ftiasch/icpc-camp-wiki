@@ -2,6 +2,8 @@
 
 ## A. Maximal Convex Subset [Solved, Xiaoxu Guo]
 
+枚举凸包的最低点，动态规划计算最大值。
+
 ## B. Death Star [Solved, Bin Jin]
 
 ## C. Elevator
@@ -14,11 +16,17 @@ $$\sum_{i=0}^{n} \binom{n}{i}2n(2n-i-1)!(-2)^i$$
 
 ## E. Pareto's Domination [Solved, Xiaoxu Guo]
 
+按照$A_i$排序，以$B_i$为下标，维护$C_i$的最大值。
+
 ## F. Unexperienced Soldiers
 
 ## G. Stocks Dynamics [Solved, Xiaoxu Guo]
 
+KMP
+
 ## H. Vader's trouble [Solved, Xiaoxu Guo]
+
+每次选择i数量最少的矩形，用链表加速。
 
 ## I. War of the Empires [Solved, Bin Jin]
 
