@@ -30,4 +30,11 @@ Problem
 Solution
 :    逆序并查集，因为要遍历联通块，所以用链表启发式合并。
 
+### ~~Shuffle(tas)~~
+
+Problem
+:    求置换$P$的$k$次根。
+Solution
+:    对于长度为$l$的置换，如果原来是大小为$d \cdot l$的置换，需要满足$\gcd(l, \frac{k}{d}) = 1$，所以还需背包求方案。
+
 # Polish Algorithm Engagement
