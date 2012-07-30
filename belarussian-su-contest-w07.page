@@ -2,7 +2,13 @@
 
 ## A. Data Coding [Solved, Bin Jin]
 ## B. Kingdom Division [Solved, Xiaoxu Guo]
+
+最优直线肯定经过某个格点，枚举后每个格子对应一个极角区间，排序扫描即可。 注意考虑经过原点的格子。
+
 ## C. Farmer's happiness [Solved, Xiaoxu Guo]
+
+梯形剖分，预处理每条线段下的点数（有向），最后枚举三角形。
+
 ## D. Generalized Fibonacci numbers [Solved, Bin Jin]
 ## E. Hello Space! [Solved, Jingbo Shang]
 ## F. Equivalent images
@@ -10,3 +16,5 @@
 ## H. Mafia forever! [Solved, Jingbo Shang]
 ## I. Password [Solved, Bin Jin]
 ## J. Buying roads [Solved, Xiaoxu Guo]
+
+找出直径（或环），枚举上面的左端点，在移动右端点的同时用优先队列维护前$K$小的元素。
