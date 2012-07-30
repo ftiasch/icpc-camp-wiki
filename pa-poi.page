@@ -9,6 +9,13 @@ Problem
 Solution
 :    [solution](last-contest-w06#c.-coefficients-solved-bin-jin)
 
+### ~~Connections(pol)~~
+
+Problem
+:    求有向图两点间的$K$短路。
+Solution
+:    枚举起点，Dijkstra维护前$K$短路。
+
 ### ~~Sums(sum)~~
 
 Problem
@@ -16,7 +23,7 @@ Problem
 Solution
 :    最短路，求出模$A_0$的每个剩余系可行的最小元素。
 
-## ~~Monkeys(mal)~~
+### ~~Monkeys(mal)~~
 
 Problem
 :    维护无向图，支持删边，求每个点与点1分离的时刻。
