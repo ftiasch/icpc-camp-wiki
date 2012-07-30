@@ -2,8 +2,20 @@
 
 ## POI X
 
+### ~~Sums(sum)~~
+
+Problem
+:    询问$b$能否表示为集合$A$中的元素之和（允许重复）。
+Solution
+:    最短路，求出模$A_0$的每个剩余系可行的最小元素。
+
 ### ~~Trinomial(tro)~~
 
-求$(1 + x + x^2)^n$展开式中$x^i$的系数除以$3$的余数。
+Problem
+:    求$(1 + x + x^2)^n$展开式中$x^i$的系数除以$3$的余数。
+Solution
+:    [solution](last-contest-w06#c.-coefficients-solved-bin-jin)
+
+
 
 # Polish Algorithm Engagement
