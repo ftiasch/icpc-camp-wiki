@@ -7,6 +7,12 @@
 Problem
 :    构造长度为$N$的字符集最少的字符串，不包含形如$xx$的子串。
 
+### ~~Chocolate(cze)~~
+Problem
+:    $N \times M$的巧克力，每条横线和竖线有代价，求拆成$1 \times 1$的最小代价（不能同时操作多块）。
+Solution
+:    对于同种线，先大后小，所以排序后动态规划。
+
 ### ~~Trinomial(tro)~~
 
 Problem
