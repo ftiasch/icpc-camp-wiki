@@ -2,6 +2,8 @@
 
 ## A. Finite Automata [Solved, Bin Jin]
 
+$2^m m$的状态，直接用状态压缩DP的做法建立自动机即可
+
 ## B. Bacteria
 
 ## C. Express Trains [Solved, Xiaoxu Guo]
@@ -9,6 +11,9 @@
 动态规划，每次转移拓扑序小的点。注意某点先到终点的转移。
 
 ## D. Merge Sort [Solved, Bin Jin]
+
+注意到只要一个序列$n$与$n-1$在两边，merge sort一定比较次数达到最大
+
 ## E. Guarding the Place of the Murder [Solved, Xiaoxu Guo]
 
 求出所有切点，和4个端点做凸包。计算距离的时候，同一个圆上的点用圆弧，否则用直线。
@@ -27,3 +32,5 @@
 递推，考虑最小的数是否为1。
 
 ## J. Tree Analysis [Solved, Bin Jin]
+
+简单的Tree Hash
