@@ -6,6 +6,8 @@ $2^m m$的状态，直接用状态压缩DP的做法建立自动机即可
 
 ## B. Bacteria
 
+标程是三分套三分。
+
 ## C. Express Trains [Solved, Xiaoxu Guo]
 
 动态规划，每次转移拓扑序小的点。注意某点先到终点的转移。
@@ -22,6 +24,8 @@ $2^m m$的状态，直接用状态压缩DP的做法建立自动机即可
 ## G. Palindromes [Solved, Xiaoxu Guo]
 
 枚举所有字串，哈希判重。
+
+标程有点奇怪没有看懂，有点像KMP。
 
 ## H. Prime Sum [Solved, Xiaoxu Guo]
 
