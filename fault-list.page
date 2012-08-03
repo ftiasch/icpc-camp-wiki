@@ -12,6 +12,8 @@
 
 ## Xiaoxu Guo
 
+* 2012-08-03, Problem I - Irene’s Password, 注意变量类型（尤其是char）。
+
 * 2012-07-20, Problem C - Nothing On TV, double判断精度要统一到一倍模长上。
 
 * 2012-07-24, Problem K - Segments, 读input和output。
