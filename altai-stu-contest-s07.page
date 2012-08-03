@@ -2,39 +2,39 @@
 
 ## A. Andrew's Castle [Solved, Xiaoxu Guo]
 
-* 按一定规律新增点，推出通项直接输出
+按一定规律新增点，推出通项直接输出
 
 ## B. Betty's Game of Coins [Solved, Bin Jin]
 
-* dp，考虑最后一种数的第一个放在哪里，乘以组合数转移。可以用前缀和优化。要高精度
+dp，考虑最后一种数的第一个放在哪里，乘以组合数转移。可以用前缀和优化。要高精度
 
 ## C. Catherine's fence [Solved, Xiaoxu Guo]
 
-* 按照斜率、截距分类，排序贪心
+按照斜率、截距分类，排序贪心
 
 ## D. Dave's Golden Birds [Solved, Bin Jin]
 
-* 枚举最后的总数，在DAG上dp，要方案
+枚举最后的总数，在DAG上dp，要方案
 
 ## E. Eveline's Hamsters [Solved, Bin Jin]
 
-* BFS，要方案。
+BFS，要方案。
 
 ## F. Freddy's Historical Essay [Solved, Xiaoxu Guo]
 
-* 读入日期，做逆序对
+读入日期，做逆序对
 
 ## G. George's Big Matrix [Solved, Xiaoxu Guo]
 
-* 按照G值排序，然后用二维树状数组求最大值，要记录方案
+按照$G$值排序，然后用二维树状数组求最大值，要记录方案
 
 ## H. Helen's Mirrors [Solved, Bin Jin]
 
-* 因为镜子平行坐标轴，所以起始的方向只有4种可能，枚举后模拟。可以不用到镜子反射，也可以先路过终点，再沿规定方向射入。由于镜子坐标在10000内，方向向量也在10000内，所以交点的坐标的分母最多啊在int内，用long long做分数类就可以保证精度不丢失
+因为镜子平行坐标轴，所以起始的方向只有4种可能，枚举后模拟。可以不用到镜子反射，也可以先路过终点，再沿规定方向射入。由于镜子坐标在10000内，方向向量也在10000内，所以交点的坐标的分母最多啊在int内，用long long做分数类就可以保证精度不丢失
 
 ## I. Irene's Password [Solved, Xiaoxu Guo]
 
-* 做出SA，考虑连续k个，算出恰好被这k个后缀包含的子串长度的上下界，然后考虑这个长度范围内能被自动机接受的极长字符串，输出即可。在验证字符串是否被自动机接受时，需要充分利用上一个串已知的信息，加速检验
+做出SA，考虑连续$k$个，算出恰好被这$k$个后缀包含的子串长度的上下界，然后考虑这个长度范围内能被自动机接受的极长字符串，输出即可。在验证字符串是否被自动机接受时，需要充分利用上一个串已知的信息，加速检验
 
 ## J. Johnny's Puzzle [Solved, Bin Jin]
 
