@@ -28,8 +28,14 @@ Solution
 
 ## F. Furious alien
 ## G. Gift [Solved, Bin Jin]
+
+* 容斥原理，考虑有多少对相邻的相同颜色。可以直接推出公式(n-1对相同和n对相同是相同的情况)。也可以用递推式，用矩阵乘法优化
+
 ## H. Hurried container
 ## I. Irregular York [Solved, Jingbo Shang]
+
+* 调整，不断地朝着目标点走，当出现环的时候找附近5*5有没有解，无解的话就往右上角小跳一下，继续调整
+
 ## J. Jack and Joan [Solved, Bin Jin]
 
 待定系数之后高斯消元
