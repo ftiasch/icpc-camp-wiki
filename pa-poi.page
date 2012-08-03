@@ -2,7 +2,7 @@
 
 ## POI X
 
-### Sequences without Stammers(cia)
+### ~~Sequences without Stammers(cia)~~
 
 Problem
 :    构造长度为$N$的字符集最少的字符串，不包含形如$xx$的子串。
