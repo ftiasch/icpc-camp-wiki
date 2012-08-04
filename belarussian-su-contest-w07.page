@@ -20,7 +20,7 @@ $2^{n-1}$枚举每位是否有进位，剩下就是解方程了，可以把$gcd(
 
 ## E. Hello Space! [Solved, Jingbo Shang]
 
-* 用最大最小误差去check每个数是1还是2，然后总的再check一遍误差是否合法，然后模拟输出，判断是否是合法输出。
+用最大最小误差去check每个数是1还是2，然后总的再check一遍误差是否合法，然后模拟输出，判断是否是合法输出。
 
 ## F. Equivalent images
 ## G. Labyrinth [Solved, Bin Jin]

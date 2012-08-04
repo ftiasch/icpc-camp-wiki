@@ -66,4 +66,4 @@ KMP
 
 ## K. Wheels [Solved, Jingbo Shang]
 
-* 要求的时刻有两种：完全重合，或者碰巧double了一份。注意无解输出-1。
+要求的时刻有两种：完全重合，或者碰巧double了一份。注意无解输出-1。
