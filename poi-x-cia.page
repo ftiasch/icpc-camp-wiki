@@ -16,7 +16,7 @@
 :    $S_{2n + 1} = -S_n$。
 
 定理6
-:    $S_j = S_{j + 1} \Rightarrow j$是偶数。
+:    $S_j = S_{j + 1} \Rightarrow j$是奇数。
 
 定理7
 :    不存在满足$S_j = S_{j + 1} = S_{j + 2}$的$j$。
