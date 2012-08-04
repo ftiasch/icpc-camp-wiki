@@ -9,18 +9,18 @@ Problem
 Solution
 :    [solution](poi-x-cia)
 
+### ~~Chocolate(cze)~~
+Problem
+:    $N \times M$的巧克力，每条横线和竖线有代价，求拆成$1 \times 1$的最小代价（不能同时操作多块）。
+Solution
+:    对于同种线，先大后小，所以排序后动态规划。
+
 ### ~~Numerals of Przesmyks(lic)~~
 
 Problem
 :    将所有由"+"和"-"组成的字符串（其中不能出现连续$M$个"-"）按照字典序排序，给出字符串求标号或者给出标号求字符串。
 Solution
 :    数位动态规划。
-
-### ~~Chocolate(cze)~~
-Problem
-:    $N \times M$的巧克力，每条横线和竖线有代价，求拆成$1 \times 1$的最小代价（不能同时操作多块）。
-Solution
-:    对于同种线，先大后小，所以排序后动态规划。
 
 ### ~~Trinomial(tro)~~
 
