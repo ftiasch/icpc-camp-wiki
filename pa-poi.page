@@ -22,6 +22,13 @@ Problem
 Solution
 :    数位动态规划。
 
+### ~~Mastermind II(mas)~~
+
+Problem
+:    解决数字宾果游戏。
+Solution
+:    枚举。
+
 ### ~~Motorways(aut)~~
 
 Problem
