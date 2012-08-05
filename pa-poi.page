@@ -57,6 +57,11 @@ Problem
 Solution
 :    [solution](last-contest-w06#c.-coefficients-solved-bin-jin)
 
+### Tiles(kaf)
+
+Problem
+:    给出$k$和$l$，如果$|i - j| = k$或$|i - j| = l$则连边，问$1, 2, \ldots, n$的联通块数量。$n \leq 10^{500}$
+
 ### ~~Connections(pol)~~
 
 Problem
