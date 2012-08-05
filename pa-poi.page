@@ -64,6 +64,11 @@ Problem
 Solution
 :    枚举起点，Dijkstra维护前$K$短路。
 
+### ~~Treasure(ska)~~
+
+Problem
+:    模拟。
+
 ### ~~Sums(sum)~~
 
 Problem
