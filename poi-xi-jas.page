@@ -1,0 +1,6 @@
+# POI XI Stage II -- Cave(jas)
+
+first in any manner you choose our tree root just about to set the order in which vertices will review the search for optimal solutions.
+solution based on the following idea: we consider our tree, starting with the leaves and going in the direction of the root. then the results for the subtrees we compute the score for the tree root in this who has an apex. and so the results for smaller trees we hope the result for a larger
+So we know the minimal number of questions in the subtree. But we want to (within a fixed number of questions), questions to ask as high as possible. for example, the above first we ask the more vertices you can even make the top to the tree that the number of required questions has not changed
+you can see that knowing only the number of questions needed in the subtree we are unable to calculate the number of questions to a greater tree. You must also know something about how big a part of the vertex in which we ask the first question. We especially want to know how many questions need to examine the upper part, but also something about the part above the first question in this section, etc
