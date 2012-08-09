@@ -1,14 +1,26 @@
-
 # Kazakhstan Contest
 
 ## A. Binary strings [Solved, Xiaoxu Guo]
 ## B. Chords [Solved, Bin Jin]
+
+把区间按左端点排序，然后树状数组
+
 ## C. Cubes [Solved, Xiaoxu Guo]
 ## D. Examinator [Solved, Xiaoxu Guo]
 ## E. Fibonacci sum [Solved, Bin Jin]
+
+简单的矩阵乘法
+
 ## F. Foremen [Solved, Bin Jin]
+
+动态规划，状态是前$i$个人，选出了$j$个leader，这些leader所在的组
+一共$k$人。复杂度$O(n^4)$
+
 ## G. Game [Solved, Xiaoxu Guo]
 ## H. Illumination [Solved, Bin Jin]
+
+二分答案之后半平面交
+
 ## I. Interval [Solved, Jingbo Shang]
 ## J. Matrix [Solved, Xiaoxu Guo]
 ## K. Strings [Solved, Jingbo Shang]
