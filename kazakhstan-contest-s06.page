@@ -36,8 +36,13 @@ splay维护序列
 二分答案之后半平面交
 
 ## I. Interval [Solved, Jingbo Shang]
+
+把区间长度分解成2的幂次与奇数的积
+
 ## J. Matrix [Solved, Xiaoxu Guo]
 
 矩阵乘法
 
 ## K. Strings [Solved, Jingbo Shang]
+
+二分答案之后hash判断
