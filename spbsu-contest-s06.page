@@ -26,7 +26,7 @@ Splay维护序列。
 
 ## G. Raccoons [Solved, Xiaoxu Guo]
 
-利用对称性，贪心构造（F是骗你的）。
+利用对称性，贪心构造（$f$是骗你的）。
 
 ## H. Robots' DNA [Solved, Bin Jin]
 
