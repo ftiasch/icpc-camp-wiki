@@ -1,12 +1,23 @@
 # Kazakhstan Contest
 
 ## A. Binary strings [Solved, Xiaoxu Guo]
+
+设$f(n)$表示满足条件的长度为$n$的数量，考虑补集，假设最小相等前后缀长度是$i$，注意到要有$2i \leq n$，而最小性需要$i$也满足条件，所以$$f(n) = 2^n - \sum_{2i \leq n}f(i) \cdot 2^{n - i}$$
+
+部分和优化即可。
+
 ## B. Chords [Solved, Bin Jin]
 
 把区间按左端点排序，然后树状数组
 
 ## C. Cubes [Solved, Xiaoxu Guo]
+
+最小费用最大流
+
 ## D. Examinator [Solved, Xiaoxu Guo]
+
+splay维护序列
+
 ## E. Fibonacci sum [Solved, Bin Jin]
 
 简单的矩阵乘法
@@ -17,10 +28,16 @@
 一共$k$人。复杂度$O(n^4)$
 
 ## G. Game [Solved, Xiaoxu Guo]
+
+动态规划，线段树优化
+
 ## H. Illumination [Solved, Bin Jin]
 
 二分答案之后半平面交
 
 ## I. Interval [Solved, Jingbo Shang]
 ## J. Matrix [Solved, Xiaoxu Guo]
+
+矩阵乘法
+
 ## K. Strings [Solved, Jingbo Shang]
