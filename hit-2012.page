@@ -1,0 +1,41 @@
+# 2012 Multi-University Training Contest 5
+
+## A. Capturing a country [Solved, Bin Jin]
+
+树形动态规划。
+
+## B. Gold miner [Solved, Xiaoxu Guo]
+
+背包。
+
+## C. History repeat itself [Solved, Bin Jin]
+
+公式。
+
+## D. Interval query [Solved, Xiaoxu Guo]
+
+倍增。
+
+## E. Mark the Rope [Solved, Xiaoxu Guo]
+
+Pollard-rho。
+
+## F. Permutation [Solved, Bin Jin]
+
+背包。
+
+## G. The Beautiful Road [Solved, Bin Jin]
+
+参考[IOIString](http://community.topcoder.com/stat?c=problem_statement&pm=10564)。
+
+## H. The Closest M Points [Solved, Jingbo Shang]
+
+kd树。
+
+## I. To the moon [Solved, Xiaoxu Guo]
+
+坚固的线段树。
+
+## J. Xiao Ming's Hope [Solved, Bin Jin]
+
+数学。
