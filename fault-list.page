@@ -10,6 +10,8 @@
 
 * 2012-07-20, Problem B - Minimum Matrix, `int compare..` 最后`return 0`（拷贝代码要再查一遍，比较异同）
 
+* 2012-09-05, Problem J - Xiaoming's Hope, 凡是复杂度小的题目注意优化读入。
+
 ## Xiaoxu Guo
 
 * 2012-08-03, Problem I - Irene’s Password, 注意变量类型（尤其是char）。
