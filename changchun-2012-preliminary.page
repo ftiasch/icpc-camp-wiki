@@ -1,0 +1,26 @@
+# ACM/ICPC 2012 Changchun Regional Contest (Preliminary)
+
+## A Simple Problem with Integers [Solved, Jingbo Shang]
+
+对于不同的模不同的剩余系，树状数组维护。
+
+## Alice and Bob [Solved, Xiaoxu Guo] 
+
+贪心，按照一维排序，每次选择另一维最大的覆盖，需要数据结构优化。
+
+## Defend Jian Ge [Solved, Xiaoxu Guo] 
+
+模拟。
+
+## Dynamic Lover
+## Find Black Hand 
+## LianLianKan [Solved, Jingbo Shang] 
+## Rescue [Solved, Jingbo Shang] 
+## Spy's Work [Solved, Bin Jin] 
+#
+## Color the Tree [Solved, Xiaoxu Guo] 
+
+可以发现质心是不动点，以质心为根递推。设$f(i)$表示以$i$为根的子树本质不同的染色方案数。对于与$i$的同构的子树，可以看做是有$f(i)$种颜色染色，不同的方案就是$x_1 + x_2 + \cdots + x_{f(i)} = k$的解，其中$k$是等价类的数目。
+
+## The Ghost Blows Light [Solved, Bin Jin]
+## USACO ORZ [Solved, Bin Jin] 
