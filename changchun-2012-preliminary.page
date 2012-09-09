@@ -1,26 +1,28 @@
 # ACM/ICPC 2012 Changchun Regional Contest (Preliminary)
 
-## A Simple Problem with Integers [Solved, Jingbo Shang]
+## A. A Simple Problem with Integers [Solved, Jingbo Shang]
 
 对于不同的模不同的剩余系，树状数组维护。
 
-## Alice and Bob [Solved, Xiaoxu Guo] 
+## B. Alice and Bob [Solved, Xiaoxu Guo] 
 
 贪心，按照一维排序，每次选择另一维最大的覆盖，需要数据结构优化。
 
-## Defend Jian Ge [Solved, Xiaoxu Guo] 
+## C. Defend Jian Ge [Solved, Xiaoxu Guo] 
 
 模拟。
 
-## Dynamic Lover
-## Find Black Hand 
-## LianLianKan [Solved, Jingbo Shang] 
-## Rescue [Solved, Jingbo Shang] 
-## Spy's Work [Solved, Bin Jin] 
-#
-## Color the Tree [Solved, Xiaoxu Guo] 
+## D. Dynamic Lover
+## E. Find Black Hand 
+## F. LianLianKan [Solved, Jingbo Shang] 
+## G. Rescue [Solved, Jingbo Shang] 
+## H. Spy's Work [Solved, Bin Jin] 
 
-可以发现质心是不动点，以质心为根递推。设$f(i)$表示以$i$为根的子树本质不同的染色方案数。对于与$i$的同构的子树，可以看做是有$f(i)$种颜色染色，不同的方案就是$x_1 + x_2 + \cdots + x_{f(i)} = k$的解，其中$k$是等价类的数目。
+## I. Color the Tree [Solved, Xiaoxu Guo] 
 
-## The Ghost Blows Light [Solved, Bin Jin]
-## USACO ORZ [Solved, Bin Jin] 
+对于任意自同构，质心是不动点（质心：直径的中点，如果直径长度是奇数，则质心在边上）。
+
+不失一般性，假设直径长度是偶数。取质心为根，设$f(T)$表示树$T$本质不同的染色数。取树$T$的根$r$，设点$r$的儿子中，共有$k$个同构等价类，分别是$T_1, T_2, \ldots, T_k$，数量是$c_1, c_2, \ldots, c_k$。对于任意等价类，递归计算$f(T_i)$，问题等价于用$f(T_i)$种颜色给$c_i$个物品染色的方案数（不计顺序），这又等价于方程$x_1 + x_2 + \cdots + x_{f(T_i)} = c_i$的解数。
+
+## J. The Ghost Blows Light [Solved, Bin Jin]
+## K. USACO ORZ [Solved, Bin Jin] 
