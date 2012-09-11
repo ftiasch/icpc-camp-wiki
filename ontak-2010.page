@@ -11,3 +11,9 @@ Problem
 :    对于无向图$G$，询问点$v$通过权$\leq x$的边可达的点集中，点权第$k$大的。
 Solution
 :    按照权从小到大添加边，联通分量形成一棵树（有$n$个叶子和至多$n - 1$个内点），问题等价于询问子树中叶子第$k$大，通过深度优先遍历转化为区间问题，时间复杂度$O(m \log m + q \log n)$。
+
+## ~~Creative Accounting(wyd)~~
+Problem
+:    求$\bmod m$最大的子串。
+Solution
+:    用部分和表达，就是$(S_i - S_j) \bmod m$最大，枚举$S_i$，分$S_i, S_j$的大小情况讨论，需要数据结构维护。
