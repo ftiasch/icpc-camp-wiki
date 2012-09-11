@@ -14,6 +14,6 @@ Solution
 
 ## ~~Creative Accounting(wyd)~~
 Problem
-:    求$\bmod m$最大的子串。
+:    求模$m$最大的子串。
 Solution
-:    用部分和表达，就是$(S_i - S_j) \bmod m$最大，枚举$S_i$，分$S_i, S_j$的大小情况讨论，需要数据结构维护。
+:    用部分和表达，就是$(S_i - S_j)$模$m$最大，枚举$S_i$，分$S_i, S_j$的大小情况讨论，需要数据结构维护。
