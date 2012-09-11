@@ -1,0 +1,13 @@
+# ONTAK 2010
+
+## ~~Non-Squarefree Numbers(pod)~~
+Problem
+:    求第$n$个有平方因子的数。
+Solution
+:    二分答案，容斥原理计算。
+
+## ~~Peaks(szc)~~
+Problem
+:    对于无向图$G$，询问点$v$通过权$\leq x$的边可达的点集中，点权第$k$大的。
+Solution
+:    按照权从小到大添加边，联通分量形成一棵树（有$n$个叶子和至多$n - 1$个内点），问题等价于询问子树中叶子第$k$大，通过深度优先遍历转化为区间问题，时间复杂度$O(m \log m + q \log n)$。
