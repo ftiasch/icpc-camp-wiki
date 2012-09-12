@@ -1,11 +1,25 @@
-
 # Warsaw U Contest (Winter 2011)
 
 ## A. Blocks [Solved, Xiaoxu Guo]
+
+求最长的平均值$\geq k$的子串。
+
+令$S_i = A_1 + A_2 + \cdots + A_i - i * k$，问题等价于求$S_i \geq S_j$且$i - j$最大。可以观察到如果$S_{i'} > S_i$且$i' > i$，则$i'$不是最优决策。维护两个单调列表扫描即可。
+
 ## B. Conspiracy
 ## C. Fire Brigade
 ## D. Hamsters [Solved, Xiaoxu Guo]
+
+给出若干互不相交的模版，求最短串使得模版出现$m$次。
+
+因为$\langle +, \max \rangle$是环，所以矩阵乘法即可。预处理矩阵需要KMP。
+
 ## E. Lightning Conductor [Solved, Xiaoxu Guo]
+
+对于$i$，求最小的$p$满足$\forall j, h_j \leq h_i + p - \sqrt{|i - j|}$。
+
+等价于求$\max\{h_j + \sqrt{|i - j|}\}$的。因为$w(i, j) = \sqrt{|i - j|}$满足四边形不等式，二分即可。
+
 ## F. Lollipop [Solved, Bin Jin]
 ## G. Minima Game [Solved, Bin Jin]
 ## H. Nasty Sets
