@@ -2,20 +2,40 @@
 
 ## A. Faulty Odometer [Solved, Xiaoxu Guo]
 
+进制转化。
+
 ## B. Number [Solved, Xiaoxu Guo]
+
+奇偶性讨论一下，直接找规律。
 
 ## C. Island Transport [Solved, Xiaoxu Guo]
 
+平面图最大流，直接Dinic。
+
 ## D. Judges' response [Solved, Xiaoxu Guo]
+
+状态压缩dp。
 
 ## E. A very hard mathematic problem [Solved, Bin Jin]
 
+Z=2特判，其他直接枚举。
+
 ## F. You Are the One [Solved, Jingbo Shang]
+
+区间型dp。
 
 ## G. Travel [Solved, Bin Jin]
 
+状态压缩dp。
+
 ## H. circuits [Solved, Bin Jin]
+
+连通性状态压缩dp。
 
 ## I. Data Handler [Solved, Xiaoxu Guo]
 
+Splay模拟。Treap和双向链表也行。
+
 ## J. Intelligent IME [Solved, Bin Jin]
+
+Trie暴力。
