@@ -30,7 +30,7 @@ Z=2特判，其他直接枚举。
 
 ## H. circuits [Solved, Bin Jin]
 
-连通性状态压缩dp。
+连通性状态压缩dp。合并一个环的时候限制包含这个环的未匹配插头为偶数个。
 
 ## I. Data Handler [Solved, Xiaoxu Guo]
 
