@@ -24,6 +24,10 @@ Link cut Tree
 
 ## G. Presentation [Solved, Bin Jin]
 
+枚举最后一次用的clipboard的子树，从根开始不断覆盖删除，看是否可行。可行则解决子问题。
+
+需要加上大小为倍数，以及去除子树同构的优化。
+
 ## H. Repairing
 
 ## I. Sun and Moon
