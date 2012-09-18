@@ -1,0 +1,35 @@
+# Japanese Alumni Group Summer Camp 2012 Day 4
+
+## A. A Two Floors Dungeon [Solved, Xiaoxu Guo]
+
+BFS
+
+## B. Area Folding [Solved, Xiaoxu Guo]
+
+Farmland
+
+## C. Connect [Solved, Bin Jin]
+
+状态压缩动态规划，只需记录格子选取的情况，即可推出对应的字符。
+
+## D. Do use segment tree [Solved, Xiaoxu Guo]
+
+Link cut Tree
+
+## E. Move on Dice
+
+## F. Pipeline Plans [Solved, Bin Jin]
+
+基于连通性的状态压缩动态规划。
+
+## G. Presentation [Solved, Bin Jin]
+
+枚举最后一次用的clipboard的子树，从根开始不断覆盖删除，看是否可行。可行则解决子问题。
+
+需要加上大小为倍数，以及去除子树同构的优化。
+
+## H. Repairing
+
+## I. Sun and Moon
+
+## J. Usoperanto
