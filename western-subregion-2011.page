@@ -1,13 +1,28 @@
-
 # NEERC Western Quarterfinal 2011
 
 ## A. The Baguette Master [Solved, Jingbo Shang]
+
+直接暴力算出坐标，平移线段之后算交点
+
 ## B. Pouring Water
 ## C. Old Chess Sets [Solved, Xiaoxu Guo]
 ## D. Checkmate with Bishop and King [Solved, Xiaoxu Guo]
 ## E. Dance Party [Solved, Bin Jin]
+
+F大小与答案无关，答案是
+
+$$1-\prod_{i=0}^{m-1} \frac{2c-m-i}{2c-1-2i}$$
+
 ## F. Determinant [Solved, Bin Jin]
+
+算出伴随矩阵，方法是求逆之后乘上行列式再求transpose。之后可以直接判断
+
 ## G. Midsummer Fires 
 ## H. Kids Play [Solved, Bin Jin]
+
+找出环之后直接计算
+
 ## I. Odd Factor [Solved, Xiaoxu Guo]
 ## J. One-Armed Bandit [Solved, Bin Jin]
+
+用普通的数位DP，方案数超过$2^60$之后就不继续
