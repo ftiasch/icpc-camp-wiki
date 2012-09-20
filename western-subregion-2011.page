@@ -6,7 +6,13 @@
 
 ## B. Pouring Water
 ## C. Old Chess Sets [Solved, Xiaoxu Guo]
+
+模拟
+
 ## D. Checkmate with Bishop and King [Solved, Xiaoxu Guo]
+
+模拟 
+
 ## E. Dance Party [Solved, Bin Jin]
 
 F大小与答案无关，答案是
@@ -23,6 +29,9 @@ $$1-\prod_{i=0}^{m-1} \frac{2c-m-i}{2c-1-2i}$$
 找出环之后直接计算
 
 ## I. Odd Factor [Solved, Xiaoxu Guo]
+
+树都是有解的，只需按照深度优先搜索序构造
+
 ## J. One-Armed Bandit [Solved, Bin Jin]
 
 用普通的数位DP，方案数超过$2^60$之后就不继续
