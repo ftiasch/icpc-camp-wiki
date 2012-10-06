@@ -1,0 +1,41 @@
+# ACM/ICPC Harbin Regional Contest 2010
+
+## A. Alice and Bob's Trip [Solved, Xiaoxu Guo]
+
+树型动态规划
+
+## B. Assignments [Solved, Bin Jin]
+
+贪心，逆序匹配
+
+## C. 3D Convex Hull [Solved, Xiaoxu Guo]
+
+三维凸包
+
+## D. Power Stations [Solved, Jingbo Shang]
+
+精确覆盖
+
+## E. Permutation Counting [Solved, Bin Jin]
+
+容斥。
+
+## F. Seaside Submit [Solved, Bin Jin]
+
+Floyd
+
+## G. THE MATRIX PROBLEM [Solved, Xiaoxu Guo]
+
+取对数，差分约束系统
+
+## H. Transportation [Solved, Xiaoxu Guo]
+
+拆边费用流
+
+## I. Volume [Solved, Bin Jin]
+
+积分
+
+## J. Cross the Wall [Solved, Xiaoxu Guo]
+
+四边形不等式
