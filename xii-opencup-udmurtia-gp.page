@@ -1,13 +1,21 @@
-
 # XII Open Cup - Udmurt Grand Prix
 
 ## A. Guess String [Solved, Xiaoxu Guo]
+
+先用36次问出每个字母的出现次数。再用二分法，用大约30次，得到具体序列。
+
 ## B. Mine Field
 ## C. Resistance
 ## D. Robot [Solved, Bin Jin]
+
+尽量走小飞，堵住robot，使他走的步长不能超过2。
+
 ## E. Elevators
 ## F. Maze
 ## G. Reflections
 ## H. Shooting
 ## I. Conveyor
 ## J. Test [Solved, Xiaoxu Guo]
+
+每个gen出一个符合所有当前已知条件的串，问一下，大概10几次就能出解。
+
