@@ -12,6 +12,8 @@
 
 * 2012-09-05, Problem J - Xiaoming's Hope, 凡是复杂度小的题目注意优化读入。
 
+* 2012-10-15, Problem K - 测试样例一定要和题目给的输出严格对照，不能以为过了就不看了。
+
 ## Xiaoxu Guo
 
 * 2012-08-03, Problem I - Irene’s Password, 注意变量类型（尤其是char）。
