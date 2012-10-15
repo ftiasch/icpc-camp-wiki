@@ -1,12 +1,45 @@
 # Andrew Stankevich Contest 26
 
 ## A. War Academy [Solved, Xiaoxu Guo]
+
+可以列出式子，除了max{}外，全是线性的。所以只需要检查所有零点的答案就行。
+
 ## B. Discount [Solved, Jingbo Shang]
+
+一定是先打折，再扣钱。用背包来做。
+
 ## C. Dowry [Solved, Jingbo Shang]
+
+折半，然后二分或者单调队列。
+
 ## D. Minimal Cut Matrix [Solved, Xiaoxu Guo]
+
+一棵树就可以满足。每次按照最小权值的边断开，分成若干连通块。
+
 ## E. Shortest Path [Solved, Jingbo Shang]
+
+在相交的圆周上分段三分。
+
 ## F. Infinite Recursion [Solved, Bin Jin]
+
+parse程序（需要读清楚题），然后广搜。以后要果断用java写。
+
 ## G. Yet Another Rooks Problem [Solved, Bin Jin]
+
+动态规划。
+
 ## H. School of Magic [Solved, Bin Jin]
+
+迭代，直接设期望，用min,max转移。
+
 ## I. Shepherd's Problem [Solved, Jingbo Shang]
+
+最优解一定与某个点距离是D。然后有一些有无解的事件点：半径为D和d的圆、直线和该圆的交点。
+然后同一段内肯定一起有解或者一起无解，所以只要分段三分就行了。
+
 ## J. Suffix Automaton [Solved, Xiaoxu Guo]
+
+统计每个点能到的后缀的长度，从这些分叉信息中可以推出一些位置必须相等的条件。
+接下来就是并查集染色就行了。
+
+
