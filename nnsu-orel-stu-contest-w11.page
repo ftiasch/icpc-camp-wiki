@@ -1,13 +1,30 @@
 # Nizhny Novgorod SU + Orel STU Contest (Winter 2012)
 
 ## A. Armoring [Solved, Jingbo Shang]
+
+能确定的部分贪心确定，剩下都是$K \times K$的，所以就是$2^n$，$n$是$K \times K$的个数。
+
 ## B. Bomb [Solved, Xiaoxu Guo]
+
+三维凸包定向，然后算体积。
+
 ## C. Assemble Cubic
 ## D. Flow [Solved, Jingbo Shang]
+
+枚举割，暴力，用双向链表。
+
 ## E. Hexadecimal's Lair [Solved, Xiaoxu Guo]
+
+树状数组。
+
 ## F. Death Levers
 ## G. Medal of Honor
 ## H. Hexadecimal's Prisoner
 ## I. Hexadecimal's Puzzle
 ## J. Hexadecimal's Theorem [Solved, Bin Jin]
+
+奇偶分类，构造。
+
 ## K. Workability [Solved, Jingbo Shang]
+
+动态规划，用四边形不等式+单调队列优化
