@@ -1,13 +1,39 @@
-
 # Andrew Stankevich Contest 25 (Summer 2007)
 
 ## A. Agrarian Reform [Solved, Xiaoxu Guo]
+
+KM+调整，然后拓扑排序构造方案。
+
 ## B. Astronomy Problem
 ## C. AVL Trees [Solved, Bin Jin]
+
+dp，用NTT做转移
+
 ## D. Block Edit Distance [Solved, Bin Jin]
+
+dp。
+
 ## E. Cryptography [Solved, Xiaoxu Guo]
+
+枚举。
+
 ## F. Independent Set [Solved, Xiaoxu Guo]
+
+dp。
+
 ## G. 3D Knight [Solved, Bin Jin]
+
+搜索，加reachable剪枝，搜不出来的打表。
+
 ## H. Perfect Lodging [Solved, Jingbo Shang]
+
+判断一般图是否有完美匹配。一个方法是用带花树。另一个方法是根据连边情况构造一个随机矩阵，判断是否满秩。
+构造方法是如果$i,j$之间没有边，那么$M_{i,j}=M{j,i}=0$；否则$M_{i,j}=rand(),M_{j,i}=-M_{i,j}$
+
 ## I. Hungry Queen 2 [Solved, Xiaoxu Guo]
+
+map套set。
+
 ## J. Trip Expenses [Solved, Bin Jin]
+
+Floyd。
