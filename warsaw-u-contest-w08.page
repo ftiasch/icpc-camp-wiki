@@ -2,12 +2,26 @@
 
 ## A. Athletic competition [Solved, Xiaoxu Guo]
 ## B. Cylinders [Solved, Bin Jin]
-## C. General Bytor
+
+BFS，两个容器至少有一个在刻度上，状态$25 \times 100000$
+
+## C. General Bytor [Solved, Xiaoxu Guo]
 ## D. Guessing game [Solved, Xiaoxu Guo]
 ## E. Medical examination [Solved, Xiaoxu Guo]
 ## F. NumberEater [Solved, Xiaoxu Guo]
 ## G. Nuts
 ## H. Ritual [Solved, Bin Jin]
+
+$666=2 \times 333$，2比较好判断是倍数，对于$333$，实际上只和位置$\mod 3$的值有关$1000 \mod 333 = 1$。
+
+数位DP，状态有左右指针在原串的位置，当前$\mod 333$的值，还有左右位置在答案中$\mod 3$的值。
+
 ## I. Stars [Solved, Xiaoxu Guo]
 ## J. Sum of a subsequence [Solved, Bin Jin]
+
+有定理证明19个数一定能找10个数和是10的倍数。用这个做bootstrap，如果假设所有数的和是$n$的倍数，每次对于每20个数操作，可以得到是10个数的和是10的倍数，而且
+最后剩下的10个数和也是10的倍数，这样就转化成了$\frac{n}{10}$的子问题。可以一开始改下第一个数使得所有数的和为$n$的倍数。
+
 ## K. Table game [Solved, Bin Jin]
+
+偶数一定无解，奇数每次点最大的数就可以了
