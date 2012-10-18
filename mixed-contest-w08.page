@@ -18,11 +18,25 @@ $$ \sum_{i=0}^{n-1} \lfloor\frac{a+bi}{m}\rfloor $$
 用组合数可以计算$n$个数字，和等于（或者小于等于）$S$的序列数目，一开始二分总的和，然后逐位二分这一位的数字
 
 ## E. Longest Increasing Subsequences [Solved, Xiaoxu Guo]
+
+用平衡树计算。
+
 ## F. Polyomino Packing [Solved, Xiaoxu Guo]
+
+先压位求出可行的区域，之后再BFS求出可达的点。
+
 ## G. Non-Attacking Queens [Solved, Bin Jin]
 
 分奇偶讨论，是多项式，暴力找出前若干项之后插值
 
 ## H. Vugluscr and Mouse [Solved, Xiaoxu Guo]
+
+考虑猫和老鼠同时到达的点，轨迹是阿波罗尼斯圆。由此可以在边上三分，也可以直接解出交点。
+
 ## I. Fleet Vulnerability [Solved, Xiaoxu Guo]
+
+hash暴力。
+
 ## J. Exclusive OR [Solved, Xiaoxu Guo]
+
+高斯消元求最优解，再高斯消元求方案。
