@@ -2,11 +2,27 @@
 
 ## A. Area
 ## B. Fill the Triangle [Solved, Bin Jin]
+
+有两种三角形，用一种三角形可以把除了一条边上的点全部转换好，用剩下的倒三角形可以把连续三个反一下，所以只有四分之一是可达的。
+
 ## C. Gary [Solved, Bin Jin]
+
+首先要求$a$与$b$互质，最大的不可达的数字是$ab-a-b$，不可达的数字书目需要用类似
+
+$$ \sum_{i=0}^{n-1} \lfloor\frac{a+bi}{m}\rfloor $$
+
+的计算，具体见我冬令营的论文《欧几里德算法的运用》。
+
 ## D. K-th sequence [Solved, Bin Jin]
+
+用组合数可以计算$n$个数字，和等于（或者小于等于）$S$的序列数目，一开始二分总的和，然后逐位二分这一位的数字
+
 ## E. Longest Increasing Subsequences [Solved, Xiaoxu Guo]
 ## F. Polyomino Packing [Solved, Xiaoxu Guo]
 ## G. Non-Attacking Queens [Solved, Bin Jin]
+
+分奇偶讨论，是多项式，暴力找出前若干项之后插值
+
 ## H. Vugluscr and Mouse [Solved, Xiaoxu Guo]
 ## I. Fleet Vulnerability [Solved, Xiaoxu Guo]
 ## J. Exclusive OR [Solved, Xiaoxu Guo]
