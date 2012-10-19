@@ -1,14 +1,29 @@
 # Warsaw U Contest (Winter 2008)
 
 ## A. Athletic competition [Solved, Xiaoxu Guo]
+
+树形动态规划，设$f(i)$表示子树$i$中有可以匹配的点，$g(i)$表示没有匹配的点。
+
 ## B. Cylinders [Solved, Bin Jin]
 
 BFS，两个容器至少有一个在刻度上，状态$25 \times 100000$
 
 ## C. General Bytor [Solved, Xiaoxu Guo]
+
+双向广搜，输出方案的时候要注意。
+
 ## D. Guessing game [Solved, Xiaoxu Guo]
+
+并查集维护前缀和的奇偶关系。
+
 ## E. Medical examination [Solved, Xiaoxu Guo]
+
+模拟。
+
 ## F. NumberEater [Solved, Xiaoxu Guo]
+
+Hash。
+
 ## G. Nuts
 ## H. Ritual [Solved, Bin Jin]
 
@@ -17,6 +32,9 @@ $666=2 \times 333$，2比较好判断是倍数，对于$333$，实际上只和�
 数位DP，状态有左右指针在原串的位置，当前$\mod 333$的值，还有左右位置在答案中$\mod 3$的值。
 
 ## I. Stars [Solved, Xiaoxu Guo]
+
+按照极角排序，每次二分到对应的极角区间，用三角形判断。
+
 ## J. Sum of a subsequence [Solved, Bin Jin]
 
 有定理证明19个数一定能找10个数和是10的倍数。用这个做bootstrap，如果假设所有数的和是$n$的倍数，每次对于每20个数操作，可以得到是10个数的和是10的倍数，而且
