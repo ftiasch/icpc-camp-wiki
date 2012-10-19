@@ -7,19 +7,15 @@
 
 ## C. Gary [Solved, Bin Jin]
 
-首先要求$a$与$b$互质，最大的不可达的数字是$ab-a-b$，不可达的数字书目需要用类似
-
-$$ \sum_{i=0}^{n-1} \lfloor\frac{a+bi}{m}\rfloor $$
-
-的计算，具体见我冬令营的论文《欧几里德算法的运用》。
+首先要求$a$与$b$互质，最大的不可达的数字是$ab-a-b$，不可达的数，相当于求网格中三角形点的个数，可以用pick公式。
 
 ## D. K-th sequence [Solved, Bin Jin]
 
-用组合数可以计算$n$个数字，和等于（或者小于等于）$S$的序列数目，一开始二分总的和，然后逐位二分这一位的数字
+用组合数可以计算$n$个数字，和等于（或者小于等于）$S$的序列数目，一开始二分总的和，然后逐位二分每一位的数字
 
 ## E. Longest Increasing Subsequences [Solved, Xiaoxu Guo]
 
-用平衡树计算。
+长度为$k$的LIS的最后一个数构成的序列是递减的，在上面维护部分和就可以了
 
 ## F. Polyomino Packing [Solved, Xiaoxu Guo]
 
