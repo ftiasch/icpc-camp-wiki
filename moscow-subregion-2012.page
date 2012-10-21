@@ -5,9 +5,24 @@
 ## C. Cinderella [Solved, Xiaoxu Guo]
 ## D. Darkwing Duck
 ## E. Epic fail for Genie [Solved, Bin Jin]
+
+很复杂的讨论，尽量取大于1的，然后枚举用多少个负数。需要注意一些特殊情况。
+
 ## F. Flood [Solved, Jingbo Shang]
+
+简单的模拟
+
 ## G. Gadget Hackwrench [Solved, Xiaoxu Guo]
+
+预处理之后LCA
+
 ## H. Hunt for Treasure! [Solved, Bin Jin]
+
+可以用stirling数算不考虑错排序列时的方法，然后再用一次容斥算条件概率和条件期望。
+
 ## I. Innovative Business [Solved, Jingbo Shang]
 ## J. Just Another Disney Problem [Solved, Bin Jin]
+
+构造，用分治的想法，类似归并排序
+
 ## K. Key to Magica's diary [Solved, Xiaoxu Guo]
