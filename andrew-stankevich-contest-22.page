@@ -2,8 +2,17 @@
 
 ## A. Maximal Flows Dimension [Solved, Xiaoxu Guo]
 ## B. Geometry Problem [Solved, Jingbo Shang]
+
+R足够大的时候应该一定有解，除了一些特殊情况可能R会比较小。所以初始R=1，找到解就输出，否则翻倍。
+做4个点为圆心的半径为R-eps,R+eps的圆，共8个。
+两两求出交点，检验交点到线段端点的距离，是否可以找到一个合适的新半径，找到就是解。
+
 ## C. Important Roads [Solved, Xiaoxu Guo]
 ## D. Crazy Nim [Solved, Jingbo Shang]
+
+找规律。我找的规律太麻烦了，被大狗哥甩出一条街：(a+1)^(b+1)^(c+1)。
+我的规律要求a<b<c，不对称，和a、b、c的二进制有关。复杂度是$\log a$的
+
 ## E. Numbers [Solved, Bin Jin]
 
 枚举位数，找大于等于$10^p$的最小的$k$的倍数，最后直接比较
