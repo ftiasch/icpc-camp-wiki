@@ -5,8 +5,25 @@
 ## C. Important Roads [Solved, Xiaoxu Guo]
 ## D. Crazy Nim [Solved, Jingbo Shang]
 ## E. Numbers [Solved, Bin Jin]
+
+枚举位数，找大于等于$10^p$的最小的$k$的倍数，最后直接比较
+
 ## F. Spam Filter [Solved, Bin Jin]
+
+直接模拟即可
+
 ## G. Fun with Squares [Solved, Bin Jin]
+
+现对任意$A-B$的形状归类，可以$O(n^2)$讨论，也可以$O(n^3)$用hashtable暴力
+
 ## H. High Speed Trains [Solved, Bin Jin]
+
+容斥原理，要高精度
+
 ## I. TV Show [Solved, Bin Jin]
+
+动态规划，记录当前的钱数目在状态中
+
 ## J. Vaild Prefixes [Solved, Bin Jin]
+
+直接暴力，不断迭代找新的可生成的串
