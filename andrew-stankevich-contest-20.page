@@ -24,4 +24,7 @@
 平衡树
 
 ## I. Starbugs Coffee [Solved, Jingbo Shang]
+
+二分答案，之后求二分图最小边覆盖。
+
 ## J. Unreachable Code
