@@ -1,7 +1,13 @@
 # Andrew Stankevich Contest 20 (Summer 2006)
 
 ## A. String Decomposition [Solved, Xiaoxu Guo]
+
+枚举左端点，KMP求出每个线段的最小表示，之后动态规划。
+
 ## B. Divide by Two [Solved, Xiaoxu Guo]
+
+按照题意模拟。
+
 ## C. Do It Yourself
 ## D. False RSA [Solved, Bin Jin]
 
