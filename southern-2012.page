@@ -20,7 +20,7 @@
 一个简单的$O(n^2)$的DP就可以找出，标记了$p$个大号的排列的个数$A_p$，然后$A_q (q>p)$在
 $A_p$里重复计算了的次数是$\binom{q}{p}$，减去既可以了。
 
-## D. Cut the rope, another rope and so on!
+## D. Cut the rope, another rope and so on! [Solved, Jingbo Shang]
 ## E. Ternary Password [Solved, Xiaoxu Guo]
 ## F. Divide The Kingdom
 ## G. Dragons and Princesses [Solved, Xiaoxu Guo]
