@@ -2,11 +2,11 @@
 
 ## A. Almost Palindromic Numbers [Solved, Bin Jin]
 
-把不超过$n$的数字写成$xxxx????$的形式，然后配对，枚举哪一位不一样，直接乘法原理。
+把不超过$n$的数字写成 "xxxx????" 的形式，然后配对，枚举哪一位不一样，直接乘法原理。
 
 ## B. Cartesian Tree [Solved, Bin Jin]
 
-数的拓扑排序的数目，合并的时候用组合数就可以了
+树的拓扑排序的数目，合并的时候用组合数就可以了
 
 ## C. Casino [Solved, Xiaoxu Guo]
 
