@@ -1,9 +1,12 @@
-# ACM/ICPC 2012 Jinhua Regional Contest (Preliminary)
+# ACM/ICPC 2012 Hangzhou Regional Contest (Preliminary)
 
 ## A. Boomerang
 ## B. Arrest [Solved, Jingbo Shang] 
 ## C. Sky Soldiers [Solved, Jingbo Shang] 
 ## D. Logical Expression [Solved, Jingbo Shang] 
+
+搜索。拆出所有的可能的term，然后做set-cover的搜索。注意a&~a的情况。
+
 ## E. Finding crosses [Solved, Jingbo Shang] 
 ## F. Assassin's Creed [Solved, Jingbo Shang] 
 ## G. Good Article Good sentence [Solved, Xiaoxu Guo] 

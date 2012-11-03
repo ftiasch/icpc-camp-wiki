@@ -1,0 +1,31 @@
+# Andrew Stankevich Contest 19
+
+## A. Almost Palindromic Numbers [Solved, Bin Jin]
+
+把不超过$n$的数字写成 "xxxx????" 的形式，然后配对，枚举哪一位不一样，直接乘法原理。
+
+## B. Cartesian Tree [Solved, Bin Jin]
+
+树的拓扑排序的数目，合并的时候用组合数就可以了
+
+## C. Casino [Solved, Xiaoxu Guo]
+
+## D. DNA Analysis [Solved, Xiaoxu Guo]
+
+## E. Formula 1 [Solved, Xiaoxu Guo]
+
+## F. Surface Genus [Solved, Xiaoxu Guo]
+
+## G. Matrix Multiplication [Solved, Bin Jin]
+
+随机算法，一起乘一个随机列向量即可，平方的复杂度。
+
+## H. Colorful Pebbles
+
+## I. Princess Dilemma [Solved, Bin Jin]
+
+一定是前$x$个人全忽略，然后选择第一个比前$x$个人都大的数，枚举$x$，复杂度$O(n^2)$
+
+## J. Crossing the River [Solved, Bin Jin]
+
+首先按照$n$的奇偶分别枚举两条出入的留，然后在剩下的4个偶区间上枚举括号序列，用并查集检查是否连通即可。最慢的点跑了5秒左右，打了表

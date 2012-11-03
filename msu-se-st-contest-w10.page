@@ -1,0 +1,35 @@
+# MSU Unpredicatable & SE & ST Contest (Winter 2010)
+
+## A. Alpinism [Solved, Bin Jin]
+
+可以把绳子折半，然后挂在某处钉子或者绳子处，下到某一海拔后回收这个绳子。
+而且每个钉子都利用到肯定最优。因此倒推即可，注意输出小数的位数。
+
+## B. Cards [Solved, Xiaoxu Guo]
+
+贪心，维护每一堆可到的一个正的前缀和处，每次找一个最大的，来一发。
+
+## C. System [Solved, Xiaoxu Guo]
+
+牛顿恒等式，将$n$个值转化为$n$个高次韦达定理的值，转化为$n$次方程求根，由于是mod $p$的，枚举根即可。试除法和求导法处理重根都对。
+
+## D. Invisible Points [Solved, Xiaoxu Guo]
+
+手动构造左下角，只有三种情况$1\times 15$,$2\times 7$,$3\times 5$。
+
+## E. Balance
+## F. Polynomial [Solved, Bin Jin]
+
+分治，用FFT合并。
+
+## G. Greetings, Belarus
+## H. Simple Problem
+## I. Prime [Solved, Jingbo Shang]
+
+首先答案是个质数。因为查询区间内的数两两互质，每个数cover了一些质数，线段树套有序表或者可持久化线段树即可。
+但是插入就有$n\log n$次，所以线段树套有序表即可。
+
+## J. Squares
+## K. Language [Solved, Xiaoxu Guo]
+
+直接模拟（单词都是English倒过来 :) ）。

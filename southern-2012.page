@@ -1,0 +1,40 @@
+# ACM/ICPC NEERC Southern Subregional Contest 2012
+
+## A. Gena vs Petya [Solved, Bin Jin]
+
+从低位到高位确定$x$，假设确定了最低的$k$位，则$x \in [0, 2^k)$，把$a$按照
+最低的$k$位排序，则一定是前面连续的一段是要从前面借位，所以可以直接枚举下一位是
+0还是1，算奇数和偶数的个数，状态有$64n$。
+
+
+## B. Cafe [Solved, Bin Jin]
+
+首先任意大于等于2的group都可以分成2和3两种，所以一定是先把人分成2和3的group，然后
+排桌子。考虑形式为$(x,y)$的2-tuple，表示$x$个2和$y$个三，大小为$n(n > 1)$的都可以表示成
+若干个$(x,y)$的形式，形式化为满足$x \geq A, y \geq B, 2x+3y = C$的$(x,y)$的整数解，
+所有的group其实可以求出对应的$A,B,C$之后相加，如果桌子全部要填满，如果有解的话很好做，否则，
+桌子最后空一个（只要对应的$x \leq x', y \leq y'$），枚举这个值，然后就可以二分了。
+
+## C. Chess Championship [Solved, Bin Jin]
+
+一个简单的$O(n^2)$的DP就可以找出，标记了$p$个大号的排列的个数$A_p$，然后$A_q (q>p)$在
+$A_p$里重复计算了的次数是$\binom{q}{p}$，减去既可以了。
+
+## D. Cut the rope, another rope and so on! [Solved, Jingbo Shang]
+## E. Ternary Password [Solved, Xiaoxu Guo]
+## F. Divide The Kingdom
+## G. Dragons and Princesses [Solved, Xiaoxu Guo]
+## H. Dumbbells [Solved, Bin Jin]
+
+按$mass$归类，然后按大小排序可以直接回答第一问，第二问简单的贪心就可以了
+
+## I. Tree Queries Online [Solved, Xiaoxu Guo]
+## J. Preparing Problem [Solved, Bin Jin]
+
+二分比较方便
+
+## K. Database optimization [Solved, Bin Jin]
+
+对于存在的数据，枚举子集放进hash表里，直接查询回答就可以了
+
+## L. Sultan's Pearls [Solved, Xiaoxu Guo]

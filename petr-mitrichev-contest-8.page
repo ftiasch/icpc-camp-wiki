@@ -1,0 +1,36 @@
+# Petr Mitrichev Contest 8 (Winter 2011)
+
+## A. Complexity [Solved, Xiaoxu Guo]
+
+可能的item很少，所以直接背包
+
+## B. Divisibility Tree [Solved, Xiaoxu Guo]
+
+每个节点的值肯定是对应子树叶子的values的gcd的约数，所以可能的值不多。
+为了有解，根不妨设为1，父子之间只差一个质数，所以直接树型dp即可。
+
+## C. Progressing Fraction [Solved, Bin Jin]
+
+q是10的幂次的时候，特判。否则，因为$\log q$是无理数，所以均匀分布，为$\log (n+1)-\log n$。
+
+## D. 4-Character Percentage [Solved, Bin Jin]
+
+超过1%的子序列，sample1000次，不出现的概率极小。100个同时在1000次sampling中出现概率也极高，所以直接sample后用dp来check即可。
+
+## E. Random Strings [Solved, Bin Jin]
+
+直接算出该串对于两种生成方法的概率，注意精度问题，多用整数和$\log$。
+
+## F. Rotor Traversal
+
+## G. Possible Shifts [Solved, Jingbo Shang]
+
+枚举可能不正确的匹配位置($n^2$个)，用并查集判断是否有矛盾。有一个trick是匹配上之后会有一些额外的相等关系，容易漏下。
+
+## H. Small Graph [Solved, Xiaoxu Guo]
+
+类似归并排序，递归构造。需要$n \log n$个节点，$3n \log n$条边。
+
+## I. High Speed [Solved, Bin Jin]
+
+二分答案，检验拐点在圆内还是圆外。
