@@ -20,6 +20,8 @@
 
 * 2012-07-24, Problem K - Segments, 读input和output。
 
+* 2012-11-03, Problem L - Log Analysis, treap在rotate()里面也要pushDown()
+
 ## Jingbo Shang
 
 * 2012-07-20， Problem A - Graph Theory, 证明结论的时候要从题目定义出发，不能自己yy。
