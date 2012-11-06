@@ -1,14 +1,22 @@
 # ACMICPC NEERC Northern Subregional Contest 2012
 
 ## A. Aztec Pyramid [Solved, Xiaoxu Guo]
+
+枚举。
+
 ## B. Battleship [Solved, Jingbo Shang]
 ## C. Chemistry
 ## D. Deepest Station [Solved, Jingbo Shang]
 ## E. Electricity [Solved, Jingbo Shang]
 ## F. Final Standings [Solved, Jingbo Shang]
 ## G. Grid [Solved, Xiaoxu Guo]
+
+因为前3个数里面必有两个数属于同一个序列，枚举之后处理。有很多corner case。
+
 ## H. Hospital [Solved, Jingbo Shang]
 ## I. Intelligent Design [Solved, Bin Jin]
 ## J. Juggle With Criteria [Solved, Bin Jin]
 ## K. Kingdom Subdivision
 ## L. Log Analysis [Solved, Xiaoxu Guo]
+
+平衡树维护区间。
