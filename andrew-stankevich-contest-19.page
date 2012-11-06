@@ -10,11 +10,19 @@
 
 ## C. Casino [Solved, Xiaoxu Guo]
 
+模拟
+
 ## D. DNA Analysis [Solved, Xiaoxu Guo]
+
+双向搜索。
 
 ## E. Formula 1 [Solved, Xiaoxu Guo]
 
+枚举哪些点在边界取值，之后求偏导高斯消元。
+
 ## F. Surface Genus [Solved, Xiaoxu Guo]
+
+平面图的欧拉定理。
 
 ## G. Matrix Multiplication [Solved, Bin Jin]
 
