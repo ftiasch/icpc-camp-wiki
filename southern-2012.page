@@ -22,13 +22,25 @@ $A_p$里重复计算了的次数是$\binom{q}{p}$，减去既可以了。
 
 ## D. Cut the rope, another rope and so on! [Solved, Jingbo Shang]
 ## E. Ternary Password [Solved, Xiaoxu Guo]
+
+动态规划，设$f(x, y, z)$表示有$x$个a, $y$个b, $z$个c的最小改变次数。
+
 ## F. Divide The Kingdom
+
+想法是先枚举国王和王后的分裂点，对于国王（王后）的联通块，枚举中点（或者中边）之后贪心，复杂度是$O(N^3)$。
+
 ## G. Dragons and Princesses [Solved, Xiaoxu Guo]
+
+贪心，每次超过限制则丢弃最劣的，自然要堆维护。
+
 ## H. Dumbbells [Solved, Bin Jin]
 
 按$mass$归类，然后按大小排序可以直接回答第一问，第二问简单的贪心就可以了
 
 ## I. Tree Queries Online [Solved, Xiaoxu Guo]
+
+实现了Eulerian-tour Tree，但是只需要启发式分裂即可，维护每条边属于的联通块标号，每次把小的部分改掉。寻找小的部分可以交替扩展两边来保证复杂度。
+
 ## J. Preparing Problem [Solved, Bin Jin]
 
 二分比较方便
@@ -38,3 +50,5 @@ $A_p$里重复计算了的次数是$\binom{q}{p}$，减去既可以了。
 对于存在的数据，枚举子集放进hash表里，直接查询回答就可以了
 
 ## L. Sultan's Pearls [Solved, Xiaoxu Guo]
+
+枚举最后头的位置，然后二分可能的尾位置。注意一旦不合法则需要跳出循环。
