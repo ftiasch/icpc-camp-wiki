@@ -1,12 +1,24 @@
 # ACM/ICPC Dhaka Regional Contest 2011
 
 ## A. Binary Matrix [Solved, Xiaoxu Guo]
+
+行列是独立的，对于一维的情况，枚举断点变成线性结构贪心。复杂度是$O(N^2)$
+
 ## B. Candles [Solved, Bin Jin]
 ## C. Cards [Solved, Xiaoxu Guo]
+
+概率递推，注意概率的算法
+
 ## D. Game of Connect
 ## E. Guards [Solved, Xiaoxu Guo]
+
+递推，把公共项提出来，剩下的可以部分和，复杂度是$O(NK)$
+
 ## F. Packing for Holiday [Solved, Xiaoxu Guo]
+
+模拟
+
 ## G. Pair of Touching Circles [Solved, Bin Jin]
-## H. Treasure Hunt [Solved, Xiaoxu Guo]
+## H. Treasure Hunt [Solved, Jingbo Shang]
 ## I. Truchet Tiling [Solved, Bin Jin]
 ## J. As Long as I Learn, I Live [Solved, Bin Jin]
