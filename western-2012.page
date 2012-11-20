@@ -2,13 +2,31 @@
 
 ## A. Article
 ## B. Airlines - 2 [Solved, Xiaoxu Guo]
+
+设$f(n)$表示$K_n$的最少分解数，则$$f(n) = \min\{\max\{f(x), f(n - x)\}\}$$，显然最小值在$x = \lceil n / 2 \rceil$处，同理得到构造。
+
 ## C. Blots on Paper [Solved, Xiaoxu Guo]
+
+floodfill
+
 ## D. Compression [Solved, Xiaoxu Guo]
+
+树形动态规划，注意空间问题
+
 ## E. Teach Yourself Pottery [Solved, Bin Jin]
 ## F. The Young Networker [Solved, Bin Jin]
 ## G. Pattern Matching [Solved, Xiaoxu Guo]
+
+先按照星号切开，假设最后有星号，就是枚举起点然后贪心匹配，为此需要用KMP求出下一个匹配位置，注意一些特殊情况。复杂度是$O(NM)$
+
 ## H. Roman Cities [Solved, Xiaoxu Guo]
+
+模拟
+
 ## I. Sequence Sum [Solved, Bin Jin]
 ## J. Order Splitter [Solved, Jingbo Shang]
 ## K. The Merry Student Life During the Term... [Solved, Bin Jin]
 ## L. Sum [Solved, Xiaoxu Guo]
+
+对于$n \leq 100$的情况，可以直接搜索。否则，添一个$(1 / 2)$可以转化为$(n - 2) / 2$，或者添$1 / 6 + 1 / 3$变成$(n - 9) / 2$的情况，递归构造。
+
