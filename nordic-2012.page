@@ -23,10 +23,18 @@
 假设$n$条直线平行，则有$(n + 1)$个无限区域，否则有$2 n$个无限区域。
 
 # H. Horror List [Solved, Bin Jin]
+
+最短路
+
 # I. Infiltration [Solved, Jingbo Shang]
 # J. Juice [Solved, Bin Jin]
+
+动态规划
+
 # K. Kindergarten [Solved, Xiaoxu Guo]
 
 2SAT
 
 # L. Luggage [Solved, Bin Jin]
+
+暴力是$n^2 \times \frac{10000}{L}$的计算量，由于$L \geq n$，所以最多$10000n$。
