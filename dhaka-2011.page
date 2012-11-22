@@ -5,6 +5,9 @@
 行列是独立的，对于一维的情况，枚举断点变成线性结构贪心。复杂度是$O(N^2)$
 
 ## B. Candles [Solved, Bin Jin]
+
+动态规划
+
 ## C. Cards [Solved, Xiaoxu Guo]
 
 概率递推，注意概率的算法
@@ -19,6 +22,14 @@
 模拟
 
 ## G. Pair of Touching Circles [Solved, Bin Jin]
+
+直接暴力找出所有范围内的勾股数
+
 ## H. Treasure Hunt [Solved, Jingbo Shang]
 ## I. Truchet Tiling [Solved, Bin Jin]
+
+按奇偶染色分成两种格点，然后可以建出边，之后BFS
+
 ## J. As Long as I Learn, I Live [Solved, Bin Jin]
+
+模拟即可
