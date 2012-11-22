@@ -15,7 +15,15 @@
 
 ## H. Hospital [Solved, Jingbo Shang]
 ## I. Intelligent Design [Solved, Bin Jin]
+
+首先是跑出真值表，然后可以用两倍的状态数判断出全真与全假，但是这样子状态就超过了5000，
+所以需要再进行一个小优化优化掉一半的状态数目。
+
 ## J. Juggle With Criteria [Solved, Bin Jin]
+
+暴力跑出小的，可以发现到7的时候所有的可能性都已经有解了，构造大的比较麻烦，需要在添加两个，
+同时要排除完全上升和完全下降两种。
+
 ## K. Kingdom Subdivision
 ## L. Log Analysis [Solved, Xiaoxu Guo]
 
