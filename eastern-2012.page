@@ -5,9 +5,23 @@
 ## C. Titan Ruins: Passing through Walls [Solved, Xiaoxu Guo]
 ## D. Titan Ruins: Old Generators Are Fine Too
 ## E. Titan Ruins: Serial Control [Solved, Bin Jin]
+
+判断整个行列式的绝对值是不是$1$即可，随机若干个大的素数看看行列式模素数的值
+
 ## F. Titan Ruins: Repeating Success and Failure [Solved, Bin Jin]
+
+当stack超过$10^6$时就不duplicate即可
+
 ## G. Titan Ruins: Stability is a Sign of Stagnation [Solved, Bin Jin]
+
+直接暴力，把找到的k-tuple塞到 `set<vector<int> >`里
+
 ## H. Titan Ruins: Better Late than Killed [Solved, Xiaoxu Guo]
 ## I. Titan Ruins: Inaction Leads to Decay [Solved, Xiaoxu Guo]
 ## J. Titan Ruins: Making Headway [Solved, Bin Jin]
+
+注意圆柱侧面不一定召开成长方形，可能是很细长的细带
+
 ## K. Titan Ruins: the Infinite Power of Magic [Solved, Bin Jin]
+
+用蛇形路线构造，注意奇数的时候最后一行的放法
