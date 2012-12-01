@@ -2,13 +2,27 @@
 
 ## A. Reading Brackets in English [Solved, Bin Jin]
 
+给定一个a list of A, B and C形式的串，问是否有二义性。
+
+因为token的个数不足500，所以用$O(n^3)$的动态规划求解，其中$n$是token的个数。
+
 ## B. Greedy, Greedy [Solved, Bin Jin]
+
+给定n种货币，问这个货币体系在贪心找零的算法下，是否是最优的。
+
+因为最大货币面值并不大，可以在2倍最大面值范围内用背包和贪心分别求解验证。
 
 ## C. First Experience [Solved, Xiaoxu Guo]
 
 模拟
 
 ## D. Poke Poker Pokest [Solved, Bin Jin]
+
+n个人玩德州扑克。1号玩家可以指定首家。先按顺序摸5n张牌，之后每个玩家按顺序决定换牌。
+
+牌堆是已知的，问1号玩家是否有必胜策略。
+
+枚举首家，然后dp验证。
 
 ## E. Philosopher’s Stone
 
@@ -18,6 +32,8 @@
 
 ## G. Exact Arithmetic [Solved, Bin Jin]
 
+模拟，按照根号下面的值分类，合并同类项。注意约分。
+
 ## H. Slippy Floors 
 
 ## I. Minimum Bounding Rectangle [Solved, Xiaoxu Guo]
@@ -25,3 +41,5 @@
 旋转卡壳, 一定贴着一边（证明？）
 
 ## J. Once Upon A Time [Solved, Bin Jin]
+
+扩展欧几里得，注意溢出longlong的问题
