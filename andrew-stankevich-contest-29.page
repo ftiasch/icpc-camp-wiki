@@ -5,8 +5,21 @@
 ## C. Late Again [Solved, Xiaoxu Guo]
 ## D. Night Watch
 ## E. Convex Permutominoes [Solved, Bin Jin]
+
+动态规划，第$i$行已经有$i+1$个列刻度，并且一定会新增一个刻度，枚举移动左右的哪一个。
+同时在状态中记录是否已经回缩即可。
+
 ## F. Substring Search [Solved, Jingbo Shang]
 ## G. Transportation Problem [Solved, Bin Jin]
+
+先集中到一个点，然后在运出去。注意在第一个阶段如果可以直接解决第二阶段的话就不用
+再运下去了。
+
 ## H. Truth is in the ... [Solved, Jingbo Shang]
 ## I. Video on Demand [Solved, Bin Jin]
+
+二分答案
+
 ## J. Wheels within Wheels [Solved, Bin Jin]
+
+不要自顶向下拆环，要自底向上合并环即可。
