@@ -9,4 +9,4 @@
 7.  substring是非常裸的SAM，但是xyz忘记了SAM，导致七爷写了复杂算法。（7k+：其实我感觉hash还挺好写的。SAM太容易错。）
 
 [scoreboard](http://hc3.seas.harvard.edu/hc3/bospre/2016/scoreboard.web)
-[code](/bosprecode.tar)
+[code](bosprecode.tar)
