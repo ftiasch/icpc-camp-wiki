@@ -1,0 +1,89 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5;
+int a[N], b[N], n, m, v[N];
+long long cnt[N][2];
+vector<int> G[N];
+int p1, p2, len;
+long long dfs(int x, int p = 0, int d = 0) {
+    ++ cnt[x][d & 1];
+    long long res = 0;
+    for (int u : G[x]) {
+        if (u == p) continue;
+        if (x == p1 && u == p2) continue;
+        if (x == p2 && u == p1) continue;
+        res += dfs(u, x, d + 1);
+        cnt[x][0] += cnt[u][0];
+        cnt[x][1] += cnt[u][1];
+        res += abs(cnt[u][0] - cnt[u][1]);
+    }
+    return res;
+}
+void dfs2(int x, int p = 0) {
+    v[x] = v[p] + 1;
+    for (int u : G[x]) {
+        if (u == p) continue;
+        if (v[u]) {
+            p1 = x;
+            p2 = u;
+            len = v[x] - v[u] + 1;
+        }
+        else dfs2(u, x);
+    }
+}
+long long calc(long long x) {
+    memset(cnt, 0, sizeof(cnt));
+    cnt[p1][0] += x;
+    cnt[p2][0] -= x;
+    return dfs(1) + abs(x);
+}
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < m; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        a[i] = u, b[i] = v;
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    if (m == n - 1) {
+        long long ans = dfs(1);
+        if (cnt[1][0] != cnt[1][1]) return 0 * puts("-1");
+        printf("%lld\n", ans);
+    }
+    else {
+        dfs2(1);
+        dfs(1);
+        if (len & 1) {
+            if (abs(cnt[1][0] - cnt[1][1]) & 1) return 0 * puts("-1");
+            long long del = (cnt[1][0] - cnt[1][1]) / 2;
+            memset(cnt, 0, sizeof(cnt));
+            cnt[p1][0] -= del;
+            cnt[p2][0] -= del;
+            long long ans = dfs(1) + abs(del);
+            printf("%lld\n", ans);
+        }
+        else {
+            if (cnt[1][0] != cnt[1][1]) return 0 * puts("-1");
+            long long l = - 1e9, r = 1e9, ans = 1e18;
+            while (l + 10 <= r) {
+                long long midl = (l + r) / 2;
+                long long midr = (midl + r) / 2;
+                long long res1 = calc(midl);
+                long long res2 = calc(midr);
+                ans = min(ans, res1);
+                ans = min(ans, res2);
+                if (res1 < res2) {
+                    r = midr - 1;
+                }
+                else {
+                    l = midl + 1;
+                }
+            }
+            for (int i = l; i <= r; ++ i) ans = min(ans, calc(i));
+            printf("%lld\n", ans);
+        }
+    }
+}
+```
