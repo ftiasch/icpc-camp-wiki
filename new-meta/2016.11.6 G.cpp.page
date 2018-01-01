@@ -1,0 +1,70 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int N = 2e5 + 7;
+
+int n, m, h[N];
+long long answer = 0;
+
+struct Node {
+    int num, h;
+    long long rem;
+    Node(int num, int h, long long rem = 0) : num(num), h(h), rem(rem) {
+    }
+    Node calc(int base) {
+        long long need = 1LL * num * (h - base), tmp;
+        answer += (tmp = (max(need - rem, 0LL) + m - 1) / m);
+        //printf("%d %d %d need = %lld tmp = %lld\n", num, h, base, need, tmp);
+        return Node(num, h, rem + tmp * m - need);
+    }
+    void operator +=(const Node& o) {
+        num += o.num;
+        rem += o.rem;
+    }
+};
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &h[i]);
+    }
+    h[++n] = h[0] = 0;
+    vector<Node> stack;
+    for (int i = 0; i <= n; i++) {
+        Node tmp = Node(1, h[i]);
+        if (i == 0 || i == n) tmp.num = 0;
+        bool over = false;
+        while (stack.size()) {
+            int s = stack.size();
+            //printf("%d\n", s);
+            if (stack.back().h == tmp.h) {
+                stack.back() += tmp;
+                over = true;
+                break;
+            } else if (s > 1 && stack[s - 2].h < stack[s - 1].h && stack[s - 1].h > h[i]) {
+                if (stack[s - 2].h > tmp.h) {
+                    stack[s - 2] += stack[s - 1].calc(stack[s - 2].h);
+                } else {
+                    tmp += stack[s - 1].calc(tmp.h);
+                }
+                stack.pop_back();
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (!over) {
+            stack.push_back(tmp);
+        }
+    }
+    cout << answer << endl;;
+    return 0;
+}
+```
