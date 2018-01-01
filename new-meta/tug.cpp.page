@@ -1,0 +1,90 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(30011), K(21);
+int adj[N * 2][2], match[N * 2], banned[N * 2], s[N * 2], go[N * 2];
+vector<int> bck[N * 2];
+bool f[N * K];
+int cnt[N * K];
+int main() {
+    int n, k;
+    scanf("%d%d", &n, &k);
+    for(int i(1); i <= 2 * n; i++) {
+        scanf("%d%d%d", &adj[i][0], &adj[i][1], &s[i]);
+        adj[i][0] = adj[i][0] * 2 - 1;
+        adj[i][1] *= 2;
+        bck[adj[i][0]].push_back(i);
+        bck[adj[i][1]].push_back(i);
+    }
+    int ans(0);
+    for(int i(1); i <= 2 * n; i++) {
+        int v(i);
+        while(!match[v] && banned[v] == (int)bck[v].size() - 1) {
+            int y;
+            for(int p(0); p < (int)bck[v].size(); p++) {
+                y = bck[v][p];
+                if(!go[y]) {
+                    break;
+                }
+            }
+            if(go[y]) {
+                printf("NO\n");
+                return 0;
+            }
+            ans += (1 - 2 * (v % 2)) * s[y];
+            go[y] = v;
+            match[v] = y;
+            v = adj[y][0] + adj[y][1] - v;
+            banned[v]++;
+        }
+    }
+    ans = abs(ans);
+    cnt[abs(ans)]++;
+    for(int i(1); i <= 2 * n; i++) 
+        if(!match[i] && banned[i] != (int)bck[i].size() - 2) {
+            printf("NO\n");
+            return 0;
+        }
+    for(int i(1); i <= 2 * n; i++) {
+        if(!go[i]) {
+            int tmp(0);
+            int v(i), y(adj[i][0]);
+            do {
+                //printf("%d %d\n", v, y);
+                tmp += (1 - 2 * (y % 2)) * s[v];
+                go[v] = y;
+                v = -1;
+                for(int p(0); p < (int)bck[y].size(); p++) {
+                    v = bck[y][p];
+                    if(!go[v]) 
+                        break;
+                    else
+                        v = -1;
+                }
+                if(v == -1)
+                    break;
+                y = adj[v][0] + adj[v][1] - y;
+            } while(v != i);
+            ans += abs(tmp);
+            cnt[abs(tmp)]++;
+        }
+    }
+    f[0] = 1;
+    for(int i(0); i <= N * K; i++)
+        if(cnt[i])
+            for(int j(N * K); j >= 0; j--)
+                if(f[j])
+                    for(int l(1); l <= cnt[i] && !f[j + l * i]; l++)
+                        f[j + l * i] = true;
+    for(int i(0); i <= N * K; i++) {
+        //if(f[i])
+        //  cout << abs(ans - 2 * i) << endl;
+        if(f[i] && abs(ans - 2 * i) <= k) {
+            printf("YES\n");
+            return 0;
+        }
+    }
+    printf("NO\n");
+    return 0;
+}
+```
