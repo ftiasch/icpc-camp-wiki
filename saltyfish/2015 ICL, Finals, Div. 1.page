@@ -1,0 +1,27 @@
+# A Survival Route
+
+# B Dispersed parentheses
+
+# C Chocolate triangles
+
+# D LWDB [zyh补]
+
+对每个点维护一个关于距离的单调栈记录每一段距离区间内的点的颜色，对于每次修改操作，不断向上更新，对于每次查询，不断向上查询最新一次在距离范围内的修改操作，直接暴力是O(h)单次修改O(hlogn)单次查询的，其中h是树高，最大可以到O(n)，考虑点分治，对分治得到的树结构进行前述操作，这样树高是O(logn)的
+
+# E Pea-City
+
+# F Beautiful sums [zyh补]
+
+可以证明恰好有n个因子的最小奇数即为所求，考虑dp[i][j]表示用前i个奇素因子能得到的具有j个因子的最小数的**log值**，转移枚举下一种素因子用多少个，记录前驱
+
+# G Nano alarm-clocks
+
+# H Lunch
+
+# I Accounting Numeral System
+
+# J Ceizenpok’s formula
+
+# K Dividing an orange
+
+# L The Pool for Lucky Ones
