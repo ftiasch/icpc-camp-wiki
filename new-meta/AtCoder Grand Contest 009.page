@@ -28,4 +28,4 @@ E. Eternal Average
 
 注意复杂度，我们的$n + m$是$k - 1$的倍数，那么可能的状态数是$O (\frac{n^2}{k-1})$，而我们枚举的复杂度是$O(k)$，所以最后复杂度不超过$O(n^2)$。
 
-[E.cpp](AtCoder%20Grand%20Contest%20009%20E.cpp)
+[E.cpp](AtCoder Grand Contest 009 E.cpp)
