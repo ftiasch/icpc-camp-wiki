@@ -1,0 +1,323 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define next NEXT
+
+typedef long double LD;
+
+const int MAXN = 200;
+const int MAXV = MAXN * MAXN;
+const int MAXE = MAXV * 6;
+const LD eps = 1e-10;
+
+int sign(LD x) {
+    return x < -eps ? -1 : x > eps;
+}
+
+struct Point {
+    LD x, y;
+
+    Point(int x, int y) : x(x), y(y) {}
+    Point() {}
+
+    void scanf() {
+        double xx, yy;
+        ::scanf("%lf %lf", &xx, &yy);
+        x = xx, y = yy;
+    }
+
+    Point &operator +=(const Point &o) {
+        x += o.x;
+        y += o.y;
+        return *this;
+    }
+
+    Point &operator -=(const Point &o) {
+        x -= o.x;
+        y -= o.y;
+        return *this;
+    }
+
+    Point &operator *=(LD k) {
+        x *= k;
+        y *= k;
+        return *this;
+    }
+
+    Point &operator /=(LD k) {
+        x /= k;
+        y /= k;
+        return *this;
+    }
+
+    LD norm2() const {
+        return x * x + y * y;
+    }
+
+    LD norm() const {
+        return sqrt(norm2());
+    }
+
+    LD arg() const {
+        return atan2(y, x);
+    }
+
+    bool on(const Point &, const Point &) const;
+    bool in(const vector<Point> &) const;
+};
+
+bool operator <(const Point &a, const Point &b) {
+    return sign(a.x - b.x) < 0 || (sign(a.x - b.x) == 0 && sign(a.y - b.y) < 0);
+}
+
+bool operator ==(const Point &a, const Point &b) {
+    return sign(a.x - b.x) == 0 && sign(a.y - b.y) == 0;
+}
+
+Point operator +(Point a, const Point &b) {
+    return a += b;
+}
+
+Point operator -(Point a, const Point &b) {
+    return a -= b;
+}
+
+Point operator /(Point a, LD k) {
+    return a /= k;
+}
+
+Point operator *(Point a, LD k) {
+    return a *= k;
+}
+
+Point operator *(LD k, Point a) {
+    return a *= k;
+}
+
+LD det(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
+}
+
+LD dot(const Point &a, const Point &b) {
+    return a.x * b.x + a.y * b.y;
+}
+
+bool parallel(const Point &a, const Point &b, const Point &c, const Point &d) {
+    return sign(det(b - a, d - c)) == 0;
+}
+
+Point intersect(const Point &a, const Point &b, const Point &c, const Point &d) {
+    LD s1 = det(b - a, c - a);
+    LD s2 = det(b - a, d - a);
+    return (c * s2 - d * s1) / (s2 - s1);
+}
+
+bool Point::on(const Point &a, const Point &b) const {
+    const Point &p = *this;
+    return sign(det(p - a, p - b)) == 0 && sign(dot(p - a, p - b)) <= 0;
+}
+
+bool Point::in(const vector<Point> &polygon) const {
+    const Point &p = *this;
+    int n = polygon.size();
+    int count = 0;
+    for (int i = 0; i < n; ++ i) {
+        const Point &a = polygon[i];
+        const Point &b = polygon[(i + 1) % n];
+        if (p.on(a, b)){
+            return false;
+        }
+        int t0 = sign(det(a - p, b - p));
+        int t1 = sign(a.y - p.y);
+        int t2 = sign(b.y - p.y);
+        count += t0 > 0 && t1 <= 0 && t2 > 0;
+        count -= t0 < 0 && t2 <= 0 && t1 > 0;
+    }
+    return count != 0;
+}
+
+struct eglist {
+    int other[MAXE], succ[MAXE], last[MAXE], sum;
+    void clear() {
+        memset(last, -1, sizeof(last));
+        sum = 0;
+    }
+    void addEdge(int a, int b) {
+        other[sum] = b, succ[sum] = last[a], last[a] = sum;
+        sum++;
+    }
+    void _addEdge(int a, int b) {
+        addEdge(a, b);
+        addEdge(b, a);
+    }
+}e, topo;
+
+int border[MAXE];
+
+vector<Point> points;
+
+Point segments[MAXE][2];
+int n, next[MAXE];
+vector<LD> areas, allAreas;
+vector<vector<Point> > regions;
+vector<vector<int>> borders;
+
+void addSegment(Point a, Point b) {
+    segments[n][0] = a;
+    segments[n][1] = b;
+    n++;
+}
+
+int locate(const Point &p) {
+    int best = -1;
+    for (int i = 0; i < regions.size(); ++i) {
+        if (p.in(regions[i]) && (best == -1 || allAreas[best] > allAreas[i])) {
+            best = i;
+        }
+    }
+    return best;
+}
+
+int main() {
+    scanf("%d", &n);
+    Point start, target;
+    start.scanf();
+    target.scanf();
+    // for (int i = 0; i < n; i++) {
+    //  segments[i][0].x = -99999;
+    //  segments[i][0].y = i;
+    //  segments[i][1].x = 99999;
+    //  segments[i][1].y = -i * i;
+    // }
+    for (int i = 0; i < n; i++) {
+        segments[i][0].scanf();
+        segments[i][1].scanf();
+        // scanf("%lf %lf %lf %lf", &segments[i][0].x, &segments[i][0].y, &segments[i][1].x, &segments[i][1].y);
+    }
+    const LD W = 1e5 + 1;
+    addSegment(Point(-W, W), Point(W, W));
+    addSegment(Point(-W, -W), Point(W, -W));
+    addSegment(Point(-W, -W), Point(-W, W));
+    addSegment(Point(W, -W), Point(W, W));
+
+    for (int i = 0; i < n; i++) {
+        points.push_back(segments[i][0]);
+        points.push_back(segments[i][1]);
+        for (int j = 0; j < i; j++) {
+            if (!parallel(segments[i][0], segments[i][1], segments[j][0], segments[j][1])) {
+                Point p = intersect(segments[i][0], segments[i][1], segments[j][0], segments[j][1]);
+                if (p.on(segments[i][0], segments[i][1]) && p.on(segments[j][0], segments[j][1])) {
+                    points.push_back(p);
+                }
+            }
+        }
+    }
+    sort(points.begin(), points.end());
+    points.erase(unique(points.begin(), points.end()), points.end());
+
+    e.clear();
+    for (int i = 0; i < n; i++) {
+        vector<pair<LD, int> > pairs;
+        for (int j = 0; j < points.size(); j++) {
+            if (points[j].on(segments[i][0], segments[i][1]))
+                pairs.push_back(make_pair((points[j] - segments[i][0]).norm(), j));
+        }
+        sort(pairs.begin(), pairs.end());
+        for (int i = 1; i < pairs.size(); i++) {
+            e.addEdge(pairs[i - 1].second, pairs[i].second);
+            e.addEdge(pairs[i].second, pairs[i - 1].second);
+        }
+    }
+
+    for (int u = 0; u < points.size(); u++) {
+        vector<pair<LD, int> > pairs;
+        for (int iter = e.last[u]; ~iter; iter = e.succ[iter]) {
+            pairs.push_back(make_pair((points[e.other[iter]] - points[u]).arg(), iter));
+        }
+        sort(pairs.begin(), pairs.end());
+        for(int i = 0; i < pairs.size(); i++) {
+            next[pairs[(i + 1) % pairs.size()].second ^ 1] = pairs[i].second;
+        }
+    }
+
+    vector<pair<Point, LD> > waits;
+    static bool visit[MAXV];
+    memset(visit, 0, sizeof(visit));
+    fill(border, border + e.sum, -1);
+    auto add_border = [&](int eid, int rid) {
+        if (border[eid] == -1) {
+            border[eid] = rid;
+        } else {
+            topo._addEdge(border[eid], rid);
+            // printf("edge = (eid = %d) %d %d\n", eid, border[eid], rid);
+            border[eid] = -1;
+        }
+    };
+    topo.clear();
+    for (int start = 0; start < e.sum; ++start) {
+        if (!visit[start]) {
+            int v = start;
+            LD totalArea = 0;
+            vector <Point> region;
+            vector <int> border;
+            for(; !visit[v]; v = next[v]) {
+                visit[v] = true;
+                totalArea += det(points[e.other[v ^ 1]], points[e.other[v]]);
+                region.push_back(points[e.other[v]]);
+                border.push_back(v >> 1);
+            }
+
+            if (sign(totalArea) > 0) {
+                // for (auto p : region) {
+                //  printf("(%f, %f)\n", p.x, p.y);
+                // }
+                for (auto ee : border) add_border(ee, regions.size());
+                regions.push_back(region);
+                areas.push_back(totalArea);
+                allAreas.push_back(totalArea);
+            } else {
+                waits.push_back(make_pair(region.front(), -totalArea));
+                borders.push_back(border);
+            }
+            // cout << " ---- " << endl;
+        }
+    }
+
+    //build
+    for (int iter = 0; iter < waits.size(); iter++) {
+        const Point &p = waits[iter].first;
+        int best = -1;
+        for (int i = 0; i < regions.size(); i++) {
+            if ((best == -1 || allAreas[best] > allAreas[i]) && p.in(regions[i])) {
+                best = i;
+            }
+        }
+        if (best != -1) {
+            areas[best] -= waits[iter].second;
+            for (auto bor : borders[iter]) {
+                add_border(bor, best);
+            }
+        }
+    }
+    // cout << regions.size() << endl;
+    int s = locate(start), t = locate(target);
+    static int dist[MAXV];
+    fill(dist, dist + regions.size(), -1);
+    vector<int> queue;
+    queue.push_back(s);
+    dist[s] = 0;
+    for (int head = 0; head < (int)queue.size(); head++) {
+        int u = queue[head];
+        for (int iter = topo.last[u]; ~iter; iter = topo.succ[iter]) {
+            int v = topo.other[iter];
+            if (dist[v] == -1) {
+                dist[v] = dist[u] + 1;
+                queue.push_back(v);
+            }
+        }
+    }
+    printf("%d\n", dist[t]);
+}
+```
