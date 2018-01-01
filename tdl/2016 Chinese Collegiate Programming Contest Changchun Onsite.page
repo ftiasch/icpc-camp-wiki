@@ -1,0 +1,53 @@
+A. Hanzo vs. Genji
+==================
+
+B. Fraction \[braveTester\]
+===========================
+
+C. Rotate String
+================
+
+D. Triangle \[Constroy\]
+========================
+
+E. The Fastest Runner Ms.Zhang
+==============================
+
+F. Harmonic Value \[Skywalkert\]
+================================
+
+由$\gcd(p_i, p_{i + 1}) \geq 1$猜测最小解的函数值为$n - 1$，显然地，$[1, 2, \cdots, n]$就是这样的排列。
+
+令$A = [1, 2, \cdots, k - 1], B = [k + 1, k + 2, \cdots, 2 \cdot k - 1], C = [2 \cdot k + 1, 2 \cdot k + 2, \cdots, n]$，则$[B, A, k, 2 \cdot k, C]$的函数值为$n + k - 2$，所以对于$n - 1$到$n + \left\lfloor\frac{n}{2}\right\rfloor - 2$这$\left\lfloor\frac{n}{2}\right\rfloor$个正整数都能构造出一组解。
+
+G. Instability \[Constroy\]
+===========================
+
+一个无向图中有多少个子图是不稳定的。一个图不稳定等价于其中存在点数为3的团或点数为3的独立集。
+由 [Ramsey's theorem](https://en.wikipedia.org/wiki/Ramsey%27s_theorem)
+的 r(3, 3) = 6 可知大于等于6的子图一定不稳定，只需暴力搜索大小为3, 4,
+5的子图即可。
+
+H. Sequence I \[Skywalkert\]
+============================
+
+用kmp处理模板序列，把文本序列按模意义拆开分别当文本序列匹配即可。
+
+I. Sequence II \[Skywalkert\]
+=============================
+
+令$pre_i$表示第$i$个位置之前与其数值相同的最晚位置，如果不存在则设为0。
+
+每个询问可以转化为求满足$l \leq i \leq r, 0 \leq pre_i < l$的所有$k$个位置里，按$i$排序的第$\left\lceil\frac{k}{2}\right\rceil$个位置是多少。
+
+将$(i, pre_i)$放到二维平面里，关于第二维建立主席树，第$l - 1$棵主席树里表示$0 \leq pre_i < l$的所有$i$相关的信息，此时线段树的下标可以代表位置。
+
+设第$l - 1$棵主席树里有$a$个位置$i$满足$i < l$，$b$个位置满足$i \leq r$，所求位置即线段树中第$\left\lceil\frac{a + b}{2}\right\rceil$大的位置，在树上二分查找即可。
+
+建立主席树的过程需要将点关于$pre_i$排序，注意$pre_i$的取值很大可能是不连续的。
+
+J. Ugly Problem \[Constroy\]
+============================
+
+K. Binary Indexed Tree \[Constroy\]
+===================================
