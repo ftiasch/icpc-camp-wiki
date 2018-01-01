@@ -1,0 +1,20 @@
+E. Rubik's Cube \[Yuzuriha Inori\]
+==================================
+
+The state space is small (less than 54 choosing 5). BFS suffices.
+
+[code](2016/8/14%20E)
+
+I. This world need more Zhu \[Miceren\]
+=======================================
+
+This problem will discussed in two case, big k or small k.
+
+For big k, we can jump up from some node u and get the max.
+
+For small k, we build a tree for each k and use union-find set to
+optimize the time complexity.
+
+All in all, the total time complextiy is $O(n \sqrt n)$
+
+[code](2016/8/14%20I)
