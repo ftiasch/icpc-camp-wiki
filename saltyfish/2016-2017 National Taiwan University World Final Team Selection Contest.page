@@ -1,0 +1,29 @@
+# A Hacker Cups and Balls [zyh&hwq]
+
+二分答案$k$，记$\leq k$的数为$0$，$>k$的数为$1$，那么区间排序就是把区间中的$0$和$1$提取出来然后再按顺序刷回去，用一个支持区间赋值区间求和的线段树维护即可，最后求出$\lfloor \frac{n+1}{2} \rfloor$处的值，若为$0$则$k$可能更小，否则必须更大，复杂度$O(n\log^2n)$
+
+# B Bored Dreamoon [ghc&zyh]
+
+# C Crazy Dreamoon [hwq&zyh]
+
+沿每条线段BFS一下，最后取个并集，复杂度$O(nA+A^2)$
+
+# D Forest Game
+
+删除点$u$时所在连通块大小等价于满足$u \rightarrow v$的路径上没有被删过点的$v$的个数，考虑枚举路径$u \rightarrow v$，这条路径有贡献当且仅当路径上没有点在$u$之前被删除，记路径上的点数为$k$，可以求出方案数是$n!/k$，记$cnt[k]$表示点数为$k$的路径数，那么有$ans=n!\sum_{k=1}^{n}\frac{cnt[k]}{k}$，那么需要求出每种长度的路径数，树分治+FFT，复杂度$O(n\log^2n)$
+
+# E Lines Game
+
+# F Lonely Dreamoon 2
+
+# G Dreamoon and NightMarket [zyh&ghc]
+
+先排序，用一个堆维护一系列子集，初始放进去$\{a_1\}$，每次弹出一个权值和最小的子集S，记最大元素是$a_i$，然后放进去$(S-\{a_i\}) \bigcup \{a_{i+1}\}$和$S \bigcup \{a_{i+1}\}$，第$K$次拿出的子集的权值和就是答案，复杂度$O(klogk)$，这本质上是一个dfs的过程，每次决定下一个选的数是哪一个，在dfs树上按照左儿子右兄弟的顺序扩展状态即可。
+
+# H Split Game
+
+# I Tree Game
+
+# J Zero Game [hwq&ghc&zyh]
+
+枚举答案中最左边0的位置，对应的方案应该是删除该位置右侧的连续若干段1，设delta=删除1后加入的0的个数-删除的1的个数，问题便转化为维护delta的最大值，用一个单调队列即可
