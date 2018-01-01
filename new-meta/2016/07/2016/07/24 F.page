@@ -1,0 +1,244 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+#include <stack>
+using namespace std;
+
+const int maxn = 1e5 + 5, MOD = 1e9 + 7;
+
+int pre[maxn], iscut[maxn], bccno[maxn], dfs_clock, bcc_cnt, a[maxn];
+vector<int> G[maxn], bcc[maxn];
+stack<pair<int, int> > S;
+int dfs(int u, int fa)
+{
+    int lowu = pre[u] = ++ dfs_clock;
+    int child = 0;
+    for (int i = 0; i < (int) G[u].size(); ++ i)
+    {
+        int v = G[u][i];
+        pair<int, int> e = make_pair(u, v);
+        if (!pre[v])
+        {
+            S.push(e);
+            child ++;
+            int lowv = dfs(v, u);
+            lowu = min(lowu, lowv);
+            if (lowv >= pre[u])
+            {
+                iscut[u] = true;
+                bcc_cnt ++;
+                bcc[bcc_cnt].clear();
+                for ( ; ; )
+                {
+                    pair<int, int> x = S.top(); S.pop();
+                    if (bccno[x.first] != bcc_cnt) {bcc[bcc_cnt].push_back(x.first); bccno[x.first] = bcc_cnt;}
+                    if (bccno[x.second] != bcc_cnt) {bcc[bcc_cnt].push_back(x.second); bccno[x.second] = bcc_cnt;}
+                    if (x.second == v && x.first == u) break;
+                }
+            }
+        }
+        else if (pre[v] < pre[u] && v != fa)
+        {
+            S.push(e);
+            lowu = min(lowu, pre[v]);
+        }
+    }
+    if (fa < 0 && child == 1) iscut[u] = 0;
+    return lowu;
+}
+void find_bcc(int n)
+{
+    memset(pre, 0, sizeof(pre));
+    memset(iscut, 0, sizeof(iscut));
+    memset(bccno, 0, sizeof(bccno));
+    dfs_clock = bcc_cnt = 0;
+    for (int i = 0; i < n; ++ i)
+    {
+        if (!pre[i]) dfs(i, -1);
+    }
+}
+
+bool v[maxn];
+vector<int> bl;
+void dfs2(int x, int p, int &mm)
+{
+    if (v[x]) return;
+    bl.push_back(x);
+    mm = 1LL * mm * a[x] % MOD;
+    v[x] = 1;
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == p) continue;
+        dfs2(u, x, mm);
+    }
+}
+
+int sub[2][maxn], resb[maxn], res[maxn], p[2][maxn];
+bool isroot[maxn], vv[2][maxn];
+vector<int> link[2][maxn];
+int dfs3(int x, int type, int par)
+{
+    vv[type][x] = 1;
+    p[type][x] = par;
+    sub[type][x] = type ? resb[x] : a[x];
+    for (int i = 0; i < (int) link[type][x].size(); ++ i)
+    {
+        int u = link[type][x][i];
+        if (u == par) continue;
+        sub[type][x] = 1LL * sub[type][x] * dfs3(u, type ^ 1, x) % MOD;
+    }
+    return sub[type][x];
+}
+int mpow(int x, int n)
+{
+    int ans = 1;
+    while (n)
+    {
+        if (n & 1) ans = 1LL * ans * x % MOD;
+        n >>= 1;
+        x = 1LL * x * x % MOD;
+    }
+    return ans;
+}
+
+bool vis[maxn];
+int ban;
+int dfs4(int x, int par)
+{
+    if (vis[x] || x == ban) return 1;
+    int res = a[x];
+    vis[x] = 1;
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == par) continue;
+        res = 1LL * res * dfs4(u, x);
+    }
+    return res;
+}
+void baoli(int n)
+{
+    int ans = 0;
+    for (int i = 0; i < n; ++ i)
+    {
+        memset(vis, 0, sizeof(vis));
+        ban = i;
+        for (int j = 0; j < n; ++ j)
+        {
+            if (!vis[j] && j != ban)
+            {
+                (ans += 1LL * (i + 1) * dfs4(j, -1) % MOD) %= MOD;
+            }
+        }
+    }
+    printf("%d\n", ans);
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        for (int i = 0; i < n; ++ i) G[i].clear();
+        for (int i = 0; i < n; ++ i) scanf("%d", &a[i]);
+        for (int i = 0; i < m; ++ i)
+        {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            -- u, -- v;
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        //baoli(n);
+        find_bcc(n);
+        for (int i = 0; i < n; ++ i)
+        {
+            link[0][i].clear();
+            link[1][i].clear();
+            isroot[i] = 0;
+        }
+        for (int i = 1; i <= bcc_cnt; ++ i) resb[i] = 1;
+        vector<int> cuts;
+        for (int i = 0; i < n; ++ i)
+        {
+            if (iscut[i])
+            {
+                cuts.push_back(i);
+            }
+            else
+            {
+                resb[bccno[i]] = 1LL * resb[bccno[i]] * a[i] % MOD;
+            }
+        }
+        for (int i = 1; i <= bcc_cnt; ++ i)
+        {
+            for (int j = 0; j < (int) bcc[i].size(); ++ j)
+            {
+                if (iscut[bcc[i][j]])
+                {
+                    link[1][i].push_back(bcc[i][j]);
+                    link[0][bcc[i][j]].push_back(i);
+                }
+            }
+        }
+        memset(v, 0, sizeof(v));
+        int anso = 0;
+        for (int i = 0; i < n; ++ i)
+        {
+            if (!v[i])
+            {
+                int tmp = 1;
+                bl.clear();
+                dfs2(i, -1, tmp);
+                (anso += tmp) %= MOD;
+                for (int j = 0; j < (int) bl.size(); ++ j) res[bl[j]] = tmp;
+            }
+        }
+        memset(vv, 0, sizeof(vv));
+        for (int i = 0; i < (int) cuts.size(); ++ i)
+        {
+            int u = cuts[i];
+            if (!vv[0][u])
+            {
+                isroot[u] = 1;
+                dfs3(u, 0, -1);
+            }
+        }
+        int ans = 0;
+        //printf("--%d\n", sub[0][2]);
+        for (int i = 0; i < n; ++ i)
+        {
+            int tmp;
+            if (iscut[i])
+            {
+                tmp = (anso + MOD - res[i]) % MOD;
+                if (!isroot[i]) (tmp += 1LL * res[i] * mpow(sub[0][i], MOD - 2) % MOD) %= MOD;
+                //printf("***%d\n", tmp);
+                for (int j = 0; j < (int) link[0][i].size(); ++ j)
+                {
+                    int u = link[0][i][j];
+                    if (u == p[0][i]) continue;
+                    (tmp += 1LL * sub[1][u]) %= MOD;
+                }
+            }
+            else
+            {
+                tmp = ((anso + MOD - res[i]) % MOD + !!G[i].size() * 1LL * res[i] * mpow(a[i], MOD - 2) % MOD) % MOD;
+                /*printf("%d\n", res[i]);
+                printf("%d : %d\n", i + 1, tmp);*/
+            }
+            (ans += 1LL * tmp * (i + 1) % MOD) %= MOD;
+        }
+        printf("%d\n", ans);
+    }
+}
+```
