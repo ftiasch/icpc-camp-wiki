@@ -1,0 +1,112 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(7), inf(1e9);
+int cap[N][N];
+vector<int> a[N][N];
+void mov(int x, int y, char dir, int num) {
+    printf("%d %d %c %d\n", x + 1, y + 1, dir, num);
+    if(dir == 'R') {
+        for(int d(0); d < num; d++) {
+            a[x][y + 1].push_back(a[x][y].back());
+            a[x][y].pop_back();
+        }
+        if(num == 2) {
+            swap(a[x][y + 1].back(), a[x][y + 1][a[x][y + 1].size() - 2]);
+        }
+    }else {
+        for(int d(0); d < num; d++) {
+            int tmp(a[x][y].back());
+            a[x + 1][y].push_back(tmp);
+            a[x][y].pop_back();
+        }
+        if(num == 2) {
+            swap(a[x + 1][y].back(), a[x + 1][y][a[x + 1][y].size() - 2]);
+        }
+    }
+}
+void go(int x, int y, int x1, int y1) {
+    while(x < x1) {
+        mov(x, y, 'D', 1);
+        x++;
+    }
+    while(y < y1) {
+        mov(x, y, 'R', 1);
+        y++;
+    }
+}
+void calc(int x, int y, int strt, int ed) {
+    assert(ed - strt + 1 <= cap[x][y]);
+    if(x == 5 && y == 5) {
+
+    }else if(x == 4 && y == 5 || x == 5 && y == 4) {
+        char dir(x == 4 ? 'D' : 'R');
+        if(strt != ed && a[x][y].back() == strt) {
+            mov(x, y, dir, 2);
+        }else {
+            mov(x, y, dir, 1);
+            if(strt != ed) {
+                mov(x, y, dir, 1);
+            }
+        }
+    }else {
+        vector<pair<int, pair<int, int> > > vec;
+        for(int i(x); i < 6; i++) {
+            for(int j(y); j < 6; j++) {
+                if(!(x == i && y == j)) {
+                    vec.push_back(make_pair(cap[i][j], make_pair(i, j)));
+                }
+            }
+        }
+        for(int i(1); i < (int)vec.size(); i++) {
+            vec[i].first += vec[i - 1].first;
+        }
+        for(int i(0); i < ed - strt + 1; i++) {
+            int cur(a[x][y].back());
+            int dest(upper_bound(vec.begin(), vec.end(), make_pair(cur - strt, make_pair(inf, inf))) - vec.begin());
+            int newx(vec[dest].second.first), newy(vec[dest].second.second);
+            assert(!a[x][y].empty());
+            go(x, y, newx, newy);
+        }
+        for(int i((int)vec.size() - 1); i >= 0; i--) {
+            int prv(i ? vec[i - 1].first : 0);
+            int cur(min(max(0, ed - strt + 1 - prv), vec[i].first - prv));
+            if(cur) {
+                calc(vec[i].second.first, vec[i].second.second, strt + prv, strt + prv + cur - 1);
+            }
+        }
+    }
+}
+int main() {
+    for(int i(5); i >= 0; i--) {
+        for(int j(5); j >= 0; j--) {
+            if(i == 5 && j == 5) {
+                cap[i][j] = 1;
+            }else if(i == 4 && j == 5 || i == 5 && j == 4) {
+                cap[i][j] = 2;
+            }else {
+                cap[i][j] = 0;
+                for(int k(i); k < 6; k++) {
+                    for(int l(j); l < 6; l++) {
+                        cap[i][j] += cap[k][l];
+                    }
+                }
+            }
+        }
+    }
+    int n;
+    scanf("%d", &n);
+//n = 40000;
+    for(int i(0); i < n; i++) {
+        int x;
+        scanf("%d", &x);
+//x = i + 1;
+        a[0][0].push_back(x);
+    }
+    calc(0, 0, 1, n);
+    /*for(int i(0); i < (int)a[5][5].size(); i++) {
+        printf("%d ", a[5][5][i]);
+    }
+    printf("\n");*/
+}
+```
