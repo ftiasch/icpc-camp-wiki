@@ -36,7 +36,7 @@ D. 1D Spreadsheet
 
 复杂度$O(\frac{n}{k}(n+k^2+k^2\log n))$，取$k=300$多就能过了。
 
-[D.cpp](Petrozavodsk%20Winter-2015.%20Michael%20Tikhomirov%20Contest%201%20D.cpp)
+[D.cpp](Petrozavodsk Winter-2015. Michael Tikhomirov Contest 1 D.cpp)
 
 I. Infinite Embedding
 =====================
