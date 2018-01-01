@@ -11,4 +11,4 @@ $1e5$组询问，每次给你$L$和$R$，求pair$(L\leq a\leq R,L\leq b\leq R)$�
 
 发现数列是指数级，所以对于一组询问，$A_1$特判，$A_x$，$x$较小的时候按行统计，预处理每一行，然后二分出$[L,R]$中有几个数。$x$较大的时候按列统计，二分出每一列的区间就行了。
 
-[H.cpp](2017/05/04%20Petrozavodsk%20Summer-2014.%20Moscow%20SU%20SG%20Contest%20H.cpp)
+[H.cpp](2017/05/04 Petrozavodsk Summer-2014. Moscow SU SG Contest H.cpp)
