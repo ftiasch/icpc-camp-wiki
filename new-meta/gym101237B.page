@@ -1,0 +1,29 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+typedef long double D;
+D si[999], pi(acos(-1.)), eps(1e-12);
+int main() {
+    int k;
+    cin >> k;
+    k *= 2;
+    for(int i(0); i <= k; i++) {
+        si[i] = sin(pi / k * i);
+    }
+    int ans(0);
+    for(int ij(2); ij < k; ij++) {
+        vector<D> vec;
+        for(int i(1); i < ij; i++) {
+            int j(ij - i);
+            for(int l(1); l + ij < k; l++) {
+                int m(k - l - ij);
+                vec.push_back(log(si[i] * si[l] / si[j] / si[m]));
+            }
+        }
+        sort(vec.begin(), vec.end());
+        for(int i(0); i < (int)vec.size(); i++)
+            ans += lower_bound(vec.begin(), vec.end(), -vec[i] + eps) - lower_bound(vec.begin(), vec.end(), -vec[i] - eps);
+    }
+    cout << ans << endl;
+}
+```
