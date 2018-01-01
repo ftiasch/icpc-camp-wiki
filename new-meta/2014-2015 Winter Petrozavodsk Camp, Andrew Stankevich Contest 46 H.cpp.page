@@ -1,0 +1,125 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <cassert>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 2e5 + 7;
+const int INF = 1e9 + 7;
+
+#define left LEFT
+#define right RIGHT
+
+int n, m, child[N][2];
+int demand[N], size[N];
+int parent[N], father[N], left[N], right[N];
+
+int visit[N], order[N];
+
+void dfs(int u, int &&tot) {
+    if (u == 0) {
+        size[u] = 0;
+        return ;
+    }
+    size[u] = 1;
+    left[u] = ++tot;
+    int min_size = INF;
+    for (int c = 0; c < 2; c++) {
+        int v = child[u][c];
+        dfs(v, move(tot));
+        size[u] += size[v];
+        if (size[v] < min_size) {
+            min_size = size[v];
+        }
+    }
+    demand[u] = 2 * min_size + 1;
+    right[u] = tot;
+    if (!visit[u]) {
+        order[++m] = u;
+        visit[u] = m;
+    }
+}
+
+vector<int> events[N];
+
+int find(int u) {
+    return father[u] == u ? u : father[u] = find(father[u]);
+}
+
+int side(int u, int v) {
+    return left[child[u][1]] <= left[v] && left[v] <= right[child[u][1]];
+}
+
+long long ans[N];
+
+int main() {
+freopen("heavylight.in", "r", stdin);
+freopen("heavylight.out", "w", stdout);
+    while (scanf("%d", &n) == 1 && n) {
+        fill(parent + 1, parent + n + 1, 0);
+        for (int i = 1; i <= n; i++) {
+            for (int c = 0; c < 2; c++) {
+                scanf("%d", &child[i][c]);
+                parent[child[i][c]] = i;
+            }
+        }
+        parent[0] = 0;
+        scanf("%d", &m);
+        int mm = m;
+        fill(visit + 1, visit + n + 1, 0);
+        for (int i = 1; i <= m; i++) {
+            scanf("%d", &order[i]);
+            visit[order[i]] = i;
+        }
+        dfs(1, 0);
+        for (int i = 0; i <= n; i++) {
+            father[i] = i;
+            events[i].clear();
+        }
+        int CNT = 0;
+        for (int i = m; i >= 1; i--) {
+            int u = order[i];
+            while (u = find(parent[u])) {
+                events[u].push_back(order[i]);
+                if (--demand[u] == 0) {
+                    father[u] = parent[u];
+                }
+            }
+        }
+        fill(ans, ans + n + 1, 0);
+        for (int u = 1; u <= n; u++) {
+            int lc, rc, num[2] = {lc = child[u][0], rc = child[u][1]};
+            int ls = 0, rs = 0;
+            int dir = size[rc] > size[lc];
+            for (auto v : events[u]) {
+                if (u != v) {
+                    side(u, v) ? rs++ : ls++;
+                }
+            }
+            reverse(events[u].begin(), events[u].end());
+            int last = 0;
+            //cout << "u = " << u << " ls = " << ls << " rs = " << rs << endl;
+            for (auto v : events[u]) {
+                // cout << v << " " << "[" << last << ", " << visit[v] << ") + " << num[dir] << endl;
+                ans[last] += num[dir];
+                ans[last = visit[v]] -= num[dir];
+                side(u, v) ? rs-- : ls--;
+                if (rs > ls) dir = 1;
+                if (ls > rs) dir = 0;
+            }
+            // cout << endl;
+        }
+        long long cur = 0;
+        for (int i = 0; i <= mm; i++) {
+            cur += ans[i];
+            printf("%lld\n", cur);
+        }
+    }
+    return 0;
+}
+```
