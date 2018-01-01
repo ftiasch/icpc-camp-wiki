@@ -1,0 +1,37 @@
+# 1001 Resident Evil [hwq&zyh]
+
+把怪物压个位，然后就是[这题](http://codeforces.com/problemset/problem/341/D)
+
+# 1002 List wants to travel[hwq补]
+
+树链剖分+线段树，维护链上区间的颜色段数以及两端的颜色
+
+# 1003 hannnnah_j’s Biological Test [ghc&zyh]
+
+将环从1和n之间断开，变成一条链，将一个小孩和他顺时针方向（顺逆时针都一样）的k个座位看成一个整体（这个小孩把这k个座位给占了），方案数为$\binom{n-mk}{m}$，但这样漏掉了一个小孩占的座位跨过了1和n的情况，枚举这k+1个座位有多少在1,2,3...，有多少在n,n-1,...，共有k种情况，方案数为$k\binom{n-mk-1}{m-1}$，两种情况相加即为答案，注意特判m=1的情形
+
+# 1004 Mathematician QSC [zyh&ghc]
+
+如果$g(n*y)<\phi(s+1)$，直接快速幂计算$x^{g(n*y)}\ mod\ (s+1)$，否则$x^{g(n*y)}\ mod\ (s+1)=x^{g(n*y)\ mod\ \phi(s+1)+\phi(s+1)}\ mod\ (s+1)$，对于$g(n)$的计算，维护$g(n),f^2(n),f(n)f(n-1),f^2(n-1)$这四个值，转移是一个四维矩阵，跑快速幂即可
+
+# 1005 Running King [zyh]
+
+答案即为无向图个数减去无根树森林个数，记$f[i]$为$i$个点的无根树个数，由Cayley's formula可知$f[i]=i^{i-2}$，记$g[i]$为$i$个点的无根树森林个数，枚举1号点所在无根树，则有$g[i]=\sum_{j=1}^{i}\binom{i-1}{j-1}f[j]g[i-j]$，分治NTT求出所有$g[i]$
+
+# 1006 The Game
+
+# 1007 odd-even number [hwq]
+
+数位dp，记一下当前放的是奇数还是偶数以及个数的奇偶性
+
+# 1008 oasis in desert [zyh&ghc&hwq]
+
+Floyd求全源最短路，然后建一个新图，两点之间如果最短路<=k那么连一条边，对于新图，考虑每一个连通分量，每条边的两个端点中至少选一个点，但不能同时选，因此一定是二分图，并且两部分点数要一样多，然后跑二分图匹配求出最小点覆盖集的大小来检查是否合法，贪心选取字典序小的那一部分
+
+# 1009 QSC and Master [hwq&ghc]
+
+dp[i][j]表示区间[i,j]的最优值，dp2[i][j]表示把区间[i,j]全拿完的最优值，转移一种是两端匹配，需要中间全拿完，还有一种是枚举断点分成两个区间
+
+# 1010 Count primes [zyh]
+
+就是[这题](http://codeforces.com/contest/665/problem/F)
