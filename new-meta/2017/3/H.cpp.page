@@ -1,0 +1,167 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e4 + 5, B = 22;
+char s[N][B];
+int m;
+struct poly {
+    vector<double> a;
+    poly() {
+        a.clear();
+        for (int i = 0; i <= m; ++ i) a.push_back(0);
+    }
+    poly(int i) {
+        a.clear();
+        for (int i = 0; i <= m; ++ i) a.push_back(0);
+        a[i] = 1;
+    }
+    poly(double x) {
+        a.clear();
+        for (int i = 0; i <= m; ++ i) a.push_back(0);
+        a[m] = x;
+    }
+};
+poly operator + (const poly &a, const poly &b) {
+    poly c = a;
+    for (int i = 0; i <= m; ++ i) c.a[i] += b.a[i];
+    return c;
+}
+poly operator - (const poly &a, const poly &b) {
+    poly c = a;
+    for (int i = 0; i <= m; ++ i) c.a[i] -= b.a[i];
+    return c;
+}
+poly operator * (const poly &a, double b) {
+    poly c = a;
+    for (double &x : c.a) x *= b;
+    return c;
+}
+pair<vector<double>, poly> mat[B];
+const int dx[4] = {-1, 1, 0, 0};
+const int dy[4] = {0, 0, -1, 1};
+double p[4], stp;
+double ans[N][B], pre[N][B][4];
+poly f[N][B];
+const double eps = 1e-16;
+int main() {
+    int n;
+    scanf("%d%d", &m, &n);
+    int uu, dd, ll, rr;
+    scanf("%d%d%d%d", &uu, &dd, &ll, &rr);
+    p[0] = uu / 100., p[1] = dd / 100., p[2] = ll / 100., p[3] = rr / 100.;
+    for (int i = 1; i <= n; ++ i) scanf("%s", s[i]);
+    stp = 0;
+    for (int i = 0; i < m; ++ i) if (s[1][i] == '.') stp ++;
+    stp = 1. / stp;
+    for (int i = 1; i <= n; ++ i) {
+        for (int j = 0; j < m; ++ j) {
+            double tot = 0;
+            for (int d = 0; d < 4; ++ d) {
+                int x = i + dx[d];
+                int y = j + dy[d];
+                if (x <= 0 || x > n || y < 0 || y >= m || s[x][y] == 'X') continue;
+                tot += p[d];
+            }
+            if (fabs(tot) > eps) for (int d = 0; d < 4; ++ d) pre[i][j][d] = p[d] / tot;
+        }
+    }
+    vector<pair<int, int>> tar;
+    for (int i = 1; i <= n; ++ i) {
+        for (int i = 0; i < m; ++ i) {
+            vector<double> tmp(m);
+            mat[i].first = tmp;
+            mat[i].second = poly();
+            mat[i].first[i] = -1;
+        }
+        for (int j = 0; j < m; ++ j) {
+            if (s[i][j] == 'X') continue;
+            if (s[i][j] == 'T') {
+                tar.push_back({i, j});
+            }
+            poly up;
+            if (i == 1) up = poly(stp); else {
+                if (s[i - 1][j] == 'X' || s[i - 1][j] == 'T') up = poly(); else up = f[i - 1][j] * pre[i - 1][j][1];
+            }
+            for (int i = 0; i < m; ++ i) {
+                mat[j].first[i] += up.a[i];
+            }
+            mat[j].second.a[m] -= up.a[m];
+            for (int d = 2; d < 4; ++ d) {
+                int x = i;
+                int y = j + dy[d];
+                if (y < 0 || y >= m || s[x][y] == 'X' || s[x][y] == 'T') continue;
+                mat[j].first[y] += pre[x][y][d ^ 1];
+            }
+            if (i < n && s[i + 1][j] != 'X' && s[i + 1][j] != 'T') {
+                mat[j].second = mat[j].second - poly(j) * pre[i + 1][j][0];
+            }
+        }
+        /*for (int i = 0; i < m; ++ i) {
+            for (int j = 0; j < m; ++ j) printf("%.2f ", mat[i].first[j]);
+            printf("= ");
+            for (int j = 0; j <= m; ++ j) printf("%.2f ", mat[i].second.a[j]); puts("");
+        }*/
+        for (int i = 0; i < m; ++ i) {
+            for (int j = i; j < m; ++ j) {
+                if (fabs(mat[j].first[i]) > eps) {
+                    if (j != i) swap(mat[i], mat[j]);
+                    break;
+                }
+            }
+            if (fabs(mat[i].first[i]) <= eps) continue;
+            double bei = 1.0 / mat[i].first[i];
+            for (int k = i; k < m; ++ k) mat[i].first[k] *= bei;
+            mat[i].second = mat[i].second * bei;
+            for (int j = i + 1; j < m; ++ j) {
+                bei = mat[j].first[i];
+                for (int k = 0; k < m; ++ k) mat[j].first[k] -= mat[i].first[k] * bei;
+                mat[j].second = mat[j].second - mat[i].second * bei;
+            }
+            //puts("---------");
+        /*for (int i = 0; i < m; ++ i) {
+            for (int j = 0; j < m; ++ j) printf("%.2f ", mat[i].first[j]);
+            printf("= ");
+            for (int j = 0; j <= m; ++ j) printf("%.2f ", mat[i].second.a[j]); puts("");
+        }*/
+        }
+        for (int j = m - 1; j >= 0; -- j) {
+            f[i][j] = mat[j].second;
+            for (int k = j + 1; k < m; ++ k) {
+                f[i][j] = f[i][j] - f[i][k] * mat[j].first[k];
+            }
+        }
+        /*for (int k = 0; k < m; ++ k) {
+            for (int j = 0; j <= m; ++ j) printf("%.2f ", f[i][k].a[j]); puts("");
+        }*/
+    }
+    for (int i = n; i >= 1; -- i) {
+        for (int j = 0; j < m; ++ j) {
+            ans[i][j] = f[i][j].a[m];
+            for (int k = 0; k < m; ++ k) {
+                ans[i][j] += f[i][j].a[k] * ans[i + 1][k];
+            }
+        }
+    }
+    /*for (int i = 1; i <= n; ++ i) {
+        for (int j = 0; j < m; ++ j) printf("%.2f ", ans[i][j]); puts("");
+    }*/
+    vector<double> res;
+    double tot = 0;
+    for (auto p : tar) {
+        int i, j;
+        tie(i, j) = p;
+        double tmp = ans[i][j];
+        /*double tmp = 0;
+        for (int d = 0; d < 4; ++ d) {
+            int x = i + dx[d];
+            int y = j + dy[d];
+            if (x <= 0 || x > n || y < 0 || y >= m || s[x][y] == 'X' || s[x][y] == 'T') continue;
+            tmp += ans[x][y] * pre[x][y][d ^ 1];
+        }*/
+        //printf("%.10f\n", tmp);
+        tot += tmp;
+        res.push_back(tmp);
+    }
+    for (double a : res) printf("%.9f\n", a / tot);
+}
+```
