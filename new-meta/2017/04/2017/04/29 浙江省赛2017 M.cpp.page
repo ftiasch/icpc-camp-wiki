@@ -1,0 +1,111 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5, B = 20, INF = 1e9 + 7;
+long long sub[N], tr1[N][B];
+int s[N], t[N], P[N];
+pair<long long, int> tr2[N][B];
+long long query(long long t[N][B], int l, int r) {
+    int d = P[r - l + 1];
+    return min(t[l][d], t[r - (1 << d) + 1][d]);
+}
+pair<long long, int> query(pair<long long, int> t[N][B], int l, int r) {
+    int d = P[r - l + 1];
+    return min(t[l][d], t[r - (1 << d) + 1][d]);
+}
+long long calc(long long lv, long long rv, int l, int r, long long t) {
+    long long res = 0, mv;
+    while (l <= r && (mv = query(tr1, l, r) + t) < 0) {
+        auto tm = query(tr2, l, r); tm.first -= t;
+        assert(tm.first >= 0);
+        tm.first = min(tm.first, 0 - mv);
+        assert(lv >= 0 && rv >= 0);
+        long long clv = query(tr1, l, l) + t;
+        long long crv = query(tr1, r, r) + t;
+        long long lb = max(0LL, ::t[l] == 0 ? 0 - clv: lv - clv);
+        long long rb = max(0LL, ::t[r] == 0 ? 0 - crv : rv - crv);
+        long long d = min(min(lb, rb), tm.first);
+        if (d == lb) {
+        //printf("dfs %d %d  %lld   d = %lld at l\n", l, r, t, d);
+            t += d; res += d;
+            sub[l] = t;
+            if (::t[l] != 0) lv = ::t[l] - s[l] + t;
+            l ++;
+        } else if (d == rb) {
+        //printf("dfs %d %d  %lld   d = %lld at r\n", l, r, t, d);
+            t += d; res += d;
+            sub[r] = t;
+            if (::t[r] != 0) rv = ::t[r] - s[r] + t;
+            r --;
+        } else {
+            t += d; res += d;
+            int x = tm.second;
+            sub[x] = t;
+            return res + calc(lv, ::t[x] - s[x] + t, l, x - 1, t) + calc(::t[x] - s[x] + t, rv, x + 1, r, t);
+        }
+    }
+    for (int i = l; i <= r; ++ i) sub[i] = t;
+    return res;
+}
+int nextInt() {
+    int res(0);
+    char c(getchar());
+    while (c < '0') c = getchar();
+    while (c >= '0') {
+        res = res * 10 + (c - '0');
+        c = getchar();
+    }
+    return res;
+}
+int main() {
+    P[1] = 0;
+    for (int i = 2; i < N; ++ i) P[i] = P[i / 2] + 1;
+    int T;
+    //scanf("%d", &T);
+    T = nextInt();
+    while (T --) {
+        int n;
+        //scanf("%d", &n);
+        n = nextInt();
+        for (int i = 1; i <= n; ++ i) s[i] = nextInt(); //scanf("%d", &s[i]);
+        bool imp = 0;
+        for (int i = 1; i <= n; ++ i) {
+            //scanf("%d", &t[i]);
+            t[i] = nextInt();
+            if (t[i] != 0 && s[i] == 0) imp = 1;
+        }
+        if (imp) {
+            puts("-1");
+            continue;
+        }
+        int nn = 0;
+        for (int i = 1; i <= n; ++ i) {
+            if (s[i] == 0 && t[i] == 0) continue;
+            s[++ nn] = s[i];
+            t[nn] = t[i];
+        }
+        n = nn;
+        for (int i = 1; i <= n; ++ i) tr1[i][0] = t[i] - s[i], tr2[i][0] = {(t[i] == 0 ? INF: s[i] - 1), i};
+        for (int j = 1; j < B; ++ j) {
+            for (int i = 1; i + (1 << j) - 1 <= n; ++ i) {
+                tr1[i][j] = min(tr1[i][j - 1], tr1[i + (1 << (j - 1))][j - 1]);
+                tr2[i][j] = min(tr2[i][j - 1], tr2[i + (1 << (j - 1))][j - 1]);
+            }
+        }
+        long long ans = 2LL * calc(0, 0, 1, n, 0), las = 0;
+        //printf("%lld\n", ans);
+        //for (int i = 1; i <= n; ++ i) printf("%lld ", sub[i]); puts("");
+        for (int i = 1; i <= n; ++ i) {
+            long long cur = t[i] - s[i] + sub[i];
+            if (t[i] == 0) continue;
+            //printf("%lld ", cur);
+            assert(cur >= 0);
+            ans += abs(cur - las);
+            las = cur;
+        }
+        //puts("");
+        ans += abs(las);
+        printf("%lld\n", ans / 2);
+    }
+}
+```
