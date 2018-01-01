@@ -1,0 +1,14 @@
+[题目链接](http://codeforces.com/contest/830/problem/E)
+
+sol：首先，只要有一个联通快成立，就可以了（其他填0）。
+
+case 1：$m \geq n$ 全填1
+
+case 2：有一个点的度数大于3，这个点填2，其他填1
+
+case 3：由两个点的度数等于3，这两个点及其最短路径上的点填2，其他填1
+
+case 4：只有一个点的度数等于3,记三条链的长度分别为p、q、r
+，当且仅当$\frac{1}{p}+\frac{1}{q}+\frac{1}{r} \leq 1$有解
+
+otherwise：无解
