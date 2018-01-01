@@ -1,0 +1,38 @@
+A. Three Servers
+----------------
+
+B. Game on Bipartite Graph
+--------------------------
+
+C. Black and White Board
+------------------------
+
+D. Catenary
+-----------
+
+E. Evacuation Plan
+------------------
+
+F. Empty Vessels
+----------------
+
+G. Maximum Product
+------------------
+
+H. Biathlon 2.0 \[skyxuan\]
+---------------------------
+
+要求两个向量点积最小，对一个向量求下凸壳，另一个向量按极角排序，之后就可以$two-pointer$来做了
+
+I. Archaeological Research \[skyxuan\]
+--------------------------------------
+
+限制条件可以转化为求区间的MEX，通过线段树维护每个数字最后出现的位置。
+
+J.Sockets \[skyxuan\] \[rikoizz\]
+---------------------------------
+
+将设备按deep排序后，可以发现我们总可以取连续的后k个设备。所以二分取的设备的个数，贪心的来判断是否可行。判断时贪心的将插口数量多的插座尽量往前放。
+
+K. Toll Roads
+-------------
