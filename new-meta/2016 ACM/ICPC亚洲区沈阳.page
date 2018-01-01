@@ -15,7 +15,7 @@ At last, this functional heap imply another graph, with constant degree
 for each node and negative cost for each edge. In using priority queue,
 we can find the kth longest path in O(k log n).
 
-[M.cpp](2016.10.31%20M.cpp)
+[M.cpp](2016.10.31 M.cpp)
 
 I. The Elder
 ============
@@ -24,4 +24,4 @@ I. The Elder
 
 **做法：**树分治+斜率优化。每次分治有一个入口$u$（一开始为根），先递归分治$u$所在的子树，计算得到$u$到分治中心路径组成的凸包，然后更新别的子树每个点的答案。再把每个子树的根作为入口继续分治。
 
-[Code](2016.10.31%20I.cpp)
+[Code](2016.10.31 I.cpp)
