@@ -1,0 +1,58 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(333333);
+int ans[N];
+struct Node {
+    int mx;
+    Node * s[2];
+    Node(int mx, Node * le, Node * ri) : mx(mx) {
+        s[0] = le; s[1] = ri;
+    }
+    int find(int le, int ri, int qr) {
+        if(ri <= qr) 
+            return mx;
+        int mid(le + ri >> 1);
+        int res(s[0]->find(le, mid, qr));
+        if(qr >= mid + 1)
+            res = max(res, s[1]->find(mid + 1, ri, qr));
+        return res;
+    }
+    Node * insert(int le, int ri, int val, int posi) {
+        if(le == ri)
+            return new Node(max(val, mx), s[0], s[1]);
+        int mid(le + ri >> 1);
+        if(posi <= mid)
+            return new Node(max(val, mx), s[0]->insert(le, mid, val, posi), s[1]);
+        else
+            return new Node(max(val, mx), s[0], s[1]->insert(mid + 1, ri, val, posi));
+    }
+} * rt[N];
+Node * build(int le, int ri) {
+    if(le == ri) {
+        return new Node(0, 0, 0);
+    }else {
+        return new Node(0, build(le, le + ri >> 1), build((le + ri) / 2 + 1, ri));
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    rt[0] = build(0, n);
+    ans[0] = 0;
+    for(int i(1); i <= n; i++) {
+        int x;
+        scanf("%d", &x);
+        if(x > 0) {
+            ans[i] = x;
+            rt[i] = rt[i - 1]->insert(0, n, i, 0);
+        } else {
+            int prv(rt[i - 1]->find(0, n, -x - 1) - 1);
+            ans[i] = ans[prv];
+            rt[i] = rt[prv]->insert(0, n, i, -x);
+        }
+        printf("%d\n", ans[i]);
+    }
+}
+```
