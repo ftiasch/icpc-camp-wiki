@@ -1,0 +1,381 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <map>
+#include <cassert>
+#include <iostream>
+
+const int INF = 2e9;
+const int DEBUG = 0;
+const int CHECK = 0;
+
+int GLOBAL_J;
+
+long long sqr(long long x) {
+    return x * x;
+}
+
+long long lower_sqrt(long long l) {
+    long long ret = (long long)sqrt(1. * l);
+    //std::cout << l << " " << ret << std::endl;
+    assert(1LL * ret * ret <= l);
+    while (1LL * (ret + 1) * (ret + 1) <= l) ret++;
+    return ret;
+}
+
+struct Point {
+    long long x, y;
+    Point(long long x = 0, long long y = 0) : x(x), y(y) {}
+    inline Point friend operator -(const Point &a, const Point &b) {
+        return Point(a.x - b.x, a.y - b.y);
+    }
+    inline Point friend operator +(const Point &a, const Point &b) {
+        return Point(a.x + b.x, a.y + b.y);
+    }
+    inline Point friend operator *(const Point &a, const long long k) {
+        return Point(a.x * k, a.y * k);
+    }
+    inline bool friend operator <(const Point &a, const Point &b) {
+        return a.x == b.x ? a.y < b.y : a.x < b.x;
+    }
+    long long lower() {
+        long long l = x * x + y * y;
+        return lower_sqrt(l);
+    }
+    long long dist2(Point o = Point(0, 0)) {
+        return (o.x - x) * (o.x - x) + (o.y - y) * (o.y - y);
+    }
+    double length() {
+        return std::sqrt(dist2(Point(0, 0)));
+    }
+    double atan2() {
+        return std::atan2(y, x);
+    }
+    long long get_y(Point dir) {
+        double r = sqrt(x * x + y * y);
+        double angle = fabs(dir.atan2() - this->atan2());
+        double ds = std::max(std::cos(angle) * r, 0.);
+if (DEBUG) printf("ds = %f\n", ds);
+        return (long long)(dir.y / dir.length() * ds * 2);
+    }
+    bool contain(Point o) {
+        return this->dist2(o) <= this->dist2(Point(0, 0));
+    }
+    Point rotate() {
+        Point ret(*this);
+        std::swap(ret.x, ret.y);
+        ret.y = -ret.y;
+        return ret;
+    }
+    long long left(long long yy) {
+        long long d = this->dist2(Point(0, 0));
+        d -= (y - yy) * (y - yy);
+        if (d < 0) {
+            return INF;
+        } else {
+            return x - lower_sqrt(d);
+        }
+    }
+    long long right(long long yy) {
+        long long d = this->dist2(Point(0, 0));
+        d -= (y - yy) * (y - yy);
+        if (d < 0) {
+            return -INF;
+        } else {
+            return x + lower_sqrt(d);
+        }
+    }
+    void show() {
+        printf("  (%lld, %lld)\n", x, y);
+    }
+    int detect(Point p, int sign, long long len) {
+        // (p.x + sign * sqrt(len), p.y)
+        // x - sqrt(l) < p.x + sign * sqrt(len) ?
+        long long l = this->dist2();
+        l -= sqr(y - p.y);
+        if (l < 0) return 0;
+        int ret = 0;
+        const long double eps = 1e-8;
+        long double t = (long double)p.x + sign * sqrt(len);
+        long double lsqrt = sqrt(l);
+        if (x - lsqrt + eps < t && x + lsqrt >= t) ret |= 1;
+        if (x + lsqrt - eps > t && x - lsqrt <= t) ret |= 2;
+        //printf("detect x, y = (%lld %lld), p = (%lld - %d * sqrt(%lld), %lld)", x, y, p.x, sign, len, p.y);
+        return ret;
+    }
+};
+
+long long det(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
+}
+
+long long dot(const Point &a, const Point &b) {
+    return a.x * b.x + a.y * b.y;
+}
+
+int n;
+std::vector<Point> points;
+
+std::vector<Point> get_convex(std::vector<Point> &points) {
+    sort(points.begin(), points.end());
+    std::vector<Point> ret;
+    for (int i = 0; i < points.size(); i++) {
+        while (ret.size() > 1 && det(ret.back() - ret[ret.size() - 2], points[i] - ret[ret.size() - 2]) <= 0) {
+            ret.pop_back();
+        }
+        ret.push_back(points[i]);
+    }
+    for (int i = points.size() - 2, t = ret.size(); i >= 0; i--) {
+        while (ret.size() > t && det(ret.back() - ret[ret.size() - 2], points[i] - ret[ret.size() - 2]) <= 0) {
+            ret.pop_back();
+        }
+        ret.push_back(points[i]);
+    }
+    if (ret.size() > 1) {
+        ret.pop_back();
+    }
+    return ret;
+}
+
+bool in_range(Point la, Point lb, Point v) {
+    if (det(la, lb) >= 0) {
+        return det(la, v) >= 0 && det(v, lb) > 0;
+    } else {
+        v = v * -1;
+        std::swap(la, lb);
+        return !(det(la, v) >= 0 && det(v, lb) > 0);
+    }
+}
+
+// a - b * sqrt(c)
+int get_sign(long long a, long long b, long long c) {
+    if ((a >= 0 && b >= 0) || (a <= 0 && b <= 0)) {
+        __int128 aa = a; aa = aa * aa;
+        __int128 bb = b; bb = bb * bb * c;
+        int sign = aa - bb < 0 ? -1 : aa - bb > 0;
+        return (a >= 0 && b >= 0) ? sign : -sign;
+    }
+    if (a < 0) {
+        assert(b > 0);
+        return -1;
+    } else if (a > 0) {
+        assert(b < 0);
+        return 1;
+    } else {
+        assert(false);
+        return -1000;
+    }
+}
+
+//  v.x + sign * sqrt(abs(len)), v.y
+bool in_range(Point la, Point lb, Point v, long long len) {
+    long long sign = len < 0 ? -1 : len > 0;
+    if (len < 0) len = -len;
+    int rev = 0;
+    if (!(det(la, lb) >= 0)) {
+        v = v * -1;
+        std::swap(la, lb);
+        rev = 1;
+    }
+    assert(det(la, lb) >= 0);
+        //return det(la, v) >= 0 && det(v, lb, len) > 0;
+    return (get_sign(det(la, v), sign * la.y, len) >= 0 &&
+        get_sign(det(v, lb), -sign * lb.y, len) > 0) ^ rev;
+        //return det(la, v) - sign * sqrt(len) * la.y >= 0 && ;
+}
+
+// a X (b.x + sign * sqrt(len), b.y)
+int det_sign(Point a, Point b, long long len) {
+    long long sign = len < 0 ? -1 : len > 0;
+    if (len < 0) len = -len;
+    return get_sign(det(a, b), sign * a.y, len);
+}
+
+bool in_range(double l, double r, double x) {
+    const double eps = 1e-10;
+    if (l < x + eps && x - eps < r) return true;
+    if (r + eps < l && (x < r + eps || x > l - eps)) return true;
+    return false;
+}
+
+void detect(Point p, long long len, Point c1, Point c2, Point c3,
+    std::vector<std::pair<int, int>> &tmp, long long pos) {
+
+    int sign = len < 0 ? -1 : len > 0;
+    len = (len < 0) ? -len : len;
+    // (p.x + sign * sqrt(len), p.y)
+    int mask = c1.detect(p, sign, len);
+    mask |= c2.detect(p, sign, len);
+    mask |= c3.detect(p, sign, len);
+    if ((mask & 1) == 0) tmp.push_back({pos, 1});
+    if ((mask & 2) == 0) tmp.push_back({pos + 1, -1});
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        y = -y;
+        points.push_back(Point(x, y));
+    }
+    points = get_convex(points);
+    n = points.size();
+if (DEBUG) {
+    printf("convex : \n");
+    for (int i = 0; i < n; i++) {
+        printf("(%lld, %lld)\n", points[i].x, points[i].y);
+    }
+    puts("");
+}
+    if (n == 1) {
+        long long answer = 0;
+        for (int y = points[0].y - points[0].lower(); y <= points[0].y + points[0].lower(); y++) {
+            std::pair<int, int> pair = {points[0].left(y), points[0].right(y)};
+            if (pair.first <= pair.second) {
+                answer += pair.second - pair.first + 1;
+            }
+        }
+        std::cout << answer << std::endl;
+        return 0;
+    }
+
+    std::map<int, std::vector<std::pair<int, int>> > events;
+    for (int i = 0; i < n; i++) {
+        Point left = points[(i + n - 1) % n], right = points[(i + 1) % n];
+        Point lp = (points[i] - left).rotate(), rp = (right - points[i]).rotate();
+if (DEBUG) printf("lp = "), lp.show();
+if (DEBUG) printf("rp = "), rp.show();
+        double up = points[i].get_y(lp), down = points[i].get_y(rp);
+        if (up < down) {
+            std::swap(up, down);
+        }
+        long long uup = (long long)(up + 1);
+        long long ddw = (long long)(down - 1);
+        if (in_range(lp, rp, Point(points[i].x, points[i].y - points[i].lower()))) {
+            ddw = std::min(ddw, points[i].y - points[i].lower());
+        }
+        if (in_range(lp, rp, Point(points[i].x, points[i].y + points[i].lower()))) {
+            uup = std::max(uup, points[i].y + points[i].lower());
+        }
+if (DEBUG) printf("%d %lld %lld\n", i, ddw, uup);
+        for (int j = ddw; j <= uup; j++) {
+            GLOBAL_J = j;
+            std::vector<std::pair<int, int>> &tmp = events[j];
+            std::pair<int, int> pair = {points[i].left(j), points[i].right(j)};
+            if (pair.first <= pair.second) {
+                long long len = points[i].dist2() - sqr(points[i].y - j);
+                if (len < 0) continue;
+                if (in_range(lp, rp, Point(points[i].x, j), -len)) {
+                    if (det_sign(lp, Point(points[i].x, j), -len) == 0 ||
+                        det_sign(rp, Point(points[i].x, j), -len) == 0) {
+                        detect(Point(points[i].x, j), -len, left, points[i], right, tmp, pair.first);
+                    } else {
+                        tmp.push_back({pair.first, 1});
+                    }
+                }
+                if (in_range(lp, rp, Point(points[i].x, j), len)) {
+                    if (det_sign(lp, Point(points[i].x, j), len) == 0 ||
+                        det_sign(rp, Point(points[i].x, j), len) == 0) {
+                        detect(Point(points[i].x, j), len, left, points[i], right, tmp, pair.second);
+                    } else {
+                        tmp.push_back({pair.second + 1, -1});
+                    }
+                }
+            }
+        }
+    }
+    events[0].clear();
+    for (auto p : points) {
+        std::pair<int, int> pair = {p.left(0), p.right(0)};
+        if (pair.first <= pair.second) {
+            events[0].push_back({pair.first, 1});
+            events[0].push_back({pair.second + 1, -1});
+        }
+    }
+if (DEBUG) puts("");
+    long long answer = 0;
+    std::map<int, int> cnt;
+    for (auto &v : events) {
+        auto &vec = v.second;
+        std::sort(vec.begin(), vec.end());
+if (DEBUG) {
+    printf("y = %d\n", v.first);
+    for (auto p : vec) {
+        printf("(%d, %d)\n", p.first, p.second);
+    }
+}
+        int times = 0;
+        long long bak = answer;
+        for (int i = 0, j; i < vec.size(); i = j) {
+            for (j = i; j < vec.size() && vec[j].first == vec[i].first; j++) {
+                times += vec[j].second;
+            }
+            if (j == vec.size()) {
+                if (times != 0) {
+                    printf("y = %d\n", v.first);
+                    for (int k = 0; k < vec.size(); k++) {
+                        printf("(%d, %d)\n", vec[k].first, vec[k].second);
+                    }
+                    printf("WA here!\n");
+                    exit(0);
+                }
+                assert(times == 0);
+            } else {
+                answer += (times > 0) ? vec[j].first - vec[i].first : 0;
+            }
+        }
+        cnt[v.first] = answer - bak;
+if (DEBUG) {
+    printf("delta = %lld\n", answer - bak);
+    puts("");
+}
+    }
+    std::cout << answer << std::endl;
+    if (CHECK) {
+        long long ret = 0;
+        long long l = INF, u = -INF, r = -INF, d = INF;
+        for (auto p : points) {
+            int ll = p.lower();
+            l = std::min(l, p.x - ll);
+            r = std::max(r, p.x + ll);
+            u = std::max(u, p.y + ll);
+            d = std::min(d, p.y - ll);
+        }
+        for (int y = d; y <= u; y++) {
+            int delta = 0;
+            for (int x = l; x <= r; x++) {
+                bool flag = false;
+                for (auto p : points) {
+                    if (p.contain(Point(x, y))) {
+                        flag = true;
+                        break;
+                    }
+                }
+                ret += flag;
+                delta += flag;
+            }
+            if (cnt[y] != delta) {
+                printf("WA in y = %d\n", y);
+                printf("correct answer is %d, whereas your answer is %d\n", delta, cnt[y]);
+                for (auto p : events[y]) {
+                    printf("(%d, %d)\n", p.first, p.second);
+                }
+                exit(0);
+            }
+        }
+        if (answer == ret) {
+            puts("OK! You are right");
+        } else {
+            puts("No");
+            printf("correct answer is %lld\n", ret);
+        }
+    }
+    return 0;
+}
+```
