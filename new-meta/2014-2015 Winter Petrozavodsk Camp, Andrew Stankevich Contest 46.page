@@ -8,7 +8,7 @@ C. Catalan Numbers
 只要知道从一个点有多少条边转移到另外一个点就行. 然后暴搜.
 发现答案里只有不超过4个点, 7种字符.
 
-[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2046%20C.cpp)
+[code](2014-2015 Winter Petrozavodsk Camp, Andrew Stankevich Contest 46 C.cpp)
 
 H. Heavy Light Decomposition
 ============================
@@ -25,4 +25,4 @@ size这么多个删除操作才可能成为关键事件点。而这个是$O(n \l
 
 直接看代码吧，不多说了。
 
-[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2046%20H.cpp)
+[code](2014-2015 Winter Petrozavodsk Camp, Andrew Stankevich Contest 46 H.cpp)
