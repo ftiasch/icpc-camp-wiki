@@ -1,0 +1,12 @@
+[CF665 F](http://codeforces.com/contest/665/problem/F)
+
+[hdu5901](http://acm.hdu.edu.cn/showproblem.php?pid=5901)
+
+count 1-n中素数个数($n \leq 1e11$)
+
+sol:
+先来一个简单易写的$\frac{n^{\frac{3}{4}}}{\log{n}}$算法，思想参见[wiki](https://zh.wikipedia.org/wiki/%E7%B4%A0%E6%95%B0%E8%AE%A1%E6%95%B0%E5%87%BD%E6%95%B0)，就是记f\[i\]\[j\]表示前i个数字中去除前j个数字的倍数剩下的个数。
+
+现在设m是不超过$n^{0.5}$的最大数，考虑到每个合数都有一个不超过m的约数，我们枚举每个合数的最小约数i,并记f\[j\]为当前1-i中质数已经筛外之后1-$\frac{n}{j}$中剩余数字个数，g\[j\]为当前1-i中质数已经筛外之后1-j中剩余数字个数，然后Dp
+
+[贴上代码]()
