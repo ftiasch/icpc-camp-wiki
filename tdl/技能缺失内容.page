@@ -1,0 +1,55 @@
+可以根据重要程度、上手难度等更改优先级，保证由上到下为优先级从高到低。接锅后在知识点后面加上自己的id。
+
+必须掌握的
+----------
+
+-   完全单调性
+-   插头DP
+-   树上莫队
+-   Splay的各种操作 `constroy`
+-   Link-cut Tree `constroy`
+-   替罪羊树 `constroy`
+-   左偏树
+-   k短路 `constroy`
+-   Dominantor Tree `constroy`
+-   带花树
+-   一类可行流 `Skywalkert`
+-   线性规划转费用流 `Skywalkert`
+-   原始对偶
+-   单纯形 `Skywalkert`
+-   动态线性基 `Skywalkert`
+-   回文自动机
+-   后缀自动机
+-   Minkowski Sum
+-   三维凸包
+-   平面图相关
+-   李超树
+-   三角剖分
+
+可能需要的
+----------
+
+-   完美消除序列
+-   Top Tree
+-   Boder Tree
+-   PQ Tree
+-   SPQR Tree
+-   不平等博弈
+-   后缀平衡树
+-   Basic Factor Dictionary
+-   Lyndon Words Generation
+-   回文串划分
+-   拉格朗日反演 `Skywalkert`
+-   常规积性函数求和
+-   模拟退火
+-   平面嵌入
+
+已经掌握的
+----------
+
+-   Z Algorithm `Skywalkert`
+-   三元环枚举 `Skywalkert`
+-   虚树 `Skywalkert`
+-   可持久化KMP `Skywalkert`
+-   DP套DP `Skywalkert`
+
