@@ -1,0 +1,211 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int INF = 0x3f3f3f3f;
+struct res
+{
+    int mi, ma;
+    //long long sum;
+    int sum;
+    //res(int mi = INF, int ma = -INF, long long sum = 0) : mi(mi), ma(ma), sum(sum) {}
+    res(int mi = INF, int ma = -INF, int sum = 0) : mi(mi), ma(ma), sum(sum) {}
+};
+res mmerge(const res &a, const res &b)
+{
+    return res(min(a.mi, b.mi), max(a.ma, b.ma), a.sum + b.sum);
+}
+struct node
+{
+    int tag;
+    res a;
+    node *L, *R;
+    node(node *L = NULL, node *R = NULL) : L(L), R(R), a() {tag = 0;}
+};
+const int N = 5e4 + 5;
+int d[N];
+node pool[5000000], *tot;
+node* root[N];
+node* build(int l, int r)
+{
+    if (l > r) return NULL;
+    node* cur = tot ++;
+    //cur -> l = l;
+    //cur -> r = r;
+    cur -> tag = 0;
+    if (l == r)
+    {
+        cur -> tag = (cur -> a).sum = (cur -> a).mi = (cur -> a).ma = d[l];
+        cur -> L = cur -> R = 0;
+        return cur;
+    }
+    int mid = (l + r) / 2;
+    cur -> L = build(l, mid);
+    cur -> R = build(mid + 1, r);
+    cur -> a = mmerge(cur -> L -> a, cur -> R -> a);
+    return cur;
+}
+res query(node* cur, int l, int r, int cl, int cr, int tag)
+{
+    if (!cur || cr < l || cl > r) return res();
+    if (l <= cl && cr <= r)
+    {
+        return res((cur -> a).mi + tag, (cur -> a).ma + tag, (cur -> a).sum + tag * (cr - cl + 1));
+    }
+    tag += cur -> tag;
+    int mid = (cl + cr) / 2;
+    return mmerge(query(cur -> L, l, r, cl, mid, tag), query(cur -> R, l, r, mid + 1, cr, tag));
+}
+node* add(node* cur, int l, int r, int cl, int cr, int tag)
+{
+    if (!cur || cr < l || cl > r || l > r) return cur;
+    node *tmp = tot ++;
+    *tmp = *cur;
+    int mid = (cl + cr) / 2;
+    if (l > cl || cr > r)
+    {
+        tmp -> L = add(tmp -> L, l, r, cl, mid, tag);
+        tmp -> R = add(tmp -> R, l, r, mid + 1, cr, tag);
+        tmp -> a = mmerge(tmp -> L -> a, tmp -> R -> a);
+        (tmp -> a).mi += tmp -> tag;
+        (tmp -> a).ma += tmp -> tag;
+        (tmp -> a).sum += tmp -> tag * (cr - cl + 1);
+        //printf("%d - %d : %d %d\n", tmp -> l, tmp -> r, (tmp -> L -> a).mi, (tmp -> R -> a).mi);
+    }
+    else
+    {
+        tmp -> tag += tag;
+        (tmp -> a).mi += tag;
+        (tmp -> a).ma += tag;
+        (tmp -> a).sum += tag * (cr - cl + 1);
+    }
+    return tmp;
+}
+
+int L[N], R[N], cnt;
+vector<int> G[N];
+int dfs(int x, int p = -1, int deep = 0)
+{
+    L[x] = R[x] = ++ cnt;
+    d[cnt] = deep;
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == p) continue;
+        R[x] = dfs(u, x, deep + 1);
+    }
+    return R[x];
+}
+void dfs2(int x, int p = -1)
+{
+    if (x != 1)
+    {
+        //printf("%d : %d - %d\n", x, L[x], R[x]);
+        root[x] = add(root[p], L[x], R[x], 1, cnt, -1);
+        //printf("%d : %d - %d\n", x, 1, L[x] - 1);
+        root[x] = add(root[x], 1, L[x] - 1, 1, cnt, 1);
+        //printf("%d : %d - %d\n", x, R[x] + 1, cnt);
+        root[x] = add(root[x], R[x] + 1, cnt, 1, cnt, 1);
+        //printf("init %d : %lld %d %d\n", x, (root[x] -> a).sum, (root[x] -> a).mi, (root[x] -> a).ma);
+    }
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == p) continue;
+        dfs2(u, x);
+    }
+}
+void clear(int n)
+{
+    cnt = 0;
+    tot = pool;
+}
+void init(int n)
+{
+    dfs(1);
+    root[1] = build(1, n);
+    dfs2(1);
+}
+int main()
+{
+    int n, m;
+    while (scanf("%d%d", &n, &m) == 2)
+    {
+        clear(n);
+        for (int i = 1; i < n; ++ i)
+        {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        init(n);
+        int las = 0;
+        while (m --)
+        {
+            int k, p, t;
+            vector<pair<int, int> > seg;
+            scanf("%d%d%d", &k ,&p, &t);
+            p = (p + las) % n + 1;
+            //printf("p=%d\n", p);
+            seg.push_back(make_pair(0, 0));
+            seg.push_back(make_pair(n + 1, n + 1));
+            for (int i = 0; i < k; ++ i)
+            {
+                int a;
+                scanf("%d", &a);
+                seg.push_back(make_pair(L[a], R[a]));
+                //printf("pb %d %d\n", L[a], R[a]);
+            }
+            res ans = res();
+            sort(seg.begin(), seg.end());
+            int RI = 0;
+            bool ever = 0;
+            for (int i = 1; i < (int) seg.size(); ++ i)
+            {
+                if (seg[i].first - RI - 1 > 0)
+                {
+                    //printf("seg : %d %d\n", RI + 1, seg[i].first - 1, 0);
+                    ans = mmerge(ans, query(root[p], RI + 1, seg[i].first - 1, 1, n, 0));
+                    ever = 1;
+                }
+                RI = max(RI, seg[i].second);
+            }
+            //printf("%lld %d %d\n", ans.sum, ans.mi, ans. ma);
+            if (!ever)
+            {
+                puts("-1");
+                las = 0;
+            }
+            else if (t == 1)
+            {
+                //printf("%I64d\n", ans.sum);
+                //printf("%lld\n", ans.sum);
+                printf("%d\n", ans.sum);
+                las = ans.sum;
+            }
+            else if (t == 2)
+            {
+                printf("%d\n", ans.mi);
+                las = ans.mi;
+            }
+            else
+            {
+                printf("%d\n", ans.ma);
+                las = ans.ma;
+            }
+        }
+        for (int i = 1; i <= n; ++ i)
+        {
+            vector<int> emp;
+            G[i].swap(emp);
+        }
+    }
+}
+```
