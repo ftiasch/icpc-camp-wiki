@@ -1,0 +1,92 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 2e5 + 5, B = 331, INF = 1e9;
+vector<int> G[N];
+int a[N], sum[N], par[N], top[N], val[N];
+vector<int> has[N];
+bool need[N];
+int fat(int x) {
+    if (val[x] != INF) return top[x];
+    if (par[x] == x) {
+        val[x] = a[x];
+        top[x] = x;
+    }
+    else {
+        top[x] = fat(par[x]);
+        val[x] = val[top[x]];
+        if (need[x]) top[x] = x;
+    }
+    //has[top[x]].push_back(x);
+    return top[x];
+}
+int tick[N], xxx;
+int jump(int x) {
+    if (tick[x] == xxx || x == par[x]) return val[x];
+    tick[x] = xxx;
+    return val[x] = jump(top[par[x]]);
+}
+int main() {
+    int n, q;
+    scanf("%d%d", &n, &q);
+    for (int i = 1; i <= n; ++ i) {
+        scanf("%d", &a[i]);
+        par[i] = i;
+    }
+    vector<tuple<char, int, int>> op;
+    vector<int> nod;
+    for (int o = 0; o < q; o += B) {
+        int len = min(B, q - o);
+        op.clear();
+        nod.clear();
+        for (int i = 1; i <= n; ++ i) {
+            need[i] = 0;
+            val[i] = INF;
+            //vector<int> emp;
+            //has[i].swap(emp);
+            has[i].clear();
+        }
+        for (int i = 0; i < len; ++ i) {
+            char s[5];
+            int x, y;
+            scanf("%s%d%d", s, &x, &y);
+            op.push_back(make_tuple(s[1], x, y));
+            if (s[1] != 'u') {
+                if (!need[x]) nod.push_back(x);
+                need[x] = 1;
+            }
+        }
+        for (int i = 1; i <= n; ++ i) {
+            fat(i);
+            sum[i] = sum[i - 1];
+            if (!need[top[i]]) sum[i] += val[i];
+        }
+        //for (int u : nod) sort(has[u].begin(), has[u].end());
+        for (int i = 1; i <= n; ++ i) if (need[top[i]]) has[top[i]].push_back(i);
+        for (auto t : op) {
+            char type;
+            int x, y;
+            tie(type, x, y) = t;
+            if (type == 'e') {
+                par[x] = x;
+                ++ xxx;
+                a[x] = val[x] = y;
+                for (int u : nod) jump(u);
+            }
+            else if (type == 'i') {
+                par[x] = y;
+                ++ xxx;
+                for (int u : nod) jump(u);
+                a[x] = val[x];
+            }
+            else {
+                int ans = sum[y] - sum[x - 1];
+                for (int u : nod) {
+                    ans += val[u] * (upper_bound(has[u].begin(), has[u].end(), y) - lower_bound(has[u].begin(), has[u].end(), x));
+                }
+                printf("%d\n", ans);
+            }
+        }
+    }
+}
+```
