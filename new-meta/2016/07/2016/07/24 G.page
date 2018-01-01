@@ -1,0 +1,270 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+#include <queue>
+using namespace std;
+const int N = 505, INF = 0x3f3f3f3f;
+int w[N][N], x[N], y[N];
+int prev_x[N], prev_y[N], son_y[N], slack[N], par[N];
+int lx, ly, pop;
+void adjust(int v)
+{
+    son_y[v] = prev_y[v];
+    if (prev_x[son_y[v]] != -2) adjust(prev_x[son_y[v]]);
+}
+bool find(int v)
+{
+    for (int i = 0; i < pop; ++ i)
+    {
+        if (prev_y[i] == -1)
+        {
+            if (slack[i] > x[v] + y[i] - w[v][i])
+            {
+                slack[i] = x[v] + y[i] - w[v][i];
+                par[i] = v;
+            }
+            if (x[v] + y[i] == w[v][i])
+            {
+                prev_y[i] = v;
+                if (son_y[i] == -1)
+                {
+                    adjust(i);
+                    return true;
+                }
+                if (prev_x[son_y[i]] != -1) continue;
+                prev_x[son_y[i]] = i;
+                if (find(son_y[i])) return true;
+            }
+        }
+    }
+    return false;
+}
+int km()
+{
+    /*memset(x, 0, sizeof(x));
+      memset(y, 0, sizeof(y));
+      memset(prev_x, 0, sizeof(prev_x));
+      memset(prev_y, 0, sizeof(prev_y));
+      memset(son_y, 0, sizeof(son_y));
+      memset(slack, 0, sizeof(slack));
+      memset(par, 0, sizeof(par));
+      lx = ly = 0;*/
+    int j, m;
+    for (int i = 0; i < pop; ++ i)
+    {
+        son_y[i] = -1;
+        y[i] = 0;
+    }
+    for (int i = 0; i < pop; ++ i)
+    {
+        x[i] = 0;
+        for (int j = 0; j < pop; ++ j)
+        {
+            x[i] = max(x[i], w[i][j]);
+        }
+    }
+    bool flag;
+    for (int i = 0; i < pop; ++ i)
+    {
+        for (j = 0; j < pop; ++ j)
+        {
+            prev_x[j] = prev_y[j] = -1;
+            slack[j] = INF;
+        }
+        prev_x[i] = -2;
+        if (find(i)) continue;
+        flag = false;
+        while (!flag)
+        {
+            m = INF;
+            for (j = 0; j < pop; ++ j)
+            {
+                if (prev_y[j] == -1)
+                {
+                    m = min(m, slack[j]);
+                }
+            }
+            for (int j = 0; j < pop; ++ j)
+            {
+                if (prev_x[j] != -1) x[j] -= m;
+                if (prev_y[j] != -1) y[j] += m;
+                else slack[j] -= m;
+            }
+            for (j = 0; j < pop; ++ j)
+            {
+                if (prev_y[j] == -1 && !slack[j])
+                {
+                    prev_y[j] = par[j];
+                    if (son_y[j] == -1)
+                    {
+                        adjust(j);
+                        flag = true;
+                        break;
+                    }
+                    prev_x[son_y[j]] = j;
+                    if (find(son_y[j]))
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    int ans = 0;
+    for (int i = 0; i < pop; ++ i) ans += w[son_y[i]][i];
+    return ans;
+}
+
+char c[N], ctmp[N];
+vector<int> G[N];
+int lr[N];
+vector<int> p;
+bool dfs(int x, int col = 0)
+{
+    if (lr[x] != -1) return lr[x] != col;
+    lr[x] = col;
+    p.push_back(x);
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (dfs(u, col ^ 1)) return 1;
+    }
+    return 0;
+}
+vector<pair<int, int> > ans, ans1, ans2;
+int d[N], h[N];
+void bfs(int s, int n)
+{
+    queue<int> q;
+    for (int i = 1; i <= n; ++ i) d[i] = -1;
+    d[s] = 0;
+    q.push(s);
+    while (!q.empty())
+    {
+        int p = q.front(); q.pop();
+        for (int i = 0; i < (int) G[p].size(); ++ i)
+        {
+            int u = G[p][i];
+            if (d[u] != -1) continue;
+            d[u] = d[p] + 1;
+            h[u] = p;
+            q.push(u);
+        }
+    }
+}
+bool work(int ty, vector<pair<int, int> > &ans, int n)
+{
+    vector<int> L, R;
+    for (int i = 0; i < (int) p.size(); ++ i)
+    {
+        int u = p[i];
+        if (c[u] == '0' && lr[u] == ty) L.push_back(u);
+        if (c[u] == '1' && lr[u] == (ty ^ 1)) R.push_back(u);
+    }
+    if (L.size() != R.size()) return 0;
+    pop = L.size();
+    for (int i = 0; i < pop; ++ i)
+    {
+        int st = L[i];
+        bfs(st, n);
+        for (int j = 0; j < pop; ++ j) w[i][j] = -d[R[j]];
+    }
+    /*printf("lr : "); for (int i = 1; i <= n; ++ i) printf("%d ", lr[i]); puts("");
+    printf("L : "); for (int i = 0; i < pop; ++ i) printf("%d ", L[i]); puts("");
+    printf("R : "); for (int i = 0; i < pop; ++ i) printf("%d ", R[i]); puts("");*/
+    km();
+    ans.clear();
+    for (int i = 1; i <= n; ++ i) ctmp[i] = c[i];
+    for (int i = 0; i < pop; ++ i)
+    {
+        int v = R[i];
+        int u = L[son_y[i]];
+        //printf("match %d %d\n", u, v);
+        bfs(u, n);
+        vector<int> path;
+        for (int j = v; j != u; j = h[j]) path.push_back(j);
+        path.push_back(u);
+        reverse(path.begin(), path.end());
+        int las = 0;
+        for (int i = 1; i < (int) path.size(); ++ i)
+        {
+            if (ctmp[path[i]] != ctmp[path[las]])
+            {
+                for (int j = i; j > las; -- j)
+                {
+                    //printf("add %d %d\n", path[j], path[j - 1]);
+                    ans.push_back(make_pair(path[j], path[j - 1]));
+                    swap(ctmp[path[j]], ctmp[path[j - 1]]);
+                }
+                las = i;
+            }
+        }
+    }
+    return 1;
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        scanf("%s", c + 1);
+        for (int i = 1; i <= n; ++ i)
+        {
+            G[i].clear();
+            lr[i] = -1;
+        }
+        for (int i = 0; i < m; ++ i)
+        {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        bool nos = 0;
+        ans.clear();
+        for (int i = 1; i <= n; ++ i)
+        {
+            if (lr[i] != -1) continue;
+            p.clear();
+            if (dfs(i))
+            {
+                nos = 1;
+                break;
+            }
+            bool ok1 = work(0, ans1, n);
+            bool ok2 = work(1, ans2, n);
+            if (!ok1 || (ok2 && ans1.size() > ans2.size()))
+            {
+                ans1.swap(ans2);
+                swap(ok1, ok2);
+            }
+            if (ok1)
+            {
+                for (int i = 0; i < (int) ans1.size(); ++ i) ans.push_back(ans1[i]);
+            }
+            else
+            {
+                nos = 1;
+                break;
+            }
+        }
+        if (nos)
+        {
+            puts("-1");
+            continue;
+        }
+        printf("%d\n", (int) ans.size());
+        for (int i = 0; i < (int) ans.size(); ++ i) printf("%d %d\n", ans[i].first, ans[i].second);
+    }
+}
+```
