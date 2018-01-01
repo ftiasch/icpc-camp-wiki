@@ -1,0 +1,52 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+const int N = 55;
+double f[N][N][N][3][2];
+int v[N][N][N][3][2], xxx;
+double b1[2], b2[2], b3[2], d1[2], d2[2], d3[2];
+double fix(double p)
+{
+    if (p < 0.) return 0.; 
+    if (p > 1.) return 1.;
+    return p;
+}
+double dfs(int h, int A, int C, int top, int who = 0)
+{
+    double &ans = f[h][A][C][top][who];
+    int &vis = v[h][A][C][top][who];
+    if (A <= 1 && C < 1) return 0.;
+    if (vis == xxx) return ans;
+    vis = xxx;
+    ans = 0;
+    int add = (top + 1) / 3;
+    // A -> B
+    if (A > 1) ans = max(ans, fix(b1[who] - (h + !!top) * d1[who]) * (1 - dfs(h + add, A - 1 + add, C, (top + 1) % 3, who ^ 1)));
+    // A -> C
+    if (A > 1) ans = max(ans, fix(b2[who] - (h + !!top) * d2[who]) * (1 - dfs(h + add, A - 1 + add, C + 1, (top + 1) % 3, who ^ 1)));
+    // C -> D
+    if (C) ans = max(ans, fix(b3[who] - (h + !!top) * d3[who]) * (1 - dfs(h + add, A + add, C - 1, (top + 1) % 3, who ^ 1)));
+    //printf("h=%d A=%d C=%d top=%d who=%d : %.4f\n", h, A, C, top, who, ans);
+    return ans;
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n;
+        scanf("%d", &n);
+        xxx ++;
+        scanf("%lf%lf%lf%lf%lf%lf", &b1[0], &d1[0], &b2[0], &d2[0], &b3[0], &d3[0]);
+        scanf("%lf%lf%lf%lf%lf%lf", &b1[1], &d1[1], &b2[1], &d2[1], &b3[1], &d3[1]);
+        printf("%.4f\n", dfs(n, n, 0, 0));
+    }
+}
+```
