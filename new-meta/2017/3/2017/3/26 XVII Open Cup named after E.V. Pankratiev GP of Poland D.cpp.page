@@ -1,0 +1,124 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+struct Node{
+    Node *ch[2], *p;
+    int is_root, cnt;
+    long long val, lazy;
+    bool dir();
+    void set(Node*, bool);
+    void update();
+    void work(long long);
+    void relax();
+    Node() {}
+    Node(Node *L, Node *R, Node *p, long long val) : p(p), val(val) {
+        ch[0] = L, ch[1] = R;
+        lazy = 0;
+        is_root = 1;
+        cnt = 0;
+    }
+} *null;
+void rot(Node *t){
+    Node *p=t->p; bool d=t->dir();
+    p->relax(); t->relax(); p->set(t->ch[!d],d);
+    if(p->is_root) t->p=p->p,swap(p->is_root,t->is_root);
+    else p->p->set(t,p->dir());
+    t->set(p,!d); p->update();
+}
+void splay(Node *t){
+    for(t->relax();!t->is_root;)
+        if(t->p->is_root) rot(t);
+        else t->dir()==t->p->dir() ?(rot(t->p),rot(t)) :(rot(t),rot(t));
+    t->update();
+}
+bool Node::dir(){ return this==p->ch[1]; }
+void Node::set(Node *t,bool _d){ ch[_d]=t; t->p=this; }
+void Node::update(){
+    assert(!lazy);
+    cnt = ch[0] -> cnt + 1 + ch[1] -> cnt;
+}
+void Node::work(long long x) {
+    if (this == null) return;
+    val += x;
+    lazy += x;
+}
+void Node::relax() { if(this==null) return; if (lazy) {ch[0] -> work(lazy); ch[1] -> work(lazy); lazy = 0;} }
+
+const int N = 1e6 + 5;
+long long a[N], b[N], id[N];
+void dfs(Node *x, long long &ans) {
+    if (x == null) return;
+    x -> relax();
+    dfs(x -> ch[0], ans);
+    ans += x -> val;
+    //printf("%I64d\n", ans);
+    printf("%lld\n", ans);
+    dfs(x -> ch[1], ans);
+}
+Node *find(Node *x, long long a, long long b, int day = 0) {
+    if (x == null) return null;
+    x -> relax();
+    if (x -> val < a * (day + x -> ch[0] -> cnt) + b) {
+        Node *tmp = find(x -> ch[0], a, b, day);
+        if (tmp == null) return x; else return tmp;
+    }
+    return find(x -> ch[1], a, b, day + 1 + x -> ch[0] -> cnt);
+}
+int main() {
+    null = new Node(null, null, null, 0);
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++ i) {
+        //scanf("%I64d%I64d", &a[i], &b[i]);
+        scanf("%lld%lld", &a[i], &b[i]);
+        id[i] = i;
+    }
+    sort(id + 1, id + 1 + n, [&] (int i, int j) {return a[i] < a[j];});
+    Node *root = null;
+    for (int i = 1; i <= n; ++ i) {
+        long long a = ::a[id[i]];
+        long long b = ::b[id[i]];
+        Node *tmp = find(root, a, b);
+        if (tmp == null) {
+            root -> is_root = 0;
+            tmp = new Node(null, null, null, root -> cnt * a + b);
+            tmp -> set(root, 0);
+            tmp -> update();
+            root = tmp;
+        }
+        else {
+            splay(tmp);
+            root = tmp;
+            Node *tt = new Node(null, null, null, tmp -> ch[0] -> cnt * a + b);
+            tt -> update();
+            tt -> is_root = 0;
+            if (tmp -> ch[0] == null) {
+                tmp -> relax();
+                tmp -> set(tt, 0);
+                tmp -> update();
+                splay(tt);
+                root = tt;
+                tt -> ch[1] -> work(a);
+            }
+            else {
+                tmp -> relax();
+                tmp = tmp -> ch[0];
+                while (tmp -> ch[1] != null) {
+                    tmp -> relax();
+                    tmp = tmp -> ch[1];
+                }
+                tmp -> set(tt, 1);
+                while (tmp != null) {
+                    tmp -> update();
+                    tmp = tmp -> p;
+                }
+                splay(tt);
+                root = tt;
+                tt -> ch[1] -> work(a);
+            }
+        }
+    }
+    long long ans = 0;
+    dfs(root, ans);
+}
+```
