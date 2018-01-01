@@ -1,0 +1,113 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 5000 + 3;
+const int MOD = 1e9 + 7;
+
+#define left LEFT
+#define right RIGHT
+
+
+struct Node {
+    bool zero;
+    int v;
+    Node() {}
+    Node(int zero, int v) : zero(zero), v(v) {}
+    static int add(int a, int b) {
+        int c = a + b;
+        if (c >= MOD) c -= MOD;
+        return c;
+    }
+    friend Node operator +(const Node &a, const Node &b) {
+        return Node(a.zero & b.zero, add(a.v, b.v));
+    }
+    friend Node operator *(const Node &a, const Node &b) {
+        return Node(a.zero | b.zero, (int)(1LL * a.v * b.v % MOD));
+    }
+};
+
+int n, a[N];
+vector<int> right[N], left[N];
+Node f[N][N], C[N][N];
+
+Node dfs(int l, int r) {
+    if (l > r) return Node(false, 1);
+    return f[l][r];
+}
+
+int main() {
+    for (int i = 0; i < N; i++) {
+        C[i][0] = Node(false, 1);
+        for (int j = 1; j <= i; j++) {
+            C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
+        }
+    }
+    int tests;
+    scanf("%d", &tests);
+    while (tests--) {
+        scanf("%d", &n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &a[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            left[i].clear();
+            right[i].clear();
+            for (int j = i; j < n; j++) {
+                if (j - a[j] == i) {
+                    left[i].push_back(j);
+                }
+            }
+            for (int j = i; j >= 0; j--) {
+                if (j + a[j] == i) {
+                    right[i].push_back(j);
+                }
+            }
+            reverse(left[i].begin(), left[i].end());
+            reverse(right[i].begin(), right[i].end());
+        }
+
+        for (int len = 1; len <= n; len++) {
+            for (int l = 0; l + len <= n; l++) {
+                int r = l + len - 1;
+                if (l == r) {
+                    if (a[l] == 0) {
+                        f[l][r] = Node(false, 1);
+                    } else {
+                        f[l][r] = Node(true, 0);
+                    }
+                } else {
+                    Node &ret = f[l][r];
+                    ret = Node(true, 0);
+                    while (left[l].size() > 1 && left[l][left[l].size() - 2] <= r) left[l].pop_back();
+                    int first = -1, is_zero = 0;
+                    if (left[l].size()) {
+                        int p = left[l].back();
+                        if (r - p < a[p]) is_zero = 1;
+                        first = p;
+                        // cout << l << " " << r << " " << p << endl;
+                        ret = ret + C[r - l][p - l] * dfs(l, p - 1) * dfs(p + 1, r);
+                    }
+                    while (right[r].size() > 1 && right[r][right[r].size() - 2] >= l) right[r].pop_back();
+                    if (right[r].size() && right[r].back() != first) {
+                        int p = right[r].back();
+                        if (p - l < a[p]) is_zero = 1;
+                        // cout << l << " " << r << " " << p << endl;
+                        ret = ret + C[r - l][p - l] * dfs(l, p - 1) * dfs(p + 1, r);
+                    }
+                    if (is_zero) {
+                        ret = Node(true, 0);
+                    }
+                }
+            }
+        }
+        if (f[0][n - 1].zero) {
+            cout << "NO" << endl;
+        } else {
+            cout << f[0][n - 1].v << endl;
+        }
+    }
+    return 0;
+}
+```
