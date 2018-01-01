@@ -1,0 +1,119 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cstring>
+#include <string>
+#include <queue>
+
+using namespace std;
+
+const int N = 400000 + 7;
+const int LOG = 20, M = N * LOG;
+const long long INF = (1LL << 60);
+
+struct Fnode {
+    Fnode *son, *child[2];
+    long long tag;
+    int dep;
+    Fnode() {}
+    Fnode(Fnode *son, Fnode *lc, Fnode *rc, int tag) :
+        son(son), child{lc, rc}, tag(tag) {
+        dep = 0;
+    }
+};
+
+Fnode mem[M];
+Fnode *null;
+
+int tot;
+
+int n, k;
+int cost[N][2], color[N];
+
+Fnode *heap_merge(Fnode *a, Fnode *b) {
+    if (a == null) {
+        return b;
+    } else if (b == null) {
+        return a;
+    }
+    if (a->tag < b->tag) {
+        swap(a, b);
+    }
+    Fnode *aa = new(mem + tot++) Fnode(*a);
+    Fnode *bb = new(mem + tot++) Fnode(*b);
+    bb->tag -= aa->tag;
+    aa->child[1] = heap_merge(aa->child[1], bb);
+    if (aa->child[0]->dep < aa->child[1]->dep) {
+        swap(aa->child[0], aa->child[1]);
+    }
+    aa->dep = aa->child[1]->dep + 1;
+    return aa;
+}
+
+Fnode *merge(Fnode *a, Fnode *b) {
+    if (a->tag < b->tag) {
+        swap(a, b);
+    }
+    Fnode *aa = new(mem + tot++) Fnode(*a);
+    Fnode *bb = new(mem + tot++) Fnode(*b);
+    bb->tag -= aa->tag;
+    aa->son = heap_merge(aa->son, bb);
+    return aa;
+}
+
+long long kth(Fnode *u) {
+    priority_queue<pair<long long, Fnode*> > q;
+    q.push(make_pair(u->tag, u));
+    for (int i = 1; i < k; i++) {
+        long long cur = q.top().first;
+        Fnode *node = q.top().second;
+        q.pop();
+        if (node == null) {
+            i--;
+            continue;
+        }
+        for (int c = 0; c < 2; c++) {
+            q.push(make_pair(node->child[c]->tag + cur, node->child[c]));   
+        }
+        q.push(make_pair(node->son->tag + cur, node->son));
+    }
+    return q.top().first;
+}
+
+void prepare() {
+    null = new Fnode(NULL, NULL, NULL, 0);
+}
+
+int main() {
+    prepare();
+    int test;
+    scanf("%d", &test);
+    while (test--) {
+        tot = 0;
+        scanf("%d %d", &n, &k);
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d %d", &cost[i][0], &cost[i][1], &color[i]);
+        }
+        static Fnode *node[2];      
+        node[0] = new(mem + tot++) Fnode(null, null, null, 0);
+        node[1] = new(mem + tot++) Fnode(null, null, null, 0);
+        for (int i = n - 1; i >= 0; i--) {
+            int c = color[i];
+            Fnode *n[2];
+            for (int j = 0; j < 2; j++) {
+                n[j] = new(mem + tot++) Fnode(*node[c]);
+                n[j]->tag += cost[i][j];
+            } 
+            for (int j = 0; j < 2; j++) {
+                node[j] = merge(n[j], node[j]);
+            }
+        }
+        printf("%lld\n", kth(node[0]));
+    }
+    return 0;
+}
+```
