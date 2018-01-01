@@ -1,0 +1,73 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 5005, MOD = 1e9 + 7;
+int a[N], nx[N][N], pr[N][N];
+pair<int, int> f[N][N], g[N];
+pair<int, int> mmerge(pair<int, int> a, pair<int, int> b)
+{
+    return a.first == b.first ? make_pair(a.first, (a.second + b.second) % MOD) : max(a, b);
+}
+int main()
+{
+    int n;
+    while (scanf("%d", &n) == 1)
+    {
+        vector<int> all;
+        for (int i = 1; i <= n; ++ i)
+        {
+            scanf("%d", &a[i]);
+            all.push_back(a[i]);
+        }
+        a[n + 1] = 0;
+        sort(all.begin(), all.end());
+        all.erase(unique(all.begin(), all.end()), all.end());
+        for (int i = 1; i <= n; ++ i) a[i] = lower_bound(all.begin(), all.end(), a[i]) - all.begin() + 1;
+        for (int i = 1; i <= n + 1; ++ i)
+        {
+            for (int j = 1; j <= n; ++ j)
+            {
+                pr[i][j] = (a[i - 1] == j ? i - 1 : pr[i - 1][j]);
+            }
+            nx[n + 1][i] = n + 1;
+        }
+        for (int i = n; i >= 0; -- i)
+        {
+            for (int j = 1; j <= n; ++ j)
+            {
+                nx[i][j] = (a[i + 1] == j ? i + 1 : nx[i + 1][j]);
+            }
+        }
+        for (int i = n; i >= 1; -- i)
+        {
+            pair<int, int> cur = make_pair(0, 1);
+            f[i][i] = make_pair(1, 1);
+            memset(g, 0, sizeof(g));
+            for (int j = i + 1; j <= n; ++ j)
+            {
+                f[i][j] = make_pair(-MOD, 1);
+                if (a[i] == a[j])
+                {
+                    f[i][j] = make_pair(cur.first + 2, cur.second);
+                }
+                if (a[j] <= a[i])
+                {
+                    if (g[a[j]].first == cur.first) cur.second -= g[a[j]].second;
+                    g[a[j]] = f[nx[i][a[j]]][j];
+                    cur = mmerge(cur, g[a[j]]);
+                }
+            }
+        }
+        pair<int, int> ans = make_pair(0, 1);
+        for (int i = 1; i <= n; ++ i) ans = mmerge(ans, f[nx[0][i]][pr[n + 1][i]]);
+        printf("%d %d\n", ans.first, ans.second);
+    }
+}
+```
