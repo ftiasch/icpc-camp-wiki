@@ -1,0 +1,45 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <bitset>
+using namespace std;
+const int N = 1e5 + 5;
+char s[N], t[N];
+bitset<N> sa[26], sc[26][26], dp[3];
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        scanf("%s%s", s + 1, t + 1);
+        for (int i = 0; i < 26; ++ i) sa[i].reset();
+        for (int i = 0; i < 26; ++ i)
+        {
+            for (int j = 0; j < 26; ++ j) sc[i][j].reset();
+        }
+        for (int i = 1; i <= n; ++ i)
+        {
+            sa[s[i] - 'a'][i] = 1;
+            if (i > 1) sc[s[i] - 'a'][s[i - 1] - 'a'][i] = 1;
+        }
+        int cur = 0;
+        dp[cur].set();
+        for (int j = 1; j <= m; ++ j)
+        {
+            (++ cur) %= 3;
+            dp[cur] = (dp[(cur + 2) % 3] << 1) & sa[t[j] - 'a'];
+            if (j > 1) dp[cur] |= (dp[(cur + 1) % 3] << 2) & sc[t[j - 1] - 'a'][t[j] - 'a'];
+        }
+        for (int i = 1; i <= n; ++ i) putchar((i <= n - m + 1 && dp[cur][i + m - 1]) ? '1' : '0');
+        puts("");
+    }
+}
+```
