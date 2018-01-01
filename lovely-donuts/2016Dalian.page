@@ -1,0 +1,49 @@
+A. Wrestling Match
+------------------
+
+B. Regular Number
+-----------------
+
+C. Game of Taking Stones
+------------------------
+
+D. A Simple Math Problem \[ruclion\]
+------------------------------------
+
+水题，枚举gcd是啥然后解二次方程就好。
+
+E. Aninteresting game
+---------------------
+
+F. Detachment
+-------------
+
+G. Garden of Eden \[ruclion\]
+-----------------------------
+
+裸地树dp，注意转移的时候用高维前缀和维护。注意每层链长为u本身的情况这个细节。
+
+H. To begin or not to begin
+---------------------------
+
+I. Convex
+---------
+
+水题，没意义。
+
+J. Find Small A
+---------------
+
+K. Guess the number
+-------------------
+
+Summary
+-------
+
+-rikoizz:
+
+-ruclion:
+
+07耽误很长时间，因为敲代码是的混用变量，导致在过不了样例调试这关浪费时间太多。之后B题没有注意轩哥的提示想出来很不应该。
+
+-skyxuan:
