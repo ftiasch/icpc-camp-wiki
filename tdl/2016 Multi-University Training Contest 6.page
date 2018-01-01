@@ -1,0 +1,58 @@
+A. A Boring Question \[Skywalkert\]
+===================================
+
+有一个经典结论是，设${Pascal}_{i,j} = \binom{i}{j}$，则${Pascal}^k_{i,j} = \binom{i}{j} \cdot k^{i - j}$，具体证法就是把矩阵乘法的路径$i \to (i + x_1) \to (i + x_1 + x_2) \to \cdots \to (i + \sum_{t = 1}^{k}{x_t}) = j$写出来，对应的贡献是$\binom{i}{j} \cdot \frac{(i - j)!}{\prod_{t = 1}^{k}{{x_i}!}}$，后半部分等价于枚举了长度为$(i - j)$的序列用$k$种颜色染色能得到的所有序列的数量，即$k^{i - j}$。
+
+那么这道题就是$\sum_{0 \leq k_1, k_2, \cdots, k_m \leq n} \prod_{1 \leq j < m} {\binom{k_{j+1}}{k_j}} = \sum_{0 \leq k_m \leq n} {\binom{i}{0} \cdot m^{i - 0}} = \frac{m^{n + 1} - 1}{m - 1}$，直接算即可。时间复杂度$O(\log n)$。
+
+B. A Simple Chess \[Constroy\]
+==============================
+
+显然每次走的向量是(1, 2)或(2,
+1)，从一个点到另一个点的走法是这两个向量的线性组合，方案数可以用组合数算出来。\
+记从点i到点j的所有路径数为$s_{i,j}$，不经过障碍到达点i的方案数为$f_i$。\
+$f_i = s_{1,i} - \sum{f_j \times s_{j,i}}$\
+这个方法是不需要对障碍物去重的，我使用unique()去重，却导致了一系列问题。。。
+
+C. A Simple Nim \[braveTester\]
+===============================
+
+打表 SG 函数（中间已经用到了 SG 定理）可以发现
+$SG(8k) = 8k - 1, SG(8k - 1) = 8k, k \in N^+, otherwise\ SG(x) = x$。按照此规律根据
+SG 定理即可算出答案。
+
+D. Magic Number
+===============
+
+E. Master Zhu
+=============
+
+F. Stabilization
+================
+
+G. This world need more Zhu
+===========================
+
+H. To My Girlfriend \[Skywalkert\]
+==================================
+
+考虑一个背包方案对$f(i, j, k, l, m)$的贡献，对于一个含有$cnt$个元素，权值和为$sum$的背包，可选的$(i, j)$有$\binom{cnt}{2} \cdot 2!$种，可选的$(k, l)$有$\binom{n - cnt}{2} \cdot 2!$种，因此只需要能在计算背包方案的时候改成统计带权的方案即可。
+
+设$f(i, cnt, sum)$表示前$i$种元素里选出$cnt$个元素，权值和为$sum$的方案数，则有$f(i, cnt, sum) = f(i - 1, cnt, sum) + f(i - 1, cnt - 1, sum - a_i)$，对应的方案数为$f(i, cnt, sum) \cdot \binom{cnt}{2} \cdot \binom{i - cnt}{2} \cdot (2!)^2$，考虑带权的情况即$f(i, cnt, sum) \cdot \binom{cnt}{2} \cdot \binom{i - cnt}{2} \cdot (2!)^2 = f(i - 1, cnt, sum) \cdot \binom{cnt}{2} \cdot \binom{i - cnt}{2} \cdot (2!)^2 + f(i - 1, cnt - 1, sum - a_i) \cdot \binom{cnt}{2} \cdot \binom{i - cnt}{2} \cdot (2!)^2$。
+
+注意到如果组合数里都是关于$i$和$cnt$的，如果能将其化为相似的形式则可以省去其中一维。由于$\binom{i}{j} = \binom{i - 1}{j - 1} + \binom{i - 1}{j}$，所以可以将$\binom{cnt}{2}$拆成$\binom{cnt - 1}{2} + \binom{cnt - 1}{1}$，同理可以拆$\binom{i - cnt}{2}$。所以令$g(i, j, k, sum) = \sum_{0 \leq cnt \leq i}{f(i, cnt, sum) \cdot \binom{cnt}{j} \cdot \binom{i - cnt}{k}}$，则有$g(i, j, k, sum) = g(i - 1, j, k, sum) + g(i - 1, j, k - 1, sum) + g(i - 1, j, k, sum - a_i) + g(i - 1, j - 1, k, sum - a_i)$，答案即为$\sum_{1 \leq sum \leq s}{g(n, 2, 2, sum) \cdot (2!)^2}$。时间复杂度$O(3^2 n s)$。
+
+I. Up Sky,Mr.Zhu
+================
+
+J. Windows 10 \[Skywalkert\]
+============================
+
+考虑减操作的序列，其实每一段的贡献是$2^x - 1$，每两段之间必须要有一个其他操作来隔开，尝试枚举可能的减操作序列，将加操作和休息操作填到里面即可。
+
+具体来说，尽量将数字减到不比目标数字大，然后考虑加操作，如果这种情况不是最优，那么必然是减少一个减操作，增加更多段的操作得到，将减少一个减操作的数字得到后再尝试即可。
+
+当不需要添加加操作就能到达目标数字时，减少一个减操作不可能是最优情况，可以停止贪心。时间复杂度$O(\log q)$。
+
+K. Zhu’s Math Problem
+=====================
