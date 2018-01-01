@@ -1,0 +1,213 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 2e5 + 5;
+vector<int> G[N];
+int f[N][2], g[N][3];
+long long ans;
+void dfs(int u, int p = 0) {
+    int cnt = 0;
+    for (int v : G[u]) {
+        if (p == v) continue;
+        dfs(v, u);
+        f[u][1] += f[v][0];
+        if (f[v][1] == f[v][0]) cnt ++;
+        g[u][1] += g[v][0];
+    }
+    if (cnt == 0) {
+        f[u][0] = f[u][1];
+        g[u][0] = 1;
+        for (int v : G[u]) {
+            if (p == v) continue;
+            g[u][0] += g[v][2];
+        }
+        g[u][2] = g[u][0];
+    }
+    else if (cnt == 1) {
+        f[u][0] = f[u][1] + 1;
+        for (int v : G[u]) {
+            if (p == v) continue;
+            g[u][0] += f[v][1] == f[v][0] ? g[v][1] : g[v][0];
+            g[u][2] += f[v][1] == f[v][0] ? g[v][2] : g[v][0];
+        }
+    }
+    else {
+        f[u][0] = f[u][1] + 1;
+        for (int v : G[u]) {
+            if (p == v) continue;
+            g[u][0] += f[v][1] == f[v][0] ? g[v][2] : g[v][0];
+        }
+        g[u][2] = g[u][0];
+    }
+}
+void dfs2(int u, vector<int> fup, vector<int> gup, int p = 0) {
+    int F0 = 0, F1 = 0, G0 = 0, G1 = 0, G2 = 0, cnt = 0;
+    //printf("dfs2 %d  fup %d %d   gup %d %d %d\n", u, fup[0], fup[1], gup[0], gup[1], gup[2]);
+    if (p) {
+        cnt += fup[0] == fup[1];
+        F1 += fup[0];
+        G1 += gup[0];
+    }
+    for (int v : G[u]) {
+        if (p == v) continue;
+        if (f[v][0] == f[v][1]) cnt ++;
+        F1 += f[v][0];
+        G1 += g[v][0];
+    }
+    if (cnt == 0) {
+        F0 = F1;
+        //long long old = ans;
+        if (p) {
+            G0 += gup[2];
+            ans += gup[0];
+        }
+        for (int v : G[u]) {
+            if (p == v) continue;
+            G0 += g[v][2];
+            ans += g[v][0];
+        }
+        //printf("at %d + %I64d\n", u, ans - old);
+        G0 ++;
+        G2 = G0;
+    }
+    else if (cnt == 1) {
+        F0 = F1 + 1;
+        if (p) {
+            G0 += fup[1] == fup[0] ? gup[1] : gup[0];
+            G2 += fup[1] == fup[0] ? gup[2] : gup[0];
+        }
+        for (int v : G[u]) {
+            if (p == v) continue;
+            G0 += f[v][1] == f[v][0] ? g[v][1] : g[v][0];
+            G2 += f[v][1] == f[v][0] ? g[v][2] : g[v][0];
+        }
+    }
+    else {
+        F0 = F1 + 1;
+        if (p) {
+            G0 += fup[1] == fup[0] ? gup[2] : gup[0];
+        }
+        for (int v : G[u]) {
+            if (p == v) continue;
+            G0 += f[v][1] == f[v][0] ? g[v][2] : g[v][0];
+        }
+        G2 = G0;
+    }
+    int sum_g2 = 0;
+    if (p) sum_g2 += gup[2];
+    for (int v : G[u]) {
+        if (p == v) continue;
+        sum_g2 += g[v][2];
+    }
+    int sum_g0_g1 = 0;
+    if (p) sum_g0_g1 += fup[0] == fup[1] ? gup[1] : gup[0];
+    for (int v : G[u]) {
+        if (p == v) continue;
+        sum_g0_g1 += f[v][0] == f[v][1] ? g[v][1] : g[v][0];
+    }
+    int sum_g0_g2 = 0;
+    if (p) sum_g0_g2 += fup[0] == fup[1] ? gup[2] : gup[0];
+    for (int v : G[u]) {
+        if (p == v) continue;
+        sum_g0_g2 += f[v][0] == f[v][1] ? g[v][2] : g[v][0];
+    }
+    for (int v : G[u]) {
+        if (p == v) continue;
+        if (f[v][0] == f[v][1]) {
+            assert(cnt);
+            if (cnt == 1) {
+                int f1 = F1 - f[v][0];
+                int f0 = f1;
+                int g1 = G1 - g[v][0];
+                int g0 = 1 + sum_g2 - g[v][2];
+                int g2 = g0;
+                dfs2(v, {f0, f1}, {g0, g1, g2}, u);
+            }
+            else if (cnt == 2) {
+                int f1 = F1 - f[v][0];
+                int f0 = f1 + 1;
+                int g1 = G1 - g[v][0];
+                int g0 = sum_g0_g1 - g[v][1];
+                int g2 = sum_g0_g2 - g[v][2];
+                dfs2(v, {f0, f1}, {g0, g1, g2}, u);
+            }
+            else {
+                int f1 = F1 - f[v][0];
+                int f0 = f1 + 1;
+                int g1 = G1 - g[v][0];
+                int g0 = G0 - g[v][2];
+                int g2 = g0;
+                dfs2(v, {f0, f1}, {g0, g1, g2}, u);
+            }
+        }
+        else {
+            int f0 = F0 - f[v][0];
+            int f1 = F1 - f[v][0];
+            int g0 = G0; if (cnt == 0) g0 -= g[v][2]; else g0 -= g[v][0];
+            int g1 = G1 - g[v][0];
+            int g2 = G2; if (cnt == 0) g2 -= g[v][2]; else g2 -= g[v][0];
+            dfs2(v, {f0, f1}, {g0, g1, g2}, u);
+        }
+    }
+}
+unordered_set<int> ban;
+int duipai(int x) {
+    ban.insert(x);
+    f[x][0] = f[x][1] = 0;
+    for (int u : G[x]) {
+        if (ban.count(u)) continue;
+        duipai(u);
+        f[x][1] += f[u][0];
+        f[x][0] = max(f[x][0], f[u][1] - f[u][0] + 1);
+    }
+    f[x][0] += f[x][1];
+    return f[x][0];
+}
+int debug = 0;
+int main() {
+    int n;
+    int seed = time(NULL);
+    seed = 1490612247;
+    srand(seed);
+    if (debug) n = 200; else
+        scanf("%d", &n);
+    for (int i = 1; i < n; ++ i) {
+        int u, v;
+        if (debug) u = i + 1, v = rand() % i + 1; else
+            scanf("%d%d", &u, &v);
+        if (debug) printf("%d %d\n", u, v);
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    dfs(1);
+    dfs2(1, {0, 0}, {0, 0, 0});
+    cout << ans / 2 << endl;
+    //puts("----------------------");
+    if (debug) {
+        int baoli = 0, should = duipai(1);
+        for (int i = 1; i <= n; ++ i) {
+            int ss = 0;
+            for (int j = 1; j <= n; ++ j) {
+                if (i == j) continue;
+                ban.clear();
+                ban.insert(i);
+                ban.insert(j);
+                int mat = 0;
+                for (int k = 1; k <= n; ++ k) {
+                    if (ban.count(k)) continue;
+                    mat += duipai(k);
+                }
+                if (mat == should) {
+                    baoli ++;
+                    ss ++;
+                }
+            }
+            printf("baoli[%d]=%d\n", i, ss);
+        }
+        cout << baoli << endl;
+        printf("--"); cout << ans << endl;
+        //assert(baoli == ans / 2);
+        printf("seed=%d\n", seed);
+    }
+}
+```
