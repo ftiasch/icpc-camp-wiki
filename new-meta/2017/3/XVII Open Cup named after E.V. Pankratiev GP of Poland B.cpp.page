@@ -1,0 +1,161 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e5 + 7, K = 11;
+const int NN = N * 4;
+
+#define rank RANK
+
+char s[NN];
+int sa[NN], ta[NN], tb[NN], *rank = ta, *tmp = tb;
+int height[NN], myLog[NN], table[18][NN];
+
+int n, m, k;
+char a[N], b[N];
+
+bool cmp(int i, int j, int l) {
+    return tmp[i] == tmp[j] && tmp[i + l] == tmp[j + l];
+}
+
+void radixSort(int n, int m) {
+    static int w[NN];
+    fill(w, w + m, 0);
+    for (int i = 0; i < n; i++) {
+        w[rank[i]]++;
+    }
+    for (int i = 1; i < m; i++) {
+        w[i] += w[i - 1];
+    }
+    for (int i = n - 1; i >= 0; i--) {
+        sa[--w[rank[tmp[i]]]] = tmp[i];
+    }
+}
+
+void suffixArray() {
+    int n = (::n + ::m) + 1, m = 256;
+    for (int i = 0; i < n; i++) {
+        rank[i] = s[i];
+        tmp[i] = i;
+    }
+    radixSort(n, m);
+    for (int j = 1, i, p = 0; j < n; j <<= 1, m = p) {
+        for (i = n - j, p = 0; i < n; i++) {
+            tmp[p++] = i;
+        }
+        for (i = 0; i < n; i++) {
+            if (sa[i] >= j) {
+                tmp[p++] = sa[i] - j;
+            }
+        }
+        radixSort(n, m);
+        for (swap(tmp, rank), rank[sa[0]] = 0, i = p = 1; i < n; i++) {
+            rank[sa[i]] = cmp(sa[i - 1], sa[i], j) ? p - 1 : p++;
+        }
+    }
+    for (int i = 0, j, k = 0; i < n; ++i, k = max(k - 1, 0)) {
+        if (rank[i]) {
+            j = sa[rank[i] - 1];
+            for (; s[i + k] == s[j + k]; k++);
+            height[rank[i]] = k;
+        }
+    }
+    for (int i = 2; i <= n; i++) {
+        myLog[i] = myLog[i >> 1] + 1;
+    }
+    for (int i = 1; i < n; i++) {
+        table[0][i] = height[i];
+    }
+    for (int j = 1; 1 << j <= n; j++) {
+        for (int i = 1; i + (1 << j) <= n; i++) {
+            table[j][i] = min(table[j - 1][i], table[j - 1][i + (1 << (j - 1))]);
+        }
+    }
+}
+
+int lcp(int l, int r) {
+    if (l > r) return 0;
+    int len = myLog[r - l + 1];
+    return min(table[len][l], table[len][r - (1 << len) + 1]);
+}
+
+int suffix_lcp(int a, int b) {
+    int l = rank[a], r = rank[b];
+    if (l > r) swap(l, r);
+    return lcp(l + 1, r);
+}
+
+void report(int l, int r) {
+    if (r < l) r = l;
+    printf("%d %d\n", l + 1, r + 1);
+    exit(0);
+}
+
+const int DEBUG = 0;
+
+pair<int, int> f[N << 1][K];
+
+int get_suffix_lcp(int i, int j) {
+    int len = suffix_lcp(i, j + n);
+    len = min(len, n - i);
+    len = min(len, m - j);
+    return len;
+}
+
+int main() {
+    if (!DEBUG) {
+        scanf("%d", &k);
+        scanf("%s", a);
+        scanf("%s", b);
+    } else {
+        k = 10;
+        for (int i = 0; i < 1e5; i++) {
+            a[i] = rand() % 26 + 'a';
+            b[i] = rand() % 26 + 'a';
+        }
+    }
+    n = strlen(a);
+    m = strlen(b);
+    for (int i = 0; i < n; i++) s[i] = a[i];
+    for (int i = 0; i < m; i++) s[n + i] = b[i];
+    s[n + m] = 0;
+    suffixArray();
+    for (int i = -m; i <= n; i++) {
+        if (i < 0) {
+            f[i + m][0] = {-1, -1};
+        } else {
+            f[i + m][0] = {get_suffix_lcp(i, 0) + i, i};
+        }
+        for (int j = 1; j <= k; j++) {
+            f[i + m][j] = {-1, -1};
+        }
+    }
+    for (int j = 0; j <= k; j++) {
+        for (int i = -m; i <= n; i++) {
+            auto w = f[i + m][j];
+            if (w.second == -1) continue;
+            int r = w.first, rp = r - i;
+            if (rp == m) report(w.second, r - 1);
+            if (j == k) continue;
+            if (r < n) {
+                // replace
+                int rr = get_suffix_lcp(r + 1, rp + 1) + r + 1;
+                f[i + m][j + 1] = max(f[i + m][j + 1], {rr, w.second});
+                // delete from s
+                rr = get_suffix_lcp(r + 1, rp) + r + 1;
+                if (i + 1 <= n) {
+                    f[i + m + 1][j + 1] = max(f[i + m + 1][j + 1], {rr, w.second});
+                }
+            }
+            // delete from t
+            if (i - 1 >= -m) {
+                int rr = get_suffix_lcp(r, rp + 1) + r;
+                f[i + m - 1][j + 1] = max(f[i + m - 1][j + 1], {rr, w.second});
+            }
+        }
+    }
+    puts("NO");
+    return 0;
+}
+```
