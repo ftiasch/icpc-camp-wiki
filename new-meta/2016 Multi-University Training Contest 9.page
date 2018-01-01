@@ -7,7 +7,7 @@ A. A Poor King
 **做法:**
 从将死状态往外BFS。黑方要尽量和棋/延长比赛，所以黑方的某个状态需要所有后继状态都已经转移过来了，才能加进队列。
 
-[A.cpp](2016-10-26%20A.cpp)
+[A.cpp](2016-10-26 A.cpp)
 
 F. Flight
 =========
@@ -20,7 +20,7 @@ F. Flight
 
 时限比较紧，尽量少用lca。
 
-[F.cpp](2016-10-26%20F.cpp)
+[F.cpp](2016-10-26 F.cpp)
 
 G. Generator \[Yuzuriha Inori\]
 ===============================
@@ -30,7 +30,7 @@ all the $N$ strings occur in a random generated infinite string.
 
 **做法:** [link label](/monkey.pdf)
 
-[K.cpp](2016-10-26%20K.cpp)
+[K.cpp](2016-10-26 K.cpp)
 
 H. Honey Tour
 =============
@@ -41,4 +41,4 @@ H. Honey Tour
 **做法:**
 插头dp+矩乘。$m$只有7，插头是个括号序列，由于有最上面进来的一个所以最后匹配完一定还剩一个左括号，dfs发现只有196个状态。插头dp跑出一个$n*m$迷宫这些状态的转移，然后矩乘。写个答案类，重载+（更新答案）和\*（连接两条路径）。
 
-[H.cpp](2016-10-26%20H.cpp)
+[H.cpp](2016-10-26 H.cpp)
