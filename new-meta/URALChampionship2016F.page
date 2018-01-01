@@ -1,0 +1,208 @@
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+#include <complex>
+#include <cassert>
+using namespace std;
+//int MOD1 = 1e6 + 39, MOD2 = 1e6 + 37, MOD3 = 3474503, MOD;
+int MOD1 = 2e9 + 11, MOD2 = 2e9 + 13, MOD;
+const double PI = acos(-1);
+typedef complex<double> Complex;
+const int N = 524288, L = 15, MASK = (1LL << L) - 1;
+Complex w[N];
+int curN = -1;
+void FFTInit(int N) {
+    curN = N;
+    for (int i = 0; i < N; ++i) {
+        w[i] = Complex(cos(2 * i * PI / N), sin(2 * i * PI / N));
+    }
+}
+void FFT(Complex p[], int n) {
+    for (int i = 1, j = 0; i < n - 1; ++i) {
+        for (int s = n; j ^= s >>= 1, ~j & s;);
+        if (i < j) {
+            swap(p[i], p[j]);
+        }
+    }
+    for (int d = 0; (1 << d) < n; ++d) {
+        int m = 1 << d, m2 = m * 2, rm = n >> (d + 1);
+        for (int i = 0; i < n; i += m2) {
+            for (int j = 0; j < m; ++j) {
+                Complex &p1 = p[i + j + m], &p2 = p[i + j];
+                Complex t = w[rm * j] * p1;
+                p1 = p2 - t;
+                p2 = p2 + t;
+            }
+        }
+    }
+}
+Complex A[N], B[N], C[N], D[N];
+void mul(int a[::N], int b[::N], int N) {
+    if (N != curN) FFTInit(N);
+    for (int i = 0; i < N; ++i) {
+        A[i] = Complex(a[i] >> L, a[i] & MASK);
+        B[i] = Complex(b[i] >> L, b[i] & MASK);
+    }
+    FFT(A, N), FFT(B, N);
+    for (int i = 0; i < N; ++i) {
+        int j = (N - i) % N;
+        Complex da = (A[i] - conj(A[j])) * Complex(0, -0.5),
+                db = (A[i] + conj(A[j])) * Complex(0.5, 0),
+                dc = (B[i] - conj(B[j])) * Complex(0, -0.5),
+                dd = (B[i] + conj(B[j])) * Complex(0.5, 0);
+        C[j] = da * dd + da * dc * Complex(0, 1);
+        D[j] = db * dd + db * dc * Complex(0, 1);
+    }
+    FFT(C, N), FFT(D, N);
+    for (int i = 0; i < N; ++i) {
+        long long da = (long long)(C[i].imag() / N + 0.5) % MOD,
+                  db = (long long)(C[i].real() / N + 0.5) % MOD,
+                  dc = (long long)(D[i].imag() / N + 0.5) % MOD,
+                  dd = (long long)(D[i].real() / N + 0.5) % MOD;
+        a[i] = ((dd << (L * 2)) + ((db + dc) << L) + da) % MOD;
+    }
+}
+int p[N], q[N], n, m, rp[N], qf[N], pf[N];
+vector<vector<int> > ap;
+void work(int ans[N], int MOD) {
+    ::MOD = MOD;
+    int B = 1;
+    for (int i = 0, r; i < (int) ap.size(); i = r) {
+        int len = (int) ap[i].size();
+        while (B < 4 * len) {
+            B <<= 1;
+        }
+        for (int j = 0; j < B; ++ j) qf[j] = pf[j] = 0;
+        //memset(qf, 0, sizeof(qf));
+        for (int j = 0; j < m; ++ j) {
+            int &f = qf[len - j % len - 1];
+            f = (1LL * f + q[j]) % MOD;
+        }
+//printf("len=%d\n", len);
+        //fir = 1;
+        for (r = i; r < (int) ap.size() && ap[r].size() == ap[i].size(); ++ r) {
+//for (int i : ap[r]) printf("%d ", i); puts("");
+            //memset(pf, 0, sizeof(pf));
+            for (int j = 0; j < len; ++ j) pf[j] = pf[j + len] = (ap[r][j] + 1) % MOD;
+//printf("pf = "); for (int i = 0; i < 2 * len; ++ i) printf("%d ", pf[i]); puts("");
+//printf("qf = "); for (int i = 0; i < 2 * len; ++ i) printf("%d ", qf[i]); puts("");
+            mul(pf, qf, B);
+//printf("af = "); for (int i = 0; i < 2 * len; ++ i) printf("%d ", pf[i]); puts("");
+            for (int j = 0; j < len; ++ j) {
+                int &f = ans[rp[ap[r][j]]];
+                f = (1LL * f + pf[j + len - 1]) % MOD;
+            }
+        }
+    }
+}
+/*int mpow(int x, int n, int MOD) {
+    int res = 1;
+    while (n) {
+        if (n & 1) res = 1LL * res * x % MOD;
+        x = 1LL * x * x % MOD;
+        n >>= 1;
+    }
+    return res;
+}
+long long calc(int x, int y) {
+    long long MOD = 1LL * MOD1 * MOD2;
+    return (mmod(1LL * MOD2 * mpow(MOD2, MOD1 - 2, MOD1), x, MOD) + mmod(1LL * MOD1 * mpow(MOD1, MOD2 - 2, MOD2), y, MOD)) % MOD;
+}*/
+long long mmod(long long a, long long b, long long P) {
+    long long t = (a * b - (long long)((long double) a / P * b + 1e-3) * P) % P;
+    return t < 0 ? t + P : t;
+    //return (long long) ((long double) a * (long long double) b % P);
+    //long long t = (a * b - (long long)((long double)a / P * b + 1e-3) * P) % P;
+    //return t < 0 ? t + P : t;
+}
+long long x, y;
+void exgcd(long long a, long long b) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return;
+    }
+    exgcd(b, a % b);
+    long long k =y;
+    y = x - a / b * y;
+    x = k;
+}
+long long inversion(long long a, long long b) {
+    exgcd(a, b);
+    return (x % b + b) % b;
+}
+long long CRT(vector<long long> m, vector<long long> a) {
+    int N = m.size();
+    /*printf("m = ");
+    for (int i = 0; i < N; ++ i) printf("%I64d ", m[i]); puts("");
+    printf("a = ");
+    for (int i = 0; i < N; ++ i) printf("%I64d ", a[i]); puts("");*/
+    long long M = 1, ret = 0;
+    for (int i = 0; i < N; ++ i) M *= m[i];
+    for (int i = 0; i < N; ++ i) ret = (ret + mmod((M / m[i]) * a[i] % M, inversion(M / m[i], m[i]), M)) % M;
+    return ret;
+}
+bool v[N];
+bool cmp(const vector<int> &a, const vector<int> &b) {return a.size() < b.size();}
+int ans[3][N];
+int main() {
+    scanf("%d%d", &m, &n);
+/*m = 50000;
+n = 50000;
+for (int i = 0; i < n; ++ i) p[i] = (i + 1) % n + 1;
+random_shuffle(p, p + n);*/
+    for (int i = 0; i < n; ++ i) {
+        scanf("%d", &p[i]);
+        p[i] --;
+        rp[p[i]] = i;
+    }
+    for (int i = 0; i < m; ++ i) {
+        scanf("%d", &q[i]);
+//q[i] = ((rand() << 15) + rand()) % (int) (1e9 + 1);
+    }
+    for (int i = 0; i < n; ++ i) {
+        if (v[i]) continue;
+        int j = p[i];
+        vector<int> tmp;
+        tmp.push_back(j);
+        v[j] = 1;
+        while (p[j] != p[i]) {
+            j = p[j];
+            v[j] = 1;
+            tmp.push_back(j);
+        }
+        ap.push_back(tmp);
+    }
+    sort(ap.begin(), ap.end(), cmp);
+    work(ans[0], MOD1);
+    work(ans[1], MOD2);
+    //work(ans[2], MOD3);
+    for (int i = 0; i < n; ++ i) {
+        vector<long long> m, a;
+        m.push_back(MOD1);
+        m.push_back(MOD2);
+        //m.push_back(MOD3);
+        a.push_back(ans[0][i]);
+        a.push_back(ans[1][i]);
+        //a.push_back(ans[2][i]);
+        //printf("%d %d %d\n", ans[0][i], ans[1][i], ans[2][i]);
+        /*long long ans = CRT(m, a);
+        long long duipai = 0;
+        int las = p[i];
+        for (int i = 0; i < ::m; ++ i) {
+            duipai += 1LL * q[i] * (las + 1);
+            las = p[las];
+        }
+        if (duipai != ans) printf("%d : %I64d %I64d\n", i, duipai, ans);
+        assert(duipai == ans);*/
+        //cout << CRT(m, a);
+        //if (i == n - 1) cout << endl; else cout << " ";
+        printf("%I64d%c", CRT(m, a), " \n"[i == n - 1]);
+    }
+    //for (int i = 0; i < n; ++ i) printf("%d%c", ans[0][i], " \n"[i == n - 1]);
+}
+```
