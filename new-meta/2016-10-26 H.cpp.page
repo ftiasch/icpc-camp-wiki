@@ -1,0 +1,185 @@
+``` {.cpp}
+
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 9, S = 600, SS = 200, MOD = 1e9 + 7;
+char s[N][N];
+struct node {
+    long long len, cnt;
+    bool possible;
+    node() {len = cnt = 0; possible = 0;}
+    node(long long len, long long cnt, bool possible) : len(len), cnt(cnt), possible(possible) {}
+    node extend() {
+        if (cnt) return node(len + 1, cnt, 1);
+        return node(0, 0, 0);
+    }
+};
+node operator * (const node &a, const node &b) {
+    return node(a.len + b.len, (a.cnt * b.cnt) % MOD, 1);
+}
+node operator + (const node &a, const node &b) {
+    if (!a.possible) return b;
+    if (!b.possible) return a;
+    if (a.len > b.len) return a;
+    if (b.len > a.len) return b;
+    return node(a.len, (a.cnt + b.cnt) % MOD, 1);
+}
+struct mat {
+    node a[SS][SS];
+    int n, m;
+    mat() {}
+    mat(int n, int m) : n(n), m(m) {
+        for (int i = 0; i < n; ++ i) {
+            for (int j = 0; j < m; ++ j) a[i][j] = node();
+        }
+    }
+};
+mat operator * (const mat &a, const mat &b) {
+    mat c = mat(a.n, b.m);
+    for (int k = 0; k < a.m; ++ k) {
+        for (int i = 0; i < a.n; ++ i) {
+            for (int j = 0; j < b.m; ++ j) {
+                if (a.a[i][k].possible && b.a[k][j].possible)
+                    c.a[i][j] = c.a[i][j] + a.a[i][k] * b.a[k][j];
+            }
+        }
+    }
+    return c;
+}
+mat mpow(mat x, int n) {
+    static mat res;
+    res = x;
+    -- n;
+    while (n) {
+        if (n & 1) res = res * x;
+        n >>= 1;
+        x = x * x;
+    }
+    return res;
+}
+int m, id[S], di[1 << (2 * N)], tot, cp[S][N], tmp_cp[N];
+bool emp[S];
+int empid[S];
+void dfs(int x, int mask = 0, vector<int> st = {}) {
+    if (x == m + 1) {
+        if (st.size() == 1) {
+            for (int i = 0; i <= m; ++ i) cp[tot][i] = tmp_cp[i];
+            id[tot] = mask;
+            di[mask] = tot;
+            tot ++;
+        }
+        return;
+    }
+    tmp_cp[x] = x;
+    dfs(x + 1, mask, st);
+    st.push_back(x);
+    dfs(x + 1, mask | (1 << (2 * x)), st);
+    st.pop_back();
+    if (!st.empty()) {
+        tmp_cp[x] = st.back();
+        int old = tmp_cp[st.back()], ob = st.back();
+        tmp_cp[st.back()] = x;
+        st.pop_back();
+        dfs(x + 1, mask | (2 << (2 * x)), st);
+        tmp_cp[ob] = old;
+    }
+}
+node dp[2][S], ans[N][N];
+int main() {
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --) {
+        int n, K;
+        scanf("%d%d%d", &n, &m, &K);
+        for (int i = 0; i < n; ++ i) scanf("%s", s[i]);
+        tot = 0;
+        dfs(0);
+        memset(emp, 0, sizeof(emp));
+        int _t = 0;
+        for (int i = 0; i < tot; ++ i) if ((id[i] >> (m * 2)) == 0) {
+            emp[i] = 1;
+            empid[i] = _t;
+            _t ++;
+        }
+        mat p = mat(_t, _t);
+        for (int st = 0; st < tot; ++ st) {
+            if (!emp[st]) continue;
+            int cur = 0;
+            for (int i = 0; i < tot; ++ i) dp[0][i] = node();
+            dp[0][st] = node(0, 1, 1);
+            for (int i = 0; i < n; ++ i) {
+                cur ^= 1;
+                for (int j = 0; j < tot; ++ j) dp[cur][j] = node();
+                for (int j = 0; j < tot; ++ j) {
+                    if (!emp[j]) continue;
+                    int mask = id[j];
+                    dp[cur][di[mask << 2]] = dp[cur ^ 1][j];
+                }
+                for (int j = 0; j < m; ++ j) {
+                    cur ^= 1;
+                    for (int k = 0; k < tot; ++ k) dp[cur][k] = node();
+                    for (int k = 0; k < tot; ++ k) {
+                        int mask = id[k], p1 = mask >> (j * 2) & 3, p2 = mask >> (j * 2 + 2) & 3;
+                        if (p1 == 0 && p2 == 0) {
+                            int tmp = mask;
+                            dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]];
+                            if (s[i][j] != 'X') {
+                                tmp |= (1 << (j * 2)) | (2 << (j * 2 + 2));
+                                dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]].extend();
+                            }
+                        }
+                        else if (s[i][j] != 'X' && (p1 == 0 || p2 == 0)) {
+                            int tmp = mask;
+                            dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]].extend();
+                            tmp &= ((1 << (m * 2 + 2)) - 1) ^ (3 << (j * 2)) ^ (3 << (j * 2 + 2));
+                            tmp |= (p2 << (j * 2)) | (p1 << (j * 2 + 2));
+                            dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]].extend();
+                        }
+                        else if (s[i][j] != 'X' && (p1 == 2 && p2 == 1)) {
+                            int tmp = mask;
+                            tmp &= ((1 << (m * 2 + 2)) - 1) ^ (3 << (j * 2)) ^ (3 << (j * 2 + 2));
+                            dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]].extend();
+                        }
+                        else if (s[i][j] != 'X' && (p1 == 1 && p2 == 1)) {
+                            int tmp = mask;
+                            int b = cp[k][j + 1];
+                            tmp &= ((1 << (m * 2 + 2)) - 1) ^ (3 << (j * 2)) ^ (3 << (j * 2 + 2)) ^ (3 << (b * 2));
+                            tmp |= (1 << (b * 2));
+                            dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]].extend();
+                        }
+                        else if (s[i][j] != 'X' && (p1 == 2 && p2 == 2)) {
+                            int tmp = mask;
+                            int b = cp[k][j];
+                            tmp &= ((1 << (m * 2 + 2)) - 1) ^ (3 << (j * 2)) ^ (3 << (j * 2 + 2)) ^ (3 << (b * 2));
+                            tmp |= (2 << (b * 2));
+                            dp[cur][di[tmp]] = dp[cur][di[tmp]] + dp[cur ^ 1][di[mask]].extend();
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < tot; ++ i) if (emp[i]) p.a[empid[st]][empid[i]] = dp[cur][i];
+        }
+        p = mpow(p, K);
+        for (int i = 0; i < m; ++ i) {
+            mat x = mat(1, _t);
+            int mask = (1 << (i * 2));
+            x.a[0][empid[di[mask]]] = node(0, 1, 1);
+            x = x * p;
+            for (int j = 0; j < m; ++ j) {
+                mat y = mat(_t, 1);
+                int mask = (1 << (j * 2));
+                y.a[empid[di[mask]]][0] = node(0, 1, 1);
+                y = x * y;
+                ans[i][j] = y.a[0][0];
+            }
+        }
+        printf("Case #%d:\n", ++ zzz);
+        for (int i = 0; i < m; ++ i) {
+            for (int j = 0; j < m; ++ j) cout << ans[i][j].len << " \n"[j == m - 1];
+        }
+        for (int i = 0; i < m; ++ i) {
+            for (int j = 0; j < m; ++ j) cout << ans[i][j].cnt << " \n"[j == m - 1];
+        }
+    }
+}
+```
