@@ -1,0 +1,64 @@
+### 计算几何：
+
+    准备板子
+
+### 博弈：
+
+-   ~~HDU 1517~~ 乘法游戏，类似巴什博弈，找先手必胜区间
+-   ~~HDU 1527~~ 标准威佐夫博弈，先手必败局势为(\[k \* (1+sqrt(5))/2\],
+    \[k \* (1+sqrt(5))/2\] + k) k = 0,1,2,...
+-   ~~HDU 1538~~ 海盗分金，简单
+-   ~~HDU 1564~~
+    用多米诺骨牌铺满n\*n的棋盘，后手每次往多米诺的另一半走即可
+-   ~~HDU 1846~~ 超级水题
+-   ~~HDU 1847~~ 水题\*2 找规律即可
+-   ~~HDU 1850~~ 水
+-   ~~HDU 2149~~ 水，巴什博弈
+-   ~~HDU 2176~~
+    水，求NIM游戏先手第一步走法，将游戏sg值与各堆sg值异或即可
+-   HDU 2177
+    标准威佐夫博弈求先手第一步走法，只会二分，O(1)做法还没看懂=。=
+-   ~~HDU 2188~~ 水，巴什博弈
+-   HDU 2486
+    k倍动态减法游戏，和下面的3404一样在[09年集训队论文](https://github.com/EnigmaHuang/ACM-ICPC-Algorithm/blob/master/博弈论/从“k倍动态减法游戏”出发探究一类组合游戏问题.pdf)里面有解。
+-   ~~HDU 2516~~ 找规律，斐波那契数列，证明可以递推找全0行
+-   ~~HDU 2897~~ 水题，巴什博弈变形
+-   ~~HDU 3032~~ 经典题，可拆分的NIM，打表找规律
+-   ~~HDU 3389~~ staircase
+    NIM游戏，转移只存在奇-&gt;偶和偶-&gt;奇，故只考虑奇数位置台阶即可。
+-   HDU 3404 ※
+    NIM积，参考[这个论文](https://github.com/EnigmaHuang/ACM-ICPC-Algorithm/blob/master/博弈论/从“k倍动态减法游戏”出发探究一类组合游戏问题.pdf)，太牛逼了orzorzorz
+-   ~~HDU 3537~~ ※
+    翻硬币模型，sg值可按各正面朝上硬币sg值异或得到，详细参见[这里](http://blog.csdn.net/acm_cxlove/article/details/7854534)
+-   ~~HDU 3544~~
+    ※ 非ICP博弈，寻找两人剩余刀数之差。对谁先走谁死的局面分数定义为0.
+-   ~~HDU 3863~~ 水题
+-   ~~HDU 3951~~ 镜像策略
+-   ~~HDU 4315~~ ※
+    阶梯博弈变形，比POJ1704难，处理king的情况要考虑到`n % 2 == 1 && k == 2`的情况
+
+\* 以上来自
+[Kuangbin博弈训练题](https://vjudge.net/contest/26587#overview)
+
+-   POJ 1704 阶梯博弈变形
+-   ~~POJ 3710~~ 无向图删边删边游戏，经典模型
+    [非常清晰的说明](http://blog.csdn.net/acm_cxlove/article/details/7854532)
+
+-   HDU 1536
+-   HDU 1848
+-   ~~HDU
+    1907~~ Anti-Nim游戏，先手必胜情况为(sg==0&&没有任何一个单独游戏sg&gt;1)
+    || (sg!=0&&至少一个单独游戏的sg&gt;1)
+-   HDU 2509
+-   HDU 5724 ※ 还没想出来 先睡他一觉
+-   HDU 5754
+-   HDU 5795
+
+-   UVA 1378
+
+`※`:此题不会做
+
+一些参考资料：
+[NIM](http://endless.logdown.com/posts/2014/05/05/find-out-the-winning-strategies-of-the-game-nim-and-grundy-number-notes)
+[博弈题的一些总结](http://blog.csdn.net/acm_cxlove/article/details/7854526)
+[贾志豪的论文](https://github.com/oeddyo/algorithm/blob/master/resources/%E7%89%9B%E4%BA%BA%E8%B0%88ACM%E7%BB%8F%E9%AA%8C(%E5%8C%85%E6%8B%AC%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E8%AE%BA%E6%96%87)/%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F%E8%AE%BA%E6%96%87/%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F2009%E8%AE%BA%E6%96%87%E9%9B%86/2.%E8%B4%BE%E5%BF%97%E8%B1%AA%E3%80%8A%E7%BB%84%E5%90%88%E6%B8%B8%E6%88%8F%E7%95%A5%E8%BF%B0%E2%80%94%E2%80%94%E6%B5%85%E8%B0%88SG%E6%B8%B8%E6%88%8F%E7%9A%84%E8%8B%A5%E5%B9%B2%E6%8B%93%E5%B1%95%E5%8F%8A%E5%8F%98%E5%BD%A2%E3%80%8B/%E7%BB%84%E5%90%88%E6%B8%B8%E6%88%8F%E7%95%A5%E8%BF%B0%E2%80%94%E2%80%94%E6%B5%85%E8%B0%88SG%E6%B8%B8%E6%88%8F%E7%9A%84%E8%8B%A5%E5%B9%B2%E6%8B%93%E5%B1%95%E5%8F%8A%E5%8F%98%E5%BD%A2.pdf)
