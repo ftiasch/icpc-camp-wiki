@@ -1,0 +1,81 @@
+One of the most important keys to Success is having the discipline to do
+what you know you should do, even when you don't feel like doing it.
+
+The greatest pleasure in life is doing what people say you cannot do.
+
+Todo List
+=========
+
+以下按照优先级排序，每日打卡
+
+-   备战toefl
+-   完善题目（2出题、1验题）
+-   Topcoder Contests
+-   Daily Training 补题
+-   [UVaLive](http://blog.csdn.net/skywalkert/article/details/51761235)
+    做题
+-   Codeforces Contests
+-   Multi-University Training 补题
+-   [PojList](http://blog.csdn.net/skywalkert/article/details/46594541)
+    做题
+-   ICPC Camp 补题
+-   [lydsy](http://blog.csdn.net/skywalkert/article/details/45244575)
+    做题
+-   思考出题与[重制](http://blog.csdn.net/skywalkert/article/details/52463289)
+
+Self-Training
+=============
+
+<!-- `2016-00-00` [`---`]()                                         `   -/  --` `??` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` -->
+  `Date`         `Contest`                                                            `Place`     `??`   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------- -------------------------------------------------------------------- ----------- ------ ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  **`TBA`**                                                                                                                                                                      
+  `2016-09-14`   [`2011 USP Try-outs`]()                                              `67/ 114`   `9`    `·`   `·`   `O`   `O`   `·`   `·`   `·`   `·`   `·`   `·`   `·`         
+  `2016-07-18`   [`Practice 1`]() `A~M`                                               `-/  --`    `13`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`
+  `2016-07-18`   [`Practice 1`]() `N~Z`                                               `-/  --`    `13`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`
+  `2016-06-18`   [`Internet Problem Solving Contest 2016`]()`(with FancyMouse)`       `88/ 773`   `10`   `O`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   `·`   `·`   `·`   `·`   `·`
+  `2015-08-14`   [`2012 ACM-ICPC Latin America Brazil Subregional Contest`]()         `45/ 136`   `8`    `O`   `·`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   `·`   `·`   `O`   
+  `2015-06-27`   [`Codeshark Round 1`]()`(with Zerotrac, absi2011)`                   `3/  27`    `9`    `·`   `·`   `·`   `·`   `·`   `·`   `Ø`   `Ø`   `Ø`   `·`   `·`   `·`   
+  **`DONE`**                                                                                                                                                                     
+  `2016-11-19`   [`Mutual Training for Wannafly Union 1`]()                           `2/ 207`    `--`   `O`   `O`   `O`   `O`   `O`   `O`                                       
+  `2016-07-31`   [`2012 ACM-ICPC Asia Tokyo Regional Contest`]()                      `23/ 131`   `--`   `O`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`   `O`   `Ø`               
+  `2016-07-24`   w\_w                                                                 `1/   6`    `--`   `O`   `O`   `O`   `O`                                                   
+  `2016-07-15`   [`2014-2015 CT S02E11 Codeforces Trainings Season 2 Episode 11`]()   `18/ 176`   `--`   `O`   `O`   `O`   `O`   `Ø`   `Ø`   `Ø`   `O`   `O`   `O`   `O`   `Ø`   `Ø`
+  `2016-07-11`   [`2015 ACM-ICPC East Central North America Regional Contest`]()      `8/ 184`    `--`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `Ø`   `O`                     
+
+------------------------------------------------------------------------
+
+ \
+` · 尚未通过  O 当场通过  Ø 赛后通过`
+
+[Self-Training 2015]()
+
+[Daily Practice]()
+==================
+
+TBA
+===
+
+[CF 718E](http://codeforces.com/contest/718/problem/E) 压位dfs
+
+[CF 704B](http://codeforces.com/contest/704/problem/B) DP? [CF
+704C](http://codeforces.com/contest/704/problem/C) ??? [CF
+704D](http://codeforces.com/contest/704/problem/D) 网络流+构造 [CF
+704E](http://codeforces.com/contest/704/problem/E) not read
+
+[CF 700D](http://codeforces.com/contest/700/problem/D) 莫队+暴力哈夫曼
+[CF 700E](http://codeforces.com/contest/700/problem/E) 后缀自动机???
+
+[CF 698D](http://codeforces.com/contest/698/problem/D) 记忆化搜? [CF
+698F](http://codeforces.com/contest/698/problem/F) 群同构+组合
+
+[CF 559D](http://codeforces.com/contest/559/problem/D) 强行picks定理?
+[CF 559E](http://codeforces.com/contest/559/problem/E) not read
+
+[CF 536D](http://codeforces.com/contest/536/problem/D) not read [CF
+536E](http://codeforces.com/contest/536/problem/E) 树剖裸题
+
+[CF 526E](http://codeforces.com/contest/526/problem/E)
+某个$O(K\cdot\frac{N}{K})=O(N)$的线性暴力 [CF
+526F](http://codeforces.com/contest/526/problem/F) cdq分治 [CF
+526G](http://codeforces.com/contest/526/problem/G) 抠个直径然后贪心
