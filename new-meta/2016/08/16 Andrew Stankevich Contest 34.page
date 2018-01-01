@@ -1,0 +1,41 @@
+A. Three Colors \[Miceren\]
+===========================
+
+**Description**
+
+Given a bipartite graph, you should assign 0, 1, 2 to each edge so that
+the for each pair of vertices (u, v), we have f(u) != f(v).
+
+f(u) is the sum of incident edges' value.
+
+**Solution**\
+Consider construct methods. We want to do this problem in the residue
+system modulo 3.
+
+For each component, for each "right set" vertex, we paired them and add
+1, 2, 1, 2, ... to the edges in the path alternatively between each pair
+of vertices.
+
+The only impossible case is that two vertices linked by one edge and no
+other edge incident to these two vertices.
+
+[code](2016/8/16%20A)
+
+D. Border Correlation \[Miceren\]
+=================================
+
+**Description**
+
+Given a string **s**, for each shifted version **s***, you should
+determined that whether there is a string t, which is the prefix and the
+suffix of **s***.
+
+**Solution**
+
+Because string is shifted, for a fixed shifted version, the prefix and
+suffix are continuous in "double sized" original string.
+
+By some observation, this is a mutated version of repeat string problem,
+classic \O(n \log n) algorithm raised.
+
+[code](2016/8/16%20D)
