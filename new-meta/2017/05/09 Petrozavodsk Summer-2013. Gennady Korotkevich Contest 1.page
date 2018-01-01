@@ -13,4 +13,4 @@ D. Degree Of Number's Eccentricity
 
 所以可以10\*10枚举那一坨$9$后面的那一位的两个数是多少，然后前面尽量多地凑$9$。如果这一位的和$\leq 8$，那么肯定不进位，后面贪心一个最大和就行了。如果这一位和$\geq10$，那么肯定进位，后面贪心最小和。如果和是$9$，那么他所对应的答案会在别的时候被枚举到（注意全部是9的情况，不过正常枚举就能枚到了，不用特殊处理）。
 
-[D.cpp](2017/05/09%20Petrozavodsk%20Summer-2013.%20Gennady%20Korotkevich%20Contest%201%20D.cpp)
+[D.cpp](2017/05/09 Petrozavodsk Summer-2013. Gennady Korotkevich Contest 1 D.cpp)
