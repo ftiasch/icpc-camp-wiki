@@ -9,7 +9,7 @@ B. Bus Stop
 
 直接积分的话，由于有些项是负的，有些项是正的，所以中间过程精度爆炸。可以这样算：设$P_k$是有$k$个变量落进了最小区间$[0,t_{min}]$的概率，那么答案是$\sum_{k=0}^nP_k\cdot \frac{t_{min}}{k+1}$，而$P_k$是$\prod (\frac{t_{min}}{t_i}x+\frac{ti-t_{min}}{ti})$中$x^k$的系数，可以用分治FFT计算。
 
-[B.cpp](2017/3/28%20AIM%20Fund%20Contest%20B.cpp)
+[B.cpp](2017/3/28 AIM Fund Contest B.cpp)
 
 D. Decomposition
 ================
