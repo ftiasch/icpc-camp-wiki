@@ -1,0 +1,109 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int ND = 1e5 + 7;
+
+struct Node {
+    vector<Node*> child;
+    int id;
+    Node(int id = -1) : id(id) {
+        child.clear();
+    }
+}pool[ND];
+int used;
+
+Node *new_node(int id = -1) {
+    return new(pool + used++) Node(id);
+}
+
+int n, d;
+vector<int> bound;
+vector<pair<vector<int>, int>> vecs;
+Node *root;
+
+void insert(vector<int> v, int id) {
+    Node *cur = root;
+    for (int i = 0; i < v.size(); i++) {
+        int tag = v[i];
+        assert(tag <= cur->child.size());
+        if (cur->child.size() == tag) {
+            cur->child.push_back(new_node());
+        }
+        cur = cur->child[tag];
+    }
+    cur->id = id;
+}
+
+int match[ND];
+
+map<pair<int, int>, int> dict;
+
+int tot = 0;
+int get_id(int cur, int suff) {
+    if (dict.count({cur, suff})) return dict[{cur, suff}];
+    return dict[{cur, suff}] = tot++;
+}
+
+vector<pair<int, int>> solve(Node *a, int dep) {
+    int cap = a->child.size() - 1;
+    vector<pair<int, int>> ret;
+    if (dep + 1 == d) {
+        for (int i = 0; i <= cap; i++) {
+            match[a->child[i]->id] = a->child[cap - i]->id;
+            ret.push_back({get_id(i, -1), a->child[i]->id});
+        }
+        sort(ret.begin(), ret.end());
+        return ret;
+    }
+    for (int i = 0, j = cap; i < j; i++, j--) {
+        vector<pair<int, int>> pa = solve(a->child[i], dep + 1);
+        vector<pair<int, int>> pb = solve(a->child[j], dep + 1);
+        for (auto b : pb) {
+            int iter = lower_bound(pa.begin(), pa.end(), make_pair(b.first, 0)) - pa.begin();
+            assert(pa[iter].first == b.first);
+            swap(match[pa[iter].second], match[b.second]);
+        }
+        for (auto t : pa) {
+            ret.push_back({get_id(i, t.first), t.second});
+        }
+        for (auto t : pb) {
+            ret.push_back({get_id(j, t.first), t.second});
+        }
+    }
+    if (cap % 2 == 0) {
+        auto w = solve(a->child[cap / 2], dep + 1);
+        for (auto t : w) {
+            ret.push_back({get_id(cap / 2, t.first), t.second});
+        }
+    }
+    sort(ret.begin(), ret.end());
+    return ret;
+}
+
+int main() {
+    scanf("%d %d", &n, &d);
+    bound.resize(d);
+    for (int i = 0; i < d; i++) {
+        scanf("%d", &bound[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        vector<int> v(d);
+        for (int j = 0; j < d; j++) {
+            scanf("%d", &v[j]);
+        }
+        vecs.push_back({v, i});
+    }
+    sort(vecs.begin(), vecs.end());
+    root = new_node();
+    for (auto vv : vecs) {
+        insert(vv.first, vv.second);
+    }
+    solve(root, 0);
+    for (int i = 0; i < n; i++) {
+        printf("%d %d\n", i + 1, match[i] + 1);
+    }
+    return 0;
+}
+```
