@@ -1,0 +1,23 @@
+J. Speed Run \[Miceren\]
+========================
+
+**Problem Description**
+
+There are $n$ stages. You are initially at stage $0$, and your target is
+stage $n$. For your goal, you have to pass every stage one by one.
+
+Saving your progress in any stage by $1$ minute and trying to go to next
+stage cost $1$ minute. For every pair of stages $i$ and $i + 1$, you
+have probability $p_i$ to pass and $1 - p_i$ to return to the nearest
+save points.
+
+You should choose the optimum strategy to achieve the best expectation
+cost.
+
+**Solution**
+
+The key observation is that you may not pass $18$ stage whose $p_i < 1$
+(this implies $p_i\le 0.99$ by the statement) without saving progress.
+So, brute force is enough. Notice that for $p_i = 1$, you may not save
+your progress before a $p_i = 1$ stages. So, the total complexity is
+$O(18 n)$.
