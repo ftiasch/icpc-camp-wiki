@@ -9,7 +9,7 @@ B. Buggy Combination Lock
 
 设某个位置的转动状态是$x$，那么剩下位置都可以唯一确定。当$n$是奇数的时候，可以解方程解出来（注意可能有0/1/2个解）。$n$是偶数的时候，有时候$x$可能是任意值。这时候想要求总的最小步数。一个位置的转动状态可以表示成$\pm x+b$，这个位置的最小步数则是一个分段函数（有时候是$y$，有时候是$m-y$）。可以算出所有函数变化的时间点，维护答案的函数，算一算就可以了。
 
-[B.cpp](Grand%20Prix%20of%20Gomel%20B.cpp)
+[B.cpp](Grand Prix of Gomel B.cpp)
 
 C. Cyclic Shift
 ===============
@@ -56,4 +56,4 @@ K. Keep Distance
 
 字母出现的次数如果是$x$，那么公差最多只能是$\frac{n}{x}$。所以总复杂度是$O(26n)$。
 
-[K.cpp](Grand%20Prix%20of%20Gomel%20K.cpp)
+[K.cpp](Grand Prix of Gomel K.cpp)
