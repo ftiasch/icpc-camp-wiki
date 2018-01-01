@@ -1,0 +1,50 @@
+主要的作用是做xor的卷积。核心是(a,b)-&gt;(a+b,a-c)。也可以类似地做or
+(a,b)-&gt;(a,a+b)和and
+(a,b)-&gt;(a+b,b)的卷积。如果枚举集合大小可以做exact cover。
+
+FWT的正变换和逆变换完全一样。记得除模长即可。
+
+``` {.cpp}
+void FWT(int a[N], int N) {
+    for (int d = 1; d < N; d <<= 1) {
+        int d2 = d << 1;
+        for (int i = 0; i < N; i += d2) {
+            int *x = a + i, *y = a + i + d;
+            for (int j = 0; j < d; ++j, ++x, ++y) {
+                if ((*x += *y) >= MOD) {
+                    *x -= MOD;
+                }
+                if ((*y = *x - (*y << 1)) < 0) {
+                    if ((*y += MOD) < 0) {
+                        *y += MOD;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+值得注意的是FWT的一个优化技巧，就是在一个向量需要乘多次的场合，可以只做一次FWT。例如下面的求向量的xor幂。
+
+``` {.cpp}
+void xorPow(int a[N], int n, int b[N]) {
+    memset(b, 0, sizeof(int) * N);
+    b[0] = 1;
+    FWT(a, N);
+    FWT(b, N);
+    while(n) {
+        if (n & 1) {
+            dot(b, a, N);
+        }
+        dot(a, a, N);
+        n >>= 1;
+    }
+    FWT(b, N);
+    norm(b, N);
+}
+```
+
+题目： [SRM518
+Nim](http://community.topcoder.com/stat?c=problem_statement&pm=11469&rd=14543)
+[Beijing Online 2015 D](http://hihocoder.com/problemset/problem/1230)
