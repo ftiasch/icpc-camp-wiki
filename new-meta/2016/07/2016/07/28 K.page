@@ -1,0 +1,329 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <set>
+#include <vector>
+using namespace std;
+struct grid
+{
+    int a, l, r, u, d;
+    grid() {}
+};
+grid c[5][5];
+int f[12], sz[12];
+int fat(int x)
+{
+    if (f[x] == x) return f[x];
+    return f[x] = fat(f[x]);
+}
+bool join(int x, int y)
+{
+    x = fat(x), y = fat(y);
+    if (x == y) return true;
+    //intf("join %d %d\n", x, y);
+    f[x] = y;
+    sz[y] += sz[x];
+    sz[x] = 0;
+    return false;
+}
+void init()
+{
+    for (int i = 0; i < 12; ++ i)
+    {
+        sz[i] = 1;
+        f[i] = i;
+    }
+}
+bool check()
+{
+    init();
+    bool F = 0;
+    for (int i = 0; i < 5; ++ i)
+    {
+        for (int j = 0; j < 5; ++ j)
+        {
+            if (c[i][j].a == 0)
+            {
+                F |= join(c[i][j].u, c[i][j].d);
+            }
+            else if (c[i][j].a == 1)
+            {
+                F |= join(c[i][j].l, c[i][j].r);
+            }
+            else if (c[i][j].a == 2)
+            {
+                F |= join(c[i][j].u, c[i][j].l);
+            }
+            else if (c[i][j].a == 3)
+            {
+                F |= join(c[i][j].u, c[i][j].r);
+            }
+            else if (c[i][j].a == 4)
+            {
+                F |= join(c[i][j].d, c[i][j].r);
+            }
+            else if (c[i][j].a == 5)
+            {
+                F |= join(c[i][j].l, c[i][j].d);
+            }
+        }
+    }
+    bool flag = 0;
+    for (int i = 0; i < 12; ++ i) if (sz[i] == 6)
+    {
+        flag = 1;
+        break;
+    }
+    return flag && F;
+}
+const int N = 25;
+int a[N][N], b[N][N];
+
+const int TOT = 11;
+char M[TOT][5][6] = {{".*...",
+                      "***..",
+                      ".*...",
+                      ".*...",
+                      "....."},
+
+                     {"***..",
+                      ".*...",
+                      ".*...",
+                      ".*...",
+                      "....."},
+
+                     {"**...",
+                      ".**..",
+                      ".*...",
+                      ".*...",
+                      "....."},
+
+                     {".*...",
+                      "**...",
+                      ".**..",
+                      ".*...",
+                      "....."},
+
+                     {"**...",
+                      ".*...",
+                      ".*...",
+                      ".**..",
+                      "....."},
+
+                     {"**...",
+                      ".*...",
+                      ".**..",
+                      ".*...",
+                      "....."},
+
+                     {"**...",
+                      ".**..",
+                      "..**.",
+                      ".....",
+                      "....."},
+
+                     {"*....",
+                      "***..",
+                      "..**.",
+                      ".....",
+                      "....."},
+
+                     {".*...",
+                      "***..",
+                      "..**.",
+                      ".....",
+                      "....."},
+
+                     {"..*..",
+                      "***..",
+                      "..**.",
+                      ".....",
+                      "....."},
+
+                     {"***..",
+                      "..***",
+                      ".....",
+                      ".....",
+                      "....."}};
+int table[TOT][6][4] = {{{9, 6, 0, 2}, {0, 1, 10, 4}, {6, 7, 4, 5}, {2, 3, 5, 11}, {7, 8, 1, 3}, {8, 9, 10, 11}},
+                        {{1, 0, 10, 4}, {9, 6, 4, 5}, {3, 2, 5, 11}, {6, 7, 0, 2}, {7, 8, 10, 11}, {8, 9, 1, 3}},
+                        {{1, 0, 10, 4}, {9, 6, 4, 3}, {6, 7, 0, 5}, {3, 2, 5, 11}, {7, 8, 10, 2}, {8, 9, 1, 11}},
+                        {{9, 6, 0, 11}, {0, 1, 10, 4}, {6, 7, 4, 2}, {7, 8, 1, 5}, {2, 3, 5, 11}, {8, 9, 10, 3}},
+                        {{1, 0, 10, 4}, {9, 6, 4, 3}, {6, 7, 0, 11}, {7, 8, 10, 2}, {8, 9, 1, 5}, {2, 3, 5, 11}},
+                        {{1, 0, 10, 4}, {9, 6, 4, 11}, {6, 7, 0, 2}, {7, 8, 10, 5}, {2, 3, 5, 11}, {8, 9, 1, 3}},
+                        {{11, 0, 9, 4}, {10, 5, 4, 1}, {5, 2, 0, 6}, {1, 7, 6, 3}, {7, 9, 2, 8}, {3, 11, 8, 10}},
+                        {{3, 4, 10, 0}, {4, 9, 11, 5}, {0, 1, 5, 6}, {3, 7, 6, 2}, {7, 9, 1, 8}, {2, 11, 8, 10}},
+                        {{10, 9, 0, 1}, {0, 4, 11, 5}, {9, 3, 5, 6}, {1, 7, 6, 2}, {7, 4, 3, 8}, {2, 11, 8, 10}},
+                        {{9, 6, 0, 3}, {9, 10, 11, 4}, {0, 1, 4, 5}, {6, 7, 5, 2}, {7, 10, 1, 8}, {2, 11, 8, 3}},
+                        {{5, 2, 11, 6}, {4, 0, 6, 7}, {3, 8, 7, 1}, {8, 2, 0, 9}, {1, 11, 9, 10}, {3, 5, 10, 4}}};
+
+bool cut(int x, int y, int type, int n, int m)
+{
+    int cnt = 0;
+    for (int i = 0; i < 5; ++ i)
+    {
+        for (int j = 0; j < 5; ++ j)
+        {
+            c[i][j].a = -1;
+            if (M[type][i][j] == '.') continue;
+            if (i + x >= n || j + y >= m) return 1;
+            c[i][j].a = a[i + x][j + y];
+            c[i][j].u = table[type][cnt][0];
+            c[i][j].d = table[type][cnt][1];
+            c[i][j].l = table[type][cnt][2];
+            c[i][j].r = table[type][cnt][3];
+            cnt ++;
+        }
+    }
+    return 0;
+}
+int base;
+int num[N][N];
+void work(int n, int m, set<long long> &ans)
+{
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j = 0; j < m; ++ j)
+        {
+            for (int k = 0; k < TOT; ++ k)
+            {
+                if (cut(i, j, k, n, m)) continue;
+                /*printf("---\n");
+                for (int q = 0; q < 5; ++ q)
+                {
+                    for (int w = 0; w < 5; ++ w) printf("%5d", c[q][w].a);
+                    puts("");
+                }*/
+                if (check())
+                {
+                    long long xy = 0;
+                    vector<int> all;
+                    for (int q = 0; q < 5; ++ q)
+                    {
+                        for (int w = 0; w < 5; ++ w)
+                        {
+                            //printf("%5d", c[q][w].a);
+                            if (c[q][w].a != -1)
+                            {
+                                all.push_back(num[q + i][w + j]);
+                                //xy = xy * base + num[q + i][w + j];
+                            }
+                        }
+                        //printf("\n");
+                    }
+                    sort(all.begin(), all.end());
+                    for (int i = 0; i < 6; ++ i) xy = xy * base + all[i];
+                    //printf("\n");
+                    ans.insert(xy);
+                    //if (k < 2) del ++;
+                }
+            }
+        }
+    }
+}
+int r1[6] = {1, 0, 3, 4, 5, 2}, v[6] = {0, 1, 3, 2, 5, 4}, h[6] = {0, 1, 5, 4, 3, 2};
+int tn[N][N];
+void rot1(int &n, int &m)
+{
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j = 0; j < m; ++ j)
+        {
+            b[j][n - i - 1] = a[i][j];
+            tn[j][n - i - 1] = num[i][j];
+        }
+    }
+    swap(n, m);
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j = 0; j < m; ++ j)
+        {
+            a[i][j] = r1[b[i][j]];
+            num[i][j] = tn[i][j];
+        }
+    }
+}
+void rot2(int n, int m)
+{
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j = 0; j < m / 2; ++ j)
+        {
+            swap(a[i][j], a[i][m - j - 1]);
+            swap(num[i][j], num[i][m - j - 1]);
+        }
+    }
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j = 0; j < m; ++ j)
+        {
+            a[i][j] = v[a[i][j]];
+        }
+    }
+}
+void rot3(int n, int m)
+{
+    for (int i = 0; i < n / 2; ++ i)
+    {
+        for (int j = 0; j < m; ++ j)
+        {
+            swap(a[i][j], a[n - i - 1][j]);
+            swap(num[i][j], num[n - i - 1][j]);
+        }
+    }
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j =0; j < m; ++ j)
+        {
+            a[i][j] = h[a[i][j]];
+        }
+    }
+}
+int main()
+{
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        for (int i = 0; i < n; ++ i)
+        {
+            for (int j = 0; j < m; ++ j)
+            {
+                scanf("%d", &a[i][j]);
+                num[i][j] = i * m + j;
+            }
+        }
+        set<long long> ans;
+        base = max(n, m) * max(n, m);
+        for (int i = 0; i < 4; rot1(n, m), ++ i)
+        {
+            for (int j = 0; j < 2; rot2(n, m), ++ j)
+            {
+                for (int k = 0; k < 2; rot3(n, m), ++ k)
+                {
+                    work(n, m, ans);
+                    //if (ans.size()) printf("%d %d %d\n", i, j, k);
+                }
+            }
+        }
+        /*for (set<long long>::iterator it = ans.begin(); it != ans.end(); ++ it)
+        {
+            long long tmp = *it;
+            for (int i = 0; i < 6; ++ i)
+            {
+                printf("<%d %d> ", (tmp % base) / m, (tmp % base) % m);
+                tmp /= base;
+            }
+            puts("");
+        }*/
+        printf("Case %d: %d\n", ++ zzz, (int) ans.size());
+    }
+}
+```
