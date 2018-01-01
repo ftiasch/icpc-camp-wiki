@@ -1,0 +1,9 @@
+@import url("screen.css"); /* default gitit screen styles */
+@import url("hk-pyg.css"); /* for syntax highlighting */
+
+/* Put your custom style modifications here: */
+
+#logo img { 
+	width: 100%;
+}
+h1 {font-size : 50pt; text-decoration : overline;}
