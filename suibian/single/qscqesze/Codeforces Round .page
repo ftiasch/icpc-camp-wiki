@@ -1,0 +1,29 @@
+Codeforces Round \#321 (Div. 2)
+===============================
+
+A.Kefa and First Steps
+----------------------
+
+水题,扫一遍就好了 [代码](http://www.cnblogs.com/qscqesze/p/4831478.html)
+
+B.Kefa and Company
+------------------
+
+尺取法或者二分查找都可以
+[代码](http://www.cnblogs.com/qscqesze/p/4831492.html)
+
+C.Kefa and Park
+---------------
+
+DFS跑一遍就行了 [代码](http://www.cnblogs.com/qscqesze/p/4831507.html)
+
+D.Kefa and Dishes
+-----------------
+
+状压dp [代码](http://www.cnblogs.com/qscqesze/p/4831560.html)
+
+E.Kefa and Watch
+----------------
+
+线段树维护hash，查询的时候只用负责len-d这么长的东西就好
+[代码](http://www.cnblogs.com/qscqesze/p/4831870.html)
