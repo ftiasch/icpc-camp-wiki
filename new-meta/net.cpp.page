@@ -1,0 +1,142 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(555555);
+int siz[N], fa[N], color[N], blg[N];
+vector<int> adj[N], rev[N], ok[N];
+vector<pair<int, int> > st0;
+vector<int> st1, st2;
+int t(0);
+int stmp[N];
+bool vst[N];
+void psh(int v) {
+    st0.push_back(make_pair(v, 0));
+    st1.push_back(v);
+    st2.push_back(v);
+    stmp[v] = ++t;
+    vst[v] = true;
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    for(int i(0); i < n - 1; i++) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        rev[x].push_back(adj[y].size());
+        rev[y].push_back(adj[x].size());
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    int rt;
+    for(int i(1); i <= n; i++)
+        if(adj[i].size() >= 2)
+            rt = i;
+    vector<int> q;
+    q.push_back(rt);
+    fa[rt] = 0;
+    fill(siz + 1, siz + 1 + n, 1);
+    for(int op(0); op < (int)q.size(); op++) {
+        int v(q[op]);
+        for(int p(0); p < (int)adj[v].size(); p++) {
+            int y(adj[v][p]);
+            if(y != fa[v]) {
+                q.push_back(y);
+                fa[y] = v;
+                siz[v] = 0;
+            }
+        }
+    }
+    for(int i(n - 1); i >= 0; i--) {
+        int v(q[i]);
+        siz[fa[v]] += siz[v];
+    }
+    for(int i(1); i <= n; i++) {
+        int v(i);
+        bool hasChild(false);
+        bool flag(v == rt || siz[rt] - siz[v] <= siz[rt] / 2);
+        for(int p(0); p < (int)adj[v].size() && flag; p++) {
+            int y(adj[v][p]);
+            if(y != fa[v]) {
+                hasChild = true;
+                flag &= siz[y] <= siz[rt] / 2;
+            }
+        }
+        if(flag && hasChild) {
+            rt = v;
+            break;
+        }
+    }
+    fill(siz + 1, siz + 1 + n, 1);
+    fill(fa + 1, fa + 1 + n, 0);
+    q.clear();
+    q.push_back(rt);
+    for(int op(0); op < (int)q.size(); op++) {
+        int v(q[op]);
+        for(int p(0); p < (int)adj[v].size(); p++) {
+            int y(adj[v][p]);
+            if(y != fa[v]) {
+                color[y] = v == rt ? y : color[v];
+                fa[y] = v;
+                q.push_back(y);
+                siz[v] = 0;
+            }
+        }
+    }
+    vector<pair<int, int> > vec, vec1;
+    for(int i(1); i <= n; i++) 
+        if(siz[i] == 1)
+            vec.push_back(make_pair(color[i], i));
+    sort(vec.begin(), vec.end());
+    printf("%d\n", (int)vec.size() + 1 >> 1);
+    vec1 = vec;
+    int cl(0);
+    for(int i(0); i < (int)vec.size(); i += 2) {
+        vec1[i] = vec[cl++];
+    }
+    for(int i(1); i < (int)vec.size(); i += 2) {
+        vec1[i] = vec[cl++];
+    }
+    for(int i(0); i < (int)vec.size(); i += 2) {
+        int x(vec1[i].second), y(i == (int)vec.size() - 1 ? vec1[i - 1].second : vec1[i + 1].second);
+        //printf("%d %d\n", x, y);
+        rev[x].push_back(adj[y].size());
+        rev[y].push_back(adj[x].size());
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    fill(vst + 1, vst + 1 + n, false);
+    fill(blg + 1, blg + 1 + n, 0);
+    for(int i(1); i <= n; i++) {
+        ok[i].resize(adj[i].size());
+        fill(ok[i].begin(), ok[i].end(), true);
+    }
+    int cnt(0);
+    psh(1);
+    while(!st0.empty()) {
+        int v(st0.back().first), p(st0.back().second++);
+        if(p != (int)adj[v].size()) {
+            if(!ok[v][p])
+                continue;
+            int y(adj[v][p]);
+            ok[v][p] = ok[y][rev[v][p]] = false;
+            if(!vst[y])
+                psh(y);
+            else if(!blg[y])
+                while(stmp[st2.back()] > stmp[y])
+                    st2.pop_back();
+        }else {
+            if(st2.back() == v) {
+                blg[v] = ++cnt;
+                while(st1.back() != v) {
+                    blg[st1.back()] = cnt;
+                    st1.pop_back();
+                }
+                st2.pop_back();
+                st1.pop_back();
+            }
+            st0.pop_back();
+        }
+    }
+    assert(cnt == 1);
+}
+```
