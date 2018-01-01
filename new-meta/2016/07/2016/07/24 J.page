@@ -1,0 +1,241 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 45, MOD = 1e9 + 7, INF = 1e9 + 7;
+int l[N], r[N], sz[N], f[N], t[N], cnt[N][2], dp[N][2], fir[N][2], las[N][2];
+pair<int, int> od[N][2];
+//vector<int> lex[N][2];
+int fat(int x)
+{
+    if (f[x] == x) return x;
+    int root = fat(f[x]);
+    t[x] ^= t[f[x]];
+    return f[x] = root;
+}
+int ran[N];
+void update(vector<int> &a, const vector<int> &b)
+{
+    for (int i = 0; i < (int) b.size(); ++ i) if (b[i] == INF) return;
+    if (a.empty()) a = b; else a = min(a, b);
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        f[0] = 0;
+        sz[0] = 1;
+        cnt[0][0] = 1;
+        cnt[0][1] = 0;
+        memset(t, 0, sizeof(t));
+        for (int i = 1; i <= n; ++ i)
+        {
+            scanf("%d%d", &l[i], &r[i]);
+            cnt[i][0] = (r[i] + 2) / 2 - (l[i] + 1) / 2;
+            cnt[i][1] = (r[i] + 1) / 2 - l[i] / 2;
+            fir[i][l[i] & 1] = l[i];
+            fir[i][(l[i] & 1) ^ 1] = (l[i] + 1 <= r[i]) ? l[i] + 1 : INF;
+            sz[i] = 1;
+            f[i] = i;
+            //printf("%d ~ %d  %d %d\n", l[i], r[i], cnt[i][0], cnt[i][1]);
+        }
+        bool flag = 0;
+        for (int i = 1; i <= m; ++ i)
+        {
+            int l, r, x;
+            scanf("%d%d%d", &l, &r, &x);
+            -- l;
+            if (fat(l) == fat(r))
+            {
+                if ((t[l] ^ t[r]) != x)
+                {
+                    flag = 1;
+                }
+            }
+            else
+            {
+                fat(l), fat(r);
+                int nt = t[l] ^ t[r] ^ x;
+                r = fat(r), l = fat(l);
+                f[r] = l;
+                t[r] = nt;
+                sz[l] += sz[r];
+                sz[r] = 0;
+            }
+        }
+        if (flag == 1)
+        {
+            puts("0");
+            puts("-1");
+            continue;
+        }
+        vector<int> ns;
+        //for (int i = 0; i <= n; ++ i) printf("%d ", t[i]); puts("");
+        for (int i = 0; i <= n; ++ i) if (sz[i] > 1)
+        {
+            ran[i] = (int) ns.size();
+            ns.push_back(i);
+        }
+        int ans = 0;
+        vector<int> seq;
+        for (int mask = 0; mask < (1 << ns.size()); ++ mask)
+        {
+            memset(dp, -1, sizeof(dp));
+            memset(las, -1, sizeof(las));
+            bool flag = 0;
+            for (int i = 0; i <= n; ++ i)
+            {
+                if (sz[i] == 1)
+                {
+                    if (i == 0)
+                    {
+                        dp[i][0] = 1;
+                        dp[i][1] = -1;
+                        od[i][0] = make_pair(0, 0);
+                        od[i][1] = make_pair(INF, INF);
+                        /*lex[i][0].clear();
+                        lex[i][1].clear();
+                        lex[i][1].push_back(INF);*/
+                    }
+                    else
+                    {
+                        pair<int, int> cho0 = make_pair(INF, INF);
+                        if (dp[i - 1][0] != -1 && cnt[i][0])
+                        {
+                            dp[i][0] = 1LL * cnt[i][0] * dp[i - 1][0] % MOD;
+                            las[i][0] = 0;
+                            cho0 = make_pair((int) (od[i - 1][0] > od[i - 1][1]), fir[i][0]);
+                        }
+                        if (dp[i - 1][1] != -1 && cnt[i][1])
+                        {
+                            if (dp[i][0] == -1) dp[i][0] = 0;
+                            pair<int, int> cho00 = make_pair((int) (od[i - 1][1] > od[i - 1][0]), fir[i][1]);
+                            if (cho00 < cho0)
+                            {
+                                las[i][0] = 1;
+                                cho0 = cho00;
+                            }
+                            (dp[i][0] += 1LL * cnt[i][1] * dp[i - 1][1] % MOD) %= MOD;
+                        }
+                        /*vector<int> t0 = lex[i - 1][0], t1 = lex[i - 1][1];
+                        t0.push_back(fir[i][0]); t1.push_back(fir[i][1]);
+                        lex[i][0] = min(t0, t1);*/
+                        pair<int, int> cho1 = make_pair(INF, INF);
+                        if (dp[i - 1][0] != -1 && cnt[i][1])
+                        {
+                            dp[i][1] = 1LL * cnt[i][1] * dp[i - 1][0] % MOD;
+                            cho1 = make_pair((int) (od[i - 1][0] > od[i - 1][1]), fir[i][1]);
+                            las[i][1] = 0;
+                        }
+                        if (dp[i - 1][1] != -1 && cnt[i][0])
+                        {
+                            if (dp[i][1] == -1) dp[i][1] = 0;
+                            pair<int, int> cho11 = make_pair((int) (od[i - 1][1] > od[i - 1][0]), fir[i][0]);
+                            if (cho11 < cho1)
+                            {
+                                las[i][1] = 1;
+                                cho1 = cho11;
+                            }
+                            (dp[i][1] += 1LL * cnt[i][0] * dp[i - 1][1] % MOD) %= MOD;
+                        }
+                        od[i][0] = cho0;
+                        od[i][1] = cho1;
+                        /*t0 = lex[i - 1][0], t1 = lex[i - 1][1];
+                        t0.push_back(fir[i][1]); t1.push_back(fir[i][0]);
+                        lex[i][1] = min(t0, t1);*/
+                    }
+                }
+                else
+                {
+                    fat(i);
+                    int cho = (mask >> ran[fat(i)] & 1) ^ t[i];
+                    if (cho && (i == 0))
+                    {
+                        flag = 1;
+                        break;
+                    }
+                    dp[i][cho ^ 1] = -1;
+                    od[i][cho ^ 1] = make_pair(INF, INF);
+                    //lex[i][cho1 ^ 1].clear(); lex[i][cho ^ 1].push_back(INF);
+                    if (i == 0)
+                    {
+                        dp[i][0] = 1;
+                        od[i][0] = make_pair(0, 0);
+                        //lex[i][0].clear();
+                    }
+                    else
+                    {
+                        pair<int, int> choo = make_pair(INF, INF);
+                        if (dp[i - 1][cho] != -1 && cnt[i][0])
+                        {
+                            dp[i][cho] = 1LL * cnt[i][0] * dp[i - 1][cho] % MOD;
+                            las[i][cho] = cho;
+                            choo = make_pair((int) (od[i - 1][cho] > od[i - 1][cho ^ 1]), fir[i][0]);
+                            //printf("choo : %d %d\n", choo.first, choo.second);
+                        }
+                        if (dp[i - 1][cho ^ 1] != -1 && cnt[i][1])
+                        {
+                            if (dp[i][cho] == -1) dp[i][cho] = 0;
+                            pair<int, int> choo2 = make_pair((int) (od[i - 1][cho ^ 1] > od[i - 1][cho]), fir[i][1]);
+                            //printf("choo2 : %d %d\n", choo2.first, choo2.second);
+                            if (choo2 < choo)
+                            {
+                                choo = choo2;
+                                las[i][cho] = cho ^ 1;
+                            }
+                            (dp[i][cho] += 1LL * cnt[i][1] * dp[i - 1][cho ^ 1] % MOD) %= MOD;
+                        }
+                        od[i][cho] = choo;
+                        /*vector<int> t0 = lex[i - 1][cho], t1 = lex[i - 1][cho ^ 1];
+                        t0.push_back(fir[i][0]); t1.push_back(fir[i][1]);
+                        lex[i][cho] = min(t0, t1);*/
+                    }
+                }
+            }
+            if (flag) continue;
+            if (ans == -1) ans = 0;
+            //printf("mask = %d\n", mask);
+            //for (int i = 1; i <= n; ++ i) printf("<%d %d> <%d %d> %d %d\n", od[i][0].first, od[i][0].second, od[i][1].first, od[i][1].second, las[i][0], las[i][1]);
+            if (dp[n][0] != -1)
+            {
+                (ans += dp[n][0]) %= MOD;
+                vector<int> seq1;
+                for (int i = n, j = 0; i >= 1; --i)
+                {
+                    seq1.push_back(od[i][j].second);
+                    j = las[i][j];
+                }
+                reverse(seq1.begin(), seq1.end());
+                if (seq.empty() || seq > seq1) seq = seq1;
+            }
+            if (dp[n][1] != -1)
+            {
+                (ans += dp[n][1]) %= MOD;
+                vector<int> seq1;
+                for (int i = n, j = 1; i >= 1; -- i)
+                {
+                    seq1.push_back(od[i][j].second);
+                    j = las[i][j];
+                }
+                reverse(seq1.begin(), seq1.end());
+                if (seq.empty() || seq > seq1) seq = seq1;
+            }
+            /*update(seq, lex[n][0]);
+            update(seq, lex[n][1]);*/
+            //if (seq.empty() || tmp_seq < seq) seq.swap(tmp_seq);
+        }
+        printf("%d\n", ans);
+        if (seq.size() == n) for (int i = 0; i < n; ++ i) printf("%d%c", seq[i], " \n"[i == n - 1]); else puts("-1");
+    }
+}
+```
