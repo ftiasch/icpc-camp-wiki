@@ -1,0 +1,33 @@
+# 1001 A Poor King
+
+# 1002 Best Division [zyh]
+
+就是要把n个数分成尽可能多的段使得每段长度<=L且xor和<=X，dp[i]表示前i个数最多能划分成多少段，对a[]做一遍前缀xor和后用Trie树维护以每个数为结尾的前缀的dp值，一个观察是同一个叶子上的dp值一定是新来的更优，因为要么旧的dp值已经过期，要么新旧dp值之间的这一段数的xor和为0，于是只需在维护最大值的同时打一个时间标记，查询时如果X当前位为1，那么走与a[i]当前位相同的边之后是可以选到整棵子树的，查询子树最大值，然后递归到另一边，如果X当前位为0，那么只能走与a[i]当前位相同的转移边，插入和删除dp值时根据时间标记进行修改，并向上更新子树最大值
+
+# 1003 Convex Hull
+
+# 1004 Different Sums
+
+# 1005 Easy Homework
+
+# 1006 Flight
+
+# 1007 Generator
+
+# 1008 Honey Tour
+
+# 1009 Intersection is not allowed! [zyh&ghc]
+
+先考虑k==2的情形，就是两个人分别跑的方案数减去路径相交的方案数，对于相交的路径，把最后一个交点之后的路径交换一下，这相当于交换了目的地，对于一般的k，考虑k!枚举目的地的全排列，如果排列的逆序对数是t，那么这个方案中至少有t对路径是相交的，容斥一下，可以发现这就是$O(k!)$计算行列式的过程，于是$O(k^3)$高斯消元求行列式。代码爷爷说就是这个引理[Lindström–Gessel–Viennot lemma](https://en.wikipedia.org/wiki/Lindstr%C3%B6m%E2%80%93Gessel%E2%80%93Viennot_lemma)
+
+# 1010 Jong Hyok and String [hwq补]
+
+strange set描述的实质上就是right集，于是建立多串SAM，让查询串在SAM上跑，最终状态对应的串长种类数即为答案，也就是当前状态的maxlen减去parent树上父亲的maxlen
+
+# 1011 K-th value
+
+# 1012 Less Time, More profit [hwq]
+
+二分答案之后即为最大权闭合子图
+
+# 1013 Math is Fun
