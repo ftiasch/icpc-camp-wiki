@@ -1,0 +1,351 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+#include <cassert>
+#include <map>
+#include <cstring>
+
+using namespace std;
+
+const int N = 1e5 + 7;
+const int M = 1e6 + 7;
+const long long INF = 1e13;
+const int LOG = 41 + 1;
+
+const bool DEBUG = false;
+
+int n, m, q;
+
+struct Edge {
+    int v, p, w, e_id;
+    Edge(int v, int p, int w, int e_id) : v(v), p(p), w(w), e_id(e_id) {}
+    bool operator <(const Edge &o) const {
+        return p < o.p;
+    }
+};
+
+struct Way {
+    int v, e_id;
+    long long ways;
+    Way(int v, int e_id, long long ways) : v(v), e_id(e_id), ways(ways) {}
+    bool operator <(const Way &o) const {
+        return ways < o.ways;
+    }
+};
+
+vector<Edge> adj[N];
+vector<Way> emit[N];
+vector<int> sons[N];
+
+int parent[N], parent_eid[N];
+int e_from[M], e_weight[M];
+
+#define left LEFT
+#define right RIGHT
+int left[N], right[N], tot, dep[N], root[N];
+
+pair<int, long long> go[N][LOG];
+
+int dfn[N], low[N], color[N], tot_color, in_stack[N], tot_v;
+vector<int> stack;
+
+long long ways[N];
+
+void add(long long &a, long long b) {
+    if ((a += b) >= INF) {
+        a = INF;
+    }
+}
+
+void tarjan(int u) {
+    dfn[u] = low[u] = tot_v++;
+    stack.push_back(u);
+    in_stack[u] = true;
+    for (auto &e : adj[u]) {
+        int v = e.v;
+        if (!dfn[v]) {
+            tarjan(v);
+            low[u] = min(low[u], low[v]);
+        } else if (in_stack[v]) {
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+    if (low[u] == dfn[u]) {
+        while (true) {
+            int t = stack.back();
+            stack.pop_back();
+            color[t] = tot_color;
+            in_stack[t] = false;
+            if (t == u) break;
+        }
+        ++tot_color;
+    }
+}
+
+void prepare() {
+    for (int u = 0; u < n; u++) {
+        sort(adj[u].begin(), adj[u].end());
+        in_stack[u] = false;
+    }
+    stack.clear();
+    tot_color = tot_v = 0;
+    for (int u = 0; u < n; u++) {
+        if (!dfn[u]) tarjan(u);
+    }
+    static int tot_e[N];
+    fill(tot_e, tot_e + tot_color, 0);
+    vector<int> topo;
+    for (int u = 0; u < n; u++) {
+        topo.push_back(u);
+        for (auto &e : adj[u]) {
+            int v = e.v;
+            if (color[u] == color[v]) {
+                tot_e[color[u]]++;
+            }
+        }
+    }
+    sort(topo.begin(), topo.end(), [&](int a, int b) { return color[a] < color[b]; });
+    for (auto u : topo) {
+        ways[u] = 1;
+        long long cho_ways = 1;
+        int cho = -1;
+        emit[u].push_back(Way(-1, -1, 1));
+        for (auto &e : adj[u]) {
+            int v = e.v;
+            long long ways_v = ways[v];
+            if (tot_e[color[v]] > 0) ways_v = INF;
+            if (ways_v >= cho_ways) {
+                cho_ways = ways_v;
+                cho = v;
+                go[u][0].second = ways[u];
+                parent_eid[u] = e.e_id;
+            }
+            add(ways[u], ways_v);
+            emit[u].push_back(Way(v, e.e_id, ways[u]));
+            if (ways[u] >= INF) break;
+        }
+        go[u][0].first = cho;
+        parent[u] = cho;
+        if (cho != -1) {
+            sons[cho].push_back(u);
+        }
+    }
+    for (int i = 0; i + 1 < LOG; i++) {
+        for (int u = 0; u < n; u++) {
+            int v = go[u][i].first;
+            if (v == -1) {
+                go[u][i + 1] = go[u][i];
+            } else {
+                long long tmp = go[u][i].second;
+                add(tmp, go[v][i].second);
+                go[u][i + 1] = make_pair(go[v][i].first, tmp);
+            }
+        }
+    }
+    if (DEBUG) {
+        for (int u = 0; u < n; u++) {
+            printf("u = %d, parent = %d, go = %lld ways = %lld\n", u, parent[u], go[u][0].second, ways[u]);
+        }
+    }
+}
+
+struct Tree {
+    long long sum[N << 2];
+    void init() {
+        memset(sum, 0, sizeof(sum));
+    }
+    void add(int x, int l, int r, int ql, int qr, int v) {
+        if (qr < l || r < ql) return ;
+        if (ql <= l && r <= qr) {
+            sum[x] += v;
+            return ;
+        }
+        int mid = (l + r) / 2;
+        add(x << 1, l, mid, ql, qr, v);
+        add(x << 1 | 1, mid + 1, r, ql, qr, v);
+    }
+
+    long long ask(int x, int l, int r, int pos) {
+        if (l == r) {
+            return sum[x];
+        }
+        int mid = (l + r) / 2;
+        if (pos <= mid) return sum[x] + ask(x << 1, l, mid, pos);
+        return sum[x] + ask(x << 1 | 1, mid + 1, r, pos);
+    }
+    void modify(int x, int v) {
+        add(1, 0, n - 1, left[x], right[x] - 1, v);
+    }
+    long long query(int x) {
+        return ask(1, 0, n - 1, left[x]);
+    }
+}tree;
+
+int visit[N];
+
+void dfs(int u) {
+    visit[u] = 2;
+    left[u] = tot++;
+    for (auto v : sons[u]) {
+        if (visit[v] != 2) {
+            dep[v] = dep[u] + 1;
+            root[v] = root[u];
+            dfs(v);
+        }
+    }
+    right[u] = tot;
+}
+
+void build() {
+    static int cnt_sons[N];
+    fill(cnt_sons, cnt_sons + n, 0);
+    fill(visit, visit + n, 0);
+    fill(dep, dep + n, 0);
+    for (int u = 0; u < n; u++) {
+        if (parent[u] != -1) {
+            cnt_sons[parent[u]]++;
+        }
+    }
+    vector<int> topo;
+    for (int u = 0; u < n; u++) {
+        if (cnt_sons[u] == 0) {
+            topo.push_back(u);
+            visit[u] = 1;
+        }
+    }
+    for (int head = 0; head < topo.size(); head++) {
+        int u = topo[head];
+        int v = parent[u];
+        if (v != -1 && --cnt_sons[v] == 0) {
+            topo.push_back(v);
+            visit[v] = 1;
+        }
+    }
+    for (int u = 0; u < n; u++) {
+        if (visit[u] == 0 || parent[u] == -1) {
+            root[u] = u;
+            dfs(u);
+        }
+    }
+    tree.init();
+    for (int u = 0; u < n; u++) {
+        if (root[u] != u) {
+            tree.modify(u, e_weight[parent_eid[u]]);
+        }
+    }
+    if (DEBUG) {
+        for (int u = 0; u < n; u++) {
+            printf("u = %d left = %d right = %d\n", u, left[u], right[u]);
+        }
+    }
+}
+
+long long go_up(int u, long long d) {
+    assert(d <= dep[u]);
+    long long ret = tree.query(u);
+    int v = u;
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (d >> i & 1) {
+            v = go[v][i].first;
+        }
+    }
+    if (v != root[u]) ret -= tree.query(v);
+    return ret;
+}
+
+long long get_weight(int u, long long steps) {
+    if (steps > dep[u] && parent[root[u]] == -1) {
+        assert(false);
+    }
+    if (dep[u] >= steps) return go_up(u, steps);
+    long long ret = tree.query(u);
+    steps -= dep[u];
+    u = root[u];
+    int down = parent[u];
+    int len = dep[down] + 1;
+    if (steps >= len) {
+        long long cost = tree.query(down) + e_weight[parent_eid[u]];
+        ret += steps / len * cost;
+        steps %= len;
+    }
+    if (steps) {
+        ret += e_weight[parent_eid[u]];
+        --steps;
+    }
+    if (steps) {
+        ret += go_up(down, steps);
+    }
+    return ret;
+}
+
+long long query(int u, long long k) {
+    if (DEBUG) {
+        printf("query %d %lld\n", u, k);
+    }
+    if (ways[u] < k) return -1;
+    long long ret = 0;
+    while (k > 1) {
+        long long steps = 0;
+        int s = u;
+        for (int i = LOG - 1; i >= 0; i--) {
+            if (go[u][i].first != -1 && go[u][i].second < k
+                && ways[go[u][i].first] + go[u][i].second >= k) {
+                k -= go[u][i].second;
+                steps += 1LL << i;
+                u = go[u][i].first;
+            }
+        }
+        if (DEBUG) printf("go %d %lld\n", s, steps);
+        ret += get_weight(s, steps);
+        if (DEBUG) printf("u = %d %lld %lld\n", u, ret, k);
+        if (k == 1) return ret;
+        int i = lower_bound(emit[u].begin(), emit[u].end(), Way(0, 0, k)) - emit[u].begin();
+        k -= emit[u][i - 1].ways;
+        ret += e_weight[emit[u][i].e_id];
+        u = emit[u][i].v;
+    }
+    return ret;
+}
+
+void change(int e, int w) {
+    int u = e_from[e];
+    if (parent_eid[u] == e) {
+        if (root[u] != u) {
+            tree.modify(u, w - e_weight[e]);
+        }
+    }
+    e_weight[e] = w;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &m, &q);
+    for (int i = 0; i < m; i++) {
+        int u, v, p, w;
+        scanf("%d %d %d %d", &u, &v, &p, &w);
+        u--, v--;
+        adj[u].push_back(Edge(v, p, w, i));
+        e_weight[i] = w;
+        e_from[i] = u;
+    }
+    prepare();
+    build();
+    for (int i = 0; i < q; i++) {
+        int t;
+        scanf("%d", &t);
+        if (t == 1) {
+            int v;
+            long long k;
+            scanf("%d %lld", &v, &k);
+            printf("%lld\n", query(--v, k));
+        } else {
+            int e, w;
+            scanf("%d %d", &e, &w);
+            change(--e, w);
+        }
+    }
+    return 0;
+}
+```
