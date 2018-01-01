@@ -1,0 +1,63 @@
+Summary
+=======
+
+乐趣就是做水题，先把水题过了，学习矩阵乘法。
+
+Problems
+========
+
+A Thickest Burger
+-----------------
+
+【题意】：有两种肉，这两种肉的高度都不一样，不能放三个类型一样的肉，问只放三种肉的最大高度是多少。
+
+【解析】：结果为A+B+max(A,B)
+
+B Relative atomic mass
+----------------------
+
+【题意】：给你一个长度不超过10的字符串表示一种分子，问该分子的相对原子质量为多少(H
+1，C 12，O 16)。
+
+【解析】：遍历
+
+C Recursive sequence
+--------------------
+
+【题意】：F(1)=a，F(2)=b，F(N)=2F(N-2)+F(N-1)+N\^4,给你N,a,b(N,a,b &lt;
+2\^31),求F(N)%2147493647.
+
+D Winning an Auction
+--------------------
+
+E Counting Cliques
+------------------
+
+F Similar Rotations
+-------------------
+
+G Do not pour out
+-----------------
+
+H Guessing the Dice Roll
+------------------------
+
+I The Elder
+-----------
+
+J Query on a graph
+------------------
+
+K New Signal Decomposition
+--------------------------
+
+L A Random Turn Connection Game
+-------------------------------
+
+M Subsequence
+-------------
+
+参考
+====
+
+[题解](http://blog.csdn.net/queuelovestack/article/details/52973038?locationNum=2&fps=1)
