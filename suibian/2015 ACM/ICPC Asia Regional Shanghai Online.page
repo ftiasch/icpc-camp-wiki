@@ -1,0 +1,41 @@
+总结
+====
+
+辣鸡学校出的辣鸡题目……（233
+
+题解
+====
+
+02 Antonidas
+------------
+
+树分治
+
+04 Count the Grid
+-----------------
+
+状压dp
+
+08 An easy problem Xiper
+------------------------
+
+水题，就Sgtree维护一下区间乘积就好了，当然自己当时想的CRT来搞。。。（智障了）
+
+[代码](http://www.cnblogs.com/qscqesze/p/4841359.html)
+
+09 Explore Track of Point Chenxh
+--------------------------------
+
+利用样例猜路径，发现时一个圆弧，当时就猜要么是翻折下来要么就是构成圆内接四边形，反正是瞎猜然后猜对了。看清题目exactly
+4 digits。 [代码](http://www.cnblogs.com/qscqesze/p/4841367.html)
+
+10 A Sweet Journey qscqesze
+---------------------------
+
+签到题，没什么好说的
+[代码](http://www.cnblogs.com/qscqesze/p/4841375.html)
+
+11 Can you find it qscqesze
+---------------------------
+
+先得推出来，一个a，最多对应一个b之后，直接暴力随机化三个值，然后暴力check就好了[代码](http://www.cnblogs.com/qscqesze/p/4841383.html)
