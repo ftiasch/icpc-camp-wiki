@@ -1,0 +1,103 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e5 + 7;
+
+int n;
+
+vector<vector<int>> a;
+
+long long ans = 0;
+int h[N];
+
+int lowbit(int x) { return x & -x; }
+
+void ins(int pos) {
+    for (int i = pos; i <= n; i += lowbit(i)) {
+        h[i]++;
+    }
+}
+
+void clear(int pos) {
+    for (int i = pos; i <= n; i += lowbit(i)) {
+        h[i] = 0;
+    }
+}
+
+int ask(int pos) {
+    int ret = 0;
+    for (int i = pos; i; i -= lowbit(i)) {
+        ret += h[i];
+    }
+    return ret;
+}
+
+long long solve(int x, int y, function<long long(int x)> norm) {
+    long long ret = 0;
+    vector<pair<int, int> > v;
+    for (int i = 0; i < n; i++) {
+        v.push_back({a[i][x], a[i][y]});
+    }
+    sort(v.begin(), v.end());
+    for (int i = 0; i < v.size(); i++) {
+        ret += norm(ask(v[i].second));
+        ins(v[i].second);
+    }
+    fill(h + 1, h + n + 1, 0);
+    return ret;
+}
+
+int val[N];
+
+long long solve3(function<long long(int x)> norm, int l = 0, int r = n - 1) {
+    if (l == 0 && r == n - 1) {
+        fill(val, val + n, 0);
+    }
+    if (l == r) {
+        // cout << l << " = " << val[l] << endl;
+        return norm(val[l]);
+    }
+    int mid = (l + r) / 2;
+    vector<pair<pair<int, int>, int> > evts;
+    for (int i = l; i <= r; i++) {
+        evts.push_back({{a[i][1], a[i][2]}, i <= mid ? -1 : i});
+    }
+    sort(evts.begin(), evts.end());
+    for (auto e : evts) {
+        if (e.second < 0) {
+            ins(e.first.second);
+        } else {
+            val[e.second] += ask(e.first.second);
+        }
+    }
+    for (auto e : evts) if (e.second < 0) {
+        clear(e.first.second);
+    }
+    return solve3(norm, l, mid) + solve3(norm, mid + 1, r);
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int x, y, z;
+        scanf("%d %d %d", &x, &y, &z);
+        a.push_back({x, y, z});
+    }
+    sort(a.begin(), a.end());
+    ans = 1LL * n * (n - 1) * (n - 2) / 6;
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 3; j++) {
+            ans -= solve(i, j, [&](int x) { return 1LL * (x - 1) * x / 2; });
+        }
+    }
+    ans += 2 * solve3([&](int x) { return 1LL * (x - 1) * x / 2; });
+    // cout << ans << endl;
+    ans += 1LL * (n - 1) * n / 2;
+    ans -= solve3([&](int x) { return x; });
+    ans += n;
+    cout << ans << endl;
+    return 0;
+}
+```
