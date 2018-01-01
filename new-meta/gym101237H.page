@@ -1,0 +1,205 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <cassert>
+
+using namespace std;
+
+const int N = 4444;
+char buf[N];
+int n, k;
+vector<int> start;
+string s;
+int go[N << 1], pre[N << 1];
+
+void z_algo(string s) {
+    int l = 0, r = 0;
+    go[0] = s.size();
+    for (int i = 1; i < s.size(); i++) {
+        if (i > r) {
+            l = r = i;
+            go[i] = 0;
+        } else {
+            go[i] = min(go[i - l], r - i + 1);
+        }
+        while (i + go[i] < s.size() && s[i + go[i]] == s[go[i]]) go[i]++;
+        if (i + go[i] - 1 > r) {
+            l = i, r = i + go[i] - 1;
+        }
+    }
+}
+
+bool solved(string t) {
+    if (t <= s) return false;
+    // cout << t << endl;
+    int m = t.size();
+    string tmp = t + s;
+    z_algo(tmp);
+    for (int i = n - 1, l = i; i >= 0; i--) {
+        if (l > i) l = i;
+        // cout << i << endl;
+        while (l >= 0) {
+            int lcp = min(min(m, go[l + m]), i - l + 1);
+            //cout << "l = " << l << " lcp = " << lcp << endl;
+            char ssc = l + lcp > i ? 0 : s[l + lcp];
+            char tc = lcp >= m ? 0 : t[lcp];
+            if (ssc > tc) {
+                l--;
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (l < 0) return false;
+        pre[i] = l;
+        //cout << i << " pre = " << pre[i] << endl;
+    }
+    int x = n - 1, cnt = 0;
+    start.clear();
+    while (x >= 0) {
+        if (++cnt < k) start.push_back(pre[x]);
+        x = pre[x] - 1;
+    }
+    start.push_back(0);
+    return cnt >= k;
+}
+
+int shift = -1;
+
+string find(string s) {
+    int i,j,k,l,N = s.length(); s += s;
+    for(i = 0, j = 1; j < N;) {
+        for (k = 0; k < N && s[i + k] == s[j + k]; k++);
+        if (k >= N) break;
+        if (s[i + k] < s[j + k]) j += k + 1;
+        else l = i + k, i = j, j = max(l, j) + 1;
+    }
+    shift = i;
+    return s.substr(i, N);
+}
+
+void print_ans() {
+    for (int i = 0; i < k; i++) {
+        (start[i] += shift) %= n;
+    }
+    sort(start.begin(), start.end());
+    for (int i = 0; i < k; i++) {
+        printf("%d%c", start[i] + 1, i + 1 == k ? '\n' : ' ');
+    }
+}
+
+bool test_bigger() {
+    string ans = "", cur = "";
+    int mm = 0;
+    for (int m = 1; m <= n; m++) {
+        for (char c = 'z'; c >= 'a'; c--) {
+            if (solved(cur + c)) {
+                ans = cur + c;
+                mm = m;
+                // cout << m << " " << cur << endl;
+            } else {
+                cur = cur + c;
+                break;
+            }
+        }
+        if (cur.size() != m) break;
+    }
+    assert(solved(ans) == true);
+    // cout << mm << " mm " << ans << endl;
+    // cout << k << " " << start.size() << endl;
+    print_ans();
+    return true;
+}
+
+bool solved(int len) {
+    static int kmp[N], min_kmp[N], go[N];
+    string ss = s + s;
+    kmp[0] = -1;
+    min_kmp[0] = 0;
+    for (int i = 1; i < len; i++) {
+        int j = kmp[i - 1];
+        while (j != -1 && s[j + 1] != s[i]) j = kmp[j];
+        kmp[i] = s[j + 1] == s[i] ? j + 1 : -1;
+        min_kmp[i] = kmp[i] == -1 ? i : min_kmp[kmp[i]];
+    }
+    static pair<int, int> range[N];
+    for (int b = 0; b < n; b++) {
+        // cout << "b = " << b << endl;
+        // str = ss[b .. b + n]
+        for (int i = b, j = -1; i < b + n; i++) {
+            while (j != -1 && s[j + 1] != ss[i]) j = kmp[j];
+            if (s[j + 1] == ss[i]) j++;
+            go[i] = j;
+            const int INF = 1e9;
+            range[i] = {-INF, -INF};
+            if (j != -1) {
+                range[i].first = i - j - 1 < b ? 1 : range[i - j - 1].first + 1;
+                range[i].second = i - min_kmp[j] - 1 < b ? 1 : range[i - min_kmp[j] - 1].second + 1;
+            }
+            if (j == len - 1) j = kmp[j];
+        }
+        int end = n + b - 1;
+        if (range[end].first <= k && k <= range[end].second) {
+            // cout << "len = " << len << endl;
+            // cout << ss.substr(b, n) << endl;
+            // cout << " found " << endl;
+            int remain = k;
+            start.clear();
+            for (int i = b + n - 1; i >= b; ) {
+                for (int j = go[i]; ~j; j = kmp[j]) {
+                    int l = j + 1;
+                    // cout << l << endl;
+                    if (l == i - b + 1 && remain == 1) {
+                        start.push_back(b % n);
+                        i -= l;
+                        break;
+                    }
+                    if (l < i - b + 1 && range[i - l].first + 1 <= remain && remain <= range[i - l].second + 1) {
+                        start.push_back((i - l + 1) % n);
+                        i -= l;
+                        remain--;
+                        // if (len == 2) cout << "l = " << l << " i = " << i << endl;
+                        break;
+                    }
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+bool test_prefix() {
+    int l = 1, r = n;
+    while (l < r) {
+        int mid = (l + r) / 2;
+        if (solved(mid)) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    if (solved(l)) {
+        print_ans();
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    scanf("%s%d", buf, &k);
+    n = strlen(buf);
+    s = find(buf);
+    // cout << s << endl;
+    if (test_prefix()) return 0;
+    // cout << "step 2" << endl;
+    if (test_bigger()) return 0;
+    assert(false);
+    return 0;
+}
+```
