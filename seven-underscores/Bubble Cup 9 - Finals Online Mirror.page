@@ -1,0 +1,29 @@
+**A Festival Organization**
+
+**B R3D3's Summer Adventure**
+
+**C Potions Homework**
+
+可以看出，答案为Σa\[i\]\*a\[n-i+1\]
+
+**D Dexterina's Lab**
+
+$dp_{i, j}$表示i个石头，异或和为j的概率，dp的转移过程可以压成一个矩阵，然后矩阵快速幂即可
+
+**E Paint it really, really dark gray**
+
+dfs一遍，当递归回某一个结点的时候，如果它的儿子结点还存在粉色的，就多往下来回走一步把它变成黑色，最后回到根的时候，如果根为粉色，最后一步就不走
+
+**F Heroes of Making Magic III**
+
+先把区间值都-1，如果有小于0的值就无解，如果奇数位置和偶数位置的和不一样，就无解，否则就维护一个差分$a_n - a_{n - 1} + a_{n - 2} - ...$如果这个差分的每一项都非负，就是有解，否则无解，维护差分的方法用一个线段树，维护一下奇数和偶数的值即可，查询的时候就先减掉一个前缀在去判断
+
+**G Underfail**
+
+把所有匹配的位置找出来，那么问题就变成一个区间k覆盖问题，费用流解决
+
+**H Pokermon League challenge**
+
+先是贪心放找出满足边约束的方案。之后就是随机大法。
+
+**I Cowboy Beblop at his computer**
