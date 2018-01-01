@@ -1,0 +1,49 @@
+A. Altitude
+-----------
+
+B. Blocking Buffer
+------------------
+
+C. Catch Me If You Can
+----------------------
+
+D. Demolition Time
+------------------
+
+E. Economy Printing\[ruclion\]
+------------------------------
+
+dp，f\[i\]\[0/1/2/3/4\]表示做完前i个，分别是：不管，连续，要求偶数连，要求奇数连，要求奇数偶数均连。
+注意，我们把10\#10或者10-10这种也允许，这样转移的时候好些。注意要写方案数。
+
+F. Format
+---------
+
+G. Great Guest Gathering
+------------------------
+
+H. Hockey Cup
+-------------
+
+I. Interesting Interactive Idea
+-------------------------------
+
+J. Juice Degustation
+--------------------
+
+K. Knights of the Old Republic
+------------------------------
+
+L. Lazy Coordinator
+-------------------
+
+Summary
+-------
+
+-rikoizz:
+
+-ruclion:
+
+E题首先dp的转移要想清楚，比赛时f\[i\]\[4\]漏掉了重复本身的情况导致一直不对，另外注意看清楚题目的输出。
+
+-skyxuan:
