@@ -1,0 +1,86 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+#define left LEFT
+#define right RIGHT
+const int N = 5e3 + 7, M = 1e4 + 7;
+
+int n1, n2, m;
+int weight[M], vis[N];
+vector<int> left, right;
+vector<pair<int, int> > adj[N];
+
+void dfs(int x) {
+    vis[x] = 1;
+    if (x < n1) {
+        left.push_back(x);
+    } else {
+        right.push_back(x);
+    }
+    
+    for (auto it : adj[x]) {
+        int y = it.first;
+        if (vis[y]) continue;
+        dfs(y);
+    }
+}
+
+bool travel(int x, int target, int inc) {
+    vis[x] = 2;
+    if (x == target) {
+        return true;
+    }
+    for (auto it : adj[x]) {
+        int y = it.first;
+        if (vis[y] == 2) continue;
+        
+        if (travel(y, target, 3 - inc)) {
+            weight[it.second] += inc;
+            return true;
+        } 
+    }
+    return false;
+    
+}
+
+int main() {
+    scanf("%d %d %d", &n1, &n2, &m);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        u--, v--;
+        v += n1;
+        adj[u].push_back(make_pair(v, i));
+        adj[v].push_back(make_pair(u, i));
+    }
+    for (int i = 0; i < n1; i++) {
+        if (!vis[i]) {
+            left.clear();
+            right.clear();
+            dfs(i);
+            if (right.size() == 1) left.swap(right);
+            if (right.size() == 1) {
+                puts("-1");
+                return 0;
+            }
+            for (int j = 0; j < right.size(); j += 2) {
+                int x = right[j];
+                int y = (j + 1 == right.size()) ? right[j - 1] : right[j + 1];
+                for (int p : left) vis[p] = 1;
+                for (int p : right) vis[p] = 1;
+                travel(x, y, 1);
+            }
+        }
+    }
+    for (int i = 0; i < m; i++) {
+        printf("%d%c", weight[i] % 3, i + 1 == m ? '\n' : ' ');
+    }
+    return 0;
+}
+```
