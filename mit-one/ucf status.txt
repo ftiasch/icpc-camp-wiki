@@ -1,0 +1,40 @@
+Problem Name	Submission Time	Judge Response
+Spiral (f)	4:59	Time-Limit Exceeded
+Spiral (f)	4:59	Wrong Answer
+Spiral (f)	4:58	Time-Limit Exceeded
+Spiral (f)	4:57	Wrong Answer
+Spiral (f)	4:49	Run-Time Error
+Spiral (f)	4:31	Run-Time Error
+Spiral (f)	4:12	Wrong Answer
+Spiral (f)	3:59	Wrong Answer
+Magic Path (j)	3:14	Wrong Answer
+[Rejudge]
+Magic Path (j)	3:14	Wrong Answer
+Magic Path (j)	3:06	Wrong Answer
+[Rejudge]
+Magic Path (j)	3:06	Wrong Answer
+Magic Path (j)	2:54	Wrong Answer
+[Rejudge]
+Magic Path (j)	2:54	Wrong Answer
+King (k)	2:49	Correct
+Magic Path (j)	2:48	Wrong Answer
+[Rejudge]
+Magic Path (j)	2:48	Run-Time Error
+Magic Path (j)	2:44	Wrong Answer
+[Rejudge]
+Magic Path (j)	2:44	Run-Time Error
+Park (e)	2:41	Correct
+King (k)	2:19	Wrong Answer
+King (k)	2:19	Run-Time Error
+Conference (a)	2:01	Correct
+Park (e)	1:36	Wrong Answer
+Witch (l)	1:27	Correct
+Park (e)	1:25	Wrong Answer
+Bosses (d)	1:06	Correct
+Bosses (d)	1:02	Wrong Answer
+Power Towers (c)	0:53	Correct
+Power Towers (c)	0:51	Time-Limit Exceeded
+Jetpack (h)	0:45	Correct
+Caesar Cipher (i)	0:26	Correct
+Tariff (g)	0:21	Correct
+Caesar Cipher (i)	0:15	Wrong Answer
