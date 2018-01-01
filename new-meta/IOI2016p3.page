@@ -1,0 +1,63 @@
+``` {.cpp}
+#include "shortcut.h"
+#include<bits/stdc++.h>
+using namespace std;
+typedef vector<int> VI;
+long long find_shortcut(int n, std::vector<int> l, std::vector<int> d, int c) {
+    vector<long long> x(1, 0), mxsum, mxdif;
+    for(int i(0); i < n - 1; i++) {
+        x.push_back(x.back() + l[i]);
+    }
+    for(int i(0); i < n; i++) {
+        mxsum.push_back(i ? max(mxsum.back(), x[i] + d[i]) : x[0] + d[0]);
+        mxdif.push_back(i ? max(mxdif.back(), d[i] - x[i]) : d[0] - x[0]);
+    }
+
+    long long inf(1e9);
+    inf = inf * inf;
+    long long le(0), ri(inf);
+    while(le != ri) {
+        //cout << le << ' ' << ri << endl;
+        int p(-1);
+        long long k(le + ri >> 1);
+        deque<int> q;
+        long long sumle(0), sumri(inf), difle(0), difri(inf);
+        for(int i(0); i < n; i++) {
+            while(q.size() && -x[q.front()] + d[q.front()] + x[i] + d[i] > k) {
+                p = q.front();
+                q.pop_front();
+            }
+            if(p != -1) {
+                sumle = max(sumle, c - k + x[i] + d[i] + mxsum[p]);
+                sumri = min(sumri, k - c + x[i] - d[i] - mxdif[p]);
+                difri = min(difri, k - c + x[i] - d[i] - mxsum[p]);
+                difle = max(difle, c - k + x[i] + d[i] + mxdif[p]); 
+            }
+            while(q.size() && -x[q.back()] + d[q.back()] <= -x[i] + d[i]) {
+                q.pop_back();
+            }
+            q.push_back(i);
+        }
+        p = 0;
+        bool flag(false);
+        for(int i(0); i < n; i++) {
+            while(p < i && x[i] + x[p] <= sumri && x[i] - x[p] >= difle) {
+                p++;
+            }
+            while(p > 0 && (x[i] + x[p] > sumri || x[i] - x[p] < difle)) {
+                p--;
+            }
+            if(sumle <= x[i] + x[p] && x[i] + x[p] <= sumri && difle <= x[i] - x[p] && x[i] - x[p] <= difri) {
+                flag = true;
+                break;
+            }
+        }
+        if(flag) {
+            ri = k;
+        }else {
+            le = k + 1;
+        }
+    }
+    return le;
+}
+```
