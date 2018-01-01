@@ -96,7 +96,7 @@ E. Distanced Strings
 
 **题解:**
 
-[Sol](/PrimeContestSolutionForE)
+[Sol](PrimeContestSolutionForE)
 
 为什么正确？
 为了避免符号问题，把题解里面的$n$换成$t$。题解中的$p$选择范围应该是$\frac{k+2}{2} - k$。
