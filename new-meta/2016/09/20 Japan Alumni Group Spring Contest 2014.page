@@ -12,6 +12,6 @@ G. Proportional Representation \[Yuzuriha Inori\]
 我们可以发现存在一个实数$r$作为当选与不当选的界限. 假如$r$给定,
 我们可以得出不考虑其他政党的情况下,
 每个政党的得票的上界和下界($\frac{x_i}{s_i}\ge r\ge\frac{x_i}{s_i+1}$)).
-然后为了不重复劳动你们去看官方题解吧说的挺清楚的[JAG春コンテスト2014問題G](http://acm-icpc.aitea.net/index.php?plugin=attach&refer=2013%2FPractice%2F%E6%98%A5%E3%82%B3%E3%83%B3%E3%83%86%E3%82%B9%E3%83%88%2F%E8%AC%9B%E8%A9%95&openfile=G.pdf)
+然后为了不重复劳动你们去看官方题解吧说的挺清楚的[JAG春コンテスト2014問題G](http://acm-icpc.aitea.net/index.php?plugin=attach&refer=2013/Practice/春コンテスト/講評&openfile=G.pdf)
 
-[code](2016/9/20%20G)
+[code](2016/9/20 G)
