@@ -1,0 +1,96 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+#define sz(x) ((x).size())
+#define pb push_back
+const int N(30033);
+const int maxD(300);
+vector<int> adj[N];
+vector<pair<int, pair<int, int> > > edges;
+int fa[N], faval[N], h[N];
+bool vst[N];
+int c[N][2 * maxD + 1];
+int main() {
+    int n;
+    scanf("%d", &n);
+    for(int i(0); i < n - 1; i++) {
+        int x, y, z;
+        scanf("%d%d%d", &x, &y, &z);
+        edges.push_back(make_pair(z, make_pair(x, y)));
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    sort(edges.begin(), edges.end());
+    vector<int> q;
+    q.pb(1);
+    fa[1] = 0;
+    vst[1] = true;
+    for(int op(0); op < sz(q); op++) {
+        int v(q[op]);
+        for(int p(0); p < sz(adj[v]); p++) {
+            int y(adj[v][p]);
+            if(!vst[y]) {
+                vst[y] = true;
+                fa[y] = v;
+                q.pb(y);
+            }
+        }
+    }
+    for(int i(n - 1); i >= 0; i--) {
+        int v(q[i]);
+        h[v] = 0;
+        faval[v] = 1;
+        for(int p(0); p < sz(adj[v]); p++) {
+            int y(adj[v][p]);
+            if(y != fa[v]) {
+                h[v] = max(h[v], h[y] + 1);
+                for(int j(0); j < maxD; j++) {
+                    c[v][maxD + j + 1] += c[y][maxD + j];
+                }
+            }
+        }
+        c[v][maxD]++;
+    }
+    long long sum(0), cnt(0);
+    for(int i(0); i < n - 1; i++) {
+        int z(edges[i].first);
+        int x(edges[i].second.first);
+        int y(edges[i].second.second);
+        if(fa[y] == x) {
+            swap(x, y);
+        }
+        int ys(x);
+        int mid(0);
+        while(ys != 1) {
+            int le(max(-h[x], -h[y] - mid));
+            int ri(min(h[x], h[y] - mid));
+            for(int j(le); j <= ri; j++) {
+                long long tmp(c[x][j + maxD] * (c[y][-j - mid + maxD] - c[ys][-j - mid - faval[ys] + maxD]));
+                sum += tmp * z;
+                cnt += tmp;
+            }
+            if(y != 1) {
+                mid += faval[y];
+            }
+            ys = y;
+            y = fa[ys];
+        }
+        y = fa[x];
+        ys = x;
+        mid = 0;
+        while(ys != 1) {
+            for(int j(-h[x]); j <= h[x]; j++) {
+                c[y][maxD + j + 1 + mid] -= c[x][maxD + j];
+                c[y][maxD + j - 1 + mid] += c[x][maxD + j];
+            }
+            if(y != 1) {
+                mid += faval[y];
+            }
+            ys = y;
+            y = fa[ys];
+        }
+        faval[x] = -1;
+    }
+    printf("%.12f\n", (double)sum / cnt);
+}
+```
