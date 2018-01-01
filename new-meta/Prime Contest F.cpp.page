@@ -1,0 +1,122 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cassert>
+#include <cstring>
+
+using namespace std;
+
+const int C = 26;
+const int N = 1e6 + 7;
+const int INF = 1e9 + 7;
+
+int table[C][C];
+int cost[C][C];
+int n, c, go[C], from[C], id[C], num, single;
+bool dead;
+int f[C + 1][1 << (C / 2)][2];
+
+void check_cycle(int x) {
+    if (go[x] == x) {
+        single++;
+        return ;
+    }
+    static int visit[C];
+    fill(visit, visit + C, 0);
+    int t = x;
+    vector<int> cycle;
+    while (!visit[t]) {
+        cycle.push_back(t);
+        visit[t] = 1;
+        t = go[t];
+    }
+    if (t == x) {
+        int last = cycle.back();
+        for (auto a : cycle) {
+            id[a] = num;
+            from[a] = last;
+            last = a;
+        }
+        num++;
+    } else {
+        dead = false;
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &c);
+    {
+        static char a[N], b[N];
+        scanf("%s", a);
+        scanf("%s", b);
+        for (int i = 0; i < n; i++) {
+            table[a[i] - 'a'][b[i] - 'a']++;
+        }
+    }
+    for (int i = 0; i < C; i++) {
+        go[i] = -1;
+        int min_cost = INF;
+        for (int j = 0; j < C; j++) {
+            cost[i][j] = (i == j ? 0 : c);
+            for (int k = 0; k < C; k++) {
+                if (k != j) cost[i][j] += table[i][k];
+            }
+            if (cost[i][j] < min_cost) {
+                min_cost = cost[i][j], go[i] = j;
+            }
+        }
+    }
+    // for (int i = 0; i < C; i++) {
+    //  printf("%c -> %c %lld\n", i + 'a', go[i] + 'a', cost[i][go[i]]);
+    // }
+    for (int i = 0; i < C; i++) id[i] = -1;
+    num = single = 0;
+    dead = true;
+    for (int i = 0; i < C; i++) {
+        if (id[i] == -1) {
+            check_cycle(i);
+        }
+    }
+    for (int i = 0; i <= C; i++) {
+        for (int mask = 0; mask < (1 << num); mask++) {
+            for (int j = 0; j < 2; j++) {
+                f[i][mask][j] = INF;
+            }
+        }
+    }
+    // printf("num = %d %d\n", num, dead);
+    f[0][0][0] = 0;
+    for (int i = 0; i < C; i++) {
+        for (int mask = 0; mask < (1 << num); mask++) {
+            for (int diff = 0; diff < 2; diff++) {
+                for (int k = 0; k < C; k++) {
+                    int new_mask = mask, new_diff = diff;
+                    if (k != go[i]) {
+                        new_diff = 1;
+                    }
+                    if (id[i] != -1 && k != go[i]) new_mask |= 1 << id[i];
+                    if (id[k] != -1 && i != from[k]) new_mask |= 1 << id[k];
+                    f[i + 1][new_mask][new_diff] = min(f[i + 1][new_mask][new_diff],
+                        f[i][mask][diff] + cost[i][k]);
+                }
+            }
+        }
+    }
+    int ans = INF;
+    for (int mask = 0; mask < (1 << num); mask++) {
+        for (int diff = 0; diff < 2; diff++) {
+            if (!diff && single < C && dead) continue;
+            int bonus = 0;
+            for (int i = 0; i < num; i++) {
+                if (~mask >> i & 1) bonus += c;
+            }
+            ans = min(ans, bonus + f[C][mask][diff]);
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
