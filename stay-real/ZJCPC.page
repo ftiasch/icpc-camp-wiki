@@ -1,0 +1,57 @@
+A.Cooking Competition\[zsc\]
+============================
+
+直接按题意模拟就好
+
+B.Problem Preparation\[zsc\]
+============================
+
+直接按题意模拟就好
+
+C.What Kind of Friends Are You?\[zsc\]
+======================================
+
+一共就20个询问 于是把每种回答的结果压成一个20位二进制数就好了
+
+D.Let's Chat\[lh\]
+==================
+
+E.Seven Segment Display\[lh\]
+=============================
+
+数位DP就可以了
+
+F.Heap Partition\[zsc&jyz\]
+===========================
+
+倒过来弄个multiset贪心就好
+
+G.Yet Another Game of Stones\[jyz\]
+===================================
+
+参考[这个](http://blog.csdn.net/dormousenone/article/details/70599659)过了，每次将一个特殊堆拿出来考虑在剩余堆上的是先手必胜还是必败即可。
+
+H.Binary Tree Restoring\[zsc&jyz\]
+==================================
+
+考虑现在的树对应的区间 如果第二个相同则直接连在根下面
+要不然相当于确定了左右子树状态递归处理就可以 这样递归下去就好了
+
+I.Domino Tiling\[jyz\]
+======================
+
+队友太神了orz
+
+构造$n*(n-1)$和$n*(n+1)$的单元，再拼起来即可
+
+J.Card Game
+===========
+
+K.Final Defense Line
+====================
+
+L.Chiaki Sequence
+=================
+
+M.Sequence to Sequence
+======================
