@@ -11,4 +11,4 @@ D. Circle Kingdom
 
 考虑用一棵全局的平衡树从大到小维护所有城堡的关税，然后到某个圆内时，用总的和减去最大的$k$个的和就是聚集点在这个圆内的答案了。维护的话就是dfs的过程中，修改平衡树中某个城堡的值：往下走一步，意思是这个子树内的人不用走出这个城堡，但外面的人要走进去。dfs回来的时候撤销，就维护好了。
 
-[D.cpp](2017/04/24%20Petrozavodsk%20Winter-2014.%20Ukrainian%20Contest%20D.cpp)
+[D.cpp](2017/04/24 Petrozavodsk Winter-2014. Ukrainian Contest D.cpp)
