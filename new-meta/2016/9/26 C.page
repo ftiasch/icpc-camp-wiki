@@ -1,0 +1,49 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cstring>
+
+using namespace std;
+
+const int M = 1e3 + 7;
+const int P = 100 + 7;
+
+long long f[M * P];
+int n, m, p[M];
+
+int main() {
+    scanf("%d %d", &n, &m);
+    int sum = 0;
+    for (int i = 1; i <= m; i++) {
+        scanf("%d", &p[i]);
+        sum += p[i];
+    }
+    memset(f, -1, sizeof(f));
+    std::sort(p + 1, p + m + 1);
+    std::reverse(p + 1, p + m + 1);
+    f[0] = 0;
+    for (int i = 1, tot = 0; i <= m; i++) {
+        tot += p[i];
+        for (int j = tot; j >= 0; j--) {
+            if (f[j] != -1) {
+                int t = tot - j - p[i];
+                f[j] += 1LL * (sum - t) * t;
+            }
+            if (j >= p[i] && f[j - p[i]] != -1) {
+                f[j] = std::max(f[j], f[j - p[i]] + 1LL * (sum - j) * j);
+            }
+        }
+    }
+    long long ans = 0;
+    for (int i = 0; i <= sum; i++) {
+        if (f[i] != -1) {
+            ans = std::max(ans, f[i] + 1LL * i * (sum - i) * (n - m));
+        }
+    }
+    std::cout << ans << std::endl;
+    return 0;
+}
+```
