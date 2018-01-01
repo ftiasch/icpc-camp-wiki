@@ -1,0 +1,197 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 50 + 3;
+const double eps = 1e-8;
+
+struct Point {
+    int x, y, z;
+    Point (int x, int y, int z) : x(x), y(y), z(z) {}
+    Point() {}
+    Point operator +(const Point &o) const {
+        return Point(x + o.x, y + o.y, z + o.z);
+    }
+    Point operator -(const Point &o) const {
+        return Point(x - o.x, y - o.y, z - o.z);
+    }
+    int operator *(const Point &o) const {
+        return x * o.x + y * o.y + z * o.z;
+    }
+    void read() {
+        scanf("%d %d %d", &x, &y, &z);
+    }
+    int len2() {
+        return x * x + y * y + z * z;
+    }
+    double len() {
+        return sqrt(len2());
+    }
+};
+
+vector<pair<Point, Point> > pts;
+int n, id[N][N], tot_id;
+pair<int, int> rid[N * N];
+
+vector<pair<double, pair<int, int>> > evts;
+
+int pos[N * N];
+vector<int> tedge;
+
+void update(double t, int a, int b) {
+    if (t > eps) {
+        if (a > b) swap(a, b);
+        evts.push_back({t, {a, b}});
+    }
+}
+
+int bel[N];
+
+int sign(double x) {
+    return x < -eps ? -1 : x > eps;
+}
+
+int find(int a) {
+    int p;
+    for (p = a; p != bel[p]; p = bel[p]);
+    for (int p2 = bel[a]; a != p2; a = p2, p2 = bel[a]) {
+        bel[a] = p;
+    }
+    return p;
+}
+
+double sqr(double x) { return x * x; }
+
+double calc_len(int u, int v, double t) {
+    Point dd = pts[u].first - pts[v].first,
+        dv = pts[u].second - pts[v].second;
+    return sqr(dd.x + dv.x * t) + sqr(dd.y + dv.y * t) + sqr(dd.z + dv.z * t);
+}
+
+void kruskal(vector<int> &edges, double t) {
+    static vector<pair<double, int> > order;
+    order.clear();
+    for (auto e : edges) {
+        int u = rid[e].first, v = rid[e].second;
+        order.push_back({calc_len(u, v, t), e});
+    }
+    sort(order.begin(), order.end());
+    edges.clear();
+    for (int i = 0; i < n; i++) bel[i] = i;
+    for (auto &o : order) {
+        int u = find(rid[o.second].first), v = find(rid[o.second].second);
+        if (u != v) {
+            edges.push_back(o.second);
+            bel[u] = v;
+            if (edges.size() == n - 1) break;
+        }
+    }
+    sort(edges.begin(), edges.end());
+}
+
+int solve() {
+    tot_id = 0;
+    for (int a = 0; a < n; a++) {
+        for (int b = a + 1; b < n; b++) {
+            rid[tot_id] = make_pair(a, b);
+            id[a][b] = tot_id++;
+            for (int c = 0; c <= a; c++) {
+                for (int d = c + 1; d < n; d++) {
+                    if (make_pair(c, d) < make_pair(a, b)) {
+                        Point cd = pts[d].first - pts[c].first;
+                        Point cdv = pts[d].second - pts[c].second;
+                        Point ab = pts[b].first - pts[a].first;
+                        Point abv = pts[b].second - pts[a].second;
+                        // (cd + t cdv).len = (ab + t * abv).len
+                        int A = cdv.len2() - abv.len2();
+                        int B = 2 * (cd * cdv - ab * abv);
+                        int C = cd.len2() - ab.len2();
+                        // At^2 + Bt + C = 0
+                        if (A == 0) {
+                            if (B == 0) {
+
+                            } else {
+                                update(-1. * C / B, id[a][b], id[c][d]);
+                            }
+                        } else {
+                            long long dLL = 1LL * B * B - 4LL * A * C;
+                            if (dLL > 0) {
+                                double delta = sqrt(dLL);
+                                update((-B - delta) / 2. / A, id[a][b], id[c][d]);
+                                update((-B + delta) / 2. / A, id[a][b], id[c][d]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    vector<int> q;
+    for (int i = 0; i < tot_id; i++) q.push_back(i);
+    sort(q.begin(), q.end(), [&](int i, int j) {
+        int da = (pts[rid[i].first].first - pts[rid[i].second].first).len2();
+        int db = (pts[rid[j].first].first - pts[rid[j].second].first).len2();
+        if (da != db) return da < db;
+        return i < j;
+    });
+    sort(evts.begin(), evts.end(), [](const pair<double, pair<int, int>> &a, const pair<double, pair<int, int>> &b) {
+        if (sign(a.first - b.first)) {
+            return a.first < b.first;
+        } else {
+            return a.second < b.second;
+        }
+    });
+    for (int i = 0; i < n; i++) bel[i] = i;
+    tedge.clear();
+    for (int i = 0; i < tot_id; i++) {
+        pos[q[i]] = i;
+        int a = find(rid[q[i]].first), b = find(rid[q[i]].second);
+        if (a != b) {
+            bel[a] = b;
+            tedge.push_back(q[i]);
+        }
+    }
+    sort(tedge.begin(), tedge.end());
+    int ans = 1;
+    for (int i = 0, j; i < evts.size(); i = j) {
+        vector<pair<int, int> > tmp;
+        double t;
+        for (j = i; j < evts.size() && sign(evts[j].first - evts[i].first) == 0; j++);
+        if (j < evts.size()) t = (evts[i].first + evts[j].first) / 2;
+        else t = evts[i].first + 10;
+        // cout << evts[i].first << endl;
+        static vector<int> edges;
+        edges.clear();
+        for (int k = i; k < j; k++) {
+            edges.push_back(evts[k].second.first);
+            edges.push_back(evts[k].second.second);
+        }
+        for (auto e : tedge) {
+            edges.push_back(e);
+        }
+        sort(edges.begin(), edges.end());
+        edges.erase(unique(edges.begin(), edges.end()), edges.end());
+        kruskal(edges, t);
+        ans += (edges != tedge);
+        tedge.swap(edges);
+        // for (auto e : tedge) {
+        //  cout << rid[e].first << " " << rid[e].second << endl;
+        // }
+    }
+    return ans;
+}
+
+int main() {
+    while (scanf("%d", &n) == 1) {
+        pts.resize(n);
+        for (int i = 0; i < n; i++) {
+            pts[i].first.read();
+            pts[i].second.read();
+        }
+        static int testCount = 0;
+        printf("Case %d: %d\n", ++testCount, solve());
+    }
+    return 0;
+}
+```
