@@ -1,0 +1,48 @@
+A. A Poor King
+==============
+
+B. Best Division \[constroy\]
+=============================
+
+设 s\[i\] 是前缀XOR和， f\[i\] 是最大段数，显然有一个 DP 方程。
+$f[i] = max\{f[j]\} + 1, j \in \{j \mid j + L \geq i \land s[i] \oplus s[j] \leq X\}$\
+需要一个数据结构来维护合法且最优的 j ， 01 字典树可以 log(x) 查询 XOR
+不等式的解对应的 j。\
+由于 j 的取值是一个长度为 L 区间，需要删除已移出区间的 j 的状态值。\
+字典树的叶子节点需要维护所有合法 j 的状态最值并支持删除，利用 j
+的单调性可以用一个单调队列来维护。\
+注意不合法的状态 $f[i] = 0 (i \neq 0)$
+是不能插入字典树的，而删除的时候不要删除未插入的状态。
+
+C. Convex Hull
+==============
+
+D. Different Sums
+=================
+
+E. Easy Homework
+================
+
+F. Flight
+=========
+
+G. Generator
+============
+
+H. Honey Tour
+=============
+
+I. Intersection is not allowed! \[braveTester\]
+===============================================
+
+J. Jong Hyok and String \[Constroy\]
+====================================
+
+K. K-th value
+=============
+
+L. Less Time, More profit \[Constroy\]
+======================================
+
+M. Math is Fun
+==============
