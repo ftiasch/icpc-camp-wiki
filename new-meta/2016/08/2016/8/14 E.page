@@ -1,0 +1,170 @@
+``` {.cpp}
+#include<cstring>
+#include<cstdio>
+#include<algorithm>
+#include<vector>
+#include<set>
+using namespace std;
+vector<int> vec;
+struct Permu {
+    int a[54];
+    Permu() {
+        for(int i(0); i < 54; i++) {
+            a[i] = i;
+        }
+    }
+    void print() const {
+        for(int i(0); i < 54; i++) {
+            printf("%d ", a[i]);
+        }
+        printf("\n");
+    }
+
+} p[3];
+__inline bool operator < (const Permu & a, const Permu & b) {
+    for(int i(0); i < 54; i++) {
+        if(a.a[i] != b.a[i]) {
+            return a.a[i] < b.a[i];
+        }
+    }
+    return false;
+}
+__inline bool operator == (const Permu & a, const Permu & b) {
+    for(int i(0); i < 54; i++) {
+        if(a.a[i] != b.a[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+__inline Permu operator * (const Permu & a, const Permu & b) {
+    Permu res;
+    for(int i(0); i < 54; i++) {
+        res.a[i] = a.a[b.a[i]];
+    }
+    return res;
+}
+vector<Permu> rots;
+int a[54], b[54];
+__inline int calc(Permu init) {
+    int res(-1);
+    for(int i(0); i < 24; i++) {
+        Permu tmp(init * rots[i]);
+        int c(0);
+        for(int j(0); j < 54; j++) {
+            if(tmp.a[j] == 1) {
+                c = c * 54 + j;
+            }
+        }
+        if(c > res) {
+            res = c;
+        }
+    }
+    return res;
+}
+int permu[3][5][12] = {
+    {
+        {9, 10, 11, 18, 19, 20, 27, 28, 29, 36, 37, 38},
+        {12, 13, 14, 21, 22, 23, 30, 31, 32, 39, 40, 41},
+        {15, 16, 17, 24, 25, 26, 33, 34, 35, 42, 43, 44},
+        {6, 7, 8, 5, 2, 1, 0, 3},
+        {45, 46, 47, 50, 53, 52, 51, 48}
+    },
+    {
+        {0, 3, 6, 18, 21, 24, 45, 48, 51, 44, 41, 38},
+        {1, 4, 7, 19, 22, 25, 46, 49, 52, 43, 40, 37},
+        {2, 5, 8, 20, 23, 26, 47, 50, 53, 42, 39, 36},
+        {11, 14, 17, 16, 15, 12, 9, 10},
+        {27, 30, 33, 34, 35, 32, 29, 28}
+    },
+    {
+        {6, 7, 8, 27, 30, 33, 47, 46, 45, 17, 14, 11},
+        {3, 4, 5, 28, 31, 34, 50, 49, 48, 16, 13, 10},
+        {0, 1, 2, 29, 32, 35, 53, 52, 51, 15, 12, 9},
+        {18, 19, 20, 23, 26, 25, 24, 21},
+        {36, 39, 42, 43, 44, 41, 38, 37}
+    }
+};
+int _rot[2][12] = {{18, 19, 20, 23, 26, 25, 24, 21}, {6, 7, 8, 27, 30, 33, 47, 46, 45, 17, 14, 11}};
+int main() {
+    Permu rot;
+    for(int i(0); i < 54; i++) {
+        for(int j(0); j < 8; j++) {
+            rot.a[_rot[0][j]] = _rot[0][(j + 2) % 8];
+        }
+        for(int j(0); j < 12; j++) {
+            rot.a[_rot[1][j]] = _rot[1][(j + 3) % 12];
+        }
+    }
+    for(int d(0); d < 3; d++) {
+        for(int i(0); i < 54; i++) {
+            p[d].a[i] = i;
+        }
+        for(int i(0); i < 3; i++) {
+            for(int j(0); j < 12; j++) {
+                p[d].a[permu[d][i][j]] = permu[d][i][(j + 3) % 12];
+            }
+        }
+        for(int i(3); i < 5; i++) {
+            for(int j(0); j < 8; j++) {
+                p[d].a[permu[d][i][j]] = permu[d][i][(j + 2) % 8];
+            }
+        }
+    }
+    vector<Permu> permus;
+    permus.push_back(rot);
+    permus.push_back(p[0] * rot);
+    permus.push_back(p[0] * p[0] * rot);
+    permus.push_back(p[0] * p[0] * p[0] * rot);
+    permus.push_back(p[1] * p[1] * p[1] * rot);
+    permus.push_back(p[1] * rot);
+    Permu v1;
+    for(int i(0); i < 4; i++) {
+        Permu v2(v1);
+        for(int j(0); j < 4; j++) {
+            Permu v3(v2);
+            for(int k(0); k < 4; k++) {
+                rots.push_back(v3);
+                v3 = v3 * p[2];
+            }
+            v2 = v2 * p[1];
+        }
+        v1 = v1 * p[0];
+    }
+    sort(rots.begin(), rots.end());
+    rots.resize(unique(rots.begin(), rots.end()) - rots.begin());
+    int tests;
+    scanf("%d", &tests);
+    for(int qq(1); qq <= tests; qq++) {
+        int n;
+        scanf("%d", &n);
+        fill(a, a + 54, 0);
+        for(int i(0); i < n; i++) {
+            int x;
+            scanf("%d", &x);
+            a[x] = 1;
+        }
+        static vector<Permu> q;
+        q.clear();
+        q.push_back(Permu());
+        for(int i(0); i < 54; i++) {
+            q[0].a[i] = a[i];
+        }
+        set<int> vst;
+        vst.insert(calc(q[0]));
+        for(int op(0); op < (int)q.size(); op++) {
+            Permu v(q[op]);
+            for(int i(0); i < (int)permus.size(); i++) {
+                Permu v1(v * permus[i]);
+                int x(calc(v1));
+                if(!vst.count(x)) {
+                    vst.insert(x);
+                    q.push_back(v1);
+                }
+            }
+        }
+        printf("Case #%d: %d\n", qq, (int)vst.size());
+    }
+}
+```
