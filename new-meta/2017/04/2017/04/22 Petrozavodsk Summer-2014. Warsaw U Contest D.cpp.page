@@ -1,0 +1,74 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 3e5 + 7, M = N;
+
+int n, m;
+vector<pair<int, int>> adj[N];
+set<pair<int, pair<int, int>>> g[N];
+int used[M], father[N], visit[N];
+
+void dfs(int u, int fe) {
+    visit[u] = 1;
+    vector<pair<int, int> > edges;
+    for (auto e : adj[u]) {
+        int v = e.first;
+        if (!visit[v]) {
+            father[v] = u;
+            dfs(v, e.second);
+        }
+        if (v != father[u] && !used[e.second]) {
+            used[e.second] = true;
+            edges.push_back({e.second, v});
+        }
+    }
+    assert(!used[fe]);
+    if (edges.size() % 2 == 1) {
+        assert(u != 1);
+        used[fe] = true;
+        edges.push_back({fe, father[u]});
+    }
+    for (int i = 0; i < edges.size(); i += 2) {
+        int a = edges[i].second, b = edges[i + 1].second;
+        g[a].insert({b, {edges[i].first, edges[i + 1].first}});
+        g[b].insert({a, {edges[i + 1].first, edges[i].first}});
+    }
+}
+
+bool done[N];
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u].push_back({v, i});
+        adj[v].push_back({u, i});
+        used[i] = false;
+    }
+    dfs(1, -1);
+    for (int u = 1; u <= n; u++) {
+        if (done[u] || adj[u].size() % 2 == 0) continue;
+        int uu = u;
+        vector<int> ans;
+        done[u] = true;
+        while (done[uu] == true || adj[uu].size() % 2 == 0) {
+            auto it = g[uu].begin();
+            ans.push_back(it->second.first);
+            ans.push_back(it->second.second);
+            int vv = it->first;
+            g[vv].erase({uu, {it->second.second, it->second.first}});
+            g[uu].erase(it);
+            uu = vv;
+        }
+        done[uu] = true;
+        printf("%d %d %d\n", u, uu, (int)ans.size());
+        for (int i = 0; i < ans.size(); i++) {
+            printf("%d%c", ans[i], " \n"[i + 1 == ans.size()]);
+        }
+    }
+    return 0;
+}
+```
