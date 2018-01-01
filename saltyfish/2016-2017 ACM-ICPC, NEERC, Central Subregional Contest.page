@@ -1,27 +1,38 @@
-# A Fried Fish [zyh]
+A Fried Fish \[zyh\]
+====================
 
 $ans=max(2,\lceil \frac{2n}{k} \rceil)$
 
-# B Hanoi tower [zyh&ghc&hwq]
+B Hanoi tower \[zyh&ghc&hwq\]
+=============================
 
 打表找规律，如果$n$是奇数，$ans=2^{2n/3-1}+2^{n/3}-2$，如果$n$是偶数，$ans=2^{2n/3-1}+2^{n/3-1}-1$，似乎是可以分析的，待研究
 
-# C Desktop
+C Desktop
+=========
 
-# D Weather Station [zyh]
+D Weather Station \[zyh\]
+=========================
 
 $dp_i$表示前$i$个字符的划分方案数，转移枚举最后切一个还是切两个
 
-# E Cupcakes
+E Cupcakes
+==========
 
-# F Vitamins
+F Vitamins
+==========
 
-# G Sphenic numbers
+G Sphenic numbers
+=================
 
-# H Non-random numbers
+H Non-random numbers
+====================
 
-# I Land Division
+I Land Division
+===============
 
-# J Architect of Your Own Fortune
+J Architect of Your Own Fortune
+===============================
 
-# K Polymorphic code
+K Polymorphic code
+==================
