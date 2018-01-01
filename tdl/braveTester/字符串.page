@@ -1,0 +1,66 @@
+一些题目
+========
+
+1.  2012 Multi-University Training Contest 4: [Revolving
+    Digits](http://acm.hdu.edu.cn/showproblem.php?pid=4333)
+2.  2016 Multi-University Training Contest 7: [Find the
+    Period](http://acm.hdu.edu.cn/showproblem.php?pid=5814)
+
+一些理论
+========
+
+大部分来源于《Algorithms on Strings》(Maxime Crochemore, Christophe
+Hancart, Thierry Lecroq)
+
+Primitivity Lemma
+-----------------
+
+一个非空字符串 $x$ 不能表示成任何其他字符串的非平凡幂，当且仅当
+$yx \leq_{pref} x^2$ 蕴含 $y = \epsilon$ 或者 $y = x$。
+
+Tire
+====
+
+KMP
+===
+
+朴素版本推荐 matrix67 的博文
+[KMP算法详解](http://www.matrix67.com/blog/archives/115)。
+
+扩展 KMP
+--------
+
+网上的写法好多，看不懂( ▼-▼ )。
+
+已有一种强烈的思路，待验证。该思路基于以下观察：如果 A\[1...pos\],
+B\[i...i + pos - 1\] 是 A\[1...\] 与 B\[pos...\] 的 LCP 的话，那么
+A\[pos + 1\] 一定不等于 B\[i +
+pos\]，也即在下一个位置一定失配。因此只需要每次失配时更新相应点的答案即可。看起来很自然，比网上写法要好，但正确性待验证。**验证完毕，错的。**
+
+对 KMP 的一些其他改造
+---------------------
+
+2012 Multi-University Training Contest 4 [Revolving
+Digits](https://wiki-tdl.icpc-camp.org/2012%20Multi-University%20Training%20Contest%204#c.-revolving-digitsbravetester)
+展示了 KMP 可计算一些附加信息的能力，其本质上不过是与 P
+数组具有类似思想的递推。
+
+AC 自动机
+=========
+
+后缀数组
+========
+
+后缀树
+======
+
+后缀自动机
+==========
+
+回文串
+======
+
+Manacher's Algorithm
+--------------------
+
+
