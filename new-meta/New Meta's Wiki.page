@@ -1,0 +1,366 @@
+Technologies:
+=============
+
+-   [分治fft的正确姿势]()
+-   [APIO2011方格染色的正确姿势]()
+-   [有限域上度数是$n$的约数的不可约多项式之积]()
+
+Coming match
+============
+
+  `Date`               `Duration`   `Contest`       `Site`
+  -------------------- ------------ --------------- --------------
+  `3月18日 11:40 PM`   `2 Hours`    `VK Cup 2017`   `Codeforces`
+
+TO DO LIST
+==========
+
+0.  一般图最大带权匹配。
+
+### Miceren
+
+1.  Suffix Tree [touch](Suffix%20Tree) 2015.11.17
+2.  ~~A fast Suffix Array Algorithm~~ 2015.11.17 \~ 2015.11.18
+3.  ~~Gomory–Hu tree~~ 2015.11.23
+4.  matroid intersection algorithm 2015.12.3 [real matroid intersection
+    algorithm](http://www.utdallas.edu/~kam093020/papers/matroid-intersection.pdf)
+
+Personal Page
+=============
+
+**[Miceren](Miceren)**
+
+**[gy](gy)**
+
+补题 TO DO LIST
+===============
+
+-   [Prime
+    Contest](https://contest.yandex.com/newyear2017/contest/3641/enter/)
+
+Codeforces
+==========
+
+-   [2016/10/22 Canada Cup 2016](2016/10/22%20Canada%20Cup%202016)
+
+-   [2017/02/02 \#395DIV1](cf395div1)
+
+Atcoder
+=======
+
+-   [2016/02/04 AGC010]()
+
+Training
+========
+
+-   [2015/11/22 Open Cup Grand Prix of
+    Europe](2015/11/22%20Open%20Cup%20Grand%20Prix%20of%20Europe)
+
+-   [2016/02/27 MUJIN プログラミングチャレンジ Programming
+    Challenge](2016/02/27%20MUJIN%20プログラミングチャレンジ%20Programming%20Challenge)
+
+-   [2016/07/23 2010 Asia Hangzhou Regional
+    Contest](2016/07/24%202010%20Asia%20Hangzhou%20Regional%20Contest)
+
+-   [2016/07/24 2016 Multi-University Training Contest
+    2](2016/07/24%202016%20Multi-University%20Training%20Contest%202)
+
+-   [2016/07/25 Chengdu 2010](2016/07/25%20Chengdu%202010)
+
+-   [2016/07/28 Dhaka 2012](2016/07/28%20Dhaka%202012)
+
+-   [2016/07/29 2016 Multi-University Training Contest
+    4](2016/07/29%202016%20Multi-University%20Training%20Contest%204)
+
+-   [2016/07/30 2016 Multi-University Training Contest
+    3](2016/07/29%202016%20Multi-University%20Training%20Contest%203)
+
+-   (DONE)[2016/08/08 CERC 2012](2016/08/08%20CERC%202012)
+
+-   [2016/08/10 JAG Autumn 2012](2016/08/10%20JAG%20Autumn%202012)
+
+-   [2016/08/12 2016 Multi-University Training Contest
+    5](2016/08/12%202016%20Multi-University%20Training%20Contest%205)
+
+-   [2016/08/14 2016中国大学生程序设计竞赛 -
+    网络选拔赛](2016/08/14%202016中国大学生程序设计竞赛%20-%20网络选拔赛)
+
+-   [2016/08/15 2016 Multi-University Training Contest
+    6](2016/08/12%202016%20Multi-University%20Training%20Contest%206)
+
+-   [2016/08/16 Andrew Stankevich Contest
+    34](2016/08/16%20Andrew%20Stankevich%20Contest%2034)
+
+-   [2016/08/18 Andrew Stankevich Contest
+    19](2016/08/18%20Andrew%20Stankevich%20Contest%2019)
+
+-   [2016/09/15 Bubble Cup 9](2016/09/15%20Bubble%20Cup%209)
+
+-   [2016/9/17 2016 ACM/ICPC Asia Regional Qingdao
+    Online](2016%20ACM/ICPC%20Asia%20Regional%20Qingdao%20Online)
+
+-   [2016/09/18 2016 ACM/ICPC Asia Regional Shenyang
+    Online](2016%20ACM/ICPC%20Asia%20Regional%20Shenyang%20Online)
+
+-   [2016/09/20 Japan Alumni Group Spring Contest
+    2015](2016/09/20%20Japan%20Alumni%20Group%20Spring%20Contest%202015)
+
+-   [2016/09/22 AtCoder Grand Contest
+    004](2016/09/22%20AtCoder%20Grand%20Contest%20004)
+
+-   [2016/09/23 Japan Alumni Group Spring Contest
+    2014](2016/09/20%20Japan%20Alumni%20Group%20Spring%20Contest%202014)
+
+-   [2016/09/25 open cup GP of Japan](open%20cup%20GP%20of%20Japan)
+
+-   [2016/9/28 JAG Practice Contest for ACM-ICPC Asia Regional
+    2014](JAG%20Practice%20Contest%20for%20ACM-ICPC%20Asia%20Regional%202014)
+
+-   [2016/10/1 CERC 2014](CERC%202014)
+
+-   [2016/10/23 Moscow QF 2016](Moscow%20QF%202016)
+
+-   [2016/10/25 2016-2017 ACM-ICPC, NEERC, Southern Subregional
+    Contest](2016-2017%20ACM-ICPC,%20NEERC,%20Southern%20Subregional%20Contest)
+
+-   [2016/10/26 2016 Multi-University Training Contest
+    9](2016%20Multi-University%20Training%20Contest%209)
+
+-   [2016/10/29 2015 ShenYang](2015%20ShenYang)
+
+-   [2016/10/30 Eastern Grand Prix](Eastern%20Grand%20Prix)
+
+-   [2016/10/31 2016 ACM/ICPC亚洲区沈阳](2016%20ACM/ICPC亚洲区沈阳)
+
+-   [2016/11/2 2015 ACM ICPC Shanghai](2015%20ACM%20ICPC%20Shanghai)
+
+-   [2016/11/6 2016 ACM ICPC HongKong](2016%20ACM%20ICPC%20HongKong)
+
+-   [2016/11/10 2011-2012 Summer Petrozavodsk Camp, Warsaw U
+    Contest](2011-2012%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest)
+
+-   [2016/11/11 2016 CCPC 合肥](2016%20CCPC%20合肥)
+
+-   [2016/11/12 Andrew Stankevich Contest
+    32](Andrew%20Stankevich%20Contest%2032)
+
+-   [2016/11/16 URAL Championship 2015](URAL%20Championship%202015)
+
+-   [2016/11/14 URAL Championship 2016](URAL%20Championship%202016)
+
+-   [2016/11/15 URAL Championship 2012](URAL%20Championship%202012)
+
+-   (DONE)[2016/11/17 Czech Grand Prix](Czech%20Grand%20Prix)
+
+-   (DONE)[2016/11/18 2014-2015 Winter Petrozavodsk Camp, Andrew
+    Stankevich Contest
+    47](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2047)
+
+-   (DONE)[2016/11/19 2014-2015 Winter Petrozavodsk Camp, Andrew
+    Stankevich Contest
+    46](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2046)
+
+-   (DONE)[2016/11/21 2016 Qing Dao](2016%20Qing%20Dao)
+
+-   (DONE)[2016/11/29 Andrew Stankevich Contest
+    45](Andrew%20Stankevich%20Contest%2045)
+
+-   (DONE)[2016/11/29 Andrew Stankevich Contest
+    44](Andrew%20Stankevich%20Contest%2044)
+
+-   (DONE)[2016/11/30 CERC 2016](CERC%202016)
+
+-   (DONE)[2016/12/4 NEERC 16](NEERC%2016)
+
+-   (DONE)[2016/12/5 NEERC 14](NEERC%2014)
+
+-   (DONE)[2016/12/6 2014-2015 ACM-ICPC, NEERC, Northern Subregional
+    Contest](2014-2015%20ACM-ICPC,%20NEERC,%20Northern%20Subregional%20Contest)
+
+-   [2016/12/21 Grand Prix of Peterhof](Grand%20Prix%20of%20Peterhof)
+
+-   [2016/12/28 2015-2016 6th BSUIR Open Programming Contest.
+    Final](2015-2016%206th%20BSUIR%20Open%20Programming%20Contest.%20Final)
+
+-   [2016/12 - 2016/1 Prime Contest](2016%20Prime%20Contest)
+
+-   (DONE)[2017/1/16 2015-2016 6th BSUIR Open Programming Contest.
+    Semifinal](2015-2016%206th%20BSUIR%20Open%20Programming%20Contest.%20Semifinal)
+
+-   (DONE)(SOLO)[2017/1/18 AGC 8](AGC8)
+
+-   (DONE)(SOLO)[2017/1/19 Meta Training - 1](Meta%20Training%20-%201)
+
+-   (DONE)[2017/1/22 2014-2015 V BSUIR Open Programming
+    Championship](2014-2015%20V%20BSUIR%20Open%20Programming%20Championship)
+
+-   (DONE)(SOLO)[2017/1/23 AtCoder Grand Contest
+    009](AtCoder%20Grand%20Contest%20009)
+
+-   (SOLO)[2017/1/24 8VC Venture Cup 2017 - Final
+    Round](8VC%20Venture%20Cup%202017%20-%20Final%20Round)
+
+-   (SOLO)[2017/1/27 UOJ Goodbye Bingshen](UOJ%20Goodbye%20Bingshen)
+
+-   [2013-2014 Petrozavodsk Winter Training Camp, Moscow SU Trinity
+    Contest]()
+
+-   ![](/dot_green.png)[2017/2/9 2013-2014 Wide-Siberian Olympiad:
+    Onsite round]()
+
+-   ![](/dot_green.png)[2017/2/22 2016 Summer Ural FU Dandelion
+    Contest]()
+
+-   ![](/dot_green.png)[2017/2/23 Petr Mitrichev Contest 14]()
+
+-   (F)[2017/2/24 Warsaw U Contest, XVI Open Cup Onsite]()
+
+-   ![](/dot_green.png)[2017/2/26 Grand Prix of Wroclaw]()
+
+-   (H)[2017/2/28 Pavel Khaustov Contest 2]()
+
+-   [2017/3/2 Moscow IPT Contest]()
+
+-   ![](/dot_green.png)[2017/3/3 Kent Nikaido Contest 1]()
+
+-   ![](/dot_green.png)[2017/3/4 Japanese OI Team Selection]()
+
+-   ![](/dot_green.png)[2017/3/5 World Final 2012]()
+
+-   ![](/dot_red.png)(J)[Petrozavodsk Summer-2015. Ivan Smirnov Contest
+    1]()
+
+-   ![](/dot_green.png)[Petrozavodsk Summer-2015. Moscow IPT Contest]()
+
+-   ![](/dot_green.png)[Petrozavodsk Summer-2015. Petr Mitrichev Contest
+    13]()
+
+-   ![](/dot_green.png)[2017/3/11 Grand Prix of Gomel]()
+
+-   ![](/dot_green.png)[2017/3/12 World Final 2013]()
+
+-   ![](/dot_green.png)[2017/3/13 Petrozavodsk Summer-2015. Andrew
+    Stankevich Contest 48]()
+
+-   ![](/dot_green.png)[2017/3/14 Petrozavodsk Summer-2015 Yandex Cup
+    Stage 1]()
+
+-   ![](/dot_green.png)[2017/3/15 Petrozavodsk Summer-2015 Yandex Cup
+    Stage 2]()
+
+-   ![](/dot_green.png)[2017/3/16 Petrozavodsk Summer-2015. Warsaw U
+    Tasks]()
+
+-   ![](/dot_green.png)[2017/3/18 XVI Open Cup named after E.V.
+    Pankratiev. GP of Ukraine]()
+
+-   ![](/dot_red.png)(J)[2017/3/19 WorldFinal2014]()
+
+-   ![](/dot_green.png)[2017/3/20 XVI Open Cup named after E.V.
+    Pankratiev. GP of Japan]()
+
+-   ![](/dot_green.png)[2017/3/21 XVI Open Cup named after E.V.
+    Pankratiev. GP of SPB]()
+
+-   ![](/dot_green.png)([2017/3/22 Petrozavodsk Winter-2015. Michael
+    Tikhomirov Contest 1]()
+
+-   ![](/dot_red.png)(E)[2017/3/23 AMPPZ-2015]()
+
+-   ![](/dot_green.png)[2017/3/24 Makoto Soejima Contest 3]()
+
+-   ![](/dot_green.png)[2017/3/26 XVII Open Cup named after E.V.
+    Pankratiev GP of Poland]()
+
+-   ![](/dot_green.png)[2017/3/28 AIM Fund Contest]()
+
+-   ![](/dot_red.png)(A)[2017/3/29 Grodno 2015 (Urozero May 2015
+    Day 5)]()
+
+-   ![](/dot_green.png)[2017/3/30 XV Open Cup named after E.V.
+    Pankratiev GP of Karelia]()
+
+-   ![](/dot_green.png)[2017/03/31 XV Open Cup named after E.V.
+    Pankratiev. GP of Udmurtia]()
+
+-   ![](/dot_green.png)[2017/04/01 Petrozavodsk Winter-2015. Wroclaw]()
+
+-   ![](/dot_green.png)[2017/04/02 Grand Prix of Tatarstan]()
+
+-   ![](/dot_green.png)[2017/04/03 XVI Open Cup named after E.V.
+    Pankratiev. GP of Ekaterinburg]()
+
+-   ![](/dot_green.png)[2017/04/04 Moscow Subregional 2015]()
+
+-   ![](/purple.png)(A)[2017/04/06 Petrozavodsk Winter-2014.
+    Jagiellonian U Contest]()
+
+-   ![](/dot_green.png)[2017/04/07 Petrozavodsk Winter-2014. Warsaw U
+    Contest]()
+
+-   ![](/dot_red.png)(EH)[2017/04/08 Petrozavodsk Winter-2014. Moscow SU
+    Tapir Contest]()
+
+MIPT TRAINING
+=============
+
+-   ![](/dot_green.png)()[2017/04/11 Day 2: Zagreb U Selection 2]()
+
+最后一个月！！！
+================
+
+-   ![](/dot_green.png)[2017/04/22 Petrozavodsk Summer-2014. Warsaw U
+    Contest]()
+
+-   ![](/dot_green.png)[2017/04/23 World Finals 2015]()
+
+-   ![](/dot_red.png)(GI)[2017/04/24 Petrozavodsk Winter-2014. Ukrainian
+    Contest]()
+
+-   ![](/dot_green.png)[2017/04/25 Petrozavodsk Winter-2014. U of Latvia
+    Contest]()
+
+-   ![](/dot_red.png)(E)[2017/04/26 Petrozavodsk Winter-2014. MIPT
+    Contest]()
+
+-   ![](/dot_red.png)(ABF)[2017/04/27 Petr Mitrichev Contest 12]()
+
+-   ![](/dot_red.png)(JKL)[2017/04/29 浙江省赛2017]()
+
+-   ![](/dot_green.png)[2017/04/30 URAL Championship 2017]()
+
+-   ![](/dot_green.png)[2017/05/02 Spring Contest]()
+
+-   ![](/dot_green.png)[2017/05/03 Petrozavodsk Winter-2013.
+    Jagiellonian U Contest]()
+
+-   ![](/dot_red.png)(AF)[2017/05/04 Petrozavodsk Summer-2014. Moscow SU
+    SG Contest]()
+
+-   ![](/dot_green.png)[2017/05/06 Lesnoe Ozero 2017. BSUIR Open 2017]()
+
+-   ![](/dot_green.png)[2017/05/07 World Final 2016]()
+
+-   ![](/dot_red.png)(G)[2017/05/08 XVII Open Cup named after E.V.
+    Pankratiev. Grand Prix of Two Capitals]()
+
+-   ![](/dot_green.png)[2017/05/09 Petrozavodsk Summer-2013. Gennady
+    Korotkevich Contest 1]()
+
+-   ![](/dot_red.png)(BC)[2017/05/10 Petrozavodsk Winter-2013. SPb SU
+    Contest]()
+
+-   ![](/dot_green.png)[2017/05/11 Petrozavodsk Summer-2013. Moscow IPT
+    Contest]()
+
+-   ![](/dot_green.png)[2017/05/13 World Final 2010]()
+
+-   ![](/dot_red.png)(BD)[2017/05/15 World Final 2011]()
+
+-   ![](/dot_green.png)[2017/05/18 GCPC 2016]()
+
+-   ![](/dot_red.png)[2017/05/19 THUPC 2017]()
+
+-   ![](/dot_green.png)[2017/05/22 NCPC 2016]()
+
+
