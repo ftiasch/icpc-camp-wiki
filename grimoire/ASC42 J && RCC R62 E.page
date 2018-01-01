@@ -1,0 +1,14 @@
+[ASC42
+J](http://codeforces.com/gym/100512/attachments/download/2773/20122013-summer-petrozavodsk-camp-andrew-stankevich-contest-42-asc-42-en.pdf)
+
+[RCC R62 E](http://www.russiancodecup.ru/en/tasks/round/62/E/)
+
+题目大意：给一张有向图中每个点的后继数目一个合理化估计。
+
+sol:考虑在n个0-1中的随机变量，它们最小值的期望为$\frac{1}{n+1}$。于是给每个点随机一个权重，然后Ｄｐ出每个点后继中最小权值。
+
+attention:
+
+1.CF(Windows)rand()返回一个short
+
+2.随即次数不能少
