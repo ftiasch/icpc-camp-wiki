@@ -1,0 +1,55 @@
+Link
+====
+
+[vjudge](http://vjudge.net/contest/136600#overview)
+
+Summary
+=======
+
+这一场好伤，K题觉得是个沙比提，但是自己在错误的道路上越走越远，其实是个数位DP，构造题也没有做出来，心态已崩。
+
+Problems
+========
+
+A Xiongnu's Land
+----------------
+
+二分。
+
+B Xiang Hex
+-----------
+
+C Today Is a Rainy Day
+----------------------
+
+D Kejin Game
+------------
+
+E Stamps
+--------
+
+F You Are Under Arrest
+----------------------
+
+G Mysterious Antiques in Sackler Museum
+---------------------------------------
+
+直接做。
+
+H Archipelago Tour
+------------------
+
+I Snake Carpet
+--------------
+
+构造。
+
+J Osu! Master
+-------------
+
+直接做。
+
+K A Math Problem
+----------------
+
+厉害了我的洁！自己太蠢，连序列是什么都不知道，可以发现是一个三进制的东西。可数位DP。
