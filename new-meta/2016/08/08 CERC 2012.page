@@ -24,7 +24,7 @@ B. Who wants to live forever? (Done By Miceren)
 
 我们可以构造一下，假如之前的串是$s$，我们现在变成s0s'0，其中$s'$是s的reverse。然后把这个串看成环状就好了，可以发现这个和之前的题目一样。
 
-[CERC 2012 B.cpp](CERC%202012%20B.cpp)
+[CERC 2012 B.cpp](CERC 2012 B.cpp)
 
 F. Farm and factory (Done By Miceren)
 =====================================
@@ -96,7 +96,7 @@ F. Farm and factory (Done By Miceren)
 
 至此完成，真是一个写起来8分钟，证明起来30分钟的题目。。
 
-[CERC 2012 F.cpp](CERC%202012%20F.cpp)
+[CERC 2012 F.cpp](CERC 2012 F.cpp)
 
 K. Graphic Madness
 ==================
