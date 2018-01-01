@@ -1,0 +1,38 @@
+Time	Problem	Language	Verdict	Status
+4:57	S - Trick Shot	C++	Incorrect Output	judged
+4:56	S - Trick Shot	C++	Compile Error	judged
+4:52	S - Trick Shot	C++	Incorrect Output	judged
+4:45	M - Delete This!	C++	Incorrect Output	judged
+4:43	M - Delete This!	C++	Incorrect Output	judged
+4:43	M - Delete This!	C++	Incorrect Output	judged
+4:39	S - Trick Shot	C++	Incorrect Output	judged
+4:14	M - Delete This!	C++	Incorrect Output	judged
+4:13	M - Delete This!	C++	Incorrect Output	judged
+4:12	L - Being Solarly Systematic	C++	Accepted	judged
+4:09	L - Being Solarly Systematic	C++	Incorrect Output	judged
+4:05	L - Being Solarly Systematic	C++	Incorrect Output	judged
+3:52	M - Delete This!	C++	Incorrect Output	judged
+3:42	L - Being Solarly Systematic	C++	Run-Time Error	judged
+3:37	M - Delete This!	C++	Incorrect Output	judged
+3:32	L - Being Solarly Systematic	C++	Time Limit Exceeded	judged
+3:20	M - Delete This!	C++	Incorrect Output	judged
+2:56	L - Being Solarly Systematic	C++	Time Limit Exceeded	judged
+2:34	N - KenKen You Do It?	C++	Accepted	judged
+2:21	Q - Transportation Delegation	C++	Accepted	judged
+2:19	Q - Transportation Delegation	C++	Time Limit Exceeded	judged
+2:16	F - InTents	C++	Accepted	judged
+1:57	J - Water	C++	Accepted	judged
+1:51	R - Tray Bien	C++	Accepted	judged
+1:27	E - Illumination	C++	Accepted	judged
+1:09	C - Buggy Robot	C++	Accepted	judged
+0:55	H - Paint	C++	Accepted	judged
+0:51	H - Paint	C++	Incorrect Output	judged
+0:41	P - Squawk Virus	C++	Accepted	judged
+0:35	G - Islands	C++	Accepted	judged
+0:29	K - Zigzag	C++	Accepted	judged
+0:24	I - Periodic Strings	C++	Accepted	judged
+0:21	O - Rings	C++	Accepted	judged
+0:18	O - Rings	C++	Incorrect Output	judged
+0:10	T - What's on the Grille?	C++	Accepted	judged
+0:10	A - Alphabet	C++	Accepted	judged
+0:07	T - What's on the Grille?	C++	Incorrect Output	judged
