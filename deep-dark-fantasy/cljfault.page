@@ -1,0 +1,3 @@
+发现题目看错一个地方之后瞎改了一下结果没有改完。。。(ICPC China-Final)、
+
+resize和assign的意思是不一样的，assign会让整个vector都变成那样，resize只是添加的时候会添加那个东西。。。不能乱用（20170101）。
