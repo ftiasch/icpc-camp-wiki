@@ -1,0 +1,163 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 5e4 + 5, B = 142, C = N / B + 1;
+int inbx[N], inby[N];
+bitset<N> bx[C], by[C], tx[C * (C + 1)];
+int memx[C][C], memy[C][C], cntx, cnty, belong_front_x[N], belong_front_y[N], tot, belong_back_x[N], belong_back_y[N];
+vector<pair<int, int>> ax, ay;
+vector<pair<int, int>> kuaix[C], kuaiy[C];
+//vector<bitset<N>> TLE;
+//int TLE_idx[N], TLE_idy[N];
+void divide(vector<pair<int, int>> a, bitset<N> b[C], int mem[C][C], bitset<N> t[C * (C + 1)], int &cnt, int belong_front[N], int belong_back[N], vector<pair<int, int>> kuai[N]) {
+    //for (int i = 0; i < N; ++ i) hang[i].clear();
+    //for (auto e : a) hang[e.first].push_back(e.second);
+    sort(a.begin(), a.end());
+    cnt = 0; int tmp = 0;
+    for (int i = 0; i < N; ++ i) belong_front[i] = belong_back[i] = -1;
+    for (auto e : a) {
+        /*if (hang[i].size() > N / 32) {
+            bitset<N> tmp;
+            for (int y : hang[i]) tmp[y] = 1;
+            TLE.push_back(tmp);
+            TLE_id[i] = (int) TLE.size();
+        }*/
+        /*if (tmp && (int) hang[i].size() + tmp >= B) {
+            cnt ++;
+            tmp = 0;
+        }
+        for (int y : hang[i]) {
+            b[cnt][y] = 1;
+            tmp ++;
+        }
+        belong[i] = cnt;
+        if (tmp >= B) {
+            cnt ++;
+            tmp = 0;
+        }*/
+        int x = e.first, y = e.second;
+        kuai[cnt].push_back(e);
+        if (belong_front[x] == -1) belong_front[x] = cnt;
+        belong_back[x] = cnt;
+        b[cnt][y] = 1;
+        tmp ++;
+        if (tmp == B) {
+            tmp = 0;
+            cnt ++;
+        }
+    }
+    cnt ++;
+    for (int i = a.back().first + 1; i < N; ++ i) belong_front[i] = belong_back[i] = cnt;
+    for (int i = 0; i < cnt; ++ i) {
+        t[tot] = b[i];
+        mem[i][i] = tot ++;
+        for (int j = i + 1; j < cnt; ++ j) {
+            t[tot] = t[tot - 1] | b[j];
+            mem[i][j] = tot ++;
+        }
+    }
+}
+bitset<N> ans;
+int ask(int mem[C][C], bitset<N> t[C * (C + 1)], int belong_front[N], int belong_back[N], vector<pair<int, int>> kuai[N], int cnt, int x1, int x2, int y1, int y2) {// int TLE_id[N]) {
+    ans.reset();
+    if (belong_front[x1] == belong_back[x2]) {
+        for (auto e : kuai[belong_front[x1]]) {
+            int x = e.first, y = e.second;
+            if (x >= x1 && x <= x2 && y >= y1 && y <= y2) ans[y] = 1;
+        }
+        /*if ((x1 == 0 || belong[x1 - 1] != belong[x1]) && (belong[x2] != belong[x2 + 1])) {
+            ans = t[mem[belong[x1]][belong[x1]]];
+        }
+        else {
+            for (int x = x1; x <= x2; ++ x) {
+                //if (TLE_id[x]) ans |= TLE[TLE_id[x] - 1]; else
+                for (int y : hang[x]) ans[y] = 1;
+            }
+        }*/
+    }
+    else {
+        /*int xl, xr;
+        if (x1 == 0 || belong[x1 - 1] != belong[x1]) {
+            xl = belong[x1];
+        }
+        else {
+            for (int x = x1; belong[x] == belong[x1]; x ++) {
+                //if (TLE_id[x]) ans |= TLE[TLE_id[x] - 1]; else
+                for (int y : hang[x]) ans[y] = 1;
+            }
+            xl = belong[x1] + 1;
+        }
+        if (belong[x2] != belong[x2 + 1]) {
+            xr = belong[x2];
+        }
+        else {
+            for (int x = x2; belong[x] == belong[x2]; x --) {
+                //if (TLE_id[x]) ans |= TLE[TLE_id[x] - 1]; else
+                for (int y : hang[x]) ans[y] = 1;
+            }
+            xr = belong[x2] - 1;
+        }*/
+        for (auto e : kuai[belong_front[x1]]) {
+            int x = e.first, y = e.second;
+            if (x >= x1 && x <= x2 && y >= y1 && y <= y2) ans[y] = 1;
+        }
+        for (auto e : kuai[belong_back[x2]]) {
+            int x = e.first, y = e.second;
+            if (x >= x1 && x <= x2 && y >= y1 && y <= y2) ans[y] = 1;
+        }
+        int xl = belong_front[x1] + 1, xr = belong_back[x2] - 1;
+        if (xl <= xr) ans |= t[mem[xl][xr]];
+    }
+    //for (int i = 0; i < 5; ++ i) putchar(ans[i] ? '1' : '0'); puts("");
+    //for (int i = 0; i < 5; ++ i) putchar((ans >> y1)[i] ? '1' : '0'); puts("");
+    //for (int i = 0; i < 5; ++ i) putchar((ans >> y1 << (y1 + N - y2 - 1))[i] ? '1' : '0'); puts("");
+    return (int) ((ans >> y1) << (y1 + N - y2 - 1)).count();
+}
+int id(int x, vector<int> &all) {return lower_bound(all.begin(), all.end(), x) - all.begin();}
+int main() {
+    int n;
+    scanf("%d", &n);
+    vector<int> allx, ally;
+    for (int i = 1; i <= n; ++ i) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        ax.push_back({x, y});
+        ay.push_back({y, x});
+        allx.push_back(x);
+        ally.push_back(y);
+    }
+    sort(allx.begin(), allx.end());
+    sort(ally.begin(), ally.end());
+    allx.erase(unique(allx.begin(), allx.end()), allx.end());
+    ally.erase(unique(ally.begin(), ally.end()), ally.end());
+    for (auto &e : ax) {
+        e.first = id(e.first, allx);
+        e.second = id(e.second, ally);
+    }
+    for (auto &e : ay) {
+        e.first = id(e.first, ally);
+        e.second = id(e.second, allx);
+    }
+    divide(ax, bx, memx, tx, cntx, belong_front_x, belong_back_x, kuaix);
+    divide(ay, by, memy, tx, cnty, belong_front_y, belong_back_y, kuaiy);
+    int m;
+    scanf("%d", &m);
+    while (m --) {
+        int x1, y1, x2, y2;
+        scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
+        x1 = id(x1, allx);
+        x2 = id(x2 + 1, allx) - 1;
+        y1 = id(y1, ally);
+        y2 = id(y2 + 1, ally) - 1;
+        if (x1 > x2 || y1 > y2) {
+            puts("0 0");
+            fflush(stdout);
+            continue;
+        }
+        int ansy = ask(memx, tx, belong_front_x, belong_back_x, kuaix, cnty, x1, x2, y1, y2);
+        int ansx = ask(memy, tx, belong_front_y, belong_back_y, kuaiy, cntx, y1, y2, x1, x2);
+        printf("%d %d\n", ansx, ansy);
+        fflush(stdout);
+    }
+}
+```
