@@ -1,0 +1,166 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 3.5e4 + 5;
+struct circle { int x, y, r, id; };
+struct half {
+    int x, y, r, type, id;
+    double calc(int a) const {
+        if (r == 0) return y;
+        if (type == 0) {
+            return y + sqrt(1.0 * r * r - 1.0 * (a - x) * (a - x));
+        }
+        else {
+            return y - sqrt(1.0 * r * r - 1.0 * (a - x) * (a - x));
+        }
+    }
+};
+int scan_x;
+bool operator < (const half &a, const half &b) {
+    if (a.id == b.id && a.type == b.type) return 0;
+    return a.calc(scan_x) < b.calc(scan_x);
+}
+int sign(int x) {
+    if (x > 0) return 1;
+    if (x < 0) return -1;
+    return 0;
+}
+bool operator < (const circle &a, const circle &b) {return a.x - sign(a.id) * a.r < b.x - sign(b.id) * b.r;}
+int c[N], parent[N];
+long long people[N];
+vector<int> G[N];
+set<half> ss;
+int getparent(int x, int y) {
+    auto it = ss.upper_bound((half) {x, y, 0, 0});
+    if (it == ss.end()) return 0;
+    if (it -> type == 0) return it -> id;
+    return parent[it -> id];
+}
+
+long long cost[N];
+#define nil mem
+#define mp make_pair
+struct Node {int fit; Node *l, *r; int sz, key; long long sum;
+} mem[N] = {{0, nil, nil}}; int sz; using ptr = Node*;
+#define NEW(arg...) new(mem+ ++sz)Node{rand(),nil,nil,arg}
+ptr renew(ptr x) {
+    x -> sz = 1 + x -> l -> sz + x -> r -> sz;
+    x -> sum = cost[x -> key] + x -> l -> sum + x -> r -> sum;
+    return x;
+}
+bool cmp_greater(int x, int y) {
+    if (cost[x] != cost[y]) return cost[x] < cost[y];
+    return x < y;
+}
+pair<ptr,ptr> split(ptr x, int key) {
+    ptr t; if (x == nil) return {nil, nil};
+    return cmp_greater(x->key, key) // x->l->sz+1>n  key(n个) 在左边
+        ? (tie(t, x->l) = split(x->l, key), mp(t, renew(x)))
+        : (tie(x->r, t) = split(x->r, key), mp(renew(x), t));
+}
+pair<ptr,ptr> split_n(ptr x, int n) {
+    ptr t; if (x == nil) return {nil, nil};
+    return x->l->sz+1>n
+        ? (tie(t, x->l) = split_n(x->l, n), mp(t, renew(x)))
+        : (tie(x->r, t) = split_n(x->r, n - 1 - x -> l -> sz), mp(renew(x), t));
+}
+ptr merge(ptr x, ptr y) {
+    if (x == nil) return y; if (y == nil) return x;
+    return x->fit < y->fit // rand() % (X.cnts + Y.cnts) < X.cnts
+        ? (x->r = merge(x->r, y), renew(x))
+        : (y->l = merge(x, y->l), renew(y));
+}
+
+void dfs(ptr x) {
+    if (x == nil) return;
+    dfs(x -> l);
+    printf("<at %d cost = %I64d> ", x -> key, cost[x -> key]);
+    dfs(x -> r);
+}
+ptr root = nil;
+long long tot_people[N];
+long long dfs1(int x) {
+    long long &tot = tot_people[x] = people[x];
+    for (int u : G[x]) {
+        long long tmp = dfs1(u);
+        tot += tmp;
+    }
+    if (x) {
+        cost[x] = tot * c[x];
+        auto t = split(root, x);
+        root = merge(merge(t.first, NEW(1, x, cost[x])), t.second);
+    }
+    return tot;
+}
+long long ans = -1;
+int K;
+void dfs2(int x) {
+    long long tmp = root -> sum;
+    auto t = split_n(root, K);
+    tmp -= (t.first) -> sum;
+    if (ans == -1 || ans > tmp) ans = tmp;
+    root = merge(t.first, t.second);
+    for (int u : G[x]) {
+        t = split(root, u);
+        auto tt = split_n(t.first, t.first -> sz - 1);
+        assert((tt.second) -> key == u);
+        cost[u] += (tot_people[0] - tot_people[u]) * c[u];
+        cost[u] -= tot_people[u] * c[u];
+        tt.second -> sum = cost[u];
+        root = merge(tt.first, t.second);
+        t = split(root, u);
+        root = merge(merge(t.first, tt.second), t.second);
+        dfs2(u);
+        t = split(root, u);
+        tt = split_n(t.first, t.first -> sz - 1);
+        assert((tt.second) -> key == u);
+        cost[u] -= (tot_people[0] - tot_people[u]) * c[u];
+        cost[u] += tot_people[u] * c[u];
+        tt.second -> sum = cost[u];
+        root = merge(tt.first, t.second);
+        t = split(root, u);
+        root = merge(merge(t.first, tt.second), t.second);
+    }
+}
+int main() {
+    int n, m;
+    scanf("%d%d%d", &n, &m, &K);
+    vector<circle> all;
+    for (int i = 1; i <= n; ++ i) {
+        int x, y, r;
+        scanf("%d%d%d%d", &x, &y, &r, &c[i]);
+        all.push_back((circle) {x, y, r, i});
+        all.push_back((circle) {x, y, r, -i});
+    }
+    for (int i = 1; i <= m; ++ i) {
+        int x, y, s;
+        scanf("%d%d%d", &x, &y, &s);
+        all.push_back((circle) {x, y, 0, s});
+    }
+    sort(all.begin(), all.end());
+    for (auto c : all) {
+        scan_x = c.x;
+        if (c.r == 0) {
+            people[getparent(c.x, c.y)] += c.id;
+        }
+        else if (c.id > 0) {
+            parent[c.id] = getparent(c.x - c.r, c.y);
+            ss.insert((half) {c.x, c.y, c.r, 0, c.id});
+            ss.insert((half) {c.x, c.y, c.r, 1, c.id});
+        }
+        else {
+            ss.erase((half) {c.x, c.y, c.r, 0, c.id});
+            ss.erase((half) {c.x, c.y, c.r, 1, c.id});
+        }
+    }
+    /*printf("people[0] = %d\n", people[0]);
+    for (int i = 1; i <= n; ++ i) {
+        printf("parent[%d] = %d  people[%d] = %d\n", i, parent[i], i, people[i]);
+    }*/
+    for (int i = 1; i <= n; ++ i) G[parent[i]].push_back(i);
+    dfs1(0);
+    dfs2(0);
+    //printf("%lld\n", ans);
+    cout << ans << endl;
+}
+```
