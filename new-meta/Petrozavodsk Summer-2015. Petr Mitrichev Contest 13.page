@@ -9,7 +9,7 @@ C. Entfernung
 
 两维分开算。梯形拆分，然后枚举$n^2$个pair，然后讨论一下相交关系（暴力一点可以4个点的离散化，然后拆成更小的梯形）积个分。根据梯形的方向决定是加还是减。注意上下限加减号之类的。
 
-[C.cpp](Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013%20C.cpp)
+[C.cpp](Petrozavodsk Summer-2015. Petr Mitrichev Contest 13 C.cpp)
 
 G. Sprache
 ==========
