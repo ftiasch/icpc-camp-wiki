@@ -1,0 +1,90 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+void ExtendedKMP(char *s, int next[]) {
+    int l = strlen(s), j = 0, k = 1;
+    while (1 + j < l && s[j] == s[1 + j]) ++j;
+    next[1] = j;
+    for (int i = 2; i < l; ++i) {
+        int len = k + next[k], ll = next[i - k];
+        if (ll < len - i) {
+            next[i] = ll;
+        } else {
+            j = max(0, len - i);
+            while (i + j < l && s[j] == s[i + j]) ++j;
+            next[i] = j;
+            k = i;
+        }
+    }
+}
+void ExtendedKMP(char *s, char *t, int next[], int fail[]) {
+    int l = (int) strlen(s), j = 0, k = 0, m = (int) strlen(t);
+    while (j < m && s[j] == t[j]) ++j;
+    next[0] = j;
+    for (int i = 1; i < l; ++i) {
+        int len = k + next[k], ll = fail[i - k];
+        if (ll < len - i) {
+            next[i] = ll;
+        } else {
+            j = max(0, len - i);
+            while (i + j < l && t[j] == s[i + j]) ++j;
+            next[i] = j;
+            k = i;
+        }
+    }
+}
+const int N = 1e6 + 5;
+char s[N], t[N], rs[N], rt[N];
+int gor[N], gol[N], tree[N * 4], fail[N];
+void build(int x, int l, int r) {
+    if (l == r) {
+        tree[x] = gol[l];
+        return;
+    }
+    int mid = (l + r) / 2;
+    build(x + x, l, mid);
+    build(x + x + 1, mid + 1, r);
+    tree[x] = max(tree[x + x], tree[x + x + 1]);
+}
+int query(int x, int l, int r, int ql, int qr, int lb) {
+    if (tree[x] < lb) return -1;
+    if (l > qr || r < ql) return -1;
+    if (l == r) return l;
+    int mid = (l + r) / 2;
+    int tmp = query(x + x, l, mid, ql, qr, lb);
+    if (tmp == -1) tmp = query(x + x + 1, mid + 1, r, ql, qr, lb);
+    return tmp;
+}
+int main() {
+    scanf("%s%s", s, t);
+    int n = (int) strlen(s);
+    int m = (int) strlen(t);
+    if (m > n) return 0 * puts("-1");
+    for (int i = 0; i < n; ++ i) s[i + n] = s[i];
+    ExtendedKMP(t, fail);
+    ExtendedKMP(s, t, gor, fail);
+    //for (int i = 0; i < 2 * n; ++ i) printf("%c ", s[i]); puts("");
+    //for (int i = 0; i < 2 * n; ++ i) printf("%d ", gor[i]); puts("");
+    //for (int i = 0; i < 2 * n; ++ i) printf("%d ", gol[i]); puts("");
+    if (*max_element(gor, gor + 2 * n) == m) {
+        printf("%d\n", n);
+        return 0;
+    }
+    for (int i = 0; i < 2 * n; ++ i) rs[i] = s[2 * n - i - 1];
+    for (int i = 0; i < m; ++ i) rt[i] = t[m - i - 1];
+    ExtendedKMP(rt, fail);
+    ExtendedKMP(rs, rt, gol, fail);
+    for (int i = 0; i < n; ++ i) swap(gol[i], gol[2 * n - i - 1]);
+    build(1, 0, 2 * n - 1);
+    int ans = -1;
+    for (int i = 0; i < 2 * n; ++ i) {
+        int L = query(1, 0, 2 * n - 1, i - (n - m) - 1, i - 1, m - gor[i]);
+        //printf("%d %d\n", L, i);
+        if (L != -1) {
+            int len = i - L - 1 + m;
+            if (len > ans) ans = len;
+        }
+    }
+    printf("%d\n", ans);
+}
+```
