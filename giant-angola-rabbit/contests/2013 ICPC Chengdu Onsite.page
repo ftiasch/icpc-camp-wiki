@@ -1,0 +1,48 @@
+Link
+====
+
+[vjudge](http://vjudge.net/contest/134827#overview)
+
+Summary
+=======
+
+Problems
+========
+
+A Assignment For Princess
+-------------------------
+
+B Beautiful Soup
+----------------
+
+C Clumsy Algorithm
+------------------
+
+D Dinner Coming Soon
+--------------------
+
+E Exhausted Robot
+-----------------
+
+F Fibonacci Tree
+----------------
+
+找出最少白边的生成树，和最多白边的生成树。判断之间是否存在Fibonacci数。
+
+G GRE Words Revenge
+-------------------
+
+H Hard Disk Drive
+-----------------
+
+直接做。
+
+I ICPC Ranking
+--------------
+
+J Just Random
+-------------
+
+\[a, b\]和\[c, d\]范围之间的答案可以处理为\[0, b\]和\[0, d\]、\[0,
+b\]和\[0, c - 1\]、\[0, a - 1\]和\[0, d\]、\[0, a - 1\]和\[0, c -
+1\]四个区间的答案。之后递归处理。
