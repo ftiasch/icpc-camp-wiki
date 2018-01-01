@@ -1,0 +1,53 @@
+A. Thickest Burger \[???\]
+==========================
+
+B. Relative atomic mass \[???\]
+===============================
+
+C. Recursive sequence \[???\]
+=============================
+
+D. Winning an Auction
+=====================
+
+E. Counting Cliques \[Skywalkert\]
+==================================
+
+由每个点的度不超过 20
+，可以考虑枚举最大团中最小标号的点，从它的邻居中选点做最大团，复杂度$O(\binom{20}{S} N)$。
+
+F. Similar Rotations
+====================
+
+G. Do not pour out
+==================
+
+H. Guessing the Dice Roll \[Skywalkert\]
+========================================
+
+建立AC自动机，设 $f_i$ 表示从节点 $i$
+走到终态的概率，对于每个串的结尾节点，该概率视为未知量，对其他节点建立转移方程，消元后剩下关于结尾节点的方程，依次枚举每个结尾节点作为终态，计算概率即可。
+
+I. The Elder
+============
+
+J. Query on a graph
+===================
+
+K. New Signal Decomposition
+===========================
+
+L. A Random Turn Connection Game
+================================
+
+M. Subsequence
+==============
+
+Summary
+=======
+
+**Constroy: **
+
+**Skywalkert: ** debug 能力需要提升。早睡早起
+
+**braveTester: **
