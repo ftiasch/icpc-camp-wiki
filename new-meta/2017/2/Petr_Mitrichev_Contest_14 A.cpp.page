@@ -1,0 +1,190 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 111;
+const int DEBUG = false;
+const int DDEBUG = false;
+
+const int BLACK = 2, WHITE = 1, NONE = 0;
+
+int n, k, g;
+
+int G[N][N];
+bool success;
+int colored;
+
+vector<vector<int>> a;
+
+void ban(int k) {
+    vector<pair<int, int> > edges;
+    if (DEBUG) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                if (G[i][j] == NONE) edges.push_back({i, j});
+            }
+        }
+        random_shuffle(edges.begin(), edges.end());
+        edges.resize(min((int)edges.size(), k));
+        if (DDEBUG) for (auto e : edges) printf("BLACK ban %d %d\n", e.first, e.second);
+    } else {
+        int m; scanf("%d", &m);
+        for (int i = 0; i < m; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            edges.push_back({u, v});
+        }
+    }
+    colored += edges.size();
+    for (auto e : edges) {
+        int u = e.first, v = e.second;
+        G[u][v] = G[v][u] = BLACK;
+    }
+}
+
+void pick(int u, int v) {
+    if (DDEBUG) printf("WHITE pick %d %d\n", u, v);
+    else {
+        printf("%d %d\n", u, v);
+        fflush(stdout);
+    }
+    ++colored;
+    G[u][v] = G[v][u] = WHITE;
+}
+
+void random_pick() {
+    for (int i = 1; i <= n; i++) {
+        for (int j = i + 1; j <= n; j++) {
+            if (G[i][j] == NONE) {
+                pick(i, j);
+                return ;
+            }
+        }
+    }
+    assert(false);
+}
+
+int find(int u) {
+    for (int i = 0; i < a.size(); i++) {
+        if (u == a[i].back()) return i;
+        if (u == a[i][0]) {
+            reverse(a[i].begin(), a[i].end());
+            return i;
+        }
+    }
+    assert(false);
+}
+
+void fuck() {
+    if (a.size() == 1) {
+        if (success) {
+            random_pick();
+            return ;
+        }
+        vector<int> cyc = a[0];
+        assert(cyc.size() == n);
+        int u = cyc[0], v = cyc[n - 1];
+        if (G[u][v] == NONE) {
+            pick(u, v);
+            success = true;
+            return ;
+        }
+        for (int i = 1; i < cyc.size(); i++) {
+            if (G[u][cyc[i]] == WHITE && G[v][cyc[i - 1]] == NONE) {
+                pick(v, cyc[i - 1]);
+            }
+        }
+        for (int i = 1; i < cyc.size(); i++) {
+            if (G[u][cyc[i]] != BLACK && G[v][cyc[i - 1]] != BLACK) {
+                bool fu = G[u][cyc[i]] == WHITE, fv = G[v][cyc[i - 1]] == WHITE;
+                if (!fv) pick(v, cyc[i - 1]);
+                else pick(u, cyc[i]);
+                a[0].clear();
+                for (int j = 0; j < i; j++) a[0].push_back(cyc[j]);
+                for (int j = cyc.size() - 1; j >= i; j--) a[0].push_back(cyc[j]);
+                if (fu || fv) success = true;
+                return ;
+            }
+        }
+        random_pick();
+    } else {
+        vector<pair<int, pair<int, int> > > cand;
+        vector<pair<int, int> > pairs;
+        static int deg[N];
+        fill(deg + 1, deg + n + 1, 0);
+        for (int i = 0; i < a.size(); i++) {
+            for (int j = i + 1; j < a.size(); j++) {
+                for (int ii = 0; ii < 2; ii++) {
+                    int u = a[i][ii * (a[i].size() - 1)];
+                    for (int jj = 0; jj < 2; jj++) {
+                        int v = a[j][jj * (a[j].size() - 1)];
+                        if (G[u][v] != NONE) continue;
+                        pairs.push_back({u, v});
+                        deg[u]++; deg[v]++;
+                    }
+                }
+            }
+        }
+        for (auto p : pairs) {
+            int u = p.first, v = p.second;
+            if (deg[u] > deg[v]) swap(u, v);
+            cand.push_back({deg[u] * 50 + deg[v], {u, v}});
+        }
+        sort(cand.begin(), cand.end());
+        if (cand.size() == 0) {
+            random_pick();
+        } else {
+            int u = cand[0].second.first, v = cand[0].second.second;
+            pick(u, v);
+            int ui = find(u), vi = find(v);
+            if (ui > vi) swap(ui, vi);
+            reverse(a[vi].begin(), a[vi].end());
+            a[ui].insert(a[ui].end(), a[vi].begin(), a[vi].end());
+            for (int i = vi; i + 1 < a.size(); i++) {
+                a[i] = a[i + 1];
+            }
+            a.resize(a.size() - 1);
+        }
+    }
+}
+
+bool solve() {
+    a.clear();
+    for (int i = 1; i <= n; i++) {
+        a.push_back(vector<int>(1, i));
+        fill(G[i] + 1, G[i] + n + 1, NONE);
+    }
+    success = false;
+    colored = 0;
+    while (colored < n * (n - 1) / 2) {
+        ban(k);
+        if (colored == n * (n - 1) / 2) break;
+        fuck();
+    }
+    if (success) {
+        for (int i = 0; i < n; i++) {
+            printf("%d%c", a[0][i], i + 1 == n ? '\n' : ' ');
+        }
+        fflush(stdout);
+    } else {
+        puts("-1");
+        fflush(stdout);
+    }
+    return success;
+}
+
+int main() {
+    srand(time(0));
+    scanf("%d %d %d", &n, &k, &g);
+    int win = 0;
+    for (int gg = 1; gg <= g; gg++) {
+        win += solve();
+    }
+    if (g == 100) {
+        assert(win >= 95);
+    }
+    if (DEBUG) printf("win = %d g = %d\n", win, g);
+    return 0;
+}
+```
