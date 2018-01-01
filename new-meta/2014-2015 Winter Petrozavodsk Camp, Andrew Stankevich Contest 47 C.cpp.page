@@ -1,0 +1,32 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+void apd(string & s, int k, int t) {
+    string a("B");
+    for(int i(1); i < k; i++) {
+        a = "P(B," + a + ")";
+    }
+    a = "L(" + a + ")";
+    for(int i(0); i < t; i++) {
+        s = "P(" + a + "," + s + ")";
+    }
+}
+int main() {
+
+    freopen("catalan.in", "r", stdin);
+    freopen("catalan.out", "w", stdout);
+    string bs("L(P(L(L(B)),B))");
+    apd(bs, 4, 1);
+    apd(bs, 5, 7);
+    int n;
+    for(;;) {
+        scanf("%d", &n);
+        if(n == 0) {
+            break;
+        }
+        string ans(bs);
+        apd(ans, 6, n - 98);
+        cout << ans << endl;
+    }
+}
+```
