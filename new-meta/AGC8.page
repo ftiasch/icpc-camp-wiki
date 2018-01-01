@@ -29,4 +29,4 @@ F - Black Radius
 
 其实这个就有点像最短路那样做，对于$S$里面的点，$lower$当然是0，那么开始在树上做最短路即可。
 
-[AGC8 F.cpp](AGC8%20F.cpp)
+[AGC8 F.cpp](AGC8 F.cpp)
