@@ -1,0 +1,55 @@
+``` {.cpp}
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+struct node {
+    int f, g, cnt;
+    node* ch[26];
+    node() {
+        f = g = cnt = 0;
+        memset(ch, NULL, sizeof(ch));
+    }
+};
+node *root;
+void insert(char *s) {
+    int n = (int) strlen(s);
+    node *cur = root;
+    for (int i = 0; i < n; ++ i) {
+        if (!cur -> ch[s[i] - 'a']) {
+            cur -> ch[s[i] - 'a'] = new node();
+        }
+        cur = cur -> ch[s[i] - 'a'];
+    }
+}
+const int N = 1e5 + 5;
+char s[N];
+void dfs(node *x) {
+    int sf = 0;
+    for (int i = 0; i < 26; ++ i) {
+        if (x -> ch[i]) {
+            dfs(x -> ch[i]);
+            x -> cnt += x -> ch[i] -> cnt;
+            sf += x -> ch[i] -> f + x -> ch[i] -> cnt;
+            x -> f = min(x -> f, x -> ch[i] -> g - x -> ch[i] -> f);
+            x -> g = min(x -> g, x -> ch[i] -> g - x -> ch[i] -> f - x -> ch[i] -> cnt);
+        }
+    }
+    x -> f += sf;
+    x -> g += sf;
+    if (x -> cnt == 0) x -> cnt = 1;
+    //printf("%s : f = %d g = %d\n", s.c_str(), x -> f, x -> g);
+}
+int main() {
+    root = new node();
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++ i) {
+        scanf("%s", s);
+        insert(s);
+    }
+    dfs(root);
+    cout << root -> f << endl;
+}
+```
