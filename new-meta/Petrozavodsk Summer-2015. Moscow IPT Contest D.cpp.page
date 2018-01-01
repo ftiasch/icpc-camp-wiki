@@ -1,0 +1,219 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int V = 2e5 + 7;
+const int C = 26;
+const int INF = V * 4;
+
+struct State {
+    int length, right;
+    bool visit;
+    State *parent,*go[C];
+    State(int length = 0):length(length),parent(NULL){
+        memset(go,0,sizeof(go));
+        right = INF;
+        visit = false;
+    }
+    State* extend(State*, int token);
+}node_pool[V << 1], *tot_node;
+
+State* State::extend(State *start,int token){
+    if (this->go[token] != NULL && this->go[token]->length == this->length + 1) {
+        return this->go[token];
+    }
+    State *p=this;
+    State *np=new(tot_node++) State(this->length+1);
+    while(p!=NULL&&p->go[token]==NULL)
+        p->go[token]=np, p=p->parent;
+    if(p==NULL) np->parent=start;
+    else{
+        State *q=p->go[token];
+        if(p->length+1==q->length) np->parent=q;
+        else{
+            State *nq=new(tot_node++) State(p->length+1);
+            memcpy(nq->go,q->go,sizeof(q->go));
+            nq->parent=q->parent;
+            np->parent=q->parent=nq;
+            while(p!=NULL&&p->go[token]==q)
+                p->go[token]=nq, p=p->parent;
+        }
+    }
+    return np;
+}
+
+State *head, *tail;
+
+void prepare() {
+    tot_node = node_pool;
+    head = tail = new(tot_node++) State();
+}
+
+string s, t;
+
+vector<pair<int, int> > upl[V], upr[V];
+int father[V << 1];
+
+int find(int u) {
+    if (u == father[u]) return u;
+    return father[u] = find(father[u]);
+}
+
+void solve(vector<pair<int, int> > up[V]) {
+    prepare();
+    for (int i = 0; i < s.size(); i++) {
+        tail = tail->extend(head, s[i] - 'a');
+    }
+    vector<State*> q;
+    q.push_back(head);
+    head->visit = true;
+    for (int i = 0; i < q.size(); i++) {
+        State* s = q[i];
+        for (int c = 0; c < C; c++) {
+            if (s->go[c] && s->go[c]->visit == false) {
+                q.push_back(s->go[c]);
+                s->go[c]->visit = true;
+            }
+        }
+    }
+    State *cur = head;
+    cur->right = -1;
+    for (int i = 0; i < s.size(); i++) {
+        int token = s[i] - 'a';
+        cur = cur->go[token];
+        cur->right = min(cur->right, i);
+    }
+    for (int i = q.size() - 1; i >= 0; i--) {
+        auto cur = q[i];
+        if (cur->parent) {
+            cur->parent->right = min(cur->parent->right, cur->right);
+        }
+    }
+    assert(tot_node - node_pool < (V << 1));
+    for (int i = 0; i < tot_node - node_pool; i++) {
+        father[i] = i;
+    }
+    cur = head;
+    int len = 0, CNT = 0;
+    for (int i = 0; i < t.size(); i++) {
+        // printf("%d\n", i);
+        int token = t[i] - 'a';
+        while (cur->go[token] == NULL && cur != head) {
+            cur = cur->parent;
+            len = cur->length;
+        }
+        if (cur->go[token]) {
+            cur = cur->go[token];
+            ++len;
+        }
+        // cout << "i = " << i << " len = " << len << endl;
+        if (cur->right >= 0) up[i].push_back({cur->right, len});
+        if (cur == head) continue;
+        State *tmp = cur->parent;
+        while (true) {
+            assert(tmp != NULL);
+            assert(++CNT <= 2 * V);
+            tmp = &node_pool[find(tmp - node_pool)];
+            if (tmp == head) break;
+            if (tmp->right >= 0) {
+                up[i].push_back({tmp->right, tmp->length});
+            }
+            assert(tmp->parent);
+            assert(tmp - node_pool == father[tmp - node_pool]);
+            father[tmp - node_pool] = tmp->parent - node_pool;
+        }
+    }
+    // cout << "over" << endl;
+}
+
+pair<int, pair<int, int> > h[V];
+
+int lowbit(int x) {
+    return x & -x;
+}
+
+pair<int, pair<int, int> > ask(int pos) {
+    pair<int, pair<int, int>> ret = {0, {-1, -1}};
+    for (int i = pos; i; i -= lowbit(i)) {
+        ret = max(ret, h[i]);
+    }
+    return ret;
+}
+
+void ins(int pos, int posi, int v) {
+    for (int i = pos; i <= s.size(); i += lowbit(i)) {
+        h[i] = max(h[i], {v, {pos, posi}});
+    }
+}
+
+int main() {
+    static char buffer[V];
+    scanf("%s", buffer); s = buffer;
+    scanf("%s", buffer); t = buffer;
+    // for (int i = 0; i < 1e5; i++) {
+    //  s += char('a');
+    //  t += char('a');
+    // }
+    // for (int i = 0; i < 1e5; i++) {
+    //  s += char(rand() % C + 'a');
+    //  t += char(rand() % C + 'a');
+    // }
+    // cout << s << " " << t << endl;
+    solve(upl);
+    // for (int i = 0; i < V; i++) {
+    //  for (auto e : upl[i]) {
+    //      printf("%d %d %d\n", i, e.first, e.second);
+    //  }
+    // }
+    reverse(s.begin(), s.end());
+    reverse(t.begin(), t.end());
+    solve(upr);
+    // cout << " --- " << endl;
+    // for (int i = 0; i < V; i++) {
+    //  for (auto e : upr[i]) {
+    //      printf("%d %d %d\n", t.size() - i - 1, s.size() - 1 - e.first, e.second);
+    //  }
+    // }
+    int ans = 0, anssl = 0, anssr = 0, anstl = 0, anstr = 0;
+    for (int i = 0; i < V; i++) {
+        h[i] = {0, {-1, -1}};
+    }
+    for (int i = 0; i < t.size(); i++) {
+        // if (i % 100 == 0) cout << "i = " << i << endl;
+        for (auto e : upr[t.size() - i - 1]) {
+            int pos = s.size() - e.first - 1;
+            int v = e.second;
+            auto r = ask(pos);
+            // cout << pos << " " << v << endl;
+            if (v + r.first > ans) {
+                ans = v + r.first;
+                anssl = r.second.first - 1, anssr = pos;
+                anstl = r.second.second, anstr = i;
+            }
+        }
+        for (auto e : upl[i]) {
+            ins(e.first + 1, i, e.second);
+        }
+        // cout << ans << endl;
+        // break;
+    }
+    reverse(s.begin(), s.end());
+    reverse(t.begin(), t.end());
+    string sl, sr;
+    for (int i = 0; anssl >= i && anstl >= i && s[anssl - i] == t[anstl - i]; i++) {
+        sl += s[anssl - i];
+    }
+    for (int i = 0; anssr + i < s.size() && anstr + i < t.size() && s[anssr + i] == t[anstr + i]; i++) {
+        sr += s[anssr + i];
+    }
+    reverse(sl.begin(), sl.end());
+    // cout << ans << endl;
+    printf("%s\n", sl.c_str());
+    // cout << sl << endl;
+    printf("%s\n", sr.c_str());
+    // cout << sr << endl;
+    // cout << sizeof(upl) + sizeof(upr) << endl;
+    return 0;
+}
+```
