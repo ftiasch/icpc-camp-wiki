@@ -1,0 +1,251 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <functional>
+#include <cassert>
+
+using namespace std;
+
+const int N = 20000 + 7;
+const int INF = 1e9 + 7;
+
+#define left LEFT
+#define right RIGHT
+
+int n, m, ans, father[N];
+vector<int> adj[N], other[N];
+int top[N], left[N], right[N], pos[N];
+int tot, out[N], who[N], size[N];
+
+void dfs_size(int u, int fat) {
+    father[u] = fat;
+    size[u] = 1;
+    out[u] = other[u].size();
+    for (auto v : adj[u]) {
+        if (v == fat) continue;
+        dfs_size(v, u);
+        size[u] += size[v];
+        out[u] += out[v];
+    }
+}
+
+void dfs_order(int u, int tp) {
+    pos[tot] = u;
+    left[u] = tot++;
+    who[u] = -1;
+    top[u] = tp;
+    for (auto v : adj[u]) {
+        if (v == father[u]) continue;
+        if (who[u] == -1 || size[v] > size[who[u]]) {
+            who[u] = v;
+        }
+    }
+    if (who[u] != -1) {
+        dfs_order(who[u], tp);
+    }
+    for (auto v : adj[u]) {
+        if (v == father[u] || v == who[u]) continue;
+        dfs_order(v, v);
+    }
+    right[u] = tot;
+}
+
+void prepare() {
+    dfs_size(0, -1);
+    tot = 0;
+    dfs_order(0, 0);
+}
+
+int min_leaf;
+
+void dfs_trivial(int u) {
+    if (adj[u].size() == 1 && u != 0) {
+        ans = min(ans, out[u] + min_leaf + 2);
+        min_leaf = min(min_leaf, out[u]);
+    }
+    for (int v : adj[u]) {
+        if (v == father[u]) continue;
+        ans = min(ans, out[u] - out[v] + 2);
+        dfs_trivial(v);
+    }
+}
+
+const int DEP = 15;
+struct Node {
+    int min_val, tag;
+    Node *lc, *rc;
+    Node() {}
+    Node(int min_val, int tag = 0) : min_val(min_val), tag(tag) {
+        lc = rc = NULL;
+    }
+    __inline void add(int d, int x, int v) {
+        tag += v;
+        min_val += v;
+    }
+    void update(Node *temp) {
+        assert(temp->lc != NULL);
+        min_val = INF;
+        if (lc != NULL) {
+            min_val = min(min_val, lc->min_val);
+        } else {
+            min_val = min(min_val, temp->lc->min_val);
+        }
+        if (rc != NULL) {
+            min_val = min(min_val, rc->min_val);
+        } else {
+            min_val = min(min_val, temp->rc->min_val);
+        }
+        min_val -= 2 * tag;
+    }
+}mem[DEP * (N << 2)];
+int used;
+
+Node *base;
+vector<Node*> recycle;
+
+Node* new_node(int min_val, int tag = 0) {
+    if (recycle.size()) {
+        Node *back = recycle.back();
+        recycle.pop_back();
+        return new(back) Node(min_val);
+    }
+    return new(mem + used++) Node(min_val);
+}
+
+Node *build(int l, int r) {
+    if (l == r) {
+        return new_node(out[pos[l]]);
+    } else {
+        Node *x = new_node(0);
+        int mid = (l + r) / 2;
+        x->lc = build(l, mid);
+        x->rc = build(mid + 1, r);
+        x->min_val = min(x->lc->min_val, x->rc->min_val);
+        return x;
+    }
+}
+
+Node *merge(Node *u, Node *v, Node *temp) {
+    if (u == NULL) {
+        return v;
+    } else if (v == NULL) {
+        return u;
+    }
+    u->tag += v->tag;
+    recycle.push_back(v);
+    if (temp->lc != NULL) {
+        u->lc = merge(u->lc, v->lc, temp->lc);
+        u->rc = merge(u->rc, v->rc, temp->rc);
+        u->update(temp);
+    } else {
+        u->min_val = temp->min_val - u->tag * 2;
+    }
+    return u;
+}
+
+Node *increase(Node *u, int l, int r, int ql, int qr, Node *temp) {
+    if (qr < l || r < ql || ql > qr) {
+        return u;
+    }
+    if (u == NULL) u = new_node(temp->min_val, 0);
+    if (ql <= l && r <= qr) {
+        u->tag++;
+        u->min_val -= 2;
+    } else {
+        int mid = (l + r) / 2;
+        u->lc = increase(u->lc, l, mid, ql, qr, temp->lc);
+        u->rc = increase(u->rc, mid + 1, r, ql, qr, temp->rc);
+        u->update(temp);
+    }
+    return u;
+}
+
+int ask(Node *u, int l, int r, int ql, int qr, Node *temp) {
+    if (qr < l || r < ql || ql > qr) {
+        return INF;
+    }
+    if (u == NULL) return ask(temp, l, r, ql, qr, temp);
+    if (ql <= l && r <= qr) {
+        return u->min_val;
+    }
+    int mid = (l + r) / 2;
+    return min(ask(u->lc, l, mid, ql, qr, temp->lc),
+                ask(u->rc, mid + 1, r, ql, qr, temp->rc)) - u->tag * 2;
+}
+
+int rangeL, rangeR;
+
+Node* dfs(int u) {
+    //printf("dfs(%d)\n", u);
+    if (father[u] == 0) {
+        rangeL = left[u];
+        rangeR = right[u];
+    }
+    Node *cur = NULL;
+    if (who[u] != -1) {
+        int v = who[u];
+        cur = dfs(v);
+    }
+    for (auto v : adj[u]) {
+        if (v == father[u] || v == who[u]) continue;
+        Node *tmp = dfs(v);
+        cur = merge(cur, tmp, base);
+    }
+    //printf("back to %d\n", u);
+    for (auto v : other[u]) {
+        while (v != -1) {
+            int tv = top[v];
+            int l = left[tv], r = left[v];
+            cur = increase(cur, 0, tot - 1, l, r, base);
+            v = father[top[v]];
+        }
+    }
+    if (u != 0) {
+        int min_other = min(ask(cur, 0, tot - 1, 1, rangeL - 1, base),
+                            ask(cur, 0, tot - 1, rangeR, tot - 1, base));
+        ans = min(ans, out[u] + min_other + 2);
+    }
+    return cur;
+}
+
+int main() {
+    int test;
+    scanf("%d", &test);
+    while (test--) {
+        scanf("%d %d", &n, &m);
+        ans = INF;
+        for (int i = 0; i < n; i++) {
+            adj[i].clear();
+            other[i].clear();
+        }
+        for (int i = 0; i < n - 1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            u--, v--;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        for (int i = 0; i < m - n + 1; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            u--, v--;
+            other[u].push_back(v);
+            other[v].push_back(u);
+        }
+        prepare();
+        for (int v : adj[0]) {
+            min_leaf = INF;
+            dfs_trivial(v);
+        }
+        used = 0;
+        recycle.clear();
+        base = build(0, tot - 1);
+        dfs(0);
+        static int testCount = 0;
+        printf("Case #%d: %d\n", ++testCount, ans);
+    }
+    return 0;
+}
+```
