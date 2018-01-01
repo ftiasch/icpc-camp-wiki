@@ -1,27 +1,37 @@
-# A Almost Bobo Number
+A Almost Bobo Number
+====================
 
-# B Connected Spanning Subgraph [zyh&hwq&ghc]
+B Connected Spanning Subgraph \[zyh&hwq&ghc\]
+=============================================
 
 大力手玩了所有$n \leq 4$的图之后猜测有且仅有二分图的方案数为奇数，这个道理是可以讲的，留坑待填
 
-# C Power of Power Partition Function
+C Power of Power Partition Function
+===================================
 
-# D Line Counting
+D Line Counting
+===============
 
-# E Maximum Flow [zyh&hwq]
+E Maximum Flow \[zyh&hwq\]
+==========================
 
 最大流=最小割，这只需要割掉一条上边和一条下边以及中间一串边，分离变量之后for两次即可
 
-# F Rectangles Inside Rectangle
+F Rectangles Inside Rectangle
+=============================
 
-# G Cute Panda [hwq&ghc]
+G Cute Panda \[hwq&ghc\]
+========================
 
 枚举第一个人给第一个桶的球数，之后每个人只需要尽可能先分给编号相同的桶即可，生成一些随机数据发现结果是单峰的，于是三分
 
-# H Order-Preserving Partition
+H Order-Preserving Partition
+============================
 
-# I Prime Tree
+I Prime Tree
+============
 
-# J Hamiltonian K-vertex Connected Graph [zyh&ghc]
+J Hamiltonian K-vertex Connected Graph \[zyh&ghc\]
+==================================================
 
 由于存在回路，点连通度至少是$2$，并且每个点的度至少是$k$，这样边数至少是$\lceil nk/2 \rceil$，分情况构造解即可
