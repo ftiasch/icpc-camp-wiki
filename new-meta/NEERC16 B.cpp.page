@@ -1,0 +1,190 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cassert>
+
+using namespace std;
+
+const int N = 1.5e6 + 7;
+const int NN = N * 2 + 1e6;
+const int M = NN << 3;
+
+struct eglist {
+    int to[M << 1], succ[M << 1], last[NN], sum;
+    void clear() {
+        sum = 0;
+        memset(last, -1, sizeof(last));
+    }
+    void add_edge(int u, int v) {
+        to[sum] = v, succ[sum] = last[u], last[u] = sum++;
+    }
+}e;
+
+int n;
+struct Node {
+    Node *child[2];
+    vector<int> ids;
+    Node() {
+        ids.clear();
+        child[0] = child[1] = NULL;
+    }
+}pool[N];
+int parent[NN], child[NN][2];
+
+int used = 0;
+Node *root;
+
+vector<string> s;
+
+int tot;
+
+int insert(char *buf) {
+    Node *cur = root;
+    for (int i = 0; buf[i]; i++) {
+        int dir = buf[i] - '0';
+        assert(cur != NULL);
+        if (cur->child[dir] == NULL) {
+            cur->child[dir] = new(pool + used++) Node();
+            cur->ids.push_back(tot++);
+        }
+        cur = cur->child[dir];
+    }
+    cur->ids.push_back(tot++);
+    return tot - 1;
+}
+
+int bel[N][2];
+    //choose
+    //up -> 2n ~ 2n + 2 * tot
+    //down -> 2n +
+
+void link(int u, int v, int dir) {
+    child[u][dir] = v;
+    parent[v] = u;
+    e.add_edge(2 * n + v, 2 * n + u);
+    e.add_edge(2 * n + tot + u, 2 * n + tot + v);
+}
+
+void build(Node *cur) {
+    int u = -1;
+    for (int i = 0; i < cur->ids.size(); i++) {
+        int v = cur->ids[i];
+        if (u != -1) link(u, v, 0);
+        u = v;
+    }
+    for (int i = 0; i < 2; i++) {
+        if (cur->child[i] == NULL) continue;
+        int v = cur->child[i]->ids[0];
+        link(u, v, i);
+        build(cur->child[i]);
+    }
+}
+
+int dfn[NN], low[NN], color[NN], tot_color;
+int in_stack[NN];
+vector<int> stack;
+int num;
+
+void tarjan(int u) {
+    dfn[u] = low[u] = ++num;
+    stack.push_back(u);
+    in_stack[u] = true;
+    for (int i = e.last[u]; ~i; i = e.succ[i]) {
+        int v = e.to[i];
+        if (!dfn[v]) {
+            tarjan(v);
+            low[u] = min(low[u], low[v]);
+        } else if (in_stack[v]) {
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+    if (low[u] == dfn[u]) {
+        ++tot_color;
+        while (1) {
+            int v = stack.back();
+            stack.pop_back();
+            color[v] = tot_color;
+            in_stack[v] = false;
+            if (v == u) break;
+        }
+    }
+}
+
+int main() {
+    e.clear();
+    used = tot = 0;
+    root = new(pool + used++) Node();
+    root->ids.push_back(tot++);
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        static char buffer[N];
+        scanf("%s", buffer);
+        int pos = -1;
+        for (int j = 0; buffer[j]; j++) {
+            if (buffer[j] == '?') pos = j;
+        }
+        s.push_back(buffer);
+        if (pos == -1) {
+            bel[i][0] = insert(buffer);
+            bel[i][1] = -1;
+        } else {
+            for (int k = 0; k < 2; k++) {
+                buffer[pos] = k + '0';
+                bel[i][k] = insert(buffer);
+            }
+        }
+    }
+    for (int i = 0; i < tot; i++) {
+        parent[i] = child[i][0] = child[i][1] = -1;
+    }
+    build(root);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (bel[i][j] != -1) {
+                int id = bel[i][j];
+                e.add_edge(n * 2 + id, i << 1 | (j ^ 1));
+                e.add_edge(n * 2 + tot + id, i << 1 | (j ^ 1));
+                if (parent[id] != -1) {
+                    e.add_edge(i << 1 | j, n * 2 + parent[id]);
+                }
+                for (int k = 0; k < 2; k++) {
+                    if (child[id][k] != -1) {
+                        e.add_edge(i << 1 | j, n * 2 + tot + child[id][k]);
+                    }
+                }
+            } else {
+                e.add_edge(i << 1 | j, i << 1 | (j ^ 1));
+            }
+        }
+    }
+    //cout << "tot = " << tot << " n = " << n << endl;
+    for (int i = 0; i < 2 * n + tot * 2; i++) {
+        dfn[i] = 0;
+        in_stack[i] = false;
+    }
+    num = 0;
+    for (int i = 0; i < 2 * n + tot * 2; i++) {
+        if (!dfn[i]) tarjan(i);
+    }
+    for (int i = 0; i < 2 * n; i++) {
+        if (color[i] == color[i ^ 1]) {
+            puts("NO");
+            return 0;
+        }
+    }
+    puts("YES");
+    for (int i = 0; i < n; i++) {
+        int x = color[i * 2 + 1] < color[i * 2];
+        for (int j = 0; j < s[i].size(); j++) {
+            if (s[i][j] == '?') s[i][j] = x + '0';
+        }
+        printf("%s\n", s[i].c_str());
+    }
+    return 0;
+}
+```
