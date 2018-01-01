@@ -1,0 +1,138 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 500 + 3;
+const int MOD = 1e9 + 7;
+const int DEBUG = false;
+
+int k, n;
+vector<vector<int> > a;
+int ok[N][N], bar[N][N];
+int f[N][N], g[N][N], h[N][N];
+
+void prepare() {
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            ok[i][j] = true;
+            bar[i][j] = n;
+        }
+    }
+    for (auto v : a) {
+        static int pos[N];
+        for (int i = 0; i < n; i++) {
+            if (DEBUG) { cout << v[i] << " "; }
+            pos[v[i]] = i;
+        }
+        if (DEBUG) cout << endl;
+        for (int j = 0; j < n; j++) {
+            static bool visit[N];
+            static int fool[N], foor[N];
+            fill(visit, visit + n, 0);
+            int ptr = j + 1;
+            for (int i = 0; i < n; i++) {
+                while (ptr < n && visit[ptr]) ptr++;
+                fool[i] = ptr;
+                visit[v[i]] = true;
+            }
+            fill(visit, visit + n, 0);
+            ptr = j + 1;
+            for (int i = n - 1; i >= 0; i--) {
+                while (ptr < n && visit[ptr]) ptr++;
+                foor[i] = ptr;
+                visit[v[i]] = true;
+            }
+            fill(visit, visit + n, 0);
+            int l = n, r = -1, cnt = 0;
+            for (int i = j; i >= 0; i--) {
+                ++cnt;
+                int p = pos[i];
+                l = min(l, p), r = max(r, p);
+                visit[p] = true;
+                if (p > 0 && visit[p - 1]) --cnt;
+                if (p + 1 < n && visit[p + 1]) --cnt;
+                if (cnt != 1) {
+                    ok[i][j] = false;
+                }
+                bar[i][j] = min(bar[i][j], max(fool[l], foor[r]));
+            }
+        }
+    }
+    if (DEBUG) {
+        cout << "ok = " << endl;
+        for (int l = 0; l < n; l++) {
+            for (int r = l; r < n; r++) {
+                cout << ok[l][r] << " ";
+            }
+            cout << endl;
+        }
+        cout << "bar = " << endl;
+        for (int l = 0; l < n; l++) {
+            for (int r = l; r < n; r++) {
+                cout << bar[l][r] << " ";
+            }
+            cout << endl;
+        }
+    }
+}
+
+void add(int &a, int b) {
+    if ((a += b) >= MOD) {
+        a -= MOD;
+    }
+}
+
+int main() {
+    scanf("%d %d", &k, &n);
+    {
+        vector<int> p(n), t(n);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &t[i]);
+            p[--t[i]] = i;
+        }
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; i && j < n; j++) {
+                scanf("%d", &t[j]);
+                --t[j];
+            }
+            // random_shuffle(t.begin(), t.end());
+            // reverse(t.begin(), t.begin() + n / 2);
+            vector<int> tt(n);
+            for (int j = 0; j < n; j++) {
+                tt[j] = p[t[j]];
+            }
+            a.push_back(tt);
+        }
+    }
+    prepare();
+    for (int len = 1; len <= n; len++) {
+        for (int l = 0; l + len <= n; l++) {
+            int r = l + len - 1;
+            if (l == r) {
+                g[l][r] = f[l][r] = 1;
+                h[l][r] = 0;
+                continue;
+            }
+            // g[l][r]
+            f[l][r] = g[l][r] = h[l][r] = 0;
+            for (int k = l; k < r; k++) {
+                if (ok[k + 1][r]) {
+                    add(g[l][r], 1LL * g[l][k] * f[k + 1][r] % MOD);
+                    if (ok[l][r]) add(f[l][r], 1LL * g[l][k] * f[k + 1][r] % MOD);
+                }
+                if (ok[l][r] && ok[l][k] && ok[k + 1][r] && bar[l][k] > r) {
+                    add(f[l][r], 1LL * h[l][k] * f[k + 1][r] % MOD);
+                    if (bar[l][k] > r + 1) {
+                        add(h[l][r], 1LL * h[l][k] * f[k + 1][r] % MOD);
+                        add(h[l][r], 1LL * f[l][k] * f[k + 1][r] % MOD);
+                    }
+                }
+            }
+            add(g[l][r], f[l][r]);
+        }
+    }
+    cout << f[0][n - 1] << endl;
+    return 0;
+}
+```
