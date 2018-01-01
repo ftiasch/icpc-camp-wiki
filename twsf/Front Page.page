@@ -1,0 +1,242 @@
+General
+=======
+
+Game Over
+
+Team **TheWaySoFar** from Beihang University
+
+-   2014-2015
+    -   Anshan: Gold(3rd place)
+    -   Beijing: Gold(7th place)
+    -   World Finals: 28th place
+-   2015-2016
+    -   Nanyang: Gold(2nd place)
+    -   Shenyang: Gold(1st place)
+    -   EC-Final: Gold(3rd place)
+    -   World Finals: 14th place
+
+Todo List
+=========
+
+TBA
+---
+
+### TBA2016
+
+-   ?? [Catalan Combinatorial
+    Objects](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2047#c.-catalan-combinatorial-objects)
+-   ?? [Higher Math
+    Lesson](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2047#h.-higher-math-lesson)
+-   搜索
+    [Isomorphism](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2047#i.-isomorphism)
+-   连通性DP? [Black and White
+    Board](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#c.-black-and-white-board)
+-   数学
+    [Catenary](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#d.-catenary)
+-   树分治 [Evacuation
+    Plan](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#e.-evacuation-plan)
+-   几何 [Break
+    Free](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2048#b.-break-free)
+-   模拟 [Hardware
+    Hashing](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2048#h.-hardware-hashing)
+-   ?? [Interactive
+    Proofs](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2048#i.-interactive-proofs)
+-   数学?
+    [Bloom](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#b.-bloom)
+-   数学?
+    [Collatz](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#c.-collatz)
+-   交互
+    [Einstein](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#e.-einstein)
+-   几何?
+    [Jordan](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#j.-jordan)
+-   连通性DP?
+    [Hovels](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Baltics#b.-hovels)
+-   大凸包 [Ancient
+    City](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Baltics#c.-ancient-city)
+-   积分
+    [Entfernung](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013#c.-entfernung)
+-   ??
+    [Sprache](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013#g.-sprache)
+-   判定
+    [Vieleck](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013#i.-vieleck)
+
+### TBA2015
+
+-   ?? [Kimagure
+    Cleaner](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20JAG%20Spring%202015#h.-kimagure-cleaner)
+-   ?? [New Game
+    AI](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20JAG%20Spring%202015#j.-new-game-ai)
+-   ??
+    [Decomposition](http://twsf.icpc-camp.org/AIM%20Fund%20Cup%202015#d.-decomposition)
+-   ?? [Ticket To
+    Ride](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Peterhof#i.-ticket-to-ride)
+-   树分治/期望 [Legacy of the
+    Void](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#g.-legacy-of-the-void)
+-   数学
+    [Casino](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20JAG%20Spring%202015#c.-casino)
+-   FFT [Bus
+    stop](http://twsf.icpc-camp.org/AIM%20Fund%20Cup%202015#b.-bus-stop)
+-   分类讨论/数学 [Ant on the
+    road](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Eurasia#g.-ant-on-the-road)
+-   Polya [Colorful
+    Floor](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#e.-colorful-floor)
+-   暴力 [Champions
+    League](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#i.-champions-league)
+-   暴力
+    [Hypercube](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest%20(NEERC%2015)#h.-hypercube)
+-   ??
+    [Cypher](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia#l.-cypher)
+-   ?? [Cow
+    Confinement](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Europe%20(CEPC-2015)#c.-cow-confinement)
+-   ?? [Impressive
+    Graphs](http://twsf.icpc-camp.org/AMPPZ-2015#e.-impressive-graphs)
+-   模拟 [Open Face Chinese
+    Poker](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#h.-open-face-chinese-poker)
+-   ??计数 [Eulerian
+    Graphs](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPB#c.-eulerian-graphs)
+-   ?? [Equivalence
+    Relation](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Peterhof#c.-equivalence-relation)
+-   数据结构
+    [Rangefinder](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia#i.-rangefinder)
+-   三维几何 [Convex
+    Polyhedron](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#k.-convex-polyhedron)
+
+zxa
+---
+
+[zxa]()
+
+[dominator tree]() [压位最长公共子序列]() [Fast Walsh Transform]()
+[Gomory–Hu tree]() [Plug-DP]() [KTU Programming Camp]()
+
+-   硬啃
+-   整理模板
+
+jsy
+---
+
+-   具体情况 [jsy]()
+-   补ICPCCamp2016的题
+
+zhy
+---
+
+-   砍掉重练计划 20%
+-   补cf近期未完成的题 (343E、Edu8F、342D)
+-   整理一份自己的模板 争取开学训练多写题
+
+Training
+========
+
+-   05.16 [2014-2015 ACM-ICPC Pacific Northwest Regional Contest]()
+-   05.14 [XV Open Cup named after E.V. Pankratiev. GP of Three
+    Capitals]()
+-   05.11 [BSUIR Open Finals]()
+-   05.10 [NAIPC-2016]()
+-   05.08 PKUCPC2016
+-   05.05 [NWERC-2015]()
+-   05.04 [Ural Championship-2016]()
+-   05.01 [XV Open Cup named after E.V. Pankratiev. GP of America]()
+
+-   04.30 THUPC2016
+-   04.28 [Grodno 2015]()
+-   04.27 [Petrozavodsk Summer-2015. Yandex Cup Stage 1]()
+-   04.24 [XVI Open Cup named after E.V. Pankratiev Grand Prix of
+    Southern Caucasus]()
+-   04.20 [Petrozavodsk Summer-2015. Yandex Cup Stage 2]()
+-   04.14 [Petrozavodsk Winter-2015. Michael Tikhomirov Contest 1]()
+-   04.12 [2015-2016 Petrozavodsk Winter Training Camp, Nizhny Novgorod
+    SU Contest]()
+-   04.10 BUPTCPC-2016
+-   04.09 [SWERC-2015]()
+-   04.07 [Warsaw U Contest, Urozero 2015 Day 4]()
+-   04.05 [0x13 Ural Championship]()
+-   04.03 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    Moscow]()
+-   04.02 [0x12 Ural Championship]()
+
+-   03.31 [0x11 Ural Championship Battle of Giants]()
+-   03.27 [Petrozavodsk Summer-2015. Warsaw U Tasks, XV Open Cup
+    Onsite]()
+-   03.26 [Petrozavodsk Summer-2015. Petr Mitrichev Contest 13]()
+-   03.22 [Petrozavodsk Summer-2015. Moscow IPT Contest]()
+-   03.20 [XVI Open Cup named after E.V. Pankratiev Grand Prix of
+    Baltics]()
+-   03.19 [2006-2007 Winter Petrozavodsk Camp, Belarussian SU Contest]()
+-   03.17 [Ivan Smirnov Contest 1]()
+-   03.13 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    Tatarstan]()
+-   03.12 [Andrew Stankevich Contest 48]()
+-   03.08 [XVI Open Cup named after E.V. Pankratiev Grand Prix of
+    Bashkortostan]()
+-   03.06 [XVI Open Cup named after E.V. Pankratiev Grand Prix of
+    Saratov]()
+-   03.05 [Andrew Stankevich Contest 47]()
+
+-   02.01 [ICPCCamp 2016 Day8 Makoto Soejima Contest 4]()
+-   01.31 [ICPCCamp 2016 Day7 Moscow SU Trinity Contest]()
+-   01.30 [ICPCCamp 2016 Day6 SPb SU and SPb AU Contest]()
+-   01.28 [ICPCCamp 2016 Day3 Grand Prix of China]()
+-   01.27 [ICPCCamp 2016 Day4 SJTU Dreadnought Contest]()
+-   01.26 [ICPCCamp 2016 Day2 ZhejiangU Contest]()
+-   01.25 [ICPCCamp 2016 Day1 ftiasch's Contest \#4]()
+
+-   01.23 [Petrozavodsk Summer-2015. JAG Spring 2015]()
+-   01.22 [AIM Fund Cup 2015]()
+-   01.20 [XVI Open Cup named after E.V. Pankratiev. GP of Peterhof]()
+-   01.19 [XVI Open Cup named after E.V. Pankratiev. GP of
+    Europe (CEPC-2015)]()
+-   01.18 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    SPB]()
+-   01.17 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    Eurasia]()
+
+-   12.13 [2015 ACM-ICPC Asia EC-Final Contest]()
+-   12.09 [Makoto Soejima Contest 3]()
+-   12.08 [AMPPZ-2015]()
+-   12.06 [2015 ACM-ICPC Northeastern European Regional Contest
+    (NEERC 15)]()
+-   12.05 [2015 ACM-ICPC NEERC Central Subregional Contest]()
+-   11.29 [ACM-ICPC Asia Regional Contest, Tsukuba, 2015]()
+-   11.28 [2015 ACM-ICPC NEERC Western Subregional Contest]()
+-   11.22 [2015 Asia Shanghai Regional Contest]()
+
+-   11.18 [2015-2016 ACM-ICPC Southeastern European Regional
+    Contest(SEERC 15)]()
+-   11.17 [2015 Asia Hefei Regional Contest]()
+-   11.08 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    Siberia]()
+-   11.07 [2014 Asia Guangzhou Regional Contest]()
+-   11.01 [XVI Open Cup named after E.V. Pankratiev, Grand Prix of
+    Ekaterinburg]()
+
+-   10.31 [2015 ACM-ICPC NEERC Northern Subregional Contest]()
+-   10.28 [2015 ACM-ICPC NEERC Moscow Subregional Contest]()
+-   10.25 [2015 Asia Shenyang Regional Contest]()
+-   10.21 [2015 Asia Changchun Regional Contest]()
+-   10.18 [2015 China Collegiate Programming Contest Nanyang]()
+-   10.11 [ZOJ Monthly, October 2015]()
+
+-   10.07 [Sichuan State Programming Contest 2012]()
+-   10.06 [2014-2015 ACM-ICPC Northeastern European Regional Contest
+    (NEERC 14)]()
+-   10.05 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    Japan]()
+-   10.04 [2012-2013 ACM-ICPC, NEERC, Moscow Subregional Contest]()
+-   10.03 [XVI Open Cup named after E.V. Pankratiev. Grand Prix of
+    Ukraine]()
+-   10.02 [ACM-ICPC Japan Alumni Group Summer Camp , Day 4]()
+-   10.01 [Sichuan Province 2015]()
+
+-   09.27 [2015 ACM/ICPC Asia Regional Hefei Online]()
+-   09.26 [2015 ACM/ICPC Asia Regional Shanghai Online]()
+-   09.20 [2015 ACM/ICPC Asia Regional Beijing Online]()
+-   09.19 [2015 ACM/ICPC Asia Regional Shenyang Online]()
+-   09.13 [2015 ACM/ICPC Asia Regional Changchun Online]()
+-   09.12 [ZOJ Monthly, September 2015]()
+
+Other
+=====
+
+-   zhy个人 [zhy]()
+
