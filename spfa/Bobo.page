@@ -1,0 +1,58 @@
+TodoList ：
+===========
+
+~~每日TC500~~
+-------------
+
+-   2015-11-11 SRM395: ~~250pt~~ ~~500pt~~
+-   2015-11-12 SRM502: ~~250pt~~ ~~500pt~~
+-   2015-11-20 SRM572: ~~250pt~~ ~~500pt~~
+-   2015-12-02 SRM512: ~~250pt~~ ~~500pt~~
+-   2015-12-03 SRM513: ~~250pt~~ ~~500pt~~
+-   2015-12-05 SRM514: ~~250pt~~ ~~600pt~~
+-   2015-12-06 SRM515: ~~250pt~~ ~~550pt~~ ~~1000pt~~
+
+几何强化 :
+----------
+
+### 模板
+
+-   暂时参考[这份](https://github.com/ACM-Obsidian/acm-template/blob/master/math/geometry/main.cpp)的实现改。
+
+### 扫描线
+
+-   [SPOJ
+    FNINJA](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=25427)
+    DONE
+-   [Burning](http://acm.hdu.edu.cn/showproblem.php?pid=4629) DONE
+-   [The Triangle
+    ransmitter](http://acm.hdu.edu.cn/showproblem.php?pid=3868) DONE
+-   [Light and Shadow](http://acm.hdu.edu.cn/showproblem.php?pid=3867)
+    DONE
+-   [Painter](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=12132)
+-   [IBM
+    Fencing](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=19660)
+    DONE
+-   [Moonmist](http://acm.hdu.edu.cn/showproblem.php?pid=3124) DONE
+
+补题补题 :
+----------
+
+### 2015 Shenyang Onsite G Game of Flying Circus
+
+题意：两人赛跑，首先到旗子点的人可以加一分，A同学可以对B进行一次fight行为使得B晕眩T秒并加一份，问A同学是否能够赢。
+
+题解：枚举都先走了哪些个旗子，然后枚举A攻击点，解方程计算。其实可以直接二分，这样更容易写。
+注意有Trick: {INF, 1, 3} 这组数据是"No"
+
+### 2014 Guangzhou Onsite H Highway
+
+题意：距离D有一条无限长度高速公路速度可以为V1,自己本身速度为V0，求在T时间内可以走到的地方的面积。
+
+题解：三分寻找到一个最优点，然后就是一个三角形与圆并的问题了。注意细节。
+
+### 2015 Hefei Online A Monitor the Alpacas
+
+题意：从M($\leq 500$)个点中选K个点包围住N($\leq 10^5$)个点，使得K最小。
+
+题解：对N个点做完凸包之后，对于凸包上的边按极角排序，枚举M个点中的任意两个，二分判断是否所有点都在左边。
