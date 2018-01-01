@@ -1,0 +1,120 @@
+``` {.cpp}
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+const int N = 1e5 + 7, K = 5 + 2;
+
+double f[K][N << 1], fs[K][N << 1];
+
+void update(double &a, double b) {
+    a = max(a, b);
+}
+
+class OptimalBetting {
+public:
+    double findProbability(int a, int b, int k) {
+        vector<pair<int, double> > best[K];
+        best[0].push_back({0, 0});
+        best[0].push_back({b, 1});
+        for (int i = 0; i < k; i++) {
+            for (auto u : best[i]) {
+                for (auto v : best[i]) {
+                    best[i + 1].push_back({(u.first + v.first + 1) / 2, (u.second + v.second) / 2});
+                }
+            }
+            sort(best[i + 1].begin(), best[i + 1].end());
+            int k = 0;
+            for (auto j : best[i + 1]) {
+                if (k == 0 || j.first != best[i + 1][k - 1].first) {
+                    best[i + 1][k++] = j;
+                } else {
+                    update(best[i + 1][k - 1].second, j.second);
+                }
+            }
+            best[i + 1].resize(k);
+        }
+        for (int i = 0; i <= k; i++) {
+            for (int j = 0; j <= 2 * b + 1; j++) {
+                f[i][j] = 0;
+            }
+        }
+        double ret = 0;
+        f[0][a] = 1;
+        for (int i = 0; i < k; i++) {
+            for (int j = b; j <= 2 * b + 1; j++) {
+                ret += f[i][j];
+                f[i][j] = 0;
+            }
+            fs[i][0] = f[i][0] / (0 + 1) / 2.;
+            for (int j = 1; j <= 2 * b + 1; j++) {
+                fs[i][j] = fs[i][j - 1] + f[i][j] / (j + 1) / 2.;
+            }
+            // cout << fs[i][2 * b + 1] << endl;
+            for (int j = 0; j <= 2 * b + 1; j++) {
+                // cout << "j = " << j << endl;
+                double winj = -1;
+                for (auto it : best[k - i - 1]) {
+                    if (j >= it.first) winj = it.second;
+                }
+                {
+                    double _winj = -1;
+                    for (auto it : best[k - i]) {
+                        if (j >= it.first) _winj = it.second;
+                    }
+                    if (_winj < winj + 1e-8) f[i + 1][j] += f[i][j] / (j + 1) / 2;
+                }
+                // cout << "winj = " << winj << endl;
+                int cur = 0;
+                for (int t = 0; t < best[k - i - 1].size(); t++) {
+                    int r = t + 1 == best[k - i - 1].size() ? 2 * b + 1 : best[k - i - 1][t + 1].first - 1;
+                    int l = best[k - i - 1][t].first;
+                    int lower = (l + j + 1) / 2;
+                    int upper = (r + j) / 2;
+                    // cout << lower << " " << upper << endl;
+                    while (cur < best[k - i].size()) {
+                        int ll = best[k - i][cur].first,
+                            rr = (cur + 1 == best[k - i].size() ? 2 * b + 1 : best[k - i][cur + 1].first - 1);
+                        if (rr < lower) {
+                            ++cur;
+                            continue;
+                        }
+                        if (ll > upper) break;
+                        if (best[k - i][cur].second < (winj + best[k - i - 1][t].second) / 2 + 1e-8) {
+                            int from = max(ll, lower), to = min(rr, upper);
+                            // cout << from << " -> " << to << " with prob = " << best[k - i][cur].second << endl;
+                            f[i + 1][j] += fs[i][to] - (from == 0 ? 0 : fs[i][from - 1]);
+                        }
+                        if (rr >= upper) break;
+                        ++cur;
+                    }
+                }
+            }
+        }
+        // cout << "ret = " << ret << endl;
+        for (int i = 0; i <= 2 * b + 1; i++) {
+            ret += f[k][i];
+            // if (b <= 30) cout << f[k][i] << endl;
+        }
+        return ret;
+    }
+};
+```
