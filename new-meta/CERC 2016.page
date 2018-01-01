@@ -29,7 +29,7 @@ B. Bipartite Blanket (Done By Miceren)
 
 总的来说，第一个方法唯一的优势可能在于可以少开一个100w的数组吧。
 
-[code](CERC%202016%20B.cpp)
+[code](CERC 2016 B.cpp)
 
 D. Dancing Disks (Yuzuriha Inori)
 =================================
@@ -50,7 +50,7 @@ D. Dancing Disks (Yuzuriha Inori)
 这样不够排题目要求的范围. 需要一个小trick:
 和终点相邻的柱子其实能排序大小为$2$的排列,
 这也是我们唯一一个用到从柱子顶上拿$>1$个盘子的操作的地方.
-[code](CERC%202016%20D.cpp)
+[code](CERC 2016 D.cpp)
 
 E. Easy Equation (Yuzuriha Inori)
 =================================
@@ -65,7 +65,7 @@ E. Easy Equation (Yuzuriha Inori)
 另外一组为$a,b',c$, 可得$b+b'=k(a+c)$. 这就是BFS的公式.
 最后观察一下$1,k,k^2+k$作为初始解就可以BFS了.
 
-[code](CERC%202016%20E.cpp)
+[code](CERC 2016 E.cpp)
 
 G. Geohash Grid （Done By Miceren）
 ===================================
@@ -123,7 +123,7 @@ $n \leq 30, Q \leq 1e5, k \leq 1e9, 多边形上的拐点数 \leq 200$。
 
 最后查询直接lower\_bound就好。
 
-[Mike's code](CERC%202016%20G_Mike.cpp)
+[Mike's code](CERC 2016 G_Mike.cpp)
 
 **我的复杂做法:**
 
@@ -131,7 +131,7 @@ $n \leq 30, Q \leq 1e5, k \leq 1e9, 多边形上的拐点数 \leq 200$。
 
 然后递归的时候，我会根据两边形状的hash值来考虑是否两边都往下递归。
 
-[My code](CERC%202016%20G_Me.cpp)
+[My code](CERC 2016 G_Me.cpp)
 
 I. Invisible Integers (Done By Miceren)
 =======================================
@@ -162,4 +162,4 @@ I. Invisible Integers (Done By Miceren)
 
 完结！！
 
-[code](CERC%202016%20I.cpp)
+[code](CERC 2016 I.cpp)
