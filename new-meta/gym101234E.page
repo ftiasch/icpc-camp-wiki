@@ -1,0 +1,131 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(111111);
+typedef pair<int, int> PII;
+int inf(2e9);
+int rela[N], mn[N], strt[N], ed[N], a[N], dp[N], go[N];
+int getmn(int x) {
+    vector<int> v;
+    int p(x);
+    while(rela[p] != p) {
+        v.push_back(p);
+        p = rela[p];
+    }
+    v.push_back(p);
+    for(int i((int)v.size() - 2); i >= 0; i--) {
+        mn[v[i]] = min(mn[v[i]], mn[v[i + 1]]);
+        rela[v[i]] = p;
+    }
+    return mn[x];
+}
+void solve(int le, int ri, vector<int> & sorted) {
+    if(le == ri) {
+    }else {
+        vector<int> ple, pri;
+        int mid(le + ri >> 1);
+        for(int i(0); i < (int)sorted.size(); i++) {
+            int x(sorted[i]);
+            if(x <= mid) {
+                ple.push_back(x);
+            }else {
+                pri.push_back(x);
+            }
+        }
+        solve(le, mid, ple);
+        //printf("%d %d : %d\n", le, ri, mid);
+        /*for(int i(le); i <= mid; i++) {
+            printf("dp[%d] = %d\n", i, dp[i]);
+        }*/
+        vector<int> stck, tmp;
+        for(int i(le); i <= mid; i++) {
+            rela[i] = i;
+            mn[i] = inf;
+            go[i] = -1;
+        }
+        for(int i(0); i < (int)sorted.size(); i++) {
+            int x(sorted[i]);
+            if(x <= mid) {
+                while(!tmp.empty() && tmp.back() < sorted[i])
+                    tmp.pop_back();
+                tmp.push_back(sorted[i]);
+            }else {
+                //printf("x = %d\n", x);
+                strt[x] = ed[x] = -1;
+                if(tmp.size()) {
+                    strt[x] = tmp.back();
+                    dp[x] = min(dp[x], dp[tmp[0]] + a[x]);
+                    mn[tmp[0]] = dp[tmp[0]];
+                    for(int j(1); j < (int)tmp.size(); j++) {
+                        mn[tmp[j]] = dp[tmp[j]];
+                        go[tmp[j]] = tmp[j - 1];
+                        rela[tmp[j]] = tmp[j - 1];
+                        dp[x] = min(dp[x], dp[tmp[j]] + a[x]);
+                    }
+                    ed[x] = tmp[0];
+                    go[ed[x]] = -1;
+                    tmp.clear();
+                }
+                while(!stck.empty() && stck.back() > x) {
+                    int cur(strt[stck.back()]);
+                    while(cur != -1 && cur < ed[x]) {
+                        cur = go[cur];
+                    }
+                    if(cur != -1) {
+                        if(ed[x] != -1) {
+                            rela[ed[x]] = cur;
+                            go[ed[x]] = cur;
+                        }else {
+                            strt[x] = cur;
+                        }
+                        dp[x] = min(dp[x], getmn(cur) + a[x]);
+                        ed[x] = ed[stck.back()];
+                    }
+                    stck.pop_back();
+                }
+                stck.push_back(x);
+            }
+        }
+        /*for(int i(mid + 1); i <= ri; i++) {
+            printf("dp[%d] = %d\n", i, dp[i]);
+        }*/
+        
+        solve(mid + 1, ri, pri);
+    }
+}
+inline bool bySecond(const PII & a, const PII & b) {
+    return a.second < b.second;
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    vector<PII> pts;
+    for(int i(1); i <= n; i++) {
+        int x;
+        scanf("%d", &x);
+        pts.push_back(make_pair(i, x));
+    }
+    pts.push_back(make_pair(n + 1, n + 1));
+    
+    sort(pts.begin(), pts.end(), bySecond);
+    for(int i(1); i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+    int mn(inf);
+    dp[n + 1] = inf;
+    for(int i(0); i < n; i++) {
+        if(mn > pts[i].first) {
+            dp[pts[i].first] = a[pts[i].first];
+            mn = pts[i].first;
+        }else {
+            dp[pts[i].first] = inf;
+        }
+    }
+    vector<int> v;
+    for(int i(0); i < n + 1; i++) {
+        v.push_back(pts[i].first);
+    }
+    solve(1, n + 1, v);
+    printf("%d\n", dp[n + 1]);
+}
+```
