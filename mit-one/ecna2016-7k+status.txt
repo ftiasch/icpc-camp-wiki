@@ -1,0 +1,15 @@
+Time	Problem	Language	Verdict	Status
+3:21	A - Bubbly Troubly	C++	Accepted	judged
+3:16	A - Bubbly Troubly	C++	Incorrect Output	judged
+2:26	J - Yes, Yes, It’s Nonograms	C++	Accepted	judged
+1:53	G - That’s One Hanoi-ed Teacher	C++	Accepted	judged
+1:45	I - Waif Until Dark	C++	Accepted	judged
+1:29	F - Removal Game	C++	Accepted	judged
+1:23	F - Removal Game	C++	Incorrect Output	judged
+1:13	D - Lost in Translation	C++	Accepted	judged
+1:11	D - Lost in Translation	C++	Incorrect Output	judged
+1:01	D - Lost in Translation	C++	Incorrect Output	judged
+0:44	B - Foosball Dynasty	C++	Accepted	judged
+0:28	E - Red Rover	C++	Accepted	judged
+0:24	C - The Key to Cryptography	C++	Accepted	judged
+0:21	H - Vin Diagrams	C++	Accepted	judged
