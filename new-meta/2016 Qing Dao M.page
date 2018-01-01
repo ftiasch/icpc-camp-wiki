@@ -1,0 +1,211 @@
+``` {.cpp}
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <cassert>
+
+using namespace std;
+const int DEBUG = 0;
+
+const long long INF = (int)1e9 + 10;
+const int N = 2e5 + 10;
+struct Point {
+    int x, y, id, v;
+    Point(int x, int y, int id = -1, int v = INF) : x(x), y(y), id(id), v(v) {}
+    Point() { id = -1; v = INF; }
+    inline bool friend operator <(const Point &a, const Point &b) {
+        return a.v < b.v;
+    }
+};
+struct Node {
+    Node *ch[2], *parent;
+    Point p, min_p;
+    int lazy;
+    bool deleted;
+    int min_x, min_y, max_x, max_y;
+    void set(Node *t, int d) {
+        ch[d] = t;
+        min_x = min(min_x, t->min_x);
+        max_x = max(max_x, t->max_x);
+        min_y = min(min_y, t->min_y);
+        max_y = max(max_y, t->max_y);
+    }
+    bool dir() { return this == parent->ch[1]; }
+    void add(int delta) {
+        if (p.id == -1) return ; // is null
+        min_p.v -= delta;
+        p.v -= delta;
+        lazy += delta;
+    }
+    void update() {
+        assert(p.id != -1);
+        min_p = Point();
+        if (!deleted) min_p = p;
+        for (int i = 0; i < 2; i++) {
+            min_p = min(min_p, ch[i]->min_p);
+        }
+    }
+    void push() {
+        ch[0]->add(lazy);
+        ch[1]->add(lazy);
+        lazy = 0;
+    }
+} nodePool[N], *totNode, *null;
+Node* newNode(const Point &p) {
+    Node *t = totNode ++;
+    t->ch[0] = t->ch[1] = t->parent = null;
+    t->lazy = 0;
+    t->min_p = Point();
+    t->p = p;
+    t->min_x = t->max_x = p.x;
+    t->min_y = t->max_y = p.y;
+    t->deleted = true;
+    return t;
+}
+
+int cmpX(const Point &a, const Point &b) {
+    if (a.x != b.x) return a.x < b.x;
+    if (a.y != b.y) return a.y < b.y;
+    return a.id < b.id;
+}
+int cmpY(const Point &a, const Point &b) {
+    if (a.y != b.y) return a.y < b.y;
+    if (a.x != b.x) return a.x < b.x;
+    return a.id < b.id;
+}
+
+struct KDTree {
+    Node *root;
+    KDTree() { root = null; }
+    KDTree(vector<Point> &a) {
+        root = build(a, 0, a.size() - 1, 0);
+    }
+    Node *build(vector<Point> &a, int l, int r, int dim) {
+        if (l > r) return null;
+        int mid = (l + r) >> 1;
+        if (dim == 0) {
+            nth_element(a.begin() + l, a.begin() + mid, a.begin() + r + 1, cmpX);
+            //sort(a.begin() + l, a.begin() + r + 1, cmpX);
+        } else {
+            nth_element(a.begin() + l, a.begin() + mid, a.begin() + r + 1, cmpY);
+            //sort(a.begin() + l, a.begin() + r + 1, cmpY);
+        }
+        Node *t = newNode(a[mid]);
+        t->set(build(a, l, mid - 1, dim ^ 1), 0);
+        t->set(build(a, mid + 1, r, dim ^ 1), 1);
+        t->update();
+        return t;
+    }
+    void insert(Node *x, const Point &p, int type, int dim = 0) {
+        x->push();
+        if (p.id == x->p.id) {
+            if (type == -1) {
+                x->deleted = true;
+            } else {
+                x->deleted = false;
+                x->p.v = p.v;
+            }
+        } else {
+            if (dim == 0) {
+                insert(x->ch[cmpX(x->p, p)], p, type, dim ^ 1);
+            } else {
+                insert(x->ch[cmpY(x->p, p)], p, type, dim ^ 1);
+            }
+        }
+        x->update();
+    }
+    void modify(Node *x, const Point &p) {
+if (DEBUG) printf("range (%d %d %d %d)\n", x->min_x, x->max_x, x->min_y, x->max_y);
+        if (x->min_x > p.x || x->max_y < p.y || x == null) {
+            return ;
+        }
+        if (x->max_x <= p.x && x->min_y >= p.y) {
+            x->add(1);
+        } else {
+            if (x->p.x <= p.x && x->p.y >= p.y) {
+                x->p.v--;
+            }
+            x->push();
+            modify(x->ch[0], p);
+            modify(x->ch[1], p);
+            x->update();
+        }
+    }
+};
+void initNull() {
+    totNode = nodePool;
+    null = totNode ++;
+    for(int i = 0; i < 2; ++ i) {
+        null->ch[i] = null;
+    }
+    null->p = null->min_p = Point();
+    null->min_x = null->min_y = INF;
+    null->max_x = null->max_y = -INF;
+}
+
+struct Event {
+    int x, y, v;
+    Event(int x, int y, int v) : x(x), y(y), v(v) {}
+};
+
+vector<Event> events;
+vector<Point> points;
+
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    while (tests--) {
+        static int testCount = 0;
+        printf("Case #%d:\n", ++testCount);
+        int n, m;
+        scanf("%d %d", &n, &m);
+        assert(n < N);
+        initNull();
+        events.clear();
+        points.clear();
+        for (int i = 0; i < n; i++) {
+            static char buf[100];
+            int l, r, v;
+            assert(scanf("%s", buf) == 1);
+            if (buf[0] == 'C') {
+                assert(scanf("%d %d %d", &l, &r, &v) == 3);
+                events.push_back(Event(l, r, v));
+                points.push_back(Point(l, r, i, INF));
+            } else {
+                assert(scanf("%d", &v) == 1);
+                events.push_back(Event(-1, -1, v));
+            }
+        }
+        assert(points.size() + 5 < N);
+        assert(events.size() == n);
+        KDTree kdt = KDTree(points);
+        int s = 0;
+        for (int i = 0; i < n; i++) {
+            if (events[i].x < 0) {
+                int v = s ^ events[i].v;
+                kdt.modify(kdt.root, Point(v, v));
+if (DEBUG) printf("Gen %d ---- top is %d\n", v, kdt.root->min_p.id);
+                static vector<int> alert;
+                alert.clear();
+                while (kdt.root->min_p.v == 0) {
+                    assert(kdt.root->min_p.id != -1);
+                    alert.push_back(kdt.root->min_p.id);
+                    kdt.insert(kdt.root, kdt.root->min_p, -1);
+                }
+                if (alert.size()) {
+                    sort(alert.begin(), alert.end());
+                    printf("%d", i + 1);
+                    for (auto x : alert) {
+                        printf(" %d", x + 1);
+                        s ^= x + 1;
+                    }
+                    puts("");
+                }
+            } else {
+                kdt.insert(kdt.root, Point(events[i].x, events[i].y, i, events[i].v), 1);
+            }
+        }
+    }
+}
+```
