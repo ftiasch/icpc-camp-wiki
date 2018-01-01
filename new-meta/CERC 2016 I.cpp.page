@@ -1,0 +1,103 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+const int N = 10, V = 10;
+const char INF = 100;
+
+char mem[N + 1][V + 1][N + 1][V + 1][1 << N];
+int pre_mask[N + 1][V + 1];
+vector<vector<int> > hints;
+int n;
+bool trans[N + 1][V + 1][N + 1];
+
+char dfs(int i, int li, int j, int lj, int s) {
+    s &= (1 << n) - 1;
+    if (s == (1 << n) - 1 && i == n && lj == hints[j].size()) return 0;
+    //if (i == n && j == n) return INF;
+    if (mem[i][li][j][lj][s]) return mem[i][li][j][lj][s];
+    //cout << i << " " << li << " " << j << " " << lj << " " << s << endl;
+    char& ret = mem[i][li][j][lj][s];
+    ret = INF;
+    if (i != n && li == 0) {
+        for (int k = 0; k <= n; k++) {
+            if (s >> k & 1) continue;
+            for (int lk = 0; lk <= hints[k].size(); lk++) {
+                if (trans[k][lk][i]) {
+                    ret = min(ret, dfs(k, lk, j, lj, s | (1 << k)));
+                }
+            }
+        }
+        return ret;
+    }
+    for (int k = 0; k < n; k++) {
+        if (s >> k & 1) continue;
+        if (j == k) continue;
+        if (trans[j][lj][k]) {
+            ret = min(ret, dfs(i, li, k, 0, s | (1 << k)));
+        }
+    }
+    for (int v = 1; v < V; v++) {
+        if (li > 0 && lj < hints[j].size() &&
+            v == hints[i][li - 1] && v == hints[j][lj]) {
+            ret = min(ret, char(1 + dfs(i, li - 1, j, lj + 1, s)));
+        }
+        if (li > 0 && v == hints[i][li - 1] && pre_mask[j][lj] >> v & 1) {
+            ret = min(ret, char(1 + dfs(i, li - 1, j, lj, s)));
+        }
+        if (lj < hints[j].size() && v == hints[j][lj] && pre_mask[i][li] >> v & 1) {
+            ret = min(ret, char(1 + dfs(i, li, j, lj + 1, s)));
+        }
+    }
+    return ret;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        vector<int> v;
+        int x;
+        while (scanf("%d", &x) && x) {
+            v.push_back(x);
+        }
+        hints.push_back(v);
+    }
+    sort(hints.begin(), hints.end());
+    hints.erase(unique(hints.begin(), hints.end()), hints.end());
+    n = hints.size();
+    hints.push_back(vector<int>());
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0, cur = 0; j < hints[i].size(); j++) {
+            pre_mask[i][j + 1] = (cur |= (1 << hints[i][j]));
+        }
+        if (i == n) pre_mask[i][0] = (1 << V) - 1;
+    }
+    for (int i = 0; i <= n; i++) {
+        for (int r = 0; r <= hints[i].size(); r++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == j) continue;
+                if (~pre_mask[i][hints[i].size()] & pre_mask[j][hints[j].size()]) continue;
+                int c = r;
+                for (int t = 0; t < hints[j].size(); t++) {
+                    if (c < hints[i].size() && hints[j][t] == hints[i][c]) c++;
+                }
+                trans[i][r][j] = (c == hints[i].size());
+                // if (c == hints[i].size()) {
+                //  cerr << i << " " << r << " " << j << endl;
+                // }
+            }
+        }
+    }
+    char ans = INF;
+    for (int i = 0; i < n; i++) {
+        ans = min(ans, dfs(i, hints[i].size(), n, 0, 1 << i));
+    }
+    printf("%d\n", ans == INF ? -1 : int(ans));
+    return 0;
+}
+```
