@@ -3,7 +3,7 @@ Grimoire
 
 这个markdown不太会用……
 
-[jzh]() [zky](https://wiki-grimoire.icpc-camp.org/kzoacn) [zzq]()
+[jzh]() [zky](kzoacn) [zzq]()
 
 ### 改题记录
 
@@ -163,19 +163,19 @@ solo加训应当明确训练方向(\*强化签到、专题训练等、读题)
     O(n\^3)（ddl7.28）
 -   \[-\] \[Shadow\](http://acm.hdu.edu.cn/showproblem.php?pid=4130)
     O(n\^2)（ddl7.28）
--   \[x\] \[Hunt
-    for Treasure!\](http://codeforces.com/gym/100685/problem/H)
+-   \[x\] \[Hunt for
+    Treasure!\](http://codeforces.com/gym/100685/problem/H)
     dp（ddl7.28）
--   \[x\] \[Hunt
-    for Treasure!\](http://codeforces.com/gym/100685/problem/H)
+-   \[x\] \[Hunt for
+    Treasure!\](http://codeforces.com/gym/100685/problem/H)
     容斥（ddl7.28）
 
 ##### zzq
 
 -   \[x\] \[CF Round 426(Div.1)
     C 搜索\](http://codeforces.com/contest/833/problem/C) (ddl - 8.3)
--   \[.\] \[8.1加训补完\](https://vjudge.net/contest/175427) (ddl -
-    8.10)
+-   \[.\] \[8.1加训补完\](https://vjudge.net/contest/175427) (ddl
+    - 8.10)
 -   \[.\] \[树形DP五题\] (ddl - 8.20)
 
 ### 4.补题
@@ -193,7 +193,7 @@ solo加训应当明确训练方向(\*强化签到、专题训练等、读题)
 
 极端情况的应对也应当思考
 
-借鉴[dreadnought](https://wiki.icpc-camp.org/dreadnought/Front%20Page.html)
+借鉴[dreadnought](https://wiki.icpc-camp.org/dreadnought/Front Page.html)
 
 ### 6.队伍交流
 
