@@ -1,0 +1,52 @@
+Contests
+========
+
+-   2015-12-02 [Codeforces Round 334](Nero's/Codeforces%20Round%20334) D
+-   2015-11-24 [Codeforces Round 333](Nero's/Codeforces%20Round%20333)
+    Done
+-   2015-11-23 [Educational Codeforces Round
+    1](Nero's/Educational%20Codeforces%20Round%201) Done
+-   2015-11-15 [2015 Africa Egyptian Regional
+    Contest](Nero's/2015%20Africa%20Egyptian%20Regional%20Contest) H
+    ~~M~~
+-   2015-11-12 [Codeforces Round 311](Nero's/Codeforces%20Round%20311)
+    Done
+-   2015-11-11 [Codeforces Round 324](Nero's/Codeforces%20Round%20324)
+    Done
+-   2015-11-10 [Codeforces Round 329](Nero's/Codeforces%20Round%20329)
+    Done
+
+Problems
+========
+
+[CCPC K/HDU 5549 Walk Around The Campsite](http://acm.hdu.edu.cn/showproblem.php?pid=5549) 2015-11-29
+-----------------------------------------------------------------------------------------------------
+
+题意：给定一个n(&lt;=1000)点多边形，有点权，问从0开始每次走到更大标号点，求最大化(经过的点权和-移动距离)。不能经过多边形内部。
+
+题解：处理出点对的连边关系，然后简单dp一下即可。处理关系时，枚举一个点极角排序扫描线一下，拿个set维护当前方向下的线段。注意细节。(原本wa了个底朝天，重写时写错符号反而ac了...)。
+
+[Codeforces Round 328 E. BCPC](http://codeforces.com/problemset/problem/592/E) 2015-11-24
+-----------------------------------------------------------------------------------------
+
+题意：给定n(&lt;=
+345678)个向量，求有多少个三元组(i,j,k)使得任意两个向量夹角小于180度。
+
+题解：考虑数有多少个三元组存在夹角大于等于180度的。极角排序转转转。注意共线/方向相反的case。
+
+[ASC47](http://codeforces.com/gym/100608)
+-----------------------------------------
+
+### I. Isomorphism 2015-11-18
+
+题意：找两只不同构的n个点的图，使得对于每只图，它的节点们的"度属性"两两不同，且这两只图的度属性们相同。
+
+题解：这个限制其实非常的大，所以搜...把n=7的解暴力出来，然后在此基础上添加一条链，就可以做所有n
+&gt;= 7的情况了。
+
+### J. Jinxiety of a Polyomino 2015-11-18
+
+题意：有一个网格，里面有一个凸的'\#'连通块。限定只能用两种方向在上面走。问连通块内格子两两的最少转弯路径中转弯最多次是多少。
+
+题解：左下做一次，右下再做一次取max。那么现在考虑右下方向。记left(i,j)表示(i,j)最左边的'\#'在哪里，up(i,j)表示(i,j)最上边的'\#'在哪里。那么dp(i,j)=dp(up(i,j),left(i,j))
++ 1。
