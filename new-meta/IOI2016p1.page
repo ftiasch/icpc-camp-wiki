@@ -1,0 +1,57 @@
+``` {.cpp}
+#include "molecules.h"
+#include<bits/stdc++.h>
+using namespace std;
+std::vector<int> find_subset(int l, int u, std::vector<int> w) {
+    int n(w.size());
+    vector<pair<int, int> > ord;
+    for(int i(0); i < n; i++) {
+        ord.push_back(make_pair(w[i], i));
+    }
+    sort(ord.begin(), ord.end());
+    for(int i(0); i < n; i++) {
+        w[i] = ord[i].first;
+    }
+    vector<long long> s(1, 0);
+    for(int i(0); i < n; i++) {
+        s.push_back(s.back() + w[i]);
+    }
+    auto calc = [&](vector<int> & ans) {
+        for(int i(0); i < (int)ans.size(); i++) {
+            ans[i] = ord[ans[i]].second;
+        }
+    };
+    for(int k(1); k <= n; k++) {
+        if(s[k] <= u && l <= s[n] - s[n - k]) {
+            long long cur(s[k]);
+            vector<int> ans;
+            for(int i(0); i < k; i++) {
+                ans.push_back(i);
+            }
+            //printf("%d %lld\n", k, cur);
+            for(int j(k - 1); j >= 0; j--) {
+                if(l <= cur && cur <= u) {
+                    calc(ans);
+                    return ans;
+                }
+                auto itr(lower_bound(w.begin() + j, w.end() - (k - j - 1), l - (cur - w[j])));
+                if(itr == w.end() - (k - j - 1)) {
+                    ans[j] = n + j - k;
+                    cur += w[ans[j]] - w[j];
+                    //printf("%lld\n", cur);
+                }else {
+                    //printf("%d\n", *itr);
+                    ans[j] = itr - w.begin();
+                    //printf("%d %d\n", ans[0], ans[1]);
+                    //for(int _(0); _ < n; _++) {
+                    //  printf("[%d %d]\n", ord[_].first, ord[_].second);
+                    //}
+                    calc(ans);
+                    return ans;
+                }
+            }
+        }
+    }
+    return std::vector<int>(0);
+}
+```
