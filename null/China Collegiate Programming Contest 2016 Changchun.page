@@ -1,0 +1,114 @@
+A.Hanzo vs. Genji
+=================
+
+B.Fraction\[hx\]
+================
+
+直接从n到1做即可。
+
+C.Rotate String
+===============
+
+D.Triangle\[lyj\]
+=================
+
+暴枚打表
+
+E.The Fastest Runner Ms.Zhang(补)
+=================================
+
+给定的图即环套树，分两种情况讨论：
+
+-   s和t在同一棵树上，那么s到t的路径上的边只会走一次，环上的边也只会走一次，于是对每棵树找直径即可。
+-   s和t在不同的树上，设s所在树在环上的点为S，t的为T，那么s到S，t到T路径上的边只会走一次，在环上，S到T的较长路走一次，其他的边除去环上一条都走两次。于是扫一遍所有环上的点，记录下顺时针走和逆时针分别的最优值即可。
+
+F.Harmonic Value\[hx\]
+======================
+
+由于$2k\le n$，第k小的值肯定是$n+k-1$，我们取出$k$和$2k$放一起，然后把其他三段凑一下使得其余的两两之间互质，具体构造方法为：
+$$k-1,k-2,\cdots ,1,n,n-1,\cdots ,2k+1,2k,k,k+1,\cdots ,2k-1$$
+
+G.Instability(补)
+=================
+
+组合数学入门题：两个人之间要么是朋友要么是敌人，那么任意六个人中，肯定能选出三个人，他们之间都互为敌人或者都互为朋友。
+于是爆搜不 unstable 的点集即可，这些点集中的点数不超过5.
+
+H.Sequence I\[lyj\]
+===================
+
+kmp
+
+I.Sequence II(补)
+=================
+
+从右往左建主席树，维护每个位置的贡献，对于一个查询，先得到k的大小，然后在主席树上二分即可。
+
+J.Ugly Problem\[lyj\]
+=====================
+
+高精度+构造
+
+K.Binary Indexed Tree(补)
+=========================
+
+现场没交上去，本来能A的。<br \>
+设$f[n]$表示对于所有二进制下位数不超过n的右端点r的答案之和。考虑l-1和r从高位数第一个不同的地方为第p位，即这一位r为1，l为0，那么在减lowbit时，r减完这一位之后，r和l-1就变成一样的了，于是对于这对(l,r)答案即两者在0-p位的1的个数之和。考虑如果枚举r，再枚举它和l-1二进制下从高位起第一个不同的位数，可以很轻松的算出答案。再考虑只枚举r和l-1二进制下从高位起第一个不同的位数，计算过程比较麻烦，结果为：$2^{n-p}\times (2\times j\times 2^{p-1}\times 2^{p}+2^{p}\times 2^{p})=2^{n+p}\times(p+1)$，这样就能算出$f[n]$了。<br \>
+再来考虑对于输入的n，枚举r和n二进制下从高位到低位第一个不同的位置，然后再进行一些繁琐的计算即可。代码如下：
+
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define mkp make_pair
+#define fi first
+#define se second
+#define FOR(i, l, r) for(int i = l; i <= r; i++)
+#define ROF(i, r, l) for(int i = r; i >= l; i--)
+#define all(a) a.begin(), a.end()
+inline int ckmax(int &a, int b) { return a < b ? a = b, 1 : 0; }
+inline int ckmin(int &a, int b) { return a > b ? a = b, 1 : 0; }
+#define clean(a) memset(a, 0, sizeof(a))
+typedef long long ll;
+#define M 1000000007
+
+int f[64], a[64];
+ll n;
+
+inline int pw(int x){
+    return (1LL << x) % M;
+}
+
+int main(){
+#ifndef ONLINE_JUDGE
+    freopen("x.in", "r", stdin);
+    freopen("x.out", "w", stdout);
+#endif
+    int T, ca = 0;
+    for(int i = 0; i < 61; ++i){
+        for(int j = i; j >= 0; --j){
+            f[i] = (f[i] + (ll)pw(i) * pw(j) %M * (j + 1)) % M;
+        }
+    }
+    
+    scanf("%d", &T);
+    while(T--){
+        scanf("%lld", &n);
+        ll nn = n + 1;
+        int l = 0;
+        while(nn) a[l++] = nn & 1, nn >>= 1;
+
+        int ans = 0, cal = 0, cnt = 0;
+        for(int i = l - 1; i >= 0; --i)
+            if(a[i]){
+                ans = (ans + (ll)pw(i) * cal % M + (i ? (ll)cnt * pw(i - 1) % M * i % M + f[i - 1] : 0)) % M;
+
+                cnt = (cnt + pw(i)) % M;
+                cal = (cal + cnt + (i ? (ll)pw(i - 1) * i % M : 0) % M) % M;
+            }
+
+        printf("Case #%d: %d\n", ++ca, ans);
+    }
+  return 0;
+}
+```
