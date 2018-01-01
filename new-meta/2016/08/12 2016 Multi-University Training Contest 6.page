@@ -1,0 +1,45 @@
+D. Magic Number \[Miceren\]
+===========================
+
+The key point to this problem is to find a natural interpretation for
+array b.
+
+Consider a graph with n node.
+
+Let edge (i, j) exists iff a\[i\]\[j\] = 1, then we may realize that
+b\[i\]\[j\] = 1 iff j is the necessity-node when moving left repeatedly
+from i.
+
+We call the father of i is the nearest necessity-node to i if we move
+from i. Then we can construct the tree.
+
+The answer to the question can be simply calculated by maintaining LCA
+in O(q \log n).
+
+[code](2016/8/15%20D)
+
+E. Master Zhu \[Yuzuriha Inori\]
+================================
+
+首先每行最多放一个棋子, 因为一行要么是被这一行的一个棋子覆盖,
+要么每一列都被别的棋子覆盖, 如果有一行有2个棋子的话,
+可以把其中一个移到别的行. 然后一行如果确定有棋子,
+那他一定要帮助上面或下面的不放棋子的行.
+所以我们dp\[i\]\[j\]\[k\]表示当前做完前i行,
+且前i行还需要后面的行在j\~k这些列上帮助他们,
+dp1\[i\]\[j\]\[k\]代表前i行已经做完且不要帮助,
+而且前i行已经帮后面的行做好了1\~j-1列的工作, 下一个不放棋子的行为第k行.
+两种dp都通过在下一行放一个棋子转移, 棋子要是有意义的话, 就一定放在第j列.
+dp做到没有需要帮助的列的时候, 就枚举下一个不放棋子的行, 转移到dp1.
+dp1走到i=k时, 就变成dp. [code](2016/8/15%20E)
+
+I. Up Sky,Mr.Zhu \[Miceren\]
+============================
+
+Pre-fetch all possible palindrome string;
+
+For each query (l, r), try any substring (ll, rr) which belonged (l, l +
+20). Then, there is no "left constrain" anymore for rest possible
+palindrome, we can do it use trie offline.
+
+[code](2016/8/15%20I)
