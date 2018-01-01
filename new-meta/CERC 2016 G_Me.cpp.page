@@ -1,0 +1,487 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cassert>
+#include <climits>
+
+using namespace std;
+
+const int DEBUG = 0;
+
+const int DEBUG_RECTANGLE = false;
+const int N = 200 * 60 * 60 * 5;
+struct Point {
+    int x, y;
+    Point(int x = -1, int y = -1) : x(x), y(y) {}
+    friend inline Point operator -(const Point &a, const Point &b) {
+        return Point(a.x - b.x, a.y - b.y);
+    }
+    friend inline Point operator +(const Point &a, const Point &b) {
+        return Point(a.x + b.x, a.y + b.y);
+    }
+    friend inline Point operator /(const Point &a, int b) {
+        return Point(a.x / b, a.y / b);
+    }
+    friend inline Point operator *(const Point &a, int b) {
+        return Point(a.x * b, a.y * b);
+    }
+    bool less(const Point &o) const {
+        return x <= o.x && y <= o.y;
+    }
+    bool strict_less(const Point &o) const {
+        return x < o.x && y < o.y;
+    }
+    int dist(const Point &o) {
+        assert(0LL + abs(x - o.x) + abs(y - o.y) <= INT_MAX);
+        return abs(x - o.x) + abs(y - o.y);
+    }
+    void show() {
+        printf("(%d, %d)\n", x, y);
+    }
+};
+
+struct Rectangle {
+    Point a, b;
+    Rectangle(Point aa = Point(-1, -1), Point bb = Point(-1, -1)) : a(aa), b(bb) {
+        if (a.x > b.x) swap(a.x, b.x);
+        if (a.y > b.y) swap(a.y, b.y);
+    }
+    bool contain(const Point &o) {
+        return a.less(o) && o.less(b);
+    }
+    bool strict_contain(const Point &o) {
+        return a.strict_less(o) && o.strict_less(b);
+    }
+    void show() {
+        a.show(); puts("+"); b.show(); puts("------");
+    }
+    Rectangle merge(const Rectangle &o) {
+        Rectangle ret = o;
+        ret.a.x = max(ret.a.x, a.x);
+        ret.a.y = max(ret.a.y, a.y);
+        ret.b.x = min(ret.b.x, b.x);
+        ret.b.y = min(ret.b.y, b.y);
+        return ret;
+    }
+    bool is_empty() {
+        return !(a.strict_less(b));
+    }
+};
+
+int n, m;
+
+long long det(Point a, Point b) {
+    return 1LL * a.x * b.y - 1LL * b.x * a.y;
+}
+
+template<typename T>
+void shift(vector<T> &v, int from, int to) {
+    int s = (to - from + v.size()) % v.size();
+    static vector<T> vv;
+    vv = v;
+    for (int i = 0; i < v.size(); i++) {
+        v[(i + s) % m] = vv[i];
+    }
+}
+
+long long TOT_AREA = 0;
+
+vector<Rectangle> dissemble() {
+const int LEFT = 0, RIGHT = 1;
+    vector<Rectangle> ret;
+    scanf("%d", &m);
+    vector<Point> poly;
+    vector<int> direction;
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        poly.push_back(Point(x, y));
+    }
+    TOT_AREA = 0;
+    Point dir = poly[0] - poly.back();
+    for (int i = 0; i < m; i++) {
+        Point new_dir = poly[(i + 1) % m] - poly[i];
+        TOT_AREA += det(poly[(i + 1) % m], poly[i]);
+        direction.push_back(det(dir, new_dir) < 0 ? RIGHT : LEFT);
+        dir = new_dir;
+        if (DEBUG_RECTANGLE) printf("%s\n", direction.back() == LEFT ? "LEFT" : "RIGHT");
+    }
+    while (poly.size() > 4) {
+        m = poly.size();
+        for (int i = 0; i < m; i++) {
+            if (direction[i] != LEFT || direction[(i + 1) % m] != LEFT) continue;
+            int len1 = poly[(i + m - 1) % m].dist(poly[i]);
+            int len2 = poly[(i + 2) % m].dist(poly[(i + 1) % m]);
+            Rectangle r;
+            if (len1 >= len2) {
+                r = Rectangle(poly[i], poly[(i + 2) % m]);
+            } else if (len1 < len2) {
+                r = Rectangle(poly[(i + m - 1) % m], poly[(i + 1) % m]);
+            }
+            bool ok = true;
+            for (int j = 0; j < m && ok; j++) {
+                if (j == i || j == (i + 1) % m) continue;
+                if (len1 <= len2 && j == (i + m - 1) % m) continue;
+                if (len1 >= len2 && j == (i + 2) % m) continue;
+                if (r.contain(poly[j])) ok = false;
+            }
+            if (!ok) continue;
+            ret.push_back(r);
+            if (len1 == len2) {
+                shift(poly, (i + 2) % m, m - 1);
+                shift(direction, (i + 2) % m, m - 1);
+                for (int j = 0; j < 4; j++) {
+                    poly.pop_back();
+                    direction.pop_back();
+                }
+            } else if (len1 < len2) {
+                Point a = poly[(i + 1) % m], b = poly[(i + 2) % m];
+                shift(poly, (i + 1) % m, m - 1);
+                shift(direction, (i + 1) % m, m - 1);
+                for (int j = 0; j < 2; j++) {
+                    poly.pop_back();
+                    direction.pop_back();
+                }
+                poly.back() = (b - a) / len2 * len1 + a;
+                direction.back() ^= 1;
+            } else {
+                Point a = poly[i], b = poly[(i + m - 1) % m];
+                shift(poly, (i + 2) % m, m - 1);
+                shift(direction, (i + 2) % m, m - 1);
+                for (int j = 0; j < 2; j++) {
+                    poly.pop_back();
+                    direction.pop_back();
+                }
+                poly.back() = (b - a) / len1 * len2 + a;
+                direction.back() ^= 0;
+            }
+            if (DEBUG_RECTANGLE) printf("i = %d\n", i);
+            break;
+        }
+        if (DEBUG_RECTANGLE) {
+            for (int i = 0; i < poly.size(); i++) {
+                poly[i].show();
+                printf("%s\n", direction[i] == RIGHT ? "RIGHT" : "LEFT");
+            }
+            puts("------------------------------------");
+            ret.back().show();
+            puts("************************************");
+        }
+        assert(poly.size() < m);
+    }
+    assert(poly.size() == 4);
+    ret.push_back(Rectangle(poly[0], poly[2]));
+if (DEBUG_RECTANGLE) ret.back().show();
+    return ret;
+}
+
+vector<Rectangle> recs;
+
+long long power(long long a, long long b) {
+    long long ret = 1;
+    for (long long i = 1; i <= b; i <<= 1) {
+        if (b & i) ret *= a;
+        a *= a;
+    }
+    return ret;
+}
+
+long long power_sum(long long a, long long n) {
+    long long ret = 0, p = a, ps = 1;
+    for (long long i = 1; i <= n; i <<= 1) {
+        if (n & i) {
+            ret = ret * p + ps;
+        }
+        ps = ps + ps * p;
+        p = p * p;
+    }
+    return ret;
+}
+
+long long get_block_hash(int wide, int x, int y) {
+    static int MAGIC = 7;
+    long long MAGIC_ROW = 11; //power(MAGIC, wide);
+    long long cur = power_sum(MAGIC, x);
+    return cur * power_sum(MAGIC_ROW, y);
+}
+
+long long full(Rectangle r) {
+    return get_block_hash(r.b.x - r.a.x, r.b.x - r.a.x, r.b.y - r.a.y);
+}
+
+long long get_hash(Rectangle bound) {
+    // cout << "hash enter" << endl;
+    long long ret = 0;
+    for (auto r : recs) {
+        auto rr = r.merge(bound);
+        if (rr.is_empty()) continue;
+        rr.b = rr.b - bound.a;
+        rr.a = rr.a - bound.a;
+        ret = ret + get_block_hash(bound.b.x - bound.a.x, rr.b.x, rr.b.y);
+        ret = ret - get_block_hash(bound.b.x - bound.a.x, rr.b.x, rr.a.y);
+        ret = ret - get_block_hash(bound.b.x - bound.a.x, rr.a.x, rr.b.y);
+        ret = ret + get_block_hash(bound.b.x - bound.a.x, rr.a.x, rr.a.y);
+    }
+    // cout << "hash out" << endl;
+    return ret;
+}
+
+const int MAX = 1, MIN = 0;
+
+long long get_id(long long x, long long y) {
+    long long id = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        if (x >> i & 1) {
+            id |= (1LL << (i * 2 + 1));
+        }
+        if (y >> i & 1) {
+            id |= (1LL << (i * 2));
+        }
+    }
+    return id;
+}
+
+long long get_id(Rectangle bound, int flag) {
+    long long ret = -1;
+    for (auto r : recs) {
+        auto rr = r.merge(bound);
+        if (rr.is_empty()) continue;
+        if (flag == MAX) {
+            long long tmp = get_id(rr.b.x - 1, rr.b.y - 1);
+            if (ret == -1 || tmp > ret) {
+                ret = tmp;
+            }
+        } else {
+            long long tmp = get_id(rr.a.x, rr.a.y);
+            if (ret == -1 || tmp < ret) {
+                ret = tmp;
+            }
+        }
+    }
+    return ret;
+}
+
+struct Node {
+    int size, aux;
+    long long key, cnt;
+    long long tot_cnt, tot_val, lazy_mul;
+    Node *child[2];
+    Node() {}
+    void mul(long long c) {
+        cnt *= c;
+        tot_cnt *= c;
+        tot_val *= c;
+        lazy_mul *= c;
+    }
+    void push() {
+        if (lazy_mul != 1) {
+            child[0]->mul(lazy_mul);
+            child[1]->mul(lazy_mul);
+            lazy_mul = 1;
+        }
+    }
+    void update() {
+        size = child[0]->size + child[1]->size + 1;
+        tot_cnt = child[0]->tot_cnt + child[1]->tot_cnt + cnt;
+        tot_val = child[0]->tot_val + child[1]->tot_val + key * cnt;
+    }
+    Node(long long key, long long cnt, int aux);
+}pool[N], *null;
+int used;
+
+void treap_init() {
+    used = 0;
+    null = pool + used++;
+    null->child[0] = null->child[1] = null;
+    null->aux = INT_MAX;
+    null->size = null->key = null->cnt = null->tot_cnt = null->tot_val = 0;
+    null->lazy_mul = 1;
+}
+
+Node :: Node(long long _key, long long _cnt, int _aux) {
+    child[0] = child[1] = null;
+    size = 1;
+    aux = _aux;
+    key = _key, cnt = _cnt;
+    tot_cnt = _cnt, tot_val = _key * _cnt;
+    lazy_mul = 1;
+}
+
+vector<Node*> trash;
+
+Node *new_node(long long _key, long long _cnt, int _aux) {
+    Node *t;
+    if (trash.size()) {
+        t = trash.back();
+        trash.pop_back();
+    } else {
+        assert(used < N);
+        t = pool + used++;
+    }
+    return new(t) Node(_key, _cnt, _aux);
+}
+
+inline void rotate(Node *&x, int dir) {
+    Node *y = x->child[!dir];
+    x->push(), y->push();
+    x->child[!dir] = y->child[dir];
+    y->child[dir] = x;
+    x->update(), y->update();
+    x = y;
+}
+
+void insert(Node* &x, long long key, long long cnt) {
+    assert(x != NULL);
+    if (x == null) {
+        x = new_node(key, cnt, rand());
+        return ;
+    }
+    x->push();
+    if (key == x->key) {
+        x->cnt += cnt;
+    } else {
+        if (key < x->key) {
+            insert(x->child[0], key, cnt);
+            if (x->child[0]->aux < x->aux) {
+                rotate(x, 1);
+            }
+        } else {
+            insert(x->child[1], key, cnt);
+            if (x->child[1]->aux < x->aux) {
+                rotate(x, 0);
+            }
+        }
+    }
+    x->update();
+}
+
+vector<pair<long long, long long> > buffer;
+
+void collect(Node *x) {
+    if (x == null) return ;
+    x->push();
+    buffer.push_back(make_pair(x->key, x->cnt));
+    trash.push_back(x);
+    collect(x->child[0]);
+    collect(x->child[1]);
+}
+void traverse(Node *x) {
+    if (x == null) return ;
+    x->push();
+    traverse(x->child[0]);
+    //cout << "key = " << x->key << " cnt = " << x->cnt << endl;
+    traverse(x->child[1]);
+    x->update();
+}
+
+Node* treap_merge(Node *lc, Node *rc) {
+    if (lc->size < rc->size) swap(lc, rc);
+    buffer.clear();
+    collect(rc);
+    for (auto x : buffer) {
+        insert(lc, x.first, x.second);
+    }
+    return lc;
+}
+
+Node* dfs(Rectangle r) {
+    {
+        //printf("get hash\n");
+        long long h = get_hash(r);
+        //cout << h << endl;
+        if (h == 0 || h == full(r)) {
+            return null;
+        }
+    }
+    assert(r.b.y > r.a.y);
+    assert(r.b.x > r.a.x);
+    //r.show();
+    Rectangle s1 = r, s2 = r;
+    if (r.b.y - r.a.y > r.b.x - r.a.x) {
+        int mid = (0LL + r.a.y + r.b.y) / 2;
+        s1.b.y = mid;
+        s2.a.y = mid;
+    } else {
+        int mid = (0LL + r.a.x + r.b.x) / 2;
+        s1.b.x = mid;
+        s2.a.x = mid;
+    }
+    Node *lc = dfs(s1);
+    if (get_hash(s1) != get_hash(s2)) {
+        Node *rc = dfs(s2);
+        lc = treap_merge(lc, rc);
+    } else {
+        lc->mul(2);
+    }
+    //traverse(lc);
+    long long id1 = get_id(s1, MAX);
+    long long id2 = get_id(s2, MIN);
+    if (id1 != -1 && id2 != -1 && id1 + 1 <= id2 - 1) {
+        //cout << "insert : " << id2 - id1 - 1 << endl;
+        insert(lc, id2 - id1 - 1, 1);
+        // cout << "insert finish" << endl;
+    }
+    // cout << "enter " << id1 << " " << id2 << endl;
+    // r.show();
+    // cout << " dddd " << endl;
+    // printf("---size = %d--- \n", lc->size);
+    return lc;
+}
+
+long long solve(Node *x, int t) {
+    if (x == null) return 0;
+    if (x->tot_cnt <= t) return x->tot_val;
+    long long ret = 0;
+    x->push();
+    if (x->child[1]->tot_cnt >= t) {
+        ret = solve(x->child[1], t);
+    } else {
+        ret += x->child[1]->tot_val;
+        t -= x->child[1]->tot_cnt;
+        if (t < x->cnt) {
+            ret += t * x->key;
+        } else {
+            ret += x->key * x->cnt;
+            ret += solve(x->child[0], t - x->cnt);
+        }
+    }
+    x->update();
+    return ret;
+}
+
+int main() {
+    scanf("%d", &n);
+    recs = dissemble();
+    {
+        //for (auto r : recs) r.show();
+        long long tot_area = 0;
+        for (int i = 0; i < recs.size(); i++) {
+            tot_area += 1LL * (recs[i].b.x - recs[i].a.x) * (recs[i].b.y - recs[i].a.y);
+            for (int j = i + 1; j < recs.size(); j++) {
+                assert(recs[i].merge(recs[j]).is_empty());
+            }
+        }
+        assert(tot_area == -TOT_AREA / 2);
+    }
+    Rectangle all = Rectangle(Point(0, 0), Point(1 << n, 1 << n));
+    treap_init();
+    Node* root = dfs(all);
+    long long base = get_id(all, MAX) - get_id(all, MIN) + 1;
+    if (DEBUG) {
+        traverse(root);
+    }
+    assert(null->tot_val == 0 && null->tot_cnt == 0);
+    int q; scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        int t; scanf("%d", &t);
+        printf("%lld\n", base - solve(root, t - 1));
+    }
+    //printf("xxxx %lld %lld\n", root->tot_val, root->tot_cnt);
+    //  cout << sizeof(pool) / 1024. / 1024 << endl;
+    //  cout << sizeof(Node) << endl;
+    return 0;
+}
+```
