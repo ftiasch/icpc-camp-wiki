@@ -41,7 +41,7 @@ D. Mushrooms after rain strike back
 
 最后的答案是平衡树的所有前缀和。
 
-[D.cpp](2017/3/26%20XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20GP%20of%20Poland%20D.cpp)
+[D.cpp](2017/3/26 XVII Open Cup named after E.V. Pankratiev GP of Poland D.cpp)
 
 F. Reachability
 ===============
@@ -95,4 +95,4 @@ $g[u][0]$表示$u$这棵子树，不关心$u$有没有被匹配用掉，删掉�
 
 然后要求两个点的方案，就是枚举一个根，首先必须要$cnt=0$（删掉这个点匹配数不变），然后把$\sum_vg[v][0]$加到答案里就行了。换根可以讨论$cnt$的情况来维护。
 
-[H.cpp](2017/3/26%20XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20GP%20of%20Poland%20H.cpp)
+[H.cpp](2017/3/26 XVII Open Cup named after E.V. Pankratiev GP of Poland H.cpp)
