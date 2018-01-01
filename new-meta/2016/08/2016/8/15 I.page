@@ -1,0 +1,160 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+const int N = 1e5 + 7;
+const int LIMIT = 20;
+
+int n;
+char s[N], t[N];
+vector<int> pal[N];
+int radius_odd[N], radius_even[N];
+
+const int SONS = 5;
+const int P_SIZE = N * 20 * 10 + 10;
+
+class Tree {
+public :
+    class Node {
+    public:
+        Node* son[SONS];
+        int size;
+    };
+    Node pool[P_SIZE], *head, *root;
+    Node* new_node() {
+        Node* ret = head++;
+        for (int i = 0; i < SONS; i++) ret->son[i] = NULL;
+        ret->size = 0;
+        return ret;
+    }
+    
+    void clear() {
+        head = pool;
+        root = new_node();
+    }
+    
+    void insert(char *s, int n) {
+        s += n / 2;
+        n = (n - 1) - n / 2 + 1;
+        
+        Node *r = root;
+        for (int i = 0; i < n; i++) {
+            int idx = s[i] - 'a';
+            r->size++;
+            if (r->son[idx] == NULL) {
+                r->son[idx] = new_node();
+            }
+            r = r->son[idx];
+        }
+        r->size++;
+    }
+    
+    int get_size(char *s, int n) {
+        Node *r = root;
+        for (int i = 0; i < n; i++) {
+            int idx = s[i] - 'a';
+            r = r->son[idx];
+            if (r == NULL) return 0;
+        }
+        return r->size;
+    }
+};
+
+Tree tri;
+
+void build(char* s, int n) {
+    for (int i = 0; i < n; i++) pal[i].clear();
+    for (int i = 0; i < n; i++) {
+        // odd
+        for (int j = 0; j <= i && i + j < n; j++) {
+            if (s[i - j] != s[i + j]) break;
+            radius_odd[i] = j;
+            pal[i + j].push_back(i - j);
+        }
+        // even
+        radius_even[i] = -1;
+        for (int j = 0; j <= i && i + j + 1 < n; j++) {
+            if (s[i - j] != s[i + j + 1]) break;
+            radius_even[i] = j;
+            pal[i + j + 1].push_back(i - j);
+        }
+    }
+}
+
+int is_palindrom(int l, int r) {
+    if ((r - l + 1) & 1) {
+        return radius_odd[(l + r) >> 1] >= r - (l + r) / 2;
+    } else {
+        return radius_even[(l + r) >> 1] >= (l + r) / 2 - l;
+    }
+}
+
+vector<pair<int, string> > queries[N];
+int answer[N];
+
+int main() {
+    while (scanf("%s", s) == 1) {
+        n = strlen(s);
+        build(s, n);
+        for (int i = 1; i <= n; i++) queries[i].clear();
+        int q; scanf("%d", &q);
+        for (int i = 1; i <= q; i++) {
+            int l, r; scanf("%d %d %s", &l, &r, t);
+            l--, r--;
+            answer[i] = 0;
+            int tlen = strlen(t);
+            for (int j = l; j <= l + LIMIT && j <= r; j++) {
+                int ptr = 0;
+                for (int k = 0; k + j <= l + LIMIT; k++, ptr++) {
+                    if (ptr < tlen) {
+                        if (s[j + k] != t[ptr]) break;
+                    }
+                    if (ptr >= tlen - 1) {
+                        // odd 
+                        if (j - k >= l) {
+                            answer[i] += is_palindrom(j - k, j + k);
+                        }
+                        // even
+                        if (j - k - 1 >= l) {
+                            answer[i] += is_palindrom(j - k - 1, j + k);
+                        }
+                        //printf("i = %d pal = (%d, %d) = %d\n", i, j, k, is_palindrom(j, k));
+                    }
+                }
+            }
+            l = l + LIMIT;
+            if (l < r) {
+                queries[r].push_back(make_pair(i, t));
+                queries[l].push_back(make_pair(-i, t));
+            }
+        }
+        tri.clear();
+        for (int i = 0; i < n; i++) {
+        //printf("i = %d\n", i);
+            for (int l : pal[i]) {
+                tri.insert(s + l, i - l + 1);
+            }
+            for (pair<int, string> tmp : queries[i]) {
+                int id = tmp.first;
+                for (int j = 0; j < tmp.second.size(); j++) t[j] = tmp.second[j];
+                if (id > 0) {
+                    answer[id] += tri.get_size(t, tmp.second.size());
+                } else {
+                    id = -id;
+                    answer[id] -= tri.get_size(t, tmp.second.size());
+                }
+            }
+        }
+        for (int i = 1; i <= q; i++) {
+            printf("%d\n", answer[i]);
+        }
+    }
+    return 0;
+}
+```
