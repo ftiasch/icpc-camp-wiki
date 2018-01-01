@@ -1,0 +1,249 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+typedef long double D;
+typedef long long LL;
+D eps(1e-15);
+inline bool equal(const D & x, const D & y) {
+    return x + eps > y && y + eps > x;
+}
+inline int sign(const D & x) {
+    return (x > eps) - (x + eps < 0);
+}
+int nextInt() {
+    int res(0);
+    char c(getchar());
+    while(c < '0' && c != '-') {
+        c = getchar();
+    }
+    int sgn(1);
+    if(c == '-') {
+        sgn = -1;
+        c = getchar();
+    }
+    while(c >= '0') {
+        res = res * 10 + (c - '0');
+        c = getchar();
+    }
+    return res * sgn;
+}
+struct Point {
+    D x, y;
+    Point() {
+    }
+    Point(const D & x, const D & y) : x(x), y(y) {
+    }
+    Point operator + (const Point & b) const {
+        return Point(x + b.x, y + b.y);
+    }
+    Point operator - (const Point & b) const {
+        return Point(x - b.x, y - b.y);
+    }
+    D operator * (const Point & b) const {
+        return x * b.y - y * b.x;
+    }
+    D operator % (const Point & b) const {
+        return x * b.x + y * b.y;
+    }
+    void scan() {
+        x = nextInt();
+        y = nextInt();
+    }
+    D sqrlen() const {
+        return x * x + y * y;
+    }
+    D len() const {
+        return sqrt(max((D)0., sqrlen()));
+    }
+    Point rev() const {
+        return Point(-y, x);
+    }
+    Point zoom(const D & l) const {
+        double lambda(l / len());
+        return Point(x * lambda, y * lambda);
+    }
+    Point rot(const D & theta) const {
+        double co(cos(theta)), si(sin(theta));
+        return Point(x * co - y * si, x * si + y * co);
+    }
+    void print() const {
+        printf("%f %f\n", (double)x, (double)y);
+    }
+    bool operator < (const Point & b) const {
+        if(!equal(x, b.x)) {
+            return x < b.x;
+        }
+        if(!equal(y, b.y)) {
+            return y < b.y;
+        }
+        return false;
+    }
+} a[1111], hx[19], h1[19];
+vector<D> p;
+D pi(acos(-1.));
+inline Point operator * (const D & x, const Point & a) {
+    return Point(x * a.x, x * a.y);
+}
+struct Line {
+    Point s, d;
+    Line(const Point & a, const Point & b) : s(a), d(b) {
+    }
+};
+inline Point intersection(const Line & a, const Line & b) {
+    D lambda((b.s - a.s) * b.d / (a.d * b.d));
+    return a.s + lambda * a.d;
+}
+typedef const Point & P;
+inline bool equal(P a, P b) {
+    return equal(a.x, b.x) && equal(a.y, b.y);
+}
+inline D atan2(P a) {
+    return atan2(a.y, a.x);
+}
+inline D _(D x) {
+    while(x >= pi / 3) {
+        x -= pi / 3;
+    }
+    while(x < 0) {
+        x += pi / 3;
+    }
+    return x;
+}
+bool inPoly;
+vector<Point> intersection(P a, P b, const D & r) {
+    vector<Point> res(2, Point(0, 0));
+    Point p(intersection(Line(a, b - a), Line(Point(0, 0), (b - a).rev())));
+    if(p.sqrlen() > r * r + eps) {
+        inPoly = true;
+        return res;
+    }
+    D lambda(sqrt(max((D)0., r * r - p.sqrlen())));
+    if(equal(lambda, 0)) {
+        return res;
+    }else {
+        Point q(p + (b - a).zoom(lambda));
+        if(sign((q - a) % (q - b)) <= 0) {
+            res[1] = q;
+        }
+        q = p - (b - a).zoom(lambda);
+        if(sign((q - a) % (q - b)) <= 0) {
+            res[0] = q;
+        }
+        return res;
+    }
+}
+int cnt;
+vector<pair<D, int> > evts;
+void psh(D a, D b) {
+    if(b > a && b - a > pi / 3 + eps || b < a && a - b < pi / 3 * 5 - eps) {
+        cnt += 2;
+        return;
+    }
+    a = _(a);
+    b = _(b);
+    evts.push_back(make_pair(a, 1));
+    evts.push_back(make_pair(b, -1));
+    if(a > b) {
+        cnt++;
+    }
+}
+bool cmp(const pair<D, int> & a, const pair<D, int> & b) {
+    if(equal(a.first, b.first))
+        return a.second < b.second;
+    else
+        return a.first < b.first;
+}
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    for(int qq(1); qq <= tests; qq++) {
+        int n, l;
+        scanf("%d%d", &n, &l);
+        for(int i(0); i < n; i++) {
+            a[i].scan();
+        }
+        sort(a, a + n);
+        static vector<Point> vec;
+        vec.clear();
+        for(int i(0); i < n; i++) {
+            while(vec.size() >= 2 && sign((vec.back() - vec[(int)vec.size() - 2]) * (a[i] - vec.back())) >= 0) {
+                vec.pop_back();
+            }
+            vec.push_back(a[i]);
+        }
+        int cur(vec.size());
+        for(int i(n - 1); i >= 0; i--) {
+            while(vec.size() >= cur + 1 && sign((vec.back() - vec[(int)vec.size() - 2]) * (a[i] - vec.back())) >= 0) {
+                vec.pop_back();
+            }
+            vec.push_back(a[i]);
+        }
+        static vector<pair<D, D> > banned;
+        banned.clear();
+        bool flag(true);
+        static vector<pair<D, int> > v;
+        v.clear();
+        cnt = 0;
+        evts.clear();
+        inPoly = false;
+        bool hasIntersection(false);
+        for(int i(0); i + 1 < (int)vec.size(); i++) {
+            Point a(vec[i]);
+            LL len(a.sqrlen() + 0.5);
+            if(len > (LL)3 * l * l) {
+                flag = false;
+                break;
+            }
+            if(len <= (LL)l * l) {
+
+            }else {
+                D theta(atan2(a));
+                D x = ((3 * l - sqrt(max((D)0., (D)-3 * l * l + 4 * len))) / 2);
+                D delta(asin(x / 2 / a.len()));
+                D le(theta - delta), ri(theta + delta);
+                psh(ri, le + pi / 3);
+            }
+
+            Point b(vec[i + 1]);
+            auto res(intersection(a, b, l));
+            if(!equal(res[0], Point(0, 0)) && !equal(res[0], a)) {
+                v.push_back(make_pair(atan2(res[0]) + pi / 6, 1));
+                hasIntersection = true;
+                if(v.size() >= 2) {
+                    psh(v.back().first, v[(int)v.size() - 2].first);
+                    v.pop_back();
+                    v.pop_back();
+                }
+            }
+            if(!equal(res[1], Point(0, 0)) && !equal(res[1], b)) {
+                hasIntersection = true;
+                v.push_back(make_pair(atan2(res[1]) + pi / 6, -1));
+            }
+        }
+        if(!hasIntersection && inPoly) {
+            printf("Change\n");
+            continue;
+        }
+        if(flag == false) {
+            printf("Change\n");
+            continue;
+        }
+        if(!v.empty()) {
+            psh(v[0].first, v[1].first);
+        }
+        sort(evts.begin(), evts.end(), cmp);
+        bool ok(cnt == 0);
+        for(int i(0); i < (int)evts.size() && !ok; i++) {
+            cnt += evts[i].second;
+            if(cnt <= 0) {
+                ok = true;
+            }
+        }
+        if(ok) {
+            printf("Cast\n");
+        }else {
+            printf("Change\n");
+        }
+    }
+}
+```
