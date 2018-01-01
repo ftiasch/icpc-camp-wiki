@@ -1,0 +1,78 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(111111);
+typedef long long LL;
+int a[N], fa[N];
+LL rmn[N];
+vector<int> adj[N];
+int main() {
+    int n;
+    cin >> n;
+    for(int i(1); i <= n; i++) 
+        cin >> a[i];
+    if(n == 1) {
+        printf("YES\n");
+        return 0;
+    }else if(n == 2) {
+        printf("%s\n", a[1] == a[2] ? "YES" : "NO");
+        return 0;
+    }
+    for(int i(0); i < n - 1; i++) {
+        int x, y;
+        cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    int rt;
+    for(int i(1); i <= n; i++) {
+        if(adj[i].size() >= 2) {
+            rt = i;
+            break;
+        }
+    }
+    vector<int> q;
+    q.push_back(rt);
+    for(int i(0); i < (int)q.size(); i++) {
+        int v(q[i]);
+        for(int p(0); p < (int)adj[v].size(); p++) {
+            int y(adj[v][p]);
+            if(y != fa[v]) {
+                fa[y] = v;
+                //cout << v << ' ' << y << endl;
+                q.push_back(y);
+            }
+        }
+    }
+    for(int i(n - 1); i >= 0; i--) {
+        int v(q[i]);
+        vector<LL> vec;
+        LL tot(0), mx(0);
+        for(int p(0); p < (int)adj[v].size(); p++) {
+            int y(adj[v][p]);
+            if(y != fa[v]) {
+                vec.push_back(rmn[y]);
+                tot += rmn[y];
+                mx = max(mx, rmn[y]);
+            }
+        }
+        if(vec.empty()) {
+            rmn[v] = a[v];
+        }else {
+            
+            LL lim(min(tot / 2, (tot - mx)));
+            //cout << tot << ' ' << mx << endl;
+            if(a[v] >= tot - lim && a[v] <= tot) {
+                //a+2*b=tot
+                //a+b=a[v]
+                rmn[v] = -tot + a[v] * 2;
+            }else {
+                printf("NO\n");
+                return 0;
+            }
+        }
+        //cout << v << ' ' << rmn[v] << endl;
+    }
+    printf("%s\n", rmn[rt] == 0 ? "YES" : "NO");
+}
+```
