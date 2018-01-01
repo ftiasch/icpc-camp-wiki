@@ -1,47 +1,60 @@
-# A Escape [hwq]
+A Escape \[hwq\]
+================
 
 显然知道转弯次数后就知道每个方向走过多少次，根据目标点位置组合数算一下，注意考虑边界情况
 
-# B Synchronous Design
+B Synchronous Design
+====================
 
-# C Shadow Area
+C Shadow Area
+=============
 
-# D Blocks [hwq&zyh]
+D Blocks \[hwq&zyh\]
+====================
 
-dp[0/1][0/1]表示R和G奇偶性状态下的方案数，矩阵快速幂
+dp\[0/1\]\[0/1\]表示R和G奇偶性状态下的方案数，矩阵快速幂
 
-# E Training little cats [hwq&zyh]
+E Training little cats \[hwq&zyh\]
+==================================
 
-根据单次循环中的操作构造矩阵，然后跑快速幂，注意到整个矩阵中总是只有O(n)项非0，矩阵乘法的复杂度是O(n^2)的
+根据单次循环中的操作构造矩阵，然后跑快速幂，注意到整个矩阵中总是只有O(n)项非0，矩阵乘法的复杂度是O(n\^2)的
 
-# F Snipe the Sniper [zyh&ghc]
+F Snipe the Sniper \[zyh&ghc\]
+==============================
 
 对每个人二分时间然后判定是否能打到目标，每次让最先能打到的人来一发即可
 
-# G UmBasketella [ghc]
+G UmBasketella \[ghc\]
+======================
 
 三分求得最优比例，按比例换算即可出结果
 
-# H Card Game [hwq补]
+H Card Game \[hwq补\]
+=====================
 
-dp[i][j][k]表示当前状态为i，手牌为j，还有k次洗牌的最大得分期望，预处理所有合法状态，转移枚举消牌或洗牌，注意不能洗牌且不能消牌游戏才结束
+dp\[i\]\[j\]\[k\]表示当前状态为i，手牌为j，还有k次洗牌的最大得分期望，预处理所有合法状态，转移枚举消牌或洗牌，注意不能洗牌且不能消牌游戏才结束
 
-# I Special Squares [zyh]
+I Special Squares \[zyh\]
+=========================
 
-注意坐标范围和题目描述不符，预处理dp[i][j]表示以(i,j)为右上角的特殊正方形边长最小值，然后枚举交点(i,j)，bitset维护(i,j)到左边所有竖线的距离以及到下边所有横线的距离，根据dp[i][j]的值提取一个后缀，and之后即为以(i,j)为右上角的正方形个数，复杂度是O(k^3/w)，其中k表示坐标范围
+注意坐标范围和题目描述不符，预处理dp\[i\]\[j\]表示以(i,j)为右上角的特殊正方形边长最小值，然后枚举交点(i,j)，bitset维护(i,j)到左边所有竖线的距离以及到下边所有横线的距离，根据dp\[i\]\[j\]的值提取一个后缀，and之后即为以(i,j)为右上角的正方形个数，复杂度是O(k\^3/w)，其中k表示坐标范围
 
-# J Full Steiner Topologies [zyh&ghc]
+J Full Steiner Topologies \[zyh&ghc\]
+=====================================
 
 由prufer编码可知结果是$(2n-3)!!=\frac{(2n-2)!}{(n-1)!2^{n-1}}$，离线询问，从小到大依次计算答案的log值，整数部分是幂次，小数部分exp后是系数
 
-# K Polygon Division [zyh&ghc]
+K Polygon Division \[zyh&ghc\]
+==============================
 
 记$f[n]$表示凸$n$边形的划分方案数，转移枚举边$(1,n)$所在的三角形或四边形，则有$f[n]=\sum_{i=2}^{n-1}f[i]f[n-i-1]+\sum_{i=2}^{n-2}\sum_{j=i+1}^{n-1}f[i]f[j-i+1]f[n-j+1]$，直接做的复杂度是$O(n^3)$的，考虑令$g[n]=\sum_{i=2}^{n-1}f[i]f[n-i+1]$，则有$f[n]=g[n]+\sum_{i=2}{n-2}f[i]g[n-i+1]$，复杂度是$O(n^2)$的
 
-# L Pumping Lemma [hwq&zyh]
+L Pumping Lemma \[hwq&zyh\]
+===========================
 
 找一个从起点可达且可达终点的环
 
-# M Subimage Recognition [zyh&hwq]
+M Subimage Recognition \[zyh&hwq\]
+==================================
 
 枚举删去的行，对列贪心匹配
