@@ -1,0 +1,301 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+struct card
+{
+    int suit, rank;
+    card(int suit = 0, int rank = 0) : suit(suit), rank(rank) {}
+    bool input()
+    {
+        char s[5];
+        scanf("%s", s);
+        if (s[0] == '#') return 1;
+        if (s[0] == 'S') suit = 0;
+        if (s[0] == 'H') suit = 1;
+        if (s[0] == 'D') suit = 2;
+        if (s[0] == 'C') suit = 3;
+        rank = s[1] - '0';
+        if (s[1] == 'A') rank = 14;
+        if (s[1] == 'T') rank = 10;
+        if (s[1] == 'J') rank = 11;
+        if (s[1] == 'Q') rank = 12;
+        if (s[1] == 'K') rank = 13;
+        return 0;
+    }
+};
+bool operator < (const card &a, const card &b)
+{
+    if (a.suit != b.suit) return a.suit < b.suit;
+    return a.rank > b.rank;
+}
+bool operator == (const card &a, const card &b)
+{
+    return a.suit == b.suit && a.rank == b.rank;
+}
+bool cmp(const card &a, const card &b)
+{
+    return a.rank > b.rank;
+}
+struct hand
+{
+    card c[5], c_suit[5], c_rank[5];
+    int me_rank;
+    hand() {me_rank = -1;}
+    void setrank()
+    {
+        for (int i = 0; i < 5; ++ i) c[i] = c_rank[i];
+    }
+    void setsuit()
+    {
+        for (int i = 0; i < 5; ++ i) c[i] = c_suit[i];
+    }
+    bool flush()
+    {
+        //sort(c, c + 5);
+        setsuit();
+        for (int i = 0; i < 5; ++ i) if (c[i].suit != c[0].suit) return 0;
+        return 1;
+    }
+    bool straight()
+    {
+        //sort(c, c + 5, cmp);
+        setrank();
+        for (int i = 1; i < 5; ++ i) if (c[i].rank != c[1].rank - i + 1) return 0;
+        if (c[0].rank == c[1].rank + 1) return 1;
+        if (c[0].rank == 14 && c[4].rank == 2)
+        {
+            c[0].rank = 1;
+            reverse(c, c + 5);
+            reverse(c, c + 4);
+            return 1;
+        }
+        return 0;
+    }
+    bool four()
+    {
+        //sort(c, c + 5, cmp);
+        setrank();
+        bool flag = 1;
+        for (int i = 1; i < 5; ++ i) if (c[i].rank != c[1].rank)
+        {
+            flag = 0;
+            break;
+        }
+        if (flag)
+        {
+            reverse(c, c + 5);
+            reverse(c, c + 4);
+        }
+        for (int i = 0; i < 4; ++ i) if (c[i].rank != c[0].rank) return 0;
+        return 1;
+    }
+    bool threetwo()
+    {
+        //sort(c, c + 5, cmp);
+        setrank();
+        bool flag = 1;
+        for (int i = 2; i < 5; ++ i) if (c[i].rank != c[2].rank)
+        {
+            flag = 0;
+            break;
+        }
+        if (flag && c[0].rank == c[1].rank)
+        {
+            swap(c[0], c[4]);
+            swap(c[1], c[3]);
+        }
+        flag = 1;
+        for (int i = 0; i < 3; ++ i) if (c[i].rank != c[0].rank) flag = 0;
+        if (c[3].rank != c[4].rank) flag = 0;
+        return flag;
+    }
+    bool threeonekind()
+    {
+        //sort(c, c + 5, cmp);
+        setrank();
+        bool flag = 0;
+        for (int j = 0; j + 3 <= 5; ++ j)
+        {
+            bool tmp = 1;
+            for (int i = 0; i < 3; ++ i) if (c[i + j].rank != c[j].rank)
+            {
+                tmp = 0;
+                break;
+            }
+            if (tmp)
+            {
+                vector<card> cc;
+                for (int i = 0; i < 3; ++ i)
+                {
+                    cc.push_back(c[j + i]);
+                }
+                for (int i = 0; i < 5; ++ i)
+                {
+                    if (i < j || i >= j + 3) cc.push_back(c[i]);
+                }
+                for (int i = 0; i < 5; ++ i) c[i] = cc[i];
+                flag = 1;
+                break;
+            }
+        }
+        return flag;
+    }
+    bool twopair()
+    {
+        //sort(c, c + 5, cmp);
+        setrank();
+        vector<int> pos;
+        for (int i = 0; i < 4; ++ i)
+        {
+            if (c[i].rank == c[i + 1].rank)
+            {
+                pos.push_back(i);
+                ++ i;
+            }
+        }
+        if ((int) pos.size() < 2) return 0;
+        if (c[pos[0]].rank < c[pos[1]].rank) swap(pos[0], pos[1]);
+        vector<card> cc;
+        int sum = 2 * pos[0] + 2 + 2 * pos[1];
+        cc.push_back(c[pos[0]]);
+        cc.push_back(c[pos[0] + 1]);
+        cc.push_back(c[pos[1]]);
+        cc.push_back(c[pos[1] + 1]);
+        cc.push_back(c[10 - sum]);
+        for (int i = 0; i < 5; ++ i) c[i] = cc[i];
+        return 1;
+    }
+    bool onepair()
+    {
+        //sort(c, c + 5, cmp);
+        setrank();
+        int pos = -1;
+        for (int i = 0; i < 4; ++ i)
+        {
+            if (c[i].rank == c[i + 1].rank)
+            {
+                pos = i;
+            }
+        }
+        if (pos == -1) return 0;
+        vector<card> cc;
+        cc.push_back(c[pos]);
+        cc.push_back(c[pos + 1]);
+        for (int i = 0; i < 5; ++ i) if (i != pos && i != pos + 1) cc.push_back(c[i]);
+        for (int i = 0; i < 5; ++ i) c[i] = cc[i];
+        return 1;
+    }
+    int rank()
+    {
+        if (me_rank != -1) return me_rank;
+        for (int i = 0; i < 5; ++ i) c_rank[i] = c_suit[i] = c[i];
+        sort(c_suit, c_suit + 5);
+        sort(c_rank, c_rank + 5, cmp);
+        if (flush())
+        {
+            if (straight())
+            {
+                if (c[0].rank == 14) return 0;
+                return 1;
+            }
+        }
+        if (four()) return 2;
+        if (threetwo()) return 3;
+        if (flush()) return 4;
+        if (straight()) return 5;
+        if (threeonekind()) return 6;
+        if (twopair()) return 7;
+        if (onepair()) return 8;
+        //sort(c, c + 5, cmp);
+        setrank();
+        return 9;
+    }
+    void output()
+    {
+        for (int i = 0; i < 5; ++ i) printf("%d-%d ", c[i].suit, c[i].rank); printf("   : %d", rank()); puts("");
+    }
+};
+bool operator < (hand a, hand b)
+{
+    if (a.rank() != b.rank()) return a.rank() < b.rank();
+    for (int i = 0; i < 5; ++ i)
+    {
+        if (a.c[i].rank != b.c[i].rank) return a.c[i].rank > b.c[i].rank;
+    }
+    return 0;
+}
+int main()
+{
+    while (true)
+    {
+        card me[7], op[7];
+        if (me[0].input()) break;
+        me[1].input();
+        op[0].input();
+        op[1].input();
+        for (int i = 0; i < 3; ++ i)
+        {
+            card tmp;
+            tmp.input();
+            me[i + 2] = op[i + 2] = tmp;
+        }
+        int tot = 0, win = 0;
+        for (int s1 = 0; s1 < 4; ++ s1) for (int r1 = 2; r1 <= 14; ++ r1)
+        {
+            bool flag = 0;
+            for (int i = 0; i < 5; ++ i) if (me[i] == card(s1, r1)) flag = 1;
+            for (int i = 0; i < 5; ++ i) if (op[i] == card(s1, r1)) flag = 1;
+            if (flag) continue;
+            for (int s2 = 0; s2 < 4; ++ s2) for (int r2 = 2; r2 <= 14; ++ r2)
+            {
+                if (card(s1, r1) == card(s2, r2)) continue;
+                flag = 0;
+                for (int i = 0; i < 5; ++ i) if (me[i] == card(s2, r2)) flag = 1;
+                for (int i = 0; i < 5; ++ i) if (op[i] == card(s2, r2)) flag = 1;
+                if (flag) continue;
+                me[5] = op[5] = card(s1, r1);
+                me[6] = op[6] = card(s2, r2);
+                vector<hand> all_me, all_op;
+                for (int i = 0; i < 7; ++ i)
+                {
+                    for (int j = i + 1; j < 7; ++ j)
+                    {
+                        hand tmp = hand();
+                        int l = 0;
+                        for (int k = 0; k < 7; ++ k) if (k != i && k != j) tmp.c[l ++] = me[k];
+                        all_me.push_back(tmp);
+                    }
+                }
+                for (int i = 0; i < 7; ++ i)
+                {
+                    for (int j = i + 1; j < 7; ++ j)
+                    {
+                        hand tmp = hand();
+                        int l = 0;
+                        for (int k = 0; k < 7; ++ k) if (k != i && k != j) tmp.c[l ++] = op[k];
+                        all_op.push_back(tmp);
+                    }
+                }
+                //sort(all_me.begin(), all_me.end());
+                //sort(all_op.begin(), all_op.end());
+                tot ++;
+                if (*min_element(all_me.begin(), all_me.end()) < *min_element(all_op.begin(), all_op.end()))
+                {
+                    win ++;
+                    /*printf("--------------\n");
+                    all_me[0].output();
+                    printf("---\n");
+                    all_op[0].output();*/
+                }
+            }
+        }
+        printf("%.20f\n", 1. * win / tot);
+    }
+}
+```
