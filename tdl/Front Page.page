@@ -1,0 +1,187 @@
+General
+=======
+
+Team **TDL** from Beihang University
+
+-   2015
+    -   ICPC Changchun: Silver (22/30/32)
+    -   ICPC Hefei: Silver (18/22/22)
+    -   ICPC EC-Final: Gold (14/24/27)
+-   2016
+    -   CCPC Changchun: Gold (7/12/13)
+    -   ICPC Dalian: Gold (2nd place)
+    -   ICPC Qingdao: Gold (5/6/6)
+    -   CCPC Final: Silver (18/23/25)
+    -   ICPC China-Final: Gold (8/15/18)
+-   2017
+    -   ICPC World Finals 2017: rank 56 (exactly 70)
+    -   We ended up but you keep moving on.
+
+Todo List
+=========
+
+[Bug收集整理]()
+
+提高训练质量与数量，~~找昂神监督~~(每个人)写总结与补题（Team Training 中
+TBA 的内容大家都要补，DONE 的内容做完的带着没做的补）
+
+重点训练方向：(Constroy)??? (Skywalkert)??? (braveTester)???
+
+战术配合：(战术1)??? (战术2)???
+
+定期(???)进行交流，及时了解队员情况
+
+-   2016.10.15会议记录
+    -   **所有人**需要提高**效率**
+    -   整理代码仓库，完善模板
+    -   每次训练后每人需要写总结，总结优先级高于题解
+    -   建立训练计划表，增加日志便于分析，暂定至少提前一周制定
+    -   指定刷题OJ为 codeforces
+        ，各成员均需要进行刷题和记录，原则上比赛也要参加
+    -   总结[技能缺失内容]()，进行[专项训练]()
+    -   每周每人定期给队友普及自己的技能
+-   2017.03 Final 冲刺训练
+    -   2017.03.04 2017.03.05 训练 OpenCup
+
+Constroy
+--------
+
+[进度](Constroy/进度)
+
+[题解](Constroy/题解)
+
+[经验](Constroy/经验)
+
+Skywalkert
+----------
+
+[tjz个人](Skywalkert/tjz)
+
+[基础几何](Skywalkert/基础几何)
+[组合数求模](http://blog.csdn.net/skywalkert/article/details/52553048)
+[一类积性函数求和](http://blog.csdn.net/skywalkert/article/details/50500009)
+[二次剩余与三次剩余](http://blog.csdn.net/skywalkert/article/details/52591343)
+
+-   搞事搞事搞事搞事搞事
+-   提高智商 CF TC
+-   认真补题
+
+braveTester
+-----------
+
+[字典序](braveTester/字典序)（待补充）
+
+[字符串](braveTester/字符串)（待补充）
+
+[概率论](braveTester/概率论)（待补充）
+
+☐ FFT 的基本原理与各种应用
+
+☐ 树上分治：树链剖分，点分治
+
+☐ 图的各种连通分量
+
+☐ 策略类题目的分析方法
+
+☐ 期望耦合在一起的分析方法 (Loading...)
+
+[个人做题列表](braveTester/做题列表)
+
+Team Training 2016-2017
+=======================
+
+<!-- `2016-00-00` [`---`]()                                         `   -/  --` `??` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` -->
+  `Date`         `Contest`                                                               `Place`      `??`   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------- ----------------------------------------------------------------------- ------------ ------ ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  **`DONE`**     `(about 11 finished contests, but 66 unfinished)`                                                                                                                   
+  `2017-05-24`   [`2017 ACM-ICPC World Finals`]()                                        `70/ 128`    `--`   `Ø`   `Ø`   `O`   `Ø`   `O`   `O`   `Ø`   `Ø`   `O`   `Ø`   `Ø`   `Ø`   
+  `2017-02-13`   [`ICPCCamp 2017 Day2 zimpha's Contest 3`]()                             `23/ 113`    `--`   `Ø`   `Ø`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`   `O`               
+  `2016-12-04`   [`2015 ACM-ICPC Asia Jakarta Regional Contest`]()`[2:2]`                `20/ 107`    `--`   `O`   `O`   `Ø`   `Ø`   `Ø`   `O`   `Ø`   `Ø`   `O`   `Ø`   `Ø`   `O`   
+  `2016-10-26`   [`2015 ACM-ICPC Asia Dhaka Regional Contest`]()`[2:2]`                  `1/ 184`     `--`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2016-10-16`   [`2016 ACM-ICPC Asia Dalian Regional Contest`]()                        `2/ 217`     `--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2016-10-04`   [`2016 Sichuan Province Contest`]()                                     `4/ 412`     `--`   `O`   `Ø`   `Ø`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2016-07-26`   [`2016 BUAA Summer Practice 2`]()                                       `--/ ---`    `--`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2016-07-23`   [`2014-2015 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)`]()    `55/ 179`    `--`   `O`   `Ø`   `Ø`   `O`   `O`   `O`   `Ø`   `O`   `O`   `Ø`   `Ø`   `O`   
+  `2016-07-22`   [`2016 BUAA Summer Practice 1`]()                                       `--/ ---`    `--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2016-07-19`   [`2016 Multi-University Training Contest 1`]()                          `17/ 332`    `--`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`         
+  `2016-02-01`   [`ICPCCamp 2016 Day8 Makoto Soejima's Contest 4`]()                     `27/  60`    `--`   `Ø`   `O`   `Ø`   `Ø`   `O`   `Ø`   `Ø`   `Ø`   `Ø`   `O`   `Ø`   `O`   `Ø`
+  **`TBA`**      `(about 309 unsolved problems)`                                                                                                                                     
+  `2017-05-22`   [`2014 ACM-ICPC World Finals`]()                                        `126/ 125`   `9`    `·`   `Ø`   `·`   `·`   `·`   `·`   `·`   `·`   `Ø`   `·`   `Ø`   `·`   
+  `2017-05-14`   [`THU Campus 2017`]()                                                   `79/  99`    `8`    `·`   `·`   `O`   `·`   `·`   `·`   `·`   `O`   `·`   `·`   `O`         
+  `2017-05-01`   [`XVII Open Cup named after E.V. Pankratiev. GP of America`]()          `75/  98`    `8`    `O`   `·`   `O`   `·`   `·`   `·`   `·`   `·`   `·`   `O`   `·`         
+  `2017-04-29`   [`2016 USP Try-outs`]()                                                 `57/ 237`    `7`    `Ø`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `·`   `O`   `·`   
+  `2017-04-23`   [`2016 National Taiwan University World Final Selection`]()             `27/  49`    `6`    `Ø`   `·`   `O`   `·`   `·`   `·`   `O`   `·`   `·`   `O`               
+  `2017-04-22`   [`2017 Zhejiang Provincial Collegiate Programming Contest`]()`[2:2]`    `10/ 968`    `4`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `·`   `Ø`   `·`
+  `2017-04-15`   [`2016 ACM-ICPC Southwestern Europe Regional Contest`]()`[2:2]`         `17/ 259`    `3`    `·`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`         
+  `2017-03-12`   [`2015 ACM-ICPC Southwestern Europe Regional Contest`]()`[2:2]`         `13/  87`    `1`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`               
+  `2017-03-11`   [`XVI Open Cup named after E.V. Pankratiev. Grand Prix of Europe`]()    `91/ 196`    `7`    `O`   `O`   `·`   `O`   `·`   `·`   `·`   `O`   `·`   `·`   `O`   `·`   
+  `2017-03-04`   [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Europe`]()   `71/ 105`    `7`    `O`   `·`   `O`   `·`   `·`   `O`   `·`   `O`   `·`   `·`   `O`   `·`   
+  `2017-03-03`   [`XVI Open Cup named after E.V. Pankratiev. GP of Peterhof`]()          `13/ 130`    `3`    `O`   `·`   `·`   `O`   `O`   `O`   `O`   `O`   `·`                     
+  `2017-02-18`   [`ICPCCamp 2017 Day6 Japanese Contest`]()                               `49/ 122`    `5`    `O`   `O`   `·`   `Ø`   `Ø`   `O`   `Ø`   `O`   `·`   `·`   `·`   `·`   
+  `2017-02-17`   [`ICPCCamp 2017 Day5 Yandex Cup 2017`]()                                `38/ 121`    `3`    `Ø`   `·`   `Ø`   `O`   `O`   `O`   `Ø`   `·`   `O`   `·`               
+  `2017-02-16`   [`ICPCCamp 2017 Day4 Jagiellonian U Contest`]()                         `67/ 121`    `2`    `O`   `O`   `O`   `·`   `Ø`   `O`   `Ø`   `Ø`   `O`   `Ø`   `·`   `O`   
+  `2017-02-14`   [`ICPCCamp 2017 Day3 Deep Dark Fantasy's Contest`]()                    `29/ 113`    `2`    `Ø`   `·`   `Ø`   `Ø`   `·`   `O`   `O`   `O`   `Ø`                     
+  `2017-02-12`   [`ICPCCamp 2017 Day1 ftiasch's Contest 5`]()                            `77/  89`    `2`    `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `·`   `·`   `O`               
+  `2016-12-11`   [`2016 ACM-ICPC Asia China-Final Regional Contest`]()                   `18/ 313`    `4`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `·`   `·`   `·`   `O`   
+  `2016-11-28`   [`2016 Chinese Collegiate Programming Contest Final Onsite`]()          `23/ 122`    `5`    `O`   `·`   `·`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   
+  `2016-11-20`   [`2016 ACM-ICPC Asia Daejeon Regional Contest`]()`Blind`                `5/  84`     `4`    `·`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `·`   `O`   
+  `2016-11-13`   [`2016 ACM-ICPC Asia Qingdao Regional Contest`]()                       `6/ 327`     `1`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `Ø`   `Ø`   `Ø`   `O`   `Ø`   `·`
+  `2016-11-06`   [`2015 ACM-ICPC Asia Phuket Regional Contest`]()`[2:2]`                 `12/ 104`    `4`    `O`   `O`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `·`   `O`   
+  `2016-11-03`   [`2015 ACM-ICPC Asia Daejeon Regional Contest`]()`[2:2]`                `26/  89`    `4`    `O`   `·`   `O`   `·`   `O`   `Ø`   `·`   `O`   `O`   `O`   `·`   `O`   
+  `2016-10-30`   [`2016 ACM-ICPC Asia Shenyang Regional Contest`]()                      `48/ 206`    `8`    `O`   `O`   `O`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   `·`   `·`   `·`
+  `2016-10-20`   [`2015 ACM-ICPC Asia Tehran Regional Contest`]()`[2:2]`                 `3/ 104`     `2`    `O`   `O`   `·`   `·`   `Ø`   `O`   `O`   `O`   `O`   `O`               
+  `2016-10-07`   [`2015-2016 ACM-ICPC Northeastern European Regional Contest`]()         `101/ 386`   `6`    `O`   `·`   `·`   `·`   `O`   `O`   `O`   `·`   `·`   `O`   `·`   `Ø`   
+  `2016-10-02`   [`XVII Open Cup Grand Prix of Eurasia`]()                               `38/  61`    `5`    `·`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `Ø`   `O`   `·`   `·`   
+  `2016-09-27`   [`2016 Chinese Collegiate Programming Contest Changchun Onsite`]()      `7/ 180`     `3`    `·`   `O`   `·`   `O`   `·`   `O`   `Ø`   `O`   `O`   `O`   `O`         
+  `2016-09-24`   [`2016 ACM-ICPC Asia Regional Beijing Online`]()                        `129/ 711`   `7`    `O`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   `·`   `·`               
+  `2016-09-19`   [`2015 ACM-ICPC Asia Beijing Regional Contest`]()`[2:2]`                `41/ 232`    `5`    `O`   `·`   `·`   `·`   `O`   `·`   `O`   `·`   `Ø`   `O`   `O`         
+  `2016-09-18`   [`2016 ACM-ICPC Asia Regional Shenyang Online`]()                       `6/ 511`     `2`    `O`   `·`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `O`               
+  `2016-09-17`   [`2016 ACM-ICPC Asia Regional Qingdao Online`]()                        `107/1378`   `4`    `O`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   `Ø`   `O`   `·`   `·`
+  `2016-09-15`   [`2015 ACM-ICPC Asia Amritapuri Regional Contest`]()`[2:2]`             `49/ 298`    `3`    `O`   `O`   `Ø`   `·`   `O`   `O`   `O`   `O`   `·`   `·`               
+  `2016-09-10`   [`2016 ACM-ICPC Asia Regional Dalian Online`]()                         `27/ 890`    `3`    `O`   `O`   `·`   `·`   `·`   `O`   `O`   `O`   `O`   `O`               
+  `2016-08-18`   [`2016 Multi-University Training Contest 10`]()                         `42/ 482`    `4`    `O`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   `·`   `·`   `O`         
+  `2016-08-16`   [`2016 Multi-University Training Contest 9`]()                          `27/ 190`    `9`    `·`   `Ø`   `·`   `·`   `·`   `·`   `·`   `·`   `O`   `O`   `·`   `O`   `·`
+  `2016-08-14`   [`2016 Chinese Collegiate Programming Contest Online Preliminary`]()    `28/1236`    `4`    `O`   `O`   `O`   `O`   `·`   `·`   `·`   `O`   `·`   `Ø`   `O`         
+  `2016-08-13`   [`2015-2016 Petrozavodsk Winter Training Camp, Saratov SU Contest`]()   `55/  86`    `7`    `·`   `·`   `·`   `·`   `·`   `·`   `O`   `O`   `O`   `O`   `·`         
+  `2016-08-11`   [`2016 Multi-University Training Contest 8`]()                          `12/ 540`    `5`    `O`   `·`   `O`   `·`   `·`   `O`   `·`   `O`   `O`   `·`   `O`         
+  `2016-08-09`   [`2016 Multi-University Training Contest 7`]()                          `21/ 488`    `5`    `·`   `O`   `O`   `O`   `O`   `·`   `·`   `O`   `·`   `O`   `·`   `O`   
+  `2016-08-06`   [`XVI Open Cup Grand Prix of Bashkortostan`]()                          `50/ 148`    `5`    `O`   `·`   `O`   `O`   `·`   `Ø`   `·`   `O`   `O`   `O`   `·`   `O`   `·`
+  `2016-08-04`   [`2016 Multi-University Training Contest 6`]()                          `65/ 416`    `6`    `O`   `O`   `O`   `·`   `·`   `·`   `·`   `O`   `·`   `Ø`   `·`         
+  `2016-08-02`   [`2016 BUAA Summer Practice 3`]()                                       `--/ ---`    `3`    `O`   `O`   `O`   `·`   `·`   `·`   `O`   `O`   `Ø`   `O`   `Ø`   `O`   
+  `2016-08-02`   [`2016 Multi-University Training Contest 5`]()                          `40/ 528`    `2`    `O`   `Ø`   `O`   `Ø`   `O`   `·`   `O`   `Ø`   `·`   `Ø`   `O`   `O`   
+  `2016-07-30`   [`2014-2015 ACM-ICPC, NEERC, Eastern Subregional Contest`]()            `79/ 452`    `3`    `O`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `Ø`   `·`   `O`   
+  `2016-07-28`   [`2016 Multi-University Training Contest 4`]()                          `17/ 571`    `3`    `O`   `Ø`   `Ø`   `·`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`   
+  `2016-07-26`   [`2016 Multi-University Training Contest 3`]()                          `24/ 571`    `3`    `O`   `O`   `O`   `O`   `·`   `·`   `Ø`   `Ø`   `·`   `O`   `O`         
+  `2016-07-21`   [`2016 Multi-University Training Contest 2`]()                          `46/ 555`    `2`    `O`   `O`   `·`   `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `O`   `Ø`   `O`   `O`   `·`
+  `2016-07-17`   [`2012 Multi-University Training Contest 4`]()                          `28/ 190`    `1`    `Ø`   `O`   `Ø`   `O`   `O`   `O`   `Ø`   `·`   `O`                     
+  `2016-07-08`   [`XVI Open Cup Grand Prix of Siberia`]()                                `32/ 158`    `2`    `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `·`   `O`   `O`   `·`   
+  `2016-07-06`   [`XVI Open Cup Grand Prix of Ekaterinburg`]()                           `115/ 171`   `7`    `·`   `O`   `·`   `O`   `·`   `O`   `O`   `·`   `·`   `·`   `·`         
+  `2016-05-22`   [`XVI Open Cup Grand Prix of SPB`]()                                    `117/ 180`   `6`    `O`   `·`   `·`   `·`   `O`   `Ø`   `O`   `O`   `O`   `·`   `·`   `·`   
+  `2016-05-08`   [`PKU Campus 2016`]()                                                   `87/ 366`    `6`    `O`   `·`   `·`   `·`   `·`   `·`   `O`   `O`   `·`   `O`               
+  `2016-04-30`   [`THU Campus 2016`]()                                                   `??/  ??`    `8`    `O`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   `·`   `·`               
+  `2016-04-24`   [`XVI Open Cup Grand Prix of Southern Caucasus`]()                      `77/ 143`    `8`    `·`   `·`   `·`   `O`   `·`   `O`   `·`   `·`   `·`   `·`   `·`         
+  `2016-04-17`   [`XVI Open Cup Grand Prix of Eurasia`]()                                `111/ 355`   `4`    `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`   `·`   
+  `2016-04-10`   [`2016 BUPT Collegiate Programming Contest`]()                          `15/ 103`    `4`    `O`   `O`   `O`   `O`   `O`   `·`   `O`   `Ø`   `·`   `·`   `O`   `·`   
+  `2016-04-04`   [`XVI Open Cup Grand Prix of Japan`]()                                  `39/ 197`    `3`    `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `·`   `O`               
+  `2016-03-27`   [`XVI Open Cup Grand Prix of Ukraine`]()                                `76/ 272`    `5`    `O`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `·`   `O`   `·`   `·`   `O`
+  `2016-03-20`   [`XVI Open Cup Grand Prix of Baltics`]()                                `71/  96`    `5`    `·`   `·`   `·`   `·`   `O`   `O`   `O`   `O`   `·`   `O`               
+  `2016-03-13`   [`XVI Open Cup Grand Prix of Tatarstan`]()                              `40/  87`    `5`    `·`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `O`
+  `2016-01-31`   [`ICPCCamp 2016 Day7 Moscow SU Trinity Contest`]()                      `21/  58`    `6`    `O`   `·`   `·`   `·`   `O`   `·`   `O`   `Ø`   `·`   `O`   `·`         
+  `2016-01-30`   [`ICPCCamp 2016 Day6 Spb SU and Spb AU Contest`]()                      `15/  57`    `6`    `·`   `·`   `·`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   
+  `2016-01-28`   [`ICPCCamp 2016 Day4 Grand Prix of China`]()                            `53/  55`    `9`    `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `O`               
+  `2016-01-27`   [`ICPCCamp 2016 Day3 SJTU Dreadnought Contest`]()                       `32/  56`    `6`    `O`   `·`   `·`   `·`   `·`   `O`   `·`   `Ø`   `·`   `O`               
+  `2016-01-26`   [`ICPCCamp 2016 Day2 ZhejiangU Contest`]()                              `12/  54`    `6`    `O`   `·`   `Ø`   `·`   `O`   `·`   `Ø`   `·`   `·`   `·`               
+  `2016-01-25`   [`ICPCCamp 2016 Day1 Ftiasch's Contest 4`]()                            `29/  41`    `4`    `Ø`   `Ø`   `·`   `O`   `·`   `Ø`   `Ø`   `Ø`   `·`   `·`               
+
+------------------------------------------------------------------------
+
+ \
+` · 尚未通过  O 当场通过  [X:Y] 非标准组队赛：X个人使用Y台电脑`\
+`  ! 口头通过  Ø 赛后通过  [IND] 个人赛(page需放在个人目录下)`
+
+Other
+=====
+
+-   训练计划表
+-   [Team Training 2015]()
+
