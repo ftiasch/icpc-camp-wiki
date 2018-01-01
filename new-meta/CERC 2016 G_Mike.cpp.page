@@ -1,0 +1,139 @@
+``` {.cpp}
+#include <cassert>
+#include <cstdio>
+#include <map>
+#include <vector>
+
+#define CHECK(x) assert(x)
+
+using namespace std;
+
+#define MAX 500
+
+typedef long long int64;
+
+int n, m;
+int x[MAX], y[MAX];
+
+map<int64, int64> holes;
+
+const int64 kNone = -1;
+int64 MinOrNone(int64 x, int64 y) {
+  if (x == kNone) return y;
+  if (y == kNone) return x;
+  return min(x, y);
+}
+int64 MaxOrNone(int64 x, int64 y) {
+  if (x == kNone) return y;
+  if (y == kNone) return x;
+  return max(x, y);
+}
+
+struct Span {
+  int64 first;
+  int64 last;
+  Span(int64 first, int64 last) : first(first), last(last) {}
+  static Span Empty() { return Span(kNone, kNone); }
+  static Span Join(const Span& a, const Span& b) {
+    return Span(MinOrNone(a.first, b.first), MaxOrNone(a.last, b.last));
+  }
+};
+
+Span Rec(int x1, int y1, int x2, int y2, int64 v0, int64 multiplier) {
+  bool contains_vertices = false;
+  bool contains_horizontal = false;
+  bool contains_vertical = false;
+  bool inside = false;
+  for (int i = 0; i < m; ++i) {
+    if (x[i] > x1 && x[i] < x2 && y[i] > y1 && y[i] < y2) {
+      contains_vertices = true;
+      break;
+    }
+    const int j = (i + 1 == m) ? 0 : i + 1;
+    if (x[i] == x[j]) {
+      CHECK(y[i] != y[j]);
+      if (x[i] <= x1 && min(y[i], y[j]) <= y1 && max(y[i], y[j]) > y1) {
+        inside = !inside;
+      }
+      if (x[i] > x1 && x[i] < x2 &&
+          max(min(y[i], y[j]), y1) < min(max(y[i], y[j]), y2)) {
+        contains_vertical = true;
+      }
+    } else {
+      CHECK(y[i] == y[j]);
+      if (y[i] > y1 && y[i] < y2 &&
+          max(min(x[i], x[j]), x1) < min(max(x[i], x[j]), x2)) {
+        contains_horizontal = true;
+      }
+    }
+  }
+  const int64 dx = x2 - x1;
+  const int64 dy = y2 - y1;
+  const int64 area = dx * dy;
+  if (contains_vertices || contains_vertical || contains_horizontal) {
+    Span a = Span::Empty();
+    Span b = Span::Empty();
+    if (dx == dy) {
+      if (!contains_vertices && contains_horizontal) {
+        CHECK(!contains_vertical);
+        a = Rec(x1, y1, (x1 + x2) / 2, y2, v0, multiplier * 2);
+        b = Span(a.first + area / 2, a.last + area / 2);
+      } else {
+        a = Rec(x1, y1, (x1 + x2) / 2, y2, v0, multiplier);
+        b = Rec((x1 + x2) / 2, y1, x2, y2, v0 + area / 2, multiplier);
+      }
+    } else {
+      if (!contains_vertices && contains_vertical) {
+        CHECK(!contains_horizontal);
+        a = Rec(x1, y1, x2, (y1 + y2) / 2, v0, multiplier * 2);
+        b = Span(a.first + area / 2, a.last + area / 2);
+      } else {
+        a = Rec(x1, y1, x2, (y1 + y2) / 2, v0, multiplier);      
+        b = Rec(x1, (y1 + y2) / 2, x2, y2, v0 + area / 2, multiplier);
+      }
+    }
+    if (a.last != kNone && b.first != kNone && a.last + 1 < b.first) {
+      holes[b.first - a.last - 1] += multiplier;
+    }
+    return Span::Join(a, b);
+  } else {
+    return inside ? Span(v0, v0 + area - 1) : Span::Empty();
+  }
+}
+
+int main() {
+  CHECK(scanf("%d", &n));
+  CHECK(scanf("%d", &m));
+  for (int i = 0; i < m; ++i) {
+    CHECK(scanf("%d%d", &x[i], &y[i]));
+  }
+  Span span = Rec(0, 0, 1 << n, 1 << n, 0, 1);
+
+  vector<int64> hole_size(1, 0);
+  vector<int64> partial_cnt(1, 0);
+  vector<int64> partial_sum(1, 0);
+  for (map<int64, int64>::reverse_iterator it = holes.rbegin();
+       it != holes.rend(); ++it) {
+    fprintf(stderr, "%lld -> %lld\n", it->first, it->second);
+    hole_size.push_back(it->first);
+    partial_cnt.push_back(partial_cnt.back() + it->second);
+    partial_sum.push_back(partial_sum.back() + it->first * it->second);
+  }
+
+  int Q;
+  CHECK(scanf("%d", &Q));
+  for (int qq = 0; qq < Q; ++qq) {
+    int k;
+    CHECK(scanf("%d", &k));
+    const int n_holes = min((int64)k - 1, partial_cnt.back());
+    const int i = lower_bound(partial_cnt.begin(), partial_cnt.end(), n_holes) -
+                  partial_cnt.begin();
+    const int64 biggest_holes = partial_sum[i] -
+                                (partial_cnt[i] - n_holes) * hole_size[i];
+    const int64 one_approximation = span.last - span.first + 1;
+    const int64 k_approximation = one_approximation - biggest_holes; 
+    printf("%lld\n", k_approximation);
+  }
+  return 0;
+}
+```
