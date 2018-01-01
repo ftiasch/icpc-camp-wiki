@@ -1,0 +1,172 @@
+Code
+
+``` {.cpp}
+
+#include<cstring>
+#include<cstdio>
+#include<algorithm>
+#include<vector>
+using namespace std;
+const int N(55);
+int modulo(1e9 + 7);
+int c[N][N], siz[N], dep[N], fa[N], dp1[N], dp2[N], dp[N][N][N];
+bool f[N];
+vector<int> edges[N];
+void dfs(int v) {
+    siz[v] = 1;
+    for(int p(0); p < (int)edges[v].size(); p++) {
+        int y(edges[v][p]);
+        if(y != fa[v]) {
+            fa[y] = v;
+            dep[y] = dep[v] + 1;
+            dfs(y);
+            siz[v] += siz[y];
+        }
+    }
+}
+int I, J, X, Y, LCA;
+void dfs1(int v) {
+    dp1[v] = 1;
+    int tot(0);
+    for(int p(0); p < (int)edges[v].size(); p++) {
+        int y(edges[v][p]);
+        if(y != fa[v]) {
+            dfs1(y);
+            if(!f[y]) {
+                tot += siz[y];
+                dp1[v] = ((long long)dp1[v] * c[tot][siz[y]] % modulo * dp1[y]) % modulo;
+            }else {
+                X = y;
+            }
+        }
+    }
+    //printf("%d %d %d\n", I, v, dp1[v]);
+    if(f[v]) {
+        if(v == I) {
+            dp[I][v][siz[v]] = dp1[v];
+            fill(dp[I][v] + 1, dp[I][v] + siz[v], 0);
+        }else {
+            for(int i(1); i <= siz[v]; i++) {
+                dp[I][v][i] = 0;
+                for(int j(max(siz[X] - siz[v] + i + 1, 1)); j <= i && j <= siz[X]; j++) {
+                    dp[I][v][i] = (dp[I][v][i] + (long long)dp[I][X][j] * c[i - 1][j - 1] % modulo * c[siz[v] - i - 1][siz[X] - j]) % modulo;
+                }
+                dp[I][v][i] = ((long long)dp[I][v][i] * dp1[v]) % modulo;
+            }
+        }
+    }else {
+        // do nothing
+    }
+}
+void dfs2(int v) {
+    if(v == LCA) {
+        int tot[siz[Y] + 1];
+        tot[0] = 0;
+        for(int i(1); i <= siz[Y]; i++) {
+            tot[i] = (tot[i - 1] + dp[J][Y][i]) % modulo;
+        }
+        dp2[v] = 0;
+        for(int i(1); i <= siz[X]; i++) {
+            for(int j(i); j <= siz[X] + siz[Y] - (siz[X] - i); j++) {
+                dp2[v] = (dp2[v] + (long long)dp[I][X][i] * c[j - 1][i - 1] % modulo * c[siz[X] + siz[Y] - j][siz[X] - i] % modulo * tot[j - i]) % modulo;
+            }
+        }
+    }else {
+        dp2[v] = 1;
+    }
+    int tot(0);
+    for(int p(0); p < (int)edges[v].size(); p++) {
+        int y(edges[v][p]);
+        if(y != fa[v] && y != X && y != Y) {
+            dfs2(y);
+            dp2[v] = (long long)dp2[v] * dp2[y] % modulo;
+            tot += siz[y];
+            dp2[v] = (long long)dp2[v] * c[tot][siz[y]] % modulo;
+        }
+    }
+    if(v == LCA) {
+        tot += siz[X] + siz[Y];
+        dp2[v] = (long long)dp2[v] * c[tot][siz[X] + siz[Y]] % modulo;
+    }
+}
+int main() {
+    for(int i(0); i <= 50; i++) {
+        for(int j(0); j <= i; j++) {
+            if(i == 0 || j == 0) {
+                c[i][j] = 1;
+            }else {
+                c[i][j] = (c[i - 1][j - 1] + c[i - 1][j]) % modulo;
+            }
+        }
+    }
+    int n, rt;
+    while(2 == scanf("%d%d", &n, &rt)) {
+        for(int i(1); i <= n; i++) {
+            edges[i].clear();
+        }
+        for(int i(0); i < n - 1; i++) {
+            int x, y;
+            scanf("%d%d", &x, &y);
+            edges[x].push_back(y);
+            edges[y].push_back(x);
+        }
+        fill(fa + 1, fa + 1 + n, 0);
+        fill(dep + 1, dep + 1 + n, 0);
+        dfs(rt);
+        //for(int i(1); i <= n; i++) {
+        //printf("fa[%d] = %d, dep[%d] = %d\n", i, fa[i], i, dep[i]);
+        //}
+        for(int i(1); i <= n; i++) {
+            int x(i);
+            fill(f + 1, f + 1 + n, false);
+            while(x != 0) {
+                f[x] = true;
+                x = fa[x];
+            }
+            I = i;
+            dfs1(rt);
+            /*for(int j(1); j <= n; j++) {
+                if(f[j]) {
+                    for(int k(1); k <= siz[j]; k++) {
+                        printf("dp[%d][%d][%d] = %d\n", i, j, k, dp[i][j][k]);
+                    }
+                }else {
+                    printf("dp1[%d] = %d\n", j, dp1[j]);
+                }
+            }*/
+        }
+        int ans(0);
+        for(int i(1); i < n; i++) {
+            for(int j(i + 1); j <= n; j++) {
+                I = i; J = j;
+                int x(i), y(j);
+                while(dep[x] > dep[y]) {
+                    x = fa[x];
+                }
+                while(dep[y] > dep[x]) {
+                    y = fa[y];
+                }
+                if(x == y) {
+                    if(dep[i] < dep[j]) {
+                        for(int k(1); k <= siz[rt]; k++) {
+                            ans = (ans + dp[i][rt][k]) % modulo;
+                        }
+                    }else {
+                        //do nothing
+                    }
+                    continue;
+                }
+                while(x != y) {
+                    X = x; Y = y;
+                    x = fa[x];
+                    y = fa[y];
+                }
+                LCA = x;
+                dfs2(rt);
+                ans = (ans + dp2[rt]) % modulo;
+            }
+        }
+        printf("%d\n", ans);
+    }
+}
+```
