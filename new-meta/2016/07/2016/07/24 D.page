@@ -1,0 +1,151 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 1e5 + 5, MOD = 1e9 + 7;
+struct nod
+{
+    vector<int> b, c;
+    int ans, a;
+    nod()
+    {
+        ans = 0;
+        a = -1;
+        b.clear();
+        c.clear();
+    }
+};
+nod operator + (const nod &a, const nod &b)
+{
+    nod c = nod();
+    c.ans = b.ans + a.ans;
+    int new_sz = a.b.size() + b.b.size();
+    c.b.resize(new_sz);
+    c.c.resize(new_sz);
+    merge(a.b.begin(), a.b.end(), b.b.begin(), b.b.end(), c.b.begin());
+    int i = 0, las = 0;
+    for (int k = 0; k < (int) c.b.size(); ++ k)
+    {
+        if (i < (int) a.b.size() && a.b[i] == c.b[k])
+        {
+            ++ i;
+            ++ las;
+        }
+        c.c[k] = las;
+    }
+    return c;
+}
+nod tree[N * 4];
+int a[N], b[N];
+void build(int l, int r, int x)
+{
+    if (l > r) return;
+    if (l == r)
+    {
+        tree[x].a = (a[l] >= b[l] ? 1 : 0);
+        tree[x].ans = a[l] >= b[l];
+        tree[x].b.clear();
+        tree[x].c.clear();
+        tree[x].b.push_back(b[l]);
+        tree[x].c.push_back(0);
+        return;
+    }
+    int mid = (l + r) / 2;
+    build(l, mid, x << 1);
+    build(mid + 1, r, (x << 1) + 1);
+    tree[x] = tree[x << 1] + tree[(x << 1) + 1];
+}
+void pd(int x)
+{
+    if (tree[x].a == -1) return;
+    int p = tree[x].a, p1 = 0, p2 = 0;
+    if (p)
+    {
+        p1 = tree[x].c[p - 1];
+        p2 = p - tree[x].c[p - 1];
+    }
+    tree[x << 1].ans = tree[x << 1].a = p1;
+    tree[(x << 1) + 1].ans = tree[(x << 1) + 1].a = p2;
+    tree[x].a = -1;
+}
+int query(int l, int r, int ql, int qr, int x)
+{
+    if (r < ql || l > qr || l > r) return 0;
+    if (l < r) pd(x);
+    if (ql <= l && r <= qr)
+    {
+        //printf("query %d - %d : %d\n", l, r, tree[x].ans);
+        return tree[x].ans;
+    }
+    int mid = (l + r) / 2;
+    return query(l, mid, ql, qr, x << 1) + query(mid + 1, r, ql, qr, (x << 1) + 1);
+}
+int change(int l, int r, int ql, int qr, int x, int p)
+{
+    //printf("in change %d - %d, %d\n", l, r, p);
+    if (l > r) return 0;
+    if (r < ql || l > qr) return tree[x].ans;
+    if (l < r) pd(x);
+    if (ql <= l && r <= qr)
+    {
+        tree[x].ans = tree[x].a = p;
+        return p;
+    }
+    int mid = (l + r) / 2, p1 = 0, p2 = 0;
+    if (p)
+    {
+        p1 = tree[x].c[p - 1];
+        p2 = p - tree[x].c[p - 1];
+    }
+    return tree[x].ans = change(l, mid, ql, qr, x << 1, p1) + change(mid + 1, r, ql, qr, (x << 1) + 1, p2);
+}
+int A, B, C = ~(1<<31), M = (1<<16)-1;
+int rnd(int last) {
+    A = (36969 + (last >> 3)) * (A & M) + (A >> 16);
+    B = (18000 + (last >> 3)) * (B & M) + (B >> 16);
+    return (C & ((A << 16) + B)) % 1000000000;
+}
+int main()
+{
+    int TT;
+    scanf("%d", &TT);
+    while (TT --)
+    {
+        int n, m, las = 0;
+        scanf("%d%d%d%d", &n, &m, &A, &B);
+        for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+        for (int i = 1; i <= n; ++ i) scanf("%d", &b[i]);
+        build(1, n, 1);
+        int ans = 0;
+        //for (int i = 0; i < (int) tree[4].c.size(); ++ i) printf("%d ", tree[4].c[i]); puts("");
+        //printf("sdali : %d\n", query(1, n, 1, 4, 1));
+        for (int i = 1; i <= m; ++ i)
+        {
+             int l = rnd(las) % n + 1, r = rnd(las) % n + 1, x = rnd(las) + 1;
+             if (l > r) swap(l, r);
+             if ((l + r + x) & 1)
+             {
+                 //printf("change %d %d %d\n", l, r, x);
+                 int p = upper_bound(tree[1].b.begin(), tree[1].b.end(), x) - tree[1].b.begin();
+                 //printf("     p=%d\n", p);
+                 change(1, n, l, r, 1, p);
+             }
+             else
+             {
+                 int tmp = query(1, n, l, r, 1);
+                 //printf("query %d %d\n", l, r);
+                 //printf("       tmp=%d\n", tmp);
+                 (ans += 1LL * i * tmp % MOD) %= MOD;
+                 las = tmp;
+             }
+        }
+        printf("%d\n", ans);
+    }
+}
+```
