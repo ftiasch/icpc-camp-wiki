@@ -1,0 +1,95 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e6 + 7;
+const int MOD = 1e9 + 123;
+
+char s[N];
+int spe[N], n, con[N], f[N], go[N];
+
+bool test(int l, int r, int period) {
+    // case 1. rest() = empty
+    if ((r - l + 1) % period == 0) return true;
+    int v = (r - l + 1) % period;
+    int lcp = min(min(l - 1, go[l + v]), period - v);
+    // case 2. is prefix
+    if (lcp == period - v) return true;
+    // case 3. less than
+    if (lcp < l - 1 && s[l + v + lcp] < s[lcp + 1]) return true;
+
+    return false;
+}
+
+void exkmp() {
+    go[1] = -1;
+    int j = 1;
+    for (int i = 2; i <= n; i++) {
+        if (go[j] + j - 1 >= i) {
+            go[i] = min(go[i - j + 1], go[j] + j - i);
+        } else {
+            go[i] = 0;
+        }
+        while (i + go[i] - 1 <= n && s[go[i] + 1] == s[i + go[i]]) go[i]++;
+        if (i + go[i] > j + go[j]) {
+            j = i;
+        }
+    }
+}
+
+int solve() {
+    scanf("%s", s + 1);
+    n = strlen(s + 1);
+    exkmp();
+    fill(spe + 1, spe + n + 1, n + 1);
+    spe[1] = 0;
+    int m = 0, i, j;
+    while (m < n) {
+        i = m + 1, j = m + 2;
+        f[i] = m;
+        spe[i] = min(spe[i], m);
+        while (true) {
+            int period = j - i;
+            if (j == n + 1 || s[i] > s[j]) {
+                while (m < i) m += period;
+                break;
+            }
+            if (s[i] == s[j]) {
+
+            } else {
+                i = m;
+                period = j - m;
+            }
+            if (test(m + 1, j, period)) {
+                f[j] = m;
+                spe[j] = min(spe[j], m);
+            } else {
+                assert(j - period != m);
+                f[j] = f[j - period] + period;
+                spe[j] = min(spe[j], f[j]);
+            }
+            ++i, ++j;
+        }
+    }
+    int ret = 0;
+    // for (int i = 1; i <= n; i++) {
+    //  printf("%d ", spe[i]);
+    // }
+    // puts("");
+    const int MAGIC = 8753;
+    for (int i = n; i >= 1; i--) {
+        ret = (1LL * ret * MAGIC + spe[i]) % MOD;
+    }
+    return ret;
+}
+
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    while (tests--) {
+        printf("%d\n", solve());
+    }
+    return 0;
+}
+```
