@@ -1,0 +1,37 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(1111111);
+int a[N], s[N], sum[N];
+int main() {
+    int n;
+    scanf("%d", &n);
+    for(int i(0); i < n; i++) {
+        scanf("%d", &a[i]);
+        a[i + n] = a[i];
+    }
+    for(int i(0); i < 2 * n; i++) {
+        s[i] = i == 0 ? a[i] : s[i - 1] + a[i];
+    }
+    int len(n / 2);
+    for(int i(0); i < 2 * n; i++) {
+        if(i >= len - 1)
+            sum[i] = s[i] - (i == len - 1 ? 0 : s[i - len]);
+    }
+    
+    deque<int> q;
+    int ans(2e9);
+    for(int i(0); i < 2 * n; i++) {
+        if(i >= n) 
+            ans = min(ans, sum[q.front()]);
+        if(i >= len - 1) {
+            while(!q.empty() && sum[q.back()] < sum[i])
+                q.pop_back();
+            q.push_back(i);
+            while(q.back() - q.front() + 1 > n - len)
+                q.pop_front();
+        }
+    }
+    printf("%d\n", s[n - 1] - ans);
+}
+```
