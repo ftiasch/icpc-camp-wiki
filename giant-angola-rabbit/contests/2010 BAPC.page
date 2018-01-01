@@ -1,0 +1,64 @@
+Link
+====
+
+[vjudge](http://vjudge.net/contest/134628#overview)
+
+Summary
+=======
+
+Problems
+========
+
+A Gene Shuffle
+--------------
+
+直接做。
+
+B Top 2000
+----------
+
+直接做。
+
+The Twin Tower
+--------------
+
+预处理出状态后做矩阵乘法快速幂。
+
+D Collatz
+---------
+
+直接做。
+
+E Clocks
+--------
+
+F Maze Recognition
+------------------
+
+交互是题目。
+
+G Snooker
+---------
+
+直接做。
+
+H Pie Division
+--------------
+
+I Keylogger
+-----------
+
+直接做。
+
+J Wrong Answer
+--------------
+
+因为同一方向的字谜不会重叠，所以是一个二分图。做匹配。
+
+K Cunning Minister
+------------------
+
+L 01
+----
+
+直接做。
