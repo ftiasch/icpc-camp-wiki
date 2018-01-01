@@ -1,0 +1,43 @@
+A. Decimal Sequences \[skyxuan\]
+--------------------------------
+
+取长度小于4的所有数字就可以判断出来了。
+
+B. Squeeze the Cylinders \[skyxuan\]
+------------------------------------
+
+把圆按顺序放好就行
+
+C. Sibling Rivalry
+------------------
+
+D. Wall Clocks \[skyxuan\]
+--------------------------
+
+抽象之后变成在环上取一些点使得每个区间都有点，枚举一个端点把环断开就是一个经典问题了。
+
+E. Bringing Order to Disorder
+-----------------------------
+
+F. Deadlock Detection \[skyxuan\]
+---------------------------------
+
+二分deadlock-unavoidable出现的位置，之后贪心的处理所有进程，看是否能全部结束。
+
+G. Do Geese See God?
+--------------------
+
+H. Rotating Cutter Bits
+-----------------------
+
+I. Routing a Marathon Race
+--------------------------
+
+J. Post Office Investigation
+----------------------------
+
+K. Min-Max Distance Game
+------------------------
+
+Summary
+-------
