@@ -1,0 +1,153 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e5 + 7;
+
+int w[N];
+long long ans, sum[N];
+int n, q;
+long long allv = 0;
+
+vector<pair<long long, pair<int, int>>> start[N << 1], over[N << 1];
+
+struct Node {
+    int cnt[2], cover[2], mix;
+}tree[N << 4];
+
+void add(int s, int t, int tag, long long v) {
+    start[s].push_back({v, {tag, t - 1}});
+    over[t - 1].push_back({v, {tag, s}});
+}
+
+void fresh(int x, int l, int r) {
+    assert(tree[x].cover[0] >= 0 && tree[x].cover[1] >= 0);
+    if (tree[x].cover[0] && tree[x].cover[1]) {
+        tree[x].cnt[0] = tree[x].cnt[1] = tree[x].mix = r - l + 1;
+    } else {
+        for (int c = 0; c < 2; c++) {
+            tree[x].cnt[c] = (l == r ? 0 : tree[x << 1].cnt[c] + tree[x << 1 | 1].cnt[c]);
+        }
+        if (tree[x].cover[0]) {
+            tree[x].cnt[0] = r - l + 1;
+            tree[x].mix = tree[x].cnt[1];
+        } else if (tree[x].cover[1]) {
+            tree[x].cnt[1] = r - l + 1;
+            tree[x].mix = tree[x].cnt[0];
+        } else {
+            tree[x].mix = (l == r ? 0 : tree[x << 1].mix + tree[x << 1 | 1].mix);
+        }
+    }
+}
+
+void insert(int x, int l, int r, int ql, int qr, int tag, int delta) {
+    if (qr < l || r < ql) return ;
+    if (ql <= l && r <= qr) {
+        tree[x].cover[tag] += delta;
+        fresh(x, l, r);
+        return ;
+    }
+    int mid = (l + r) / 2;
+    insert(x << 1, l, mid, ql, qr, tag, delta);
+    insert(x << 1 | 1, mid + 1, r, ql, qr, tag, delta);
+    fresh(x, l, r);
+}
+
+long long getv(int l, int r) {
+    l %= n, r %= n;
+    if (l <= r) {
+        return sum[r + 1] - sum[l];
+    } else {
+        return allv - sum[l] + sum[r + 1];
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &q);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &w[i]);
+        allv += w[i];
+        sum[i + 1] = sum[i] + w[i];
+    }
+    ans = 0;
+    long long ansr = 0;
+    for (int i = 0; i < q; i++) {
+        int s, t;
+        scanf("%d %d", &s, &t);
+        if (s < t) {
+            t--;
+            long long st = sum[t + 1] - sum[s];
+            ans += st;
+            ansr += allv - st;
+            add(s, t + 1, 0, st);
+            add(t + 1, s + n, 1, allv - st);
+            add(s + n, t + 1 + n, 0, st);
+            if (s == 0) add(t + 1 + n, s + n + n, 1, allv - st);
+        } else if (s > t) {
+            s--;
+            long long st = sum[s + 1] - sum[t];
+            ans += allv - st;
+            ansr += st;
+            add(t, s + 1, 1, st);
+            add(s + 1, t + n, 0, allv - st);
+            add(t + n, s + 1 + n, 1, st);
+            if (t == 0) add(s + 1 + n, t + n + n, 0, allv - st);
+        }
+    }
+    ans = min(ans, ansr);
+    // cout << ans << endl;
+    // ans = 1e18;
+    int nn = 2 * n - 1;
+    long long cur = 0;
+    for (int l = 2 * n - 1, r = 2 * n; l >= 0; l--) {
+        while (r >= l + n) {
+            r--;
+            for (auto w : over[r]) {
+                int ll = w.second.second, rr = r;
+                // cout << "delete " << w.second.first << " (" << ll << ", " << rr << ")" << endl;
+                insert(1, 0, nn, ll, rr, w.second.first, -1);
+                cur -= w.first;
+            }
+        }
+        if (l <= n) {
+            long long tmp = cur;
+            bool gg = false;
+            vector<pair<pair<int, int>, int>> collect;
+            vector<int> pos;
+            for (auto w : start[l]) {
+                if (w.second.first == 0) {
+                    pos.push_back(w.second.second);
+                } else {
+                    gg = true;
+                }
+            }
+            sort(pos.begin(), pos.end());
+            for (auto p : pos) {
+                tmp += getv(l, p);
+                insert(1, 0, nn, l, p, 0, 1);
+            }
+            if (!gg && tree[1].mix == 0) ans = min(ans, tmp);
+            for (int i = pos.size() - 1; i >= 0; i--) {
+                tmp -= getv(l, pos[i]);
+                insert(1, 0, nn, l, pos[i], 0, -1);
+                tmp += getv(pos[i] + 1, l + n - 1);
+                insert(1, 0, nn, pos[i] + 1, l + n - 1, 1, 1);
+                if (!gg && tree[1].mix == 0) ans = min(ans, tmp);
+            }
+            for (auto p : pos) {
+                insert(1, 0, nn, p + 1, l + n - 1, 1, -1);
+            }
+        }
+        // cout << cur << endl;
+        for (auto w : start[l]) {
+            int ll = l, rr = w.second.second;
+            // cout << "insert " << w.second.first << " (" << ll << ", " << rr << ")" << endl;
+            insert(1, 0, nn, ll, rr, w.second.first, 1);
+            cur += w.first;
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
