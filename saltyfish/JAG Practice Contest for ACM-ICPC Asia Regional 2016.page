@@ -1,35 +1,46 @@
-# A Best Matched Pair [ghc]
+A Best Matched Pair \[ghc\]
+===========================
 
 暴力枚举两个数乘起来判断是否合法
 
-# B Help the Princess! [hwq]
+B Help the Princess! \[hwq\]
+============================
 
 求出从终点出发到每个位置的最短路，如果某个士兵能够比公主更早到终点，就可以在终点等着
 
-# C We don't wanna work! [hwq补]
+C We don't wanna work! \[hwq补\]
+================================
 
 按照题意模拟即可，注意题意要求，每次操作判断人数是否失衡
 
-# D Parentheses [zyh&ghc]
+D Parentheses \[zyh&ghc\]
+=========================
 
 构造，"))...)(...(("（k个左括号k个右括号）需要k(k+1)/2交换才能得到合法括号序列，然后在第n-k(k+1)/2个左括号右边放一个"()"
 
-# E Similarity of Subtrees [zyh&hwq]
+E Similarity of Subtrees \[zyh&hwq\]
+====================================
 
 对子树T的S(T,·)序列多项式hash，合并两棵子树就是两棵子树的hash值相加
 
-# F Escape from the Hell [zyh&ghc]
+F Escape from the Hell \[zyh&ghc\]
+==================================
 
-# G Share the Ruins Preservation [zyh]
+G Share the Ruins Preservation \[zyh\]
+======================================
 
 按x排序，水平序求出上下凸壳，来回扫一次，即可求出前若干个点和后若干个点的凸包面积大小，然后枚举分割线
 
-# H Pipe Fitter and the Fierce Dogs
+H Pipe Fitter and the Fierce Dogs
+=================================
 
-# I Multisect
+I Multisect
+===========
 
-# J Compressed Formula
+J Compressed Formula
+====================
 
-# K Non-redundant Drive [zyh补]
+K Non-redundant Drive \[zyh补\]
+===============================
 
-点分治，求出从重心出发到每个点初始所需的最少油量以及油量变化量，用线段树维护，然后求出从每个点出发到重心的历史最低油量以及油量变化量，如果历史最低油量>=0说明可以到重心，然后在线段树上查询
+点分治，求出从重心出发到每个点初始所需的最少油量以及油量变化量，用线段树维护，然后求出从每个点出发到重心的历史最低油量以及油量变化量，如果历史最低油量&gt;=0说明可以到重心，然后在线段树上查询
