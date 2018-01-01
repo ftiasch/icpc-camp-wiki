@@ -1,0 +1,21 @@
+2014ACM/ICPC亚洲区广州站
+========================
+
+题解
+====
+
+The E-pang Palace
+-----------------
+
+水题啦，暴力判判判就好了
+
+Little Zu Chongzhi's Triangles
+------------------------------
+
+C(12,3)*C(9,3)*C(6,3)的复杂度去枚举就好了
+
+Song Jiang's rank list
+----------------------
+
+How Many Maos Does the Guanxi Worth
+-----------------------------------
