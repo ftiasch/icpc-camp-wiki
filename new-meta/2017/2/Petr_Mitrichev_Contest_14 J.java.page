@@ -1,0 +1,225 @@
+``` {.java}
+import java.io.*;
+import java.util.*;
+import java.math.*;
+public class Main {
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    PrintWriter writer = new PrintWriter(System.out);
+    StringTokenizer tokenizer = null;
+    int min(int a, int b) {
+        if (a < b) return a;
+        return b;
+    }
+    void solve() throws Exception {
+        //Scanner cin = new Scanner(System.in);
+        int N = 500;
+        BigInteger [] P = new BigInteger [N + 1];
+        P[0] = BigInteger.ONE;
+        for (int i = 1; i <= N; ++ i) P[i] = P[i - 1].multiply(BigInteger.valueOf(i));
+        BigInteger [][] dp = new BigInteger [N + 1][];
+        BigInteger [][] C = new BigInteger [N + 1][];
+        for (int i = 0; i <= N; ++ i) {
+            dp[i] = new BigInteger[N + 1];
+            C[i] = new BigInteger[N + 1];
+            for (int j = 0; j <= N; ++ j) C[i][j] = BigInteger.ZERO;
+            C[i][0] = BigInteger.ONE;
+            for (int j = 1; j <= i; ++ j) C[i][j] = C[i - 1][j - 1].add(C[i - 1][j]);
+            for (int j = 0; j <= N; ++ j) dp[i][j] = BigInteger.ZERO;
+        }
+        /*dp[0][0] = BigInteger.ONE;
+          for (int i = 0; i <= N; ++ i) {
+          for (int j = 0; j + i <= N; ++ j) {
+          for (int k = 0; k <= i; ++ k) {
+          BigInteger mp;
+          if (k % 2 == 0) mp = BigInteger.ONE; else mp = BigInteger.valueOf(-1);
+          dp[i][j] = dp[i][j].add(mp.multiply(C[i][k]).multiply(P[j + i - k]));
+          }
+          }
+          }*/
+        dp[0][0] = BigInteger.ONE;
+        for (int j = 1; j <= N; ++ j) {
+            dp[0][j] = dp[0][j - 1].multiply(BigInteger.valueOf(j));
+        }
+        for (int i = 1; i <= N; ++ i) {
+            for (int j = 0; i + j <= N; ++ j) {
+                if (i >= 2) {
+                    dp[i][j] = dp[i][j].add(dp[i - 2][j].multiply(BigInteger.valueOf(i - 1)));
+                }
+                dp[i][j] = dp[i][j].add(dp[i - 1][j].multiply(BigInteger.valueOf(i - 1)));
+                if (j >= 1) {
+                    dp[i][j] = dp[i][j].add(dp[i - 1][j - 1].multiply(BigInteger.valueOf(j)));
+                    dp[i][j] = dp[i][j].add(dp[i][j - 1].multiply(BigInteger.valueOf(j)));
+                }
+            }
+        }
+        int t = nextInt(); //cin.nextInt();
+        for (int rr = 0; rr < t; ++ rr) {
+            int n = nextInt(); //cin.nextInt();
+            int k = nextInt(); //cin.nextInt();
+            BigInteger d = nextBigInteger(); //cin.nextBigInteger();
+            int [] ans = new int [n + 5];
+            boolean [] use = new boolean [n + 5];
+            for (int i = 1; i <= n; ++ i) use[i] = false;
+            int a = 0, b = 0;
+            for (int i = 1; i <= n; ++ i) {
+                int [] alive = new int [n + 5];
+                alive[0] = 0;
+                for (int j = 1; j <= n; ++ j) {
+                    alive[j] = alive[j - 1];
+                    if (use[j]) continue;
+                    alive[j] ++;
+                }
+                BigInteger c0, c1, c2;
+                int r = n - i;
+                {
+                    int aa = a, bb = b;
+                    if (use[i]) bb --;
+                    c0 = BigInteger.ZERO;
+                    if (k - aa >= 0 && k - aa <= r && r - bb - (k - aa) >= 0) {
+                        int ii = r - bb - (k - aa);
+                        int jj = bb;
+                        if (ii >= 0 && jj >= 0) {
+                            //writer.println(ii + "*" + jj);
+                            //writer.println((r - bb) + "*" + (k - aa));
+                            c0 = dp[ii][jj].multiply(C[r - bb][k - aa]);
+                        }
+                    }
+                }
+                {
+                    int aa = a, bb = b;
+                    if (use[i]) bb --;
+                    c1 = BigInteger.ZERO;
+                    aa ++;
+                    if (k - aa >= 0 && k - aa <= r && r - bb - (k - aa) >= 0) {
+                        int ii = r - bb - (k - aa);
+                        int jj = bb;
+                        if (ii >= 0 && jj >= 0) {
+                            //writer.println(ii + "*" + jj);
+                            //writer.println((r - bb) + "*" + (k - aa));
+                            c1 = dp[ii][jj].multiply(C[r - bb][k - aa]);
+                        }
+                    }
+                }
+                {
+                    int aa = a, bb = b;
+                    if (use[i]) bb --;
+                    c2 = BigInteger.ZERO;
+                    bb ++;
+                    //writer.println(aa + " : " + bb);
+                    if (k - aa >= 0 && k - aa <= r && r - bb - (k - aa) >= 0) {
+                        int ii = r - bb - (k - aa);
+                        int jj = bb;
+                        if (ii >= 0 && jj >= 0) {
+                            //writer.println(ii + "*" + jj);
+                            //writer.println((r - bb) + "*" + (k - aa));
+                            c2 = dp[ii][jj].multiply(C[r - bb][k - aa]);
+                        }
+                    }
+                }
+                //writer.println(c0 + " + " + c1 + " + " + c2);
+                int L = 1, R = n, res = -1;
+                while (L <= R) {
+                    //writer.println(L + "-" + R);
+                    int mid = (L + R) / 2;
+                    int type0 = alive[min(mid, i - 1)], type1 = alive[min(mid, i)] - type0, type2 = alive[mid] - type0 - type1;
+                    BigInteger calc = c0.multiply(BigInteger.valueOf(type0)).add(c1.multiply(BigInteger.valueOf(type1)).add(c2.multiply(BigInteger.valueOf(type2))));
+                    //writer.println(type0 + "," + type1 + "," + type2);
+                    //writer.println(calc + " === " + d);
+                    if (calc.compareTo(d) < 0) {
+                        L = mid + 1;
+                    }
+                    else {
+                        res = mid;
+                        R = mid - 1;
+                    }
+                }
+                int mid = res - 1;
+                //while (use[mid]) mid --;
+                //writer.println("res=" + res);
+                int type0 = alive[min(mid, i - 1)], type1 = alive[min(mid, i)] - type0, type2 = alive[mid] - type0 - type1;
+                BigInteger calc = c0.multiply(BigInteger.valueOf(type0)).add(c1.multiply(BigInteger.valueOf(type1)).add(c2.multiply(BigInteger.valueOf(type2))));
+                /*writer.println(type0 + "," + type1 + "," + type2);
+                writer.println(calc + " === " + d);*/
+                d = d.subtract(calc);
+                if (use[i]) b --;
+                if (res > i) b ++;
+                if (res == i) a ++;
+                ans[i] = res;
+                use[res] = true;
+                //writer.println("after " + a + " : " + b);
+                /*for (int j = 1; j <= n; ++ j) {
+                    if (use[j]) continue;
+                    ans[i] = j;
+                    int aa = a, bb = b;
+                    if (j == i) aa ++;
+                    if (use[i]) bb --;
+                    if (j > i) bb ++;
+                    BigInteger calc = BigInteger.ZERO;
+                    int r = n - i;
+                    System.out.println("testing : ");
+                    for (int l = 1; l <= i; ++ l) System.out.print(ans[l] + " "); System.out.println("");
+                    System.out.println("aa=" + aa);
+                    System.out.println("bb=" + bb);
+                    System.out.println("r=" + r);
+                    if (k - aa >= 0 && k - aa <= r && r - bb - (k - aa) >= 0) {
+                        int ii = r - bb - (k - aa);
+                        int jj = bb;
+                        //System.out.println("ii=" + ii + ", jj=" + jj);
+                        calc = dp[ii][jj].multiply(C[r - bb][k - aa]);
+                        //System.out.println(calc + " <> " + d);
+                    } else continue;
+                    if (calc.compareTo(d) < 0) {
+                        d = d.subtract(calc);
+                    }
+                    else {
+                        a = aa;
+                        b = bb;
+                        ans[i] = j;
+                        use[j] = true;
+                        break;
+                    }
+                }*/
+            }
+            for (int i = 1; i <= n; ++ i) {
+                writer.print(ans[i] + " ");
+                //System.out.print(ans[i]);
+                //System.out.print(" ");
+            }
+            writer.println("");
+            //System.out.println("");
+        }
+    }
+    void run()throws Exception{
+        try{
+            while (true) {
+                solve();
+                break;
+            }   
+        }
+        catch(Exception e){
+        }
+        finally{
+            reader.close();
+            writer.close();
+        }
+    }
+    String next()throws Exception{
+        for(;tokenizer == null || !tokenizer.hasMoreTokens();){
+            tokenizer = new StringTokenizer(reader.readLine());
+        }
+        return tokenizer.nextToken();
+    }
+    int nextInt()throws Exception{
+        return Integer.parseInt(next());
+    }
+    double nextDouble()throws Exception{
+        return Double.parseDouble(next());
+    }
+    BigInteger nextBigInteger()throws Exception{
+        return new BigInteger(next());
+    }
+    public static void main(String [] argc)throws Exception{
+        (new Main()).run();
+    }
+};
+```
