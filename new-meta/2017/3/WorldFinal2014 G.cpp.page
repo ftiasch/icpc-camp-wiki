@@ -1,0 +1,167 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 2e2 + 7;
+const int V = N << 1;
+const int E = V * V;
+
+struct Eglist {
+    int to[E << 1], succ[E << 1], last[V], tot;
+    void clear() {
+        tot = 0;
+        memset(last, -1, sizeof(last));
+    }
+    void add_edge(int u, int v) {
+        to[tot] = v, succ[tot] = last[u], last[u] = tot++;
+    }
+}e, g;
+
+int n;
+vector<pair<int, pair<int, int> > > edges;
+int pos[V], col[V];
+
+vector<int> groups[N];
+
+int join(int u, int v) {
+    if (pos[u] == pos[v]) {
+        return 2 * (col[u] == col[v]);
+    }
+    int pu = pos[u], pv = pos[v];
+    if (groups[pu].size() < groups[pv].size()) swap(pu, pv);
+    int s = col[u] ^ col[v] ^ 1;
+    for (auto w : groups[pv]) {
+        pos[w] = pu;
+        col[w] ^= s;
+        groups[pu].push_back(w);
+    }
+    groups[pv].clear();
+    return 1;
+}
+
+int dfn[V], low[V], color[V], tot_color, in_stack[V];
+#define stack STACK
+vector<int> stack;
+int tag;
+
+void tarjan(int u) {
+    dfn[u] = low[u] = ++tag;
+    stack.push_back(u);
+    in_stack[u] = true;
+    for (int i = g.last[u]; ~i; i = g.succ[i]) {
+        int v = g.to[i];
+        if (dfn[v] == -1) {
+            tarjan(v);
+            low[u] = min(low[u], low[v]);
+        } else if (in_stack[v]) {
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+    if (low[u] == dfn[u]) {
+        int t;
+        ++tot_color;
+        do {
+            t = stack.back();
+            stack.pop_back();
+            in_stack[t] = false;
+            color[t] = tot_color;
+        } while (t != u);
+    }
+}
+
+bool solve(int va, int vb) {
+    // cout << va << " " << vb << endl;
+    assert(va >= vb);
+    g.tot = e.tot;
+    for (int i = 0; i < n << 1; i++) g.last[i] = e.last[i];
+    for (int i = 0; i < e.tot; i++) {
+        g.succ[i] = e.succ[i];
+        g.to[i] = e.to[i];
+    }
+    for (auto edge : edges) {
+        if (edge.first > vb && edge.first <= va) {
+            int u, v;
+            tie(u, v) = edge.second;
+            g.add_edge(u << 1, v << 1 | 1);
+            g.add_edge(v << 1, u << 1 | 1);
+        }
+    }
+    tot_color = tag = 0;
+    for (int i = 0; i < n << 1; i++) {
+        dfn[i] = low[i] = color[i] = -1;
+        in_stack[i] = false;
+    }
+    assert(stack.size() == 0);
+    for (int i = 0; i < n << 1; i++) {
+        if (dfn[i] == -1) tarjan(i);
+    }
+    for (int i = 0; i < n; i++) {
+        if (color[i << 1] == color[i << 1 | 1]) return false;
+    }
+    return true;
+}
+
+int main() {
+    vector<int> values;
+    scanf("%d", &n);
+    if (n <= 2) {
+        cout << 0 << endl;
+        return 0;
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 1; i + j < n; j++) {
+            int w;
+            scanf("%d", &w);
+            values.push_back(w);
+            edges.push_back({w, {i, i + j}});
+        }
+    }
+    values.push_back(0);
+    sort(values.begin(), values.end());
+    values.erase(unique(values.begin(), values.end()), values.end());
+    for (int i = 0; i < n; i++) {
+        pos[i] = i;
+        col[i] = 0;
+        groups[i].push_back(i);
+    }
+    sort(edges.begin(), edges.end());
+    e.clear();
+    int ans = edges.back().first;
+    for (int j, i = edges.size() - 1; i >= 0; i = j) {
+        int w = edges[i].first, flag = 0;
+        vector<pair<int, int> > useful;
+        for (j = i; j >= 0 && w == edges[j].first; j--) {
+            int u, v, t;
+            tie(u, v) = edges[j].second;
+            if (t = join(v, u)) useful.push_back({u, v});
+            flag |= t;
+        }
+        if (flag) {
+            int l = 0, r = values.size() - 1;
+            while (l < r) {
+                int mid = (l + r) / 2;
+                if (values[mid] > w || solve(w, values[mid])) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            if (w >= values[l] && solve(w, values[l])) {
+                ans = min(ans, w + values[l]);
+            }
+        }
+        if (flag & 2) break;
+        for (auto o : useful) {
+            int u, v;
+            tie(u, v) = o;
+            e.add_edge(v << 1 | 1, u << 1);
+            e.add_edge(v << 1, u << 1 | 1);
+            e.add_edge(u << 1 | 1, v << 1);
+            e.add_edge(u << 1, v << 1 | 1);
+        }
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
