@@ -1,0 +1,256 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <functional>
+#include <queue>
+#include <vector>
+using namespace std;
+const long long INF = 1e18;
+const int N = 2e5 + 5;
+struct state
+{
+    int i, x, nx, cnt;
+    long long res;
+    state(int i = 0, int x = 0, int nx = 0, long long res = -INF, int cnt = 0) : i(i), x(x), nx(nx), res(res), cnt(cnt) {}
+};
+struct cmp1
+{
+    bool operator () (const state &a, const state &b)
+    {
+        return a.res < b.res;
+    }
+};
+struct cmp2
+{
+    bool operator () (const state &a, const state &b)
+    {
+        return a.res > b.res;
+    }
+};
+vector<long long> pos, neg, all;
+bool isn[N];
+
+vector<pair<int, int> > ans;
+vector<pair<int, int> > baoli;
+void dfs(int x, int p, pair<int, int> t)
+{
+    if (p == 0 || x == baoli.size())
+    {
+        if (p == 0)
+        {
+            if (t.first < 0) t.second *= -1;
+            ans.push_back(t);
+        }
+        return;
+    }
+    for (int i = x; i < (int) baoli.size(); ++ i)
+    {
+        pair<int, int> tt;
+        tt.first = baoli[i].first * t.first;
+        tt.second = t.second + baoli[i].second;
+        dfs(i + 1, p - 1, tt);
+    }
+}
+void duipai(int n, int m, int K)
+{
+    ans.clear();
+    dfs(0, m, make_pair(1, 0));
+    sort(ans.begin(), ans.end());
+    reverse(ans.begin(), ans.end());
+    //for (auto x : ans) printf("%d %d\n", x.first, x.second);
+    int cmt = 0;
+    //for (int i = 0; i <= K - 1; ++ i)
+    {
+        int i = K - 1;
+        pair<int, int> t = ans[i];
+        if (t.first == 0)
+        {
+            puts("0");
+            cmt ++;
+        }
+        else if (t.first > 0)
+        {
+            printf("+ %d\n", t.second);
+            cmt ++;
+        }
+        else
+        {
+            printf("- %d\n", -t.second);
+        }
+    }
+    //printf("%d\n", cmt);
+}
+
+
+int main()
+{
+    while (true)
+    {
+        int n, m, K;
+        scanf("%d%d%d", &n, &m, &K);
+        if (n + m + K == 0) break;
+        pos.clear();
+        neg.clear();
+        baoli.clear();
+        for (int i = 1; i <= n; ++ i)
+        {
+            char s[3];
+            int a;
+            scanf("%s", s);
+            if (s[0] == '+')
+            {
+                scanf("%d", &a);
+                pos.push_back(a);
+                baoli.push_back(make_pair(1, a));
+            }
+            else if (s[0] == '-')
+            {
+                scanf("%d", &a);
+                neg.push_back(a);
+                baoli.push_back(make_pair(-1, a));
+            }
+            else
+            {
+                baoli.push_back(make_pair(0, 0));
+                pos.push_back(-2 * INF);
+            }
+        }
+        //duipai(n, m, K);
+        sort(pos.begin(), pos.end(), greater<long long>());
+        sort(neg.begin(), neg.end(), greater<long long>());
+        all.resize(pos.size() + neg.size());
+        merge(pos.begin(), pos.end(), neg.begin(), neg.end(), all.begin(), greater<long long>());
+        int r = 0;
+        for (int i = 0; i < (int) all.size(); ++ i)
+        {
+            isn[i] = 1;
+            if (r < (int) pos.size() && pos[r] == all[i])
+            {
+                isn[i] = 0;
+                r ++;
+            }
+        }
+        priority_queue<state, vector<state>, cmp1> q;
+        long long sum = 0;
+        int cnt = 0;
+        for (int i = 0; i < m; ++ i)
+        {
+            sum += all[i];
+            cnt += isn[i];
+            if (sum < -INF) sum = -INF;
+        }
+        //cout << sum << " " << cnt << endl;
+        q.push(state(m, m - 1, (int) all.size(), sum, cnt));
+        long long las = sum;
+        //puts("++++++++++++++++");
+        //int cmt = 0;
+        while (!q.empty() && K)
+        {
+            state p = q.top(); q.pop();
+            //cout << p.res << " " << p.cnt << endl;
+            //cout << "i = " << p.i << " x = " << p.x << " nx = " << p.nx << endl;
+            if (p.cnt % 2 == 0 || p.res == -INF)
+            {
+                las = p.res;
+                K --;
+                //cmt ++;
+                //cout << "cho " << las << endl;
+            }
+            if (p.x + 1 < p.nx)
+            {
+                state pp = p;
+                pp.x ++;
+                pp.res -= all[pp.x - 1];
+                pp.res += all[pp.x];
+                if (pp.res < -INF) pp.res = -INF;
+                pp.cnt -= isn[pp.x - 1];
+                pp.cnt += isn[pp.x];
+                q.push(pp);
+            }
+            if ((p.i - 1) && p.i - 1 < p.x)
+            {
+                state pp = p;
+                pp.nx = p.x;
+                pp.x = p.i - 1;
+                pp.i --;
+                pp.res -= all[pp.x - 1];
+                pp.res += all[pp.x];
+                if (pp.res < -INF) pp.res = -INF;
+                pp.cnt -= isn[pp.x - 1];
+                pp.cnt += isn[pp.x];
+                q.push(pp);
+            }
+        }
+        //printf("cmt = %d\n", cmt);
+        if (!K)
+        {
+            if (las == -INF)
+            {
+                puts("0");
+            }
+            else
+            {
+                cout << "+ " << las << endl;
+            }
+            continue;
+        }
+        priority_queue<state, vector<state>, cmp2> q2;
+        while (!all.empty() && all.back() == -2 * INF) all.pop_back();
+        //for (long long x : all) printf("a%lld\n", x);
+        reverse(all.begin(), all.end());
+        reverse(isn, isn + (int) all.size());
+        sum = 0;
+        cnt = 0;
+        for (int i = 0; i < m; ++ i)
+        {
+            sum += all[i];
+            cnt += isn[i];
+            if (sum < -INF) sum = -INF;
+        }
+        q2.push(state(m, m - 1, (int) all.size(), sum, cnt));
+        las = sum;
+        while (!q2.empty() && K)
+        {
+            state p = q2.top(); q2.pop();
+            //cout << p.res << " " << p.cnt << endl;
+            //cout << "i = " << p.i << " x = " << p.x << " nx = " << p.nx << endl;
+            if (p.cnt % 2 == 1)
+            {
+                las = p.res;
+                K --;
+                //cout << "cho " << p.res << endl;
+            }
+            if (p.x + 1 < p.nx)
+            {
+                state pp = p;
+                pp.x ++;
+                pp.res -= all[pp.x - 1];
+                pp.res += all[pp.x];
+                if (pp.res < -INF) pp.res = -INF;
+                pp.cnt -= isn[pp.x - 1];
+                pp.cnt += isn[pp.x];
+                q2.push(pp);
+            }
+            if ((p.i - 1) && p.i - 1 < p.x)
+            {
+                state pp = p;
+                pp.nx = p.x;
+                pp.x = p.i - 1;
+                pp.i --;
+                pp.res -= all[pp.x - 1];
+                pp.res += all[pp.x];
+                if (pp.res < -INF) pp.res = -INF;
+                pp.cnt -= isn[pp.x - 1];
+                pp.cnt += isn[pp.x];
+                q2.push(pp);
+            }
+        }
+        cout << "- " << las << endl;
+    }
+}
+```
