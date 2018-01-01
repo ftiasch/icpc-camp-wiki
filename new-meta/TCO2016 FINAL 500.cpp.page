@@ -1,0 +1,56 @@
+``` {.cpp}
+const int N = 55;
+
+int pre_min[N], pre_max[N];
+long long f[N][N];
+
+class SwappingParentheses {
+public:
+    long long countValid(string s, vector <int> op) {
+        string ss = s;
+        for (auto p : op) {
+            if (ss[p] == ')' && ss[p + 1] == '(') {
+                swap(ss[p], ss[p + 1]);
+            }
+        }
+        for (int i = 0, c = 0; i < s.size(); i++) {
+            if (ss[i] == '(') {
+                c++;
+            } else {
+                c--;
+            }
+            pre_max[i] = c;
+        }
+        ss = s;
+        for (auto p : op) {
+            if (ss[p] == '(' && ss[p + 1] == ')') {
+                swap(ss[p], ss[p + 1]);
+            }
+        }
+        for (int i = 0, c = 0; i < s.size(); i++) {
+            if (ss[i] == '(') {
+                c++;
+            } else {
+                c--;
+            }
+            pre_min[i] = c;
+        }
+        memset(f, 0, sizeof(f));
+        for (int c = max(0, pre_min[0]); c <= pre_max[0]; c++) {
+            f[0][c] = 1;
+        }
+        for (int i = 0; i + 1 < s.size(); i++) {
+            for (int j = 0; j <= i + 1; j++) {
+                for (int k = -1; k <= 1; k += 2) {
+                    if (j + k >= 0 && pre_min[i + 1] <= j + k && j + k <= pre_max[i + 1]) {
+                        f[i + 1][j + k] += f[i][j];
+                    }
+                    
+                }
+            }
+        }
+        int m = s.size() - 1;
+        return accumulate(f[m], f[m] + m, 0LL);
+    }
+};
+```
