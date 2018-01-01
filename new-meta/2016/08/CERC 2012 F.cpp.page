@@ -1,0 +1,77 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+const int N = 1e5 + 7;
+const long long INF = (1LL << 60);
+
+int n, m;
+long long ds[N], dt[N];
+vector<pair<int, int> > adj[N];
+
+void spfa(int s, long long d[N]) {
+    static bool visit[N];
+    for (int i = 0; i < n; i++) {
+        d[i] = INF;
+        visit[i] = false;
+    }
+    priority_queue<pair<long long, int> > q;
+    d[s] = 0;
+    q.push({0, s});
+    while (!q.empty()) {
+        auto p = q.top();
+        q.pop();
+        int u = p.second;
+        if (visit[u]) continue;
+        visit[u] = true;
+        for (auto e : adj[u]) {
+            int v = e.first, cost = e.second;
+            if (d[u] + cost < d[v]) {
+                d[v] = d[u] + cost;
+                q.push({-d[v], v});
+            }
+        }
+    }
+}
+
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    while (tests--) {
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n; i++) {
+            adj[i].clear();
+        }
+        for (int i = 0; i < m; i++) {
+            int u, v, c;
+            scanf("%d %d %d", &u, &v, &c);
+            u--; v--;
+            adj[u].push_back(make_pair(v, c));
+            adj[v].push_back(make_pair(u, c));
+        }
+        spfa(0, ds);
+        spfa(1, dt);
+        static long long a[N], b[N];
+        for (int i = 0; i < n; i++) {
+            a[i] = ds[i] + dt[i];
+            b[i] = ds[i] - dt[i];
+        }
+        nth_element(a, a + n / 2, a + n);
+        nth_element(b, b + n / 2, b + n);
+        long long aa = a[n / 2] + b[n / 2];
+        long long bb = a[n / 2] - b[n / 2];
+        long long ans = 0;
+        for (int i = 0; i < n; i++) {
+            ans += max(abs(ds[i] * 2 - aa), abs(dt[i] * 2 - bb));
+        }
+        printf("%.10f\n", ans / 2. / n);
+    }
+    return 0;
+}
+```
