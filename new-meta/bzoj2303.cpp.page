@@ -1,0 +1,62 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(2111111);
+int rela[N], delta[N];
+int getr(int x) {
+    int p(x);
+    int tot(0);
+    while(p != rela[p]) {
+        tot ^= delta[p];
+        p = rela[p];
+    }
+    int p1(p); p = x;
+    while(p != rela[p]) {
+        int p2(rela[p]);
+        tot ^= delta[p];
+        delta[p] ^= tot;
+        rela[p] = p1;
+        p = p2;
+    }
+    return p1;
+}
+int main() {
+    int n, m, k;
+    scanf("%d%d%d", &n, &m, &k);
+    for(int i(1); i <= n + m; i++) {
+        rela[i] = i;
+        delta[i] = 0;
+    }
+    bool invalid(false);
+    for(int qq(0); qq < k; qq++) {
+        int x, y, z;
+        scanf("%d%d%d", &x, &y, &z);
+        if(x % 2 == y % 2 && x % 2 == 1) {
+            z ^= 1;
+        }
+        y += n;
+        int xx(getr(x)), yy(getr(y));
+        if(xx == yy) {
+            if((delta[x] ^ delta[y] ^ z) != 0) {
+                invalid = true;
+                break;
+            }
+        }else {
+            rela[yy] = xx;
+            delta[yy] = delta[x] ^ delta[y] ^ z;
+        }
+    }
+    int res(1), modulo(1e9);
+    int flag(true);
+    for(int i(1); i <= n + m; i++) {
+        if(rela[i] == i) {
+            if(!flag) {
+                res = res * 2 % modulo;
+            }else{ 
+                flag = false;
+            }
+        }
+    }
+    printf("%d\n", invalid ? 0 : res);
+}
+```
