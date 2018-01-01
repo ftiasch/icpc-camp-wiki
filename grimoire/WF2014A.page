@@ -1,0 +1,12 @@
+[题目链接](https://vjudge.net/problem/UVALive-6770)
+
+sol: \[ \]\[ \]BABABABA$\cdots$BABABABA
+
+$\rightarrow$ ABBABABABA$\cdots$BABAB\[ \]\[ \]A
+
+$\rightarrow$ ABBA\[ \]\[ \]BABA$\cdots$BABABBAA
+
+然后对除去前四个和最后四个的区间递归处理，还剩４，５，６，７对的时候手动打表。
+
+具体形式是\[ \]\[ \]BABABABA$\cdots$BABABABA $\rightarrow$
+AA$\cdots$ABB$\cdots$B\[ \]\[ \]
