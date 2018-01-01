@@ -1,0 +1,75 @@
+2015 ACM-ICPC Asia Regional Hefei
+
+[A. Bus Routes](http://acm.hdu.edu.cn/showproblem.php?pid=5552) [Lolicon](#lolicon)
+===================================================================================
+
+题解：分治FFT。显然有$N^2$dp。可以用分治+FFT优化。
+
+[B. Advanced Calculator](http://acm.hdu.edu.cn/showproblem.php?pid=5553) \[TBA\]
+================================================================================
+
+题解：
+
+[C. Autopilot System](http://acm.hdu.edu.cn/showproblem.php?pid=5554) [Bacon](#bacon)
+=====================================================================================
+
+题解：设$E_i$为$i$点出发到终点的期望代价。令$X=\sum_{i=1}^{m}q_i*E_{u_i}$，则每个点都可以表示为$E_i=c_i+\lambda_i*X$，求出$c_i$和$\lambda_i$之后对$m$个$E_{u_i}$消元即可。
+
+求$c_i$和$\lambda_i$时，将$n$号点拉成根，从叶子到根每个点$u$都可以表示为$E_u=a_u * E_{father[u]}+b_u+c_u*X$，再将$E_n=0$带入，从根到叶子带回去就可求出$c_i$和$\lambda_i$。
+
+特判impossible的情况。
+
+[D. Immortality of Frog](http://acm.hdu.edu.cn/showproblem.php?pid=5555) [Lolicon](#lolicon)
+============================================================================================
+
+题解：DP。每列不超过10个1算perm，状压即可。
+
+[E. Land of Farms](http://acm.hdu.edu.cn/showproblem.php?pid=5556) [Lolicon](#lolicon)
+======================================================================================
+
+题解：暴力。
+
+[F. Matching Compressed String](http://acm.hdu.edu.cn/showproblem.php?pid=5557) [Lolicon](#lolicon)
+===================================================================================================
+
+题解：倍增。不明出题意图的奇怪的题。
+
+[G. Alice's Classified Message](http://acm.hdu.edu.cn/showproblem.php?pid=5558) [Bacon](#bacon)
+===============================================================================================
+
+题解：HDU上面的题目没有改小数据范围，直接暴力SA即可，求答案只需维护一个单调栈即可。
+
+[H. Frog and String](http://acm.hdu.edu.cn/showproblem.php?pid=5559) [Lolicon](#lolicon)
+========================================================================================
+
+题解：构造。老题。对于字符集大小1、2、3分类讨论。
+
+[I. The Shields](http://acm.hdu.edu.cn/showproblem.php?pid=5560) [Bacon](#bacon)
+================================================================================
+
+题解：简单的数据结构，瞎拆拆。
+
+[J. Kingdom of Tree](http://acm.hdu.edu.cn/showproblem.php?pid=5561) \[Rowdark\]
+================================================================================
+
+题解：首先，先二分答案$\lambda$，则最终答案小于$\lambda$等价于$\sum_{i = 1}^NR_i-\lambda \times \sum_{S}L_{ij}<0$。令$F_{i,x}$表示在以$i$为根的子树中，根节点的$R$值为$x$时的函数最小值，令$G_{i,x}=min_{y \geq x}F_{i,y}$则有：
+
+$F(i, x)=\sum_{j \in C_i}{min{\{G_{j, L_{ij}-x}-\lambda \times L_{ij}, G_{j,0}}\}}$，其中$C_i$表示点$i$的儿子集合。
+
+容易发现函数$G_{i,\_}$单调，故分段函数$min{\{G_{j,L_{ij}-x}-\lambda \times L_{ij},G_{j,0}\}}$的段数至多比$G_{j,\_}$的段数多$1$，因此每颗子树根节点分段函数$G_{i,\_}$的段数少于其子树大小的$2$倍。合并函数时，可以使用堆或者排序的方式进行合并。
+
+故最终复杂度为$O(N^2\log N \log Ans)$。
+
+Summary
+=======
+
+Lolicon
+-------
+
+这场合肥，dirt率爆炸。上来中毒EWA2CE1。H题漏了一个trivial
+case。F题有一个打错变量和重名。最后搞A题把两个卷积的向量的长度当成一样的了。
+
+Bacon
+-----
+
+G和I都是我比较擅长的无脑题，处理的还行（I有数据范围没有标清有些讨厌）。C是我平时不做的题目，提高了对这类题的作战能力。
