@@ -1,0 +1,106 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 2e6 + 5;
+int x[N];
+char ch[20] = "0123456789abcdef";
+string str(int x) {
+    int a = x & 255, b = (x >> 8) & 255, c = (x >> 16) & 255, d = (x >> 24) & 255;
+    string s;
+    s += ch[a / 16]; s += ch[a % 16];
+    s += ch[b / 16]; s += ch[b % 16];
+    s += ch[c / 16]; s += ch[c % 16];
+    s += ch[d / 16]; s += ch[d % 16];
+    return s;
+}
+int tick[N], xxx, tr[N];
+bool crash(int m, vector<int> &all) {
+    xxx ++;
+    for (int a : all) {
+        if (tick[a % m] == xxx) return 1;
+        tick[a % m] = xxx;
+    }
+    return 0;
+}
+const int M = 2e4 + 5;
+vector<int> g[M];
+int main() {
+    freopen("hardware.in", "r", stdin);
+    freopen("hardware.out", "w", stdout);
+    bitset<N> p;
+    p.set();
+    for (int i = 2; i < N; ++ i) {
+        if (p[i]) for (int j = i + i; j < N; j += i) p[j] = 0;
+    }
+    int n;
+    scanf("%d", &n);
+    vector<int> all;
+    unordered_map<int, int> ans;
+    for (int i = 0; i < n; ++ i) {
+        int a;
+        scanf("%d", &a);
+        all.push_back(a);
+    }
+    int M1 = 10009;
+    /*while (rand() & 1) {
+        M1 --;
+        while (!p[M1]) M1 --;
+    }*/
+    sort(all.begin(), all.end());
+    int cnt = 0;
+    for (int a : all) {
+        g[a % M1].push_back(a);
+        ans[a] = ++ cnt;
+    }
+    int pre = 96;
+    string s = "3101" + str(M1);
+    s += "3102" + str(8);
+    s += "3103" + str(pre);
+    s += "3104" + str(pre + 4);
+    s += "050001050a";
+    s += "0305020607";
+    s += "01060307";
+    s += "01060408";
+    s += "300707";
+    s += "300808";
+    s += "050007000b";
+    s += "3109" + str(4);
+    s += "0300090009";
+    s += "01000800";
+    s += "300000";
+    s += "ff";
+    while ((int) s.length() < pre * 2) s += "00";
+    string t;
+    for (int i = 0; i < M1; ++ i) {
+        if (g[i].empty()) {
+            s += str(0) + str(0);
+        }
+        else {
+            for (int j = 1; ; ++ j) {
+                if (!crash(j, g[i])) {
+                    //printf("prime=%d\n", j);
+                    //printf("aa %d\n", s.length() / 2);
+                    //printf("aa %d\n", s.length() / 2 + 4);
+                    s += str(j) + str(pre + M1 * 8 + (int) t.length() / 2);
+                    ++ xxx;
+                    for (int a : g[i]) {
+                        tick[a % j] = xxx;
+                        tr[a % j] = ans[a];
+                    }
+                    for (int k = 0; k < j; ++ k) {
+                        if (tick[k] == xxx) {
+                            //printf("---%d\n", t.length() / 2 + pre + M1 * 8);
+                            t += str(tr[k]);
+                        }
+                        else {
+                            t += str(0);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    printf("%s%s\n", s.c_str(), t.c_str());
+}
+```
