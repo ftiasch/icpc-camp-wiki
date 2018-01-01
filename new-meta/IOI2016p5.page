@@ -1,0 +1,52 @@
+``` {.cpp}
+#include <vector>
+
+#include "messy.h"
+#include<bits/stdc++.h>
+using namespace std;
+std::vector<int> restore_permutation(int n, int w, int r) {
+    int lo(0);
+//cout << n << ' ' << w << ' ' << r << endl;
+    for(int i(1); i < n; i *= 2)
+        lo++;
+    for(int i(0); i < lo; i++) {
+        string bs(n, '1');
+        for(int j(0); j < n; j++)
+            bs[j] = '0' + (i != lo - 1 && (i == 0 || (j & ((1 << i) - 1)) == ((1 << i) - 1)) ? 1 : 0);
+        for(int j(0); j < n; j++) {
+            if(j & (1 << i)) {
+                string qu(bs);
+                qu[j] ^= 1;
+//cout << qu << endl;
+                add_element(qu);
+            }
+        }
+    }
+    compile_set();
+    vector<vector<int> > msk(lo, vector<int>(n, 0));
+    vector<vector<int> > psbl(n, vector<int>(n, 1));
+    for(int i(0); i < lo; i++) {
+        string bs(n, '0');
+        for(int j(0); j < n; j++)
+            bs[j] = i == lo - 1 ? '0' : psbl[(1 << i) - 1][j] + '0';
+//cout << bs << endl;
+        for(int j(0); j < n; j++) {
+            string qu(bs);
+            qu[j] ^= 1;
+//cout << "check " << qu << endl;
+//cout << "ch2ck " << q2 << endl;
+            msk[i][j] = check_element(qu);
+//cout << msk[i][j] << endl;
+        }
+        for(int j(0); j < n; j++) 
+            for(int k(0); k < n; k++)
+                psbl[j][k] &= msk[i][k] ^ ((j & (1 << i)) > 0) ^ 1;
+    }
+    vector<int> permu(n, 0);
+    for(int i(0); i < n; i++) {
+//cout << find(res.begin(), res.end(), 1) - res.begin() << endl;
+        permu[find(psbl[i].begin(), psbl[i].end(), 1) - psbl[i].begin()] = i;
+    }
+    return permu;
+}
+```
