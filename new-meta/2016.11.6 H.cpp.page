@@ -1,0 +1,99 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <bitset>
+
+using namespace std;
+
+const int N = 14000 + 7;
+
+double answer;
+int block[N], last[N], tot = 0;
+vector<int> tree[N << 2];
+int value[N], father[N];
+int n, m;
+vector<pair<int, pair<int, int> > > edges;
+
+int find(int x) {
+    return father[x] == x ? x : father[x] = find(father[x]);
+}
+
+void insert(int x, int l, int r, int ql, int qr, int v) {
+    if (ql > qr || qr < l || r < ql) {
+        return ;
+    } else if (ql <= l && r <= qr) {
+        tree[x].push_back(v);
+    } else {
+        int mid = (l + r) >> 1;
+        insert(x << 1, l, mid, ql, qr, v);
+        insert(x << 1 | 1, mid + 1, r, ql, qr, v);
+    }
+}
+
+void dfs(int x, int l, int r, bitset<N> bs) {
+    for (auto v : tree[x]) {
+        bs = bs | (bs << v);
+    }
+    if (l == r) {
+        int min_delta = 0;
+        for (int i = n / 2; i >= 0; i--) {
+            if (bs[i]) {
+                min_delta = min(i, n - i);
+                break;
+            }
+        }
+        if (min_delta != 0) {
+            answer = min(answer, 1. * value[l] / min_delta);
+        }
+    } else {
+        int mid = (l + r) >> 1;
+        dfs(x << 1, l, mid, bs);
+        dfs(x << 1 | 1, mid + 1, r, bs);
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i <= m; i++) {
+        int u, v, w;
+        scanf("%d %d %d", &u, &v, &w);
+        edges.push_back(make_pair(w, make_pair(u, v)));
+    }
+    sort(edges.begin(), edges.end());
+    for (int i = 0; i < n; i++) {
+        block[i] = 1;
+        last[i] = n;
+        father[i] = i;
+    }
+    int ind = n - 1;
+    for (int i = m - 1, j; i >= 0; i = j) {
+        int u = find(edges[i].second.first), v = find(edges[i].second.second);
+        father[u] = v;
+        value[--ind] = edges[i].first;
+        insert(1, 0, n - 2, ind, last[u] - 1, block[u]);
+        insert(1, 0, n - 2, ind, last[v] - 1, block[v]);
+        block[v] += block[u];
+        last[v] = ind;
+        for (j = i; j >= 0; j--) {
+            int uu = find(edges[j].second.first), vv = find(edges[j].second.second);
+            if (uu != vv) {
+                break;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        if (find(i) == i) {
+            insert(1, 0, n - 2, 0, last[i] - 1, block[i]);
+        }
+    }
+    answer = 1e100;
+    bitset<N> bs;
+    bs[0] = 1;
+    dfs(1, 0, n - 2, bs);
+    printf("%.10f\n", answer);
+    return 0;
+}
+```
