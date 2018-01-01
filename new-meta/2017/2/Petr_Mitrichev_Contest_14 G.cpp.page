@@ -1,0 +1,53 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(1011);
+int row[N], col[N], diag[N * 2], gaid[N * 2];
+char a[N][N];
+int n, m;
+bool bad(int i, int j) {
+    return (a[i][j] != '+') ^ (row[i]) ^ (col[j]) ^ (diag[i - j + m - 1]) ^ (gaid[i + j]);
+}
+int main() {
+    scanf("%d%d", &n, &m);
+    for(int i(0); i < n; i++)
+        scanf("%s", a[i]);
+    for(int i(0); i < m; i++) {
+        if(n >= 2 && bad(1, i)) 
+            col[i] ^= 1;
+        if(bad(0, i))
+            diag[0 - i + m - 1] ^= 1;
+        if(n >= 3 && bad(2, i))
+            gaid[2 + i] ^= 1;
+    }
+    for(int i(3); i < n; i++) {
+        if(m >= 2 && bad(i, 1))
+            row[i] ^= 1;
+        if(bad(i, 0))
+            diag[i - 0 + m - 1] ^= 1;
+        if(m >= 3 && bad(i, m - 1))
+            gaid[i + m - 1] ^= 1;
+        for(int j(2); j < m - 1; j++)
+            if(bad(i, j)) {
+                printf("Nein\n");
+                return 0;
+            }
+    }
+    vector<pair<pair<int, int>, pair<int, int> > > ans;
+    for(int i(0); i < n; i++)
+        if(row[i])
+            ans.push_back(make_pair(make_pair(i, 0), make_pair(i, m - 1)));
+    for(int i(0); i < m; i++)
+        if(col[i])
+            ans.push_back(make_pair(make_pair(0, i), make_pair(n - 1, i)));
+    for(int i(0); i <= n - 1 + m - 1; i++)
+        if(diag[i])
+            ans.push_back(make_pair(make_pair(max(0, i - m + 1), max(0, m - 1 - i)), make_pair(min(n - 1, m - 1 + i - m + 1), min(m - 1, n - 1 - i + m - 1))));
+    for(int i(0); i <= n - 1 + m - 1; i++)
+        if(gaid[i])
+            ans.push_back(make_pair(make_pair(max(0, i - m + 1), min(m - 1, i)), make_pair(min(n - 1, i), max(0, i - n + 1))));
+    printf("Ja\n%d\n", (int)ans.size());
+    for(auto i : ans) 
+        printf("%d %d %d %d\n", i.first.first + 1, i.first.second + 1, i.second.first + 1, i.second.second + 1);
+}
+```
