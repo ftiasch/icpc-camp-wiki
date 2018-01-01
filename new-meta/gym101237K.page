@@ -1,0 +1,225 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cassert>
+
+using namespace std;
+
+const int N = 2e5 + 7;
+const int LOG = 20;
+const int DEBUG = false;
+
+int n, q;
+vector<int> adj[N];
+int pos[N], rpos[N], dep[N], top[N], size[N];
+int father[N], jump[N][LOG], max_son[N];
+int tot;
+
+void dfs(int u, int from) {
+    size[u] = 1;
+    max_son[u] = -1;
+    for (int v : adj[u]) {
+        if (v == from) continue;
+        jump[v][0] = father[v] = u;
+        dep[v] = dep[u] + 1;
+        dfs(v, u);
+        size[u] += size[v];
+        if (max_son[u] == -1 || size[v] > size[max_son[u]]) {
+            max_son[u] = v;
+        }
+    }
+}
+
+void decomp(int u, int from, int tp) {
+    //cout << u << endl;
+    pos[u] = ++tot;
+    rpos[tot] = u;
+    top[u] = tp;
+    if (max_son[u] == -1) return ;
+    decomp(max_son[u], u, tp);
+    for (auto v : adj[u]) {
+        if (v != max_son[u] && v != from) {
+            decomp(v, u, v);
+        }
+    }
+}
+
+const int NONE = -1;
+int val_e[N];
+
+struct SegmentTree {
+    int sum[N << 2], lazy[N << 2];
+    void build(int x, int l, int r, int init) {
+        lazy[x] = NONE;
+        if (l == r) {
+            sum[x] = init;
+        } else {
+            int mid = (l + r) / 2;
+            build(x << 1, l, mid, init);
+            build(x << 1 | 1, mid + 1, r, init);
+            sum[x] = sum[x << 1] + sum[x << 1 | 1];
+        }
+    }
+
+    void push(int x, int l, int r) {
+        if (lazy[x] != NONE) {
+            lazy[x << 1] = lazy[x << 1 | 1] = lazy[x];
+            int mid = (l + r) / 2;
+            sum[x << 1] = (mid - l + 1) * lazy[x];
+            sum[x << 1 | 1] = (r - mid) * lazy[x];
+            lazy[x] = NONE;
+        }
+    }
+
+    void update(int x) {
+        sum[x] = sum[x << 1] + sum[x << 1 | 1];
+    }
+
+    void cover(int x, int l, int r, int ql, int qr, int v) {
+        if (qr < l || r < ql) return ;
+        if (ql <= l && r <= qr) {
+            lazy[x] = v;
+            sum[x] = v * (r - l + 1);
+            return ;
+        }
+        push(x, l, r);
+        int mid = (l + r) / 2;
+        cover(x << 1, l, mid, ql, qr, v);
+        cover(x << 1 | 1, mid + 1, r, ql, qr, v);
+        update(x);
+    }
+
+    int ask(int x, int l, int r, int ql, int qr) {
+        // if (l == 1 && r == n) {
+        //  printf("ask %d %d\n", ql, qr);
+        // }
+        if (qr < l || r < ql) return 0;
+        if (ql <= l && r <= qr) {
+            return sum[x];
+        }
+        push(x, l, r);
+        int mid = (l + r) / 2;
+        return ask(x << 1, l, mid, ql, qr) + ask(x << 1 | 1, mid + 1, r, ql, qr);
+    }
+}tnode, tans;
+
+int get_lca(int u, int v) {
+    if (dep[u] < dep[v]) swap(u, v);
+    for (int i = 0; i < LOG; i++) {
+        if (dep[u] - dep[v] >> i & 1) {
+            u = jump[u][i];
+        }
+    }
+    if (u == v) return u;
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (jump[u][i] != jump[v][i]) {
+            u = jump[u][i];
+            v = jump[v][i];
+        }
+    }
+    return jump[v][0];
+}
+
+int node_id(int u) {
+    return tnode.ask(1, 1, n, pos[u], pos[u]);
+}
+
+int query(int u, int v) {
+    if (DEBUG) cout << "query " << u << " " << v << endl;
+    assert(dep[u] >= dep[v]);
+    int ret = 0;
+    while (u != v) {
+        if (DEBUG) cout << u << " " << v << endl;
+        if (top[u] == top[v]) {
+            ret += tans.ask(1, 1, n, pos[v] + 1, pos[u]);
+            break;
+        } else {
+            if (top[u] != u)
+                ret += tans.ask(1, 1, n, pos[top[u]] + 1, pos[u]);
+            u = top[u];
+            //cout << node_id(u) << " " << node_id(father[u]) << endl;
+            if (max(node_id(u), node_id(father[u])) > val_e[u]) ret++;
+            u = father[u];
+        }
+    }
+    return ret;
+}
+
+void fuck(int u, int v, int stamp) {
+    if (dep[u] < dep[v]) swap(u, v);
+    if (DEBUG) cout << "fuck " << u << " " << v << endl;
+    tnode.cover(1, 1, n, pos[v], pos[u], stamp);
+    if (dep[u] > dep[v]) {
+        tans.cover(1, 1, n, pos[v] + 1, pos[u], 0);
+        // cout << "cover " << pos[v] + 1 << " " << pos[u] << endl;
+    }
+    if (max_son[u] != -1) {
+        int son = max_son[u];
+        tans.cover(1, 1, n, pos[son], pos[son], 1);
+        // cout << "cover1 " << pos[son] << endl;
+    }
+    if (v != top[v]) {
+        tans.cover(1, 1, n, pos[v], pos[v], 1);
+        // cout << "cover1 " << pos[v] << endl;
+    }
+}
+
+void modify(int u, int v) {
+    static int stamp = 0;
+    ++stamp;
+    while (true) {
+        if (top[u] == top[v]) {
+            fuck(u, v, stamp);
+            break;
+        }
+        if (dep[top[u]] < dep[top[v]]) swap(u, v);
+        fuck(u, top[u], stamp);
+        u = top[u];
+        assert(u != 1);
+        val_e[u] = stamp;
+        u = father[u];
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i + 1 < n; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    dfs(1, -1);
+    tot = 0;
+    decomp(1, -1, 1);
+    // for (int i = 1; i <= n; i++) {
+    //  printf("%d\n", rpos[i]);
+    // }
+    for (int i = 2; i <= n; i++) {
+        val_e[i] = -1;
+    }
+    tnode.build(1, 1, n, 0);
+    tans.build(1, 1, n, 1);
+    for (int i = 0; i + 1 < LOG; i++) {
+        for (int u = 1; u <= n; u++) {
+            jump[u][i + 1] = jump[jump[u][i]][i];
+        }
+    }
+    scanf("%d", &q);
+    for (int i = 1; i <= q; i++) {
+        // cout << "query i = " << i << endl;
+        int type, u, v;
+        scanf("%d %d %d", &type, &u, &v);
+        if (type == 0) {
+            int lca = get_lca(u, v);
+            printf("%d\n", query(u, lca) + query(v, lca));
+        } else {
+            modify(u, v);
+        }
+    }
+    return 0;
+}
+```
