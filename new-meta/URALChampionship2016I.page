@@ -1,0 +1,73 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+typedef long double D;
+struct P {
+    D x, y;
+    P() {
+    }
+    P(const D & x, const D & y) : x(x), y(y) {
+    }
+    D sqrlen() const {
+        return x * x + y * y;
+    }
+    D len() const {
+        return sqrt(max((D)0., sqrlen()));
+    }
+    P zoom(const D & l) const {
+        D lambda(l / len());
+        return P(lambda * x, lambda * y);
+    }
+    P rot(const D & si, const D & co) const {
+        return P(x * co - y * si, x * si + y * co);
+    }
+    P operator + (const P & b) const {
+        return P(x + b.x, y + b.y);
+    }
+    void print() const {
+        printf("%.15f %.15f\n", (double)x, (double)y);
+    }
+};
+D pi(acos((D)-1.));
+int main() {
+    int X, Y, Z;
+    scanf("%d%d%d", &X, &Y, &Z);
+    int x1, y1, x2, y2;
+    scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
+    int l((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    vector<P> ans;
+    if(l > X * X && l > Y * Y) {
+    }else {
+        int p(X + Y + Z);
+        long long h(1ll * p * (p - 2 * X) * (p - 2 * Y) * (p - 2 * Z));
+        if(l * 4ll * Z * Z < h) {
+        }else if(h == l * 4ll * Z * Z) {
+            if(X * X + Z * Z >= Y * Y && Y * Y + Z * Z >= X * X) {
+                D h1 = h / Z / Z / 4;
+                ans.push_back(P(x2, y2) + P(x2 - x1, y2 - y1).rot(1, 0).zoom(sqrt(X * X - h1)));
+                if(4ll * X * X * Z * Z != h) {
+                    ans.push_back(P(x2, y2) + P(x2 - x1, y2 - y1).rot(-1, 0).zoom(sqrt(X * X - h1)));
+                }   
+            }
+        }else {
+            for(int i(0); i < 2; i++) {
+                if(i == 0 && X * X + Z * Z >= Y * Y && X * X >= l && (Y * Y <= l || Y * Y >= l && Y * Y + Z * Z >= X * X) || i == 1 && Y * Y >= l && Y * Y + Z * Z >= X * X && (X * X <= l || X * X >= l && X * X + Z * Z >= Y * Y)) {
+                    D co((X * X + Z * Z - Y * Y) / 2. / X / Z);
+                    D si(sqrt(max((D)0., 1 - co * co)));
+                    D si1(si * X / sqrt(l));
+                    D co1((i == 0 ? -1 : 1) * sqrt(max((D)0., 1 - si1 * si1)));
+                    D t(pi - atan2(si, co) - atan2(si1, co1));
+                    ans.push_back(P(x1, y1) + P(x2 - x1, y2 - y1).rot(sin(t), cos(t)).zoom(X));
+                    if(i == 1 && (X * X != l || X * X + Z * Z >= Y * Y) || i == 0 && X * X != l) {
+                        ans.push_back(P(x1, y1) + P(x2 - x1, y2 - y1).rot(sin(-t), cos(-t)).zoom(X));
+                    }
+                }
+            }
+        }
+    }
+    printf("%d\n", (int)ans.size());
+    for(auto i : ans) {
+        i.print();
+    }
+}
+```
