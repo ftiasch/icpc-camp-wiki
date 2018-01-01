@@ -30,7 +30,7 @@ F. Sushi
 
 注意，这里换出来并不需要真正的删除，因为最后重建的时候他一定不会被留下。所以用堆维护一下就行了。
 
-[F.cpp](Japanese%20OI%20Team%20Selection%20F.cpp)
+[F.cpp](Japanese OI Team Selection F.cpp)
 
 Comments
 ========
