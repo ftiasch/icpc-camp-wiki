@@ -1,0 +1,3 @@
+[题目链接](http://codeforces.com/gym/100512/attachments/download/2773/20122013-summer-petrozavodsk-camp-andrew-stankevich-contest-42-asc-42-en.pdf)
+
+sol:首先初始顺序无解。考虑题目给定的序列，找出最晚出现的０和最早出现的１，让这个０的位置和所有０的位置cmp并且１的位置和所有１的位置cmp，结果是只有所给序列的这两个位置变换后仍然为1,0。然后随意
