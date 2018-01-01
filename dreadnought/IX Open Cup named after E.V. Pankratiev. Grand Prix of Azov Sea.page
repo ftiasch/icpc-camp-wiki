@@ -1,0 +1,82 @@
+IX Open Cup named after E.V. Pankratiev. Grand Prix of Azov Sea
+
+A. Beatlemania \[Bacon\]
+========================
+
+题解：暴力。
+
+B. Second Chance \[Bacon\]
+==========================
+
+题解：直接用链表模拟。
+
+C. Conveyor \[Bacon\]
+=====================
+
+题解：非常难写的压位模拟。基本思想是对一个block用long
+long压掉，对每个操作O(N)完成。
+
+对于load操作，首先设给定的单位串长为len，如果len太小会导致复杂度退化，这个时候要先把若干个小块合成大块，最左边剩个尾巴。
+
+在任何时刻基本的arrangement都是这样：leftState + midState \*
+midLeftNumber + rightState + 0 \* zeroNumber + a\[1..N\]
+
+首先计算被抓走了多少，从左到右枚举每个检查点，找到左边的第一个1，这里要用一个栈维护，需要对long
+long快速求highbit。
+
+然后最终的形态，就对于抓完州的arrangement从左向右挨个贴上去，
+
+对于rollback操作，可以看做把整个序列reverse，然后load一坨0，需要写对long
+long的快速reverse。
+
+D. The Dots Game \[TBA\]
+========================
+
+题解：
+
+E. HAL 9000 \[Lolicon\]
+=======================
+
+题解：博弈。注意到游戏肯定是两个人先不断接近，等到对角之后开始逐步向角落移动直到一个人gg。后面部分的步数是确定的。dp\[dx\]\[dy\]计算x差为dx
+y差为dy时候的输赢情况，并同时计算需要走的步数。后面算一下实际的步数即可。
+
+F. Hippiemobile \[Bacon\]
+=========================
+
+题解：直接做Tarjan。
+
+G. Sea of Holes \[Bacon\]
+=========================
+
+题解：考虑自己是从虫洞出发沿着反方向走，没走到一个点就用上一个碰到的虫洞更新它，两重蛇形for就搞定了。
+
+因为奇偶性的问题，需要从左上和右上各自出发跑一遍。
+
+H. Monopolies \[Bacon\]
+=======================
+
+题解：求完凸包之后是简单的计数。
+
+I. Strawberry Fields Forever \[TBA\]
+====================================
+
+题解：
+
+\[Rowdark\]
+
+$O(NM)$预处理以每个点为中心的菱形内数值和，之后就是一个枚举+区间询问了。
+
+J. Recording Studio \[Lolicon\]
+===============================
+
+题解：简单网络流建图。
+
+K. Tournament \[Lolicon\]
+=========================
+
+题解：暴力枚举。分类讨论+贪心check。
+
+L. Woodstock \[Lolicon\]
+========================
+
+题解：水题不表。
