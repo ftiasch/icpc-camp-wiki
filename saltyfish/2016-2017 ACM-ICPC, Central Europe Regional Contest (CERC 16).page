@@ -1,41 +1,55 @@
-# A Appearance Analysis [hwq]
+A Appearance Analysis \[hwq\]
+=============================
 
 模拟，暴力转方向，暴力判相等
 
-# B Bipartite Blanket [zyh&hwq]
+B Bipartite Blanket \[zyh&hwq\]
+===============================
 
-考虑求出A中的哪些点集A'与B存在一个匹配使得所有A'内的点都被覆盖，根据[Hall’s marriage theorem](https://en.wikipedia.org/wiki/Hall%27s_marriage_theorem)，这等价于A'的每个子集的邻接点集不小于自身，于是先判断A中每个点集的邻接点集是否大于自身，然后做一次高维前缀AND即可求出满足条件的A'，对B同理做一次求出所有B'，注意到任取一个A'和B'并起来后都是满足被某个匹配所覆盖的，各自预处理出每个合法子集的权值和，排序后双指针即可
+考虑求出A中的哪些点集A'与B存在一个匹配使得所有A'内的点都被覆盖，根据[Hall’s
+marriage
+theorem](https://en.wikipedia.org/wiki/Hall's_marriage_theorem)，这等价于A'的每个子集的邻接点集不小于自身，于是先判断A中每个点集的邻接点集是否大于自身，然后做一次高维前缀AND即可求出满足条件的A'，对B同理做一次求出所有B'，注意到任取一个A'和B'并起来后都是满足被某个匹配所覆盖的，各自预处理出每个合法子集的权值和，排序后双指针即可
 
-# C Convex Contour [zyh&ghc]
+C Convex Contour \[zyh&ghc\]
+============================
 
 下、左、右边界的贡献只需要关心左右两端是否是圆，对于上边界，如果没有三角形，同样只需要关心左右两端是否是圆，如果全是三角形也是简单的，否则考虑最左的三角形，找出最左的不是三角形，根据是圆还是正方形分情况计算贡献，同理处理最右的三角形
 
-# D Dancing Disks
+D Dancing Disks
+===============
 
-# E Easy Equation
+E Easy Equation
+===============
 
 目前思路，设$(a,b,c)(a \leq b \leq c)$是一组解，将$a^2+b^2+c^2=k(ab+bc+ca)+1$整理成关于$a$的二次方程$a^2-k(b+c)a+(b^2+c^2-kbc-1)=0$，令$d=k(b+c)-a$，则$(b,c,d)(b \leq c \leq d)$也是一组解，其实就是无穷递降的思想，考虑暴力出一些比较小的解之后利用这个过程推出更多的解~~，赛中抄少了两个正项导致递降过程进行不下去然后开始爆炸，我果然没学过初等数论~~
 
-# F Free Figurines [ghc]
+F Free Figurines \[ghc\]
+========================
 
 对于每条链找出需要断开的最深的位置，从这个位置以上都要断开，计算最少需要断成多少条链，该数目减原来的链数即为拆套娃所需步数，该数目减最终的链数即为组装套娃所需步数，两者相加即为答案
 
-# G Geohash Grid
+G Geohash Grid
+==============
 
-# H Hangar Hurdles [zyh&hwq]
+H Hangar Hurdles \[zyh&hwq\]
+============================
 
 整体二分~~，脑子有坑~~
 
-# I Invisible Integers 
+I Invisible Integers
+====================
 
-# J Jazz Journey [hwq补]
+J Jazz Journey \[hwq补\]
+========================
 
 必须严格按照计划挨着挨着飞，处理出来每对点正反绕圈的最优方案，然后每对点贪心算一算
 
-# K Key Knocking [hwq]
+K Key Knocking \[hwq\]
+======================
 
 简单构造，相邻3个分成一组，一定有一种方法操作最多一次并获得2的收益
 
-# L Lost Logic [ghc&hwq&zyh]
+L Lost Logic \[ghc&hwq&zyh\]
+============================
 
 对于3组不同的赋值，一定能找到2个位$x_i$和$x_j$将它们区分出来，且$x_i \rightarrow x_j,x_i \rightarrow !x_j,!x_i \rightarrow x_j,!x_i \rightarrow !x_j$中一定存在一条约束条件满足该条件为真当且仅当$x_i,x_j$的取值与3组赋值其中一组在这两个位上的取值相同。对于$x_i,x_j$以外每一个位$x_q$，只需通过建立$x_i$与$x_q$、$x_j$与$x_q$之间的约束使得当$x_i,x_j$的取值与3组赋值其中一组在这两个位上的取值相同时，$x_q$的取值与对应的那组赋值在这个位上的取值相同：若3组赋值在$x_q$的取值都一样，我们可以用$x_q \rightarrow !x_q$或$!x_q \rightarrow x_q$来使得$x_q$只能为0或只能为1，若$x_q$始终和$x_i$或$x_j$相同或相反，可以用$x_i \rightarrow x_q,x_q \rightarrow x_i$或$x_i \rightarrow !x_q,!x_q \rightarrow x_i$或$x_j \rightarrow x_q,x_q \rightarrow x_j$或$x_j \rightarrow !x_q,!x_q \rightarrow x_j$来满足要求，其他情况无解
