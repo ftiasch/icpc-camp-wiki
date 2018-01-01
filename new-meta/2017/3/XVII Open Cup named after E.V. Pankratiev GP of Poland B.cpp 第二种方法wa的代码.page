@@ -1,0 +1,224 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e5 + 7;
+const int NN = N * 2;
+
+#define rank RANK
+
+char s[NN];
+int sa[NN], ta[NN], tb[NN], *rank = ta, *tmp = tb;
+int height[NN], myLog[NN], table[18][NN];
+
+int n, m, k;
+char a[N], b[N];
+int same_a[N], same_b[N];
+
+bool cmp(int i, int j, int l) {
+    return tmp[i] == tmp[j] && tmp[i + l] == tmp[j + l];
+}
+
+void radixSort(int n, int m) {
+    static int w[NN];
+    fill(w, w + m, 0);
+    for (int i = 0; i < n; i++) {
+        w[rank[i]]++;
+    }
+    for (int i = 1; i < m; i++) {
+        w[i] += w[i - 1];
+    }
+    for (int i = n - 1; i >= 0; i--) {
+        sa[--w[rank[tmp[i]]]] = tmp[i];
+    }
+}
+
+void suffixArray() {
+    int n = (::n + ::m) + 1, m = 256;
+    for (int i = 0; i < n; i++) {
+        rank[i] = s[i];
+        tmp[i] = i;
+    }
+    radixSort(n, m);
+    for (int j = 1, i, p = 0; p < n && j < n; j <<= 1, m = p) {
+        for (i = n - j, p = 0; i < n; i++) {
+            tmp[p++] = i;
+        }
+        for (i = 0; i < n; i++) {
+            if (sa[i] >= j) {
+                tmp[p++] = sa[i] - j;
+            }
+        }
+        radixSort(n, m);
+        for (swap(tmp, rank), rank[sa[0]] = 0, i = p = 1; i < n; i++) {
+            rank[sa[i]] = cmp(sa[i - 1], sa[i], j) ? p - 1 : p++;
+        }
+    }
+    for (int i = 0, j, k = 0; i < n; ++i, k = max(k - 1, 0)) {
+        if (rank[i]) {
+            j = sa[rank[i] - 1];
+            for (; s[i + k] == s[j + k]; k++);
+            height[rank[i]] = k;
+        }
+    }
+    for (int i = 2; i <= n; i++) {
+        myLog[i] = myLog[i >> 1] + 1;
+    }
+    for (int i = 1; i < n; i++) {
+        table[0][i] = height[i];
+    }
+    for (int j = 1; 1 << j <= n; j++) {
+        for (int i = 1; i + (1 << j) <= n; i++) {
+            table[j][i] = min(table[j - 1][i], table[j - 1][i + (1 << (j - 1))]);
+        }
+    }
+}
+
+int lcp(int l, int r) {
+    if (l > r) return 0;
+    int len = myLog[r - l + 1];
+    return min(table[len][l], table[len][r - (1 << len) + 1]);
+}
+
+int suffix_lcp(int a, int b) {
+    int l = rank[a], r = rank[b];
+    if (l > r) swap(l, r);
+    return lcp(l + 1, r);
+}
+
+void report(int l, int r) {
+    printf("%d %d\n", l + 1, r + 1);
+    exit(0);
+}
+
+vector<pair<int, int>> ls[N];
+vector<pair<int, int> > fuck[N];
+
+int PRE;
+
+void gol(int from, int l, int lp, int dep) {
+    int len = suffix_lcp(l, n + lp);
+    len = min(len, n - l);
+    len = min(len, m - lp);
+    // cout << l << " " << lp << " " << len << endl;
+    l += len;
+    lp += len;
+    // ls[l + 1].push_back({lp, from});
+    if (lp >= m) {
+        report(from, l - 1);
+    }
+    if (dep + m - lp + n - l <= k) {
+        report(from, n - 1);
+    }
+    if (l >= n) return ;
+    if (dep == PRE) {
+        // cout << l << " " << lp << endl;
+        fuck[lp].push_back({l + 1, from});
+        if (l && a[l - 1] == b[lp]) {
+            int la = same_a[l - 1];
+            int lb = same_b[lp];
+            if (lb < lp && lp - lb == l - la && la >= from) {
+                // cout << la << " " << lb << endl;
+                fuck[lb].push_back({la + 1, from});
+            }
+        }
+        if (lp && a[l] == b[lp - 1]) {
+            int la = same_a[l];
+            int lb = same_b[lp - 1];
+            if (la < l && l - la == lp - lb && la >= from) {
+                fuck[lb].push_back({la + 1, from});
+            }
+        }
+        return ;
+    }
+    gol(from, l + 1, lp, dep + 1);
+    gol(from, l, lp + 1, dep + 1);
+    gol(from, l + 1, lp + 1, dep + 1);
+}
+
+void look(int ps, int pt, int r) {
+    if (pt < 0 || pt >= m) return ;
+    auto iter = lower_bound(ls[ps + 1].begin(), ls[ps + 1].end(), make_pair(pt, 0));
+    if (iter != ls[ps + 1].end() && iter->first == pt) {
+        report(iter->second, r);
+        return ;
+    }
+}
+
+void gor(int from, int r, int rp, int dep) {
+    int len = suffix_lcp(n - r - 1, n + m - rp - 1);
+    len = min(len, r + 1);
+    len = min(len, rp + 1);
+    r -= len;
+    rp -= len;
+    if (rp < 0) {
+        report(r + 1, from);
+    }
+    if (dep + r + 1 + rp + 1 <= k) {
+        report(0, from);
+    }
+    if (r < 0) return ;
+    // cout << "xxx " << r << " " << rp << endl;
+    look(r, rp, from); // replace
+    look(r + 1, rp, from); // delete from t
+    look(r, rp + 1, from); // delete from s
+    if (dep + 1 >= k - PRE) return ;
+    gor(from, r - 1, rp, dep + 1);
+    gor(from, r, rp - 1, dep + 1);
+    gor(from, r - 1, rp - 1, dep + 1);
+}
+
+const int DEBUG = 0;
+
+int main() {
+    if (!DEBUG) {
+        scanf("%d", &k);
+        scanf("%s", a);
+        scanf("%s", b);
+    } else {
+        k = 10;
+        for (int i = 0; i < 1e5; i++) {
+            a[i] = rand() % 26 + 'a';
+            b[i] = rand() % 26 + 'a';
+        }
+    }
+    n = strlen(a);
+    for (int i = 0; i < n; i++) {
+        same_a[i] = i;
+        if (i && a[i] == a[i - 1]) same_a[i] = same_a[i - 1];
+    }
+    m = strlen(b);
+    for (int i = 0; i < m; i++) {
+        same_b[i] = i;
+        if (i && b[i] == b[i - 1]) same_b[i] = same_b[i - 1];
+    }
+    PRE = min(5, k / 2);
+    for (int i = 0; i < n; i++) s[i] = a[i];
+    for (int i = 0; i < m; i++) s[n + i] = b[i];
+    s[n + m] = 0;
+    suffixArray();
+    // cout << s << endl;
+    // for (int i = 0; i < 2 * n + 2 * m + 1; i++) {
+    //  cout << i << " : " << s + sa[i] << endl;
+    // }
+    for (int l = 0; l < n; l++) {
+        gol(l, l, 0, 0);
+    }
+    // return 0;
+    for (int i = 0; i <= m; i++) {
+        for (auto t : fuck[i]) {
+            ls[t.first].push_back({i, t.second});
+        }
+    }
+    for (int i = 0; i < n; i++) s[i] = a[n - i - 1];
+    for (int i = 0; i < m; i++) s[n + i] = b[m - i - 1];
+    s[n + m] = 0;
+    suffixArray();
+    for (int r = n - 1; r >= 0; r--) {
+        gor(r, r, m - 1, 0);
+    }
+    puts("NO");
+    return 0;
+}
+```
