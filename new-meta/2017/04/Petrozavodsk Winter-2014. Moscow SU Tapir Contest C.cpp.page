@@ -1,0 +1,121 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1 << 17, P = 1051721729, G = 6;
+
+int modPow(int a, int n, int MOD) {
+    int ret = 1;
+    while (n) {
+        if (n & 1) ret = 1LL * ret * a % MOD;
+        n >>= 1;
+        a = 1LL * a * a % MOD;
+    }
+    return ret;
+}
+
+void dft(int *x, int on, int n) {
+    int k, id, r, u, t;
+    for(int i = 1, j = n >> 1; i < n - 1; ++ i) {
+        if (i < j) swap(x[i], x[j]);
+        for(k = n >> 1; j >= k; j -= k, k >>= 1);
+        j += k;
+    }
+    for(int h = 2; h <= n; h <<= 1) {
+        r = modPow(G, (P - 1) / h, P);
+        if (on < 0) r = modPow(r, P - 2, P);
+        for(int j = 0, p = h >> 1; j < n; j += h) {
+            for(int k = j, w = 1; k < j + p; k ++) {
+                u = x[k]; id = k + p;
+                t = (long long)w * x[id] % P;
+                x[k] = (u + t) % P;
+                x[id] = (u - t + P) % P;
+                w = (long long)w * r % P;
+}}}}
+int xa[N], xb[N];
+void dft(int *a, int lenA, int *b, int lenB, int *ans) {
+    int lenAns;
+    for(lenAns = 1; lenAns < lenA + lenB; lenAns <<= 1);
+    for(int i = 0; i < lenAns; ++ i) xa[i] = xb[i] = 0;
+    for(int i = 0; i < lenA; ++ i) xa[i] = a[i] % P;
+    for(int i = 0; i < lenB; ++ i) xb[i] = b[i] % P;
+    dft(xa, 1, lenAns); dft(xb, 1, lenAns);
+    for(int i = 0; i < lenAns; ++ i) xa[i] = (long long)xa[i] * xb[i] % P;
+    dft(xa, -1, lenAns);
+    int tmp = modPow(lenAns, P - 2, P);
+    for(int i = 0; i < lenAns; ++ i) ans[i] = (long long)xa[i] * tmp % P;
+}
+
+vector<int> seq;
+
+int ans[N], ansl[N], ansr[N];
+
+int solve(int l, int r, int *ans) {
+    if (l == r) {
+        for (int i = 0; i <= seq[l]; i++) {
+            ans[i] = 1;
+        }
+        return seq[l] + 1;
+    }
+    int mid = (l + r) / 2;
+    int lsize = solve(l, mid, ans);
+    int rsize = solve(mid + 1, r, ans + lsize);
+    for (int i = 0; i < lsize; i++) ansl[i] = ans[i];
+    for (int i = 0; i < rsize; i++) ansr[i] = ans[i + lsize];
+    dft(ansl, lsize, ansr, rsize, ans);
+    return lsize + rsize - 1;
+}
+
+const int S = 512;
+
+int mem[S][N];
+
+void fuck(int *mem, int num, int tot) {
+    int sum = 0;
+    for (int i = 0; i < tot; i++) {
+        mem[i] = (ans[i] - sum + P) % P;
+        sum = (sum + mem[i]) % P;
+        if (i >= num) {
+            sum = (sum + P - mem[i - num]) % P;
+        }
+    }
+    ++num;
+    for (int i = 1; i <= tot; i++) {
+        (mem[i] += mem[i - 1]) %= P;
+    }
+    for (int i = tot; i > num; i--) {
+        mem[i] = (mem[i] - mem[i - num - 1] + P) % P;
+    }
+}
+
+int main() {
+    int n;
+    map<int, int> cnt;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        cnt[x]++;
+    }
+    for (auto w : cnt) {
+        seq.push_back(w.second);
+    }
+    int tot = solve(0, seq.size() - 1, ans);
+    map<int, int> where;
+    int cur = 0;
+    int q; scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        int x, k;
+        scanf("%d %d", &x, &k);
+        int num = cnt[x];
+        if (!where.count(num)) {
+            where[num] = cur;
+            fuck(mem[cur], num, tot);
+            cur++;
+        }
+        printf("%d\n", mem[where[num]][k]);
+    }
+    return 0;
+}
+```
