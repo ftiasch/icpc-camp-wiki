@@ -1,0 +1,62 @@
+[2015 Multi-University Training Contest 1](http://acm.hdu.edu.cn/search.php?field=problem&key=2015+Multi-University+Training+Contest+1&source=1&searchmode=source)
+==================================================================================================================================================================
+
+A.OO’s Sequence
+---------------
+
+水题
+
+B.Assignment
+------------
+
+水题
+
+C.Bombing plan
+--------------
+
+树DP
+
+D.Candy Distribution
+--------------------
+
+利用转移的特点优化转移的代价
+
+E.Pocket Cube
+-------------
+
+利用结论的构造，可不补。
+
+F.Tree chain problem
+--------------------
+
+数据结构优化DP
+
+G.Tricks Device
+---------------
+
+最短路+最小割
+
+H.Unstable
+----------
+
+平面几何，构造
+
+I.Annoying problem
+------------------
+
+用数据结构维护DFS序形成的环
+
+J.Y sequence \[待补\]
+---------------------
+
+奇怪的题
+
+K.Solid Geometry Homework \[待补\]
+----------------------------------
+
+区域划分
+
+L.Circles Game \[待补\]
+-----------------------
+
+树上SG
