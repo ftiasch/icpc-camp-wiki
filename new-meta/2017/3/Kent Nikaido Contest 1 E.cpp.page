@@ -1,0 +1,112 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 2e5 + 7;
+const int INF = 1e9 + 7;
+
+int n;
+int a[N];
+bool instk[N];
+long long ans = 0;
+set<int> stk;
+
+int nxt(int pos) {
+    auto it = stk.upper_bound(pos);
+    assert(it != stk.end());
+    return *it;
+}
+
+int pre(int pos) {
+    auto it = stk.lower_bound(pos);
+    if (it == stk.begin()) return -1;
+    --it;
+    return *it;
+}
+
+void flip(int p) {
+    if (instk[p]) {
+        // cout << "instk" << endl;
+        int l = pre(p), r = nxt(p);
+        ans -= (l == -1 || l % 2 == 0) * a[p];
+        ans -= (p % 2 == 0 && r < n) * a[r];
+        ans += (p % 2 == 0) * a[p];
+        ans += (l == -1 || l % 2 == 0) * (r < n) * a[r];
+        stk.erase(p);
+    } else {
+        ans -= (p % 2 == 0) * a[p];
+        int l = pre(p), r = nxt(p);
+        if (r < n) {
+            ans -= (l == -1 || l % 2 == 0) * a[r];
+        }
+        ans += (l == -1 || l % 2 == 0) * a[p];
+        ans += (p % 2 == 0 && r < n) * a[r];
+        stk.insert(p);
+    }
+    instk[p] ^= 1;
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    a[n] = INF;
+    stk.insert(n);
+    for (int i = n - 1; i >= 0; i--) {
+        if (a[i] < a[*stk.begin()]) {
+            instk[i] = true;
+            stk.insert(i);
+        } else {
+            instk[i] = false;
+            ans += (i % 2 == 0) * a[i];
+        }
+    }
+    {
+        int last = 0;
+        for (auto i : stk) {
+            if (i < n) ans += (last % 2 == 0) * a[i];
+            last = i;
+        }
+    }
+    printf("%lld\n", ans);
+    int q;
+    scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        int pos, v;
+        scanf("%d %d", &pos, &v);
+        pos--;
+        a[pos] -= v;
+        if (instk[pos]) {
+            ans -= (pre(pos) == -1 || pre(pos) % 2 == 0) * v;
+            while (true) {
+                // cout << "ans = " << ans << endl;
+                int p = pre(pos);
+                if (p != -1 && a[p] >= a[pos]) {
+                    flip(p);
+                } else {
+                    break;
+                }
+            }
+        } else {
+            ans -= (pos % 2 == 0) * v;
+            int r = nxt(pos);
+            if (a[pos] < a[r]) {
+                while (true) {
+                    int p = pre(pos);
+                    if (p != -1 && a[p] >= a[pos]) {
+                        flip(p);
+                    } else {
+                        break;
+                    }
+                }
+                flip(pos);
+            }
+        }
+        // for (auto pp : stk) cout << pp << endl;
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
+```
