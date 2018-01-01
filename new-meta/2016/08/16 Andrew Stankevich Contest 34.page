@@ -19,7 +19,7 @@ of vertices.
 The only impossible case is that two vertices linked by one edge and no
 other edge incident to these two vertices.
 
-[code](2016/8/16%20A)
+[code](2016/8/16 A)
 
 D. Border Correlation \[Miceren\]
 =================================
@@ -38,4 +38,4 @@ suffix are continuous in "double sized" original string.
 By some observation, this is a mutated version of repeat string problem,
 classic \O(n \log n) algorithm raised.
 
-[code](2016/8/16%20D)
+[code](2016/8/16 D)
