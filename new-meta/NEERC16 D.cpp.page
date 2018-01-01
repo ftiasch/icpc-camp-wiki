@@ -1,0 +1,154 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+#include <vector>
+
+using namespace std;
+
+const int N = 2e3 + 7;
+const int M = N << 3;
+const int INF = 1e9 + 7;
+const long long BIG = 1LL << 40;
+
+int n, k, a[N], b[N];
+int lower, upper;
+int source, target;
+
+struct eglist {
+    int to[M], succ[M], last[N], cap[M], id[M], sum;
+    long long cost[M];
+    void clear() {
+        memset(last, -1, sizeof(last));
+        sum = 0;
+    }
+    void _add_edge(int u, int v, int capacity, long long c, int mark = -1) {
+        to[sum] = v, succ[sum] = last[u], last[u] = sum;
+        cap[sum] = capacity, cost[sum] = c;
+        id[sum++] = mark;
+    }
+    void add_edge(int u, int v, int capacity, long long c, int mark = -1) {
+        _add_edge(u, v, capacity, c, mark);
+        _add_edge(v, u, 0, -c);
+    }
+}e;
+
+int from_e[N];
+long long dist[N];
+
+bool spfa() {
+    vector<int> queue;
+    const long long inf = (1LL << 60);
+    static int visit[N];
+    for (int i = 0; i <= target; i++) {
+        dist[i] = -inf;
+        visit[i] = 0;
+    }
+    dist[source] = 0;
+    queue.push_back(source);
+    for (int head = 0; head < (int)queue.size(); head++) {
+        int u = queue[head];
+        //printf("%d %lld\n", u, dist[u]);
+        visit[u] = false;
+        for (int i = e.last[u]; ~i; i = e.succ[i]) {
+            int v = e.to[i];
+            if (e.cap[i] && dist[v] < dist[u] + e.cost[i]) {
+                dist[v] = dist[u] + e.cost[i];
+                from_e[v] = i;
+                if (!visit[v]) {
+                    queue.push_back(v);
+                    visit[v] = true;
+                }
+            }
+        }
+    }
+    return dist[target] != -inf && dist[target] > 0;
+}
+
+pair<long long, long long> min_cost() {
+    auto ret = make_pair(0LL, 0LL);
+    while (spfa()) {
+        int v = target;
+        int flow = INF;
+        while (v != source) {
+            flow = min(flow, e.cap[from_e[v]]);
+            v = e.to[from_e[v] ^ 1];
+        }
+        v = target;
+        while (v != source) {
+            e.cap[from_e[v]] -= flow;
+            e.cap[from_e[v] ^ 1] += flow;
+            v = e.to[from_e[v] ^ 1];
+        }
+        ret.first += 1LL * flow * dist[target];
+        ret.second += flow;
+    }
+    return ret;
+}
+
+void show(int u) {
+    for (int i = e.last[u]; ~i; i = e.succ[i]) {
+        int v = e.to[i];
+        printf("%d -> %d by %d - %d\n", u, v, e.cap[i], e.cap[i ^ 1]);
+    }
+}
+
+int main() {
+    scanf("%d %d %d %d", &n, &k, &upper, &lower);
+    upper = k - upper;
+    long long base = 0;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+        base += a[i];
+    }
+    e.clear();
+    source = 2 * (n - k + 1), target = source + 1;
+    int c = upper - lower;
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &b[i]);
+        int from = i < k ? 0 : i - k + 1;
+        int to = i < n - k ? i + 1 : target;
+        e.add_edge(from, to, 1, b[i] - a[i], i);
+    }
+    e.add_edge(source, 0, upper - c, BIG);
+    base -= BIG * (upper - c);
+    for (int i = 1; i <= n - k; i++) {
+        e.add_edge(i, target, c, BIG);
+        base -= BIG * c;
+    }
+    for (int i = 0; i <= n - k; i++) {
+        int t = n - k + 1;
+        e.add_edge(source, t + i, c, BIG);
+        base -= BIG * c;
+        e.add_edge(t + i, i, INF, 0, -n - i - 2);
+        if (i < n - k) {
+            e.add_edge(t + i, i + 1, INF, 0, -i - 2);
+        } else {
+            e.add_edge(t + i, target, INF, 0, -i - 2);
+        }
+    }
+    pair<long long, long long> result = min_cost();
+    cout << base + result.first << endl;
+    static char ans[N];
+    ans[n] = 0;
+    fill(ans, ans + n, '?');
+    vector<int> ys(n, 0), zs(n, 0);
+    for (int i = 0; i < e.sum; i++) {
+        if (e.id[i] >= 0) {
+            ans[e.id[i]] = e.cap[i ^ 1] == 1 ? 'E' : 'S';
+        } else if (e.id[i] <= -n - 2) {
+            zs[-e.id[i] - n - 2] = e.cap[i ^ 1];
+        } else if (e.id[i] < -1) {
+            ys[-e.id[i] - 2] = e.cap[i ^ 1];
+        }
+    }
+    // show(6);
+    // for (int i = 0; i < n - k + 1; i++) {
+    //  printf("y[%d] = %d; z[%d] = %d\n", i, ys[i], i, zs[i]);
+    // }
+    puts(ans);
+    return 0;
+}
+```
