@@ -1,0 +1,168 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 450;
+struct edge {
+    int to, r;
+    double f;
+    edge(int to, double f, int r) : to(to), f(f), r(r) {}
+};
+int S, T, d[N];
+vector<edge> G[N], gg[N];
+const double eps = 1e-12;
+bool BFS() {
+    queue<int> q;
+    for (int i = 0; i <= T; ++ i) d[i] = 0;
+    d[S] = 1;
+    q.push(S);
+    while (!q.empty()) {
+        int p = q.front(); q.pop();
+        for (edge e : G[p]) {
+            if (fabs(e.f) < eps) continue;
+            if (d[e.to]) continue;
+            d[e.to] = d[p] + 1;
+            q.push(e.to);
+        }
+    }
+    return d[T];
+}
+int st[N];
+double DFS(int x, double arg) {
+    if (x == T) return arg;
+    double lt = arg;
+    for (int &i = st[x]; i < (int) G[x].size(); ++ i) {
+        int u = G[x][i].to;
+        if (fabs(G[x][i].f) < eps || d[u] != d[x] + 1) continue;
+        double tmp = DFS(u, min(G[x][i].f, lt));
+        G[x][i].f -= tmp;
+        G[u][G[x][i].r].f += tmp;
+        lt -= tmp;
+        if (lt < eps) return arg;
+    }
+    return arg - lt;
+}
+int tick[N], xxx;
+void DFS2(int x) {
+    if (x == S) return ;
+    tick[x] = xxx;
+    for (int i = 0; i < (int) G[x].size(); ++ i) {
+        int u = G[x][i].to;
+        if (fabs(G[u][G[x][i].r].f) < eps || tick[u] == xxx) continue;
+        DFS2(u);
+    }
+}
+double mf() {
+    double ans = 0;
+    while (BFS()) {
+        for (int i = 0; i <= T; ++ i) st[i] = 0;
+        double tmp = 0;
+        while ((tmp = DFS(S, 1)) > eps) ans += tmp;
+    }
+    return ans;
+}
+double u[N];
+double sqr(double x) {return x * x;}
+int c[N];
+void ae(int u, int v, double f) {
+    G[u].push_back(edge(v, f, (int) G[v].size()));
+    G[v].push_back(edge(u, 0, (int) G[u].size() - 1));
+}
+
+const int DEBUG = false;
+
+int k, p;
+bool stick[N];
+
+double build(double delta) {
+    G[0].clear();
+    double ret = 0;
+    for (int i = 1; i <= T; ++ i) G[i] = gg[i];
+    for (int i = 1; i <= k; ++ i) {
+        if (stick[i]) {
+            ae(S, i, u[i]);
+            ret += u[i];
+        } else {
+            ae(S, i, delta / 2 / c[i] + u[i]);
+            ret += u[i] + delta / 2 / c[i];
+        }
+    }
+    return ret;
+}
+
+int main() {
+    if (DEBUG) {
+        k = 100, p = 50;
+    } else scanf("%d%d", &k, &p);
+    for (int i = 1; i <= k; ++ i) {
+        if (DEBUG) {
+            c[i] = rand() % 100;
+        } else scanf("%d", &c[i]);
+    }
+    S = 0, T = k + p + 1;
+    for (int i = 1; i <= k; ++ i) {
+        for (int j = 1; j <= p; ++ j) {
+            int a;
+            if (DEBUG) a = (rand() % 10 == 1);
+            else scanf("%d", &a);
+            if (a) ae(i, k + j, 1);
+        }
+    }
+    for (int i = 1; i <= p; ++ i) ae(k + i, T, 1);
+    for (int i = 1; i <= T; ++ i) gg[i] = G[i];
+    fill(stick + 1, stick + k + 1, false);
+    for (int i = 1; i <= k; i++) {
+        if (c[i] == 0) {
+            stick[i] = true;
+            u[i] = 1;
+        }
+    }
+    bool updated = true;
+    while (updated) {
+        updated = false;
+        double delta = 0.1;
+        static double record[N];
+        const double diff = 1e-9;
+        for (int i = 1; i <= k; i++) {
+            record[i] = u[i];
+            if (1 - u[i] < diff) u[i] = 1, stick[i] = true;
+            if (!stick[i]) delta = min(delta, (1 - u[i]) * 2 * c[i]);
+        }
+        double exp_flow = build(delta);
+        if (fabs(mf() - exp_flow) < diff) {
+            for (int i = 1; i <= k; i++) if (!stick[i]) {
+                u[i] += delta / 2 / c[i];
+                updated = true;
+            }
+            // cout << "pass! " << exp_flow << " delta = " << delta << endl;
+            continue;
+        }
+        int cnt = 20;
+        while (cnt --) {
+            delta /= 2.0;
+            build(delta);
+            mf();
+            xxx ++;
+            DFS2(T);
+            for (int i = 1; i <= k; i++) {
+                if (!stick[i] && tick[i] == xxx) {
+                    u[i] += delta / 2 / c[i];
+                    updated = true;
+                }
+            }
+        }
+        for (int i = 1; i <= k; i++) {
+            if (fabs(record[i] - u[i]) < diff) {
+                stick[i] = true;
+            }
+            // printf("stick[%d] = %d %f %f\n", i, stick[i], record[i], u[i]);
+        }
+    }
+    // for (int i = 1; i <= k; ++ i) printf("u[%d] = %.5f, df = %.5f\n", i, u[i], u[i] * c[i]);
+    double ans = 0;
+    for (int i = 1; i <= k; ++ i) {
+        ans += c[i] * u[i] * u[i];
+        assert(u[i] < 1 + eps);
+    }
+    printf("%.10f\n", ans);
+}
+```
