@@ -1,0 +1,116 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 5e5 + 7;
+
+typedef unsigned int uint;
+
+int n;
+uint a[N];
+
+struct Node {
+    uint sure[2];
+    uint min;
+    Node() {}
+    Node(uint v) {
+        sure[1] = v;
+        sure[0] = ~v;
+        min = v;
+    }
+}tree[N << 2];
+
+void push(int x) {
+    for (int v = 0; v < 2; v++) {
+        for (int c = 0; c < 2; c++) {
+            tree[x << 1 | c].sure[v] |= tree[x].sure[v];
+            if (v == 1) {
+                tree[x << 1 | c].min += tree[x].sure[v];
+            }
+        }
+        tree[x].sure[v] = 0;
+    }
+}
+
+void update(int x) {
+    tree[x].min = min(tree[x << 1].min, tree[x << 1 | 1].min);
+    for (int c = 0; c < 2; c++) {
+        tree[x].sure[c] = tree[x << 1].sure[c] & tree[x << 1 | 1].sure[c];
+        uint cv = tree[x].sure[c];
+        tree[x << 1].sure[c] ^= cv;
+        tree[x << 1 | 1].sure[c] ^= cv;
+    }
+    uint cv = tree[x].sure[1];
+    tree[x << 1].min ^= cv;
+    tree[x << 1 | 1].min ^= cv;
+}
+
+void build(int x, int l, int r) {
+    if (l == r) {
+        tree[x] = Node(a[l]);
+    } else {
+        int m = (l + r) / 2;
+        build(x << 1, l, m);
+        build(x << 1 | 1, m + 1, r);
+        update(x);
+    }
+}
+
+void update(int x, int l, int r, int ql, int qr, uint mask, int v) {
+    if (r < ql || qr < l) return ;
+    if (ql <= l && r <= qr) {
+        uint inter = (tree[x].sure[0] | tree[x].sure[1]) & mask;
+        tree[x].min -= tree[x].sure[1];
+        tree[x].sure[v] |= inter;
+        tree[x].sure[v ^ 1] &= ~inter;
+        tree[x].min += tree[x].sure[1];
+        mask ^= inter;
+    }
+
+    if (mask) {
+        push(x);
+        int m = (l + r) / 2;
+        update(x << 1, l, m, ql, qr, mask, v);
+        update(x << 1 | 1, m + 1, r, ql, qr, mask, v);
+        update(x);
+    }
+}
+
+uint ask(int x, int l, int r, int ql, int qr) {
+    if (r < ql || qr < l) return ~0u;
+    if (ql <= l && r <= qr) {
+        return tree[x].min;
+    } else {
+        int m = (l + r) / 2;
+        return min(ask(x << 1, l, m, ql, qr), ask(x << 1 | 1, m + 1, r, ql, qr)) + tree[x].sure[1];
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%u", &a[i]);
+    }
+    build(1, 0, n - 1);
+    int q;
+    scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        static char buffer[10];
+        int l, r, x;
+        scanf("%s %d %d", buffer, &l, &r);
+        l--, r--;
+        if (buffer[0] == '|' || buffer[0] == '&') {
+            scanf("%u", &x);
+            if (buffer[0] == '|') {
+                update(1, 0, n - 1, l, r, x, 1);
+            } else {
+                update(1, 0, n - 1, l, r, ~x, 0);
+            }
+        } else {
+            printf("%u\n", ask(1, 0, n - 1, l, r));
+        }
+    }
+    return 0;
+}
+```
