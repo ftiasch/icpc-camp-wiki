@@ -1,0 +1,77 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 3e5 + 5;
+int cnt[26], ans[N];
+vector<int> pc[26];
+deque<int> q[N];
+int tick[N], xxx;
+char s[N];
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        scanf("%s", s + 1);
+        int n = (int) strlen(s + 1);
+        for (int i = 0; i < 26; ++ i) {
+            cnt[i] = 0;
+            pc[i].clear();
+        }
+        for (int i = 1; i <= n; ++ i) {
+            cnt[s[i] - 'a'] ++;
+            pc[s[i] - 'a'].push_back(i);
+        }
+        for (int i = 0; i < 26; ++ i) reverse(pc[i].begin(), pc[i].end());
+        for (int i = 0; i < 26; ++ i) if (cnt[i]) ans[i] = cnt[i] - 1;
+        /*for (int i = 0; i < 26; ++ i) {
+            if (!cnt[i]) continue;
+            printf("%d ", ans[i]);
+        }
+        puts("");*/
+        for (int d = 1; d < n; ++ d) {
+            for (int c = 0; c < 26; ++ c) {
+                if (!cnt[c] || 1LL * (cnt[c] - 1) * d > n - 1) continue;
+                //for (int i = 0; i < d; ++ i) q[i].clear();
+                xxx ++;
+                for (int i : pc[c]) {
+                    deque<int> &qq = q[i % d];
+                    if (tick[i % d] < xxx) {
+                        qq.clear();
+                        tick[i % d] = xxx;
+                    }
+                    long long max_p = (cnt[c] - 1) * d + i;
+                    qq.push_front(i);
+                    while (qq.back() > max_p) qq.pop_back();
+                    if ((i - 1) / d + 1 + (n - i) / d >= cnt[c]) {
+                        ans[c] = min(ans[c], cnt[c] - (int) qq.size());
+                    }
+                }
+            }
+        }
+        /*for (int c = 0; c < 26; ++ c) {
+            if (!cnt[c] || 1LL * (cnt[c] - 1) * B > n - 1) continue;
+            vector<int> &pc = ::pc[c];
+            for (int a = 0; a < cnt[c]; ++ a) { 
+                int i = pc[a];
+                for (int b = a + 1; b < cnt[c]; ++ b) {
+                    int res = 0;
+                    int d = abs(pc[b] - i);
+                    long long max_p = 1LL * (cnt[c] - 1) * d + i;
+                    for (int cc = 0; cc < cnt[c] && pc[cc] <= max_p; ++ cc) {
+                        if ((pc[cc] - i) % d == 0) res ++;
+                    }
+                    int res = 2;
+                    if ((i - 1) / d + 1 + (n - i) / d >= cnt[c]) {
+                        ans[c] = min(ans[c], cnt[c] - res);
+                    }
+                }
+            }
+        }*/
+        for (int i = 0; i < 26; ++ i) {
+            if (!cnt[i]) continue;
+            printf("%d ", ans[i]);
+        }
+        puts("");
+    }
+}
+```
