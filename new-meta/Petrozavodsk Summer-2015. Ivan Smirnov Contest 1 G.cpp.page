@@ -1,0 +1,131 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int LOG = 20;
+const int N = 1e5 + 7;
+
+long long n;
+
+struct Node {
+    long long top, out;
+    int dep;
+    Node* jump[LOG];
+    long long dist[LOG];
+    Node(Node* fa, long long _out, long long len) {
+        jump[0] = fa, out = _out;
+        dist[0] = _out - fa->top + 1;
+        top = n;
+        dep = fa->dep + 1;
+        for (int i = 0; i + 1 < LOG; i++) {
+            if (jump[i] && jump[i]->jump[i]) {
+                jump[i + 1] = jump[i]->jump[i];
+                dist[i + 1] = dist[i] + jump[i]->dist[i];
+            }
+        }
+    }
+    Node() {}
+};
+
+map<long long, Node*> id;
+
+Node* find(long long pos) {
+    auto t = id.upper_bound(pos);
+    assert(t != id.begin());
+    --t;
+    return t->second;
+}
+
+long long lca(long long a, long long b) {
+    Node *na = find(a), *nb = find(b);
+    if (na->dep < nb->dep) {
+        swap(na, nb);
+        swap(a, b);
+    }
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (na->dep - (1 << i) > nb->dep) {
+            na = na->jump[i];
+            a = na->top;
+        }
+    }
+    if (na->dep > nb->dep) {
+        a = na->out;
+        na = na->jump[0];
+    }
+    if (na->top == nb->top) {
+        return min(a, b);
+    }
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (na->jump[i] == NULL) continue;
+        if (na->jump[i]->top != nb->jump[i]->top) {
+            na = na->jump[i];
+            nb = nb->jump[i];
+        }
+    }
+    a = na->out;
+    b = nb->out;
+    return min(a, b);
+}
+
+long long get_len(long long a, long long b) {
+    Node *pa = find(a), *pb = find(b);
+    if (pa->top == pb->top) {
+        return a - b;
+    }
+    long long ret = a - pa->top + 1;
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (pa->dep - (1 << i) > pb->dep) {
+            ret += pa->dist[i];
+            pa = pa->jump[i];
+        }
+    }
+    a = pa->out;
+    ret += a - b;
+    return ret;
+}
+
+int main() {
+    int q;
+    scanf("%d", &q);
+    Node* root = new Node();
+    for (int i = 0; i < LOG; i++) root->jump[i] = NULL;
+    for (int i = 0; i < LOG; i++) root->dist[i] = 0;
+    root->dep = 0;
+    root->top = 0;
+    root->out = -1;
+    id[0] = root;
+
+    n = 1;
+
+    Node *cur = root;
+    long long pos = 0;
+    for (int i = 0; i < q; i++) {
+        char buffer[10];
+        scanf("%s", buffer);
+        if (buffer[0] == 'c' && buffer[1] == 'o') {
+            scanf("%lld", &pos);
+            cur = find(pos);
+        } else if (buffer[0] == 'c' && buffer[1] == 'i') {
+            id[n] = cur = new Node(cur, pos, 1);
+            pos = n++;
+        } else {
+            long long a;
+            scanf("%lld", &a);
+            long long c = lca(pos, a);
+            long long lp = get_len(pos, c), la = get_len(a, c);
+            if (la != 0) {
+                if (lp == 0) {
+                    pos = a, cur = find(pos);
+                } else {
+                    pos = a, cur = find(pos);
+                    id[n] = cur = new Node(cur, pos, lp);
+                    pos = (n += lp) - 1;
+                }
+            }
+            printf("%lld\n", pos);
+        }
+    }
+    return 0;
+}
+```
