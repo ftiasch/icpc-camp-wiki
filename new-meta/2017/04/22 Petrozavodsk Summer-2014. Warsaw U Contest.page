@@ -15,7 +15,7 @@ D. The KingDom
 
 然后对于每一个奇度点，我们直接从每个这样的点开始走匹配边，一次走两条边，这样总会停在一个奇度点位置。这样弄完即可得到所有的路径，稍微注意点可以做到线性的复杂度，嫌麻烦也可以直接set做到。
 
-[D.cpp](2017/04/22%20Petrozavodsk%20Summer-2014.%20Warsaw%20U%20Contest%20D.cpp)
+[D.cpp](2017/04/22 Petrozavodsk Summer-2014. Warsaw U Contest D.cpp)
 
 H. The Museum
 =============
@@ -34,7 +34,7 @@ H. The Museum
 
 复杂度$O((m+n)\log (m+n))$。
 
-[H.cpp](2017/04/22%20Petrozavodsk%20Summer-2014.%20Warsaw%20U%20Contest%20H.cpp)
+[H.cpp](2017/04/22 Petrozavodsk Summer-2014. Warsaw U Contest H.cpp)
 
 K. Teams
 ========
@@ -53,4 +53,4 @@ K. Teams
 
 这道题卡常数与空间，注意不要用太多vector，线段树的话用一些trick可以使常数减半。
 
-[K.cpp](2017/04/22%20Petrozavodsk%20Summer-2014.%20Warsaw%20U%20Contest%20K.cpp)
+[K.cpp](2017/04/22 Petrozavodsk Summer-2014. Warsaw U Contest K.cpp)
