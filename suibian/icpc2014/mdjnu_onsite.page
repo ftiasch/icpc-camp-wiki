@@ -1,0 +1,42 @@
+总结
+====
+
+啊 我们金牌啦！
+
+[比赛地址](http://acm.hust.edu.cn/vjudge/contest/view.action?cid=92546#overview)
+
+题解
+====
+
+A.Average Score Xiper
+---------------------
+
+大意就是给两个班的人数，有一个班少了个人，然后给你其他人的分数，问你那个人可能的分数范围，直接暴力就好了。
+
+B.Building Fire Stations Chenxh
+-------------------------------
+
+给你一棵树，找两个点使得其余点到他们的距离的最大值最小。如果找一个点就是找直径取中点就好了，找两个点只要以这个中点把树切割成两棵树（切边），答案就是得到的两棵树的两个直径中点。正确性显然。
+
+D.Domination Xiper
+------------------
+
+虽然感觉这是道期望dp，实际是道数学，霄神迷一样的第二个式子（我不会告诉他我刚开始是对的，然后看到霄神的跟我不一样，我就X了我自己的）导致WA了一发，自己读错题WA了一发...实际是容斥搞一搞就可以转移了，全期望公式。
+
+E.Excavator Contest qscqesze
+----------------------------
+
+构造题，比较烦，霄神给我把构造方式推出来，然后我当成模拟题写的，非常蛋疼……
+[代码](http://www.cnblogs.com/qscqesze/p/4836573.html)
+
+I.Information Entropy qscqesze
+------------------------------
+
+签到题，没啥好说的……
+[代码](http://www.cnblogs.com/qscqesze/p/4836588.html)
+
+K.Known Notation qscqesze
+-------------------------
+
+傻逼贪心题，也没啥好说的……
+[代码](http://www.cnblogs.com/qscqesze/p/4836632.html)
