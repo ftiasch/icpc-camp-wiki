@@ -1,0 +1,107 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cassert>
+
+using namespace std;
+
+const int N = 21;
+
+char mat[N][N];
+int threshhold;
+int adj[N], lowbit[1 << N];
+int visit;
+
+int lowest(int x) {
+    //printf("x = %d %d\n", x, x & -x);
+    //assert(lowbit[x & -x] != 0);
+    return lowbit[x & -x];
+}
+
+int match[N][N];
+
+bool find(int i, int match[]) {
+    while (visit & adj[i]) {
+        int j = lowest(visit & adj[i]);
+        visit ^= 1 << j;
+        if (match[j] == -1 || find(match[j], match)) {
+            match[j] = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+void getv(int n, int m, int w[], vector<int> &fetch, int pos = 0, long long curv = 0) {
+    if (pos == n) {
+        fetch.push_back(curv);
+        return ;
+    }
+    for (int i = 0; i < m; i++) {
+        match[pos + 1][i] = match[pos][i];
+    }
+    getv(n, m, w, fetch, pos + 1, curv);
+    for (int i = 0; i < m; i++) {
+        match[pos + 1][i] = match[pos][i];
+    }
+    visit = (1 << m) - 1;
+    if (find(pos, match[pos + 1])) {
+        getv(n, m, w, fetch, pos + 1, curv + w[pos]);
+    }
+}
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i <= 20; i++) {
+        lowbit[1 << i] = i;
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%s", mat[i]);
+    }
+    static int wx[N], wy[N];
+    for (int i = 0; i < n; i++) scanf("%d", &wx[i]);
+    for (int i = 0; i < m; i++) scanf("%d", &wy[i]);
+    scanf("%d", &threshhold);
+    {
+        for (int i = 0; i < n; i++) {
+            adj[i] = 0;
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == '1') adj[i] |= 1 << j;
+            }
+        }
+    }
+    vector<int> l, r;
+    fill(match[0], match[0] + n, -1);
+    getv(n, m, wx, l);
+    {
+        for (int i = 0; i < m; i++) {
+            adj[i] = 0;
+            for (int j = 0; j < n; j++) {
+                if (mat[j][i] == '1') adj[i] |= 1 << j;
+            }
+        }
+    }
+    fill(match[0], match[0] + n, -1);
+    getv(m, n, wy, r);
+    //sort(l.begin(), l.end());
+    sort(r.begin(), r.end());
+    /*
+    for (auto ll : l) cerr << ll << " ";
+    cerr << endl;
+    for (auto rr : r) cerr << rr << " ";
+    cerr << endl;
+    */
+    long long ans = 0;
+    for (auto v : l) {
+        //if (v > threshhold) continue;
+        ans += (r.end() - lower_bound(r.begin(), r.end(), threshhold - v));
+        //cerr << "v = " << v << " ans = " << ans << " dd = " << threshhold - v << endl;
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
