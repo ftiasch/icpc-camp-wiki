@@ -16,7 +16,7 @@ from i. Then we can construct the tree.
 The answer to the question can be simply calculated by maintaining LCA
 in O(q \log n).
 
-[code](2016/8/15%20D)
+[code](2016/8/15 D)
 
 E. Master Zhu \[Yuzuriha Inori\]
 ================================
@@ -31,7 +31,7 @@ dp1\[i\]\[j\]\[k\]代表前i行已经做完且不要帮助,
 而且前i行已经帮后面的行做好了1\~j-1列的工作, 下一个不放棋子的行为第k行.
 两种dp都通过在下一行放一个棋子转移, 棋子要是有意义的话, 就一定放在第j列.
 dp做到没有需要帮助的列的时候, 就枚举下一个不放棋子的行, 转移到dp1.
-dp1走到i=k时, 就变成dp. [code](2016/8/15%20E)
+dp1走到i=k时, 就变成dp. [code](2016/8/15 E)
 
 I. Up Sky,Mr.Zhu \[Miceren\]
 ============================
@@ -42,4 +42,4 @@ For each query (l, r), try any substring (ll, rr) which belonged (l, l +
 20). Then, there is no "left constrain" anymore for rest possible
 palindrome, we can do it use trie offline.
 
-[code](2016/8/15%20I)
+[code](2016/8/15 I)
