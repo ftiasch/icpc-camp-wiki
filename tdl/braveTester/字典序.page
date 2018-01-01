@@ -1,0 +1,23 @@
+字典序
+======
+
+一些题目
+--------
+
+1.  2016 Multi-University Training Contest 2: [Join the
+    Future](Join%20The%20Future)
+2.  2016 Multi-University Training Contest 4: [After a Sleepless
+    Night](http://acm.hdu.edu.cn/showproblem.php?pid=5764)
+3.  2014-2015 ACM-ICPC Pacific Northwest Regional Contest (Div. 1):
+    [Alchemy](http://codeforces.com/gym/100827)
+
+通用规则
+--------
+
+如果可以枚举所有可能的字典序，那么之后只需要取最小值即可。
+
+如果不能，则求最小字典序的通用过程相当于一个搜索过程：从小到大枚举位置，然后选择有解的最小取值固定在当前位置上。
+
+[Join the Future](Join%20The%20Future)
+可使用上面两种方法，[Alchemy](http://codeforces.com/gym/100827)
+只能用第二种。
