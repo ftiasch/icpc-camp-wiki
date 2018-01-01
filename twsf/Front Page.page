@@ -24,82 +24,72 @@ TBA
 ### TBA2016
 
 -   ?? [Catalan Combinatorial
-    Objects](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2047#c.-catalan-combinatorial-objects)
+    Objects](Andrew Stankevich Contest 47#c.-catalan-combinatorial-objects)
 -   ?? [Higher Math
-    Lesson](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2047#h.-higher-math-lesson)
--   搜索
-    [Isomorphism](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2047#i.-isomorphism)
+    Lesson](Andrew Stankevich Contest 47#h.-higher-math-lesson)
+-   搜索 [Isomorphism](Andrew Stankevich Contest 47#i.-isomorphism)
 -   连通性DP? [Black and White
-    Board](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#c.-black-and-white-board)
+    Board](XVI Open Cup named after E.V. Pankratiev Grand Prix of Saratov#c.-black-and-white-board)
 -   数学
-    [Catenary](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#d.-catenary)
+    [Catenary](XVI Open Cup named after E.V. Pankratiev Grand Prix of Saratov#d.-catenary)
 -   树分治 [Evacuation
-    Plan](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#e.-evacuation-plan)
--   几何 [Break
-    Free](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2048#b.-break-free)
+    Plan](XVI Open Cup named after E.V. Pankratiev Grand Prix of Saratov#e.-evacuation-plan)
+-   几何 [Break Free](Andrew Stankevich Contest 48#b.-break-free)
 -   模拟 [Hardware
-    Hashing](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2048#h.-hardware-hashing)
+    Hashing](Andrew Stankevich Contest 48#h.-hardware-hashing)
 -   ?? [Interactive
-    Proofs](http://twsf.icpc-camp.org/Andrew%20Stankevich%20Contest%2048#i.-interactive-proofs)
--   数学?
-    [Bloom](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#b.-bloom)
--   数学?
-    [Collatz](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#c.-collatz)
--   交互
-    [Einstein](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#e.-einstein)
--   几何?
-    [Jordan](http://twsf.icpc-camp.org/Ivan%20Smirnov%20Contest%201#j.-jordan)
+    Proofs](Andrew Stankevich Contest 48#i.-interactive-proofs)
+-   数学? [Bloom](Ivan Smirnov Contest 1#b.-bloom)
+-   数学? [Collatz](Ivan Smirnov Contest 1#c.-collatz)
+-   交互 [Einstein](Ivan Smirnov Contest 1#e.-einstein)
+-   几何? [Jordan](Ivan Smirnov Contest 1#j.-jordan)
 -   连通性DP?
-    [Hovels](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Baltics#b.-hovels)
+    [Hovels](XVI Open Cup named after E.V. Pankratiev Grand Prix of Baltics#b.-hovels)
 -   大凸包 [Ancient
-    City](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Baltics#c.-ancient-city)
+    City](XVI Open Cup named after E.V. Pankratiev Grand Prix of Baltics#c.-ancient-city)
 -   积分
-    [Entfernung](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013#c.-entfernung)
+    [Entfernung](Petrozavodsk Summer-2015. Petr Mitrichev Contest 13#c.-entfernung)
 -   ??
-    [Sprache](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013#g.-sprache)
+    [Sprache](Petrozavodsk Summer-2015. Petr Mitrichev Contest 13#g.-sprache)
 -   判定
-    [Vieleck](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20Petr%20Mitrichev%20Contest%2013#i.-vieleck)
+    [Vieleck](Petrozavodsk Summer-2015. Petr Mitrichev Contest 13#i.-vieleck)
 
 ### TBA2015
 
 -   ?? [Kimagure
-    Cleaner](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20JAG%20Spring%202015#h.-kimagure-cleaner)
+    Cleaner](Petrozavodsk Summer-2015. JAG Spring 2015#h.-kimagure-cleaner)
 -   ?? [New Game
-    AI](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20JAG%20Spring%202015#j.-new-game-ai)
--   ??
-    [Decomposition](http://twsf.icpc-camp.org/AIM%20Fund%20Cup%202015#d.-decomposition)
+    AI](Petrozavodsk Summer-2015. JAG Spring 2015#j.-new-game-ai)
+-   ?? [Decomposition](AIM Fund Cup 2015#d.-decomposition)
 -   ?? [Ticket To
-    Ride](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Peterhof#i.-ticket-to-ride)
+    Ride](XVI Open Cup named after E.V. Pankratiev. GP of Peterhof#i.-ticket-to-ride)
 -   树分治/期望 [Legacy of the
-    Void](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#g.-legacy-of-the-void)
--   数学
-    [Casino](http://twsf.icpc-camp.org/Petrozavodsk%20Summer-2015.%20JAG%20Spring%202015#c.-casino)
--   FFT [Bus
-    stop](http://twsf.icpc-camp.org/AIM%20Fund%20Cup%202015#b.-bus-stop)
+    Void](2015 ACM-ICPC Asia EC-Final Contest#g.-legacy-of-the-void)
+-   数学 [Casino](Petrozavodsk Summer-2015. JAG Spring 2015#c.-casino)
+-   FFT [Bus stop](AIM Fund Cup 2015#b.-bus-stop)
 -   分类讨论/数学 [Ant on the
-    road](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Eurasia#g.-ant-on-the-road)
+    road](XVI Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia#g.-ant-on-the-road)
 -   Polya [Colorful
-    Floor](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#e.-colorful-floor)
+    Floor](2015 ACM-ICPC Asia EC-Final Contest#e.-colorful-floor)
 -   暴力 [Champions
-    League](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#i.-champions-league)
+    League](2015 ACM-ICPC Asia EC-Final Contest#i.-champions-league)
 -   暴力
-    [Hypercube](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest%20(NEERC%2015)#h.-hypercube)
+    [Hypercube](2015 ACM-ICPC Northeastern European Regional Contest (NEERC 15)#h.-hypercube)
 -   ??
-    [Cypher](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia#l.-cypher)
+    [Cypher](XVI Open Cup named after E.V. Pankratiev. Grand Prix of Siberia#l.-cypher)
 -   ?? [Cow
-    Confinement](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Europe%20(CEPC-2015)#c.-cow-confinement)
--   ?? [Impressive
-    Graphs](http://twsf.icpc-camp.org/AMPPZ-2015#e.-impressive-graphs)
+    Confinement](XVI Open Cup named after E.V. Pankratiev. GP of Europe (CEPC-2015)#c.-cow-confinement)
+-   ?? [Impressive Graphs](AMPPZ-2015#e.-impressive-graphs)
 -   模拟 [Open Face Chinese
-    Poker](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#h.-open-face-chinese-poker)
+    Poker](2015 ACM-ICPC Asia EC-Final Contest#h.-open-face-chinese-poker)
 -   ??计数 [Eulerian
-    Graphs](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPB#c.-eulerian-graphs)
+    Graphs](XVI Open Cup named after E.V. Pankratiev. Grand Prix of SPB#c.-eulerian-graphs)
 -   ?? [Equivalence
-    Relation](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Peterhof#c.-equivalence-relation)
+    Relation](XVI Open Cup named after E.V. Pankratiev. GP of Peterhof#c.-equivalence-relation)
 -   数据结构
-    [Rangefinder](http://twsf.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia#i.-rangefinder)
+    [Rangefinder](XVI Open Cup named after E.V. Pankratiev. Grand Prix of Siberia#i.-rangefinder)
 -   三维几何 [Convex
-    Polyhedron](http://twsf.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final%20Contest#k.-convex-polyhedron)
+    Polyhedron](2015 ACM-ICPC Asia EC-Final Contest#k.-convex-polyhedron)
 
 zxa
 ---
