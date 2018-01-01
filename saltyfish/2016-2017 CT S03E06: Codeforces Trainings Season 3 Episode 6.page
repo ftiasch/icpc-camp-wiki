@@ -1,0 +1,45 @@
+# A The Baguette Master [ghc]
+
+比较显然的是两块木板之间的缝隙是两木板所成角的角平分线，于是根据余弦定理求一求角度就可以算了
+
+# B Pouring Water
+
+目前通过一些暴力搜索，可以预见最终结果是小于$\frac{n(n+1)}{2}$的最大偶数，并且如果$i\ mod\ 8\neq 7$，在$i$的结果的基础上加入装有$i+1$升水的杯子可以得到$i+1$的结果
+
+# C Old Chess Sets [zyh]
+
+求出第一套棋子缺了哪些，看一下第二套棋子够不够这些，够的话就输出这些棋子，否则输出impossible
+
+# D Checkmate with Bishop and Knight [zyh&ghc]
+
+枚举白棋的第一步操作，然后检查黑王所在位置及一圈是否都被攻击，注意白王不能被反杀，还要考虑黑王吃了某个白棋后被反杀的情况
+
+# E Dance Party [hwq&zyh]
+
+考虑反面，没有基友出现的概率为$\frac{(2C)\cdot(2C-2)\cdots(2C-2M+2)}{(2C)\cdot(2C-1)\cdots(2C-M+1)}$，计算时取对数，C或M较大时用斯特林公式逼近
+
+# F Determinant (64 Mb ML!)
+
+# G Midsummer Fires (64 MB ML!)
+
+# H Kids' Play [zyh&ghc]
+
+相当于给一个有向图，保证每个点出度为1，查询从一个点出发经过若干步之后到了哪个点，倍增一下即可
+
+# I Odd Factor (64 MB ML!) [hwq&zyh]
+
+奇数个点的联通块必定无解，对于偶数的点的联通块，只需要考虑其生成树，从下到上check每个点，如果度为偶数就删去到父亲的边
+
+# J One-Armed Bandit
+
+# K Average Speed [zyh]
+
+简单模拟
+
+# L Subway [hwq]
+
+把关键点拿出来做一遍最短路
+
+# M A multiplication game [hwq&zyh&ghc]
+
+打表找规律，当$n\in(9*18^{i-1},18^i]$时后手胜，否则先手胜
