@@ -1,0 +1,215 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(66);
+typedef long double D;
+D eps(1e-14);
+inline int sign(const D & x) {
+    return (x > eps) - (x + eps < 0);
+}
+inline bool equal(const D & x, const D & y) {
+    return x + eps > y && y + eps > x;
+}
+int TWOSIDE = 99, RAY = 101;
+struct P {
+    D x, y;
+    P() {
+    }
+    P(const D & x, const D & y) : x(x), y(y) {
+    }
+    void scan() {
+        double _x, _y;
+        scanf("%lf%lf", &_x, &_y);
+        x = _x; y = _y;
+    }
+    D sqrlen() const {
+        return x * x + y * y;
+    }
+    D len() const {
+        return sqrt(max((D)0., sqrlen()));
+    }
+    P operator + (const P & b) const {
+        return P(x + b.x, y + b.y);
+    }
+    P operator - (const P & b) const {
+        return P(x - b.x, y - b.y);
+    }
+    D operator % (const P & b) const {
+        return x * b.x + y * b.y;
+    }
+    D operator * (const P & b) const {
+        return x * b.y - y * b.x;
+    }
+    P zoom(const D & l) const {
+        D lambda(l / len());
+        return P(x * lambda, y * lambda);
+    }
+    bool operator < (const P & b) const {
+        if(!equal(x, b.x)) {
+            return x < b.x;
+        }
+        if(!equal(y, b.y)) {
+            return y < b.y;
+        }
+        return false;
+    }
+    bool operator == (const P & b) const {
+        return equal(x, b.x) && equal(y, b.y);
+    }
+    void print() const {
+        printf("(%.6f %.6f)\n", (double)x, (double)y);
+    }
+} a[N];
+P operator * (const D & a, const P & b) {
+    return P(a * b.x, a * b.y);
+}
+struct Line {
+    P s, d;
+    Line(const P & s, const P & d) : s(s), d(d) {
+    }
+};
+inline P intersection(const Line & a, const Line & b) {
+    D lambda((b.s - a.s) * b.d / (a.d * b.d));
+    return a.s + lambda * a.d;
+}
+
+inline bool onRay(const P & a, const P & b, const P & c) {
+    return sign((a - b) % (c - b)) > 0;
+}
+inline bool onSeg(const P & a, const P & b, const P & c) {
+    return sign((a - b) % (a - c)) <= 0;
+}
+P sq[4] = {P(0, 0), P(0, 1), P(1, 1), P(1, 0)};
+void calc(const P & a, const P & b, vector<P> & res, int flag) {
+    Line l(a, b - a);
+    if(a == b) {
+        res.push_back(a);
+        return;
+    }
+    int cnt(0);
+    for(int i(0); i < 4; i++) {
+        Line l1(sq[i], sq[(i + 1) % 4] - sq[i]);
+        if(!equal(l1.d * l.d, 0)) {
+            P p(intersection(l1, l));
+            if(flag == TWOSIDE && onSeg(p, sq[i], sq[(i + 1) % 4]) || flag == RAY && onSeg(p, sq[i], sq[(i + 1) % 4]) && onRay(p, a, b)) {
+                cnt++;
+                res.push_back(p);
+            }   
+        }
+    }
+
+}
+struct cmp {
+    P o;
+    cmp(const P & o) : o(o) {
+    }
+    bool operator() (const P & a, const P & b) const {
+        int d1(a < o), d2(b < o);
+        if(d1 - d2)
+            return d1 < d2;
+        else {
+            return sign((a - o) * (b - o)) < 0;
+        }
+    }
+};
+D ntgr(const P & a, const P & b, const P & x, const P & ax, const P & bx, int d) {
+    if(a == b)
+        return 0;
+//  printf("ab\n");
+//  a.print();
+//  b.print();
+//  sq[d].print();
+    if(equal((bx - ax) * (b - a), 0) && onSeg(bx, sq[(d + 1) % 4], sq[(d + 2) % 4])) {
+        return (b - a).len() + 0.5 * (b - a).len() * ((ax - sq[(d + 1) % 4]).len() + (bx - sq[(d + 1) % 4]).len());
+    }else {
+
+        if(onSeg(ax, sq[d], sq[(d + 1) % 4])) {
+            D x1(abs((x - sq[d]) % (b - a).zoom(1)));
+            D y1(abs((x - sq[d]) % (ax - bx).zoom(1)));
+            D la((a - sq[d]).len());
+            D lb((b - sq[d]).len());
+            if(x == sq[d]) {
+                return 0;
+            }else {
+                return abs((y1 * la + x1 * y1 * log(la - x1)) - ((y1 * lb + x1 * y1 * log(lb - x1))));
+            }
+        }else {
+//          ax.print();
+//          sq[d].print();
+            assert(onSeg(ax, sq[(d + 2) % 4], sq[(d + 3) % 4]));
+            D x1(abs((x - sq[(d + 3) % 4]) % (b - a).zoom(1)));
+            D y1(abs((x - sq[(d + 3) % 4]) % (ax - bx).zoom(1)));
+            D la((a - sq[(d + 3) % 4]).len());
+            D lb((b - sq[(d + 3) % 4]).len());
+            if(x == sq[(d + 3) % 4]) {
+                return (b - a).len() * 3;
+            }else {
+                return (b - a).len() * 3 - abs((y1 * la + x1 * y1 * log(la - x1)) - ((y1 * lb + x1 * y1 * log(lb - x1))));
+            }
+        }
+    }
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    for(int i(0); i < n; i++) {
+        a[i].scan();
+    }
+    a[n] = P(0, 0);
+    a[n + 1] = P(0, 1);
+    a[n + 2] = P(1, 1);
+    a[n + 3] = P(1, 0);
+    vector<P> ntr;
+    for(int i(0); i < n + 4; i++) {
+        for(int j(0); j < i && j < n; j++) {
+            calc(a[i], a[j], ntr, TWOSIDE);
+        }
+    }
+    sort(ntr.begin(), ntr.end(), cmp(P(0.5, 0.5)));
+    ntr.resize(unique(ntr.begin(), ntr.end()) - ntr.begin());
+    ntr.push_back(ntr.front());
+    D ans(0);
+    for(int i(0); i < (int)ntr.size() - 1; i++) {
+        P a(ntr[i]), b(ntr[i + 1]), mid(0.5 * (a + b));
+        int d;
+        for(int j(0); j < 4; j++) {
+            if(sign((sq[j] - a) % (b - a)) > 0 && sign((sq[j] - a) * (sq[j] - b)) == 0) {
+                d = j;
+            }
+        }   
+//      printf("%d\n", d);
+//      a.print();
+        if(a == b)
+            continue;
+        sort(::a, ::a + n + 4, cmp(mid));
+        int c1(0), c2(n);
+        ::a[n + 4] = ::a[0];
+        int strt;
+        for(int j(0); j < n + 4; j++) {
+            P x(::a[j]), y(::a[j + 1]);
+            if(equal((x - a) * (y - a), 0) && equal((x - b) * (y - b), 0)) {
+//              x.print(); y.print();
+                strt = j;
+                break;
+            }
+        }
+        for(int j((strt + 1) % (n + 4)); j != strt; j = (j + 1) % (n + 4)) {
+            P x(::a[j]), y(::a[j + 1]);
+            vector<P> res;
+            calc(a, x, res, RAY);
+            P ax(res.back());
+            calc(a, y, res, RAY);
+            P ay(res.back());
+            calc(b, x, res, RAY);
+            P bx(res.back());
+            calc(b, y, res, RAY);
+            P by(res.back());
+            ans += min(c1, c2) * abs(ntgr(a, b, y, ay, by, d) - ntgr(a, b, x, ax, bx, d));
+            if(!equal((y - P(0.5, 0.5)).sqrlen(), (D)0.5)) {
+                c1++; c2--;
+            }
+        }
+    }
+    printf("%.12f\n", (double)ans / 12);
+}
+```
