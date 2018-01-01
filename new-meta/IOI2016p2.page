@@ -1,0 +1,51 @@
+``` {.cpp}
+#include "railroad.h"
+#include<bits/stdc++.h>
+using namespace std;
+typedef vector<int> VI;
+long long plan_roller_coaster(std::vector<int> s, std::vector<int> t) {
+    int n = (int) s.size();
+    VI rela(n);
+    vector<pair<int, pair<int, int> > > edges, evts;
+    auto getr = [&](int x) {
+        int p(x);
+        while(p != rela[p]) 
+            p = rela[p];
+        int p1(p); p = x;
+        while(p != rela[p]) {
+            int p2(rela[p]);
+            rela[p] = p1;
+            p = p2;
+        }
+        return p1;
+    };
+    for(int i(0); i < n; i++) {
+        rela[i] = i;
+        evts.push_back(make_pair(s[i], make_pair(+1, i)));
+        evts.push_back(make_pair(t[i], make_pair(-1, i)));
+    }
+    int cur(0);
+    long long ans(0);
+    sort(evts.begin(), evts.end());
+    for(int i(0); i < (int)evts.size() - 1; i++) {
+        cur += evts[i].second.first;
+        if(cur > 1) {
+            ans += (cur - 1ll) * (evts[i + 1].first - evts[i].first);
+        }
+        if(cur != 1 || evts[i + 1].first == evts[i].first) {
+            rela[getr(evts[i].second.second)] = getr(evts[i + 1].second.second);
+        }else {
+            edges.push_back(make_pair(evts[i + 1].first - evts[i].first, make_pair(evts[i].second.second, evts[i + 1].second.second)));
+        }
+    }
+    sort(edges.begin(), edges.end());
+    for(int i(0); i < (int)edges.size(); i++) {
+        int x(getr(edges[i].second.first)), y(getr(edges[i].second.second));
+        if(x != y) {
+            rela[x] = y;
+            ans += edges[i].first;
+        }
+    }
+    return ans;
+}
+```
