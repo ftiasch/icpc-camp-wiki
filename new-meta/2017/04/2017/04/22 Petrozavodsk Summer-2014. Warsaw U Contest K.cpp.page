@@ -1,0 +1,130 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 1e6 + 7;
+const int MOD = 1e9 + 7;
+
+struct Value {
+    int number, ways;
+    Value(int number = -1, int ways = 0) : number(number), ways(ways) {}
+    void operator +=(const Value &o) {
+        if (number > o.number) return ;
+        if (number < o.number) *this = o;
+        else {
+            if ((ways += o.ways) >= MOD) {
+                ways -= MOD;
+            }
+        }
+    }
+};
+
+int lower[N], upper[N], n;
+Value f[N];
+
+struct List {
+    pair<Value, int> val[N << 1];
+    int last[N], succ[N], tot;
+    void init() {
+        memset(last, -1, sizeof(last));
+        tot = 0;
+    }
+    void add(int pos, const pair<Value, int> &v) {
+        val[tot] = v, succ[tot] = last[pos], last[pos] = tot++;
+    }
+}ls;
+
+// vector<pair<Value, int>> events[N];
+
+Value tree[N << 2];
+
+void modify(int x, int l, int r, int pos, const Value &val) {
+    if (l == r) {
+        tree[x] = val;
+    } else {
+        int mid = (l + r) / 2;
+        if (pos <= mid) {
+            modify(x << 1, l, mid, pos, val);
+            tree[x] = tree[x << 1 | 1];
+            tree[x] += tree[x << 1];
+        } else {
+            modify(x << 1 | 1, mid + 1, r, pos, val);
+            tree[x] = tree[x << 1];
+            tree[x] += tree[x << 1 | 1];
+        }
+    }
+}
+
+Value TMP;
+
+void ask(int x, int l, int r, int ql, int qr) {
+    if (ql > qr) return ;
+    if (ql <= l && r <= qr) {
+        TMP += tree[x];
+        return ;
+    }
+    int mid = (l + r) / 2;
+    if (ql <= mid) ask(x << 1, l, mid, ql, qr);
+    if (qr > mid) ask(x << 1 | 1, mid + 1, r, ql, qr);
+}
+
+void solve(int l, int r) {
+    if (l == r) return ;
+    int mid = (l + r) / 2;
+    solve(l, mid);
+    int minl = lower[mid + 1], maxl = upper[mid + 1];
+    ls.tot = 0;
+    for (int i = mid; i >= l; i--) {
+        int minr = max(i + minl, mid + 1);
+        int maxr = min(i + maxl, r);
+        if (minr <= maxr) {
+            ls.add(minr, {f[i], i});
+            // events[minr].push_back({f[i], i});
+            ls.add(maxr + 1, {Value(-1, 0), i});
+            // events[maxr + 1].push_back({Value(-1, 0), i});
+        }
+        minl = max(minl, lower[i]);
+        maxl = min(maxl, upper[i]);
+    }
+    minl = lower[mid + 1], maxl = upper[mid + 1];
+    for (int i = mid + 1; i <= r + 1; i++) {
+        for (int j = ls.last[i]; ~j; j = ls.succ[j]) {
+            auto &w = ls.val[j];
+            modify(1, l, mid, w.second, w.first);
+        }
+        ls.last[i] = -1;
+        if (i > r) break;
+        minl = max(minl, lower[i]), maxl = min(maxl, upper[i]);
+        if (minl <= maxl && i - minl >= l) {
+            TMP = Value(-1, 0);
+            ask(1, l, mid, max(l, i - maxl), min(mid, i - minl));
+            if (TMP.number >= 0) TMP.number++;
+            f[i] += TMP;
+        }
+    }
+    solve(mid + 1, r);
+}
+
+const int DEBUG = 0;
+
+int main() {
+    if (DEBUG) {
+        n = 1e6;
+    } else scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        if (DEBUG) {
+            lower[i] = 0, upper[i] = n;
+        } else scanf("%d %d", &lower[i], &upper[i]);
+    }
+    f[0] = Value(0, 1);
+    ls.init();
+    solve(0, n);
+    if (f[n].number == -1) {
+        puts("NIE");
+    } else {
+        printf("%d %d\n", f[n].number, f[n].ways);
+    }
+    return 0;
+}
+```
