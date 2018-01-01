@@ -1,40 +1,50 @@
-# A Card Show [zyh&hwq]
+A Card Show \[zyh&hwq\]
+=======================
 
 每行用一个merge-split treap维护
 
-# B Random Run [zyh&ghc]
+B Random Run \[zyh&ghc\]
+========================
 
 猜结论，每个点答案为(该点所在连通块每个点的度数+1之和)/(该点的度数+1)，证明待补
 
-# C Salt Mine [zyh&ghc]
+C Salt Mine \[zyh&ghc\]
+=======================
 
 简单模拟
 
-# D Fire Flowers [zyh]
+D Fire Flowers \[zyh\]
+======================
 
 判断圆的半径以及圆心距与两圆半径的关系
 
-# E Polish Fortress [zyh]
+E Polish Fortress \[zyh\]
+=========================
 
 利用叉积求出有向面积，判断多边形点的绕向，再根据叉积判断是否为凹进去的角
 
-# F Auction of Services [hwq&ghc]
+F Auction of Services \[hwq&ghc\]
+=================================
 
 先求出最小生成树，同时是最小瓶颈生成树，然后查路径max
 
-# G 7168 – SMOK [hwq&zyh] 
+G 7168 – SMOK \[hwq&zyh\]
+=========================
 
 矩阵快速幂，但是模1e9+7之后为0不一定原来就是0，考虑再模几个数判是否为0
 
-# H Warsaw University [zyh]
+H Warsaw University \[zyh\]
+===========================
 
 按照分数从大到小排序，对于分数相同的人，先枚举志愿，然后按照标号从小到大处理
 
-# I Polish Solidarity [zyh&hwq]
+I Polish Solidarity \[zyh&hwq\]
+===============================
 
 贪心，优先选结束时间早的
 
-# J Optimized RPG [zyh]
+J Optimized RPG \[zyh\]
+=======================
 
 偏序问题3 in 1
 
@@ -42,10 +52,11 @@
 
 (2)m=2，cdq分治+树状数组
 
-(3)m>2，dp[i]表示以i为结尾的LIS，转移枚举下一个
+(3)m&gt;2，dp\[i\]表示以i为结尾的LIS，转移枚举下一个
 
 需要记录前趋以输出方案
 
-# K Pope's work [zyh&hwq]
+K Pope's work \[zyh&hwq\]
+=========================
 
-注意到把承重能力大的箱子放在上面不会更优，将箱子按照承重能力从小到大排序，dp[i][j]表示前i个箱子选出了j个箱子能得到的最小总重量，转移枚举是否把下一个箱子堆在最下面
+注意到把承重能力大的箱子放在上面不会更优，将箱子按照承重能力从小到大排序，dp\[i\]\[j\]表示前i个箱子选出了j个箱子能得到的最小总重量，转移枚举是否把下一个箱子堆在最下面
