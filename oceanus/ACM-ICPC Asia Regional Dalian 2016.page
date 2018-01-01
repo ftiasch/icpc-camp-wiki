@@ -1,0 +1,55 @@
+A.Wrestling Match
+=================
+
+直接判断是不是二分图以及是否有孤立点。。
+
+B.Regular Number
+================
+
+维护些bitset暴力shift and一下就可以了
+
+C.Game of Taking Stones
+=======================
+
+发现规律为ai=i\*(sqrt(5)+1)/2 bi=ai+i
+
+然后写个java算一下就好啦
+
+D.A Simple Math Problem
+=======================
+
+枚举x y的gcd 然后就是接个方程check一下就可以了
+
+E.Aninteresting game\[wht\]
+===========================
+
+F.Detachment
+============
+
+先求出最大的x 使得2+3+...+x&lt;=n 然后把剩下的从后往前加就可以了
+
+G.Garden of Eden
+================
+
+考虑点分治 然后难点在于merge统计答案 不难发现其实是or卷积 可以用fwt
+可惜我不会 于是维护了高维前缀和过得
+
+H.To begin or not to begin
+==========================
+
+和抓阄一个道理 就看抓的次数是否多了一次就可以了
+
+I.Convex
+========
+
+直接算就好啦
+
+J.Find Small A
+==============
+
+直接算就好啦
+
+K.Guess the number\[ckg\]
+=========================
+
+好像是个dp？
