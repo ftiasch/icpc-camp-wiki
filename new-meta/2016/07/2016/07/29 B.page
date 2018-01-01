@@ -1,0 +1,134 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <set>
+#include <vector>
+using namespace std;
+const int N = 1e5 + 5, INF = 0x3f3f3f3f;
+int a[N], f[N];
+int to[2 * N], nex[2 * N], tot, st[N];
+vector<int> tmp;
+void ae(int s, int t)
+{
+    tot ++;
+    to[tot] = t;
+    nex[tot] = st[s];
+    st[s] = tot;
+}
+int fat(int x)
+{
+    if (x == f[x]) return x;
+    return f[x] = fat(f[x]);
+}
+void join(int x, int y)
+{
+    f[fat(x)] = fat(y);
+}
+int dfs(int x, int p)
+{
+    int flag = 0, ma = a[x];
+    for (int j = st[x]; j; j = nex[j])
+    {
+        int u = to[j];
+        if (u == p) continue;
+        if (a[u] == a[x]) flag ++;
+        ma = max(ma, dfs(u, x));
+    }
+    if (ma > a[x] || flag > 1)
+    {
+        tmp.clear();
+        return INF;
+    }
+    if (flag == 0)
+    {
+        if (f[a[x]] != a[x])
+        {
+            tmp.clear();
+            return INF;
+        }
+        tmp[x] = a[x];
+        join(a[x], a[x] - 1);
+    }
+    return ma;
+}
+void work(int r, int n)
+{
+    tmp.resize(n + 1);
+    fill(tmp.begin(), tmp.end(), 0);
+    for (int i = 0; i <= n; ++ i) f[i] = i;
+    dfs(r, -1);
+    if (tmp.empty()) return;
+    for (int i = n; i >= 1; -- i)
+    {
+        if (!tmp[i])
+        {
+            int it = fat(a[i]);
+            if (!it)
+            {
+                tmp.clear();
+                return;
+            }
+            tmp[i] = it;
+            join(it, it - 1);
+        }
+    }
+}
+int main()
+{
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n;
+        scanf("%d", &n);
+        for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+        tot = 0;
+        for (int i = 1; i <= n; ++ i) st[i] = 0;
+        for (int i = 1; i < n; ++ i)
+        {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            ae(u, v);
+            ae(v, u);
+        }
+        vector<int> root;
+        for (int i = 1; i <= n; ++ i)
+        {
+            if (a[i] != n) continue;
+            int cnt = 0;
+            for (int j = st[i]; j; j = nex[j])
+            {
+                int u = to[j];
+                if (a[u] == n) cnt ++;
+            }
+            if (cnt <= 1)
+            {
+                root.push_back(i);
+                if ((int) root.size() > 2) break;
+            }
+        }
+        if ((int) root.size() > 2)
+        {
+            root.clear();
+        }
+        vector<int> ans;
+        for (int i = 0; i < (int) root.size(); ++ i)
+        {
+            work(root[i], n);
+            if (ans.empty() || tmp < ans) ans.swap(tmp);
+        }
+        printf("Case #%d: ", ++ zzz);
+        if (ans.empty())
+        {
+            puts("Impossible");
+            continue;
+        }
+        for (int i = 1; i <= n; ++ i) printf("%d%c", ans[i], " \n"[i == n]);
+    }
+}
+```
