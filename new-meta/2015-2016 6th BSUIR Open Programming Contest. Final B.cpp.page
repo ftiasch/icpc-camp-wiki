@@ -1,0 +1,121 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <cassert>
+
+using namespace std;
+
+const int DEBUG = 0;
+
+const int N = 1e3 + 7;
+int n;
+
+struct Node {
+    int row, col;
+    Node *prev, *next;
+    Node() {}
+    Node(int row, int col, Node *prev = NULL, Node *next = NULL) :
+        row(row), col(col), prev(prev), next(next) {}
+}mem[N * N];
+int used = 0;
+
+class CompareNode {
+public :
+    bool operator ()(const Node* a, const Node* b) const {
+        return a->col < b->col;
+    }
+};
+
+typedef set<Node*, CompareNode> SPoint;
+
+SPoint colors[N * N];
+map<int, Node*> last;
+
+Node* L, *R;
+
+void prepare() {
+    L = new Node(n + 1, 0);
+    R = new Node(n + 1, n + 1);
+}
+
+long long solve(SPoint &s, int row, int col, Node* &lst) {
+    long long ret = 0;
+    if (s.size() == 0) {
+        s.insert(L);
+        s.insert(R);
+    }
+    Node* tnode = new(mem + used++) Node(row, col, L, R);
+    if (lst != NULL && lst->row == row) {
+        tnode->prev = lst;
+        lst->next = tnode;
+    }
+    lst = tnode;
+    int top = 0;
+    auto it = s.lower_bound(tnode), it2 = it;
+    Node* pr = *it;
+    Node* pl = *--it2;
+    if (pr->col == col) {
+        if (DEBUG) printf("delete (%d, %d)\n", pr->row, pr->col);
+        top = pr->row;
+        s.erase(it++);
+        pr = *it;
+    }
+
+    int tl = col - pl->col, tr = pr->col - col;
+    while (pl->row < row || pr->row < row) {
+        long long dx = max(0, min(pl->row, pr->row) - top);
+        ret += dx * tl * tr;
+        if (pl->row < pr->row) {
+            top = max(top, pl->row);
+            tl += pl->col - pl->prev->col;
+            pl->next = tnode;
+            //assert(pl->col < col);
+            if (DEBUG) printf("(%d, %d)\n", pl->row, pl->col);
+            pl = pl->prev;
+        } else {
+            top = max(top, pr->row);
+            tr += pr->next->col - pr->col;
+            pr->prev = tnode;
+            //assert(pr->col > col);
+            if (DEBUG) printf("(%d, %d)\n", pr->row, pr->col);
+            pr = pr->next;
+        }
+    }
+    //cout << "top = " << top << endl;
+    ret += 1LL * (row - top) * (col - pl->col) * (pr->col - col);
+    s.insert(tnode);
+    return ret * (n + 1 - row);
+}
+
+int main() {
+    long long ans = 0;
+    scanf("%d", &n);
+    prepare();
+    static int a[N][N];
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            scanf("%d", &a[i][j]);
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            int x = a[i][j];
+            if (last.count(x) == 0) {
+                last[x] = NULL;
+            }
+            long long delta = solve(colors[x], i, j, last[x]);
+            if (DEBUG) printf("--------------------------------- (%d, %d) : %lld\n", i, j, delta);
+            ans += delta;
+        }
+    }
+    double divide = (n * (n + 1LL)) / 2;
+    printf("%.20f\n", ans / divide / divide);
+    return 0;
+}
+```
