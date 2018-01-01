@@ -1,0 +1,46 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+struct point {
+    int x, y;
+    point() {}
+    point(int x, int y) : x(x), y(y) {}
+};
+point operator - (const point &a, const point &b) {return point(a.x - b.x, a.y - b.y);}
+long long cross(const point &a, const point &b) {return 1LL * a.x * b.y - 1LL * a.y * b.x;}
+const int N = 505;
+point a[N];
+bool see(const point &a, const point &b, const point &c) {return cross(b - a, c - a) >= 0;}
+vector<int> f[N][N];
+int vis[N][N], xxx;
+vector<int> dfs(int l, int r) {
+    if (l > r) return {};
+    if (xxx == vis[l][r]) return f[l][r];
+    vis[l][r] = xxx;
+    if (l == r) return f[l][r] = {l};
+    vector<int> res = {l};
+    int las = l + 1;
+    for (int i = l + 2; i <= r + 1; ++ i) {
+        if (i > r || see(a[l], a[las], a[i])) {
+            auto tmp = dfs(las + 1, i - 1);
+            res.insert(res.end(), tmp.begin(), tmp.end());
+            las = i;
+        }
+    }
+    vector<int> res2 = dfs(l + 1, r);
+    if (res.size() < res2.size()) res.swap(res2);
+    return f[l][r] = res;
+}
+int main() {
+    freopen("hide.in", "r", stdin);
+    freopen("hide.out", "w", stdout);
+    int n;
+    while (scanf("%d", &n) == 1 && n) {
+        for (int i = 1; i <= n; ++ i) scanf("%d%d", &a[i].x, &a[i].y);
+        xxx ++;
+        auto ans = dfs(2, n);
+        printf("%d\n", (int) ans.size());
+        for (int x : ans) printf("%d ", x); puts("");
+    }
+}
+```
