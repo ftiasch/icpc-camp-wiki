@@ -1,0 +1,141 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6 + 5, MOD = 1e9 + 7, M = 2e5 + 5, C = 4;
+unordered_set<int> ban[2][M];
+int f[C][3][3], id[N];
+bool bans(vector<int> a, int type) {
+    for (int i = 1; i < (int) a.size(); ++ i) {
+        if (ban[type][id[a[i - 1]]].count(a[i])) return 1;
+    }
+    return 0;
+}
+int main() {
+    int n, p, m;
+    scanf("%d%d%d", &n, &m, &p);
+    int ott = 0;
+    for (int i = 1; i <= m; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        if (!id[u]) id[u] = ++ ott;
+        if (!id[v]) id[v] = ++ ott;
+        ban[0][id[u]].insert(v);
+        ban[1][id[v]].insert(u);
+    }
+    bool debug = 0;
+    if (n < 5 || debug) {
+        vector<int> q;
+        for (int i = 1; i < n; ++ i) q.push_back(i);
+        int ans = 0;
+        do {
+            q.push_back(n);
+            bool flag = 1;
+            for (int i = 0; i < n; ++ i) {
+                if (ban[0][id[q[i]]].count(q[(i + 1) % n])) flag = 0;
+                if (ban[1][id[q[i]]].count(q[(i + n - 1) % n])) flag = 0;
+                if (abs(q[i] - q[(i + 1) % n]) > p) flag = 0;
+            }
+            if (flag) {
+                ans ++;
+                if (debug) {
+                    for (int i = n - 1; i >= 0; -- i) printf("%d ", q[i]);
+                    for (int i = 0; i < n; ++ i) {
+                        if (q[i] == 1) {
+                            int a = q[(i + n - 1) % n];
+                            int b = q[(i + 1) % n];
+                            printf("   %d %d\n", 4 - a, 4 - b);
+                            break;
+                        }
+                    }
+                }
+            }
+            q.pop_back();
+        } while (next_permutation(q.begin(), q.end()));
+        printf("%d\n", ans);
+        if (!debug) return 0;
+    }
+    if (p <= 1) return 0 * puts("0");
+    if (p == 2) {
+        deque<int> qq;
+        qq.push_back(n);
+        for (int i = n - 1; i >= 1; -- i) {
+            if (i & 1) qq.push_back(i); else qq.push_front(i);
+        }
+        vector<int> q;
+        for (int x : qq) q.push_back(x);
+        int ans = 0;
+        bool flag = 1;
+        for (int i = 0; i < n; ++ i) {
+            if (ban[0][id[q[i]]].count(q[(i + 1) % n])) flag = 0;
+            if (ban[1][id[q[i]]].count(q[(i + n - 1) % n])) flag = 0;
+            if (abs(q[i] - q[(i + 1) % n]) > p) flag = 0;
+        }
+        if (flag) ans ++;
+        flag = 1;
+        reverse(q.begin(), q.end());
+        for (int i = 0; i < n; ++ i) {
+            if (ban[0][id[q[i]]].count(q[(i + 1) % n])) flag = 0;
+            if (ban[1][id[q[i]]].count(q[(i + n - 1) % n])) flag = 0;
+            if (abs(q[i] - q[(i + 1) % n]) > p) flag = 0;
+        }
+        if (flag) ans ++;
+        printf("%d\n", ans);
+        return 0;
+    }
+    int cur = 0;
+    if (!bans({n, n - 2, n - 1}, 0)) f[0][1][0] ++;
+    if (!bans({n, n - 1, n - 2}, 0)) f[0][2][0] ++;
+    if (!bans({n, n - 2, n - 1}, 1)) f[0][0][1] ++;
+    if (!bans({n, n - 1, n - 2}, 1)) f[0][0][2] ++;
+    if (!bans({n, n - 1}, 0) && !bans({n, n - 2}, 1)) f[0][1][2] ++;
+    if (!bans({n, n - 1}, 1) && !bans({n, n - 2}, 0)) f[0][2][1] ++;
+    if (!bans({n, n - 3, n - 1}, 0) && !bans({n, n - 2}, 1)) f[1][0][1] ++;
+    if (!bans({n, n - 3, n - 2}, 0) && !bans({n, n - 1}, 1)) f[1][1][0] ++;
+    if (!bans({n, n - 3, n - 1}, 1) && !bans({n, n - 2}, 0)) f[1][1][0] ++;
+    if (!bans({n, n - 3, n - 2}, 1) && !bans({n, n - 1}, 0)) f[1][0][1] ++;
+    if (!bans({n, n - 1, n - 4, n - 2}, 0) && !bans({n, n - 3}, 1)) f[2][0][1] ++;
+    if (!bans({n, n - 1, n - 4, n - 2}, 1) && !bans({n, n - 3}, 0)) f[2][1][0] ++;
+    for (int i = n; i > 4; -- i) {
+        //printf("work %d\n", i);
+        memset(f[(cur + C - 1) % C], 0, sizeof(f[(cur + C - 1) % C]));
+        for (int x = 0; x < 3; ++ x) {
+            for (int y = 0; y < 3; ++ y) {
+                if (!f[cur][x][y]) continue;
+                if (x == 0) {
+                    if (!ban[0][id[i]].count(i - 3)) (f[(cur + 1) % C][2][y - 1] += f[cur][x][y]) %= MOD;
+                }
+                else if (y == 0) {
+                    if (!ban[1][id[i]].count(i - 3)) (f[(cur + 1) % C][x - 1][2] += f[cur][x][y]) %= MOD;
+                }
+                else if (x == 1) {
+                    if (!ban[0][id[i - 1]].count(i - 3)) (f[(cur + 1) % C][2][y - 1] += f[cur][x][y]) %= MOD;
+                    if (i > 5 && !ban[0][id[i - 1]].count(i - 4) && !ban[0][id[i - 4]].count(i - 3))
+                        (f[(cur + 2) % C][1][y - 2] += f[cur][x][y]) %= MOD;
+                    if (!ban[1][id[i - 2]].count(i - 3)) (f[(cur + 1) % C][x - 1][2] += f[cur][x][y]) %= MOD;
+                    if (!bans({i - 1, i - 4}, 0) && !bans({i - 2, i - 5, i - 3}, 1))
+                        (f[(cur + 3) % C][1][0] += f[cur][x][y]) %= MOD;
+                }
+                else {
+                    if (!ban[1][id[i - 1]].count(i - 3)) (f[(cur + 1) % C][x - 1][2] += f[cur][x][y]) %= MOD;
+                    if (i > 5 && !ban[1][id[i - 1]].count(i - 4) && !ban[1][id[i - 4]].count(i - 3))
+                        (f[(cur + 2) % C][x - 2][1] += f[cur][x][y]) %= MOD;
+                    if (!ban[0][id[i - 2]].count(i - 3)) (f[(cur + 1) % C][2][y - 1] += f[cur][x][y]) %= MOD;
+                    if (!bans({i - 1, i - 4}, 1) && !bans({i - 2, i - 5, i - 3}, 0))
+                        (f[(cur + 3) % C][0][1] += f[cur][x][y]) %= MOD;
+                }
+            }
+        }
+        (++ cur) %= C;
+    }
+    int ans = 0;
+    for (int x = 0; x < 3; ++ x) {
+        for (int y = 0; y < 3; ++ y) {
+            if (!f[cur][x][y]) continue;
+            if (ban[0][id[1]].count(4 - y) || ban[1][id[1]].count(4 - x)) continue;
+            //printf("%d %d + %d\n", x, y, f[cur][x][y]);
+            (ans += f[cur][x][y]) %= MOD;
+        }
+    }
+    printf("%d\n", ans);
+}
+```
