@@ -1,0 +1,135 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+struct point {
+    long long x, y;
+    point() {}
+    point(long long x, long long y) : x(x), y(y) {}
+    long long calc(long long k) {return y - k * x;}
+};
+point operator - (const point &a, const point &b) {return point(a.x - b.x, a.y - b.y);}
+long long operator * (const point &a, const point &b) {return a.x * b.y - a.y * b.x;}
+const int N = 255, M = 1e4 + 5;
+long long INF = 1e18;
+long long f[N][M];
+void push(deque<point> &q, point x) {
+    point tmp;
+    while (q.size() >= 2 && (tmp = *(-- (-- q.end())), (q.back() - tmp) * (x - tmp) >= 0)) {
+        q.pop_back();
+    }
+    q.push_back(x);
+}
+pair<long long, bool> query(deque<point> &q, long long k) {
+    if (q.empty()) return {0, 0};
+    point tmp;
+    while (q.size() >= 2 && (tmp = *(++ q.begin()), tmp.calc(k) >= q.begin() -> calc(k))) {
+        q.pop_front();
+        //printf("pop\n");
+    }
+    //printf("%I64d - %I64d * k\n", q.front().y, q.front().x);
+    return {q.begin() -> calc(k), 1};
+}
+deque<point> q[M];
+double ans1[M], ans2[M];
+int main() {
+    int n, W;
+    scanf("%d%d", &n, &W);
+    //n = 250; W = 10000;
+    vector<tuple<int, int, int>> D;
+    vector<pair<int, int>> C;
+    for (int i = 1; i <= n; ++ i) {
+        char type[5];
+        scanf("%s", type);
+        //type[0] = 'C';
+        int w, t, dt;
+        if (type[0] == 'D') {
+            scanf("%d%d%d", &w, &t, &dt);
+            D.push_back(make_tuple(w, t, dt));
+        }
+        else {
+            scanf("%d%d", &t, &dt);
+            //t = 10000;
+            //dt = 0;
+            C.push_back({t, dt});
+        }
+    }
+    for (int i = 0; i <= (int) D.size(); ++ i) {
+        for (int j = 0; j <= W; ++ j) {
+            f[i][j] = -2 * INF;
+        }
+    }
+    f[0][0] = 0;
+    for (int i = 1; i <= (int) D.size(); ++ i) {
+        int w, t, dt;
+        tie(w, t, dt) = D[i - 1];
+        for (int j = 0; j < w; ++ j) q[j].clear();
+        for (int j = 0; j <= W; ++ j) {
+            auto tmp = query(q[j % w], - 2LL * (j / w) * dt);
+            f[i][j] = f[i - 1][j];
+            if (tmp.second) {
+                f[i][j] = max(f[i][j], tmp.first - 1LL * dt * (j / w) * (j / w) + 1LL * dt * (j / w) + 2LL * t * (j / w));
+            }
+            //if (f[i][j] != -2 * INF) printf("f[%d][%d]=%I64d\n", i, j, f[i][j]);
+            if (f[i - 1][j] != -2 * INF) {
+                push(q[j % w], point(j / w, f[i - 1][j] - 2LL * (j / w) * t - 1LL * dt * (j / w) * (j / w) - 1LL * dt * (j / w)));
+            }
+        }
+    }
+    for (int i = 0; i <= W; ++ i) {
+        ans1[i] = f[(int) D.size()][i] / 2.0;
+        if (i == 0) ans2[i] = 0; else ans2[i] = -2e18;
+        if (!C.empty()) {
+            double l = -1e9, r = 1e9;
+            for (int j = 0; j < 100; ++ j) {
+                double d = (l + r) / 2.0, ax = 0;
+                for (auto x : C) {
+                    int t, dt;
+                    t = x.first, dt = x.second;
+                    double A = - dt / 2.0, B = t - d;
+                    if (dt == 0) {
+                        if (t >= d) ax += i;
+                    }
+                    else {
+                        ax += max(0.0, - B / (2 * A));
+                        if (ax > i) break;
+                    }
+                }
+                if (ax > i) {
+                    l = d;
+                }
+                else {
+                    r = d;
+                }
+            }
+            double d = l, ans = 0, remain = i;
+            bool flag = 0;
+            int maxt = 0;
+            for (auto xx : C) {
+                int t, dt;
+                t = xx.first, dt = xx.second;
+                if (dt != 0) {
+                    double A = - dt / 2.0, B = t - d;
+                    double x = max(0.0, - B / (2 * A));
+                    ans += - dt / 2.0 * x * x + t * x;
+                    remain -= x;
+                }
+                else {
+                    flag = 1;
+                    maxt = max(maxt, t);
+                }
+            }
+            ans2[i] = ans + remain * maxt;
+        }
+    }
+    double ans = -1e18;
+    for (int i = 0; i <= W; ++ i) {
+        //if (ans1[i] >= -1e17) printf("ans1[%d]=%.1f\n", i, ans1[i]);
+        //if (ans2[i] >= -1e17) printf("ans2[%d]=%.3f\n", i, ans2[i]);
+        if (ans1[i] >= -1e17 && ans2[W - i] >= -1e17) { 
+            ans = max(ans, ans1[i] + ans2[W - i]);
+            //printf("ans1[%d] = %.1f  ans2[%d] = %.1f\n", i, ans1[i], W - i, ans2[W - i]);
+        }
+    }
+    if (ans < -1e17) puts("impossible"); else printf("%.9f\n", ans);
+}
+```
