@@ -1,0 +1,77 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int P = 47;
+const int N = 2 * (P * P + P + 1);
+
+vector<int> adj[N];
+int p;
+
+void add(int u, int v) {
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+int visit[N], from[N];
+int START;
+
+void dfs(int u, int dep) {
+    visit[u] = 1;
+    for (auto v : adj[u]) {
+        if (v == from[u]) continue;
+        if (v == START && dep < 5) {
+            while (u != START) {
+                printf("%d ", u);
+                u = from[u];
+            }
+            printf("%d\n", START);
+            exit(0);
+        }
+        if (!visit[v]) {
+            from[v] = u;
+            dfs(v, dep + 1);
+        }
+    }
+    visit[u] = 0;
+}
+
+int main() {
+    scanf("%d", &p);
+    int n = 2 * (p * p + p + 1);
+    add(0, n - 1);
+    for (int i = 0; i < p; i++) {
+        add(0, i + 1);
+        add(n - 1, n - i - 2);
+    }
+    for (int i = 0; i < p; i++) {
+        for (int j = 0; j < p; j++) {
+            add(i + 1, p + 1 + i * p + j);
+            add(n - i - 2, n - 2 - p - i * p - j);
+        }
+    }
+    for (int i = 0; i < p; i++) {
+        for (int j = 0; j < p; j++) {
+            int u = 1 + p + i * p + j;
+            for (int k = 0; k < p; k++) {
+                int v = n - 2 - p - k * p - (i * k + j) % p;
+                add(u, v);
+            }
+        }
+    }
+    // for (int i = 0; i < n; i++) {
+    //  START = i;
+    //  from[i] = -1;
+    //  dfs(i, 0);
+    // }
+    printf("%d\n", n);
+    for (int u = 0; u < n; u++) {
+        for (auto v : adj[u]) {
+            printf("%d ", v + 1);
+        }
+        puts("");
+    }
+    return 0;
+}
+```
