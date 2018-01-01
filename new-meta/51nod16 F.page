@@ -1,0 +1,168 @@
+``` {.cpp}
+#include<cstring>
+#include<cstdio>
+#include<algorithm>
+#include<ctime>
+#include<cassert>
+using namespace std;
+int modulo(985661441);
+int maxpw2(1048576);//max 2^k s.t. 2^k | modulo
+int G(289936572);//79986183ll * 79986183ll % modulo);//s.t. elements in {G^0, G^1, ..., G^mxpw2} are distinct
+int pw[1111111];
+const int N(1111111);
+void FFT(int P[], int n, int oper) {
+    for(int i(1), j(0); i < n - 1; i++) {
+        for(int s(n); j ^= s >>= 1, ~j & s;);
+        if (i < j) 
+            swap(P[i], P[j]);
+    }
+    //int unit_p0;
+    for(int d(0); (1 << d) < n; d++) {
+        int m(1 << d), m2(m * 2);
+        int delta(oper * (maxpw2 / m2));
+        int cur1(oper == 1 ? 0 : maxpw2);
+        //unit_p0 = oper == 1 ? pw[maxpw2 / m2] : pw[maxpw2 - maxpw2 / m2];
+        
+        //printf("%d %d\n", unit_p0, pw[cur1 + delta]);
+        for(int i = 0; i < n; i += m2) {
+            //int unit(1);
+            int cur(cur1);
+            for(int j(0); j < m; j++) {
+                int &P1 = P[i + j + m], &P2 = P[i + j];
+                //printf("%d %d\n", unit, pw[cur]);
+                //assert(unit == pw[cur]);
+                //int t = (long long)unit * P1 % modulo;
+                int t = (long long)pw[cur] * P1 % modulo;
+                cur += delta;
+                P1 = (P2 - t + modulo) % modulo;
+//              if(P1 < 0) {
+//                  P1 += modulo;
+//              }
+                P2 = (P2 + t) % modulo;
+//              if(P2 >= modulo) {
+//                  P2 -= modulo;
+//              }
+//              P1 = (P2 - t + modulo) % modulo;
+//              P2 = (P2 + t) % modulo;
+                //unit = (long long)unit * unit_p0 % modulo;
+            }
+        }
+    }
+}
+
+int nn;
+int A[N], B[N], C[N];
+
+//A * B = C;
+//len = nn
+
+int coe[N], ans[4][N * 2], fac[N], invFac[N], inv[N], res[N];
+int vst[N], _B[N * 2];
+int cnt;
+void multiply() {
+    cnt += nn * ilogb(nn);
+    FFT(A, nn, 1);
+    if(vst[nn]) {
+        copy(_B + nn, _B + nn + nn, B);
+    }else {
+        vst[nn] = true;
+        copy(coe, coe + nn, B);
+        FFT(B, nn, 1);
+        copy(B, B + nn, _B + nn);
+    }
+    //printf("FFT %d %d %d %d %d %d %d %d\n", A[0], A[1], A[2], A[3], B[0], B[1], B[2], B[3]);
+    for(int i(0); i < nn; i++) {
+        C[i] = (long long)A[i] * B[i] % modulo;
+    }
+    FFT(C, nn, -1);
+    /*for(int i(0); i < 3; i++) {
+        printf("%d ", C[i]);
+    }
+    printf("\n");*/
+    /*for(int i(0); i < nn; i++) {
+        C[i] = (long long)C[i] * inv[nn] % modulo;
+        //printf("C[%d] = %d\n", i, C[i]);
+    }*/
+    /*for(int i(0); i < 3; i++) {
+        printf("%d ", C[i]);
+    }
+    printf("\n");*/
+}
+
+void calc(int le, int ri) {
+    if(ri - le <= 200) {
+        for(int i(le + 1); i <= ri; i++) {
+            int tmp(0);
+            for(int j(le); j < i; j++) {
+                tmp = (tmp + (long long)res[j] * coe[i - j]) % modulo;
+            }
+            res[i] = (res[i] + (long long)tmp * inv[i]) % modulo;
+        }
+    }else {
+        int mid((le * 1 + ri * 1) / 2);
+        calc(le, mid);
+        nn = 1;
+        while(nn <= ri - le + 1) {//(mid - le + 1) + (ri - le + 1) - 1) {
+            nn *= 2;
+        }
+        memcpy(A, res + le, sizeof(int) * (mid - le + 1));
+        memset(A + mid - le + 1, 0, sizeof(int) * (nn - mid + le - 1));
+        multiply();
+        int tmp(inv[nn]);
+        for(int i(mid + 1); i <= ri; i++) {
+            res[i] = (res[i] + (long long)inv[i] * C[i - le] % modulo * tmp) % modulo;
+        }
+        calc(mid + 1, ri);
+    }
+}
+int main() {
+    pw[0] = 1;
+    cnt = 0;
+    for(int i(1); i < maxpw2; i++) {
+        pw[i] = (long long)pw[i - 1] * G % modulo;
+    }
+    pw[maxpw2] = 1;
+    for(int i(0); i <= maxpw2; i++) {
+        if(i == 0) {
+            fac[i] = 1;
+        }else {
+            fac[i] = 1ll * fac[i - 1] * i % modulo;
+        }
+        inv[i] = i == 0 ? 1 : i == 1 ? 1 : 1ll * ((modulo + i - 1) / i) * inv[i - modulo % i] % modulo;
+        invFac[i] = i == 0 ? 1 : invFac[i - 1] * 1ll * inv[i] % modulo;
+    }
+    int tests;
+    scanf("%d", &tests);
+    for(int i(1); i <= 2000000; i++) {
+        ans[1][i] = 1;
+    }
+    ans[2][0] = ans[3][0] = 1;
+    for(int i(1); i <= 1000000; i++) {
+        coe[i] = ((long long)i * invFac[i - 1]) % modulo;
+        res[i] = 0;
+    }
+    res[0] = 1;
+    calc(0, 1000000);
+    for(int i(1); i <= 1000000; i++) {
+        ans[2][i] = ((long long)res[i] * fac[i]) % modulo;
+    }
+    for(int i(1); i <= 666666; i++) {
+        coe[i] = ((long long)coe[i] * ans[2][i - 1]) % modulo;
+        res[i] = 0;
+    }
+    for(int i(1); i <= maxpw2; i *= 2) {
+        vst[i] = false;
+    }
+    res[0] = 1;
+    calc(0, 666666);
+    for(int i(1); i <= 666666; i++) {
+        ans[3][i] = ((long long)res[i] * fac[i]) % modulo;
+    }
+    //printf("%d %d\n", cnt, clock());
+    for(int qq(1); qq <= tests; qq++) {
+        int s, k;
+        scanf("%d%d", &s, &k);
+        printf("Case #%d: %d\n", qq, ans[k][s]);
+    }
+}
+```
