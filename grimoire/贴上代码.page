@@ -1,4 +1,4 @@
-``` {.{cpp}}
+``` {.{.{cpp}}}
 inline LL solve(LL n) {
     LL m = 1;
     for (; m * m <= n; ++m) {
