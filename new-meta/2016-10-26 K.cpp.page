@@ -1,0 +1,132 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(17), M(111), L(42222);
+int a[N][L], p[M], invp[M];
+int coe[N][N], c[L], nxt[L];
+int modulo(1e9 + 7);
+int pw(int x, int n) {
+    int res(1);
+    while(n) {
+        if(n & 1) {
+            res = (long long)res * x % modulo;
+        }
+        x = (long long)x * x % modulo;
+        n /= 2;
+    }
+    return res;
+}
+vector<int> elim(vector<vector<int> > & a, vector<int> & b) {
+    int n(b.size());
+    /*printf("%d\n", n);
+    for(int i(0); i < n; i++) {
+        for(int j : a[i]) printf("%d ", j);
+        printf("%d\n", b[i]);
+    }*/
+    for(int i(0); i < n; i++) {
+        assert(a[i][i] != 0);
+        for(int j(0); j < n; j++) {
+            if(j != i) {
+                int coe((long long)a[j][i] * pw(a[i][i], modulo - 2) % modulo);
+                for(int k(0); k < n; k++) {
+                    a[j][k] = (a[j][k] - (long long)a[i][k] * coe % modulo + modulo) % modulo;
+                }
+                b[j] = (b[j] - (long long)b[i] * coe % modulo + modulo) % modulo;
+            }
+        }
+    }
+    vector<int> res;
+    for(int i(0); i < n; i++) {
+        res.push_back((long long)b[i] * pw(a[i][i], modulo - 2) % modulo);
+    }
+    return res;
+}
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    for(int qq(1); qq <= tests; qq++) {
+        int n, m, l;
+        scanf("%d%d%d", &n, &m, &l);
+//n = 15;
+//m = 100;
+//l = 20000;
+        int sum(0);
+        for(int i(1); i <= m; i++) {
+            scanf("%d", &p[i]);
+//p[i] = rand() % 100 + 1;
+            sum += p[i];
+        }
+        sum = pw(sum, modulo - 2);
+        for(int i(1); i <= m; i++) {
+            p[i] = (long long)p[i] * sum % modulo;
+            invp[i] = pw(p[i], modulo - 2);
+        }
+        for(int i(1); i <= n; i++) {
+            for(int j(1); j <= l; j++) {
+                scanf("%d", &a[i][j]);
+//a[i][j] = rand() % 100 + 1;
+            }
+        }
+        for(int i(1); i <= n; i++) {
+            nxt[0] = -1;
+            for(int j(1); j <= l; j++) {
+                for(nxt[j] = nxt[j - 1]; nxt[j] >= 0 && a[i][nxt[j] + 1] != a[i][j]; nxt[j] = nxt[nxt[j]]);
+                nxt[j]++;
+                //printf("nxt[%d] = %d\n", j, nxt[j]);
+            }
+            
+            c[0] = 1;
+            for(int j(1); j <= l; j++) {
+                c[j] = (long long)c[j - 1] * invp[a[i][j]] % modulo;
+            }
+            c[0] = 0;
+            for(int j(1); j <= l; j++) {
+                c[j] = (c[nxt[j]] + c[j]) % modulo;
+            }
+            for(int j(1); j <= n; j++) {
+                int cur(0);
+                for(int k(1); k <= l; k++) {
+                    while(cur >= 0 && a[i][cur + 1] != a[j][k]) {
+                        cur = nxt[cur];
+                    }
+                    cur++;
+                    if(k == l) {
+                        coe[i][j] = c[cur];
+                        //printf("coe[%d][%d] = %d\n", i, j, coe[i][j]);
+                    }
+                }
+            }
+        }
+
+        int ans(0);
+        for(int msk(1); msk < (1 << n); msk++) {
+            static vector<int> vec;
+            vec.clear();
+            for(int i(1); i <= n; i++) {
+                if(msk >> (i - 1) & 1) {
+                    vec.push_back(i);
+                }
+            }
+            static vector<vector<int> > a;
+            static vector<int> b;
+            a.clear();
+            b.clear();
+            for(int i(0); i < (int)vec.size(); i++) {
+                a.push_back(vector<int>());
+                vector<int> &ai(a.back());
+                for(int j(0); j < (int)vec.size(); j++) {
+                    ai.push_back(coe[vec[i]][vec[j]]);
+                }
+                ai.push_back(modulo - 1);
+                b.push_back(0);
+            }
+            b.push_back(1);
+            a.push_back(vector<int>(vec.size(), 1));
+            a.back().push_back(0);
+            ans = (ans + (long long)(__builtin_popcount(msk) & 1 ? 1 : -1) * elim(a, b).back() + modulo) % modulo;
+            //printf("??\n");
+        }
+        printf("%d\n", ans);
+    }   
+}
+```
