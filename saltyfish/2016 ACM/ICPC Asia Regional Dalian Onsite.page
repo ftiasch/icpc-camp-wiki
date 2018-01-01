@@ -1,0 +1,31 @@
+# A Wrestling Match
+
+# B Regular Number 
+
+# C Game of Taking Stones [zyh&ghc&hwq]
+
+不妨设$a\leq b$，那么$(a,b)$是必败态当且仅当存在非负整数$n$使得$a=\lfloor \frac{\sqrt{5}+1}{2}n \rfloor$且$b=a+n$，解出$n$的大致范围然后前后枚举几个数，检查是否满足条件即可，为了保证精度，需要将$\sqrt{5}$精确到小数点后$>100$位
+
+# D A Simple Math Problem [zyh&ghc]
+
+设$g=gcd(x,y),x=ng,y=mg$，则有$a=(n+m)g,b=nmg$，由于$gcd(n,m)=1$，则有$g=gcd(a,b)$，现在有$n+m=a/g,nm=b/g$，那么$n,m$是某个二次方程的两个根，求整数解即可（如果没有整数解那么也不会有分数解）
+
+# E Aninteresting game
+
+# F Detachment
+
+# G Garden of Eden [zyh&hwq]
+
+特判$k=1$，然后点分治，需要合并两棵子树的路径，or-fwt即可，复杂度是$O(nlogn+nk2^k)$
+
+# H To begin or not to begin
+
+# I Convex [zyh&ghc]
+
+$res=\frac{1}{2}\sum D^2sin(ang)$
+
+# J Find Small A [zyh]
+
+直接做
+
+# K Guess the number
