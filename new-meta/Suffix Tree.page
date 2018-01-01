@@ -1,0 +1,612 @@
+支持在线的后插入，均摊O(n)的复杂度保证。
+后缀树是一个很强大的字符串处理利器，经过一定的扩展，可以支持前面删除节点。
+
+个人理解
+========
+
+初步约定
+--------
+
+首先由后缀树建设出来的Trie树仅仅有2n个节点（其中包括n个internal
+node和n个leaf）。
+
+由于每一条边所代表的是一个字符串，我们约定每一条边都用\[from,
+to)来表示，这条边对应的是原字符串的一个左闭右开的区间。为了方便，我们让叶子与父亲的连边上的'to'代表当前字符串的最后一个位置+1。
+
+小性质
+------
+
+仔细思考字符串在往后面添加的时候，后缀树到底会如何变化呢？
+
+### 对于任何两个后缀a，b，两个串一旦分叉，就再也毫无关联。
+
+从这个观察可以得出，如果当前的后缀们都两两分叉了，如果不考虑后面加进来的后缀，我们的工作其实已经完成。换一种思路来看，如果每次加进来的后缀都与前面的每一个后缀『分叉』，那么我们只要把『叉』分出来就很简单的完成了任务。比如abcdef这个串，因为每个字母都不同，所以每加进来一个串（字符）都能直接分出叉来。
+
+这么一来，我们的难点主要在于，某个后缀，设它为s，他不和另外一个后缀，设它为t，分叉。即某个串是另外一个串的前缀，不失一般性，我们设s是t的前缀。
+
+### 如果串s是在它之前的某个后缀串的前缀，那么s的每一个后缀也是s之前的某个后缀串的前缀。
+
+换句话来说，如果不管当前起始位置在s中的任意一个后缀串而建成了一个后缀树，并且s在这个后缀树中，那么我们可以得出s中的任意一个后缀都出现在这个后缀树中。
+
+由这个性质我们可以得出，被之前的串盖住的串（即没有分叉出来的串）是连续的一段后缀！这是一个很厉害的性质，因为我们只要维护好这样的串的集合，每次加一个字符以后，我们看最前面的那个后缀是不是分出叉来了，没有我们就不管了，否则把『叉』弄出来，继续看这个串的集合里面最前面的那个串。如果我们真的能有效率的去分析是否叉出来了，又是在哪里叉出来了，其实这个问题就能解决了（因为根据之前的分析，每个串也就只会叉一次而已）。
+
+如何解决
+--------
+
+### Active Node
+
+仔细思考如何有效率的分析这两个问题，其实我们只要有一个指针指到我们当时集合里面最前面的串在suffix
+tree上走到了哪里就能轻松知道是不是叉出来和在哪里叉出来了，而这个指针其实就是Ukkonen算法中的active\_node的本质！
+
+active node 需要记录自己是在suffix
+tree上的那个内节点，往那条边走，走了多远这三个参数组成，在程序中分别表示为active\_node,
+active\_e, active\_len;
+
+### Suffix Link
+
+那么现在又有了第二个问题，这个串真的分叉了，我们现在要看第二个串了（也就是上一个串删掉第一个字符所得到的后缀），我们肯定不能从后缀树的开头走下来更新指针，而这就是我们的suffix
+link出场的时候了！
+
+suffix link其实就是一个fail指针，它仅可能出现在suffix
+tree的内部节点上（因为叶子节点是无限长的串，既然都是无限长了，我们也不能说一个串是另外一个串的前缀。）。
+
+那么suffix link是什么时候出现的呢？
+
+注意到我们每加入一个字符，要从没有分叉的后缀集合弹好几次，而这些弹出去的后缀串所分出叉位置的内节点直接就是呈前后缀关系，我们要按照顺序给它们连边，也就是suffix
+link。 而每次找下一个串的active node的位置，也正是通过suffix
+link来快速查找。
+
+注意到每次suffix link，只会在前面减少一个字符。而我们要walk
+down很长的距离，当且仅当在根的时候。所以就算是从根walk
+down了很长的一段距离，以后也要走那么多部回来的，而且没往回走一步都对应着一个当前的分叉串，所以这里均摊还是正确的。
+
+我们可以通过明显的势能分析来得出复杂度的线性关系。
+
+### 算法中的Observation与rule
+
+Observation 1
+
+    When the final suffix we need to insert is found to exist in the tree already, 
+    the tree itself is not changed at all (we only update the active point and remainder).
+
+Observation 2
+
+    If at some point active_length is greater or equal to the length of current edge (edge_length), 
+    we move our active point down until edge_length is not strictly greater than active_length.
+
+Now, let's redefine the rules:
+
+Observation 3
+
+    When the final suffix we need to insert is found to exist in the tree already,
+    the string denoted by the path from root to current node is exactly the string we want to add suffix link.
+
+Rule 1
+
+    If after an insertion from the active node = root, the active length is greater than 0, then:
+    active node is not changed
+    active length is decremented
+    active edge is shifted right (to the first character of the next suffix we must insert)
+
+Rule 2
+
+    If we create a new internal node OR make an inserter from an internal node, 
+    and this is not the first SUCH internal node at current step, 
+    then we link the previous SUCH node with THIS one through a suffix link.
+
+Rule 3
+
+    After an insert from the active node which is not the root node, 
+    we must follow the suffix link and set the active node to the node it points to. 
+    If there is no a suffix link, set the active node to the root node. 
+    Either way, active edge and active length stay unchanged.
+
+In this definition of Rule 3 we also consider the inserts of leaf nodes
+(not only split-nodes).
+
+Ukkonen算法
+===========
+
+``` {.cpp}
+#include <iostream>
+#include <stdio.h>
+#include <string>
+
+const int oo = 1<<25;
+const int ALPHABET_SIZE = 256;
+const int MAXN = 5000;
+
+using namespace std;
+
+int root, last_added, pos, needSL, remainder,
+    active_node, active_e, active_len;
+
+struct node {
+/*
+   There is no need to create an "Edge" struct.
+   Information about the edge is stored right in the node.
+   [start; end) interval specifies the edge,
+   by which the node is connected to its parent node.
+*/
+
+    int start, end, slink;
+    int next[ALPHABET_SIZE];    
+
+    int edge_length() {
+        return min(end, pos + 1) - start;
+    }
+};
+
+node tree[2*MAXN];
+char text[MAXN];
+
+int new_node(int start, int end = oo) {
+    node nd;
+    nd.start = start;
+    nd.end = end;
+    nd.slink = 0;
+    for (int i = 0; i < ALPHABET_SIZE; i++)
+        nd.next[i] = 0;
+    tree[++last_added] = nd;
+    return last_added;
+}
+
+char active_edge() {
+    return text[active_e];
+}
+
+void add_SL(int node) {
+    if (needSL > 0) tree[needSL].slink = node;
+    needSL = node;
+}
+
+bool walk_down(int node) {
+    if (active_len >= tree[node].edge_length()) {
+        active_e += tree[node].edge_length();
+        active_len -= tree[node].edge_length();
+        active_node = node;
+        return true;
+    }
+    return false;
+}
+
+void st_init() {
+    needSL = 0, last_added = 0, pos = -1, 
+    remainder = 0, active_node = 0, active_e = 0, active_len = 0;
+    root = active_node = new_node(-1, -1);
+}
+
+void st_extend(char c) {
+    text[++pos] = c;
+    needSL = 0;
+    remainder++;
+    while(remainder > 0) {
+        if (active_len == 0) active_e = pos;
+        if (tree[active_node].next[active_edge()] == 0) {
+            int leaf = new_node(pos);
+            tree[active_node].next[active_edge()] = leaf;
+            add_SL(active_node); //rule 2
+        } else {
+            int nxt = tree[active_node].next[active_edge()];
+            if (walk_down(nxt)) continue; //observation 2
+            if (text[tree[nxt].start + active_len] == c) { //observation 1
+                active_len++;
+                add_SL(active_node); //observation 3
+                break;
+            }
+            int split = new_node(tree[nxt].start, tree[nxt].start + active_len);
+            tree[active_node].next[active_edge()] = split;
+            int leaf = new_node(pos);
+            tree[split].next[c] = leaf;
+            tree[nxt].start += active_len;
+            tree[split].next[text[tree[nxt].start]] = nxt;
+            add_SL(split); //rule 2
+        }
+        remainder--;
+        if (active_node == root && active_len > 0) { //rule 1
+            active_len--;
+            active_e = pos - remainder + 1;
+        } else
+            active_node = tree[active_node].slink > 0 ? tree[active_node].slink : root; //rule 3
+    }
+}
+
+int main() {
+    //
+    return 0;
+}
+```
+
+论Ukk算法解决排列问题的可能性
+=============================
+
+根据[论文](http://hariharan-ramesh.com/papers/suffixMissing.pdf)的方法,
+假设了real node和imagine node的存在。
+
+考虑各个操作的复杂度。
+
+往上找第一个real node的复杂度
+-----------------------------
+
+首先，这个复杂度
+
+= 所有real node往上走到另外一个real node所经过的imagine node个数
+
+= 所有imagine node被遇到的次数之和
+
+而这个次数 &lt; |str(z)| - |str(y)|
+其中str(x)代表x这个点在后缀树里面代表的字符串,
+z是ukk算法第一次经过y，在y下面做出来的real node。
+
+这个的复杂度其实是O
+n，考虑一个树上某种遍历，我们先到第i个后缀和前面的后缀们j &lt;
+i的分叉点，然后从i这个位置跳到对应的imagine node位置，然后再继续走到i +
+1的分叉点，由于排列有的性质（假如后缀i 和 j的lcp有l，那么i + 1, j +
+1的lcp不小于l - 1），可以得到我们的复杂度为O(n)。
+
+往下找对应的link(x)的复杂度
+---------------------------
+
+考虑往下找的时候，每隔一个建立一个对应的位置的back
+propogation，貌似就是论文里面的算法了吧。。。？
+
+下面这个题目是UOJ15的第三题，貌似第二部分的 每隔一个点要一个back
+propogation是需要的。不然复杂度有问题。。。
+
+``` {.cpp}
+// spoj 1811
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <algorithm>
+#include <map>
+#include <vector>
+#include <cassert>
+
+const int oo = 1<<25;
+const int N = 1e5 + 7;
+const int LOGN = 20;
+const int DEBUG = 0;
+
+using namespace std;
+
+class RankTree {
+public:
+    struct Node {
+        int sum;
+        Node *left, *right;
+        Node(int sum = 0, Node* left = NULL, Node *right = NULL) :
+            sum(sum), left(left), right(right) {}
+    };
+public:
+    int total, n, cur_time;
+    Node pool[N * LOGN * 2];
+    Node* root[N];
+    int text[N];
+
+    Node* build(int l, int r) {
+        if (l < r) {
+            int mid = l + r >> 1;
+            return new(pool + total++)
+                Node(0, build(l, mid), build(mid + 1, r));
+        } else {
+            return new (pool + total++) Node(0, NULL, NULL);
+        }
+    }
+
+    RankTree() {}
+
+    RankTree(int n) : n(n) {
+        total = 0;
+        root[cur_time = 0] = build(1, n);
+    }
+
+    Node* insert(Node* root, int l, int r, int c) {
+        Node* ret = new(pool + total++) Node(root->sum + 1, root->left, root->right);
+        if (l < r) {
+            int mid = l + r >> 1;
+            if (c <= mid) {
+                ret->left = insert(ret->left, l, mid, c);
+            } else {
+                ret->right = insert(ret->right, mid + 1, r, c);
+            }
+        }
+        return ret;
+    }
+
+    int ask_rank(Node* lt, Node* rt, int l, int r, int c) {
+        if (r <= c) {
+            return rt->sum - lt->sum;
+        } else if (l > c) {
+            return 0;
+        }
+        int mid = l + r >> 1;
+        return ask_rank(lt->left, rt->left, l, mid, c) +
+            ask_rank(lt->right, rt->right, mid + 1, r, c);
+    }
+
+    int rank(int l, int r) {
+        if (l > r) return 0;
+        l++, r++;
+        return ask_rank(root[l - 1], root[r], 1, n, text[r]);
+    }
+
+    void expand(int c) {
+        text[++cur_time] = c;
+        root[cur_time] = insert(root[cur_time - 1], 1, n, c);
+    }
+};
+
+class SuffixTree {
+public:
+    struct Node {
+        int start, end;
+        int length, size;
+        Node *slink, *father;
+        map<int, Node*> next;
+
+        Node(int start = -1, int end = oo) : start(start), end(end) {
+            length = 0;
+            size = 0;
+            slink = father = NULL;
+            next.clear();
+        }
+
+        Node* set_next(int c, Node* y) {
+            next[c] = y;
+            y->length = length + len();
+            y->father = this;
+            return y;
+        }
+
+        __inline int len2(int pos) {
+            return min(end, pos) - start;
+        }
+
+        __inline int len() {
+            return end - start;
+        }
+    };
+
+    Node *cur;
+    int cur_len, cur_p;
+    Node pool[N << 2];
+    Node *root, *needSL;
+    vector<Node*> leaves;
+    int total, pos, remaind;
+    int text[N];
+    RankTree* rank;
+
+    inline bool walk_down(Node *x) {
+        if (cur_len >= x->len()) {
+            cur_p += x->len();
+            cur_len -= x->len();
+            cur = x;
+            return true;
+        }
+        return false;
+    }
+
+    int get_rank(Node* x, int delta) {
+        return rank->rank(x->start - x->length, x->start + delta - 1);
+    }
+
+    __inline Node* new_node(int start, int end = oo) {
+        return new(pool + total++) Node(start, end);
+    }
+
+    void add_SL(Node* x) {
+        if (needSL != NULL) {
+            assert(needSL->length + needSL->len2(pos) == x->length + x->len2(pos) + 1);
+            needSL->slink = x;
+        }
+        needSL = x;
+    }
+
+    void init(int n) {
+        needSL = NULL, total = 0, pos = 0,
+        remaind = 0;
+        root = cur = new_node(-1, -1);
+        root->slink = root;
+        cur_p = cur_len = 0;
+        leaves.clear();
+        rank = new RankTree(n);
+    }
+
+    void show(Node* x) {
+        printf("%d ********** [%d, %d), suffix = %d\n", x - pool, x->start, x->end, x->slink - pool);
+        for (auto y : x->next) {
+            for (int j = y.second->start; j < pos && j < y.second->end; j++) {
+                printf("%d,", get_rank(y.second, j - y.second->start + 1));
+            }
+            printf(" %d\n", y.second - pool);
+        }
+        for (auto y : x->next) {
+            show(y.second);
+        }
+    }
+
+    Node* split(Node *nxt, int len) {
+        if (nxt->len2(pos) == len) return nxt;
+        if (len == 0) return nxt->father;
+        assert(nxt->len2(pos) > len && len > 0);
+        Node* branch = new_node(nxt->start, nxt->start + len);
+        Node* father = nxt->father;
+        father->set_next(get_rank(nxt, 1), branch);
+        nxt->start += len;
+        nxt->length += len;
+        branch->set_next(get_rank(nxt, 1), nxt);
+        return branch;
+    }
+
+    Node* down(Node *x, int start, int l, int r) {
+        while (true) {
+            if (r - l == 0) return x;
+            int e = rank->rank(start, l);
+            x = x->next[e];
+            if (r - l >= x->len()) {
+                l += x->len();
+            } else {
+                return split(x, r - l);
+            }
+        }
+    }
+
+    Node* get_link(Node *x) {
+        if (x->slink) return x->slink;
+        int acc = x->len();
+        Node* t = x->father;
+        while (t != root && t->next.size() == 1) acc += t->len(), t = t->father;
+        if (t == root) {
+            return x->slink = down(root, x->start - x->length + 1, x->start - x->length + 1, x->end);
+        }
+        Node* sl = get_link(t);
+        return x->slink = down(sl, x->end - acc - sl->length - sl->len(), x->end - acc, x->end);
+    }
+
+    void extend(int c) {
+        rank->expand(c);
+        text[pos++] = c;
+        needSL = NULL;
+        remaind++;
+        while (remaind > 0) {
+            cur_p = pos - remaind + cur->length + cur->len();
+            int cur_e = rank->rank(pos - remaind, cur_p);
+            if (cur->next.count(cur_e) == 0) {
+                Node* leaf = new_node(pos - 1);
+                leaves.push_back(cur->set_next(cur_e, leaf));
+                add_SL(cur); //rule 2
+            } else {
+                Node* nxt = cur->next[cur_e];
+                if (walk_down(nxt)) continue; //observation 2
+                int cur_c = rank->rank(pos - remaind, pos - 1);
+                int edge_c = get_rank(nxt, cur_len + 1);
+                if (cur_c == edge_c) { //observation 1
+                    if (needSL != NULL) cur = split(nxt, cur_len), cur_len = 0;
+                    cur_len++;
+                    add_SL(cur); //observation 3
+                    break;
+                }
+                cur = split(nxt, cur_len), cur_len = 0;
+                Node *leaf = new_node(pos - 1);
+                leaves.push_back(cur->set_next(cur_c, leaf));
+                add_SL(cur);
+            }
+            remaind--;
+            if (cur == root && cur_len > 0) { //rule 1
+                cur_len--;
+                cur_p = pos - remaind;
+            } else {
+                cur = get_link(cur);
+            }
+        }
+    }
+
+    void bfs() {
+        vector<Node*> queue;
+        queue.push_back(root);
+        for (int head = 0; head < queue.size(); head++) {
+            Node* x = queue[head];
+            for (auto son : x->next) {
+                queue.push_back(son.second);
+            }
+        }
+        assert(queue.size() == total);
+        for (int i = queue.size() - 1; i >= 0; i--) {
+            Node *x = queue[i];
+            for (auto son : x->next) {
+                x->size += son.second->size;
+            }
+        }
+    }
+
+    void finish() {
+        needSL = NULL;
+        for (int i = 0; i < total; ++i) if (pool[i].end == oo) add_SL(pool + i);
+        while (remaind > 0) {
+            cur_p = pos - remaind + cur->length + cur->len();
+            if (cur_len > 0) {
+                int cur_e = rank->rank(pos - remaind, cur_p);
+                Node *nxt = cur->next[cur_e];
+                if (walk_down(nxt)) continue;
+                cur = split(nxt, cur_len), cur_len = 0;
+            }
+            leaves.push_back(cur);
+            add_SL(cur);
+
+            --remaind;
+            if (cur == root && cur_len > 0) {
+                --cur_len;
+                cur_p = pos - remaind;
+            } else {
+                cur = get_link(cur);
+            }
+        }
+        if (needSL != root) add_SL(root);
+        for (auto v : leaves) {
+            v->size++;
+        }
+        assert(leaves.size() == pos);
+        bfs();
+    }
+};
+
+SuffixTree st;
+int a[N], c[N * 5];
+int n, q;
+
+int main() {
+    int encode; scanf("%d", &encode);
+    scanf("%d %d", &n, &q);
+    st.init(n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+        st.extend(a[i]);
+    }
+    assert(st.root->next.size() == 1);
+    st.finish();
+    int ans = 0;
+    for (int i = 1; i <= q; i++) {
+        int m; scanf("%d", &m);
+        if (!encode) ans = 0;
+        for (int j = 1; j <= m; j++) {
+            scanf("%d", &c[(j + ans - 1) % m + 1]);
+        }
+        if (m > n) {
+            printf("%d\n", ans = 0);
+            continue;
+        }
+        static int h[N];
+        fill(h, h + m + 1, 0);
+        auto cur = st.root;
+        int cur_len = 0, cur_e = 0;
+        ans = 0;
+        for (int j = 1; j <= m; j++) {
+            int x = c[j];
+            for (int k = x; k <= m; k += k & -k) h[k]++;
+            c[j] = 0;
+            for (int k = x; k; k -= k & -k) c[j] += h[k];
+            x = c[j];
+            if (cur_len == 0) {
+                if (cur->next[x] == NULL) break;
+                cur_e = x;
+                cur_len++;
+            } else {
+                if (st.get_rank(cur->next[cur_e], cur_len + 1) != x) break;
+                cur_len++;
+            }
+            int l = cur->next[cur_e]->len2(st.pos);
+            if (cur_len == l) {
+                cur = cur->next[cur_e];
+                cur_len -= l;
+                cur_e = 0;
+            }
+        }
+        if (cur->length + cur->len2(st.pos) + cur_len == m) {
+            ans = cur_len ? cur->next[cur_e]->size : cur->size;
+        }
+        printf("%d\n", ans);
+    }
+    return 0;
+}
+```
