@@ -1,39 +1,51 @@
-# 1001 Median [zyh]
+1001 Median \[zyh\]
+===================
 
 注意到原序列已经排好序，那么可以二分答案，或者直接分类讨论
 
-# 1002 Hard problem [zyh]
+1002 Hard problem \[zyh\]
+=========================
 
 推公式，一个月牙=两个弓形相减，一个弓形=一个扇形-一个三角形，只需要用余弦定理求两个角度
 
-# 1003 Captain is coding
+1003 Captain is coding
+======================
 
-# 1004 Death Sequence [zyh]
+1004 Death Sequence \[zyh\]
+===========================
 
 记第$i$个人会在第$dp[i]$轮被T出去，那么如果$i\ mod\ k=1$，那么i第一轮就会被T出去，即$dp[i]=1$，否则i前面有$\lceil \frac{i}{k} \rceil$个人会被T出去，下一轮的标号是$i-\lceil \frac{i}{k} \rceil$，那么有$dp[i]=dp[i-\lceil \frac{i}{k} \rceil]+1$，然后挂个链表整理一下顺序即可
 
-# 1005 Road [hwq]
+1005 Road \[hwq\]
+=================
 
 相当于求每段路的最早访问时间和最晚访问时间，用并查集暴力就可以了
 
-# 1006 Counting Intersections [hwq]
+1006 Counting Intersections \[hwq\]
+===================================
 
 把线段拆事件点，扫描线+线段树
 
-# 1007 cjj's string game [zyh]
+1007 cjj's string game \[zyh\]
+==============================
 
-dp[i][j]表示两个串的长度是i，结尾恰好有j个字符是相同的，转移枚举下一个字符是否相同，矩阵优化，但是这样会算进max<m的情形，只要令m=m-1再做一次然后减掉
+dp\[i\]\[j\]表示两个串的长度是i，结尾恰好有j个字符是相同的，转移枚举下一个字符是否相同，矩阵优化，但是这样会算进max&lt;m的情形，只要令m=m-1再做一次然后减掉
 
-# 1008 Cube again [zyh&ghc]
+1008 Cube again \[zyh&ghc\]
+===========================
 
 枚举一个面作为正面，顺时针旋转4次，然后对称一下再做前述操作，每次检查两个魔方每个格子的颜色的最小表示是否相同
 
-# 1009 Stone game
+1009 Stone game
+===============
 
-# 1010 Lucky [zyh&hwq]
+1010 Lucky \[zyh&hwq\]
+======================
 
-记mx[i]表示初始时以i为根的子树最大值，dp[i][j]表示以i为根的子树最大值<=mx[i]+j的概率，相当于维护一个分布列，根据p0[max(i,j)<=k]=p1[i<=k]*p2[j<=k]来转移，注意到如果一个点没有操作，可以直接把状态向上传，因此没有操作的点都可以忽略掉，只保留有操作的m个点及其祖孙关系，以及这是个[原题](http://codeforces.com/contest/494/problem/C)
+记mx\[i\]表示初始时以i为根的子树最大值，dp\[i\]\[j\]表示以i为根的子树最大值&lt;=mx\[i\]+j的概率，相当于维护一个分布列，根据p0\[max(i,j)&lt;=k\]=p1\[i&lt;=k\]\*p2\[j&lt;=k\]来转移，注意到如果一个点没有操作，可以直接把状态向上传，因此没有操作的点都可以忽略掉，只保留有操作的m个点及其祖孙关系，以及这是个[原题](http://codeforces.com/contest/494/problem/C)
 
-# 1011 Water problem [ghc]
+1011 Water problem \[ghc\]
+==========================
 
-模拟，英语不好只能wiki一下[English numerals](https://en.wikipedia.org/wiki/English_numerals)
+模拟，英语不好只能wiki一下[English
+numerals](https://en.wikipedia.org/wiki/English_numerals)
