@@ -1,0 +1,43 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+char verdict[2][10] = {"First", "Second"};
+const int N(111111);
+int n, a[N];
+void solve(bool reverse = false) {
+    int cnt[2] = {};
+    for(int i(0); i < n; i++)
+        cnt[a[i] % 2] ++;
+    if(cnt[0] % 2) {
+        printf("%s\n", verdict[reverse]);
+        exit(0);
+    }else if(cnt[1] >= 2) {
+        printf("%s\n", verdict[1 ^ reverse]);
+        exit(0);
+    }else {
+        for(int i(0); i < n; i++)
+            if(a[i] % 2) {
+                if(a[i] == 1) {
+                    printf("%s\n", verdict[1 ^ reverse]);
+                    exit(0);
+                }else {
+                    a[i]--;
+                    break;
+                }
+            }
+        int d(a[0]);
+        for(int i(1); i < n; i++)
+            d = __gcd(d, a[i]);
+        for(int i(0); i < n; i++)
+            a[i] /= d;
+        solve(reverse ^ 1);
+    }
+}
+int main() {
+    cin >> n;
+    for(int i(0); i < n; i++) {
+        cin >> a[i];
+    }
+    solve(false);
+}
+```
