@@ -1,0 +1,88 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 131072;
+int t[N], tmi, n;
+typedef complex<double> Complex;
+Complex a[N], b[N], c[N];
+const double pi = acos(-1.);
+void FFT(Complex P[], int n, int oper) {
+    for (int i = 1, j = 0; i < n - 1; ++ i) {
+        for (int s = n; j ^= s >>= 1, ~j & s;);
+        if (i < j) swap(P[i], P[j]);
+    }
+    Complex unit_p0;
+    for (int d = 0; (1 << d) < n; ++ d) {
+        int m = 1 << d, m2 = m * 2;
+        double p0 = pi / m * oper;
+        unit_p0.imag(sin(p0));
+        unit_p0.real(cos(p0));
+        for (int i = 0; i < n; i += m2) {
+            Complex unit = 1;
+            for (int j = 0; j < m; ++ j) {
+                Complex &P1 = P[i + j + m], &P2 = P[i + j];
+                Complex t = unit * P1;
+                P1 = P2 - t;
+                P2 = P2 + t;
+                unit = unit * unit_p0;
+            }
+        }
+    }
+}
+vector<double> multiply(vector<double> a, vector<double> b) {
+    int n = (int) max(a.size(), b.size()), m = (int) a.size() + (int) b.size() - 1;
+    n = 1 << (ilogb(n) + 2);
+    for (int i = 0; i < n; ++ i) ::a[i] = 0;
+    for (int i = 0; i < n; ++ i) ::b[i] = 0;
+    for (int i = 0; i < (int) a.size(); ++ i) ::a[i] = a[i];
+    for (int i = 0; i < (int) b.size(); ++ i) ::b[i] = b[i];
+    FFT(::a, n, 1);
+    FFT(::b, n, 1);
+    for (int i = 0; i < n; ++ i) {
+        ::c[i] = ::a[i] * ::b[i];
+    }
+    FFT(::c, n, -1);
+    vector<double> c;
+    for (int i = 0; i < m; ++ i) c.push_back(::c[i].real() / n);
+    return c;
+}
+vector<double> divide(int l, int r) {
+    vector<double> c(r - l + 1);
+    if (r - l <= 10) {
+        c[0] = 1;
+        for (int i = 1; i <= r - l; ++ i) c[i] = 0;
+        for (int i = l; i < r; ++ i) {
+            int t = ::t[i];
+            if (!t) continue;
+            for (int j = r - l - 1; j >= 0; -- j) {
+                c[j + 1] = 1.0 * tmi / t * c[j] + c[j + 1] * (t - tmi) / t;
+            }
+            c[0] *= 1.0 * (t - tmi) / t;
+        }
+    }
+    else {
+        int mid = (l + r) / 2;
+        vector<double> a = divide(l, mid);
+        vector<double> b = divide(mid, r);
+        c = multiply(a, b);
+    }
+    return c;
+}
+int main() {
+    int n;
+    tmi = 2e9;
+    scanf("%d", &n);
+    int nn = 1;
+    while (nn < n) nn *= 2;
+    for (int i = 0; i < n; ++ i) {
+        scanf("%d", &t[i]);
+        tmi = min(tmi, t[i]);
+    }
+    vector<double> a = divide(0, n);
+    double ans = 0;
+    for (int i = 0; i <= n; ++ i) {
+        ans += 1.0 * tmi / (i + 1) * a[i];
+    }
+    printf("%.12f\n", ans);
+}
+```
