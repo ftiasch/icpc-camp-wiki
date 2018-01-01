@@ -1,51 +1,67 @@
-# A Relic Discovery [zyh&ghc]
+A Relic Discovery \[zyh&ghc\]
+=============================
 
 输出$\sum ab$
 
-# B Pocket Cube [zyh&ghc]
+B Pocket Cube \[zyh&ghc\]
+=========================
 
 枚举第一步操作然后检查是否复原，只需枚举L,L'（实际上就是3次L）U,U',F,F'六种操作
 
-# C Pocky [zyh&hwq]
+C Pocky \[zyh&hwq\]
+===================
 
 当$L\leq d$时$dp[L]=0$，否则有$dp[L]=\frac{\int_{d}^{L}dp[t]dt}{L}+1$，其中$dp[d^+]=1$，解得$dp[L]=log(\frac{L}{d})+1$
 
-# D Lucky Coins [zyh&ghc]
+D Lucky Coins \[zyh&ghc\]
+=========================
 
 先对每种硬币求出进行若干轮之后恰好没有硬币剩余的概率，这个概率当轮数足够多时呈指数递减，到$100$轮之后就可以忽略不计了，然后枚举游戏进行的轮数计算贡献，注意$k=1$要特判
 
-# E Fibonacci [zyh补]
+E Fibonacci \[zyh补\]
+=====================
 
-[感谢 tls](../tdl/2016%20ACM-ICPC%20Asia%20Qingdao%20Regional%20Contest#e.-fibonacci-skywalkert)
+[感谢
+tls](../tdl/2016 ACM-ICPC Asia Qingdao Regional Contest#e.-fibonacci-skywalkert)
 
-# F Lambda Calculus [zyh&ghc&hwq]
+F Lambda Calculus \[zyh&ghc&hwq\]
+=================================
 
-递归下降，但是需要手写栈，stack\<pair\<set\<string\>,string\>\>，pair第一维表示当前表达式中occur free的variable集合，pair第二维表示当前表达式中在lambda函数内（如果有）的字符串，遇到左括号压栈，遇到右括号先将当前集合减去要减掉的string然后与栈顶的集合启发式合并一下再弹栈，遇到"lambda"（注意判断要全字符匹配）时直接进入后面的括号内找出要被减去的字符串 ，遇到字符串直接抠出来加进集合中
+递归下降，但是需要手写栈，stack&lt;pair&lt;set&lt;string&gt;,string&gt;&gt;，pair第一维表示当前表达式中occur
+free的variable集合，pair第二维表示当前表达式中在lambda函数内（如果有）的字符串，遇到左括号压栈，遇到右括号先将当前集合减去要减掉的string然后与栈顶的集合启发式合并一下再弹栈，遇到"lambda"（注意判断要全字符匹配）时直接进入后面的括号内找出要被减去的字符串
+，遇到字符串直接抠出来加进集合中
 
-# G Coding Contest [hwq&zyh]
+G Coding Contest \[hwq&zyh\]
+============================
 
 考虑求出踢掉网线的最小概率，取对数后最小费用最大流，更新最短路时要关注精度问题
 
-# H Pattern [zyh&hwq补]
+H Pattern \[zyh&hwq补\]
+=======================
 
 相当于求有多少对图使得每个格子的度都相同，同时对两张图轮廓线dp，记录轮廓线上哪些位置有插头（有边要往外连），逐格转移，枚举当前格子作为新的轮廓线上的两个位置是否有插头，可以知道当前格子的度，转移时保证两张图当前格子的度相同即可
 
-# I Travel Brochure [zyh补]
+I Travel Brochure \[zyh补\]
+===========================
 
 $\sum_{j=0}^{k}(a_{i_{j+1}}-a_{i_j})\frac{b_{i_j}b_{i_{j+1}}}{a_{i_j}a_{i_{j+1}}}=\sum_{j=0}^{k}(\frac{b_{i_j}}{a_{i_j}},b_{i_j})\times(\frac{b_{i_{j+1}}}{a_{i_{j+1}}},b_{i_{j+1}})$，问题转化成按照一定顺序不重复地遍历$n$个点$(\frac{b_i}{a_i},b_i)$之中的若干个，~~使得连成的简单多边形的有向面积最大，显然是凸包面积~~似乎不太对
 
-# J Cliques [zyh补]
+J Cliques \[zyh补\]
+===================
 
 考虑所有三元组，图是若干个团之并的充要条件是不存在某个三元组中有两条边（实际上就是要满足传递性），于是任取一个有两条边的三元组，枚举加上剩下的边或者删除现有两条边之一，修改一条边之后会有$O(n)$个三元组受影响，暴力修改这些三元组，同时用一个队列+时间戳维护当前有两条边的三元组，搜$10$步即可，复杂度是$O(n^3+n3^{10})$
 
-# K Finding Hotels [zyh补]
+K Finding Hotels \[zyh补\]
+==========================
 
 离线询问，kd-tree查最近点
 
-# L Tower Attack [zyh补]
+L Tower Attack \[zyh补\]
+========================
 
 对一棵树割掉两条边之后dfs序被分成可能为空的$5$段，分两种情况讨论这几个区间的关系，ST表维护LCA支持$O(1)$查询树上两点距离，然后ST表维护区间点集直径，合并两个点集时只需要取出各自的直径一共$4$个点，然后两两枚举点对更新合并后的点集直径，复杂度是$O(6nlogn+30q)$
 
-# M Generator and Monitor [zyh补]
+M Generator and Monitor \[zyh补\]
+=================================
 
 第一种操作相当于插入一个权值为$c$的点$(l,r)$，第二种操作相当于将所有满足$x\leq a \wedge y\geq a$的点权值$-1$，然后删去权值为$0$的点并输出标号，kd-tree维护即可，由于插入操作不是强制在线，可以先离线建树，复杂度是$O(n\sqrt{n})$
