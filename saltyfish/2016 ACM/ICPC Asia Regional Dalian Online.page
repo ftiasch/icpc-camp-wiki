@@ -1,0 +1,35 @@
+# 1001 Different Circle Permutation [zyh补]
+
+如果一个方案旋转$\frac{2 \pi d}{n}$之后和原来相同，则称$d$为这个方案的一个周期，一个方案的所有周期中最小的称为最小周期，记$h[i]$为$n$个点的最小周期为$i$的考虑旋转同构的方案数，那么结果即为$\sum_{d|n}h[d]$，记$f[i]$为$i$个点的不考虑旋转同构的方案数，那么一个最小周期为$d$的方案会被重复计算$d$次，于是有$f[i]=\sum_{d|i}dh[d]$，记$g[i]=ih[i]$，则有$f[i]=\sum_{d|i}g[d]$，对所有$n$的因子$d$计算$f[d]$，然后对因子容斥计算出所有$g[d]$，复杂度是$O(\sqrt{n}+\sigma(n)logn+\sigma^2(n))$的，**特别注意特判$n=1$的情形**
+
+# 1002 Different GCD Subarray Query [zyh]
+
+询问离线按r排序，注意到固定右端点的gcd只有log种，维护每种gcd最右的出现位置，用树状数组维护每种gcd的贡献
+
+# 1003 Alice's Adventure in Wonderland
+
+# 1004 Number of Connected Subgraph
+
+# ~~1005 Seats~~
+
+错题，[这里](https://async.icpc-camp.org/d/553-2016/4)有讨论
+
+# 1006 Football Games [hwq]
+
+赛中乱搞过的，科学做法要魔改[Landau's Theorem](https://en.wikipedia.org/wiki/Tournament_%28graph_theory%29)
+
+# 1007 Friends and Enemies [ghc&zyh]
+
+实际上是要用一些团来覆盖所有边，如果存在一个>=3的团，可以将其缩掉，结果不会更优，因此最坏情况下不存在>=3的团，由[Turán's theorem](https://en.wikipedia.org/wiki/Tur%C3%A1n%27s_theorem)可知边数最大为n^2/4，这是m的下界
+
+# 1008 Function [hwq&zyh]
+
+每次有效的取模会使结果减半，因此只有log次有效取模，每次往右找一个不大于结果的最靠左的数，ST表+二分
+
+# 1009 Sparse Graph [zyh]
+
+补图最短路，由于边权为1，每个点只会被更新一次，用一个链表维护没被更新过的点，每次从队列里取出一个点u之后遍历链表，对于链表中的点v，如果u和v之间没有边那么更新最短路并且删掉v，否则跳过v，这样由于每个点只会被更新一次，并且不被更新的情况相当于枚举了一条边，复杂度是O(n+m)的
+
+# 1010 Weak Pair [zyh&ghc]
+
+相当于对每个子树查询<=某个数的个数，dfs转成序列，询问离线，用树状数组维护
