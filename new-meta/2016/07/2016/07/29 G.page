@@ -1,0 +1,192 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 1e5 + 5, B = 17, T = 1 << B, INF = 0x3f3f3f3f;
+int L[N], R[N], f[N][B], deep[N], cnt;
+vector<int> G[N];
+int dfs(int x, int p = 1, int d = 1)
+{
+    L[x] = R[x] = ++ cnt;
+    f[x][0] = p;
+    deep[x] = d;
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == p) continue;
+        R[x] = max(R[x], dfs(u, x, d + 1));
+    }
+    return R[x];
+}
+int LCA(int u, int v)
+{
+    if (deep[u] > deep[v]) swap(u, v);
+    int del = deep[v] - deep[u];
+    for (int i = 0; i < B; ++ i) if (del >> i & 1) v = f[v][i];
+    if (u == v) return u;
+    for (int i = B - 1; i >= 0; -- i)
+    {
+        if (f[u][i] != f[v][i])
+        {
+            u = f[u][i];
+            v = f[v][i];
+        }
+    }
+    return f[u][0];
+}
+struct seg
+{
+    int x, y1, y2, w;
+    seg(int x = 0, int y1 = 0, int y2 = 0, int w = 0) : x(x), y1(y1), y2(y2), w(w) {}
+};
+bool operator < (const seg &x, const seg &y)
+{
+    return x.x < y.x;
+}
+vector<seg> all;
+void addr(int x1, int x2, int y1, int y2, int w)
+{
+    if (x1 > x2 || y1 > y2) return;
+    //printf("%d - %d  %d - %d + %d\n", x1, x2, y1, y2, w);
+    all.push_back(seg(x1, y1, y2, w));
+    all.push_back(seg(x2 + 1, y1, y2, -w));
+}
+int tree[T << 1], lazy[T << 1];
+void pd(int x)
+{
+    if (lazy[x])
+    {
+        tree[x << 1] += lazy[x];
+        tree[x << 1 ^ 1] += lazy[x];
+        lazy[x << 1] += lazy[x];
+        lazy[x << 1 ^ 1] += lazy[x];
+        lazy[x] = 0;
+    }
+}
+void PTL(int x)
+{
+    for (int i = B; i >= 1; -- i) pd(x >> i);
+}
+void upd(int x)
+{
+    tree[x] = max(tree[x << 1], tree[x << 1 ^ 1]);
+}
+void add(int l, int r, int c)
+{
+    l = l + T - 1;
+    r = r + T + 1;
+    PTL(l); PTL(r);
+    int ll = l, rr = r;
+    while (l + 1 < r)
+    {
+        if (~l & 1) {tree[l ^ 1] += c; lazy[l ^ 1] += c;}
+        if (r & 1) {tree[r ^ 1] += c; lazy[r ^ 1] += c;}
+        l >>= 1;
+        r >>= 1;
+    }
+    for (ll >>= 1; ll >= 1; ll >>= 1) upd(ll);
+    for (rr >>= 1; rr >= 1; rr >>= 1) upd(rr);
+}
+int sing[N];
+int main()
+{
+    int TT, zzz = 0;
+    scanf("%d", &TT);
+    while (TT --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        for (int i = 1; i <= n; ++ i) G[i].clear();
+        memset(sing, 0, sizeof(sing));
+        for (int i = 1; i < n; ++ i)
+        {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        cnt = 0;
+        dfs(1);
+        for (int j = 1; j < B; ++ j)
+        {
+            for (int i = 1; i <= n; ++ i) f[i][j] = f[f[i][j - 1]][j - 1];
+        }
+        all.clear();
+        int base = 0;
+        for (int i = 0; i < m; ++ i)
+        {
+            int u, v, w;
+            scanf("%d%d%d", &u, &v, &w);
+            int uv = LCA(u, v);
+            if (u == v)
+            {
+                base += w;
+                sing[u] += -w;
+            }
+            else if (u == uv)
+            {
+                int del = deep[v] - deep[u] - 1;
+                int tmp = v;
+                for (int i = B - 1; i >= 0; -- i) if (del >> i & 1) tmp = f[tmp][i];
+                addr(1, L[tmp] - 1, L[v], R[v], w);
+                addr(R[tmp] + 1, n, L[v], R[v], w);
+            }
+            else if (v == uv)
+            {
+                int del = deep[u] - deep[v] - 1;
+                int tmp = u;
+                for (int i = B - 1; i >= 0; -- i) if (del >> i & 1) tmp = f[tmp][i];
+                addr(L[u], R[u], 1, L[tmp] - 1, w);
+                addr(L[u], R[u], R[tmp] + 1, n, w);
+            }
+            else
+            {
+                addr(L[u], R[u], L[v], R[v], w);
+            }
+        }
+        for (int i = 1; i <= n; ++ i)
+        {
+            if (sing[i])
+            {
+                int w = sing[i];
+                addr(1, L[i] - 1, 1, L[i] - 1, w);
+                addr(R[i] + 1, n, R[i] + 1, n, w);
+                addr(1, L[i] - 1, R[i] + 1, n, w);
+                addr(R[i] + 1, n, 1, L[i] - 1, w);
+                for (int j = 0; j < (int) G[i].size(); ++ j)
+                {
+                    int u = G[i][j];
+                    if (u == f[i][0]) continue;
+                    addr(L[u], R[u], L[u], R[u], w);
+                }
+            }
+        }
+        sort(all.begin(), all.end());
+        memset(lazy, 0, sizeof(lazy));
+        for (int i = 0; i < T; ++ i) tree[i + T] = -INF;
+        for (int i = 1; i <= n; ++ i) tree[i + T] = 0;
+        for (int i = T - 1; i >= 1; -- i) upd(i);
+        int r, ans = -INF;
+        for (int i = 0; i < (int) all.size(); i = r)
+        {
+            if (all[i].x > n) break;
+            for (r = i; r < (int) all.size() && all[r].x == all[i].x; ++ r);
+            for (int j = i; j < r; ++ j)
+            {
+                add(all[j].y1, all[j].y2, all[j].w);
+                //printf("%d  %d %d + %d\n", all[j].x, all[j].y1, all[j].y2, all[j].w);
+            }
+            //printf("---  %d\n", tree[1]);
+            ans = max(ans, base + tree[1]);
+        }
+        //printf("%d\n", base);
+        printf("Case #%d: %d\n", ++ zzz, ans);
+    }
+}
+```
