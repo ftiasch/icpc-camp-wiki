@@ -1,0 +1,50 @@
+A.A Poor King
+=============
+
+B.Best Division
+===============
+
+考虑最简单的dp dp\[i\]表示前i个数的时候 答案最大是多少
+那么dp\[i\]=max(dp\[j\])+1 i-l+1&lt;=j&lt;=i-1
+而且a\[j\]^a\[j+1\]^...\^a\[i\]&lt;=X
+
+所以建一个字典树 然后在上面跑dp就可以了 有点卡常数 要写的好看一点
+
+C.Convex Hull
+=============
+
+D.Different Sums
+================
+
+E.Easy Homework
+===============
+
+F.Flight
+========
+
+G.Generator
+===========
+
+H.Honey Tour
+============
+
+I.Intersection is not allowed!
+==============================
+
+构造N\*N的行列式 第i行第j列的值为a\[i\]\~b\[j\]方案数 行列式的值就是答案
+
+J.Jong Hyok and String
+======================
+
+后缀自动机裸题
+
+K.K-th value
+============
+
+L.Less Time, More profit
+========================
+
+二分答案后经典的最大权闭合子图问题
+
+M.Math is Fun
+=============
