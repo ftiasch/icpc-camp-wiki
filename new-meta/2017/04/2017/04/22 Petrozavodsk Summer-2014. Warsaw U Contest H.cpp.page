@@ -1,0 +1,46 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+struct event { ll x, y; int v; };
+bool operator < (const event &a, const event &b) {
+    if (a.x != b.x) return a.x < b.x;
+    return a.y > b.y;
+}
+int main() {
+    int n, m;
+    scanf("%d%d", &n, &m);
+    int w, h;
+    scanf("%d%d", &w, &h);
+    vector<event> all;
+    ll ans = 0;
+    for (int i = 1; i <= n + m; ++ i) {
+        int x, y, v;
+        scanf("%d%d%d", &x, &y, &v);
+        ll X = -1LL * x * h + 1LL * w * y;
+        ll Y = -1LL * x * h - 1LL * w * y;
+        all.push_back((event) {X, Y, i <= n ? -v : v});
+        if (i <= n) ans += v;
+    }
+    sort(all.begin(), all.end());
+    map<ll, ll> pack;
+    for (event e : all) {
+        if (e.v > 0) {
+            ll v = e.v;
+            while (v) {
+                auto it = pack.lower_bound(e.y);
+                if (it == pack.end()) break;
+                ll c = min(it -> second, v);
+                v -= c;
+                it -> second -= c;
+                ans -= c;
+                if (it -> second == 0) pack.erase(it);
+            }
+        }
+        else {
+            pack[e.y] -= e.v;
+        }
+    }
+    printf("%lld\n", ans);
+}
+```
