@@ -1,0 +1,73 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5;
+int x[N], a[N];
+
+int main() {
+    int L, n, k;
+    scanf("%d%d%d", &L, &n, &k);
+    for (int i = 1; i <= n; ++ i) scanf("%d", &x[i]);
+    for (int i = 2; i <= n; ++ i) a[i - 1] = x[i] - x[i - 1];
+    a[n] = L - x[n];
+    sort(a + 1, a + 1 + n);
+    double l = 1e-7, r = L;
+    for (int c = 0; c < 100; ++ c) {
+        double mid = (l + r) / 2;
+        long long cnt = 0;
+        for (int i = 1; i <= n; ++ i) if (a[i] >= mid) cnt += (long long) (a[i] / mid);
+        if (cnt <= k) {
+            r = mid;
+        }
+        else {
+            l = mid;
+        }
+    }
+    double ans = l;
+    int ll = 1, rr = n, aid = -1;
+    while (ll <= rr) {
+        int mid = (ll + rr) / 2;
+        long long cnt = 0;
+        for (int i = mid + 1; i <= n; ++ i) if (a[i] >= a[mid]) {
+            cnt += a[i] / a[mid];
+        }
+        if (cnt <= k) {
+            aid = mid;
+            rr = mid - 1;
+        }
+        else {
+            ll = mid + 1;
+        }
+    }
+    if (aid != -1) {
+        double tmp = a[aid] + a[aid - 1];
+        //printf("tmp=%.2f\n", tmp);
+        for (int i = aid + 1; i <= n; ++ i) {
+            int cnt = a[i] / a[aid] + 1;
+            tmp = max(tmp, a[aid] + 1.0 * a[i] / cnt);
+            //cout << i << ' ' << cnt << ' ' << aid << endl;
+        }
+        ans = min(ans, tmp / 2.);
+        double l = 1e-7, r = L;
+        for (int c = 0; c < 60; ++ c) {
+            double mid = (l + r) / 2;
+            long long cnt = 0;
+            for (int i = aid + 1; i <= n; ++ i) if (a[i] >= mid) cnt += (long long) (a[i] / mid);
+            if (cnt <= k) {
+                r = mid;
+            }
+            else {
+                l = mid;
+            }
+        }
+        ans = min(ans, (a[aid] + max((double)a[aid - 1], (l + r) / 2)) / 2);
+        //printf("ans2=%.2f\n", tmp);
+    }
+    /*if(abs(ans - ca) > 1e-6) {
+        for(int i(1); i <= n; i++) {
+            printf("%d\n", a[i]);
+        }
+    }*/
+    printf("%.9f\n", ans);
+}
+```
