@@ -1,0 +1,47 @@
+学习资料
+========
+
+[TC SRM518 1k Nim](http://apps.topcoder.com/wiki/display/tc/SRM+518)
+
+[pyx博客](http://picks.logdown.com/posts/179290-fast-walsh-hadamard-transform)
+
+类比and/or卷积的变换方式，相当好理解。
+
+理解后可以做任何位运算的卷积。
+
+核心代码
+========
+
+``` {.cpp}
+void FWT(int a[] , int len , int oper) {
+    for (int k = 0 ; 1 << k < len ; ++ k) {
+        for (int i = 0 ; i < len ; ++ i) {
+            if (~i >> k & 1) {
+                int j = i ^ (1 << k);
+                int x = (a[i] + Q - a[j]) % Q;
+                int y = (a[i] + a[j]) % Q;
+                if (oper == -1) {
+                    x = (Q - x) % Q;
+                    swap(x , y);
+                }
+                a[i] = x;
+                a[j] = y;
+            }
+        }
+    }
+}
+```
+
+题目
+====
+
+[Beijing Online 2015 D](http://hihocoder.com/problemset/problem/1230)
+过掉啦
+
+[SRM518 1k Nim](http://apps.topcoder.com/wiki/display/tc/SRM+518) 过掉啦
+
+[Codeforces Round \#259
+D](http://codeforces.com/problemset/problem/453/D) 过掉啦
+
+[2015 Multi-University Training Contest 4
+D](http://acm.hdu.edu.cn/showproblem.php?pid=5330) 过掉啦
