@@ -1,0 +1,83 @@
+B. Borderless Words
+===================
+
+**题意:**
+
+问在所有长度为$n \leq 64$,
+只包含$a, b$两种字符，字典序排名第$k$大的borderless的串是什么。一个串是borderless当且仅当不存在一个非空非全集的前缀和后缀相等。
+
+**题解:**
+
+首先我们需要知道如何算对于一个$n$，有多少个borderless的串。
+
+根据容斥，对于一个$n$，我们算出所有可能的串的个数为$1 << n$。现在考虑减去不是borderless的串，也就是说存在一个串$p$，存在前缀后缀等于$p$。为了避免重复，我们考虑最小的这个$p$。
+
+由于$p$的最小性，$p$必然是borderless的，而且可以发现$p$必然长度小于等于$\frac{n}{2}$。那么我们就可以Dp了。
+
+$f[n] = (1 << n) - (f[m] << (n - 2m))$ for all $m * 2 \leq n$。
+
+考虑现在求第$k$大，一样的套路，我们枚举一个前缀，想算在这个前缀下有多少个borderless的串。
+
+可以发现其实算还是一样算，只不过$f[n]$还多了一个前缀的限制，思想不变，只是在枚举$m$的时候要判断是否合法。
+
+[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2047%20B.cpp)
+
+C. Borderless Words
+===================
+
+**题意:**
+
+See
+pdf:[statement](http://codeforces.com/gym/100608/attachments/download/3181/20142015-winter-petrozavodsk-camp-andrew-stankevich-contest-47-asc-47-en.pdf)
+
+**题解:**
+
+See the sample output. Maybe we need L() and P(,) only. See the sample
+closely. X=L(P(L(L(B)),B)) produce a sequence of (1,1,2,5,13,34,89).
+Y=L(P(P(B,B),P(B,B))) produces a sequence of (1,0,0,0,1,0,0). P is in
+fact a convolution. So P(Z,Y) is in fact "Z\[i\]=Z\[i\] + Z\[i-4\]".
+Similarly we can get something like "Z\[i\]=Z\[i\] + Z\[i-5\]" and
+"Z\[i\]=Z\[i\] + Z\[i-6\]". Use them repeatedly and you get AC.
+
+[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2047%20C.cpp)
+
+H. Higher Math Lesson
+=====================
+
+**题意: **
+给一个大小不超过$5$的方阵A，每个元素都是绝对值不超过$10$的整数，要求出可逆矩阵$L, R$，使得$L, R$可逆，而且逆也是整数矩阵，并且$LAR = B$是对角阵，其中对于任意$j > i$
+有$B[i][i] | B[j][j]$。
+
+**题解: **
+
+首先我们对$A$做行列变换，这个行列变换包括，一行加等于另外一行的几倍，行交换，列也一样。这样同时构造$L, R$即可在保证$L, R$性质下得到$LAR$为对角阵。
+
+得到对角阵之后，对$B[i][i], B[j][j]$用行列变换进行辗转相除法，即可弄出最终的形式。
+
+在这些步骤中，有很多技巧性的东西
+
+-   如何把$A$弄成对角阵。可以发现一般我们使用的把某行乘以某个数字，再减去另一行的倍数来消元的方法宣告破产，因为这样会导致逆矩阵不为整数。所以为了做到这件事，我们需要每次把右下角最小的元素作为当前行列的pivot，再对其他的相除。在一定程度上这样做，矩阵这一行列的元素绝对值单调递减，所以总会停止。具体可以看程序。
+
+-   如何在对角阵的基础上把两个元素进行辗转相除。看程序更容易理解
+
+[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2047%20H.cpp)
+
+I. Isomorphism
+==============
+
+**题意：**
+一张$n$个点的连通无向图，一个点的度数为$c(i)$.。对于某个点$i$，定义一个multiset：$U(i,d)=\{c(u)|dist(i,u)=d\}$，定义一个数组$dp(i)=[U(i,0),U(i,1),...,U(i,n-1)]$，定义一张图的hash数组$hash=[dp(1),...dp(n)]$。给你$1\leq n\leq 100$，要你构造两张hash数组相同且hash数组内的元素两两不同，但是不同构的，大小为$n$的图。
+
+**做法：**
+小数据暴力，$n=7$时开始有解。$n>7$时，在$n=7$的解上接一条链就行了。$n=7$和$n>7$，要接一条链所以某个点度数不一样，分别搜一下。
+
+[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2047%20I.cpp)
+
+J. Jinxiety of a Polyomino
+==========================
+
+**题意：**给你一个$n*m$的grid，有些点是黑色。保证黑色的点组成的面积是一个曼哈顿凸包。定义两个黑色点的距离是从一个点走到另一个点的最少拐弯次数。求最大两点间的距离。
+
+**做法：**考虑每个点在4个方向上的最长距离，假定为左上角。当某个点左上角（开区间）没有其他点的时候，这个点的答案显然为0。否则的话考虑$(i,j)$一步**不**能到达的区域，是不停往上走，走到$up[i][j]$，以及不停往左走，走到$left[i][j]$，$(up[i][j],left[i][j])$左上角（开区间）的区域，所以直接用$f[up[i][j]-1][left[i][j]-1]+1$更新答案。
+
+[code](2014-2015%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2047%20J.cpp)
