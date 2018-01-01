@@ -1,0 +1,66 @@
+2015 ACM-ICPC Asia EC-Final
+
+A. Boxes and Balls
+==================
+
+题解：
+
+B. Business Cycle
+=================
+
+题解：
+
+C. Suffixes and Palindromes
+===========================
+
+题解：
+
+D. Change \[Lolicon\]
+=====================
+
+题解：分类讨论。观察易知绝大部分情况仅需1分。而对于100-&gt;10，5-&gt;1这种到更小的单位且非两倍关系的需要2分。
+
+E. Colorful Floor \[TBA\]
+=========================
+
+题解：
+
+F. Hungry Game of Ants \[Rowdark\]
+==================================
+
+题解：水DP。
+
+G. Legacy of the Void \[TBA\]
+=============================
+
+题解：
+
+H. Open Face Chinese Poker \[Lolicon\]
+======================================
+
+题解：大模拟。正解是dp，因为特殊的牌型非常少，而高牌是没有顺序的，可以状压。亦可搜索。
+
+I. Champions League \[TBA\]
+===========================
+
+题解：
+
+J. Dome and Steles \[Lolicon\]
+==============================
+
+题解：二分+贪心。
+
+K. Convex Polyhedron \[TBA\]
+============================
+
+题解：
+
+L. Multiplication Table \[Lolicon\]
+===================================
+
+题解：枚举一个非问号的点所对应的行和列，再暴力check。
+
+M. November 11th \[Lolicon\]
+============================
+
+题解：水贪心。然而场上写错了。
