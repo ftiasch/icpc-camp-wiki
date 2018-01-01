@@ -1,41 +1,53 @@
-# A Toda 2 [zyh&ghc]
+A Toda 2 \[zyh&ghc\]
+====================
 
 枚举$ans>0$，那么所有数都要恰好减到$0$，先将所有数减去$ans$，如果没有非零数那么已经OK，如果恰好有一个非零数或者恰好有两个不相同的非零数那么GG，否则如果此时$sum$是奇数，选三个最大的减去$1$，再重复一次前述讨论，之后只需要每次选最大的两个数减$1$，有解当且仅当$sum-max\leq max$
 
-# B Minimum and Maximum [zyh&ghc]
+B Minimum and Maximum \[zyh&ghc\]
+=================================
 
 首先比较$a_{2i-1}$和$a_{2i}$，对于每次比较，较小的项可能是最小值，较大的项可能是最大值，于是可以将这$n$项分成两组，其中当$n$是奇数时$a_n$同时属于两个组，然后在可能是最小值的一组中选出最小值，最大值同理
 
-# C Bulmart [zyh&ghc]
+C Bulmart \[zyh&ghc\]
+=====================
 
 先将所有商店按p从小到大排序，对每次查询bfs最短路，然后二分答案，扫空距离范围内的商店即可
 
-# D Running Over The Bridges [zyh&ghc]
+D Running Over The Bridges \[zyh&ghc\]
+======================================
 
 贪心，尽量晚嗑药
 
-# E Award Ceremony [zyh&ghc]
+E Award Ceremony \[zyh&ghc\]
+============================
 
 任意两支队伍之间的贡献是独立的，考虑一对$i$和$j$，$i$比$j$先开和$j$比$i$先开的贡献可能有$(0,0),(1,1),(0,2),(2,0)$四种，如果$i$比$j$先开能产生$2$的贡献，则连一条$i \rightarrow j$的边，可以发现这个图没有环，因此所有产生$2$的贡献的条件都能满足
 
-# F Ber Patio
+F Ber Patio
+===========
 
-# G Car Repair Shop [zyh&ghc]
+G Car Repair Shop \[zyh&ghc\]
+=============================
 
 用set维护不相交区间
 
-# H Delete Them [zyh&ghc]
+H Delete Them \[zyh&ghc\]
+=========================
 
 简单模拟
 
-# I Olympiad in Programming and Sports [hwq]
+I Olympiad in Programming and Sports \[hwq\]
+============================================
 
-把所有人按a属性从大到小排序，那么前p个不进B集合的人会进A集合，否则会被抛弃，于是dp[i][j]表示从前i个人中选出j个人进B集合时的最大收益，转移枚举下一个人是否进B集合
+把所有人按a属性从大到小排序，那么前p个不进B集合的人会进A集合，否则会被抛弃，于是dp\[i\]\[j\]表示从前i个人中选出j个人进B集合时的最大收益，转移枚举下一个人是否进B集合
 
-# J Bottles [zyh&ghc]
+J Bottles \[zyh&ghc\]
+=====================
 
-dp[i][j]表示考虑前i个杯子要选出总容量是j的杯子至少要选出多少个杯子以及这些杯子里原有水的总量最大值，转移枚举下一个杯子选不选
+dp\[i\]\[j\]表示考虑前i个杯子要选出总容量是j的杯子至少要选出多少个杯子以及这些杯子里原有水的总量最大值，转移枚举下一个杯子选不选
 
-# K Roads Orientation Problem
+K Roads Orientation Problem
+===========================
 
-# L Expression Queries
+L Expression Queries
+====================
