@@ -1,0 +1,239 @@
+Code
+
+``` {.cpp}
+#pragma comment(linker, "/STACK:102400000,102400000")
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+const int N = 1e5 + 7;
+const int LOG = 17;
+const int LIMIT = 100;
+const int LIMIT2 = 200;
+
+int n, m;
+int val[N], dep[N];
+int father[N][LOG];
+vector<int> g[N];
+int ans[N];
+vector<int> qset[N];
+
+vector<int> vg[N];
+int vfather[N];
+
+int ff[N], fv[N];
+
+struct Query {
+    int x, times, k;
+    int id;
+    Query(int x, int times, int k, int id) : x(x), times(times), k(k), id(id) {}
+};
+vector<Query> q;
+
+void build(int x, int fa) {
+    father[x][0] = fa;
+    dep[x] = dep[fa] + 1;
+    for (int y : g[x]) {
+        if (y == fa) continue;
+        build(y, x);
+    }
+}
+
+int getLCA(int u, int v) {
+    if (dep[u] < dep[v]) swap(u, v);
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (dep[u] - (1 << i) >= dep[v]) {
+            u = father[u][i];
+        }
+    }
+    if (u == v) return u;
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (father[u][i] != father[v][i]) {
+            u = father[u][i];
+            v = father[v][i];
+        }
+    }
+    return father[u][0];
+}
+
+int goUp(int x, int k) {
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (k >> i & 1) {
+            x = father[x][i];
+        }
+    }
+    return x;
+}
+
+vector<int> stack;
+
+
+void MyAssert(bool flag) {
+    if (!flag) {
+        int y = 0, x = 0;
+        x = x + 1;
+        x /= y;
+    }
+}
+
+void dfs(int x, int fa) {
+    stack.push_back(val[x]);
+    MyAssert(stack.size() <= n);
+    for (int qid : qset[x]) {
+        int x = q[qid].x, times = q[qid].times, k = q[qid].k;
+        int ret = 0;
+        for (int j = 0; j <= times; j++) {
+            ret = max(ret, stack[stack.size() - 1 - j * k]);
+        }
+        ans[q[qid].id] = max(ans[q[qid].id], ret);
+    }
+    
+    for (int s : g[x]) {
+        if (s != fa) dfs(s, x);
+    }
+    stack.pop_back();
+}
+
+int getV(int x) {
+    static vector<int> stk;
+    stk.clear();
+    int t = x;
+    while (ff[t] != t) {
+        MyAssert(stk.size() <= n);
+        stk.push_back(t);
+        t = ff[t];
+    }
+    for (int i = stk.size() - 1; i >= 0; i--) {
+        int u = stk[i];
+        fv[u] = max(fv[u], fv[ff[u]]);
+        ff[u] = ff[ff[u]];
+    }
+    return fv[x];
+}
+
+void dfs_v(int x, int fa) {
+    for (int s : vg[x]) {
+        if (s == fa) continue;
+        dfs_v(s, x);
+    }
+    ff[x] = fa;
+    fv[x] = val[x];
+    
+    for (int qid : qset[x]) {
+        int u = q[qid].x, id = q[qid].id;
+        //printf("dfs_v %d %d\n", id, x);
+        ans[id] = max(ans[id], getV(u));
+        ans[id] = max(ans[id], val[x]);
+    }
+}
+
+void solve() {
+    scanf("%d %d", &n, &m);
+    for (int i = 1; i <= n; i++) scanf("%d", &val[i]);
+    for (int i = 1; i <= n; i++) g[i].clear();
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        //u = i, v = i + 1;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+    build(1, 0);
+    for (int i = 0; i + 1 < LOG; i++) {
+        for (int j = 1; j <= n; j++) {
+            father[j][i + 1] = father[father[j][i]][i];
+        }
+    }
+    
+    q.clear();
+    fill(ans + 1, ans + m + 1, 0);
+    for (int i = 1; i <= m; i++) {
+    //  printf("%dth query -------- \n", i);
+        int u, v, k;
+        scanf("%d %d %d", &u, &v, &k);
+        //u = rand() % n + 1, v = rand() % i + 1, k = rand() % 1000;
+        int lca = getLCA(u, v);
+    //  printf("lca = %d\n", lca);
+        int num = dep[u] + dep[v] - 2 * dep[lca] + 1;
+        // lca -> v
+        v = goUp(v, num % k);
+        if (dep[v] >= dep[lca]) {
+            int times = (dep[v] - dep[lca]) / k;
+            q.push_back(Query(v, times, k, i));
+    //      printf("v = %d k = %d times = %d\n", v, k, times);
+        }
+        
+        // u -> lca
+        u = goUp(u, k - 1);
+        if (dep[u] >= dep[lca]) {
+            int times = (dep[u] - dep[lca]) / k;
+            q.push_back(Query(u, times, k, i));
+    //      printf("v = %d k = %d times = %d\n", v, k, times);
+        }
+    }
+    
+    // maintain samller k
+    for (int i = 1; i <= n; i++) vfather[i] = i;
+    for (int vk = 1; vk <= LIMIT; vk++) {
+        for (int i = 1; i <= n; i++) {
+            vg[i].clear();
+            qset[i].clear();
+        }
+    //  printf("vk = %d\n", vk);
+        for (int i = 1; i <= n; i++) {
+            vfather[i] = father[vfather[i]][0];
+    //      printf("vfather[%d] = %d\n", i, vfather[i]);
+            vg[vfather[i]].push_back(i);
+        }
+        int cnt = 0;
+        for (int i = 0; i < q.size(); i++) {
+            if (q[i].k == vk && q[i].times > LIMIT2) {
+                ++cnt;
+    //          printf("fuck goUp(%d, %d) = %d\n", q[i].x, q[i].k * q[i].times, goUp(q[i].x, q[i].k * q[i].times));
+                qset[goUp(q[i].x, q[i].k * q[i].times)].push_back(i);
+            }
+        }
+        
+        if (cnt == 0) continue;
+        
+        for (int i = 1; i <= n; i++) {
+            ff[i] = i;
+            fv[i] = 0;
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            if (vfather[i] == 0) {
+                dfs_v(i, 0);
+            }
+        }
+    }
+    
+    // maintain bigger k
+    for (int i = 1; i <= n; i++) qset[i].clear();
+    for (int i = 0; i < q.size(); i++) {
+        if (q[i].k > LIMIT || q[i].times <= LIMIT2) {
+            qset[q[i].x].push_back(i);
+        }
+    }
+    stack.clear();
+    dfs(1, 0);
+    
+    for (int i = 1; i <= m; i++) {
+        printf("%d\n", ans[i]);
+    }
+}
+
+int main() {
+    int test;
+    scanf("%d", &test);
+    while (test--) {
+        static int testCount = 0;
+        printf("Case #%d:\n", ++testCount);
+        solve();
+    }
+    return 0;
+}
+```
