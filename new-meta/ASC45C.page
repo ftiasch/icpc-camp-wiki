@@ -1,0 +1,78 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+long long ans[99], f[33][2][131077], g[33][2][131077], fst[131077];;
+int main() {
+    f[0][0][1] = 1;
+    ans[1] = 1;
+    int mx(1);
+    for(int i(0); i < 131072; i++) {
+        for(int j(0); j < 17; j++) {
+            if(i >> j & 1) {
+                fst[i] = j;
+            }
+        }
+    }
+    for(int i(1); i < 32; i++) {
+        int newMx(0);
+        //printf("%d\n", mx);
+        for(int j(0); j <= mx; j++) {
+            for(int d(0); d < 2; d++) {
+                for(int msk(1); msk < (1 << mx); msk++) {
+                    if(f[j][d][msk] == 0) {
+                        continue;
+                    }
+                    //printf("%d %d %d %d\n", i, j, d, msk);
+                    int realMsk(msk);
+                    int rng(fst[realMsk] + 1);
+                    if(!d) {
+                        realMsk -= 1 << fst[realMsk];
+                    }
+                    for(int k(0); k <= rng; k++) {
+                        int newRng(rng + (k > j));
+                        int dec(0);
+                        if(k > j) {
+                            for(int l(max(j - 1, 0)); l < k - 1; l++) {
+                                if(realMsk >> l & 1) {
+                                    dec = l + 1;
+                                }
+                            }
+                        }
+                        int newMsk(realMsk);
+                        if(k > 0) {
+                            newMsk |= 1 << k - 1;
+                        }
+                        newMsk >>= dec;
+                        //printf("%d k = %d %d %d %d\n", i, k, newRng, newMsk, dec);
+                        g[k - dec][k == newRng][newMsk | (1 << newRng - dec - 1)] += f[j][d][msk];
+                        //printf("k = %d\n", k);
+                        newMx = max(newMx, newRng - dec);
+                        ans[i + 1] += f[j][d][msk];
+                    //  printf("k = %d\n", k);
+                    }
+                }
+            }
+        }
+        //printf("%d\n", i);
+        mx = newMx;
+        for(int j(0); j <= mx; j++) {
+            for(int d(0); d < 2; d++) {
+                for(int msk(0); msk < (1 << mx); msk++) {
+                    f[j][d][msk] = g[j][d][msk];
+                    g[j][d][msk] = 0;
+                }
+            }
+        }
+
+    }
+    for(int qq(1); ; qq++) {
+        int n;
+        scanf("%d", &n);
+        if(n == 0) {
+            break;
+        }
+        cout << "Case #" << qq << ": ";
+        cout << ans[n] << endl;
+    }
+}
+```
