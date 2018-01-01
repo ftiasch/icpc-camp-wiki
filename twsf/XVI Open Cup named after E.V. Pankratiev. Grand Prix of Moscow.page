@@ -1,0 +1,36 @@
+A. Guess A Number
+=================
+
+B. Path Choosing
+================
+
+C. Distanced Strings
+====================
+
+D. Subcubes \[jsy\]
+===================
+
+从后往前做，维护未被处理的数字的模版。
+
+E. Super Backpack
+=================
+
+F. Rain
+=======
+
+G. Points And Circles
+=====================
+
+H. Vectors
+==========
+
+I. Cartesian Tree \[zxa\]
+=========================
+
+插入每个点时如果存在一个前驱或后继使得新插入的点的y坐标比较大，就会发生rebuilding。第n个点插入时对应概率为$\frac{2}{n} \frac{1}{2} + \frac{n-2}{n} \frac{2}{3}$。累加起来即可，需要用到调和级数的求和。
+
+J. Maximal Angle
+================
+
+K. Bipartite Graph
+==================
