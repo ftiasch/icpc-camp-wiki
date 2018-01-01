@@ -1,0 +1,108 @@
+核心思想
+========
+
+-   维护顶标，保证lx\[x\] + ly\[y\] &gt;= w\[x\]\[y\] all the time。
+    所以我们只要找到一个顶标，使得在这个顶标下的等价图中存在完美匹配，那么这个完美匹配就是我们要求的答案。
+-   考虑每次我们要给一个新的x找到一个y。
+
+在alternative tree中，定义slack\[y\] 代表这个y与遍历过得x中，lx\[x\] +
+ly\[y\] - cost\[x\]\[y\]最小的值。
+
+我们从x出发，每次从没有遍历过得y里面找一个slack最小的走一步。
+
+我们需要把当前x-y这条边加入我们的图中，更新lx, ly。
+
+如果这个y没有match过，那么一个alternative path就找到了，match number++。
+
+否则，我们走到这个y对应的x这个点。开始做下一轮。
+
+可以发现我们每条边只会进来一次，而且每次我们bfs的时候，都必然会进来一个点，才update一次，也就是说，每次的augment复杂度是O(n\^2)。
+
+所以总复杂度就是O(n\^3)了。
+
+-xxx
+
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+#include <queue>
+
+const int N = 305;
+const int INF = 2e9;
+
+int n, cost[N][N];
+int lx[N], ly[N], match[N], slack[N], prev[N];
+bool vy[N];
+
+void augment(int root) {
+    std::fill(vy + 1, vy + n + 1, false);
+    std::fill(slack + 1, slack + n + 1, INF);
+    int py;
+    match[py = 0] = root;
+    do {
+        vy[py] = true;
+        int x = match[py], delta = INF, yy;
+        for (int y = 1; y <= n; y++) {
+            if (!vy[y]) {
+                if (lx[x] + ly[y] - cost[x][y] < slack[y]) {
+                    slack[y] = lx[x] + ly[y] - cost[x][y];
+                    prev[y] = py;
+                }
+                if (slack[y] < delta) {
+                    delta = slack[y];
+                    yy = y;
+                }
+            }
+        }
+        for (int y = 0; y <= n; y++) {
+            if (vy[y]) {
+                lx[match[y]] -= delta;
+                ly[y] += delta;
+            } else {
+                slack[y] -= delta;
+            }
+        }
+        py = yy;
+    } while (match[py] != -1);
+    do {
+        int pre = prev[py];
+        match[py] = match[pre];
+        py = pre;
+    } while (py);
+}
+
+int KM() {
+    for (int i = 1; i <= n; i++) {
+        lx[i] = ly[i] = 0;
+        match[i] = -1;
+        for (int j = 1; j <= n; j++) {
+            lx[i] = std::max(lx[i], cost[i][j]);
+        }
+    }
+    int answer = 0;
+    for (int root = 1; root <= n; root++) {
+        augment(root);
+    }
+    for (int i = 1; i <= n; i++) {
+        answer += lx[i];
+        answer += ly[i];
+        //printf("%d %d\n", match[i], i);
+    }
+    return answer;
+}
+
+int main() {
+    while (scanf("%d", &n) == 1) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                scanf("%d", &cost[i][j]);
+            }
+        }
+        std::cout << KM() << std::endl;
+    }
+    return 0;
+}
+```
