@@ -9,4 +9,4 @@ H. Hardware Hashing
 
 发现$30$步太少了，所以只能打表。由于数字很多，一次取模哈希不够，两层取模就可以了。具体来说，就是先模一个$1w$左右的质数，把$a$分成很多组，然后每组分别枚举一个小质数，使得这一组内的数模了这个小质数能被分开就行了。先打一张表记录每大组之后的模数，以及小表的位置在哪里。然后再打许多小表就行了。
 
-[H.cpp](Petrozavodsk%20Summer-2015.%20Andrew%20Stankevich%20Contest%2048%20H.cpp)
+[H.cpp](Petrozavodsk Summer-2015. Andrew Stankevich Contest 48 H.cpp)
