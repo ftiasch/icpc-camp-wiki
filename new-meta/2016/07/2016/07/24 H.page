@@ -1,0 +1,125 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+using namespace std;
+const int N = 1005, M = 5e5 + 5;
+struct rect
+{
+    int x, y1, y2, c;
+    rect(int x = 0, int y1 = 0, int y2 = 0, int c = 0) : x(x), y1(y1), y2(y2), c(c) {}
+};
+bool operator < (const rect &a, const rect &b)
+{
+    if (a.x != b.x) return a.x < b.x;
+    return a.c < b.c;
+}
+vector<int> aly;
+vector<rect> all;
+void adde(int la, int ra, int lb, int rb)
+{
+    //printf("%d %d : %d %d\n", la, ra, lb, rb);
+    all.push_back(rect(la, lb, rb + 1, -1));
+    all.push_back(rect(ra + 1, lb, rb + 1, -3));
+    aly.push_back(lb);
+    aly.push_back(rb + 1);
+}
+char out[M];
+int a[N], tree[N * N * 2 + M];
+void add(int x, int c)
+{
+    while (x <= (int) aly.size())
+    {
+        tree[x] += c;
+        x += x & -x;
+    }
+}
+int query(int x)
+{
+    int res = 0;
+    while (x)
+    {
+        res += tree[x];
+        x -= x & -x;
+    }
+    return res;
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        aly.clear();
+        all.clear();
+        for (int i = 0; i < n; ++ i) scanf("%d", &a[i]);
+        for (int i = 0; i < n; ++ i)
+        {
+            int ci = i & 1;
+            if (ci == 0)
+            {
+                adde(0, a[i], 0, 0);
+            }
+            else
+            {
+                adde(0, 0, 0, a[i]);
+            }
+            int cnt[2] = {0, 0};
+            for (int j = i + 1; j < n; ++ j)
+            {
+                int cj = j & 1;
+                if (j > i + 1)
+                {
+                    cnt[(j - 1) & 1] += a[j - 1];
+                }
+                adde(cnt[0] + (ci ^ 1) + (cj ^ 1), cnt[0] + (ci ^ 1) * a[i] + (cj ^ 1) * a[j], cnt[1] + ci + cj, cnt[1] + ci * a[i] + cj * a[j]);
+            }
+        }
+        for (int i = 0; i < m; ++ i)
+        {
+            int a, b;
+            scanf("%d%d", &a, &b);
+            all.push_back(rect(a, b, b, i));
+            aly.push_back(b);
+        }
+        sort(aly.begin(), aly.end());
+        aly.erase(unique(aly.begin(), aly.end()), aly.end());
+        sort(all.begin(), all.end());
+        memset(tree, 0, sizeof(tree));
+        for (int i = 0; i < (int) all.size(); ++ i)
+        {
+            if (all[i].c < 0)
+            {
+                int gety1 = lower_bound(aly.begin(), aly.end(), all[i].y1) - aly.begin() + 1;
+                int gety2 = lower_bound(aly.begin(), aly.end(), all[i].y2) - aly.begin() + 1;
+                //printf("seg : %d %d - %d\n", all[i].x, gety1, gety2);
+                add(gety1, all[i].c + 2);
+                add(gety2, -(all[i].c + 2));
+            }
+            else
+            {
+                int gety = lower_bound(aly.begin(), aly.end(), all[i].y2) - aly.begin() + 1;
+                //printf("q %d %d\n", all[i].x, gety);
+                int tmp = query(gety);
+                if (tmp)
+                {
+                    out[all[i].c] = '1';
+                }
+                else
+                {
+                    out[all[i].c] = '0';
+                }
+            }
+        }
+        out[m] = 0;
+        puts(out);
+    }
+}
+```
