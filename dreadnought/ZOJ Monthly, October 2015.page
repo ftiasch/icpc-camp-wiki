@@ -1,0 +1,61 @@
+ZOJ Monthly, October 2015
+
+[A. Ant](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3903) \[Rowdark\]
+=======================================================================================
+
+题解：水求和，式子稍微化下就出来了。
+
+[B. Birthday Gift](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3904) \[Bacon\]
+===============================================================================================
+
+题解：处理出Alice和Bob每个人拿到i个箱子的方案数，然后暴力FFT。
+
+[C. Cake](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3905) \[Bacon\]
+======================================================================================
+
+题解：按照Bob的喜好降序排序，f\[i\]\[j\]表示前i个，Alice取j个的最大值。
+
+[D. Suika's Chain](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3906) \[Lolicon\]
+=================================================================================================
+
+题解：分类讨论。先用点和边数量特征判掉一些不可能解，再利用度数枚举主链，然后拉出主链上的分叉点暴力判断。
+
+[E. Two Ellipses](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3907) \[TBA\]
+============================================================================================
+
+题解：三分套三分。先三分一个椭圆的长轴，之后再三分椭圆上一点到另一个椭圆两焦点距离和最小点在哪，之后计算求面积乘积即可。
+
+[F. Number Game](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3908) \[Bacon\]
+=============================================================================================
+
+题解：把$\le \lfloor k/2 \rfloor$的东西从大到小依次贪心的找能匹配的最大值，如果匹配不到则扔到被匹配的set里去。最后在所有的pair里取最大的m个。
+
+[G. Gene Cluster](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3909) \[Bacon\]
+==============================================================================================
+
+题解：将度为1的黑点用拓扑排序炸掉，剩下的直接取答案。
+
+[H. Market](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3910) \[Bacon\]
+========================================================================================
+
+题解：按照深度从深到浅依次贪心，在某个时刻加入buyer会被加入，用线段树维护dfs序，每个节点维护一个优先队列取出最深的buyer。
+
+[I. Prime Query](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3911) \[Lolicon\]
+===============================================================================================
+
+题解：水线段树。
+
+[J. Coins](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3912) \[Lolicon\]
+=========================================================================================
+
+题解：暴力。考虑付p+delta元。比delta大的那些硬币都可以随便用。小于等于delta的那些硬币则不能进位。
+
+[K. Bob wants to pour water](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3913) \[Lolicon\]
+===========================================================================================================
+
+题解：积分+暴力二分。恶心的是样例居然给的不是精确解。
+
+[L. Semantic Version](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3914) \[Bacon\]
+==================================================================================================
+
+题解：将每个版本号先去掉+以后的部分，然后暴力分成vector<string>，最后直接比较，简单粗暴。
