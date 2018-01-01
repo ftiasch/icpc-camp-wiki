@@ -1,0 +1,112 @@
+几何
+====
+
+环事件处理：cls (DONE) 要注意完全包含整个环的情况。
+
+三角形的心:cls (DONE)
+
+基本几何:cls (DONE)
+
+凸包快速操作:cls (DONE)
+
+3D几何: cls，切空间, 3d凸包，求3d凸包的重心 （DONE）
+
+求四点的外接球：cls（DONE）
+
+D三角剖分:cls （DONE）
+
+点定位,扫描线:cls (会就行了)
+
+最小圆覆盖:cls (DONE)
+
+圆并:cls (DONE)
+
+simpson: dls (DONE)
+
+最近点对最远点对？
+
+数据结构
+========
+
+笛卡尔树 (DONE)
+
+splay, lct:dyh (DONE)
+
+(树链剖分)
+
+(树上基本操作:Lca 等等)
+
+左偏树，random heap：dyh
+
+图论算法
+========
+
+一个非常好抄的网络流：dls or 策爷 (DONE)
+
+无向图最小割：策爷 (DONE)
+
+最大流，(DONE)
+
+dijkstra费用流: 策爷 (DONE)
+
+负环费用流？
+
+带花树: 策爷 (DONE)
+
+带权带花树？？
+
+dominator tree (DONE)
+
+最小树形图: cls (DONE)
+
+欧拉回路
+
+(Tarjan):
+
+2SAT : dls (DONE)
+
+仙人掌dp : dls (DONE)
+
+弦图：dls
+
+公式表
+======
+
+积分表: dls
+
+常数表: dls
+
+数学
+====
+
+exgcd
+
+直线下整点个数，Pell 方程，二次剩余：dls (DONE)
+
+FFT,一些多项式算法: 策爷 (DONE)
+
+simplex : dls (带初始化) (DONE)
+
+(高斯消元)
+
+素数判定，质因数分界：dls (DONE)
+
+字符串
+======
+
+字符串操作 : cls (DONE)
+
+parser: cls
+
+kmp,z, manacher, ac,(DONE)
+
+sam: (DONE)
+
+palindrome tree, sa (jc)
+
+字符串最小表示：策爷 (DONE) 每个前缀的 最小表示？？
+
+常用算法
+========
+
+1D1D dp：策爷。。。(DONE)
