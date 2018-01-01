@@ -1,0 +1,82 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(555555);
+int rela[N], a[N], b[N], ext[N], nxt[N];
+int getr(int x) {
+    int p(x);
+    while(p != rela[p])
+        p = rela[p];
+    int p1(p); p = x;
+    while(p != rela[p]) {
+        int p2(rela[p]);
+        rela[p] = p1;
+        p = p2;
+    }
+    return p1;
+}
+bool check(int n) {
+    
+    for(int i(1); i <= n; i++) {
+        rela[i] = i;
+    }
+    int l(0);
+    int _c(0);
+    for(int i(n); i >= 1; i--) {
+        if(a[i] <= l || a[i] == i) {
+            l = l - 1;
+            continue;
+        }else {
+            _c += a[i];
+            if(_c > 2 * n) {
+                return false;
+            }
+            for(int j(1); j <= a[i]; j++) {
+                rela[getr(j)] = getr(i - a[i] + j);
+            }
+            l = a[i] - 1;
+        }
+    }
+    nxt[0] = -1;
+    fill(ext + 1, ext + 1 + n, 0);
+    for(int i(1); i <= n; i++) {
+        for(nxt[i] = nxt[i - 1]; nxt[i] != -1 && getr(nxt[i] + 1) != getr(i); nxt[i] = nxt[nxt[i]]);
+        nxt[i]++;
+        if(nxt[i] == 0) {
+            b[i] = i;
+            ext[i] = i;
+        }else if(ext[b[nxt[i]]] >= i - b[nxt[i]]) {
+            b[i] = b[nxt[i]];
+            ext[b[nxt[i]]] = i;
+        }else {
+            b[i] = i;
+            ext[i] = i;
+        }
+    }
+    for(int i(1); i <= n; i++) {
+        if(b[i] != a[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+int main() {
+//  freopen("judges.in", "r", stdin);
+//  freopen("judges.out", "w", stdout);
+    int n;
+    for(;scanf("%d", &n) && n;) {
+        for(int i(1); i <= n; i++) {
+            scanf("%d", &a[i]);
+        }
+        if(check(n)) {
+            printf("Yes\n");
+            for(int i(1); i <= n; i++) {
+                printf("%d%c", getr(i), i == n ? '\n' : ' ');
+            }
+        }else {
+            printf("No\n");
+        }
+
+    }
+}
+```
