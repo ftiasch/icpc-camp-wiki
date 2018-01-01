@@ -1,0 +1,57 @@
+``` {.cpp}
+#include "aliens.h"
+#include<bits/stdc++.h>
+using namespace std;
+long long sqr(long long x) {
+    return x * x;
+}
+typedef pair<long long, pair<long long, int> > PPLLI;
+long long take_photos(int n, int m, int k, std::vector<int> r, std::vector<int> c) {
+    vector<pair<long long, long long> > pts, tmp;
+    for(int i(0); i < n; i++) {
+        if(r[i] > c[i])
+            swap(r[i], c[i]);
+        pts.push_back(make_pair((long long)r[i], (long long)c[i]));
+    }
+    sort(pts.begin(), pts.end());
+    for(int i(0); i < n; i++) {
+        if(!tmp.empty() && pts[i].first == tmp.back().first && pts[i].second >= tmp.back().second) 
+            tmp.pop_back();
+        if(tmp.empty() || pts[i].second > tmp.back().second)
+            tmp.push_back(pts[i]);
+    }
+    pts = tmp;
+    n = pts.size();
+    long long le(1e12), ri(0), ans(sqr(pts.back().second - pts.front().first + 1));
+    pts.push_back(pts.back());
+    while(le != ri) {
+        long long slp(le + ri >> 1);
+        vector<pair<long long, int> > f(n);
+        f[0] = make_pair(sqr(pts[0].second - pts[0].first + 1) + slp, 1);
+        vector<PPLLI> q;
+        int p(0);
+        q.push_back(make_pair(pts[0].first, make_pair(sqr(pts[0].first - 1), 0)));
+        q.push_back(make_pair(pts[1].first, make_pair(f[0].first + sqr(pts[1].first - 1) - sqr(max(0ll, pts[0].second - pts[1].first + 1)), 1)));
+        for(int i(1); i < n; i++) {
+            if(p >= (int)q.size())
+                p = q.size() - 1;
+            while(p + 1 < (int)q.size() && make_pair(q[p].first * (-2 * pts[i].second) + q[p].second.first, q[p].second.second) > make_pair(q[p + 1].first * (-2 * pts[i].second) + q[p + 1].second.first, q[p + 1].second.second)) 
+                   p++;
+            f[i] = make_pair(q[p].first * (-2 * pts[i].second) + q[p].second.first + sqr(pts[i].second) + 2 * pts[i].second + slp, q[p].second.second + 1);
+            PPLLI tmp(pts[i + 1].first, make_pair(f[i].first + sqr(pts[i + 1].first - 1) - sqr(max(0ll, pts[i].second - pts[i + 1].first + 1)), f[i].second));
+            auto check = [&](PPLLI a, PPLLI b, PPLLI c) {
+                long long crs((b.first - a.first) * (c.second.first - b.second.first) - (c.first - b.first) * (b.second.first - a.second.first));
+                return crs < 0 || crs == 0 && (b.second >= min(a.second, c.second));
+            };
+            while(q.size() >= 2 && check(q[q.size() - 2], q.back(), tmp)) 
+                q.pop_back();
+            q.push_back(tmp);
+        }
+        if(f[n - 1].second > k) 
+            ri = slp + 1;
+        else
+            le = slp, ans = f[n - 1].first - k * slp;
+    }
+    return ans;
+}
+```
