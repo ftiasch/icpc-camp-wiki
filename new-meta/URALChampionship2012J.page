@@ -1,0 +1,139 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+typedef long double D;
+D eps(1e-16);
+inline D cmp(const D & x, const D & y) {
+    return abs(x - y) < (1) * eps ? 0 : x - y;
+}
+inline D sqr(const D & x) {
+    return x * x;
+}
+inline D scan() {
+    double x;
+    scanf("%lf", &x);
+    return x;
+}
+struct P {
+    D x, y, z;
+    P () {
+    }
+    void scan() {
+        x = ::scan();
+        y = ::scan();
+        z = ::scan();
+    }
+    P(const D & x, const D & y, const D & z) : x(x), y(y), z(z) {
+    }
+    P operator + (const P & b) const {
+        return P(x + b.x, y + b.y, z + b.z);
+    }
+    P operator - (const P & b) const {
+        return P(x - b.x, y - b.y, z - b.z);
+    }
+    P operator * (const P & b) const {
+        return P(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
+    }
+    D operator % (const P & b) const {
+        return x * b.x + y * b.y + z * b.z;
+    }
+    D sqrlen() const {
+        return x * x + y * y + z * z;
+    }
+    D len() const {
+        return hypot(x, (hypot(y, z)));
+    }
+    bool operator < (const P & b) const {
+        if(cmp(x, b.x)) {
+            return x < b.x;
+        }else if(cmp(y, b.y)) {
+            return y < b.y;
+        }else if(cmp(z, b.z)) {
+            return z < b.z;
+        }else {
+            return false;
+        }
+    }
+    D sgnlen() const {
+        return cmp(x, 0) ? x : cmp(y, 0) ? y : z;
+    }
+    P zoom(const D & l) const {
+        D lambda(l / len());
+        return P(lambda * x, lambda * y, lambda * z);
+    }
+    void print() const {
+        cout << x << ' ' << y << ' ' << z << endl;
+    }
+};
+inline P operator * (const D & x, const P & b) {
+    return P(x * b.x, x * b.y, x * b.z);
+}
+struct Line {
+    P s, d;
+    Line(const P & s, const P & d) : s(s), d(d) {
+    }
+};
+inline P intersection(const Line & a, const Line & b) {
+    D lambda(((b.s - a.s) * b.d).sgnlen() / (a.d * b.d).sgnlen());
+    return a.s + lambda * a.d;
+}
+inline bool check(const P & s, const P & d, const P & sp, const D & r) {
+    return cmp((sp - s) % d, 0) > 0 && cmp(sqrt(max((D)0., (sp - s).sqrlen() - sqr((sp - s) % d) / d.sqrlen())), r) <= 0;
+}
+int main() {
+    D r;
+    int ans;
+    P sp, s1, s2, d;
+    sp.scan();
+    r = scan();
+    s1.scan();
+    s2.scan();
+    d.scan();
+    //d.print();
+    //(s2 - s1).print();
+    P norm((s2 - s1) * d);
+    //norm.print();
+    if(cmp(norm.sqrlen(), 0) == 0) {
+        if(check(s1, d, sp, r) || check(s2, d, sp, r)) {
+            ans = 2;
+        }else {
+            ans = 0;
+        }
+    }else {
+        //norm.print();
+        D dis(sqr(sp % norm - s1 % norm));
+        //cout << dis << endl;
+        if(cmp(dis, sqr(r) * norm.sqrlen()) > 0) {
+            ans = 0;
+        }else {
+            P d1(d - d % (s2 - s1) / (s2 - s1).sqrlen() * (s2 - s1));
+            if(cmp((sp - s1) % d1, 0) <= 0 || cmp((sp - s1).sqrlen() - ((sp - s1) % (s2 - s1) / (s2 - s1).sqrlen() * (s2 - s1)).sqrlen(), sqr(r)) <= 0) {
+                if(check(s1, d, sp, r) || check(s2, d, sp, r)) {
+                    ans = 2;
+                }else {
+                    ans = 0;
+                }
+            }else {
+                P projp(s1 + (sp - s1) % (s2 - s1) / (s2 - s1).sqrlen() * (s2 - s1));
+                P tanp(projp + d1.zoom(sqrt(max((D)0., (sp - projp).sqrlen() - dis / norm.sqrlen())) - sqrt(max((D)0., sqr(r) - dis / norm.sqrlen()))));
+                //tanp.print();
+                D le(0), ri(((s2 - s1) * d).sgnlen());
+                if(cmp(le, ri) > 0) {
+                    swap(le, ri);
+                }
+                D mid(((tanp - s1) * d).sgnlen());
+                //cout << le << ' ' << ri << ' ' << mid << endl;
+                if(cmp(le, mid) < 0 && cmp(mid, ri) < 0) {
+                    ans = 1;
+                }else if(check(s1, d, sp, r) || check(s2, d, sp, r)) {
+                    ans = 2;
+                }else {
+                    ans = 0;
+                }
+            }
+        }
+    }
+    printf("%s\n", ans ? ans - 1 ? "Crash" : "Warning" : "False alarm");
+
+}
+```
