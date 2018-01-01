@@ -12,7 +12,7 @@
 
 于是接下来就是Dp了。
 
-[code](TCO2016%20FINAL%20500.cpp)
+[code](TCO2016 FINAL 500.cpp)
 
 ### HamiltonianPaths \[TCO2016 FINAL 1000\]
 
@@ -39,7 +39,7 @@
 
 注意到这个题目MOD的数字特殊，直接上NTT。
 
-[code](TCO%20FINAL%201000)
+[code](TCO FINAL 1000)
 
 ### XorRank \[ TCO SEMIFINAL2 1000 \]
 
