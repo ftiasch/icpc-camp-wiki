@@ -1,0 +1,67 @@
+Link
+====
+
+[vjudge](http://vjudge.net/contest/136718#overview)
+
+Summary
+=======
+
+我真的记不太清了。。
+
+D题简单DP，自己却想错了，**整个人心态大崩**，没有做完就颓废了。
+
+Problems
+========
+
+A A Curious Matt
+----------------
+
+直接做。
+
+B Black and White
+-----------------
+
+C Collision
+-----------
+
+D Dire Wolf
+-----------
+
+枚举\[L, R\]区间中哪个狼是最后死的，分成\[L, mid - 1\] 和 \[mid + 1,
+R\]处理。
+
+E Everlasting L
+---------------
+
+F Fluorescent
+-------------
+
+要求$E[X^3]$，令$x_i$表示第$i$个灯是否在最后被点亮。
+
+$(\sum_{i=1}^{N}{x_i})^3$ 式子展开后发现要求的是$i$, $j$, $k$
+3个灯同时被点亮的方案数。
+
+G GRE Words Once More!
+----------------------
+
+H Happy Matt Friends
+--------------------
+
+求选择K个数字使得xor和不超过M的方案数。
+
+高斯消元后枚举答案。
+
+I Intersection
+--------------
+
+求两个圆环的相交面积。
+
+容斥一下讨论一下。
+
+J Just A Mistake
+----------------
+
+K.Bro Sorting
+-------------
+
+直接做。
