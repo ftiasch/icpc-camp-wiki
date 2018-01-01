@@ -1,0 +1,147 @@
+``` {.cpp}
+
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 10;
+typedef vector<multiset<int>> degreeprofile;
+void translate(int mask, int n, vector<int> G[N], bitset<N> adj[N]) {
+    int cnt = 0;
+    for (int i = 0; i < n; ++ i) {
+        G[i].clear();
+        adj[i].reset();
+    }
+    for (int i = 0; i < n; ++ i) {
+        for (int j = i + 1; j < n; ++ j) {
+            if (mask >> (cnt ++) & 1) {
+                G[i].push_back(j);
+                G[j].push_back(i);
+                adj[i][j] = adj[j][i] = 1;
+            }
+        }
+    }
+}
+bool work(int n) {
+    unordered_set<int> ban;
+    map<set<degreeprofile>, pair<vector<int>, int>> all;
+    for (int mask = 0; mask < (1 << n * (n - 1) / 2); ++ mask) {
+        if (ban.count(mask)) continue;
+        vector<int> G[N];
+        bitset<N> adj[N];
+        translate(mask, n, G, adj);
+        vector<int> per;
+        for (int i = 0; i < n; ++ i) per.push_back(i);
+        do {
+            int cnt = 0, tm = 0;
+            for (int i = 0; i < n; ++ i) {
+                for (int j = i + 1; j < n; ++ j) {
+                    if (adj[per[i]][per[j]]) tm |= 1 << cnt;
+                    cnt ++;
+                }
+            }
+            ban.insert(tm);
+        } while (next_permutation(per.begin(), per.end()));
+        bool con = 1;
+        map<degreeprofile, int> cur;
+        for (int i = 0; i < n; ++ i) {
+            queue<int> q;
+            vector<int> U[N];
+            degreeprofile tmp;
+            U[0].push_back(i);
+            bitset<N> v;
+            v.reset();
+            v[i] = 1;
+            tmp.push_back({(int) G[i].size() + !i});
+            int tot = 1;
+            for (int j = 0; j < n - 1; ++ j) {
+                multiset<int> tt;
+                for (int x : U[j]) for (int y : G[x]) if (!v[y]) {
+                    ++ tot;
+                    U[j + 1].push_back(y);
+                    v[y] = 1;
+                    tt.insert((int) G[y].size() + !y);
+                }
+                tmp.push_back(tt);
+            }
+            if (tot != n) {con = 0; break;}
+            cur[tmp] = i;
+        }
+        if (!con) continue;
+        if ((int) cur.size() != n) continue;
+        set<degreeprofile> cc;
+        per.clear();
+        for (auto x : cur) {
+            cc.insert(x.first);
+            per.push_back(x.second);
+        }
+        if (all.count(cc)) {
+            /*for (auto x : cur) {
+                printf("[");
+                for (auto y : x) {
+                    printf("{");
+                    for (int z : y) printf("%d ", z);
+                    printf("}, ");
+                }
+                printf("]\n");
+            }*/
+            int cnt = 0, tm = 0;
+            for (int i = 0; i < n; ++ i) {
+                for (int j = i + 1; j < n; ++ j) {
+                    if (adj[per[i]][per[j]]) tm |= 1 << cnt;
+                    cnt ++;
+                }
+            }
+            int p0;
+            for (p0 = 0; per[p0] != 0; ++ p0);
+            printf("%d(%d) ", tm, p0);
+            translate(all[cc].second, n, G, adj);
+            cnt = tm = 0;
+            for (int i = 0; i < n; ++ i) {
+                for (int j = i + 1; j < n; ++ j) {
+                    if (adj[all[cc].first[i]][all[cc].first[j]]) tm |= 1 << cnt;
+                    cnt ++;
+                }
+            }
+            for (p0 = 0; all[cc].first[p0] != 0; ++ p0);
+            printf("%d(%d)\n", tm, p0);
+            return 1;
+        }
+        all[cc] = make_pair(per, mask);
+    }
+    return 0;
+}
+int main() {
+    //freopen("isomorphism.in", "r", stdin);
+    //freopen("isomorphism.out", "w", stdout);
+    /*for (int n = 1; n <= 7; ++ n) {
+        printf("n=%d\n", n);
+        if (work(n)) break;
+    }*/
+    vector<int> G1[N], G2[N];
+    bitset<N> adj[N];
+    //1697044(6) 1696920(6)
+    int n;
+    scanf("%d", &n);
+    if (n != 7) {
+        translate(1697044, 7, G1, adj);
+        translate(1696920, 7, G2, adj);
+        if (n < 7) return 0 * puts("NO");
+        int laslas = 7;
+        puts("YES");
+        printf("%d\n", n - 7 + __builtin_popcount(1697044));
+        for (int i = 0; i < 7; ++ i) for (int j : G1[i]) if (i < j) printf("%d %d\n", i + 1, j + 1);
+        for (int i = 8, las = laslas; i <= n; las = i, ++ i) printf("%d %d\n", las, i);
+        printf("%d\n", n - 7 + __builtin_popcount(1696920));
+        for (int i = 0; i < 7; ++ i) for (int j : G2[i]) if (i < j) printf("%d %d\n", i + 1, j + 1);
+        for (int i = 8, las = laslas; i <= n; las = i, ++ i) printf("%d %d\n", las, i);
+    }
+    else {
+        translate(2017873, 7, G1, adj);
+        translate(2010193, 7, G2, adj);
+        puts("YES");
+        printf("%d\n", n - 7 + __builtin_popcount(2017873));
+        for (int i = 0; i < 7; ++ i) for (int j : G1[i]) if (i < j) printf("%d %d\n", i + 1, j + 1);
+        printf("%d\n", n - 7 + __builtin_popcount(2010193));
+        for (int i = 0; i < 7; ++ i) for (int j : G2[i]) if (i < j) printf("%d %d\n", i + 1, j + 1);
+    }
+}
+```
