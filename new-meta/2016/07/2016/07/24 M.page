@@ -1,0 +1,135 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 2005;
+pair<int, int> p[N];
+int sum[N][N], ord[5];
+int pre[N], nex[N], rtol[N];
+int area(int q1, int w1, int q2, int w2)
+{
+    if (q1 > q2) swap(q1, q2);
+    if (w1 > w2) swap(w1, w2);
+    return sum[q2][w2] - sum[q1 - 1][w2] - sum[q2][w1 - 1] + sum[q1 - 1][w1 - 1];
+}
+bool cmph(int i, int j)
+{
+    return p[i].second < p[j].second;
+}
+void del(int x)
+{
+    if (pre[x]) nex[pre[x]] = nex[x];
+    if (nex[x]) pre[nex[x]] = pre[x];
+}
+bool check(int a, int b, int c, int d)
+{
+    if (!a || !b || !c || !d) return 0;
+    if (p[a].second >= p[b].second) return 0;
+    if (p[b].second >= p[c].second) return 0;
+    if (p[c].second >= p[d].second) return 0;
+    int U = min(min(p[a].first, p[b].first), min(p[c].first, p[d].first));
+    int D = max(max(p[a].first, p[b].first), max(p[c].first, p[d].first));
+    if (area(U, p[a].second, D, p[d].second) != 4) return 0;
+    int x[5] = {0, a, b, c, d}, y[5];
+    for (int i = 1; i <= 4; ++ i) y[ord[i]] = x[i];
+    if (p[y[1]].first >= p[y[2]].first) return 0;
+    if (p[y[2]].first >= p[y[3]].first) return 0;
+    if (p[y[3]].first >= p[y[4]].first) return 0;
+    return 1;
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m, q;
+        scanf("%d%d%d", &n, &m, &q);
+        swap(n, m);
+        for (int i = 1; i <= n; ++ i)
+        {
+            for (int j = 1; j <= m; ++ j) sum[i][j] = 0;
+        }
+        for (int i = 1; i <= 4; ++ i) scanf("%d", &ord[i]);
+        for (int i = 1; i <= q; ++ i)
+        {
+            int x, y;
+            scanf("%d%d", &x, &y);
+            swap(x, y);
+            p[i] = make_pair(x, y);
+            sum[x][y] = 1;
+            rtol[i] = i;
+        }
+        for (int i = 1; i <= n; ++ i)
+        {
+            for (int j = 1; j <= m; ++ j)
+            {
+                sum[i][j] += sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
+            }
+        }
+        sort(p + 1, p + 1 + q);
+        //for (int i = 1; i <= q; ++ i) printf("%d %d\n", p[i].first, p[i].second);
+        sort(rtol + 1, rtol + 1 + q, cmph);
+        int ans = 0;
+        for (int l = 1; l <= q; ++ l)
+        {
+            memset(pre, 0, sizeof(pre));
+            memset(nex, 0, sizeof(nex));
+            vector<int> ri;
+            for (int i = 1; i <= q; ++ i)
+            {
+                if (p[i].second >= p[l].second) ri.push_back(i);
+            }
+            for (int i = 0; i < (int) ri.size() - 1; ++ i) nex[ri[i]] = ri[i + 1];
+            for (int i = (int) ri.size() - 1; i >= 1; -- i) pre[ri[i]] = ri[i - 1];
+            for (int rid = q; rtol[rid] != l; -- rid)
+            {
+                int r = rtol[rid], p2 = 0, p3 = 0;
+                if (ord[2] == ord[1] + 1) p2 = nex[l];
+                if (ord[2] == ord[1] - 1) p2 = pre[l];
+                if (ord[3] == ord[1] + 1) p3 = nex[l];
+                if (ord[3] == ord[1] - 1) p3 = pre[l];
+                if (ord[2] == ord[4] + 1) p2 = nex[r];
+                if (ord[2] == ord[4] - 1) p2 = pre[r];
+                if (ord[3] == ord[4] + 1) p3 = nex[r];
+                if (ord[3] == ord[4] - 1) p3 = pre[r];
+                if (p2 && ord[3] == ord[2] - 1) p3 = pre[p2];
+                if (p2 && ord[3] == ord[2] + 1) p3 = nex[p2];
+                if (p3 && ord[2] == ord[3] - 1) p2 = pre[p3];
+                if (p3 && ord[2] == ord[3] + 1) p2 = nex[p3];
+                //printf("%d %d %d %d\n", nex[l], nex[r], pre[l], pre[r]);
+                //printf("%d %d %d %d\n", l, p2, p3, r);
+                if (check(l, p2, p3, r))
+                {
+                    ans ++;
+                }
+                del(r);
+            }
+        }
+        /*int duipai = 0;
+        for (int i = 1; i <= q; ++ i)
+        {
+            for (int j = 1; j <= q; ++ j)
+            {
+                for (int k = 1; k <= q; ++ k)
+                {
+                    for (int l = 1; l <= q; ++ l)
+                    {
+                        if (check(i, j, k, l))
+                        {
+                            duipai ++;
+                        }
+                    }
+                }
+            }
+        }*/
+        printf("%d\n", ans);
+    }
+}
+```
