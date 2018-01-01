@@ -1,0 +1,367 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5;
+struct edge {
+    int to, w, p, id;
+    edge() {}
+    edge(int to, int w, int p, int id) : to(to), w(w), p(p), id(id) {}
+};
+bool operator < (const edge &a, const edge &b) {return a.p < b.p;}
+vector<edge> G[N];
+pair<int, int> E[10 * N];
+vector<int> lis, rG[N];
+bool v[N];
+int cnt_com, cid[N];
+vector<int> com[N];
+void dfst1(int x) {
+    if (v[x]) return;
+    v[x] = 1;
+    for (edge e : G[x]) dfst1(e.to);
+    lis.push_back(x);
+}
+void dfst2(int x, int cid) {
+    if (::cid[x]) return;
+    ::cid[x] = cid;
+    com[cid].push_back(x);
+    for (int u : rG[x]) dfst2(u, cid);
+}
+vector<int> nG[N];
+int in[N];
+long long cnt_path[N];
+const long long INF = 1e12 + 5;
+const int B = 42;
+int heavye[N][B], heavyeid[N];
+long long heavycut[N][B], heavyup[N][B];
+vector<long long> lightcut[N];
+vector<int> tree[N];
+vector<int> circle[N];
+long long circletot[N];
+vector<long long> circlecut[N];
+vector<long long> circlew[N];
+int cirid[N], incirid[N];
+int debug = 0;
+void build_fenwick(vector<long long> &t) {
+    int n = (int) t.size() - 1;
+    if (debug) {
+        printf("before : \n");
+        for (long long x : t) cout << x << " "; cout << endl;
+    }
+    for (int i = n; i >= 1; -- i) {
+        int x = i + (i & -i);
+        while (x <= n) {
+            t[x] += t[i];
+            x += x & -x;
+        }
+    }
+    if (debug) {
+        printf("after : \n");
+        for (long long x : t) cout << x << " "; cout << endl;
+    }
+}
+long long query_fenwick(vector<long long> &t, int x) {
+    long long res = 0;
+    while (x) {
+        res += t[x];
+        x -= x & -x;
+    }
+    return res;
+}
+void change_fenwick(vector<long long> &t, int x, int c) {
+    int n = (int) t.size() - 1;
+    while (x <= n) {
+        t[x] += c;
+        x += x & -x;
+    }
+}
+int dfn, L[N], R[N], top[N];
+int dfs(int x, int t) {
+    L[x] = R[x] = dfn ++;
+    top[x] = t;
+    for (int u : tree[x]) R[x] = dfs(u, t);
+    return R[x];
+}
+long long lazy[N * 4];
+void change(int x, int l, int r, int ql, int qr, int c) {
+    if (r < ql || l > qr) return;
+    if (ql <= l && r <= qr) {
+        lazy[x] += c;
+        return;
+    }
+    int mid = (l + r) >> 1;
+    change(x + x, l, mid, ql, qr, c);
+    change(x + x + 1, mid + 1, r, ql, qr, c);
+}
+long long query(int x, int l, int r, int qx) {
+    if (l > qx || r < qx) return 0;
+    if (l == r) return lazy[x];
+    int mid = (l + r) >> 1;
+    return lazy[x] + query(x + x, l, mid, qx) + query(x + x + 1, mid + 1, r, qx);
+}
+long long calc_tree(int u, int v) {
+    return query(1, 0, dfn - 1, L[u]) - query(1, 0, dfn - 1, L[v]);
+}
+long long calc_chain(int u, int v) {
+    long long res = 0;
+    int c = cirid[u];
+    if (incirid[u] > incirid[v]) {
+        res += query_fenwick(circlew[c], (int) circle[c].size()) - query_fenwick(circlew[c], incirid[u]);
+        u = circle[c][0];
+    }
+    return res + query_fenwick(circlew[c], incirid[v]) - query_fenwick(circlew[c], incirid[u]);
+}
+int DPE[N];
+int main() {
+    int n, m, q;
+    scanf("%d%d%d", &n, &m, &q);
+    if (debug) {
+        n = 50;
+        m = 100;
+        q = 1000;
+        for (int i = 1; i <= m; ++ i) DPE[i] = i;
+        random_shuffle(DPE + 1, DPE + m);
+    }
+    for (int i = 1; i <= m; ++ i) {
+        int u, v, p, w;
+        if (debug) {
+            u = rand() % n + 1;
+            v = rand() % n + 1;
+            p = DPE[i];
+            w = rand();
+            //printf("--------------%d %d %c %d\n", u, v, p + 'a', w);
+        }
+        else scanf("%d%d%d%d", &u, &v, &p, &w);
+        G[u].push_back(edge(v, w, p, i));
+    }
+    for (int i = 1; i <= n; ++ i) {
+        sort(G[i].begin(), G[i].end());
+        int cnt = 0;
+        for (auto e : G[i]) {
+            E[e.id] = make_pair(i, cnt ++);
+            rG[e.to].push_back(i);
+        }
+    }
+    for (int i = 1; i <= n; ++ i) if (!v[i]) dfst1(i);
+    for (int i = n - 1; i >= 0; -- i) if (!cid[lis[i]]) dfst2(lis[i], ++ cnt_com);
+    for (int i = 1; i <= n; ++ i) {
+        for (edge e : G[i]) {
+            if (cid[e.to] != cid[i]) {
+                nG[cid[i]].push_back(cid[e.to]);
+                in[cid[e.to]] ++;
+            }
+        }
+    }
+    queue<int> Q;
+    for (int i = 1; i <= cnt_com; ++ i) if (in[i] == 0) Q.push(i);
+    lis.clear();
+    while (!Q.empty()) {
+        int p = Q.front(); Q.pop();
+        lis.push_back(p);
+        for (int u : nG[p]) {
+            if (-- in[u] == 0) Q.push(u);
+        }
+    }
+    reverse(lis.begin(), lis.end());
+    for (int p : lis) {
+        for (int u : com[p]) cnt_path[u] = INF;
+        for (int u : com[p]) {
+            long long cnt = 1;
+            heavye[u][0] = u;
+            heavyeid[u] = -1;
+            heavycut[u][0] = 0;
+            //lightcut[u].push_back(1);
+            //printf("calc %d\n", u);
+            for (int i = 0; i < (int) G[u].size(); ++ i) {
+                edge e = G[u][i];
+                if (heavye[u][0] == u || cnt_path[heavye[u][0]] < cnt_path[e.to]) {
+                    heavye[u][0] = e.to;
+                    heavycut[u][0] = cnt;
+                    heavyup[u][0] = min(INF, cnt + cnt_path[e.to]);
+                    heavyeid[u] = i;
+                }
+                lightcut[u].push_back(cnt);
+                //printf(" + %d %I64d\n", e.to, cnt_path[e.to]);
+                cnt += cnt_path[e.to];
+                if (cnt > INF) break;
+            }
+            if ((int) com[p].size() == 1) cnt_path[u] = min(INF, cnt);
+        }
+    }
+    for (int j = 1; j < B; ++ j) {
+        for (int i = 1; i <= n; ++ i) {
+            heavye[i][j] = heavye[heavye[i][j - 1]][j - 1];
+            heavycut[i][j] = heavycut[heavye[i][j - 1]][j - 1] + heavycut[i][j - 1];
+            heavyup[i][j] = heavyup[heavye[i][j - 1]][j - 1] + heavycut[i][j - 1];
+        }
+    }
+    memset(in, 0, sizeof(in));
+    for (int i = 1; i <= n; ++ i) in[heavye[i][0]] ++;
+    for (int i = 1; i <= n; ++ i) if (in[i] == 0) Q.push(i);
+    while (!Q.empty()) {
+        int p = Q.front(); Q.pop();
+        tree[heavye[p][0]].push_back(p);
+        if (-- in[heavye[p][0]] == 0) Q.push(heavye[p][0]);
+    }
+    int cir_cnt = 0;
+    for (int i = 1; i <= n; ++ i) {
+        if (!in[i] || cirid[i]) continue;
+        cir_cnt ++;
+        if (debug) printf("circle %d :\n", cir_cnt);
+        cirid[i] = cir_cnt;
+        incirid[i] = 0;
+        circle[cir_cnt].push_back(i);
+        circlecut[cir_cnt].push_back(0);
+        circlecut[cir_cnt].push_back(heavycut[i][0]);
+        circlew[cir_cnt].push_back(0);
+        circlew[cir_cnt].push_back(heavyeid[i] == -1 ? 0 : G[i][heavyeid[i]].w);
+        dfs(i, i);
+        for (int j = heavye[i][0]; j != i; j = heavye[j][0]) {
+            cirid[j] = cir_cnt;
+            incirid[j] = (int) circle[cir_cnt].size();
+            circle[cir_cnt].push_back(j);
+            circlecut[cir_cnt].push_back(circlecut[cir_cnt].back() + heavycut[j][0]);
+            circlew[cir_cnt].push_back(heavyeid[j] == -1 ? 0 : G[j][heavyeid[j]].w);
+            dfs(j, j);
+        }
+        if (debug) {
+            printf("circle : ");
+            for (int x : circle[cir_cnt]) printf("%d ", x);
+            puts("");
+        }
+        if (debug) {
+            printf("circle : ");
+            for (int x : circlecut[cir_cnt]) printf("%d ", x);
+            puts("");
+        }
+        circletot[cir_cnt] = circlecut[cir_cnt].back();
+        build_fenwick(circlew[cir_cnt]);
+    }
+    //return 0;
+    for (int i = 1; i <= n; ++ i) {
+        if (cirid[i] || heavyeid[i] == -1) continue;
+        if (debug) printf("change %d %d + %d\n", L[i], R[i], G[i][heavyeid[i]].w);
+        change(1, 0, dfn - 1, L[i], R[i], G[i][heavyeid[i]].w);
+    }
+    if (debug) for (int i = 1; i <= n; ++ i) printf("cnt_path[%d]=%I64d\n", i, cnt_path[i]);
+    //if (debug) for (int i = 1; i <= n; ++ i) printf("heavye[%d][0]=%d\n", i, heavye[i][0]);
+    for (int ii = 0; ii < q; ++ ii) {
+        int type;
+        if (debug) {
+            type = rand() % 2 + 1;
+        }
+        else scanf("%d", &type);
+        if (type == 1) {
+            int u;
+            long long k, duipai;
+            if (debug) {
+                u = rand() % n + 1;
+                k = rand() % 100;
+                printf("+++++++++++++++++++  %d %d %d\n", type, u, k);
+            }
+            else scanf("%d%lld", &u, &k);
+            /*if (k <= cnt_path[u]) {
+                int uu = u;
+                long long K = k;
+                duipai = 0;
+                while (K > 1) {
+                    K --;
+                    for (edge e : G[uu]) {
+                        if (cnt_path[e.to] < K) {
+                            K -= cnt_path[e.to];
+                        }
+                        else {
+                            duipai += e.w;
+                            uu = e.to;
+                            break;
+                        }
+                    }
+                }
+            }*/
+            if (k > cnt_path[u]) {
+                puts("-1");
+                continue;
+            }
+            long long ans = 0;
+            while (k > 1) {
+                int l = 0, r = (int) lightcut[u].size();
+                while (l + 1 < r) {
+                    //printf("%d %d\n", l, r);
+                    int mid = (l + r) >> 1;
+                    if (lightcut[u][mid] < k) {
+                        l = mid;
+                    }
+                    else {
+                        r = mid;
+                    }
+                }
+                if (debug) printf("%d %d\n", lightcut[u].size(), G[u].size());
+                if (debug) printf("u = %d k = %I64d l = %d lc=%I64d\n", u, k, l, lightcut[u][l]);
+                if (l == heavyeid[u]) {
+                    int v = u;
+                    for (int i = B - 1; i >= 0; -- i) {
+                        if (!cirid[heavye[u][i]] && heavycut[u][i] < k && k <= heavyup[u][i]) {
+                            k -= heavycut[u][i];
+                            u = heavye[u][i];
+                        }
+                    }
+                    ans += calc_tree(v, u);
+                    if (debug) printf("calc tree %d -> %d  %d\n", v, u, ans);
+                    if (heavycut[u][0] < k && k <= heavyup[u][0]) {
+                        k -= heavycut[u][0];
+                        ans += (heavyeid[u] == -1 ? 0 : G[u][heavyeid[u]].w);
+                        u = heavye[u][0];
+                        if (k == 1) break;
+                        if (debug) printf("at %d   %d\n", u, ans);
+                        if (debug) printf("k=%I64d %d %I64d\n", k, cirid[u], circletot[cirid[u]]);
+                        long long round = (k - 1) / circletot[cirid[u]];
+                        ans += round * query_fenwick(circlew[cirid[u]], (int) circle[cirid[u]].size());
+                        k -= round * circletot[cirid[u]];
+                        if (debug) printf("%d   %I64d size = %d\n", round, ans, (int) circle[cirid[u]].size());
+                        int v = u;
+                        for (int i = B - 1; i >= 0; -- i) {
+                            if (heavycut[u][i] < k) {
+                                k -= heavycut[u][i];
+                                u = heavye[u][i];
+                            }
+                        }
+                        ans += calc_chain(v, u);
+                        if (debug) printf("calc chain %d -> %d  %d\n", v, u, ans);
+                    }
+                }
+                else {
+                    k -= lightcut[u][l];
+                    ans += G[u][l].w;
+                    u = G[u][l].to;
+                    if (debug) printf("???\n");
+                }
+            }
+            //printf("%I64d\n", ans);
+            printf("%lld\n", ans);
+            //assert(ans == duipai);
+        }
+        else {
+            int e, w;
+            if (debug) {
+                e = rand() % m + 1;
+                w = rand();
+                printf("+++++++++++++++++++  %d %d %d\n", type, e, w);
+            }
+            else scanf("%d%d", &e, &w);
+            int u = E[e].first, i = E[e].second;
+            if (heavyeid[u] == i) {
+                int del = w - G[u][i].w;
+                if (cirid[u]) {
+                    change_fenwick(circlew[cirid[u]], incirid[u] + 1, del);
+                }
+                else {
+                    change(1, 0, dfn - 1, L[u], R[u], del);
+                }
+                G[u][i].w += del;
+            }
+            else {
+                G[u][i].w = w;
+            }
+        }
+    }
+}
+```
