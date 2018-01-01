@@ -1,0 +1,87 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(10);
+char st[2 * N + 2];
+int a[N];
+long long dp[N + 1][400][2][3];
+bool eq(char c, char d) {
+    return c == '?' || c == d;
+}
+bool ei(int x, int y) {
+    return x == -1 || x == y;
+}
+int j, k, l, prv1, prv2;
+bool check (int a1, int a2) {
+    int ctb(k * a1);
+    return (!k || ei(prv2, j - 10 + a1)) && (!l || l == 1 && ei(prv1, j + ctb + a1) || l == 2 && ei(prv1, j + a1 + a2 + ctb));
+}
+int calc (int a1, int a2) {
+    return j + a1 * (1 + k + (l >= 1)) + a2 * (1 + (l >= 2));
+}
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    for(int qq(1); qq <= tests; qq++) {
+        int n;
+        scanf("%d", &n);
+        scanf("%s", st);
+        for(int i(0); i < n; i++)
+            scanf("%d", &a[i]);
+        for(int i(0); i <= n; i++)
+            for(int j(0); j < 400; j++)
+                for(int k(0); k <= 1; k++)
+                    for(int l(0); l <= 2; l++) 
+                        dp[i][j][k][l] = 0;
+        dp[0][0][0][0] = 1;
+        for(int i(0); i < n; i++)
+            for(j = 0; j < 400; j++)
+                for(k = 0; k <= 1; k++)
+                    for(l = 0; l <= 2; l++) {
+                        if(!dp[i][j][k][l])
+                            continue;
+                        char s1(st[i * 2]), s2(st[i * 2 + 1]);
+                        prv2 = i >= 2 ? a[i - 2] : 0; prv1 = i >= 1 ? a[i - 1] : 0; 
+                        if(i != n - 1) {
+                            if(eq(s1, 'x') && eq(s2, '-') && (!k || ei(prv2, j - 10 + 10)) && (1 - l || l == 1 && ei(prv1, j + 10)))
+                                dp[i + 1][calc(10, 0)][l == 2][2] += dp[i][j][k][l];
+                            for(int c1(0); c1 <= 9; c1++) {
+                                if(eq(s1, '0' + c1) && eq(s2, '/') && check(c1, 10 - c1))
+                                    dp[i + 1][calc(c1, 10 - c1)][0][1] += dp[i][j][k][l];
+                                for(int c2(0); c2 + c1 <= 9; c2++)
+                                    if(eq(s1, '0' + c1) && eq(s2, '0' + c2) && check(c1, c2) && ei(a[i], calc(c1, c2)))
+                                        dp[i + 1][calc(c1, c2)][0][0] += dp[i][j][k][l];
+                            }
+                        } else {
+                            char s3(st[i * 2 + 2]);
+                            if(eq(s1, 'x') && eq(s2, 'x') && eq(s3, 'x') && check(10, 10)) {
+                                dp[i + 1][calc(10, 10) + 10][0][0] += dp[i][j][k][l];
+                            }
+                            for(int c1(0); c1 <= 9; c1++) {
+                                if(eq(s1, 'x') && eq(s2, 'x') && eq(s3, c1 + '0') && check(10, 10)) 
+                                    dp[i + 1][calc(10, 10) + c1][0][0] += dp[i][j][k][l];
+                                if(eq(s1, 'x') && eq(s2, c1 + '0') && eq(s3, '/') && check(10, c1)) 
+                                    dp[i + 1][calc(10, c1) + 10 - c1][0][0] += dp[i][j][k][l];
+                                if(eq(s1, c1 + '0') && eq(s2, '/') && eq(s3, 'x') && check(c1, 10 - c1)) 
+                                    dp[i + 1][calc(c1, 10 - c1) + 10][0][0] += dp[i][j][k][l];
+                                for(int c2(0); c2 <= 9; c2++) {
+                                    if(c1 + c2 <= 9) {
+                                        if(eq(s1, 'x') && eq(s2, c1 + '0') && eq(s3, c2 + '0') && check(10, c1)) 
+                                            dp[i + 1][calc(10, c1) + c2][0][0] += dp[i][j][k][l];
+                                        if(eq(s1, c1 + '0') && eq(s2, c2 + '0') && eq(s3, '-') && check(c1, c2))
+                                            dp[i + 1][calc(c1, c2)][0][0] += dp[i][j][k][l];
+                                    }
+                                    if(eq(s1, c1 + '0') && eq(s2, '/') && eq(s3, c2 + '0') && check(c1, 10 - c1))
+                                        dp[i + 1][calc(c1, 10 - c1) + c2][0][0] += dp[i][j][k][l];
+                                }
+                            }
+                        }
+                    }
+        long long ans(0);
+        for(int i(0); i < 400; i++)
+            if(ei(a[n - 1], i))
+                ans += dp[n][i][0][0];
+        cout << ans << endl;
+    }
+}
+```
