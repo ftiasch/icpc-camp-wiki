@@ -1,0 +1,164 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// #define debug(...) fprintf(stderr, __VA_ARGS__);
+#define debug(...)
+
+const int N = 5e2 + 7;
+
+int n, m;
+int r2c[N], c2r[N];
+vector<int> balls[4][N];
+
+vector<pair<int, int> > evts[N][N];
+
+int dr[4] = {0, -1, 0, 1};
+int dc[4] = {-1, 0, 1, 0};
+
+int sign(int x) {
+    return x < 0 ? -1 : x > 0;
+}
+
+void reflect(int &d, int sgn) {
+    if (sgn == 0) {
+        d ^= 1;
+    } else {
+        d ^= 3;
+    }
+}
+
+void go(int r, int c, int d, int cur_t, int sgn) {
+    debug("trace sgn = %d  start_time = %d\n", sgn, cur_t);
+    r += dr[d], c += dc[d];
+    ++cur_t;
+    int from = 0;
+    while (r >= 1 && r <= n && c >= 1 && c <= n) {
+        debug("(%d, %d)", r, c);
+        if (c == r2c[r]) {
+            reflect(d, sgn);
+            from = (sgn ? 1 : -1) * r;
+            r += dr[d];
+            c += dc[d];
+        } else {
+            if (!(from == 0 && sgn == 1)) evts[r][c].push_back({cur_t, from});
+            debug("store, from = %d", from);
+            r += dr[d];
+            c += dc[d];
+        }
+        ++cur_t;
+        debug("\n");
+    }
+}
+
+vector<int> adj[N << 1];
+int dfn[N << 1], low[N << 1], in_stk[N << 1], color[N << 1], tot_color, tot;
+vector<int> stk;
+
+void dfs(int u) {
+    dfn[u] = low[u] = ++tot;
+    in_stk[u] = true;
+    stk.push_back(u);
+    for (auto v : adj[u]) {
+        if (!dfn[v]) {
+            dfs(v);
+            low[u] = min(low[u], low[v]);
+        } else if (in_stk[v]) {
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+    if (low[u] == dfn[u]) {
+        int t;
+        ++tot_color;
+        do {
+            t = stk.back();
+            stk.pop_back();
+            color[t] = tot_color;
+            in_stk[t] = false;
+        } while (t != u);
+    }
+}
+
+void forbid(int r, int sgn, int c = -1, int csgn = -1) {
+    if (r < c) { swap(r, c); swap(sgn, csgn); }
+    debug("forbid %d %d %d %d\n", r, sgn, c, csgn);
+    r--;
+    if (c <= 0) {
+        adj[r << 1 | sgn].push_back(r << 1 | (sgn ^ 1));
+    } else {
+        c--;
+        adj[r << 1 | sgn].push_back(c << 1 | (csgn ^ 1));
+        adj[c << 1 | csgn].push_back(r << 1 | (sgn ^ 1));
+    }
+}
+
+void collect(vector<int> row[N], vector<int> col[N], int sgn,
+    int row_sgn, int row_para, int col_sgn, int col_para) {
+    for (int r = 1; r <= n; r++) {
+        int c = r2c[r];
+        bool finish = false;
+        for (auto rt : row[r]) if (!finish) {
+            for (auto ct : col[c]) if (!finish) {
+                int dist = row_sgn * r + row_para + col_sgn * c + col_para - 1;
+                if (rt + dist + 1 > ct && ct + dist + 1 > rt) {
+                    forbid(r, sgn);
+                    finish = true;
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &r2c[i]);
+        c2r[r2c[i]] = i;
+    }
+    scanf("%d", &m);
+    for (int i = 0; i < m; i++) {
+        int r, c, t, d;
+        scanf("%d %d %d", &r, &c, &t);
+        if (c == 0) {
+            balls[d = 0][r].push_back(t);
+        } else if (r == 0) {
+            balls[d = 1][c].push_back(t);
+        } else if (c == n + 1) {
+            balls[d = 2][r].push_back(t);
+        } else {
+            balls[d = 3][c].push_back(t);
+        }
+        go(r, c, d ^ 2, t, 0);
+        go(r, c, d ^ 2, t, 1);
+    }
+    collect(balls[0], balls[1], 1, 1, 0, 1, 0);
+    collect(balls[2], balls[1], 0, 1, 0, -1, n + 1);
+    collect(balls[2], balls[3], 1, -1, n + 1, -1, n + 1);
+    collect(balls[0], balls[3], 0, -1, n + 1, 1, 0);
+    for (int r = 1; r <= n; r++) {
+        for (int c = 1; c <= n; c++) {
+            auto &w = evts[r][c];
+            sort(w.begin(), w.end());
+            for (int i = 0, j; i < w.size(); i = j) {
+                for (j = i; j < w.size() && w[j].first == w[i].first; j++) {
+                    for (int k = i; k < j; k++) {
+                        debug("r = %d c = %d\n", r, c);
+                        forbid(abs(w[k].second), !!(sign(w[k].second) + 1),
+                            abs(w[j].second), !!(sign(w[j].second) + 1));
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < 2 * n; i++) {
+        if (!dfn[i]) dfs(i);
+    }
+    for (int i = 0; i < n; i++) {
+        assert(color[i << 1] != color[i << 1 | 1]);
+        printf("%d", color[i << 1] > color[i << 1 | 1]);
+    }
+    printf("\n");
+    return 0;
+}
+```
