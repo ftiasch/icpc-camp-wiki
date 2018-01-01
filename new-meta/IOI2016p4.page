@@ -1,0 +1,113 @@
+``` {.cpp}
+#include "paint.h"
+
+#include <cstdlib>
+#include<bits/stdc++.h>
+using namespace std;
+std::string solve_puzzle(std::string s, std::vector<int> c) {
+    s = "X_" + s + "_X";
+    c.push_back(1);
+    c.insert(c.begin(), 1);
+    int n(s.length());
+    vector<int> cnt[2];
+    auto calcSum = [&]() {
+        cnt[0] = cnt[1] = vector<int>(1, 0);
+        for(int i(0); i < n; i++) {
+            cnt[0].push_back(cnt[0].back() + (s[i] == '_'));
+            cnt[1].push_back(cnt[1].back() + (s[i] == 'X'));
+        }
+    };
+    auto getSum = [&](vector<int> & s, int le, int ri) {
+        return ri < le ? 0 : (ri >= n ? s[n] : ri < 0 ? 0 : s[ri + 1]) - (le >= n ? s[n] : le < 0 ? 0 : s[le]);
+    };
+    calcSum();
+    int m(c.size());
+    vector<int> delta(n, 0);
+    auto paint = [&](int le, int ri) {
+        //printf("%d~%d\n", le, ri);
+        if(0 <= le && le < n)
+            delta[le]++;
+        if(0 <= ri && ri < n)
+            delta[ri]--;
+    };
+        
+    vector<vector<int> > dp(m, vector<int>(n, 0)), pd(dp);
+    auto calc = [&](vector<vector<int> > & dp) {
+        vector<int> ext1r(n, 0);
+        for(int i(n - 1); i >= 0; i--) {
+            ext1r[i] = s[i] == 'X' ? i : i == n - 1 ? n : ext1r[i + 1];
+        }
+        fill(delta.begin(), delta.end(), 0);
+        paint(c[0] - 1, ext1r[0] + c[0]);
+        for(int i(0); i < m; i++) {
+            int cur(0);
+            for(int j(0); j < n; j++) {
+                cur += delta[j];
+                //printf("%d %d %d\n", i, j, getSum(cnt[0], j - c[i] + 1, j));
+                dp[i][j] = (cur > 0) && (getSum(cnt[0], j - c[i] + 1, j) == 0);
+            }
+            if(i == m - 1)
+                break;
+            fill(delta.begin(), delta.end(), 0);
+            for(int j(0); j < n; j++) {
+                if(dp[i][j]) 
+                    paint(j + c[i + 1] + 1, (j + 1 >= n ? n : ext1r[j + 1]) + c[i + 1]);
+            }
+        }
+    };
+    calc(dp);
+    reverse(s.begin(), s.end());
+    reverse(c.begin(), c.end());
+    calcSum();
+    calc(pd);
+    /*for(int i(0); i < m; i++) {
+        for(int j(0); j < n; j++) {
+            printf("%d %d %d %d\n", i, j, dp[i][j], pd[i][j]);
+        }
+    }*/
+    reverse(s.begin(), s.end());
+    reverse(c.begin(), c.end());
+    delta = vector<int>(n, 0);
+    vector<int> maybe[2] = {vector<int>(n, 0), vector<int>(n, 0)};
+    vector<int> ext1l(n, 0), ext1r(n, 0);
+    for(int i(n - 1); i >= 0; i--)
+        ext1r[i] = s[i] == 'X' ? i : i == n - 1 ? n : ext1r[i + 1];
+    for(int i(0); i < n; i++) 
+        ext1l[i] = s[i] == 'X' ? i : i == 0 ? -1 : ext1l[i - 1];
+    for(int i(0); i < m - 1; i++) {
+        vector<int> cntpd = {0};
+        for(int j(0); j < n; j++) {
+            cntpd.push_back(cntpd.back() + pd[m - i - 2][n - j - 1]);
+        }
+        vector<int> cntdp = {0};
+        for(int j(0); j < n; j++) 
+            cntdp.push_back(cntdp.back() + dp[i][j]);
+        for(int j(0); j < n; j++)
+            if(dp[i][j] && getSum(cntpd, j + 2, (j + 1 >= n ? n : ext1r[j + 1])) > 0)
+                paint(j - c[i] + 1, j + 1);
+        for(int j(0); j < n; j++)
+            if(s[j] != 'X' && getSum(cntpd, j + 1, (j + 1 >= n ? n : ext1r[j + 1])) > 0 && getSum(cntdp, (j - 1 < 0 ? -1 : ext1l[j - 1]), j - 1) > 0)
+                maybe[0][j] = 1;
+    }
+    int cur(0);
+    for(int i(0); i < n; i++) {
+        cur += delta[i];
+        maybe[1][i] = cur > 0;  
+    }
+    string res(n - 4, '?');
+    for(int i(2); i < n - 2; i++) {
+        if(!maybe[0][i])
+            res[i - 2] = 'X';
+        if(!maybe[1][i]) 
+            res[i - 2] = '_';
+    }
+    return res;
+}
+/*int main() {
+    cout << solve_puzzle("...", {1, 1}) << endl;
+    cout << solve_puzzle("..........", {3, 4}) << endl;
+    cout << solve_puzzle("........", {3, 4}) << endl;
+    cout << solve_puzzle("..._._....", {3}) << endl;
+    cout << solve_puzzle(".X........", {3}) << endl;
+}*/
+```
