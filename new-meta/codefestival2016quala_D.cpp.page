@@ -1,0 +1,92 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(211111);
+long long x[N], y[N], a[N], rela[N], delta[N], sgn[N], le[N], ri[N];
+int getr(int x) {
+    int p(x);
+    long long coe(1), pls(0);
+    while(p != rela[p]) {
+        pls += delta[p] * coe;
+        coe *= sgn[p];
+    //printf("!%d %lld %lld %lld %lld \n", x, pls, coe, delta[p], sgn[p]);
+        p = rela[p];
+    }
+    int p1(p);
+    p = x;
+    //printf("!%d %lld %lld\n", x, pls, coe);
+    while(p != rela[p]) {
+        int p2(rela[p]);
+        rela[p] = p1;
+        long long dp(delta[p]), sp(sgn[p]);
+        delta[p] = pls;
+        sgn[p] = coe;
+        //coe * x + pls - delta[p] = sgn[p] * y
+        coe *= sp;
+        pls = (pls - dp) * sp;
+        p = p2;
+    }
+    return p1;
+}
+int main() {
+    int r, c, n;
+    cin >> r >> c >> n;
+    long long a11(0);
+    for(int i(0); i < n; i++) {
+        cin >> x[i] >> y[i] >> a[i];
+    }
+    bool invalid(false);
+    for(int i(1); i <= r + c; i++) {
+        rela[i] = i;
+        delta[i] = 0;
+        sgn[i] = 1;
+    }
+    for(int i(0); i < n; i++) {
+        int ca(x[i]), cb(r + y[i]);
+        int xx(getr(ca)), yy(getr(cb));
+        a[i] += a11;
+        //(sgn[ca] * v[xx] + delta[ca] + sgn[cb] * v[yy] + delta[cb] = a[i]);
+        //printf("%d %d\n", xx, yy);
+        if(xx == yy) {
+            //(sgn[ca] + sgn[cb]) * v + delta[ca] + delta[cb] - a[i] = 0;
+            if(delta[ca] + delta[cb] - a[i] != 0) {
+                invalid = true;
+                break;
+            }
+        }else {
+            //v[yy] = sgn[cb] * (-sgn[ca] * v[xx] - delta[ca] - delta[cb] + a[i])
+
+            //rela[yy] = xx;
+            long long newsgn = sgn[cb] * sgn[ca] * -1;
+            long long newdelta = sgn[cb] * (-delta[ca] - delta[cb] + a[i]);
+            rela[yy] = xx;
+            sgn[yy] = newsgn;
+            delta[yy] = newdelta;
+        }
+    }
+    //cout << invalid << endl;
+    for(int i(1); i <= r + c; i++) {
+        //printf("%lld %lld %lld\n", rela[i], sgn[i], delta[i]);
+        if(rela[i] == i) {
+            le[i] = 0;
+            ri[i] = 1e18;
+        }
+    }
+    for(int i(1); i <= r + c; i++) {
+        getr(i);
+        //printf("%lld %lld %lld\n", rela[i], sgn[i], delta[i]);
+        if(sgn[i] > 0) {
+            le[rela[i]] = max(le[rela[i]], -delta[i]);
+        }else {
+            ri[rela[i]] = min(ri[rela[i]], delta[i]);
+        }
+    }
+    for(int i(1); i <= r + c; i++) {
+        if(le[i] > ri[i]) {
+            invalid = true;
+            break;
+        }
+    }
+    cout << (invalid ? "No" : "Yes") << endl;
+}
+```
