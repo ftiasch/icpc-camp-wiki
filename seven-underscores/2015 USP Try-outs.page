@@ -1,0 +1,46 @@
+**A.Bridge**
+
+**B.Renzo and the palindromic decoration**
+
+进制转换
+
+**C.Robotics Competition**
+
+一个点绕定点转换一定角度后坐标可用矩阵表达，矩阵乘法加速下即可通过。
+
+**D.Random walks in Thailand**
+
+考虑每个点和终点的距离，必然是有一个值W，若dis\[i\]&gt;W则采用飞行的方法，否则直接走最短路到终点。
+那么设期望为x，可以列出方程$x=(a/n)*x+(b/n)*dis$,这里a表示dis&gt;W的点数，b表示dis&lt;=W的点数，求解这个方程即可得到期望，
+最小期望可以按距离枚举一遍即可。
+
+**E.Escape from Ayutthaya**
+
+BFS
+
+**F.Fighting the Rajasi**
+
+**G.Thai Lottery**
+
+**H.Guarding the Temples**
+
+由于图是二分图，那么将图二染色后，每一条边必定一端是白点，一端是黑点，假设白点数目比黑点多，则答案至少要白点数目那么多，然后在看看这些白点最多能覆盖多少个黑点，可以用最大匹配求出，
+答案为$n-最大匹配数$。
+
+**I.The Kunming-Singapore Railway**
+
+动态树维护最小生成树
+
+**J.The Kamphaeng Phet's Chedis**
+
+**K.Training with Phuket's larvae**
+
+枚举三角形的两条短边x与y，打表发现，面积会根据长边的变换呈现单峰性，因此可以二分最接近x+y的边，然后判断一下这条边与最接近max(x,y)的边构成的三角形哪个面积比较小。复杂度$O(nlogn)$
+
+**L.Putting plates on the tuk-tuks**
+
+$ans=26^a+10^b$
+
+**M.Removing coins in Kem Kadrãn**
+
+找规律发现，可消除方案都是每次消除最左或者最右的东西，然后模拟一下即可，复杂度$O(n)$
