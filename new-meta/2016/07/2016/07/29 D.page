@@ -1,0 +1,312 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+using namespace std;
+/*const int N = 22, MOD = 1e9 + 7;
+int f[2][1 << N], g[1 << N];
+inline void fix(int &x) {if (x >= MOD) x -= MOD;}
+int work(int n, int m, int st, int wall)
+{
+    memset(f, 0, sizeof(f));
+    memset(g, 0, sizeof(g));
+    int cur = 0;
+    f[0][st] = 1;
+    for (int i = 1; i <= m; ++ i)
+    {
+        for (int j = 1; j <= n; ++ j)
+        {
+            cur ^= 1;
+            memset(f[cur], 0, sizeof(f[cur]));
+            for (int m = 0; m < (1 << (n + 1)); ++ m)
+            {
+                fix(f[cur][m >> 1] += f[cur ^ 1][m]);
+                if (j > 1 && (~m & 1) && (~m >> 1 & 1) && (~m >> n & 1))
+                {
+                    fix(f[cur][((m | 3 | (1 << n)) >> 1) | (1 << n)] += f[cur ^ 1][m]);
+                }
+                if (j == 1 && (~wall >> i & 1) && (~m >> 1 & 1) && (~wall >> (i - 1) & 1))
+                {
+                    fix(f[cur][((m | 3) >> 1) | (1 << n)] += f[cur ^ 1][m]);
+                }
+            }
+        }
+    }
+    int ans = 0;
+    for (int i = 0; i < (1 << (n + 1)); ++ i)
+    {
+        fix(ans += f[cur][i]);
+        fix(g[i >> 1] += f[cur][i]);
+    }
+    for (int i = 0; i < n; ++ i)
+    {
+        for (int j = 0; j < (1 << n); ++ j)
+        {
+            if (~j >> i & 1)
+            {
+                fix(g[j | (1 << i)] += g[j]);
+            }
+        }
+    }
+    return ans;
+}
+int ans0[N], ans90[N], ans180[N], v[N];
+void dfs3(int x, int n, int &ans)
+{
+    if (x == n + 1)
+    {
+        int x = 0;
+        for (int i = 1; i <= n; ++ i)
+        {
+            if (v[i] < 2) x += 1 << (i - 1);
+        }
+        //int aa = ans;
+        fix(ans += g[x]);
+        //for (int i = 1; i <= n; ++ i) printf("%d ", v[i]);
+        //printf("+ %d\n", ans - aa);
+        return;
+    }
+    dfs3(x + 1, n, ans);
+    if (x < n && !v[x] && !v[x + 1]  && ((n - (x + 1) + 1) > x + 1 || n - x + 1 < x))
+    {
+        v[x] ++;
+        v[x + 1] ++;
+        v[n - x + 1] ++;
+        v[n - (x + 1) + 1] ++;
+        dfs3(x + 2, n, ans);
+        v[x] --;
+        v[x + 1] --;
+        v[n - x + 1] --;
+        v[n - (x + 1) + 1] --;
+    }
+    if (x < n)
+    {
+        v[x] += 2;
+        v[x + 1] += 2;
+        dfs3(x + 2, n, ans);
+        v[x] -= 2;
+        v[x + 1] -= 2;
+    }
+}
+void dfs(int x, int n, int &ans)
+{
+    if (x == n + 1)
+    {
+        int x = 0;
+        for (int i = 1; i <= n; ++ i)
+        {
+            if (v[i] != 2) x += 1 << (i - 1);
+        }
+        fix(ans += g[x]);
+        return;
+    }
+    dfs(x + 1, n, ans);
+    if (x <= n / 2)
+    {
+        v[x] = v[x + 1] = 1;
+        v[n - x + 1] = v[n - (x + 1) + 1] = 1;
+        dfs(x + 2, n, ans);
+        v[x] = v[x + 1] = 0;
+        v[n - x + 1] = v[n - (x + 1) + 1] = 0;
+    }
+    if (x < n && !v[x] && !v[x + 1])
+    {
+        v[x] = v[x + 1] = 2;
+        dfs(x + 2, n, ans);
+        v[x] = v[x + 1] = 0;
+    }
+}
+pair<int, int> r[N][N][4];
+pair<int, int> rot(pair<int, int> a, int n)
+{
+    return make_pair(a.second, n - a.first + 1);
+}
+vector<pair<int, int> > tot;
+int n, vv[N][N], vvt[N * N][N][N];
+bool inmid(int x)
+{
+    return n / 2 <= x && x <= (n / 2 + 1 + !!(n % 2));
+}
+bool ava(int x, int y)
+{
+    return min(x, y) >= 1 && max(x, y) <= n && (inmid(x) || inmid(y)) && !vv[x][y];
+}
+bool ava4(int x, int y)
+{
+    if (!ava(x, y)) return 0;
+    for (int i = 0; i < 4; ++ i)
+    {
+        pair<int, int> t = r[x][y][i];
+        if (!ava(t.first, t.second)) return 0;
+    }
+    return 1;
+}
+void set4(int x, int y, int c)
+{
+    for (int i = 0; i < 4; ++ i)
+    {
+        pair<int, int> t = r[x][y][i];
+        vv[t.first][t.second] = c;
+    }
+}
+bool ava22(int x, int y)
+{
+    return ava4(x, y) && ava4(x, y + 1) && ava4(x + 1, y) && ava4(x + 1, y + 1);
+}
+void set22(int x, int y, int c)
+{
+    set4(x, y, c);
+    set4(x, y + 1, c);
+    set4(x + 1, y, c);
+    set4(x + 1, y + 1, c);
+}
+void dfs2(int p, int &ans)
+{
+    if (p == (int) tot.size())
+    {
+        int wall = 0, st = 0;
+        int lu = n / 2 + 1 + !!(n % 2);
+        for (int i = lu; i <= n; ++ i)
+        {
+            if (vv[lu][i]) st += (1 << (i - lu));
+            if (vv[i][lu]) wall += (1 << (i - lu));
+        }
+        //for (int i = 1; i <= n; ++ i)
+        //{
+        //  for (int j = 1; j <= n; ++ j) printf("%d ", vv[i][j]);
+        //  puts("");
+        //}
+        //int aa = ans;
+        fix(ans += work((n - 2) / 2, (n - 2) / 2, st, wall));
+        //printf("+ %d\n", ans - aa);
+        return;
+    }
+    int x = tot[p].first, y = tot[p].second;
+    dfs2(p + 1, ans);
+    for (int i = 1; i <= n; ++ i)
+    {
+        for (int j = 1; j <= n; ++ j) vvt[p][i][j] = vv[i][j];
+    }
+    bool flag = 1;
+    if (!(n % 2 == 0 && x == n / 2 && y == n / 2))
+    {
+        for (int i = 0; i < 2; ++ i)
+        {
+            for (int j = 0; j < 2; ++ j)
+            {
+                if (!ava4(x + i, y + j)) flag = 0;
+                set4(x + i, y + j, 1);
+            }
+        }
+    }
+    if (flag)
+    {
+        set22(x, y, 1);
+        dfs2(p + 1, ans);
+    }
+    for (int i = 1; i <= n; ++ i)
+    {
+        for (int j = 1; j <= n; ++ j) vv[i][j] = vvt[p][i][j];
+    }
+}
+bool ban[N][N];
+int mpow(int x, int n)
+{
+    int res = 1;
+    while (n)
+    {
+        if (n & 1) res = 1LL * res * x % MOD;
+        n >>= 1;
+        x = 1LL * x * x % MOD;
+    }
+    return res;
+}
+int ans[N];
+int main()
+{
+    for (int i = 1; i <= 20; ++ i)
+    {
+        ans0[i] = work(i, i, (1 << (i + 1)) - 1, (1 << (i + 1)) - 1);
+        printf("%d : %d\n", i, ans0[i]);
+    }
+    for (int i = 1; i <= 20; ++ i)
+    {
+        work(i, i / 2 - 1, (1 << (i + 1)) - 1, (1 << (i / 2)) - 1);
+        n = i;
+        if (i & 1)
+        {
+            dfs3(1, i, ans180[i]);
+        }
+        else
+        {
+            dfs(1, i, ans180[i]);
+        }
+        printf("%d : %d\n", i, ans180[i]);
+    }
+    for (int i = 1; i <= 20; ++ i)
+    {
+        n = i;
+        for (int x = 1; x <= i; ++ x)
+        {
+            for (int y = 1; y <= i; ++ y)
+            {
+                pair<int, int> t = make_pair(x, y);
+                r[x][y][0] = t;
+                t = rot(t, i);
+                r[x][y][1] = t;
+                t = rot(t, i);
+                r[x][y][2] = t;
+                t = rot(t, i);
+                r[x][y][3] = t;
+            }
+        }
+        tot.clear();
+        memset(ban, 0, sizeof(ban));
+        for (int x = 1; x < i; ++ x)
+        {
+            for (int y = 1; y < i; ++ y)
+            {
+                if (inmid(x) || inmid(y))
+                {
+                    if (ban[x][y]) continue;
+                    tot.push_back(make_pair(x, y));
+                    pair<int, int> tmp = make_pair(x, y);
+                    for (int j = 0; j < 4; ++ j)
+                    {
+                        tmp.first ++;
+                        tmp = rot(tmp, i);
+                        //printf("ban %d %d\n", tmp.first, tmp.second);
+                        ban[tmp.first][tmp.second] = 1;
+                    }
+                }
+            }
+        }
+        //for (auto x : tot) printf("%d %d\n", x.first, x.second);
+        dfs2(0, ans90[i]);
+        printf("%d : %d\n", i, ans90[i]);
+    }
+    for (int i = 1; i <= 20; ++ i)
+    {
+        ans[i] = (1LL * ans0[i] + ans180[i] + 2LL * ans90[i]) % MOD * mpow(4, MOD - 2) % MOD;
+        printf("%d, ", ans[i]);
+    }
+}*/
+int ans[22] = {0, 1, 2, 2, 12, 84, 1641, 50788, 3183091, 338785462, 429880385, 948920428, 392930107, 842384602, 36468923, 534250025, 693507546, 311288183, 320259213, 232751393, 866290697};
+int main()
+{
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n;
+        scanf("%d", &n);
+        printf("Case #%d: %d\n", ++ zzz, ans[n]);
+    }
+}
+```
