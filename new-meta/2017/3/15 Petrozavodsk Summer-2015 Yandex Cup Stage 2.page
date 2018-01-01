@@ -1,0 +1,27 @@
+E. Equation
+===========
+
+**题意: ** 求方程$n^x\equiv x\pmod m$的所有通解,
+保证能表示成$\cup_{i\in I}\{k_ia_i+b_i|k\ge 0, k\in\mathbb{Z}\},a_i,b_i>0$的形式.
+要求输出使得$|I|$尽量小.
+
+**做法: ** 首先, 若$n$和$m$不互质, 即$gcd(n,m)>1$. 考虑使存在$b\ge 1$,
+对任意$y\ge 0$满足$n^{k+by}\equiv n^k\pmod m$的最小的$k$. 当$x\le k$时,
+存在一质数$p$, 使得$p^x|(n^x \bmod m)$. 因为$p^x\nmid x$,
+所以$n^x\not\equiv x\pmod m$. 所以$x>k$.
+
+若$n^x\equiv x\pmod m$,
+设满足对任意$y\ge 0$成立$n^{k+by}\equiv n^k\pmod m$最小的$b$为$r$,
+显然$n^{x+a\cdot lcm(m,r)}\equiv x+a\cdot lcm(m,r)\pmod m$对任意$a\ge 0$成立.
+下面假设$n^{x+ad}\equiv x+ad\pmod m$对任意$a\ge 0$成立,
+证明$d$必是$lcm(m,r)$的倍数. 取$a=m/gcd(m,d)$,
+则$n^{x+(m/gcd(m,d))d}\equiv x\pmod m$. 由于$n^x\equiv x\pmod m$,
+$r|lcm(m,d)$. 再取$a=r/gcd(r,d)$,
+则$n^x\equiv x+(r/gcd(r,d))d\pmod m$,可知$m|lcm(r,d)$.
+由此可证$lcm(m,r)|d$.
+
+若不考虑输出最小化, 有如下做法: 枚举通解$x=i+ar$, 中的$i$, $r$同上定义,
+试求所有满足条件的$a$. 有$n^x\equiv n^i\pmod m$.
+解方程$i+ar\equiv n^i\pmod m$即得所有可能的$a$.
+可以发现这些$a$的公差恰为$lcm(m,r)/r$. 所以$ar$的公差为$lcm(m,r)$.
+根据上段分析, 这已经是最简形式, 所以无需化简.
