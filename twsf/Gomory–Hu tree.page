@@ -1,0 +1,32 @@
+学习资料
+========
+
+[yangff's blog](http://yangff.logdown.com/posts/141380-gomoryhu-tree)
+
+[Pumping Stations题解](http://codeforces.com/blog/entry/8860)
+
+无向图的任意两点之间的最小割可以用一颗树来表示.
+
+一个简单的构造方法：
+
+在当前的连通集合中任取两点(若当前连通集合仅有一个点退出)，并在原图中求这两点之间的最小割。
+
+在树上连接这两个点，边权为刚才求出的最小割。
+
+将当前的连通集合根据刚才的割划分为两部分，递归处理。
+
+可以大概参考[我的代码](http://codeforces.com/contest/343/submission/13317266)。
+
+题目
+====
+
+[Zjoi2011
+最小割](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=147106)
+
+[Uva11594 All Pairs Maximum
+Flow](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=33964)
+
+[Codeforces Round \#200 E Pumping
+Stations](http://codeforces.com/contest/343/problem/E)
+
+以上题目都很简单，如果找到有新的请补充。
