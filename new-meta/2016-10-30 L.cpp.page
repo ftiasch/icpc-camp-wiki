@@ -1,0 +1,145 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <cstring>
+#include <cmath>
+#include <iostream>
+using namespace std;
+
+const int SIZE = 55;
+const int N = SIZE * SIZE * 2, M = N << 3;
+const long long inf = (1LL << 40);
+
+struct eglist {
+    int other[M], succ[M], last[N], cap[M], sum;
+    long long cost[M];
+    void clear() {
+        memset(last, -1, sizeof(last));
+        sum = 0;
+    }
+    void _addEdge(int a, int b, int c, long long d) {
+        other[sum] = b, succ[sum] = last[a], last[a] = sum, cost[sum] = d, cap[sum++] = c;
+    }
+    void addEdge(int a, int b, int c, long long d) {
+        _addEdge(a, b, c, d);
+        _addEdge(b, a, 0, -d);
+    }
+}e;
+
+int S, T, tot, totFlow;
+long long dis[N], totCost, slack[N];
+int visit[N];
+
+int modlable() {
+    long long delta = inf;
+    for(int i = 0; i <= T; i++) {
+        if (!visit[i] && slack[i] < delta)
+            delta = slack[i];
+        slack[i] = inf;
+    }
+    if (delta == inf)
+        return 1;
+    for(int i = 0; i <= T; i++)
+        if (visit[i])
+            dis[i] += delta;
+    return 0;
+}
+
+int dfs(int x, int flow) {
+    if (x == T) {
+        totFlow += flow;
+        totCost += flow * (dis[S] - dis[T]);
+        return flow;
+    }
+    visit[x] = 1;
+    int left = flow;
+    for(int i = e.last[x]; ~i; i = e.succ[i])
+        if (e.cap[i] > 0 && !visit[e.other[i]]) {
+            int y = e.other[i];
+            if (dis[y] + e.cost[i] == dis[x]) {
+                int delta = dfs(y, min(left, e.cap[i]));
+                e.cap[i] -= delta;
+                e.cap[i ^ 1] += delta;
+                left -= delta;
+                if (!left) {
+                    dis[x] = inf;
+                    return flow;
+                }
+            } else {
+                slack[y] = min(slack[y], dis[y] + e.cost[i] - dis[x]);
+            }
+        }
+    return flow - left;
+}
+
+pair<int, long long> minCost() {
+    totFlow = 0, totCost = 0;
+    fill(dis, dis + T + 1, 0);
+    do {
+        do {
+            fill(visit, visit + T + 1, 0);
+        } while(dfs(S, (1 << 30)));
+    } while(!modlable());
+    return make_pair(totFlow, totCost);
+}
+
+int n, m, grid[SIZE][SIZE];
+
+int main() {
+    int test;
+    scanf("%d", &test);
+    while (test--) {
+        scanf("%d %d", &n, &m);
+        e.clear();
+        S = n * m * 2, T = S + 1;
+        int tot_in = 0, tot_out = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                scanf("%d", &grid[i][j]);
+                int id = i * m + j;
+                if (grid[i][j] == 0) {
+                    e.addEdge(S, id << 1, 1, 0);
+                    e.addEdge(id << 1 | 1, T, 1, 0);
+                    tot_in ++;
+                    tot_out ++;
+                } else if (grid[i][j] & 1) {
+                    e.addEdge(S, id << 1, 1, 0);
+                    tot_in ++;
+                } else {
+                    e.addEdge(id << 1 | 1, T, 1, 0);
+                    tot_out ++;
+                }
+            }
+        }
+        for (int i = 0; i + 1 < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int id1 = i * m + j, id2 = (i + 1) * m + j;
+                int cost;
+                scanf("%d", &cost);
+                e.addEdge(id1 << 1, id2 << 1 | 1, 1, cost);
+                e.addEdge(id2 << 1, id1 << 1 | 1, 1, cost);
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j + 1 < m; j++) {
+                int id1 = i * m + j, id2 = i * m + j + 1;
+                int cost;
+                scanf("%d", &cost);
+                e.addEdge(id1 << 1, id2 << 1 | 1, 1, cost);
+                e.addEdge(id2 << 1, id1 << 1 | 1, 1, cost);
+            }
+        }
+        pair<int, long long> result = minCost();
+        static int test_count = 0;
+        printf("Case #%d: ", ++test_count);
+        //printf("%d %d %d %d\n", result.first, result.second, tot_in, tot_out);
+        if (result.first != tot_in || result.first != tot_out) {
+            printf("-1\n");
+        } else {
+            cout << result.second << endl;
+        }
+    }
+    return 0;
+}
+```
