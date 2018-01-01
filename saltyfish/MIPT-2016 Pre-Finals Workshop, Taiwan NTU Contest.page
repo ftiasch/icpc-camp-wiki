@@ -1,33 +1,43 @@
-# A As Easy As Possible [zyh]
+A As Easy As Possible \[zyh\]
+=============================
 
-预处理从每个位置出发往右找到2^k个"easy"会到达的位置
+预处理从每个位置出发往右找到2\^k个"easy"会到达的位置
 
-# B Be Friends [zyh&hwq&ghc]
+B Be Friends \[zyh&hwq&ghc\]
+============================
 
 从高到低位考虑，假设已经固定了一个前缀，根据下一位是0或者1可以将当前的数分进两个集合中，如果两个集合均不为空，那么要各选一个数使得xor和最小，在这两个数之间连一条边，把下一位是0的数加进字典树，然后枚举下一位是1的数在字典树上查即可，然后对划分出来的集合递归处理
 
-# C Coprime Heaven
+C Coprime Heaven
+================
 
-# D Drawing Hell [zyh&ghc]
+D Drawing Hell \[zyh&ghc\]
+==========================
 
 游戏结束时一定是一个三角剖分，并且每个三角剖分的边数都是相同的，类似求凸包的方法可以求出其中一个三角剖分的边数，然后根据奇偶性判断胜负
 
-# E Easiest Game
+E Easiest Game
+==============
 
-# F Fibonacci of Fibonacci [zyh]
+F Fibonacci of Fibonacci \[zyh\]
+================================
 
 暴力求出$F_n\ mod\ 20160519$的循环节，然后跑两次矩阵快速幂
 
-# G Global Warming
+G Global Warming
+================
 
-# H Hash Collision [zyh&ghc]
+H Hash Collision \[zyh&ghc\]
+============================
 
-dp[i][j]表示长为i的hash值为j的字符串个数，考虑将一个长为l和一个长为r的字符串拼起来，那么dp[l+r][(x*2^r+y)%m]+=dp[l][x]*dp[r][y]，于是倍增第一维，FFT转移第二维，用[黑科技FFT](http://sd-invol.github.io/2016/02/13/FFT-mod-prime/)可以使精度误差在允许的范围内
+dp\[i\]\[j\]表示长为i的hash值为j的字符串个数，考虑将一个长为l和一个长为r的字符串拼起来，那么dp\[l+r\]\[(x\*2\^r+y)%m\]+=dp\[l\]\[x\]\*dp\[r\]\[y\]，于是倍增第一维，FFT转移第二维，用[黑科技FFT](http://sd-invol.github.io/2016/02/13/FFT-mod-prime/)可以使精度误差在允许的范围内
 
-# I Increasing or Decreasing [hwq&ghc]
+I Increasing or Decreasing \[hwq&ghc\]
+======================================
 
 数位dp需要卡一卡常数，更快的做法是固定一个前缀，预处理出可以拼到后面的合法的数字个数
 
-# J Just Convolution [zyh]
+J Just Convolution \[zyh\]
+==========================
 
 数据随机，枚举两个数列中最大的k个元素更新答案，对于未被更新过的位置暴力计算，据说只要k取到3000，未被更新过的位置个数几乎不可能超过100
