@@ -1,0 +1,210 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+struct arr {
+    //string nem;
+    vector<int> sz;
+    vector<int> a;
+    arr() {}
+    void print() {
+        int x, y, z;
+        if ((int) sz.size() == 3) x = sz[0], y = sz[1], z = sz[2];
+        else if ((int) sz.size() == 2) x = 1, y = sz[0], z = sz[1];
+        else x = y = 1, z = sz[0];
+        int tot = 0;
+        for (int i = 0; i < x; ++ i) {
+            if (i) puts("");
+            for (int j = 0; j < y; ++ j) {
+                for (int k = 0; k < z; ++ k) {
+                    printf("%d%c", a[tot ++], " \n"[k == z - 1]);
+                }
+            }
+        }
+    }
+};
+struct node {
+    string opt;
+    arr val;
+    node() {}
+    node(string opt) : opt(opt) {}
+    //node(int, string opt) { val.nem = opt; }
+    node(vector<int> a) { val.sz.push_back((int) a.size()); val.a = a; }
+    node(arr A) {val.sz = A.sz; val.a = A.a;}
+};
+const int N = 100;
+char s[N];
+vector<node> all;
+int cp[N];
+unordered_map<string, arr> var;
+int calc(int a, int b, string c) {
+    if (c[0] == '+') return a + b;
+    if (c[0] == '*') return a * b;
+    return a - b;
+}
+arr work1(arr a, string o) {
+    if (o.back() == '=') {
+        o.pop_back();
+        var[o] = a;
+        return a;
+    }
+    if (o.back() == '/') {
+        o.pop_back();
+        int n = a.sz.back();
+        vector<int> b;
+        for (int i = 0; i < (int) a.a.size(); i += n) {
+            int las = a.a[i + n - 1];
+            for (int j = n - 2; j >= 0; -- j) {
+                las = calc(a.a[j + i], las, o);
+            }
+            b.push_back(las);
+        }
+        a.sz.pop_back();
+        a.a = b;
+        if (a.sz.empty()) a.sz.push_back(1);
+        return a;
+    }
+    if (o == "iota") {
+        int n = a.a[0];
+        a.a.pop_back();
+        a.sz[0] = n;
+        for (int i = 1; i <= n; ++ i) a.a.push_back(i);
+        return a;
+    }
+    //assert(0);
+}
+arr work2(arr a, arr b, string o) {
+    if (o == "+" || o == "-" || o == "*") {
+        if (a.sz.size() == 1 && a.sz[0] == 1) {
+            int x = a.a[0];
+            for (int &i : b.a) i = calc(x, i, o);
+            return b;
+        }
+        if (b.sz.size() == 1 && b.sz[0] == 1) {
+            int x = b.a[0];
+            for (int &i : a.a) i = calc(i, x, o);
+            return a;
+        }
+        for (int i = 0; i < (int) a.a.size(); ++ i) {
+            a.a[i] = calc(a.a[i], b.a[i], o);
+        }
+        return a;
+    }
+    if (o == "rho") {
+        b.sz = a.a;
+        int s = 1; for (int i : a.a) s *= i;
+        while ((int) b.a.size() > s) b.a.pop_back();
+        vector<int> ex;
+        for (int i = b.a.size(); i < s; ++ i) ex.push_back(b.a[i % b.a.size()]);
+        b.a.insert(b.a.end(), ex.begin(), ex.end());
+        return b;
+    }
+    if (o == "drop") {
+        b.sz[0] -= a.a[0];
+        b.a.erase(b.a.begin(), b.a.begin() + a.a[0]);
+        return b;
+    }
+    //assert(0);
+}
+arr dfs(int l, int r) {
+    //printf("dfs %d %d\n", l, r);
+    if (l == r) {
+        if (var.count(all[l].opt)) return var[all[l].opt];
+        return all[l].val;
+    }
+    if (cp[l] == r) return dfs(l + 1, r - 1);
+    /*vector<node> cur;
+    for (int i = r; i >= l; i = cp[i] - 1) {
+        if (cp[i] < i) cur.push_back(dfs(cp[i], i)); else cur.push_back(all[i]);
+    }
+    reverse(cur.begin(), cur.end());*/
+    vector<arr> num;
+    vector<string> opt;
+    for (int i = r; i >= l; i = cp[i] - 1) {
+    //for (int i = cur.size() - 1; i >= 0; -- i) {
+        node curi = cp[i] == i ? all[i] : node(dfs(cp[i], i));
+        if (curi.opt.empty() || var.count(curi.opt)) {
+            if (var.count(curi.opt)) num.push_back(var[curi.opt]); else num.push_back(curi.val);
+            if (!opt.empty()) {
+                arr tmp = work2(num[1], num[0], opt[0]);
+                opt.clear();
+                num.clear();
+                num.push_back(tmp);
+            }
+        }
+        else {
+            string o = curi.opt;
+            if (o.back() == '=' || o.back() == '/' || o == "iota") {
+                arr tmp = work1(num[0], o);
+                num.clear();
+                num.push_back(tmp);
+            }
+            else {
+                opt.push_back(o);
+            }
+        }
+    }
+    //assert(!num.empty());
+    return num[0];
+}
+int main() {
+    int zzz = 0;
+    while (gets(s), s[0] != '#') {
+        int len = (int) strlen(s);
+        s[len] = ' ';
+        string las;
+        vector<int> a;
+        all.clear();
+        for (int i = 0; i <= len; ++ i) {
+            if (s[i] == ' ') {
+                if (las[0] >= '0' && las[0] <= '9') {
+                    int m = 0;
+                    for (char c : las) m = m * 10 + c - '0';
+                    a.push_back(m);
+                }
+                else {
+                    if (!a.empty()) {
+                        all.push_back(node(a));
+                        a.clear();
+                    }
+                    if (las == "/") {
+                        all.back().opt += '/';
+                    }
+                    else if (las == "=") {
+                        all.back().opt += '=';
+                    }
+                    else {
+                        //if (las == "=" || las == "iota" || las == "rho" || las == "drop" || las == "(" || las == ")" || las == "*" || las == "+" || las == "-") {
+                        all.push_back(node(las));
+                    }
+                }
+                las = "";
+            }
+            else las += s[i];
+        }
+        if (!a.empty()) all.push_back(node(a));
+        int n = all.size();
+        /*for (int i = 0; i < n; ++ i) {
+            printf("%d : %d : ", i, all[i].val.sz.size());
+            for (int u : all[i].val.a) printf("%d ", u); puts("");
+        }*/
+        vector<int> st;
+        for (int i = 0; i < n; ++ i) {
+            if (all[i].opt == "(") {
+                st.push_back(i);
+            }
+            else if (all[i].opt == ")") {
+                cp[st.back()] = i;
+                cp[i] = st.back();
+                st.pop_back();
+            }
+            else {
+                cp[i] = i;
+            }
+        }
+        s[len] = 0;
+        arr ans = dfs(0, n - 1);
+        printf("Case %d: %s\n", ++ zzz, s);
+        ans.print();
+    }
+}
+```
