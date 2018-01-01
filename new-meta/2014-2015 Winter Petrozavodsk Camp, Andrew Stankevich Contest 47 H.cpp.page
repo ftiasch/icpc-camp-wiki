@@ -1,0 +1,101 @@
+``` {.py}
+from fractions import gcd
+
+fin=file("higher.in","r");
+fout=file("higher.out","w")
+
+def print_matrix(m) :
+    for i in xrange(n) :
+        print >>fout, " ".join(map(str, m[i]))
+    print >>fout
+
+while True :
+    n = int(fin.readline());
+    if n == 0 : break
+    A = [[0 for i in xrange(n)] for j in xrange(n)]
+    L = [[0 for i in xrange(n)] for j in xrange(n)]
+    R = [[0 for i in xrange(n)] for j in xrange(n)]
+    invL = [[0 for i in xrange(n)] for j in xrange(n)]
+    invR = [[0 for i in xrange(n)] for j in xrange(n)]
+    for i in xrange(n) :
+        L[i][i] = R[i][i] = invL[i][i] = invR[i][i] = 1
+    for i in xrange(n) :
+        A[i] = map(int, fin.readline().split())
+
+    #print_matrix(A)
+
+    def swap_row(i, j) :
+        if i == j : return
+        for k in xrange(n) :
+            L[i][k], L[j][k] = L[j][k], L[i][k]
+            invL[k][i], invL[k][j] = invL[k][j], invL[k][i]
+            A[i][k], A[j][k] = A[j][k], A[i][k]
+
+    def swap_col(i, j) :
+        if i == j : return
+        for k in xrange(n) :
+            R[k][i], R[k][j] = R[k][j], R[k][i]
+            invR[i][k], invR[j][k] = invR[j][k], invR[i][k]
+            A[k][i], A[k][j] = A[k][j], A[k][i]
+
+    def add_row(i, j, para) :
+        for k in xrange(n) :
+            L[i][k] += L[j][k] * para
+            invL[k][j] -= invL[k][i] * para
+            A[i][k] += A[j][k] * para
+
+    def add_col(i, j, para) :
+        for k in xrange(n) :
+            R[k][i] += R[k][j] * para
+            invR[j][k] -= invR[i][k] * para
+            A[k][i] += A[k][j] * para
+
+    def neg_row(i) :
+        for k in xrange(n) :
+            L[i][k] *= -1;
+            invL[k][i] *= -1;
+            A[i][k] *= -1;
+
+    def neg_col(i) :
+        for k in xrange(n) :
+            R[k][i] *= -1;
+            invR[i][k] *= -1;
+            A[k][i] *= -1;
+
+    for i in xrange(n) :
+        done = False
+        while not done :
+            r = c = i
+            for j in xrange(i, n) :
+                for k in xrange(i, n) :
+                    if A[r][c] == 0 or (A[j][k] != 0 and abs(A[j][k]) < abs(A[r][c])) :
+                        r, c = j, k
+            if A[r][c] == 0 : break
+            swap_row(i, r)
+            swap_col(i, c)
+            done = True
+            for j in xrange(i + 1, n) :
+                add_col(j, i, -A[i][j] / A[i][i])
+                if A[i][j] != 0 : done = False
+
+            for j in xrange(i + 1, n) :
+                add_row(j, i, -A[j][i] / A[i][i])
+                if A[j][i] != 0 : done = False
+            #break
+
+    for i in xrange(n) :
+        for j in xrange(i + 1, n) :
+            if A[i][i] == 0 or A[j][j] == 0 : continue
+            add_row(i, j, 1)
+            cnt = 0
+            while A[i][j] != 0 :
+                if abs(A[i][i]) > abs(A[i][j]) :
+                    swap_col(i, j)
+                add_col(j, i, -A[i][j] / A[i][i])
+            add_row(j, i, -A[j][i] / A[i][i])
+
+    print_matrix(L)
+    print_matrix(invL)
+    print_matrix(R)
+    print_matrix(invR)
+```
