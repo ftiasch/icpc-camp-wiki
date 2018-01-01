@@ -1,0 +1,216 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <cassert>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+const double eps = 1e-8;
+const double INF = 1e18;
+const double PI = acos(-1.);
+const int DEBUG = 0;
+
+double sqr(double x) { return x * x; }
+double sign(double x) { return x < -eps ? -1 : x > eps; }
+
+struct Point {
+    double x, y;
+    Point(double x = 0, double y = 0) : x(x), y(y) {}
+    friend inline Point operator +(const Point &a, const Point &b) {
+        return Point(a.x + b.x, a.y + b.y);
+    }
+    friend inline Point operator -(const Point &a, const Point &b) {
+        return Point(a.x - b.x, a.y - b.y);
+    }
+    friend inline Point operator *(const Point &a, double b) {
+        return Point(a.x * b, a.y * b);
+    }
+    friend inline Point operator /(const Point &a, double b) {
+        return Point(a.x / b, a.y / b);
+    }
+    double len2() {
+        return x * x + y * y;
+    }
+    double len() {
+        return sqrt(max(0., len2()));
+    }
+    double ang() {
+        double t = ::atan2(y, x);
+        if (t < 0) t += 2 * PI;
+        return t / PI * 180;
+    }
+    double atan2() {
+        return ::atan2(y, x);
+    }
+    Point rotate90() {
+        return Point(-y, x);
+    }
+    void read() {
+        scanf("%lf %lf", &x, &y);
+    }
+    void show() {
+        printf("%.10f %.10f\n", x, y);
+    }
+};
+
+double dot(const Point &a, const Point &b) {
+    return a.x * b.x + a.y * b.y;
+}
+
+double det(const Point &a, const Point &b) {
+    return a.x * b.y - b.x * a.y;
+}
+
+Point intersect(Point p1, Point p2, Point q1, Point q2) { // 直线与直线求交点，需要预判直线不平行
+    p2 = p1 + p2; q2 = q1 + q2;
+    double a1 = det(q2 - q1, p1 - q1), a2 = -det(q2 - q1, p2 - q1);
+    return (p1 * a2 + p2 * a1) / (a1 + a2);
+}
+
+void intersect(Point a, double ar, Point b, double br, Point &r0, Point &r1) {
+    assert(!(sign(a.x - b.x) == 0 && sign(a.y - b.y) == 0 && sign(ar - br) == 0));
+    //assert(ar + br + eps > (b - a).len());
+    //assert(!(ar - br - eps > (b - a).len()));
+    //assert(!(br - ar - eps > (b - a).len()));
+    double t = (sqr(ar) + (b - a).len2() - sqr(br)) / 2 / ar / (b - a).len();
+    t = min(1., t);
+    t = max(-1., t);
+    t = acos(t);
+    double mid = (b - a).atan2();
+    r0 = a + Point(cos(mid + t), sin(mid + t)) * ar;
+    r1 = a + Point(cos(mid - t), sin(mid - t)) * ar;
+}
+
+Point cur = Point(0, 0);
+int cur_level = 3;
+
+pair<double, int> query(double d) {
+    static int round = 0;
+    ++round;
+    if (round > 5) exit(0);
+if (DEBUG) {
+    printf("current located at (%.10f %.10f), level = %d\n", cur.x, cur.y, cur_level);
+    printf("query %f\n", d);
+
+    static Point o = Point(300, 0);
+    static double r = 100;
+    double dx = cos(d / 180. * PI), dy = sin(d / 180. * PI);
+    double dis = INF; int level = -1, max_level = cur_level;
+    Point a = cur, b = cur + Point(dx, dy);
+    if (round == 5) max_level = 0;
+    for (int i = 0; i <= max_level; i++) {
+        double vd = fabs(det(b - a, o - a));
+        if (i != 0 && vd > i * r + eps) continue;
+        if (i == 0 && vd > r / 10.) continue;
+        double hd = dot(b - a, o - a);
+        double hr = sqrt(max(0., sqr(i * r) - sqr(vd)));
+        if (hd + hr > eps && hd + hr < dis) {
+            dis = hd + hr;
+            level = i;
+        }
+        if (hd - hr > eps && hd - hr < dis) {
+            dis = hd - hr;
+            level = i;
+        }
+    }
+    if (level == -1) {
+        level = cur_level;
+        dis = 0;
+    }
+    if (level == 0) puts("Gotcha!");
+    return {dis, level};
+} else {
+    printf("%f\n", d);
+    fflush(stdout);
+    double dis;
+    int level;
+    if (scanf("%lf %d", &dis, &level) != 2) {
+        return {0, 0};
+    } else {
+        return {dis, level};
+    }
+}
+}
+
+void goal(Point target) {
+    double d = (target - cur).ang();
+    while (1) {
+        auto q = query(d);
+        cur = cur + Point(cos(d / 180 * PI), sin(d / 180 * PI)) * q.first;
+        cur_level = q.second;
+        if (q.second == 0) {
+            exit(0);
+        }
+    }
+}
+
+int main() {
+    double SCALE = 1000;
+    double d = rand() % 180 * SCALE / SCALE;
+    vector<pair<Point, int> > trace;
+    trace.push_back({Point(0, 0), 3});
+    int cnt_stall = 0;
+    for (int i = 0; i < 2; i++) {
+        pair<double, int> q = query(d);
+        if (sign(q.first) == 0) {
+            ++cnt_stall;
+            if (cnt_stall == 1) {
+                if ((d += 180) >= 360) d -= 360;
+                i--;
+                continue;
+            } else if (cnt_stall == 2) {
+                if ((d -= 90) < 0) d += 360;
+                q = query(d);
+                if (q.first < eps) {
+                    if ((d += 180) >= 360) d -= 360;
+                    Point dir = Point(cos(d / 180 * PI), sin(d / 180 * PI));
+                    goal(cur + dir * 1000);
+                } else {
+                    Point dir = Point(cos(d / 180 * PI), sin(d / 180 * PI));
+                    cur = cur + dir * q.first;
+                    cur_level = q.second;
+                    goal(cur + dir * 1000);
+                }
+            }
+        }
+        cur = cur + Point(cos(d / 180 * PI), sin(d / 180 * PI)) * q.first;
+        cur_level = q.second;
+        trace.push_back({cur, q.second});
+        int m = trace.size();
+        if (m >= 2 && trace[m - 1].second == trace[m - 2].second) {
+            if ((d += 179) >= 360) d -= 360;
+            q = query(d);
+            cur = cur + Point(cos(d / 180 * PI), sin(d / 180 * PI)) * q.first;
+            cur_level = q.second;
+            assert(q.second == trace[m - 1].second);
+            goal(intersect((cur + trace[m - 1].first) / 2, (cur - trace[m - 1].first).rotate90(),
+                (cur + trace[m - 2].first) / 2, (cur - trace[m - 2].first).rotate90()));
+        }
+    }
+    int m = trace.size();
+    assert(trace[m - 1].second == 1 && trace[m - 2].second == 2);
+    Point c[2];
+    double r[2];
+    for (int i = 0; i < 2; i++) {
+        Point a = trace[i].first, b = trace[i + 1].first;
+        double k = 1. * (3 - i - 1) / (3 - i);
+        Point lo = a + (b - a) / (1 + k), ro = a + (b - a) / (1 - k);
+        c[i] = (lo + ro) / 2;
+        r[i] = (lo - ro).len() / 2;
+    }
+    Point i0, i1;
+    intersect(c[0], r[0], c[1], r[1], i0, i1);
+    double dir;
+    auto q = query(dir = (i0 - cur).ang());
+    if (q.second != 0) {
+        cur = cur + Point(cos(dir / 180 * PI), sin(dir / 180 * PI)) * q.first;
+        cur_level = q.second;
+        goal(i1);
+    }
+    return 0;
+}
+```
