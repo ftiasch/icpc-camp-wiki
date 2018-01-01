@@ -10,4 +10,4 @@ A. Festival Organization \[Yuzuriha Inori\]
 发现$\mathbb{Z}_{10^9+7}$里面没有斐波那契数列特征方程$x^2-x-1=0$的根$\frac{1\pm\sqrt{5}}{2}$.
 所以我们做个扩域$\mathbb{Z}_{10^9+7}(\frac{1\pm\sqrt{5}}{2})=\{x+y\sqrt{5}|x,y\in \mathbb{Z}_{10^9+7}\}$.
 
-[code](2016/9/15%20A)
+[code](2016/9/15 A)
