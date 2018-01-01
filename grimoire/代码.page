@@ -1,0 +1,89 @@
+``` {.{cpp}}
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef double DB;
+typedef long long LL;
+
+const int MAXN = 40000 + 10;
+const int MAXS = 1 << 4;
+const LL INF = 9e18;
+
+int n, m, K, a[MAXN][5], b[MAXN][5], cnt[MAXN][5][MAXS];
+LL dp[MAXN][4][MAXS];
+
+inline void update(LL &dp, int &cnt, LL dpt, int cntt) {
+    if (dpt < dp) {
+        dp = dpt;
+        cnt = cntt;
+    }
+}
+
+inline pair<LL, int> calc(LL k) {
+    for (int i = 0; i <= n + 1; ++i) {
+        for (int j = 0; j < m; ++j) {
+            for (int mask = 0; mask < 1 << m; ++mask) {
+                dp[i][j][mask] = INF;
+                cnt[i][j][mask] = 0;
+            }
+        }
+    }
+    dp[1][0][(1 << m) - 1] = 0;
+    cnt[1][0][(1 << m) - 1] = 0;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            int ni = j == m - 1 ? i + 1 : i,
+                nj = j == m - 1 ? 0 : j + 1;
+            for (int mask = 0; mask < 1 << m; ++mask) {
+                if (dp[i][j][mask] == INF) {
+                    continue;
+                }
+                int up = !(mask >> (m - 1)),
+                    left = j && !(mask & 1),
+                    S = mask & ((1 << (m - 1)) - 1);
+                update(dp[ni][nj][S << 1], cnt[ni][nj][S << 1], dp[i][j][mask], cnt[i][j][mask]);
+                if (up) {
+                    update(dp[ni][nj][(S << 1) | 1], cnt[ni][nj][(S << 1) | 1], dp[i][j][mask] + a[i - 1][j] - k, cnt[i][j][mask] + 1);
+                }
+                if (left) {
+                    update(dp[ni][nj][(S << 1) | 0b11], cnt[ni][nj][(S << 1) | 0b11], dp[i][j][mask] + b[i][j - 1] - k, cnt[i][j][mask] + 1);
+                }
+            }
+        }
+    }
+    pair<LL, int> ans = make_pair(INF, 0);
+    for (int mask = 0; mask < 1 << m; ++mask) {
+        ans = min(ans, make_pair(dp[n + 1][0][mask], cnt[n + 1][0][mask]));
+    }
+    return ans;
+}
+
+int main() {
+    int testcase;
+    cin >> testcase;
+    for (; testcase; --testcase) {
+        scanf("%d%d%d", &n, &m, &K);
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                scanf("%d", &a[i][j]);
+            }
+        }
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j + 1 < m; ++j) {
+                scanf("%d", &b[i][j]);
+            }
+        }
+        
+        LL left = 0, right = 1e14;
+        while (left < right) {
+            LL mid = (left + right + 1) >> 1;
+            if (calc(mid).second <= K) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        printf("%lld\n", (LL)(calc(left).first + left * K));
+    }
+}
+```
