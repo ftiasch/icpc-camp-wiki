@@ -1,0 +1,88 @@
+``` {.cpp}
+
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5, MOD = 1e9 + 7;
+vector<int> lop[N], G[N];
+int inst[N], f[N][3], dfn[N], cnt;
+vector<int> st;
+void prework(int x, int p) {
+    dfn[x] = ++ cnt;
+    inst[x] = st.size();
+    st.push_back(x);
+    for (int u : G[x]) {
+        if (u == p) continue;
+        if (inst[u] != -1) {
+            if (dfn[u] < dfn[x]) for (int i = inst[u]; i < (int) st.size(); ++ i) lop[u].push_back(st[i]);
+        }
+        else prework(u, x);
+    }
+    st.pop_back();
+}
+int dfs(int x, int upx, int p);
+int subwork(int x, int down, int upx, int b1, int b2 = 0, int b3 = 0) {
+    if (down + upx > 2) return 0;
+    int dp[3];
+    memset(dp, 0, sizeof(dp));
+    dp[0] = 1;
+    for (int u : G[x]) {
+        if (u == b1 || u == b2 || u == b3) continue;
+        for (int cnt = down; cnt >= 0; -- cnt) {
+            if (cnt < down) (dp[cnt + 1] += 1LL * dp[cnt] * dfs(u, !!down * (down + upx), x) % MOD) %= MOD;
+            (dp[cnt] = 1LL * dp[cnt] * dfs(u, 0, x) % MOD) %= MOD;
+        }
+    }
+    return dp[down];
+}
+int dfs(int x, int upx, int p) {
+    int &ans = f[x][upx];
+    if (ans != -1) return ans;
+    ans = 0;
+    if (lop[x].empty()) {
+        for (int down = 0; down <= 2; ++ down) {
+            (ans += subwork(x, down, upx, p)) %= MOD;
+        }
+    }
+    else {
+        for (int las = 0; las <= 2; ++ las) {
+            int dp[2][3], cur = 0;
+            memset(dp, 0, sizeof(dp));
+            if (las + upx > 2) continue;
+            dp[0][las + upx] = 1;
+            for (int i = 0; i < (int) lop[x].size(); ++ i) {
+                int u = lop[x][i];
+                int nexu = lop[x][(i + 1) % lop[x].size()];
+                int preu = lop[x][(i - 1 + lop[x].size()) % lop[x].size()];
+                cur ^= 1;
+                memset(dp[cur], 0, sizeof(dp[cur]));
+                for (int nex = 0; nex <= 1; ++ nex) {
+                    for (int las = 0; las <= 2; ++ las) {
+                        for (int down = 0; down <= 2; ++ down) {
+                            int tot = nex + down + las;
+                            if (tot > 2) continue;
+                            (dp[cur][nex ? tot : 0] += 1LL * dp[cur ^ 1][las] * subwork(u, down, nex + las, p, preu, nexu) % MOD) %= MOD;
+                        }
+                    }
+                }
+            }
+            (ans += dp[cur][las]) %= MOD;
+        }
+    }
+    return ans;
+}
+int main() {
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= m; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    memset(inst, -1, sizeof(inst));
+    prework(1, 0);
+    memset(f, -1, sizeof(f));
+    int ans = dfs(1, 0, 0);
+    printf("%d\n", ans);
+}
+```
