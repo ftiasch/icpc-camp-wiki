@@ -1,0 +1,124 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <cassert>
+#include <cmath>
+#include <iostream>
+
+using namespace std;
+
+const double PI = acos(-1.);
+const double eps = 1e-8;
+const int N = 4444;
+
+int n, radius, m;
+
+double sqr(double x) { return x * x; }
+
+double fix(double c) {
+    return c < 0 ? c + 2 * PI : c > 2 * PI ? c - 2 * PI : c;
+}
+
+vector<double> values;
+
+int get_pos(double v) {
+    return lower_bound(values.begin(), values.end(), v - eps) - values.begin();
+}
+
+int f[N], h[N], from[N];
+
+inline int lowbit(int x) {
+    return x & -x;
+}
+
+void modify(int pos, int v) {
+    for (int i = pos; i <= m; i += lowbit(i)) {
+        if (h[i] == -1 || f[h[i]] < f[v]) h[i] = v;
+    }
+}
+
+int ask(int pos) {
+    int ret = -1;
+    for (int i = pos; i; i -= lowbit(i)) {
+        if (ret == -1 || f[h[i]] > f[ret]) ret = h[i];
+    }
+    return ret;
+}
+
+int solver(vector<pair<pair<int, int>, int> > ranges) {
+    auto bak = ranges;
+    m = values.size();
+    // for (int i = 0; i < n; i++) {
+    //  printf("%d %d\n", ranges[i].first.first, ranges[i].first.second);
+    // }
+    sort(ranges.begin(), ranges.end());
+    vector<int> ans;
+    ans.push_back(0);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <= m; j++) {
+            h[j] = -1;
+        }
+        f[i] = 1;
+        from[i] = -1;
+        modify(ranges[i].first.second + 1, i);
+        for (int j = i + 1; j < n; j++) {
+            int pos = ask(ranges[j].first.second);
+            if (pos != -1) {
+                f[j] = f[pos] + 1;
+                from[j] = pos;
+                modify(ranges[j].first.second + 1, j);
+                if (ranges[j].first.first <= ranges[i].first.second && f[j] > ans.size()) {
+                    // cout << "new score " << f[j] << endl;
+                    ans.clear();
+                    int x = j;
+                    while (x != -1) {
+                        ans.push_back(ranges[x].second);
+                        x = from[x];
+                    }
+                    reverse(ans.begin(), ans.end());
+                }
+            }
+        }
+    }
+    printf("%d\n", (int)ans.size());
+    for (unsigned int i = 0; i < ans.size(); i++) {
+        printf("%d%c", ans[i] + 1, i + 1 == ans.size() ? '\n' : ' ');
+        // printf("%d %d\n", bak[ans[i]].first.first, bak[ans[i]].first.second);
+        if (i) {
+            //cout << "i = " << i << endl;
+            assert(bak[ans[i]].first.first > bak[ans[i - 1]].first.first &&
+                    bak[ans[i]].first.second > bak[ans[i - 1]].first.second);
+        }
+    }
+    return 0;
+}
+
+int main() {
+    scanf("%d %d", &n, &radius);
+    vector<pair<double, double> > tmp_ranges;
+    for (int i = 0; i < n; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        double t = atan2(y, x);
+        double d2 = x * x + y * y;
+        double d = acos((d2 + sqr(radius) - d2 + sqr(radius)) / 2. / radius / sqrt(d2));
+        values.push_back(fix(t - d));
+        values.push_back(fix(t + d));
+        tmp_ranges.push_back({fix(t - d), fix(t + d)});
+    }
+    sort(values.begin(), values.end());
+    vector<pair<pair<int, int>, int> > ranges;
+    for (int i = 0; i < n; i++) {
+        ranges.push_back({{get_pos(tmp_ranges[i].first),
+                get_pos(tmp_ranges[i].second)}, i});
+        if (ranges[i].first.first > ranges[i].first.second) {
+            swap(ranges[i].first.first, ranges[i].first.second);
+        }
+    }
+    solver(ranges);
+    return 0;
+}
+```
