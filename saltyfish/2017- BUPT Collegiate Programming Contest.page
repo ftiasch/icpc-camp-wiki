@@ -1,4 +1,5 @@
-# A Simple Math Problem [zyh]
+A Simple Math Problem \[zyh\]
+=============================
 
 记$f(p,q)=(p>>q)\&1$，则有
 
@@ -10,42 +11,54 @@ $=\sum_{k=0}^{\lfloor \log_2 A \rfloor}\sum_{l=0}^{\lfloor \log_2 A \rfloor}2^{k
 
 于是枚举两位之后数位dp即可，复杂度$O(\log^3A)$
 
-# B Pearl Necklace [hwq&ghc]
+B Pearl Necklace \[hwq&ghc\]
+============================
 
 对于可以交换的珠子，用并查集等价起来，显然每个等价类内部就是$x$个一样的珠子用$k$种颜色染色的方案数，最后等价类之间乘一下
 
-# C Cellular Network
+C Cellular Network
+==================
 
-比较裸的Steiner tree problem，考虑$dp_{i,S}$表示包含$i$这个点的一个点集包含了$S$这个关键点集的最小代价，转移枚举和$i$相邻的点$j$，合并两个关键点集，需要跑一个最短路~~，能不能好好写个Dijkstra~~
+比较裸的Steiner tree
+problem，考虑$dp_{i,S}$表示包含$i$这个点的一个点集包含了$S$这个关键点集的最小代价，转移枚举和$i$相邻的点$j$，合并两个关键点集，需要跑一个最短路~~，能不能好好写个Dijkstra~~
 
-# D Alterable Sequence
+D Alterable Sequence
+====================
 
-# E Easy Polynome
+E Easy Polynome
+===============
 
 导函数的零点会将原函数分成若干个区间，每个区间内原函数是单调的，至多存在一个零点，二分求零点，这个过程要递归到常值函数，精度看上去比较差，并且重根的情况会比较恶心，但是由于数据随机，这种情况很可能不存在
 
-# F Gabriel's Pocket Money [hwq]
+F Gabriel's Pocket Money \[hwq\]
+================================
 
 从小到大插入数字，树状数组维护前缀最大值，复杂度$O(n\log n)$，据说可以用基数排序和双向链表做到$O(n)$，待研究
 
-# G Trailing Zeros [zyh]
+G Trailing Zeros \[zyh\]
+========================
 
 $ans=\sum_{i=1}^{\lfloor \log_5 n \rfloor}\lfloor \frac{n}{5^i} \rfloor$
 
-# H Black-white Tree [hwq&ghc]
+H Black-white Tree \[hwq&ghc\]
+==============================
 
 观察到每个点的操作次数的奇偶性是确定的，直接dfs即可
 
-# I Beautiful Array [zyh]
+I Beautiful Array \[zyh\]
+=========================
 
-# J Hopscotch [hwq&ghc]
+J Hopscotch \[hwq&ghc\]
+=======================
 
 $ans=\lceil \frac{n}{s} \rceil \lceil \frac{m}{s} \rceil((n-1)\mod s+1)((m-1)\mod s+1)$
 
-# K Permutation [zyh&ghc]
+K Permutation \[zyh&ghc\]
+=========================
 
 对于一个排列$p$，连边$i \rightarrow p_i$，可以得到若干个有向环，那么问题等价于求有多少个$n$个点的有向图是若干个有向环的并（也就是每个点出度入度均为$1$），且所有边的权值和恰好是$K$，这里每条边的权值是$min(a_i,a_{p_i})$，观察到每条边的权值在左端点确定时就已经确定，考虑$dp_{i,j,k}$表示前$i$个点已经连好边，有$j$条边是从$\leq i$向$>i$的部分连出，那么也需要有$j$条边是从$>i$向$\leq i$的部分连出，已经确定的边权和为$k$的方案数，转移枚举下一个点是连一个自环，或者是出边向$<i$或者$>i$的部分连以及入边是由$<i$或者$>i$的部分连入，复杂度$O(n^2K)$
 
-# L ch's Gifts [zyh]
+L ch's Gifts \[zyh\]
+====================
 
 二分答案$k$，判断是否有$\sum_{i=1}^{n}\lfloor \frac{i-1}{k} \rfloor \leq n$，如果是说明这个$k$可能更小，否则必须更大
