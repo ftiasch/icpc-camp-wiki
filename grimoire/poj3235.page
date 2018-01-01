@@ -1,0 +1,3 @@
+题意：给出ｍ个ｎ维整数向量$\vec a_1,\vec a_2, \cdots, \vec a_m$，定义一个点A可以被另一个点B走到为$\exists k_1, k_2, \cdots, k_m \in \mathbb N, s.t. \vec B = \vec A + k_1\cdot \vec a_1, \cdots, k_m\cdot \vec a_m$，试找出ｎ个整数向量等价于这ｍ个向量
+
+sol：gauss消元＋辗转相减
