@@ -1,0 +1,50 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cstring>
+
+using namespace std;
+
+const int N = 2222;
+const int MOD = 1e9 + 7;
+
+int n, m, k;
+int f[N][N], vis[N][N];
+
+int dfs(int n, int m) {
+    if (n + m == 1) return f[n][m] = 1;
+    if (n + m == k) {
+        if (n == k || m == k) return f[n][m] = 0;
+        return f[n][m] = 1;
+    }
+    if (vis[n][m] != -1) return f[n][m];
+    vis[n][m] = 1;
+    int &ret = f[n][m];
+    ret = 0;
+    for (int i = 0; i < k; i++) {
+        if (n >= i && m >= k - i - 1) {
+            ret += dfs(n - i, m - (k - i - 1));
+            ret %= MOD;
+        }
+    }
+    return ret;
+}
+
+int main() {
+    scanf("%d %d %d", &n, &m, &k);
+    memset(vis, -1, sizeof(vis));
+    int ans = 0;
+    for (int i = n; i > 0; i -= k - 1) {
+        for (int j = m; j > 0; j -= k - 1) {
+            ans += dfs(i, j);
+            //cout << "i = " << i << " j = " << j << " " << f[i][j] << " " << ans << endl;
+            ans %= MOD;
+        }
+    }
+    printf("%d\n", ans);
+    return 0;
+}
+```
