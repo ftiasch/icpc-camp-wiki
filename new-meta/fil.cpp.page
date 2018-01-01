@@ -1,0 +1,83 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+int n, m, k, s;
+const int N(3333);
+vector<pair<int, int> > files[N], sons[N];
+bool ans[N];
+int cnt[1111111], c1[1111111];
+bool ext(int x) {
+    return x >= 0 && x <= 1000000 && cnt[x] >= 1;   
+}
+bool e1(int x) {
+    return x >= 0 && x <= 1000000 && c1[x] >= 1;    
+}
+vector<int> calcFactors(int x) {
+    vector<int> res1, res2;
+    for(int i(1); i * i <= x; i++) {
+        if(x % i)
+            continue;
+        res1.push_back(i);
+        if(i * i - x)
+            res2.push_back(x / i);
+    }
+    res1.insert(res1.end(), res2.begin(), res2.end());
+    return res1;
+}
+void sfd(int v, int tot) {
+    c1[tot] = 1;
+    for(int i(0); i < (int)sons[v].size(); i++)
+        sfd(sons[v][i].first, tot + sons[v][i].second);
+}
+void fc(int v, int tot, int delta) {
+    cnt[tot] += delta;
+    for(int i(0); i < (int)sons[v].size(); i++)
+        fc(sons[v][i].first, tot + sons[v][i].second, delta);
+}
+vector<int> st;
+void dfs(int v) {
+    fc(v, 0, 1);
+    for(int i(0); i < (int)files[v].size(); i++) {
+        ans[files[v][i].first] |= e1(k - files[v][i].second - s);
+        int tot(0);
+        for(int j((int)st.size() - 1); j >= 0; j--) {
+            tot += st[j];
+            ans[files[v][i].first] |= e1(k - files[v][i].second - tot - s);
+        }
+        int curLen(tot + files[v][i].second);
+        ans[files[v][i].first] |= k == curLen;
+        vector<int> factors(calcFactors(k - curLen));
+        for(int j(0); j < (int)factors.size(); j++) {
+//          printf("%d\n", factors[j]);
+            ans[files[v][i].first] |= ext(factors[j] - s);
+        }
+    }
+    for(int p(0); p < (int)sons[v].size(); p++) {
+        st.push_back(sons[v][p].second);
+        dfs(sons[v][p].first);
+        st.pop_back();
+    }
+    fc(v, 0, -1);
+}
+int main() {
+    cnt[0] = 1;
+    scanf("%d%d%d%d", &n, &m, &k, &s);
+    s++;
+    for(int i(1); i <= n; i++) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        y++;
+        sons[x].push_back(make_pair(i, y));
+    }
+    for(int i(1); i <= m; i++) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        y++;
+        files[x].push_back(make_pair(i, y));
+    }
+    sfd(0, 0);
+    dfs(0);
+    for(int i(1); i <= m; i++)
+        printf("%s\n", ans[i] ? "YES" : "NO");
+}
+```
