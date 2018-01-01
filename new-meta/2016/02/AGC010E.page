@@ -1,0 +1,75 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(2022);
+int e[N][N];
+int a[N];
+bool vst[N];
+vector<int> sons[N], ans[N];
+int main() {
+    int n;
+    cin >> n;
+    for(int i(0); i < n; i++) {
+        cin >> a[i];
+    }
+    sort(a, a + n);
+    for(int i(0); i < n; i++) {
+        for(int j(0); j < i; j++) {
+            if(__gcd(a[i], a[j]) != 1) {
+                e[i][j] = e[j][i] = 1;
+            }
+        }
+    }
+    fill(vst, vst + n, false);
+    vector<int> ord;
+    ord.push_back(n);
+    for(int i(0); i < n; i++) {
+        if(!vst[i]) {
+            vector<pair<int, int> > q;
+            sons[n].push_back(i);
+            ord.push_back(i);
+            vst[i] = true;
+            q.push_back(make_pair(i, 0));
+            while(!q.empty()) {
+                int v(q.back().first), p(q.back().second++);
+                if(p != n) {
+                    if(e[v][p] && !vst[p]) {
+                        vst[p] = true;
+                        ord.push_back(p);
+                        //cout << v << ' ' << p << endl;
+                        q.push_back(make_pair(p, 0));
+                        sons[v].push_back(p);
+                    }
+                }else {
+                    q.pop_back();
+                }
+            }
+        }
+    }
+    for(int i(n); i >= 0; i--) {
+        int v(ord[i]);
+        //cout << v << endl;
+        for(int j(0); j < (int)sons[v].size(); j++) {
+            int y(sons[v][j]);
+            //cout << a[v] << ' ' << a[y] << endl;
+            vector<int> vec;
+            for(int k1(0), k2(0); k1 < (int)ans[v].size() || k2 < (int)ans[y].size(); ) {
+                if(k2 == (int)ans[y].size() || k1 < (int)ans[v].size() && k2 < (int)ans[y].size() && ans[v][k1] > ans[y][k2]) {
+                    vec.push_back(ans[v][k1]);
+                    k1++;
+                }else {
+                    vec.push_back(ans[y][k2]);
+                    k2++;
+                }
+            }
+            swap(vec, ans[v]);
+        }
+        if(i)
+            ans[v].insert(ans[v].begin(), v);
+        
+    }
+    for(int i(0); i < (int)ans[n].size(); i++) {
+        printf("%d%c", a[ans[n][i]], i == n - 1 ? '\n' : ' ');
+    }
+}
+```
