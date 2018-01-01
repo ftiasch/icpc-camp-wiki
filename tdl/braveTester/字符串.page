@@ -41,7 +41,7 @@ pos\]，也即在下一个位置一定失配。因此只需要每次失配时更
 ---------------------
 
 2012 Multi-University Training Contest 4 [Revolving
-Digits](../2012%20Multi-University%20Training%20Contest%204#c.-revolving-digitsbravetester)
+Digits](../2012 Multi-University Training Contest 4#c.-revolving-digitsbravetester)
 展示了 KMP 可计算一些附加信息的能力，其本质上不过是与 P
 数组具有类似思想的递推。
 
