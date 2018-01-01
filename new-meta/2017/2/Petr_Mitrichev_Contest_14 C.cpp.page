@@ -1,0 +1,117 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int M = 100;
+const int C = 2;
+const int K = 60;
+
+struct Node {
+    Node *child[C], *fail;
+    bool end;
+    long long dp[K + 1];
+    Node() {
+        clear();
+    }
+    void clear() {
+        for (int c = 0; c < C; c++) {
+            child[c] = NULL;
+        }
+        end = false;
+        for (int i = 0; i <= K; i++) {
+            dp[i] = 0;
+        }
+    }
+}pool[K * M + 7];
+int used;
+
+Node *root;
+int n, k;
+
+vector<string> forbid;
+
+Node* new_node() {
+    return new(pool + used++) Node();
+}
+
+long long solve() {
+    used = 0;
+    root = new_node();
+    for (auto& s : forbid) {
+        Node *cur = root;
+        for (auto c : s) {
+            int d = c - 'A';
+            if (cur->child[d] == NULL) {
+                cur->child[d] = new_node();
+            }
+            cur = cur->child[d];
+        }
+        cur->end = true;
+    }
+    vector<Node*> queue;
+    queue.push_back(root);
+    root->fail = root;
+    for (int head = 0; head < queue.size(); head++) {
+        Node *cur = queue[head];
+        for (int c = 0; c < C; c++) {
+            if (cur->child[c] == NULL) {
+                if (cur == root) {
+                    cur->child[c] = root;
+                } else {
+                    cur->child[c] = cur->fail->child[c];
+                }
+            } else {
+                cur->child[c]->fail = (cur == root) ? root : cur->fail->child[c];
+                queue.push_back(cur->child[c]);
+            }
+        }
+    }
+    root->dp[0] = 1;
+    for (int i = 0; i < k; i++) {
+        for (int j = 0; j < used; j++) {
+            Node *cur = pool + j;
+            for (int c = 0; c < 2; c++) {
+                if (cur->child[c]->end == false) {
+                    cur->child[c]->dp[i + 1] += cur->dp[i];
+                }
+            }
+        }
+    }
+    long long ret = 0;
+    for (int i = 0; i < used; i++) {
+        ret += (pool + i)->dp[k];
+    }
+    return ret;
+}
+
+set<string> exist;
+
+int main() {
+    scanf("%d", &n);
+    int ans = -1;
+    k = 1;
+    while ((1 << k) < n) k++;
+    ans = solve();
+    while (ans != n) {
+        string cur;
+        while (cur.size() <= k) {
+            char c = rand() % 2 + 'A';
+            cur += c;
+            if (!exist.count(cur)) {
+                forbid.push_back(cur);
+                if ((ans = solve()) >= n) {
+                    exist.insert(cur);
+                    break;
+                }
+                forbid.pop_back();
+            }
+        }
+    }
+    printf("%d %d\n", k, (int)forbid.size());
+    for (auto s : forbid) {
+        cout << s << endl;
+    }
+    return 0;
+}
+```
