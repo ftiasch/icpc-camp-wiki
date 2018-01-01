@@ -1,0 +1,137 @@
+Code
+
+``` {.cpp}
+
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+const int INF = 1e9;
+const int N = 3e3, M = 5e3;
+
+int n, m;
+
+struct Graph {
+    int other[M << 1], last[N], succ[M << 1], cap[M << 1], sum;
+    void clear(int n) {
+        fill(last, last + n, -1);
+        sum = 0;
+    }
+    void add_edge(int a, int b) {
+        other[sum] = b, succ[sum] = last[a], last[a] = sum, cap[sum++] = 1;
+        other[sum] = a, succ[sum] = last[b], last[b] = sum, cap[sum++] = 1;
+    }
+    void add_edge(int a, int b, int c) {
+        other[sum] = b, succ[sum] = last[a], last[a] = sum, cap[sum++] = c;
+        other[sum] = a, succ[sum] = last[b], last[b] = sum, cap[sum++] = c;
+    }
+};
+
+Graph g, tree;
+int answer = 0;
+int father[N];
+
+void dfs(int x, int limit) {
+    for (int i = tree.last[x]; ~i; i = tree.succ[i]) {
+        int y = tree.other[i];
+        if (y != father[x]) {
+            father[y] = x;
+            answer += min(limit, tree.cap[i]);
+            dfs(y, min(limit, tree.cap[i]));
+        }
+    }
+}
+
+int bfs(int source, int target, vector<int> &ss, vector<int> &tt, vector<int> &set) {
+    for (int i = 0; i < g.sum; i++) {
+        g.cap[i] = 1;
+    }
+
+    static vector<int> queue;
+    static int visit[N], from[N];
+    int flow = 0;
+    while (1) {
+        fill(visit, visit + n, 0);
+        queue.clear();
+        queue.push_back(source);
+        visit[source] = 1;
+        for (int head = 0; head < (int)queue.size(); head++) {
+            int x = queue[head];
+            for (int i = g.last[x]; ~i; i = g.succ[i]) {
+                int y = g.other[i];
+                if (g.cap[i] && !visit[y]) {
+                    visit[y] = 1;
+                    from[y] = i;
+                    queue.push_back(y);
+                }
+            }
+        }
+
+        if (!visit[target]) {
+            break;
+        }
+
+        flow++;
+        for (int x = target; x != source; x = g.other[from[x] ^ 1]) {
+            g.cap[from[x]]--;
+            g.cap[from[x] ^ 1]++;
+        }
+    }
+
+    for (int i = 0; i < (int)set.size(); i++) {
+        int x = set[i];
+        if (visit[x]) {
+            ss.push_back(x);
+        } else {
+            tt.push_back(x);
+        }
+    }
+    return flow;
+}
+
+void solve(int s, vector<int> &v) {
+    if (v.empty()) {
+        return ;
+    }
+    int t = v[0];
+    vector<int> ss, tt;
+    int cost = bfs(s, t, ss, tt, v);
+    tree.add_edge(s, t, cost);
+    solve(s, ss);
+    for (vector<int> :: iterator it = tt.begin(); it != tt.end(); ++it) {
+        if (*it == t) {
+            tt.erase(it);
+            break;
+        }
+    }
+    solve(t, tt);
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    g.clear(n);
+    tree.clear(n);
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        scanf("%d %d", &a, &b);
+        a--; b--;
+        g.add_edge(a, b);
+    }
+
+    vector<int> nodes;
+    for (int i = 1; i < n; i++) {
+        nodes.push_back(i);
+    }
+    solve(0, nodes);
+    for (int i = 0; i < n; i++) {
+        fill(father, father + n, -1);
+        dfs(i, INF);
+    }
+    printf("%d\n", answer / 2);
+    return 0;
+}
+```
