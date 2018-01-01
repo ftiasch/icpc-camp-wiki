@@ -1,0 +1,161 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 3e5 + 500;
+typedef unsigned int ui;
+int poi[N], go[N];
+ui tree[N];
+void add(int x, int n, ui c)
+{
+    while (x <= n)
+    {
+        tree[x] += c;
+        x += x & -x;
+    }
+}
+ui query(int x)
+{
+    ui res = 0;
+    while (x)
+    {
+        res += tree[x];
+        x -= x & -x;
+    }
+    return res;
+}
+ui sz[N], s1[N], s2[N], w[N];
+int par[N], L[N], R[N], cnt;
+ui sum[N], st[N];
+vector<int> G[N];
+void dfs(int x)
+{
+    sum[x] = sz[x] = s1[x] = s2[x] = st[x] = 0;
+    L[x] = R[x] = ++ cnt;
+    for (int u : G[x])
+    {
+        dfs(u);
+        R[x] = max(R[x], R[u]);
+        st[x] += (ui) s1[u] * (ui) sz[u];
+        sum[x] += sum[u];
+        s2[x] += s1[u];
+        s1[x] ++;
+        sz[x] += sz[u];
+    }
+    s2[x] += s1[x];
+    sz[x] ++;
+    sum[x] += w[x];
+}
+void poit(int x, int las, int p = 0)
+{
+    par[x] = p;
+    poi[x] = las;
+    if (poi[x] == x) poi[x] = p;
+    go[x] = -1;
+    int mid = -1;
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (mid == -1 || sz[u] > sz[G[x][mid]]) mid = i;
+    }
+    if (mid != -1)
+    {
+        poit(G[x][mid], las, x);
+        go[x] = G[x][mid];
+    }
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (i == mid) continue;
+        poit(u, u, x);
+    }
+}
+ui p12[N], p34[N];
+void toroot(int x, ui c)
+{
+    while (x)
+    {
+        if (go[par[x]] != x) p34[par[x]] += c * (ui) (sz[par[x]] - sz[x]);
+        x = poi[x];
+    }
+}
+void work(int u, ui x, int n)
+{
+    add(L[u], n, x * (ui) (s2[u] + 1));
+    toroot(u, x * (ui) (s2[u] + 1));
+    p12[u] += x;
+    p34[u] += x * ((ui) 2 + sz[u] * s2[u] - st[u]);
+}
+ui bigquery(int u)
+{
+    ui q = p34[u];
+    if (go[u] != -1) q += (query(R[go[u]]) - query(L[go[u]] - 1)) * (sz[u] - sz[go[u]]);
+    if (par[u]) q += ((ui) 2 + s1[u] * sz[u]) * p12[par[u]];
+    if (par[par[u]]) q += ((ui) 1 + sz[u]) * p12[par[par[u]]];
+    return q;
+}
+void clear(int n)
+{
+    for (int i = 1; i <= n; ++ i)
+    {
+        G[i].clear();
+        p12[i] = p34[i] = 0;
+        tree[i] = 0;
+    }
+    cnt = 0;
+}
+int main()
+{
+    int n, m;
+    while (scanf("%d%d", &n, &m) == 2)
+    {
+        clear(n);
+        for (int i = 2; i <= n; ++ i)
+        {
+            int p;
+            scanf("%d", &p);
+            G[p].push_back(i);
+        }
+        for (int i = 1; i <= n; ++ i)
+        {
+            int ww;
+            scanf("%d", &ww);
+            w[i] = (ui) ww;
+        }
+        dfs(1);
+        poit(1, 1);
+        //for (int i = 1; i <= n; ++ i) printf("%d : %d\n", i, poi[i]);
+        for (int i = 1; i <= n; ++ i)
+        {
+            p34[i] += w[i] + sum[i] * sz[i];
+            for (int u : G[i])
+            {
+                p34[i] -= sum[u] * sz[u];
+            }
+        }
+        for (int i = 1; i <= m; ++ i)
+        {
+            int t;
+            scanf("%d", &t);
+            if (t == 2)
+            {
+                int x;
+                scanf("%d", &x);
+                printf("%u\n", bigquery(x));
+            }
+            else
+            {
+                int x, c;
+                scanf("%d%d", &x, &c);
+                work(x, c, n);
+            }
+        }
+    }
+}
+```
