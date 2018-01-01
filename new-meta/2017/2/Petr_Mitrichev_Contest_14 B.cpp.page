@@ -1,0 +1,198 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+bool x_y = 0, up_down = 0;
+double YYY;
+struct Point {
+    double x,y;
+    Point() {}
+    Point(double x, double y) : x(x), y(y) {}
+    double len() {
+        return sqrt(x * x + y * y);
+    }
+};
+Point xxx = Point(99.8, 0.23);
+bool debug = 0;
+vector<Point> ppp;
+int tot = 0;
+void print(double x, double y) {
+    if (up_down) y = 100 - y;
+    if (x_y) swap(x, y);
+    if (debug) ppp.push_back(Point(x, y));
+    printf("%.10f %.10f ", x, y);
+}
+struct Line {
+    Point a, b;
+    Line() {}
+    Line(Point a, Point b) : a(a), b(b) {}
+};
+Point operator - (const Point &a, const Point &b) {
+    return Point(a.x - b.x, a.y - b.y);
+}
+double dot(const Point &a, const Point &b) {
+    return a.x * b.x + a.y * b.y;
+}
+double det(const Point &a, const Point &b) {
+    return a.x * b.y - a.y * b.x;
+}
+double distoline(const Line &l, const Point &p) {
+    return abs(det(p - l.a, l.b - l.a) / (l.b - l.a).len());
+}
+const double eps = 1e-9;
+int sign(double x) {
+    if (x > eps) return 1;
+    if (x < -eps) return -1;
+    return 0;
+}
+double distoseg(const Line &l, const Point &p) {
+    return sign(dot(p - l.a, l.b - l.a)) * sign(dot(p - l.b, l.a - l.b)) == 1 ? distoline(l, p) : min((p - l.a).len(), (p - l.b).len());
+}
+bool query() {
+    tot ++;
+    assert(ppp[0].x < eps);
+    assert(ppp.back().x > 100 - eps);
+    for (int i = 1; i < (int) ppp.size(); ++ i) {
+        Line l = Line(ppp[i - 1], ppp[i]);
+        if (distoseg(l, xxx) < 1 + eps) {
+            printf("found %.2f %.2f   %.2f %.2f\n", ppp[i - 1].x, ppp[i - 1].y, ppp[i].x, ppp[i].y);
+            printf("len = %.2f\n", distoseg(l, xxx));
+            ppp.clear();
+            return 1;
+        }
+    }
+    ppp.clear();
+    return 0;
+}
+bool test(int m) {
+    //printf("test %d\n", m);
+    if (x_y) {
+        vector<pair<int, int>> all;
+        int i;
+        for (i = 0; i + 1 < m; i += 2) {
+            all.push_back(make_pair(0, i));
+            all.push_back(make_pair(100, i));
+            all.push_back(make_pair(100, i + 1));
+            all.push_back(make_pair(0, i + 1));
+        }
+        if (i + 1 <= m) {
+            all.push_back(make_pair(0, i));
+            all.push_back(make_pair(100, i));
+        }
+        if (YYY < 50) {
+            all.push_back(make_pair(100, m - 1));
+            all.push_back(make_pair(100, 100));
+        }
+        else {
+            all.push_back(make_pair(0, m - 1));
+            all.push_back(make_pair(0, 100));
+        }
+        printf("%d ", (int) all.size());
+        for (auto x : all) print(x.first, x.second);
+    }
+    else {
+        vector<pair<double, double>> all;
+        all.push_back(make_pair(0, 0));
+        all.push_back(make_pair(0, m - 1));
+        double i = 0;
+        while (true) {
+             i = min(100.0, i + 1.9);
+             all.push_back(make_pair(i, m - 1));
+             all.push_back(make_pair(i, 0));
+             all.push_back(make_pair(i, m - 1));
+             if (100 - i < eps) break;
+        }
+        printf("%d ", (int) all.size());
+        for (auto x : all) print(x.first, x.second);
+    }
+    puts("");
+    fflush(stdout);
+    int res;
+    if (debug) res = query(); else scanf("%d", &res);
+    //printf("get ans = %d\n", res);
+    return res;
+}
+double rev(double x) {
+    if (up_down) x = 100 - x;
+    return x;
+}
+bool test2(double h) {
+    if (x_y) {
+        if (YYY < 50) {
+            printf("5 ");
+            print(100, rev(0));
+            print(100, h - 1);
+            print(0, h - 1);
+            print(100, h - 1);
+            print(100, rev(100));
+        }
+        else {
+            printf("5 ");
+            print(0, rev(0));
+            print(0, h - 1);
+            print(100, h - 1);
+            print(0, h - 1);
+            print(0, rev(100));
+        }
+    }
+    else {
+        printf("2 ");
+        print(0, h - 1);
+        print(100, h - 1);
+    }
+    puts("");
+    fflush(stdout);
+    int res;
+    if (debug) res = query(); else scanf("%d", &res);
+    return res;
+}
+double guess2(int L, int R) {
+    if (debug) printf("guess2 %d %d\n", L, R);
+    if (L == 0) {
+        up_down = 1;
+        L = 100 - L;
+        R = 100 - R;
+        swap(L, R);
+    }
+    else {
+        up_down = 0;
+    }
+    double l = L, r = R;
+    for (int i = 0; i < 22; ++ i) {
+        double mid = (l + r) / 2.;
+        if (test2(mid)) {
+            r = mid;
+        }
+        else {
+            l = mid;
+        }
+    }
+    double mid = (l + r) / 2;
+    if (up_down) mid = 100 - mid;
+    up_down = 0;
+    return mid;
+}
+double guess() {
+    int L = 0, R = 100;
+    while (R - L >= 2) {
+        int mid = (L + R) / 2;
+        if (test(mid)) {
+            R = mid;
+        }
+        else {
+            L = mid;
+        }
+    }
+    return guess2(L, R);
+}
+int main() {
+    double y = guess();
+    YYY = y;
+    x_y = 1;
+    double x = guess();
+    printf("0 %.10f %.10f\n", x, y);
+    if (debug) printf("%d\n", tot);
+    if (debug) printf("%.10f %.10f\n", x - xxx.x, y - xxx.y);
+    assert(tot <= 60);
+    fflush(stdout);
+}
+```
