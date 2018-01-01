@@ -1,0 +1,55 @@
+[题目](http://vjudge.net/contest/139415)
+
+A - Thickest Burger
+-------------------
+
+签到
+
+B - Relative atomic mass
+------------------------
+
+签到
+
+C - Recursive sequence
+----------------------
+
+矩阵乘法
+
+E - Counting Cliques
+--------------------
+
+根据给的限制，爆搜即可
+
+G - Do not pour out
+-------------------
+
+首先显然要分0&lt;=d&lt;=1和1&lt;d&lt;=2两种情况讨论<br>
+先贴一下别人的[博客](http://blog.csdn.net/danliwoo/article/details/53002695),讲得很详细<br>
+1.1&lt;d&lt;=2<br> V=2PI-PItanβ<br> =&gt;β=arctan(2-d)<br>
+圆柱体底面积大小为pi<br> 所以有ans=pi/cos(β)<br>
+相当于是要求的面积的投影就是下面那一个圆<br> 2.0&lt;=d&lt;=1<br>
+sinθ=S底(有水盖住的那一部分)/ans<br> 像那人一样建系的话有<br>
+每一层的面积s=pi-α+(x-1)\*sinα<br> x=cosα + 1<br>
+对体积按y轴进行积分<br> 然后可以算出<br>
+V=1/tanθ\*(1/3\*(sinα)\^3-picosα-sinα+αcosα)|(pi,α1)<br>
+因为tanθ=x/y<br> 所以有a=arccos(2tanθ - 1)<br> α1就是y=2时的那个角度<br>
+然后显然θ在\[0,pi/4\]之间<br> 由于体积关于θ是单增的<br> 可以二分求θ<br>
+最后答案就是S0/sinθ<br> 注意有精度问题所以要特判d=0的情况<br>
+
+H - Guessing the Dice Roll
+--------------------------
+
+先建立AC自动机，然后两种方法：
+
+1.  迭代DP，把转移矩阵自乘30次
+2.  高斯消元
+
+I - The Elder
+-------------
+
+斜率优化DP，可持久化单调栈即可
+
+J - Query on a graph
+--------------------
+
+由于k不超过2，以环上的点为根，按照BFS序建线段树，修改和查询需要对k讨论一下，比较麻烦。
