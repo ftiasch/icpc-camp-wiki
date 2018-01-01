@@ -28,7 +28,7 @@ G. Generator \[Yuzuriha Inori\]
 **题意:** Given $N$ strings of length $L$, output the expected time when
 all the $N$ strings occur in a random generated infinite string.
 
-**做法:** [link label](/monkey.pdf)
+**做法:** [link label](monkey.pdf)
 
 [K.cpp](2016-10-26 K.cpp)
 
