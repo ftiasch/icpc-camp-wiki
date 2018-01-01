@@ -1,0 +1,29 @@
+``` {.{cpp}}
+inline LL solve(LL n) {
+    LL m = 1;
+    for (; m * m <= n; ++m) {
+        f[m] = n / m - 1;
+    }
+    for (int i = 1; i < (int)m; ++i) {
+        g[i] = i - 1;
+    }
+    for (int i = 2; i < m; ++i) {
+        if (g[i] == g[i - 1]) {
+            continue;
+        }
+        
+        for (int j = 1; j < m && j <= n / i / i; ++j) {
+            if (1LL * i * j < m) {
+                f[j] -= f[i * j] - g[i - 1];
+            } else {
+                f[j] -= g[n / i / j] - g[i - 1];
+            }
+        }
+        
+        for (int j = m - 1; j >= 1LL * i * i; --j) {
+            g[j] -= g[j / i] - g[i - 1];
+        }
+    }
+    return f[1];
+}
+```
