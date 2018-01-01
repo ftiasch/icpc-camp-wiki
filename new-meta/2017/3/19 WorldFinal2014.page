@@ -25,7 +25,7 @@ B. Buffed Buffet
 
 离散的物品可以用斜率优化dp。连续的物品二分导数，转化成求极值点的位置（注意有斜率为0的物品，要特殊处理一下）。然后枚举一边的重量，合起来就行了。注意答案可能为负数。
 
-[B.cpp](2017/3/19%20WorldFinal2014%20B.cpp)
+[B.cpp](2017/3/19 WorldFinal2014 B.cpp)
 
 F. Messager
 ===========
@@ -58,7 +58,7 @@ G. Metal Processing Plant
 考虑到枚举最大值的时候，上面的边都是双向边，构成的强连通分量结构只有O(n)中不同结果，我们对每一种结果分别二分较小值的答案，再用2sat
 check，最后复杂度为O(n\^3 \log n)。
 
-[G.cpp](2017/3/19%20WorldFinal2014%20G.cpp)
+[G.cpp](2017/3/19 WorldFinal2014 G.cpp)
 
 H. Pachinko
 ===========
