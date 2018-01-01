@@ -42,7 +42,7 @@ C. Guess The Number
 
 最后的期望其实就是$\log(n+1)$，详细看代码了，我中间还加了一个二分。但其实可以省掉，但是要更麻烦的讨论。
 
-[code](Prime%20Contest%20C.cpp)
+[code](Prime Contest C.cpp)
 
 D. Path Selection
 =================
@@ -81,9 +81,9 @@ DAG，无修改版本就是GRE WORDS，用带合并的可持久化treap即可做
 
 有了环的话，其实我们只要把环上一条边拆了变成树，那一条边特殊判断一下。还有考虑在环上绕多少圈的问题，就能做出来了！
 
-[code](Prime%20Contest%20D.cpp)
+[code](Prime Contest D.cpp)
 
-[code2](Prime%20Contest%20D2.cpp)
+[code2](Prime Contest D2.cpp)
 
 E. Distanced Strings
 ====================
@@ -173,7 +173,7 @@ bound是这个图的边个数。考虑如果只是树，这个lower bound肯定�
 
 这样一来这个问题就解决了。
 
-[code](Prime%20Contest%20F.cpp)
+[code](Prime Contest F.cpp)
 
 I. Catch Me If You Can
 ======================
@@ -226,7 +226,7 @@ std会返回你你沿着这个方向走了多长才停下来，并且会告诉�
 
 尽量写个点到最近圆的距离函数，不然头硬直接交的结果是judge也头硬一直让你WA。
 
-[code](Prime%20Contest%20I.cpp)
+[code](Prime Contest I.cpp)
 
 31
 ==
@@ -239,4 +239,4 @@ std会返回你你沿着这个方向走了多长才停下来，并且会告诉�
 特殊情况是六角星的内点和凸包没有交点,
 但是凸包包含了六角星内点导致存活区间其实是空.
 
-[code](Prime%20Contest%2031.cpp)
+[code](Prime Contest 31.cpp)
