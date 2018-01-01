@@ -1,0 +1,160 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(33333);
+long long mn[N], mx[N];
+double eps(1e-8);
+long long _floor(const double & x) {
+    return (long long)(x + eps);
+}
+long long _ceil(const double & x) {
+    return x <= floor(x) + eps ? floor(x) + eps : floor(x) + eps + 1;
+}
+pair<double, double> binary_search(function<long long(double)> f) {
+    double le(0), ri(2e9);
+    pair<double, double> res;
+    bool equal0(false);
+    for(int i(0); i < 100; i++) {
+        double mid((le + ri) / 2);
+        long long smid(f(mid));
+        //cout << mid << ' ' << smid << endl;
+        if(smid < 0) {
+            le = mid;
+        }else {
+            if(smid == 0) {
+                equal0 = true;
+                res.first = mid;
+            }
+            ri = mid;
+        }
+    }
+    le = 0; ri = 2e9;
+    for(int i(0); i < 100; i++) {
+        double mid((le + ri) / 2);
+        long long smid(f(mid));
+        if(smid > 0) {
+            ri = mid;
+        }else {
+            if(smid == 0) {
+                res.second = mid;
+            }
+            le = mid;
+        }
+    }
+    if(!equal0) {
+        res.first = le;
+        res.second = ri;
+    }
+    //printf("?! %f %f\n", res.first, res.second);
+    return res;
+}
+int main() {
+    int n, m;
+    vector<int> s;
+    scanf("%d%d", &n, &m);
+    long long tot(0);
+    for(int i(0); i < m; i++) {
+        int x;
+        scanf("%d", &x);
+        tot += x;
+        mn[i] = 1e9;
+        mx[i] = 0;
+        s.push_back(x);
+    }
+    double le(1), ri(1e18);
+    function<long long(double)> f0;
+    pair<double, double> p = binary_search(f0 = [&](const double & r) {long long res(-n); for(auto i : s) res += _ceil(r * i); return res;});
+    ri = min(ri, f0(p.second) == 0 ? p.second : p.first);
+    function<long long(double)> f3;
+
+    f3 = [&](const double & r) {long long res(-n); for(auto i : s) res += _floor(r * (i + 1)); return res;};
+    pair<double, double> q = binary_search(f3);
+    le = max(le, f3(q.first) == 0 ? q.first : q.second);
+    //printf("le = %f, ri = %f\n", le, ri);
+    bool invalid(true);
+    if(tot <= n) {
+        invalid = false;
+        int flag;
+        double ble(le), bri(ri);
+        for(int _(0); _ < 100; _++) {
+            long long sum(0);
+            double r(_ == 99 ? flag == 1 ? ri : le : (le + ri) / 2);
+            for(int i(0); i < m; i++) {
+                sum += _floor(r * (s[i] + 1));
+            }
+            flag = 0;
+            for(int i(0); i < m; i++) {
+                long long mn1(_ceil(r * s[i]));
+                long long mn2(n - (sum - _floor(r * (s[i] + 1))));
+                mn[i] = min(mn[i], max(mn1, mn2));
+                if(mn1 < mn2) {
+                    flag = 1;
+                }else if(mn1 > mn2) {
+                    flag = -1;
+                }
+            }
+            if(flag == 1) {
+                le = r;
+            }else if(flag == -1) {
+                ri = r;
+            }else {
+                break;
+            }
+        }
+
+        le = ble; ri = bri;
+        for(int _(0); _ < 100; _++) {
+            long long sum(0);
+            double r(_ == 99 ? flag == 1 ? ri : le : (le + ri) / 2);
+            //printf("%.20f %.20f %.20f\n", le, ri, r);
+            for(int i(0); i < m; i++) {
+                sum += _ceil(r * s[i]);
+            }
+            flag = 0;
+            for(int i(0); i < m; i++) {
+                long long mx1(_floor(r * (s[i] + 1)));
+                long long mx2(n - (sum - _ceil(r * s[i])));
+            //  if(_ >= 98) printf("%I64d %I64d\n",mx1, sum);
+                mx[i] = max(mx[i], min(mx1, mx2));
+                if(mx1 < mx2) {
+                    flag = 1;
+                }else if(mx1 > mx2) {
+                    flag = -1;
+                }
+            }
+            if(flag == 1) {
+                le = r;
+            }else if(flag == -1) {
+                ri = r;
+            }else {
+                break;
+            }
+        }
+
+    }
+    if(f0(p.first) == 0 && p.first < 1) {
+        double r(p.second);
+        bool flag(true);
+        for(int i(0); i < m; i++) {
+            if(_ceil(r * s[i]) != _floor(r * (s[i] + 1))) {
+                flag = false;
+                break;
+            }
+        }
+        if(flag) {
+            invalid = false;
+            for(int i(0); i < m; i++) {
+                mn[i] = min(mn[i], _ceil(r * s[i]));
+                mx[i] = max(mx[i], _ceil(r * s[i]));
+            }
+        }
+    }
+    if(invalid) {
+        printf("impossible\n");
+    }else {
+        for(int i(0); i < m; i++) {
+            printf("%d %d\n", (int)mn[i], (int)mx[i]);
+        }
+    }
+}
+```
