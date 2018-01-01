@@ -1,0 +1,95 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6 + 5;
+char s[N];
+string ans; bool ANS;
+void upd(string A, int rl) {
+    if ((int) A.length() > rl) {
+        A.pop_back();
+    }
+    else {
+        string B;
+        bool fir = 1;
+        for (int i = 0; i < rl; ++ i) {
+            if (fir && A[i] == '0') {
+                B += '0';
+                continue;
+            }
+            if (fir) {
+                B += 10 - (A[i] - '0') + '0';
+                fir = 0;
+            }
+            else {
+                B += 9 - (A[i] - '0') + '0';
+            }
+        }
+        if (fir) B += '1';
+        A = B;
+    }
+    while (!A.empty() && A.back() == '0') A.pop_back();
+    reverse(A.begin(), A.end());
+    //cout << A << endl;
+    if (ANS || A.length() < ans.length() || (A.length() == ans.length() && A < ans)) ans = A, ANS = 0;
+}
+string add(const string &A, const string &B) {
+    string c;
+    int j = 0, n = A.length();
+    for (int i = 0; i < n; ++ i) {
+        j += A[i] - '0' + B[i] - '0';
+        c += j % 10 + '0';
+        j /= 10;
+    }
+    if (j) c += j + '0';
+    //cout << A << " + " << B << " = " << c << endl;
+    return c;
+}
+int main() {
+    freopen("done.in", "r", stdin);
+    freopen("done.out", "w", stdout);
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        scanf("%s", s);
+        int n = (int) strlen(s), cnt[10], old[10];
+        memset(old, 0, sizeof(old));
+        for (int i = 0; i < n; ++ i) old[s[i] - '0'] ++;
+        ANS = 1;
+        for (int da = 0; da <= 9; ++ da) {
+            for (int db = 0; db <= 9; ++ db) {
+                for (int i = 0; i <= 9; ++ i) cnt[i] = old[i];
+                cnt[da] --; cnt[db] --;
+                if (cnt[da] < 0 || cnt[db] < 0) continue;
+                for (int i = 0; i <= 4; ++ i) {
+                    int should = min(cnt[i], cnt[9 - i]);
+                    cnt[i] -= should;
+                    cnt[9 - i] -= should;
+                }
+                string R[2];
+                int cur = 0;
+                for (int i = 0; i <= 9; ++ i) {
+                    for (int j = 0; j < cnt[i]; ++ j) {
+                        R[cur] += i + '0';
+                        cur ^= 1;
+                    }
+                }
+                assert(R[0].length() == R[1].length());
+                int rl = R[0].length();
+                R[0] += da + '0';
+                R[1] += db + '0';
+                string A = add(R[0], R[1]);
+                R[0].pop_back(); R[1].pop_back();
+                upd(A, rl + 1);
+                reverse(R[0].begin(), R[0].end());
+                reverse(R[1].begin(), R[1].end());
+                R[0] += da + '0';
+                R[1] += db + '0';
+                A = add(R[0], R[1]);
+                upd(A, rl + 1);
+            }
+        }
+        if (ans.empty()) ans = "0";
+        printf("%s\n", ans.c_str());
+    }
+}
+```
