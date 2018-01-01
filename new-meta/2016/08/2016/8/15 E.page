@@ -1,0 +1,68 @@
+Code
+
+``` {.cpp}
+#include<cstring>
+#include<cstdio>
+#include<vector>
+#include<algorithm>
+using namespace std;
+const int N(111);
+int dp[N][N][N], dp1[N][N][N];
+int l[N], r[N];
+void renew(int & a, int b) {
+    a = min(a, b);
+}
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    for(int qq(1); qq <= tests; qq++) {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        for(int i(1); i <= n; i++) {
+            scanf("%d%d", &l[i], &r[i]);
+        }
+        for(int i(0); i <= n; i++) {
+            for(int j(1); j <= m + 1; j++) {
+                for(int k(j - 1); k <= m; k++) {
+                    dp[i][j][k] = 1e9;
+                }
+            }
+        }
+        for(int i(0); i <= n; i++) {
+            for(int j(1); j <= m + 1; j++) {
+                for(int k(i); k <= n; k++) {
+                    dp1[i][j][k] = 1e9;
+                }
+            }
+        }
+        dp[0][1][0] = 0;
+        for(int i(0); i <= n; i++) {
+            for(int j(1); j <= m + 1; j++) {
+                renew(dp[i][j][max(j - 1, r[i])], dp1[i][j][i]);
+                for(int k(i + 1); k <= n; k++) {
+                    renew(dp1[i][max(l[k], j)][k], dp[i][j][j - 1]);
+                }
+                for(int k(j); k <= m; k++) {
+                    if(l[i + 1] <= j) {
+                        renew(dp[i + 1][j + 1][k], dp[i][j][k] + 1);
+                        renew(dp[i + 1][j][r[i + 1]], dp[i][j][k]);
+                    }
+                }
+                renew(dp1[i + 1][j][i + 1], dp1[i][j][i + 1]);
+                for(int k(i + 2); k <= n; k++) {
+                    if(r[i + 1] >= j) {
+                        renew(dp1[i + 1][j + 1][k], dp1[i][j][k] + 1);
+                    }
+                    renew(dp1[i + 1][j][k], dp1[i][j][k] + 1);
+                }
+                renew(dp[i + 1][j][j - 1], dp[i][j][j - 1] + 1);
+            }
+        }
+        int ans(1e9);
+        for(int i(1); i <= m + 1; i++) {
+            ans = min(ans, dp[n][i][i - 1]);
+        }
+        printf("%d\n", ans);
+    }
+}
+```
