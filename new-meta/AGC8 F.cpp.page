@@ -1,0 +1,112 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+const int N = 2e5 + 7;
+const int INF = 1e9 + 7;
+
+int n;
+int upper[N], lower[N];
+vector<int> adj[N];
+pair<int, int> farest[N][2], up[N];
+
+void fresh(pair<int, int> far[2], pair<int, int> tmp) {
+    if (tmp > far[0]) {
+        far[1] = far[0];
+        far[0] = tmp;
+    } else if (tmp > far[1]) {
+        far[1] = tmp;
+    }
+}
+
+void dfs_down(int u, int from) {
+    for (int i = 0; i < 2; i++) {
+        farest[u][i] = {0, 0};
+    }
+    for (auto v : adj[u]) {
+        if (v == from) continue;
+        dfs_down(v, u);
+        auto tmp = make_pair(farest[v][0].first + 1, v);
+        fresh(farest[u], tmp);
+    }
+}
+
+void dfs_up(int u, int from) {
+    for (auto v : adj[u]) {
+        if (v == from) continue;
+        up[v].first = max(up[u].first + 1, v == farest[u][0].second ?
+            farest[u][1].first + 1 : farest[u][0].first + 1);
+        up[v].second = u;
+        dfs_up(v, u);
+    }
+    fresh(farest[u], up[u]);
+    upper[u] = min(farest[u][1].first + 1, farest[u][0].first - 1);
+}
+
+vector<int> queue[N];
+int finish[N];
+
+void go(int i, int u) {
+    for (auto v : adj[u]) {
+        int duv = farest[u][0].second == v ? farest[u][1].first : farest[u][0].first;
+        int dvu = farest[v][0].second == u ? farest[v][1].first : farest[v][0].first;
+        //printf("v = %d\n", v);
+        int t = min(max(duv + 1, lower[u] - 1), max(dvu + 1, lower[u]) + 1);
+        queue[t].push_back(v);
+    }
+}
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i < n; i++) {
+        int u, v;
+        scanf("%d %d", &u, &v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    dfs_down(1, 0);
+    up[1] = make_pair(0, 0);
+    dfs_up(1, 0);
+    {
+        static char buffer[N];
+        scanf("%s", buffer + 1);
+        for (int i = 1; buffer[i]; i++) {
+            if (buffer[i] == '1') {
+                lower[i] = 0;
+                queue[0].push_back(i);
+            }
+        }
+    }
+    for (int i = 0; i <= n; ) {
+        if (i > 0 && queue[i - 1].size()) {
+            i--;
+        } else if (queue[i].size() == 0) {
+            i++;
+        } else {
+            int top = queue[i].back();
+            queue[i].pop_back();
+            if (!finish[top] || i < lower[top]) {
+                lower[top] = i;
+                finish[top] = true;
+                go(i, top);
+            }
+        }
+    }
+    long long ans = 0;
+    assert(queue[0].size() == 0);
+    for (int i = 1; i <= n; i++) {
+        if (upper[i] >= lower[i]) ans += upper[i] - lower[i] + 1;
+        printf("i = %d lower = %d upper = %d\n", i, lower[i], upper[i]);
+        assert(queue[i].size() == 0);
+        assert(finish[i]);
+    }
+    cout << ans + 1 << endl;
+    return 0;
+}
+```
