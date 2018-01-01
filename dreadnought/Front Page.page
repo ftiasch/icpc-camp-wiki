@@ -37,96 +37,89 @@ Working Status
 TBA-2016
 --------
 
--   ?.???
-    [Bloom](http://dreadnought.icpc-camp.org/Ivan%20Smirnov%20Contest%201#b.-bloom-tba)
--   A.性质
-    [Collatz](http://dreadnought.icpc-camp.org/Ivan%20Smirnov%20Contest%201#c.-collatz-tba)
--   ?.DP?
-    [Jordan](http://dreadnought.icpc-camp.org/Ivan%20Smirnov%20Contest%201#j.-jordan-tba)
+-   ?.??? [Bloom](Ivan Smirnov Contest 1#b.-bloom-tba)
+-   A.性质 [Collatz](Ivan Smirnov Contest 1#c.-collatz-tba)
+-   ?.DP? [Jordan](Ivan Smirnov Contest 1#j.-jordan-tba)
 
 -   C.大几何 [Ancient
-    City](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Baltics#c.-ancient-city-tba)
--   ?.???
-    [Entfernung](http://dreadnought.icpc-camp.org/Petr%20Mitrichev%20Contest%2013#c.-entfernung-tba)
--   ?.???
-    [Sprache](http://dreadnought.icpc-camp.org/Petr%20Mitrichev%20Contest%2013#g.-sprache-tba)
+    City](XVI Open Cup named after E.V. Pankratiev Grand Prix of Baltics#c.-ancient-city-tba)
+-   ?.??? [Entfernung](Petr Mitrichev Contest 13#c.-entfernung-tba)
+-   ?.??? [Sprache](Petr Mitrichev Contest 13#g.-sprache-tba)
 -   A.状压DP [Black And White
-    Board](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#c.-black-and-white-board-tba)
+    Board](XVI Open Cup named after E.V. Pankratiev Grand Prix of Saratov#c.-black-and-white-board-tba)
 -   ?.二分+物理
-    [Catenary](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov#d.-catenary-tba)
+    [Catenary](XVI Open Cup named after E.V. Pankratiev Grand Prix of Saratov#d.-catenary-tba)
 
 TBA-Camp16
 ----------
 
 -   ?.数学
-    [Stains](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%207%20-%20Makoto%20Soejima%20Contest%204#k.-stains-tba)
+    [Stains](ICPCCamp 2016 Day 7 - Makoto Soejima Contest 4#k.-stains-tba)
 -   ?.容斥
-    [Paint](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%207%20-%20Makoto%20Soejima%20Contest%204#g.-paint-tba)
+    [Paint](ICPCCamp 2016 Day 7 - Makoto Soejima Contest 4#g.-paint-tba)
 -   ?.??? [Deep
-    Purple](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%206%20-%20Moscow%20SU%20Trinity%20Contest#d.-deep-purple-tba)
+    Purple](ICPCCamp 2016 Day 6 - Moscow SU Trinity Contest#d.-deep-purple-tba)
 -   ?.???
-    [Triangle](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%205%20-%20SPb%20SU%20and%20SPb%20AU%20Contest#l.-triangle-tba)
+    [Triangle](ICPCCamp 2016 Day 5 - SPb SU and SPb AU Contest#l.-triangle-tba)
 -   ?.二分+线段树 [Random Points On The
-    Circle](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%205%20-%20SPb%20SU%20and%20SPb%20AU%20Contest#a.-random-points-on-the-circle-tba)
+    Circle](ICPCCamp 2016 Day 5 - SPb SU and SPb AU Contest#a.-random-points-on-the-circle-tba)
 -   ?.??? [Graph
-    Drawing](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%203%20%E2%80%93%20Grand%20Prix%20of%20China#a.-graph-drawing-tba)
+    Drawing](ICPCCamp 2016 Day 3 – Grand Prix of China#a.-graph-drawing-tba)
 -   ?.???
-    [Attack](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%203%20%E2%80%93%20Grand%20Prix%20of%20China#d.-attack-tba)
+    [Attack](ICPCCamp 2016 Day 3 – Grand Prix of China#d.-attack-tba)
 -   ?.??? [Graph
-    Automorphism](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%203%20%E2%80%93%20Grand%20Prix%20of%20China#e.-graph-automorphism-tba)
+    Automorphism](ICPCCamp 2016 Day 3 – Grand Prix of China#e.-graph-automorphism-tba)
 -   ?.???
-    [Chessboard](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%201%20-%20ftiasch%E2%80%99s%20Contest%20#c.-chessboard-tba)
+    [Chessboard](ICPCCamp 2016 Day 1 - ftiasch’s Contest #c.-chessboard-tba)
 -   ?.结论+dp
-    [Bomb](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%202%20-%20ZhejiangU%20Contest#b.-bomb-tba)
+    [Bomb](ICPCCamp 2016 Day 2 - ZhejiangU Contest#b.-bomb-tba)
 -   ?.树分治+启发式合并
-    [Triple](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%202%20-%20ZhejiangU%20Contest#i.-triple-tba)
+    [Triple](ICPCCamp 2016 Day 2 - ZhejiangU Contest#i.-triple-tba)
 -   A.容斥
-    [Clique](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%202%20-%20ZhejiangU%20Contest#c.-clique-tba)
+    [Clique](ICPCCamp 2016 Day 2 - ZhejiangU Contest#c.-clique-tba)
 -   A.数据结构
-    [Four](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%202%20-%20ZhejiangU%20Contest#f.-four-tba)
+    [Four](ICPCCamp 2016 Day 2 - ZhejiangU Contest#f.-four-tba)
 
 TBA-2015
 --------
 
 -   ?.容斥 [Colorful
-    Floor](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final#e.-colorful-floor-tba)
+    Floor](2015 ACM-ICPC Asia EC-Final#e.-colorful-floor-tba)
 -   ?.树分治+概率 [Legacy Of The
-    Void](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final#g.-legacy-of-the-void-tba)
+    Void](2015 ACM-ICPC Asia EC-Final#g.-legacy-of-the-void-tba)
 -   ?.枚举 [Champions
-    League](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final#i.-champions-league-tba)
+    League](2015 ACM-ICPC Asia EC-Final#i.-champions-league-tba)
 -   ?.三维几何 [Convex
-    Polyhedron](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20EC-Final#k.-convex-polyhedron-tba)
+    Polyhedron](2015 ACM-ICPC Asia EC-Final#k.-convex-polyhedron-tba)
 -   ?.数学? [Equivalence
-    Relation](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Peterhof#c.-equivalence-relation-tba)
+    Relation](XVI Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof#c.-equivalence-relation-tba)
 -   ?.DP+几何 [Land
-    Division](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20NEERC%20Central%20Subregional%20Contest#f.-land-division-tba)
+    Division](2015 ACM-ICPC NEERC Central Subregional Contest#f.-land-division-tba)
 
 -   B.DP [Happiness of
     Frog](http://acm.hdu.edu.cn/showproblem.php?pid=5579)
 
 -   C.数据结构+模拟 [Iceberg
-    Orders](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest(NEERC%202015)#i.-iceberg-orders-tba)
+    Orders](2015 ACM-ICPC Northeastern European Regional Contest(NEERC 2015)#i.-iceberg-orders-tba)
 -   C.Hash+最小表示 [Pattern
-    String](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20Regional%20Shenyang)
+    String](2015 ACM-ICPC Asia Regional Shenyang)
 -   C.巨模拟
     [Asynchronous](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2389)
 
 -   D.Parse模拟[Advanced
     Calculator](http://acm.hdu.edu.cn/showproblem.php?pid=5553)
 -   D.模拟 [Dots
-    Game](http://dreadnought.icpc-camp.org/IX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Azov%20Sea#d.-the-dots-game-tba)
+    Game](IX Open Cup named after E.V. Pankratiev. Grand Prix of Azov Sea#d.-the-dots-game-tba)
 -   D.仙人掌 [New Teaching
-    Buildings](http://dreadnought.icpc-camp.org/2015%20ACM/ICPC%20Asia%20Regional%20Beijing%20Online#TOC)
+    Buildings](2015 ACM/ICPC Asia Regional Beijing Online#TOC)
 -   D.DP/搜索 [Clock
-    Adjusting](http://dreadnought.icpc-camp.org/2015%20ACM/ICPC%20Asia%20Regional%20Changchun%20Online)
--   D.虚树 [Angry
-    Trees](http://dreadnought.icpc-camp.org/2015%20Multi-University%20Training%20Contest%202)
+    Adjusting](2015 ACM/ICPC Asia Regional Changchun Online)
+-   D.虚树 [Angry Trees](2015 Multi-University Training Contest 2)
 -   D.Parse模拟 [Code
     Formatting](http://acm.hdu.edu.cn/showproblem.php?pid=5472)
--   D.三分 [Two
-    Ellipses](http://dreadnought.icpc-camp.org/ZOJ%20Monthly,%20October%202015)
+-   D.三分 [Two Ellipses](ZOJ Monthly, October 2015)
 -   D.??? [Word By
-    Mouth](http://dreadnought.icpc-camp.org/2015%20ICPC%20Southeastern%20European%20Regional(SEERC%202015)#j.-word-by-mouth-tba)
+    Mouth](2015 ICPC Southeastern European Regional(SEERC 2015)#j.-word-by-mouth-tba)
 
 TBR
 ---
@@ -151,9 +144,9 @@ Lolicon
 -   A.数学
     [Casino](http://jag2015spring.contest.atcoder.jp/tasks/icpc2015spring_c)(TBR)
 -   ?.??? [Optimal
-    BST](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%203%20%E2%80%93%20Grand%20Prix%20of%20China#h.-optimal-bst-lolicon-tbr)(TBR)
+    BST](ICPCCamp 2016 Day 3 – Grand Prix of China#h.-optimal-bst-lolicon-tbr)(TBR)
 -   ?.凸包 [Black
-    Sabbath](http://dreadnought.icpc-camp.org/ICPCCamp%202016%20Day%206%20-%20Moscow%20SU%20Trinity%20Contest#b.-black-sabbath-lolicon-tbr)(TBR)
+    Sabbath](ICPCCamp 2016 Day 6 - Moscow SU Trinity Contest#b.-black-sabbath-lolicon-tbr)(TBR)
 
 -   A.Fast分治乘法研究
 -   A.TCO15 3A-1k
@@ -167,23 +160,22 @@ Rowdark
 抠标程：
 
 -   ~~A.枚举 [Strawberry Fields
-    Forever](http://dreadnought.icpc-camp.org/IX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Azov%20Sea#i.-strawberry-fields-forever-tba)~~
+    Forever](IX Open Cup named after E.V. Pankratiev. Grand Prix of Azov Sea#i.-strawberry-fields-forever-tba)~~
 -   ~~B.数论 [Primes
-    Pattern](http://dreadnought.icpc-camp.org/IV%20E.V.%20Pankratiev%20Memorial%20Open%20Cup.%20GP%20of%20SPb#i.-primes-pattern-lolicon-tbr)~~
+    Pattern](IV E.V. Pankratiev Memorial Open Cup. GP of SPb#i.-primes-pattern-lolicon-tbr)~~
 -   ~~C.FFT模拟 [Laser
-    Billiards](http://dreadnought.icpc-camp.org/IX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Onsite%20Round#b.-laser-billiards-tba)~~
+    Billiards](IX Open Cup named after E.V. Pankratiev. Onsite Round#b.-laser-billiards-tba)~~
 
 -   ? [Binary Search
-    Tree](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20NEERC%20Western%20Subregional%20Contest)
+    Tree](2015 ACM-ICPC NEERC Western Subregional Contest)
 -   C.球面几何
-    [Satellite](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia)
--   C.论文题 [John’s
-    Fences](http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20Regional%20Shenyang)
+    [Satellite](XVI Open Cup named after E.V. Pankratiev. Grand Prix of Siberia)
+-   C.论文题 [John’s Fences](2015 ACM-ICPC Asia Regional Shenyang)
     [paper](/BarrierCycleBasis.pdf)
 -   C.? [Random Inversion
-    Machine](http://dreadnought.icpc-camp.org/2015%20Multi-University%20Training%20Contest%209)
+    Machine](2015 Multi-University Training Contest 9)
 -   C.? [Eulerian
-    Graphs](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20St.%C2%A0Petersburg)
+    Graphs](XVI Open Cup named after E.V. Pankratiev. Grand Prix of St. Petersburg)
 
 -   ~~A.DP[Kingdom of
     Tree](http://acm.hdu.edu.cn/showproblem.php?pid=5561)~~
@@ -193,7 +185,7 @@ Rowdark
 Contests
 ========
 
-[第四式程式漏洞封印术](http://dreadnought.icpc-camp.org/Bug收集整理)
+[第四式程式漏洞封印术](Bug收集整理)
 
 Team Trainings
 --------------
