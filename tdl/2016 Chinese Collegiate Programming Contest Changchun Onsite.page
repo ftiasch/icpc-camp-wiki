@@ -24,8 +24,8 @@ G. Instability \[Constroy\]
 ===========================
 
 一个无向图中有多少个子图是不稳定的。一个图不稳定等价于其中存在点数为3的团或点数为3的独立集。
-由 [Ramsey's theorem](https://en.wikipedia.org/wiki/Ramsey%27s_theorem)
-的 r(3, 3) = 6 可知大于等于6的子图一定不稳定，只需暴力搜索大小为3, 4,
+由 [Ramsey's theorem](https://en.wikipedia.org/wiki/Ramsey's_theorem) 的
+r(3, 3) = 6 可知大于等于6的子图一定不稳定，只需暴力搜索大小为3, 4,
 5的子图即可。
 
 H. Sequence I \[Skywalkert\]
