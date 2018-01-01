@@ -1,0 +1,111 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(2000000);
+int go[18][N];
+int dis[18 * N], num[18][N];
+int mod[18];
+int idx[18 * N];
+struct Edge {
+    int y, next;
+} edges[18 * N];
+int l;
+void build(int x, int y) {
+    edges[++l].y = y;
+    edges[l].next = idx[x];
+    idx[x] = l;
+}
+int main() {
+    int tests;
+    scanf("%d", &tests);
+    for(int qq(1); qq <= tests; qq++) {
+        int x0, p;
+        scanf("%d%d", &x0, &p);
+        int tot(0);
+        int lst(p);
+        mod[++tot] = p;
+        for(int i(0); i < p; i++) {
+            go[1][i] = -1;
+        }
+        for(;;) {
+            vector<pair<int, int> > vec;
+            int x(lst);
+            for(int i(2); i * i <= lst; i++) {
+                if(x % i == 0) {
+                    vec.push_back(make_pair(i, 0));
+                    while(x % i == 0) {
+                        vec.back().second++;
+                        x /= i;
+                    }
+                }
+            }
+            if(x != 1) {
+                vec.push_back(make_pair(x, 1));
+            }
+            int cur(1);
+            for(int i(0); i < (int)vec.size(); i++) {
+                int tmp(vec[i].first == 2 ? 3 : vec[i].first == 5 ? 20 : (vec[i].first % 10 == 1 || vec[i].first % 10 == 9) ? vec[i].first - 1 : 2 * (vec[i].first + 1));
+                for(int j(2); j <= vec[i].second; j++) {
+                    tmp = tmp * vec[i].first;
+                }
+                cur = cur / __gcd(cur, tmp) * tmp;
+            }
+            mod[++tot] = cur;
+            int a(1 % lst), b(0);
+            for(int i(0); i < cur; i++) {
+                go[tot][i] = b;
+                a += b;
+                if(a >= lst) {
+                    a -= lst;
+                }
+                swap(a, b);
+            }
+            if(cur == lst) {
+                break;
+            }
+            lst = cur;
+        }
+        int np(0);
+        for(int i(1); i < tot; i++) {
+            for(int j(0); j < mod[i]; j++) {
+                num[i][j] = ++np;
+                dis[np] = -1;
+                idx[np] = 0;
+            }
+        }
+        l = 0;
+        for(int i(2); i <= tot; i++) {
+            for(int j(0); j < mod[i]; j++) {
+                build(num[i - 1][go[i][j]], i == tot ? num[i - 1][j] : num[i][j]);
+            }
+        }
+        vector<int> q;
+        q.push_back(num[1][x0 % p]);
+        dis[q[0]] = 0;
+        for(int i(0); i < (int)q.size(); i++) {
+            int tmp = dis[q[i]];
+            if(i == 0) {
+                dis[q[0]] = -1;
+            }
+            int v(q[i]);
+            for(int p(idx[v]); p; p = edges[p].next) {
+                int y(edges[p].y);
+                if(dis[y] == -1) {
+                    dis[y] = tmp + 1;
+                    q.push_back(y);
+                }
+            }
+        }
+        int ans(1e9);
+        for(int i(1); i < tot; i++) {
+            if(dis[num[i][x0 % mod[i]]] != -1) {
+                ans = min(ans, dis[num[i][x0 % mod[i]]]);
+            }
+        }
+        if(ans == 1e9) {
+            ans = -1;
+        }
+        printf("%d\n", ans);
+    }
+}
+```
