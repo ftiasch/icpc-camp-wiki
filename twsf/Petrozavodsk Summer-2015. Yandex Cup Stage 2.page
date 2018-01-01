@@ -16,7 +16,7 @@ C. Coin Game \[jsy\]
 D. Domination \[zxa\]
 =====================
 
-不带修改的版本就是[这个题](http://twsf.icpc-camp.org/Warsaw%20U%20Contest,%20Urozero%202015%20Day%204#d.-couriers-jsy)……
+不带修改的版本就是[这个题](Warsaw U Contest, Urozero 2015 Day 4#d.-couriers-jsy)……
 
 带修改了于是要维护支持询问一段区间有多少个某个数和区间赋值……所以愚蠢的方法就是外面整体拿map维护一段一段的区间，内部对每种权值再开个数据结构，平衡树啥的看起来就很麻烦所以直接选择动态开节点的线段树，所以空间就直接炸了。
 
