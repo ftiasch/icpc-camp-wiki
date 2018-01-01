@@ -1,0 +1,27 @@
+M. Subsequence
+==============
+
+**DescriptionAndSolution** A classic kth largest element query by
+maintaining functional heap.
+
+Noted that in this problem, for better complexity, we use multi-child
+functional heap. And we maintain these children by using regular heap.
+
+When we merge two functional heap, we can easily take one functional
+heap as the child of the other. Which process involves only regular heap
+merge once (the size of this regular heap is at most $n$).
+
+At last, this functional heap imply another graph, with constant degree
+for each node and negative cost for each edge. In using priority queue,
+we can find the kth longest path in O(k log n).
+
+[M.cpp](2016.10.31%20M.cpp)
+
+I. The Elder
+============
+
+**题意：**一棵有根树，从每个点跳到根。每次可以往上跳$L$的长度花费$L^2$的时间，每跳一次需要额外的$c$时间。求每个点跳到根的最小时间的最大值。
+
+**做法：**树分治+斜率优化。每次分治有一个入口$u$（一开始为根），先递归分治$u$所在的子树，计算得到$u$到分治中心路径组成的凸包，然后更新别的子树每个点的答案。再把每个子树的根作为入口继续分治。
+
+[Code](2016.10.31%20I.cpp)
