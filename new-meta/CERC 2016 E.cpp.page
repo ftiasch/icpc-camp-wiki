@@ -1,0 +1,35 @@
+``` {.python}
+def pr(t) :
+    print t[0], t[1], t[2]
+def apd(t, x) :
+    global s, q, ss, n
+    nw = k * (t[(x + 1) % 3] + t[(x + 2) % 3]) - t[x]
+    if nw <= 0 :
+        return;
+    t = tuple(sorted(t[:x] + (nw,) + t[x + 1:]))
+#   pr(t)
+    if not(t in s) :
+        s.add(t)
+        q = q + [t]
+        if not(q[-1][0] in ss) and not(q[-1][1] in ss) and not(q[-1][2] in ss) :
+            pr(q[-1])
+            n -= 1
+            if n == 0 :
+                exit(0)
+            for j in range(3) :
+                ss.add(q[-1][j])
+global s, q, ss, n
+k, n = map(eval, raw_input().split())
+
+ss = set()
+s = set()
+i = 0
+s.add((1, k, k * k + k))
+q = [(1, k, k * k + k)]
+
+while True :
+    apd(q[i], 0)
+    apd(q[i], 1)
+    apd(q[i], 2)
+    i = i + 1
+```
