@@ -1,0 +1,53 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+const int N = 64 + 1;
+
+long long k, f[N];
+int n;
+int a[N];
+
+long long solve(int m) {
+    for (int i = 1; i <= n; i++) {
+        f[i] = 1LL << max(0, i - m);
+        for (int j = 1; j <= i / 2; j++) {
+            bool possible = true;
+            for (int k = 1; k <= j; k++) {
+                if (k <= m && i - j + k <= m && a[k] != a[i - j + k]) {
+                    possible = false;
+                }
+            }
+            if (possible) {
+                f[i] -= f[j] << max(0, i - j - max(m, j));
+            }
+        }
+        //cout << "i = " << i << " f = " << f[i] << endl;
+    }
+    return f[n];
+}
+
+int main() {
+    while (cin >> n >> k && n + k) {
+        for (int i = 1; i <= n; i++) {
+            a[i] = 0;
+            long long tmp;
+            if ((tmp = solve(i)) < k) {
+                k -= tmp;
+                a[i] = 1;
+            }
+        }
+        for (int i = 1; i <= n; i++) {
+            putchar(a[i] + 'a');
+        }
+        puts("");
+    }
+    return 0;
+}
+```
