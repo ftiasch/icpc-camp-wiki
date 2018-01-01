@@ -1,0 +1,175 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <string>
+using namespace std;
+
+#define left LEFT
+#define right RIGHT
+
+const int DEBUG = 0;
+const int N = 5e3 + 7;
+const int M = 2e6 + 7;
+const int LOG = 13;
+
+int father[N][LOG];
+
+int n, m, q, r_num;
+struct Graph {
+    int sum, other[M], succ[M], last[N];
+    void clear(int n) {
+        sum = 0;
+        fill(last, last + n, -1);
+    }
+    void add(int a, int b) {
+        other[sum] = b, succ[sum] = last[a], last[a] = sum++;
+    }
+};
+Graph g, tree;
+int deg[N], len[N], root;
+int tot, left[N], right[N], dep[N];
+
+void dfs(int x) {
+    left[x] = ++tot;
+    for (int i = tree.last[x]; ~i; i = tree.succ[i]) {
+        int y = tree.other[i];
+        dfs(y);
+    }
+    right[x] = tot;
+}
+
+bool cmp(int a, int b) {
+    return left[a] < left[b];
+}
+
+int getLCA(int u, int v) {
+    if (dep[u] < dep[v]) swap(u, v);
+    int delta = dep[u] - dep[v];
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (delta >> i & 1) {
+            u = father[u][i];
+        }
+    }
+    if (u == v) return u;
+    for (int i = LOG - 1; i >= 0; i--) {
+        if (father[u][i] != father[v][i]) {
+            u = father[u][i];
+            v = father[v][i];
+        }
+    }
+    return father[u][0];
+}
+
+void solve() {
+    scanf("%d %d", &n, &m);
+    g.clear(n);
+    fill(deg, deg + n, 0);
+
+    static vector<int> s;
+    s.clear();
+    for (int i = 0; i < m; i++) {
+        int pos; scanf("%d", &pos);
+        s.push_back(pos);
+    }
+    sort(s.begin(), s.end());
+    for (int i = 0, delta = 0, ptr = 0; i < n; i++, delta += i) {
+        while (ptr < s.size() && s[ptr] - delta <= i) {
+            if (s[ptr] - delta != i) {
+                g.add(i, s[ptr] - delta);
+                deg[i]++;
+            }
+            ptr++;
+        }
+    }
+    root = n;
+    dep[root] = 0;
+    for (int j = 0; j < LOG; j++) father[root][j] = root;
+    for (int i = 0; i < n; i++) {
+        if (deg[i] == 0) {
+            father[i][0] = root;
+            dep[i] = 1;
+        } else {
+            int x = -1;
+            for (int j = g.last[i]; ~j; j = g.succ[j]) {
+                int y = g.other[j];
+                if (x == -1) {
+                    x = y;
+                } else {
+                    x = getLCA(x, y);
+                }
+            }
+            father[i][0] = x;
+            dep[i] = dep[x] + 1;
+        }
+        if (DEBUG) {
+            printf("father[%d] = %d\n", i, father[i][0]);
+        }
+        for (int j = 0; j + 1 < LOG; j++) {
+            father[i][j + 1] = father[father[i][j]][j];
+        }
+    }
+
+    tree.clear(n + 1);
+    for (int i = 0; i < n; i++) {
+        tree.add(father[i][0], i);
+    }
+    tot = 0;
+    dep[n] = 0;
+    dfs(n);
+
+    scanf("%d %d", &q, &r_num);
+    for (int i = 0; i < q; i++) {
+        scanf("%d", &len[i]);
+    }
+    static vector<int> r;
+    r.clear();
+    for (int i = 0; i < r_num; i++) {
+        int pos; scanf("%d", &pos);
+        r.push_back(pos);
+    }
+    sort(r.begin(), r.end());
+    for (int i = 0, delta = 0, ptr = 0; i < q; delta += len[i], i++) {
+        if (DEBUG) {
+            printf("query #%d\n", i);
+        }
+        static vector<int> xs;
+        xs.clear();
+        while (ptr < r.size() && r[ptr] - delta < len[i]) {
+            if (r[ptr] - delta < n) {
+                xs.push_back(r[ptr] - delta);
+            }
+            ptr++;
+        }
+        sort(xs.begin(), xs.end(), cmp);
+        int answer = 0, last_x = -1;
+        for (auto x : xs) {
+            if (DEBUG) {
+                printf("--%d ", x);
+            }
+            if (last_x == -1) {
+                answer = dep[x];
+            } else {
+                answer += dep[x];
+                answer -= dep[getLCA(x, last_x)];
+            }
+            last_x = x;
+        }
+        if (DEBUG) {
+            puts("");
+        }
+        printf("%d\n", answer);
+    }
+}
+
+int main() {
+    int test; scanf("%d", &test);
+    while (test--) {
+        static int testCount = 0;
+        printf("Case #%d:\n", ++testCount);
+        solve();
+    }
+    return 0;
+}
+```
