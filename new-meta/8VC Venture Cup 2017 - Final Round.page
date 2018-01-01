@@ -7,7 +7,7 @@ D. Bacterial Melee
 **做法: **
 定义$comp(s)$是字符串$s$删掉多余的相邻且相同的字符后的字符串。比如$comp(aabccd)=abcd$。那么一个结果$r$可以由$s$得到当且仅当$comp(r)$是$comp(s)$的子序列（一次操作可以抹掉comp中的字符，或者不变）。一个$comp$可以生成$\binom{n-1}{length(comp)-1}$种不同的最终结果。所以只要统计$comp(s)$的对应长度的合法（符合$comp$的定义）的子序列有多少个，再乘上那个组合数加起来就可以了。这个可以用dp。记$las[i]$为$s[i]$在$s$中上一次出现的位置，$dp[i][j]$表示在$s$长度为$j$的前缀中，长度为$i$的合法子序列有多少个。那么$dp[i][j]=dp[i][j-1]+dp[i-1][j-1]-dp[i-1][las[i]-1]-(dp[i-1][las[i]]-dp[i-1][las[i]-1])$，各项分别对应+不加$s[i]$+加上$s[i]$-加上$s[i]$后重复-加上$s[i]$后不重复且不合法。
 
-[D.cpp](8VC%20Venture%20Cup%202017%20-%20Final%20Round%20D.cpp)
+[D.cpp](8VC Venture Cup 2017 - Final Round D.cpp)
 
 E. Byteland coins
 =================
@@ -43,4 +43,4 @@ F. Long number
 
 最后复杂度就是$O(n \log n)$。
 
-[F.cpp](8VC%20Venture%20Cup%202017%20-%20Final%20Round%20F.cpp)
+[F.cpp](8VC Venture Cup 2017 - Final Round F.cpp)
