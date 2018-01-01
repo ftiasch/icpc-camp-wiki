@@ -1,0 +1,158 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int INF = 2e9 + 9, N = 2e5 + 5;
+int m, t[N];
+struct line {
+    long long k, b;
+    line(long long k, long long b) : k(k), b(b) {}
+    long long calc(long long x) {return k * x + b;}
+};
+line operator + (const line &a, const line &b) {
+    return line(a.k + b.k, a.b + b.b);
+}
+line operator - (const line &a, const line &b) {
+    return line(a.k - b.k, a.b - b.b);
+}
+struct event {
+    int stage, change, b, type;
+    void go() {
+        stage += type;
+        if (type == 1) {
+            if (stage == 1) change = m / 2 + 1 - b;
+            else if (stage == 2) change = m + 1 - b;
+            else if (stage == 3) change = m + m / 2 + 1 - b;
+            else change = INF;
+        }
+        else {
+            if (stage == 1) change = INF;
+            else if (stage == 2) change = b - m / 2;
+            else if (stage == 3) change = b - m;
+            else change = b - m / 2 - m;
+        }
+    }
+    event(int type, int bb) : type(type), b(bb) {
+        if (type == -1) b += m;
+            if (b < m / 2 + 1) {
+                stage = 1 - type;
+                go();
+            }
+            else if (b < m + 1) {
+                stage = 2 - type;
+                go();
+            
+            }
+            else if (b < m + m / 2 + 1) {
+                stage = 3 - type;
+                go();
+            }
+            else {
+                stage = 4 - type;
+                go();
+            }
+    }
+    line calc() {
+        if (stage == 1) return line(type, b);
+        else if (stage == 2) return line(-type, m - b);
+        else if (stage == 3) return line(type, b - m);
+        return line(-type, 2 * m - b);
+    }
+};
+bool operator < (const event &a, const event &b) {
+    return a.change > b.change;
+}
+int main() {
+    int n;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; ++ i) scanf("%d", &t[i]);
+    for (int i = 0; i < n; ++ i) {
+        int s;
+        scanf("%d", &s);
+        t[i] = (s + m - t[i]) % m;
+    }
+    vector<event> init;
+    init.push_back(event(1, 0));
+    int A = 0;
+    bool flag = 0;
+    for (int i = n - 1; i >= 1; -- i) {
+        flag ^= 1;
+        A = (m + t[(i + 1) % n] - A) % m;
+        if (flag) init.push_back(event(-1, A));
+            else init.push_back(event(1, A));
+    }
+    //for (auto e : init) printf("%dx+%d\n", e.calc().k, e.calc().b);
+    if (!flag) {
+        int x = -1, aa = (t[1] - A + m) % m;
+        if (aa % 2 == 0) {
+            x = aa / 2;
+        }
+        else if (m & 1) {
+            x = (aa + m) / 2;
+        }
+        if (x == -1) return 0 * puts("-1");
+        line ans = line(0, 0);
+        //printf("x=%d\n", x);
+        for (auto e : init) {
+            while (e.change <= x) {
+            //printf("%d\n", e.type);
+            //printf("s%d %d->", e.stage, e.change);
+                e.go();
+            //printf("s%d %d\n", e.stage, e.change);
+            }
+            ans = ans + e.calc();
+        }
+        long long ans1 = ans.calc(x);
+        if (aa % 2 == 0 && m % 2 == 0) {
+            x += m / 2;
+            ans = line(0, 0);
+            for (auto e : init) {
+                while (e.change <= x) {
+                //printf("%d\n", e.type);
+                //printf("s%d %d->", e.stage, e.change);
+                    e.go();
+                //printf("s%d %d\n", e.stage, e.change);
+                }
+                ans = ans + e.calc();
+            }
+            ans1 = min(ans1, ans.calc(x));
+        }
+        printf("%lld\n", ans1);
+        return 0;
+    }
+    if (t[1] != A) return 0 * puts("-1");
+    priority_queue<event> q;
+    line sum = line(0, 0);
+    for (auto e : init) {
+        q.push(e);
+        sum = sum + e.calc();
+    }
+    //printf("sum=%dx + %d\n", sum.k, sum.b);
+    long long ans = sum.calc(0);
+    //int lasx = 0;
+    //for (int i = 0; i < n; ++ i) printf("%d ", t[i]); puts("");
+    //printf("init=%lld\n", ans);
+    while (!q.empty()) {
+        int x = q.top().change;
+        if (x >= m) break;
+        if (x) ans = min(ans, sum.calc(x - 1));
+        vector<event> c;
+        while (!q.empty() && q.top().change == x) {
+            c.push_back(q.top());
+            q.pop();
+        }
+        //printf("****x=%d\n", x);
+        for (auto e : c) {
+            sum = sum - e.calc();
+            //printf("s%d t%d b%d %d cost%d ->", e.stage, e.type, e.b, e.change, e.calc(lasx));
+            e.go();
+            //printf("s%d t%d b%d %d cost%d\n", e.stage, e.type, e.b, e.change, e.calc(x));
+            sum = sum + e.calc();
+            //printf("cost = %lld\n", x, sum);
+            q.push(e);
+        }
+        ans = min(ans, sum.calc(x));
+    }
+    ans = min(ans, sum.calc(m - 1));
+    printf("%lld\n", ans);
+}
+```
