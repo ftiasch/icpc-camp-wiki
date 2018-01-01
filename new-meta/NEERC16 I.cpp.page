@@ -1,0 +1,108 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+void print(int x, int y, int z) {
+    printf("%d %s %d\n", x, y == 0 ? "left" : "right", z);
+    fflush(stdout);
+}
+int lst;
+string get() {
+    string res;
+    cin >> res;
+    if(res == "left") {
+        lst = 0;
+    }else if(res == "right") {
+        lst = 1;
+    }else if(res != "center") {
+        exit(0);
+    }
+    return res;
+}
+int main() {
+    vector<int> p;
+    p.push_back(0);
+    vector<int> bk, mx, fa;
+    bk.push_back(-1);
+    mx.push_back(1e9);
+    fa.push_back(-1);
+    int k;
+    scanf("%d", &k);
+    get();
+    for(;;) {
+        if(p.back() == k) {
+            print(bk.back() % k, 0, bk.back() % k);
+            int cnt(0);
+            while(get() != "right") {
+                print(0, 0, 0);
+                cnt++;
+            }
+            do {
+                print(0, 1, 0); 
+                cnt++;
+            } while(get() != "left");
+            for(int i(0); i < cnt; i++) {
+                print(0, lst, 0);
+                get();
+            }
+            int tmp(mx.back());
+            bk.pop_back();
+            p.pop_back();
+            mx.pop_back();
+            if(tmp < mx.back()) {
+                bk.back() = fa.back();
+                mx.back() = tmp;
+            }
+            fa.pop_back();
+        }else {
+            p.back()++;
+            print(1, 1, 1);
+            string tmp(get());
+            if(tmp == "center") {
+                fa.push_back(p.back());
+                p.push_back(0);
+                bk.push_back(-1);
+                mx.push_back(1e9);
+            }else if(tmp == "right") {
+                print(0, 0, 0);
+                int cnt(0);
+                while(get() != "left") {
+                    print(0, 1, 0);
+                    cnt++;
+                }
+                for(int i(0); i < cnt; i++) {
+                    print(0, 1, 0);
+                    get();
+                }
+                if(cnt != 0 && (int)p.size() - cnt < mx.back()) {
+                    bk.back() = p.back();
+                    mx.back() = (int)p.size() - cnt;
+                }
+                if(cnt == 0) {
+                    print(0, 1, 0);
+                    get();
+                }
+            }else {
+                int cnt(0);
+                do {
+                    print(0, lst, 0);
+                    cnt++;
+                } while(get() != "right");
+                int dep(p.size() + 1);
+                do {
+                    print(0, lst, 0);
+                    cnt++;
+                    dep--;
+                } while(get() != "left");
+                for(int i(0); i < cnt - 1; i++) {
+                    print(0, lst, 0);
+                    get();
+                }
+                if(dep < mx.back()) {
+                    bk.back() = p.back();
+                    mx.back() = dep;
+                }
+            }
+        }
+    }
+}
+```
