@@ -1,0 +1,30 @@
+To bound the time complexity of the wide used incremental construction
+algorithm for suffix automaton, one should argue that: 1. The size of
+the automaton is of O(n); 2. The number of executed "redirect"
+operations is of O(n).
+
+1.the size of the automaton By the correctness of the algorithm,
+there're O(n) states in a suffix automaton. To count the number of
+transitions, consider a spanning tree of the automaton rooted by the
+initial vertex. For each transition not in the spanning tree, we
+construct a path that go along the spanning tree, then pass through the
+transition and terminate at the final vertex. The paths are different
+for all the transitions not in the spanning tree for the automaton being
+deterministic. We are done by noticing that such a path represents a
+suffix.
+
+2.the number of "redirect" operations Consider the shortest substring
+corresponding to father(last). (last is the vertex representing the
+whole string.) The substring ss has its last occurence, meaning
+s\[a..b\]=ss where a is as big as possible. We will prove that the value
+of a increase for every "redirect" operation. For every vertex in the
+automaton, the length of the shortest substring corresponding to that
+vertex is the length of the shortest path from the initial vertex to
+that vertex. We denote the length of the shortest path from the initial
+vertex to father(last) by a(s) where s is the whole string. As one
+charactor being extended to the end of the string, namely x being
+extended to s, and once after the first "redirect" operation, we have
+a(s+x)&lt;=a(s)+1 as for now father(last(s+x)) is just the copy of some
+vertex that direct accessible from father(...father(last(s))). Each of
+the following "redirect" operations decreases a(s+x) by at least one for
+it is strictly shorter than its kid.
