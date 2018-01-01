@@ -1,0 +1,65 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 4e5 + 5, B = 666;
+int x[N], n;
+vector<int> dalao[N];
+priority_queue<int> group[N];
+void build(int s) {
+    int t = min(n - 1, s + B - 1);
+    int x = s / B;
+    while (!group[x].empty()) group[x].pop();
+    priority_queue<int, vector<int>, greater<int>> xiaolao;
+    for (int u : dalao[x]) xiaolao.push(u);
+    dalao[x].clear();
+    for (int i = s; i <= t; ++ i) {
+        xiaolao.push(::x[i]);
+        ::x[i] = xiaolao.top();
+        xiaolao.pop();
+        group[x].push(::x[i]);
+    }
+}
+int work(int s, int t, int p) {
+    build(s / B * B);
+    build(t / B * B);
+    if (s / B == t / B) {
+        for (int i = s; i <= t; ++ i) if (x[i] > p) swap(x[i], p);
+        build(s / B * B);
+        return p;
+    }
+    for (int i = s; i < s / B * B + B; ++ i) if (x[i] > p) swap(x[i], p);
+    build(s / B * B);
+    for (int i = s / B * B + B; i / B < t / B; i += B) {
+        int x = i / B;
+        if (group[x].top() > p) {
+            dalao[x].push_back(p);
+            p = group[x].top();
+            group[x].pop();
+            group[x].push(dalao[x].back());
+        }
+    }
+    for (int i = t / B * B; i <= t; ++ i) if (x[i] > p) swap(x[i], p);
+    build(t / B * B);
+    return p;
+}
+int main() {
+    int q;
+    scanf("%d%d", &n, &q);
+    for (int i = 0; i < n; ++ i) scanf("%d", &x[i]);
+    for (int i = 0; i < n; i += B) build(i);
+    for (int i = 0; i < q; ++ i) {
+        int s, t, p;
+        scanf("%d%d%d", &s, &t, &p);
+        -- s, -- t;
+        int ans;
+        if (s <= t) {
+            ans = work(s, t, p);
+        }
+        else {
+            ans = work(s, n - 1, p);
+            ans = work(0, t, ans);
+        }
+        printf("%d\n", ans);
+    }
+}
+```
