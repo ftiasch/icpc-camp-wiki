@@ -1,0 +1,19 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+int mp[99][99];
+int a[20] = {15, 14, 8, 12, 14, 13, 15, 13, 13, 12, 16};
+int b[20] = {15, 16, 8, 12, 15, 16, 16, 14, 10, 16, 16};
+int main() {
+    for(int i(0); ; i++) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        if(x == -1 && y == -1) {
+            break;
+        }
+        mp[x][y] = 1;
+        printf("%d %d\n", a[i], b[i]);
+        fflush(stdout);
+    }
+}
+```
