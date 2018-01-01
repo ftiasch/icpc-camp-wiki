@@ -1,0 +1,33 @@
+Week of Code 17, Hackerrank
+
+总体来看，没有什么代码量大的题目，拿来练手还是不错的。
+
+Find the Robot
+==============
+
+水题，利用每4次行动得到的结果是相同的来简化操作。
+
+Count Fridays the 13th
+======================
+
+使用python的date类和timedelta类可以轻松的过掉这个题。
+
+Road Reform
+===========
+
+最短路+排序+前缀和，没什么意思。
+
+Cross the River
+===============
+
+线段树中维护单调队列来优化DP，没什么难度。
+
+Garden Planning
+===============
+
+状态压缩动态规划，注意使用最小表示即可。
+
+Counting Permutations
+=====================
+
+树DP，由于需要判断树同构，可以使用hash或者其他技巧，注意hash的状态空间。
