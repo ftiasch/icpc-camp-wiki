@@ -1,0 +1,45 @@
+# A Number Theory Problem [zyh]
+
+$ans=\lfloor n/3 \rfloor$
+
+# B Hemi Palindrome [zyh补]
+
+从左往右逐位确定答案，那么一个子问题是确定了一个前缀之后有多少个Hemi Palindrome，利用容斥原理，就是[奇位回文]+[偶位回文]-[奇位和偶位都是回文]，如果已经确定的长度不超过一半，那么方案数就是2^(自由位)，否则根据已经确定的位可以知道是否可能是回文。
+
+# C Mr. Panda and Strips [zyh补]
+
+枚举右边区间的左端点$l$，用一个std::set维护右端点$<l$的所有极大区间，现在右边区间的右端点$r$往右滑，相当于往$l$左侧插入障碍点，删除所有经过障碍点的区间，然后重新插入两个障碍点往左往右延伸的极大区间，每个区间只会被删除一次，最多插入$O(n)$个区间
+
+# D Ice Cream Tower [hwq&zyh]
+
+排序后二分答案贪心
+
+# E Bet [zyh&hwq&ghc]
+
+假设在第$i$支队伍下注$x_i>0$，那么要有$(1+\frac{b_i}{a_i})x_i>\sum x_i$，整理可得$\sum \frac{a_i}{a_i+b_i}<1$，排序后从小到大贪心即可，需要高精度
+
+# F Mr. Panda and Fantastic Beasts [zyh补]
+
+对所有串建立一个后缀自动机之后相当于从root出发在一个DAG上走最少的步数到某个关键点，bfs即可
+
+# G Pandaria [zyh补]
+
+先做一次最小生成树，但是在合并u和v的时候并不直接连边，而是新建一个节点w向u和v连边，最后可以得到一棵树，这样对于一次查询，往上沿着不大于上限的边走到某个点，就是查询这个点所在子树内的众数，线段树合并
+
+# H Great Cells [zyh&ghc]
+
+实际上Great Cells的个数不超过$min(n,m)$，先考虑有$k$个Great Cells分别在$(1,1),(2,2),...,(k,k)$的情况，blablabla，由于加密方式不太好，也可以直接对每个格子计算贡献
+
+# I Cherry Pick
+
+# J Mr.Panda and TubeMaster [hwq补]
+
+黑白染色定向，把每个点拆成左右两部，相邻点按方向将出点的左部与入点的右部相连，连接非必要点的左右部表示该点可以不选，做最小费用最大流，不满流则impossible
+
+# K Justice Rains From Above [zyh补]
+
+把所有点投影到球面上，相当于在球面上找一个圆包含最多的点，把点扩成圆，把圆缩成点，相当于找一个点在最多的圆内，枚举一个圆，将其他圆和这个圆求交之后极角排序即可
+
+# L World Cup [zyh&hwq]
+
+暴力枚举六场比赛的结果
