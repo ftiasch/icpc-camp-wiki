@@ -14,7 +14,7 @@ E. Fibonacci
 而这些边具体是什么可以处理出所有$p$值后正向递推得出.
 所以直接BFS就做完了. 复杂度$15*2000000$.
 
-[E.cpp](2016%20Qing%20Dao%20E)
+[E.cpp](2016 Qing Dao E)
 
 M. Generator and Monitor
 ========================
@@ -23,4 +23,4 @@ M. Generator and Monitor
 
 直接KDtree 维护吧。。
 
-[M.cpp](2016%20Qing%20Dao%20M)
+[M.cpp](2016 Qing Dao M)
