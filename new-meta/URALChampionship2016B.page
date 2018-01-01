@@ -1,0 +1,209 @@
+``` {.cpp}
+#include <cstdio>
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <cassert>
+#include <algorithm>
+#include <set>
+using namespace std;
+
+const bool DEBUG = false;
+
+int MOD;
+
+int fix(long long t) {
+    return (t % MOD + MOD) % MOD;
+}
+
+int power(int a, int n, int mod = MOD) {
+    int ret = 1 % mod;
+    assert(a < MOD);
+    for (long long i = 1; i <= n; i <<= 1) {
+        if (n & i) {
+            ret = 1LL * ret * a % mod;
+        }
+        a = 1LL * a * a % mod;
+    }
+    return ret;
+}
+/*
+void calcH(int &t, int &h, const int p) {
+    int tmp = p - 1; for (t = 0; (tmp & 1) == 0; tmp /= 2) t++; h = tmp;
+}
+
+bool solve(int a, int p, int &x, int &y) {
+    srand(19950602);
+    if (p == 2) { x = y = 1; return true; }
+    int p2 = p / 2, tmp = power(a, p2, p);
+    if (tmp == p - 1) return false;
+    if ((p + 1) % 4 == 0) {
+        x = power(a, (p + 1) / 4, p); y = p - x; return true;
+    } else {
+        int t, h, b, pb; calcH(t, h, p);
+        if (t >= 2) {
+            do {b = rand() % (p - 2) + 2;
+            } while (power(b, p / 2, p) != p - 1);
+            pb = power(b, h, p);
+        } int s = power(a, h / 2, p);
+        for (int step = 2; step <= t; step++) {
+            int ss = (((long long)(s * s) % p) * a) % p;
+            for (int i = 0; i < t - step; i++) ss = ((long long)ss * ss) % p;
+            if (ss + 1 == p) s = (s * pb) % p; pb = ((long long)pb * pb) % p;
+        } x = ((long long)s * a) % p; y = p - x;
+    } return true;
+}
+*/
+
+void multiply(int &c, int &d, int a, int b, int w) {
+    int cc = 1LL * a * c % MOD + 1LL * b * d % MOD * w % MOD;
+    cc %= MOD;
+    int dd = 1LL * a * d % MOD + 1LL * b * c % MOD;
+    dd %= MOD;
+    c = cc, d = dd;
+}
+
+bool solve(int n, int &x) {
+    if (MOD == 2) { x = 1; return true; }
+    if (power(n, MOD / 2, MOD) == MOD - 1) return false;
+    int a, w;
+    for (a = 0, w = (-n + MOD) % MOD; ; a ++) {
+        if ((w = ((1LL * a * a % MOD - n + MOD) % MOD)) == 0) {
+            return x = a, true;
+        } else if (power(w, MOD / 2, MOD) == MOD - 1) {
+            break;
+        }
+    }
+    // x = (a + sqrt(w)) ^ ((p + 1) / 2)
+    int times = (MOD + 1) / 2;
+    int c = 1, d = 0;
+    int b = 1;
+    while (times) {
+        if (times & 1) multiply(c, d, a, b, w);
+        multiply(a, b, a, b, w);
+        times >>= 1;
+    }
+    return x = c, true;
+}
+
+int x;
+vector<int> ans;
+
+struct Matrix {
+    int dat[2][2];
+    //Matrix() {}
+    Matrix(int a = 0, int b = 0, int c = 0, int d = 0) {
+        dat[0][0] = a; dat[0][1] = b;
+        dat[1][0] = c; dat[1][1] = d;
+    }
+    void init(int v = 1) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                dat[i][j] = (i == j) * v;
+            }
+        }
+    }
+    Matrix inline friend operator *(const Matrix &a, const Matrix &b) {
+        Matrix c;
+        c.init(0);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 2; k++) {
+                    c.dat[i][j] += 1LL * a.dat[i][k] * b.dat[k][j] % MOD;
+                    c.dat[i][j] %= MOD;
+                }
+            }
+        }
+        return c;
+    }
+};
+
+set<pair<int, int> > dict;
+Matrix sqrt_rev;
+void prepare() {
+    Matrix rev(0, 1,
+            1, -1 + MOD);
+    sqrt_rev.init(1);
+    int a = 0, b = 1;
+    for (int i = 0; 1LL * i * i <= 4LL * MOD; i++) {
+        dict.insert(make_pair(a, b));
+        int c = (a + b) % MOD;
+        a = b, b = c;
+        sqrt_rev = sqrt_rev * rev;
+    }
+}
+
+bool check(int x, int y) {
+    //printf("check %d %d\n", x, y);
+    //for (int i = 0; i < 100; i++) {
+    //  rev = rev * rev;
+    //}
+    Matrix init = {
+        y, 0,
+        x, 0
+    };
+    for (int i = 0; 1LL * i * i <= 4LL * MOD; i++) {
+        int a = init.dat[0][0], b = init.dat[1][0];
+        if (dict.count(make_pair(b, a))) return true;
+        init = sqrt_rev * init;
+    }
+    return false;
+}
+
+int main() {
+    scanf("%d %d", &MOD, &x);
+    if (MOD == 2) {
+        if (x == 0) {
+            printf("1\n1\n");
+        } else {
+            printf("2\n0 1\n");
+        }
+        return 0;
+    }
+    prepare();
+    for (int sign = -1; sign < 2; sign += 2) {
+        int a = 1, b = -x + MOD, c = fix(sign - 1LL * x * x % MOD);
+        int s1, s2;
+        int delta = fix(1LL * b * b % MOD - 4LL * a % MOD * c % MOD);
+        //printf("delta = %d\n", delta);
+        if (!solve(delta, s1)) {
+            continue;
+        }
+        //printf("sol = %d\n", s1);
+        //assert(s1 + s2 == MOD);
+        s2 = MOD - s1;
+        //printf("a = %d b = %d c = %d s1 = %d\n", a, b, c, s1);
+        s1 = 1LL * (x + s1) % MOD * power(2LL * a % MOD, MOD - 2) % MOD;
+        s2 = 1LL * (x + s2) % MOD * power(2LL * a % MOD, MOD - 2) % MOD;
+        if (check(x, s1)) ans.push_back(s1);
+        if (check(x, s2)) ans.push_back(s2);
+    }
+    sort(ans.begin(), ans.end());
+    ans.erase(unique(ans.begin(), ans.end()), ans.end());
+    printf("%d\n", (int)ans.size());
+    for (int i = 0; i < ans.size(); i++) {
+        printf("%d%c", ans[i], i + 1 == ans.size() ? '\n' : ' ');
+    }
+    if (DEBUG) {
+        int a = 0, b = 1;
+        set<int> cor;
+        for (int i = 0; i < 4LL * MOD; i++) {
+            if (a == x && cor.count(b)) {
+                cor.insert(b);
+            }
+            int c = (a + b) % MOD;
+            a = b, b = c;
+        }
+        //printf("%d\n", (int)cor.size());
+        printf("checked!\n");
+        //assert(cor.size() == ans.size());
+        if (cor.size() != ans.size()) {
+            printf("%d\n", (int)cor.size());
+            for (auto v : cor) {
+                printf("%d ", v);
+            }
+            puts("");
+        }
+    }
+}
+```
