@@ -67,7 +67,7 @@ B. Variety
 
 然后就没有然后了。唯一需要注意的地方在于一开始$a[i]$都是等于0的，这里需要自己调整一下，把树高做成$\log$级别。后面的感觉怎么弄都不会出事的样子。
 
-[B.cpp](2015-2016%206th%20BSUIR%20Open%20Programming%20Contest.%20Final%20B.cpp)
+[B.cpp](2015-2016 6th BSUIR Open Programming Contest. Final B.cpp)
 
 F. Cactus
 =========
@@ -84,7 +84,7 @@ F. Cactus
 
 如果是环，就先枚举环上最后一条边$las$所处连通块的边数情况$0/1/2$，然后再dp一圈，$g[i][pre=0/1/2]$，表示做到第$i$个孩子，他上一条边上一共连着几条边，最开始那个点的上一条边是$up+las$，每次枚举环上下一条边$new$有没有，然后再枚举他的孩子连了$down=0/1/2$条边，$pre+new$可以当作$up$用上面那种点情况递归往下算一下更新$g$，最后只要取$g[][las]$的答案就行了。
 
-[F.cpp](2015-2016%206th%20BSUIR%20Open%20Programming%20Contest.%20Final%20F.cpp)
+[F.cpp](2015-2016 6th BSUIR Open Programming Contest. Final F.cpp)
 
 J. Cherry orchard
 =================
@@ -98,4 +98,4 @@ J. Cherry orchard
 **做法: ** 樱桃树和正方形的角两两连线和正方形有若干交点. 每两个交点之间,
 樱桃树的极角序不变. 在这个区间内做个积分.
 
-[J.cpp](2015-2016%206th%20BSUIR%20Open%20Programming%20Contest.%20Final%20J.cpp)
+[J.cpp](2015-2016 6th BSUIR Open Programming Contest. Final J.cpp)
