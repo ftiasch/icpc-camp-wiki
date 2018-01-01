@@ -1,0 +1,81 @@
+Code
+
+``` {.cpp}
+
+#include <bits/stdc++.h>
+#define um unordered_map
+#define vi vector<int>
+using namespace std;
+const int N = 5, M = 11, MOD = 1e9 + 7;
+char pre[20] = "0111121112221211";
+int ans[N][M][N * M];
+struct ha
+{
+    long long operator () (const vector<int> &a) const
+    {
+        long long res = 0;
+        for (int x : a) (res *= 10) += x;
+        return res;
+    }
+};
+um<vi, int, ha> dp[M][N * M];
+int cost(int fr, int to, int cur) {return __builtin_popcount(~fr & to) + pre[cur ^ to] - '0';}
+void fix(int &x) {if (x >= MOD) x -= MOD;}
+void solve(int n)
+{
+    vi init(1 << n, MOD);
+    init[0] = 0;
+    dp[0][0].clear();
+    ++ dp[0][0][init];
+    for (int i = 1; i < M; ++ i)
+    {
+        for (int k = 0; k <= i * n; ++ k) dp[i][k].clear();
+        um<vi, vector<pair<vi, int>>, ha> G;
+        for (int k = 0; k <= (i - 1) * n; ++ k)
+        {
+            for (auto &x : dp[i - 1][k]) G[x.first].clear();
+        }
+        for (auto &x : G)
+        {
+            for (int cur = 0; cur < (1 << n); ++ cur)
+            {
+                vi tmp(1 << n, MOD);
+                for (int fr = 0; fr < (1 << n); ++ fr)
+                {
+                    for (int to = 0; to < (1 << n); ++ to)
+                    {
+                        tmp[to] = min(tmp[to], cost(fr, to, cur) + x.first[fr]);
+                    }
+                }
+                int ex = *min_element(tmp.begin(), tmp.end());
+                for (int &y : tmp) y -= ex;
+                x.second.push_back(make_pair(tmp, ex));
+            }
+        }
+        for (int k = 0; k <= (i - 1) * n; ++ k)
+        {
+            for (auto &x : dp[i - 1][k])
+            {
+                for (auto &y : G[x.first])
+                {
+                    fix(dp[i][k + y.second][y.first] += x.second);
+                    fix(ans[n][i][k + y.second] += x.second);
+                }
+            }
+        }
+        for (int k = 1; k <= i * n; ++ k) fix(ans[n][i][k] += ans[n][i][k - 1]);
+    }
+}
+int main()
+{
+    for (int i = 1; i <= 4; ++ i) solve(i);
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m, k;
+        scanf("%d%d%d", &n, &m, &k);
+        printf("Case #%d: %d\n", ++ zzz, ans[n][m][k]);
+    }
+}
+```
