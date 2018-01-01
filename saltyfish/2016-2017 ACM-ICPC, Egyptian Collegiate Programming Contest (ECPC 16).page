@@ -1,0 +1,47 @@
+# A The game of Osho [zyh]
+
+小范围打$SG$表之后可以观察到，对于一堆石子$(B,N)$，有如下情况：
+
+（1）$B\ mod\ 2=1$，$SG$值是$N\ mod\ 2$
+
+（2）$B\ mod\ 2=0$，若$N\ mod\ (B+1)=B$，则$SG$值是2，否则$SG$值是$N\ mod\ 2$
+
+# B Street [zyh&ghc]
+
+对起点线终点线和阴影建图跑最短路，可以把起点线和终点线看成细长的阴影，之后对阴影的位置关系分情况讨论
+
+# C The Wall [hwq&zyh&ghc]
+
+用最少的行列覆盖给定点，其中横线是一些半圆，对每个点坐标变换$(x,y) \rightarrow (x,y-\sqrt{(\frac{n}{2})^{2}-(\frac{n}{2}-x)^2})$即可转换成水平竖直的行列，然后二分图最大匹配
+
+# D Popcorn [zyh]
+
+就是求$\binom{n}{m}$，预处理组合数即可
+
+# E Jumping [zyh&ghc]
+
+反向建图，从终点出发BFS即可
+
+# F Bishops Alliance [zyh&ghc&hwq]
+
+每条对角线分别做，按照横坐标排序，然后$dp_i$表示最后一个选了第$i$个时最多能选多少个，转移枚举前一个选了第$j$个，限制是$p_i^2+p_j^2+C\leq dis(i,j)=x_i-x_j+1$，分离变量可得$p_j^2+x_j\leq x_i-p_i^2-C+1$，将$p_j^2+x_j$离散化后用线段树维护$dp$值即可
+
+# G The Galactic Olympics [zyh&ghc]
+
+就是求$S(n,k)k!$，当$k>n$结果为$0$，预处理第二类斯特林数即可
+
+# H Commandos [zyh&hwq]
+
+按照x递减y递增z递增的顺序排序，然后dp
+
+# I On the way to the park [zyh&ghc]
+
+求出覆盖每个小圆时大圆圆心的横坐标区间，然后扫描线
+
+# J Whistle's New Car [zyh]
+
+对每个点树上二分求出能到达的最高点并打标记，最后dfs一次即可
+
+# K Touristic Trip [hwq&zyh&ghc]
+
+条件概率，$dp[i][j]$表示在城市$j$买到第$i$个明信片的概率，计算分母时正常转移，计算分子时在第$q$个纪念品处将第$z$个城市之外的概率抹掉
