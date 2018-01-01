@@ -1,0 +1,64 @@
+Link
+====
+
+[vjudge](http://vjudge.net/contest/134213#overview)
+
+Summary
+=======
+
+Problems
+========
+
+A Secrete Master Plan
+---------------------
+
+直接做。
+
+B Build Towers
+--------------
+
+C The Battle of Chibi
+---------------------
+
+直接做。
+
+D Pick The Sticks
+-----------------
+
+直接做。需要特判一下只有一个Stick的情况。
+
+E Ba Gua Zhen
+-------------
+
+XOR类题目，N个点M条边的图，dfs出一棵树来，每一条不在树上的边都可以和树上的边形成一个环，求个线性基出来。具体可以看莫涛的论文。
+
+F The Battle of Guandu
+----------------------
+
+G Ancient Go
+------------
+
+直接做。
+
+H Sudoku
+--------
+
+直接做。
+
+I Mahjong
+---------
+
+DP套DP，第一次接触这种题目。
+
+J Walk Around the Campsite
+--------------------------
+
+K Game Rooms
+------------
+
+DP，f\[i\]\[j\]表示前i层，且第i层是游泳池/台球室，通过预处理可以做到O(1)转移。
+
+L Huatuo's Medicine
+-------------------
+
+直接做。
