@@ -1,0 +1,12 @@
+比赛过程基本忘了 随便写点
+
+1.  oneboggle傻逼错误导致WA一次（&lt;=写成&lt;）
+2.  economy叉爷准备了很久，但是快开始写的时候柠檬爷突然发现可以裸上LP
+3.  gaudy因为计算几何部分的各种错误WA了很多次
+4.  gaudy范围只有40，可以折半，也可以直接搜索，然而之前一直没提，导致柠檬爷写了复杂算法
+5.  hulldiame没有一个人能手写旋转卡壳。。。还是叉爷推了一会儿
+6.  exsort柠檬爷说非常快（代码也很短），但是我感觉写了很久
+7.  substring是非常裸的SAM，但是xyz忘记了SAM，导致七爷写了复杂算法。（7k+：其实我感觉hash还挺好写的。SAM太容易错。）
+
+[scoreboard](http://hc3.seas.harvard.edu/hc3/bospre/2016/scoreboard.web)
+[code](/bosprecode.tar)
