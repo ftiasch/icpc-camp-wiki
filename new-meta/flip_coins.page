@@ -1,0 +1,110 @@
+Problem Description
+===================
+
+Flipping m coins every round, how many round should we take to turn all
+n coins negative up!
+
+Outline
+=======
+
+For simplify problem, we try to solve this problem in some sub-case.
+
+1. n is odd
+-----------
+
+#### 1.1 m is even
+
+After each round, the number of coins face up is always even, but our
+goal is to turn odd coin face up. Which means this is impossible.
+
+#### 1.2 m is odd
+
+According to parity property, we must to take even rounds to achieve our
+goal, ceil(n / m) is obvious lowerbound.
+
+A straight insight is that our answer is the least odd number which not
+less than ceil(n / m).
+
+We can achieve that bound indeed. one can just exam it in two cases:
+floor(n / m) is odd or even.
+
+2. n is even
+------------
+
+#### 2.0 m = n / 2
+
+This is a special case and the answer is 2.
+
+#### 2.1 m is even and n / 2 &lt; m
+
+1 can't be the answer because we have m &lt; n.
+
+2 can't be the answer either because we can't turn a coin 3 times in
+just 2 round.
+
+3 maybe the possible least answer and indeed we can do that.
+
+#### 2.2 m is even and m &lt; n / 2
+
+We can achieve that easily by ceil(n / m) and obviously this is also the
+lower bound.
+
+#### 2.3 m is odd and m &lt; n / 2
+
+In the same way where n is odd and n is odd, we can achieve it by the
+least even number which not less than ceil(n / m).
+
+#### 2.4 m is odd and n / 2 &lt; m
+
+This is the most complicate case, we have no straight idea for this
+situation. Noticing the case n = 6, m = 5(answer is 6), and the case n =
+20, 11(answer is 4), we found that this answer is not relate to ceil(n /
+m) or some constant.
+
+From parity property, we should take even round, and each coin should
+turn odd times. For another angle, each coin should "not turn" odd
+times, and each round we should "not turn" (n - m) coins! Fortunately,
+this is exactly the case 2.3.
+
+Conclusion
+==========
+
+``` {.cpp}
+int main() {
+    scanf("%d %d", &n, &m);
+    if (n % 2 == 1) {
+        if (m % 2 == 0) {
+            cout << -1 << endl;
+        } else {
+            int p = (n + m - 1) / m;
+            if (p % 2 == 0) {
+                p++;
+            }
+            cout << p << endl;
+        }
+    } else {
+        if (m == n - 1) {
+            cout << n << endl;
+        } else if (m == n / 2) {
+            cout << 2 << endl;
+        } else if (m % 2 == 0 && n / 2 < m && m < n - 1) {
+            cout << 3 << endl;
+        } else if (m % 2 == 0 && m < n / 2) {
+            int p = (n + m - 1) / m;
+            cout << p << endl;
+        } else if (m % 2 == 1 && n / 2 < m && m < n - 1) {
+            m = n - m;
+            int p = (n + m - 1) / m;
+            if (p & 1) p++;
+            cout << p << endl;
+        } else if (m % 2 == 1 && m < n / 2) {
+            int p = (n + m - 1) / m;
+            if (p % 2 == 1) {
+                ++p;
+            }
+            cout << p << endl;
+        }
+    }
+    return 0;
+}
+```
