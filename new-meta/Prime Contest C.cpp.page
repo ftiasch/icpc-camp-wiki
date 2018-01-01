@@ -108,5 +108,4 @@ int main() {
     if (DEBUG) printf("%f %f\n", 1. * CNT, k * (log(n) / log(2) + 0.1));
     return 0;
 }
-
 ```
