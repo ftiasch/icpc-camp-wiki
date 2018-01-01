@@ -1,0 +1,112 @@
+Code
+
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <set>
+
+using namespace std;
+
+const int N = 1e2 + 7;
+const int LIMIT = 2e6;
+const int INF = 1e9;
+
+int dx[] = {-1, 0, 0, 1};
+int dy[] = {0, 1, -1, 0};
+
+int n, m;
+int mx, my;
+
+char map[N][N];
+set<pair<int, int> > visited;
+
+bool can_go(int x, int y) {
+    return map[(x % n + n) % n][(y % m + m) % m] == '.';
+}
+
+vector<pair<int, int> > queue;
+
+int bfs(int sx, int sy) {
+    queue.clear();
+    queue.push_back(make_pair(sx, sy));
+    visited.insert(make_pair(sx, sy));
+    int mode = 0;  //0 finite   1 infinite  2 partial
+    for (int head = 0; head < (int)queue.size() && mode == 0; head++) {
+        int x = queue[head].first, y = queue[head].second;
+        for (int dir = 0; dir < 4; dir ++) {
+            int tx = x + dx[dir];
+            int ty = y + dy[dir];
+            if (can_go(tx, ty) && !visited.count(make_pair(tx, ty))) {
+                if ((int)queue.size() == LIMIT) {
+                    mode = 1;
+                    break;
+                }
+                visited.insert(make_pair(tx, ty));
+                queue.push_back(make_pair(tx, ty));
+            }
+        }
+    }
+
+    if (mode != 0) {
+        if (visited.count(make_pair(n, 0)) && visited.count(make_pair(0, m))) {
+            return mode = 1;
+        } else {
+            mx = INF, my = INF;
+            for (int i = 0; i < (int)queue.size(); i++) {
+                int x = queue[i].first, y = queue[i].second;
+                if ((x != 0 || y != 0) && x % n == 0 && y % m == 0) {
+                    if (abs(x) + abs(y) < abs(mx) + abs(my)) {
+                        mx = x, my = y;
+                    }
+                }
+            }
+            return mode = 2;
+        }
+    } else {
+        return mode = 0;
+    }
+}
+
+int main() {
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        scanf("%s", map[i]);
+    }
+    int mode = bfs(0, 0);
+    //printf("mode = %d %d %d", mode, mx, my);
+    int q;
+    scanf("%d", &q);
+    for (int i = 0; i < q; i++) {
+        int x, y;
+        scanf("%d %d", &x, &y);
+        bool flag = false;
+        if (mode == 0) {
+            if (visited.count(make_pair(x, y))) {
+                flag = true;
+            }
+        } else if (mode == 1) {
+            if (can_go(x, y) && visited.count(make_pair((x % n + n) % n, (y % m + m) % m))) {
+                flag = true;
+            }
+        } else {
+            int t;
+            if (mx != 0) {
+                t = x / mx;
+            } else {
+                t = y / my;
+            }
+            x -= t * mx;
+            y -= t * my;
+            if (visited.count(make_pair(x, y))) {
+                flag = true;
+            }
+        }
+        puts(flag ? "yes" : "no");
+    }
+
+    return 0;
+}
+```
