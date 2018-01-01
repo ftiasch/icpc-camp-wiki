@@ -1,0 +1,144 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+const double INF = 1e12, eps = 1e-6;
+struct point
+{
+    double x, y;
+    point(double x = 0, double y = 0) : x(x), y(y) {}
+    double length() {return sqrt(x * x + y * y);}
+};
+point operator - (const point &a, const point &b) {return point(a.x - b.x, a.y - b.y);}
+point operator + (const point &a, const point &b) {return point(a.x + b.x, a.y + b.y);}
+point operator * (const point &a, double x) {return point(a.x * x, a.y * x);}
+double dot(const point &a, const point &b) {return a.x * b.x + a.y * b.y;}
+double cross(const point &a, const point &b) {return a.x * b.y - a.y * b.x;}
+int dcmp(double x)
+{
+    if (fabs(x) < eps) return 0;
+    return x < 0 ? -1 : 1;
+}
+double getintersection(point p, point v, point q, point w)
+{
+    point u = p - q;
+    return cross(w, u) / cross(v, w);
+}
+pair<point, point> line[4];
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int sx, sy, tx, ty;
+        scanf("%d%d%d%d", &sx, &sy, &tx, &ty);
+        point p = point(sx, sy);
+        point v = point(tx, ty) - point(sx, sy);
+        point p1, p2, p3;
+        int q, w;
+        scanf("%d%d", &q, &w); p1 = point(q, w);
+        scanf("%d%d", &q, &w); p2 = point(q, w);
+        scanf("%d%d", &q, &w); p3 = point(q, w);
+        double nu;
+        scanf("%lf", &nu);
+        line[0] = make_pair(p1, p2 - p1);
+        line[1] = make_pair(p2, p3 - p2);
+        line[2] = make_pair(p3, p1 - p3);
+        //line[3] = make_pair(point(-INF, 0), point(2 * INF, 0));
+        bool flag = 0;
+        point ans;
+        int in = 0;
+        int cf = 0;
+        while (!flag)
+        {
+            double hit_len = -1;
+            int cho = -1;
+            point hit_p, hit_v;
+            for (int i = 0; i < 3; ++ i)
+            {
+                if (dcmp(cross(v, line[i].second)) == 0) continue;
+                double go = getintersection(p, v, line[i].first, line[i].second);
+                if (dcmp(go) <= 0) continue;
+                point pp = p + v * go;
+                if (dot(pp - line[i].first, pp - (line[i].second + line[i].first)) >= 0) continue;
+                if (hit_len < 0 || hit_len > go)
+                {
+                    hit_len = go;
+                    hit_p = p + v * go;
+                    double n1, n2;
+                    if (in)
+                    {
+                        n1 = nu, n2 = 1.;
+                    }
+                    else
+                    {
+                        n1 = 1., n2 = nu;
+                    }
+                    point law = point(-line[i].second.y, line[i].second.x);
+                    //printf("law = %.3f %.3f\n", law.x, law.y);
+                    //point lv = line[i].second;
+                    if (dot(law, v) < 0)
+                    {
+                        law.x = -law.x;
+                        law.y = -law.y;
+                        //lv.x = -lv.x;
+                        //lv.y = -lv.y;
+                    }
+                    double sinth1 = cross(law, v) / (v.length() * law.length());
+                    /*printf("theta1 = %.2f\n", asin(sinth1) / acos(-1.) * 180);
+                    printf("in = %d  %.5f %.5f\n", in, n1, n2);*/
+                    bool rot = sinth1 > 0;
+                    sinth1 = fabs(sinth1);
+                    double sinth2 = sinth1 / n2 * n1;
+                    double costh2 = sqrt(1. - sinth2 * sinth2);
+                    /*printf("%.2f+++\n", sinth1);*/
+                    /*printf("%.2f+++\n", sinth2);
+                    printf("%.2f+++\n", costh2);
+                    cout << 'a' << i << ' ' << rot << endl;*/
+                    if (rot)
+                    {
+                        hit_v = point(law.x * costh2 - law.y * sinth2, law.x * sinth2 + law.y * costh2);
+                    }
+                    else
+                    {
+                        hit_v = point(law.x * costh2 + law.y * sinth2, - law.x * sinth2 + law.y * costh2);
+                    }                   
+                    //printf("%.2f %.2f\n", hit_v.x, hit_v.y);
+                    //hit_v = law - lv * tan(asin(sinth2));
+                    cho = i;
+                }
+            }
+            if (hit_len < 0)
+            {
+                if (v.y < 0)
+                {
+                    flag = 1;
+                    ans.x = p.x + p.y / (-v.y) * v.x;
+                }
+                break;
+            }
+            p = hit_p;
+            v = hit_v;
+            in ^= 1;
+            /*printf("%.2f %.2f\n", p.x, p.y);
+            printf("%.2f %.2f\n", v.x, v.y);
+            printf("-----\n");*/
+        }
+        if (flag)
+        {
+            printf("%.3f\n", ans.x + 1e-6);
+        }
+        else
+        {
+            puts("Error");
+        }
+    }
+}
+```
