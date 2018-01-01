@@ -1,0 +1,59 @@
+A. Por Costel and Azerah\[lyj\]
+===============================
+
+组合数学
+
+B. Por Costel and the Algorithm\[lyj\]
+======================================
+
+dijsktra+堆
+
+C. Por Costel and Bujor\[lyj\]
+==============================
+
+矩阵求逆
+
+D. Por Costel and the Censorship Committee\[hx\]
+================================================
+
+先建立AC自动机，找出所有匹配的位置，对应一个区间，这个区间内至少要有一个要选，然后对这些区间，去掉包含别的区间的区间，再平方进行DP。
+
+E. Por Costel and the Cipher(补)
+================================
+
+容斥
+
+F. Por Costel and the Alien Invasion(!)
+=======================================
+
+线段树，对每个点维护一个栈，每次只入小于等于栈顶的值。删除的时候，如果要删的高度等于栈顶元素则删除。这样子需要$2\times m\log n$的空间，理论上会爆，但实际不需要这么多。
+
+G. Por Costel and the Orchard\[hx\]
+===================================
+
+分行进行区间DP。
+
+H. Por Costel and the Match\[hx\]
+=================================
+
+带权并查集。
+
+I. Por Costel and the Pairs\[hx\]
+=================================
+
+sb题。
+
+J. Por Costel and Pinball\[hx\]
+===============================
+
+答案即拐点的数量，每次修改最多改变三个点是否拐点。
+
+K. Por Costel and the Firecracker\[hx\]
+=======================================
+
+部分预处理。
+
+L. Por Costel and the Semipalindromes\[hx\]
+===========================================
+
+最后一个和第一个字母必须相等，用二进制做即可。
