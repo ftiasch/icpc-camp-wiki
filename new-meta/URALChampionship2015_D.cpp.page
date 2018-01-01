@@ -1,0 +1,125 @@
+``` {.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cassert>
+
+using namespace std;
+
+int n, k;
+
+vector<pair<int, int> > ans;
+
+void print() {
+    assert(ans.size() <= 3 * n);
+    printf("%d\n", (int)ans.size());
+    const int N = 1e5 + 7;
+    static int a[N];
+    fill(a + 1, a + n + 1, 1);
+    for (int i = 0; i < ans.size(); i++) {
+        int b, c;
+        printf("%d %d\n", b = ans[i].first, c = ans[i].second);
+        assert(a[b] && a[c] && a[b] >= a[c]);
+        a[b] -= a[c];
+        a[c] <<= 1;
+    }
+    assert(a[1] == k);
+}
+
+void pattern(int n, int offset) {
+    if (n == 1) {
+        return ;
+    } else {
+        pattern(n / 2, offset);
+        pattern(n / 2, offset + n / 2);
+        ans.push_back(make_pair(offset + n / 2, offset));
+        return ;
+    }
+}
+
+int solve(int n) {
+    assert(n & 1);
+    vector<pair<int, int> > cups;
+    int offset = 1;
+    for (int i = 20; i >= 0; i--) {
+        if (n & (1 << i)) {
+            pattern((1 << i), offset);
+            cups.push_back(make_pair(1 << i, offset));
+            offset += (1 << i);
+        }
+    }
+    int s = cups.size();
+    if (s == 1) {
+        return -1;
+    }
+    while (s > 2) {
+        //printf("process %d\n", ans.size());
+        if (cups[s - 1].first == cups[s - 2].first) {
+            cups[s - 2].first <<= 1;
+            ans.push_back(make_pair(cups[s - 1].second, cups[s - 2].second));
+            s--;
+            cups.pop_back();
+        } else {
+            cups[0].first -= cups.back().first;
+            cups.back().first <<= 1;
+            ans.push_back(make_pair(cups[0].second, cups[s - 1].second));
+        }
+    }
+    assert(s == 2);
+    if (cups[0].first < cups[1].first) swap(cups[0], cups[1]);
+    while (cups[0].first != 1 && cups[1].first != 1) {
+        cups[0].first -= cups[1].first;
+        cups[1].first <<= 1;
+        ans.push_back(make_pair(cups[0].second, cups[1].second));
+        if (cups[0].first < cups[1].first) {
+            swap(cups[0], cups[1]);
+        }
+    }
+    if (cups[0].second != 1) {
+        int a = cups[0].second, b = 1;
+        for (int i = 0; i < ans.size(); i++) {
+            if (ans[i].first == a) {
+                ans[i].first = b;
+            } else if (ans[i].first == b) {
+                ans[i].first = a;
+            }
+            if (ans[i].second == a) {
+                ans[i].second = b;
+            } else if (ans[i].second == b) {
+                ans[i].second = a;
+            }
+        }
+        return cups[0].second;
+    }
+    return cups[1].second;
+}
+
+int main() {
+    scanf("%d %d", &n, &k);
+    if (k & 1) {
+        n = min(n, k + 2);
+    } else {
+        n = min(n, k + 1);
+    }
+    if (k == (k & -k)) {
+        pattern(k, 1);
+    } else if (n == k) {
+        return puts("-1"), 0;
+    } else if (n == k + 1) {
+        if (n & 1) {
+            solve(n);
+        } else {
+            return puts("-1"), 0;
+        }
+    } else {
+        assert(n == k + 2);
+        int remain = solve(n);
+        ans.push_back(make_pair(1, remain));
+    }
+    print();
+    return 0;
+}
+```
