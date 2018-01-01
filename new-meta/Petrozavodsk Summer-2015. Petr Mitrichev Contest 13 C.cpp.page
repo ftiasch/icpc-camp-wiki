@@ -1,0 +1,121 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+struct point {
+    int x; double y;
+    point() {}
+    point(int x, double y) : x(x), y(y) {}
+};
+#define pow fastpow
+__inline double fastpow(double x, int n) {
+    if (n == 1) return x;
+    if (n == 2) return x * x;
+    if (n == 3) return x * x * x;
+    if (n == 4) return x * x * x * x;
+    if (n == 5) return x * x * x * x * x;
+    return -1;
+}
+struct seg {
+    point L, R;
+    double k, b;
+    seg() {}
+    seg(point L, point R) : L(L), R(R) {
+        k = (R.y - L.y) / (R.x - L.x);
+        b = L.y - L.x * (R.y - L.y) / (R.x - L.x);
+    }
+    __inline double calc(int x) {
+        return k * x + b;
+    }
+    __inline double ss(int x1, int x2, int t) {
+        return b / t * (pow(x2, t) - pow(x1, t)) + k / (t + 1) * (pow(x2, t + 1) - pow(x1, t + 1));
+    }
+};
+double calc(seg a, seg b, int flaga, int flagb) {
+    if (a.L.x == b.L.x && a.R.x == b.R.x) {
+        int x1 = a.L.x, x2 = a.R.x;
+        double tmp =  (b.k / 3 * pow(x2, 3) + b.b / 2 * pow(x2, 2)) * a.ss(x1, x2, 1)
+                    - (b.b * x2 + b.k / 2 * pow(x2, 2)) * a.ss(x1, x2, 2)
+                    + b.b / 2 * a.ss(x1, x2, 3)
+                    + b.k / 6 * a.ss(x1, x2, 4);
+        //printf("sega %d-%d %.2f segb %d-%d %.2f", a.L.x, a.R.x, a.L.y, b.L.x, b.R.x, b.L.y);
+        //printf("tmp = %.3f flag = %d\n", tmp, flaga * flagb);
+        return flaga * flagb * tmp;
+    }
+    else if (max(a.L.x, a.R.x) <= min(b.L.x, b.R.x)) {
+        int x1 = a.L.x, x2 = a.R.x;
+        int x3 = b.L.x, x4 = b.R.x;
+        double tmp = a.ss(x1, x2, 1) * b.ss(x3, x4, 2) - b.ss(x3, x4, 1) * a.ss(x1, x2, 2);
+        return flaga * flagb * tmp;
+    }
+    return 0;
+}
+double calc(vector<pair<int, int>> all) {
+    //vector<int> ax;
+    //for (auto e : all) ax.push_back(e.first);
+    //sort(ax.begin(), ax.end());
+    //ax.erase(unique(ax.begin(), ax.end()), ax.end());
+    int n = (int) all.size() - 1;
+    vector<seg> s;
+    for (int i = 0; i < n; ++ i) {
+        //int xl = lower_bound(ax.begin(), ax.end(), all[i].first) - ax.begin();
+        //int xr = lower_bound(ax.begin(), ax.end(), all[i + 1].first) - ax.begin();
+        if (all[i].first == all[i + 1].first) continue;
+        //int d = xl > xr ? -1 : 1;
+        //seg line = seg(point(all[i].first, all[i].second), point(all[i + 1].first, all[i + 1].second));
+        //for (int j = xl; j != xr; j += d) {
+        //  s.push_back(seg(point(ax[j], line.calc(ax[j])), point(ax[j + d], line.calc(ax[j + d]))));
+        //}
+        s.push_back(seg(point(all[i].first, all[i].second), point(all[i + 1].first, all[i + 1].second)));
+    }
+    double ans = 0;
+    //for (seg a : s) printf("seg %d %.1f %d %.1f\n", a.L.x, a.L.y, a.R.x, a.R.y);
+    for (seg A : s) {
+        int flaga = 1;
+        if (A.L.x > A.R.x) {flaga = -1; swap(A.L, A.R);}
+        for (seg B : s) {
+            int flagb = 1;
+            if (B.L.x > B.R.x) {flagb = -1; swap(B.L, B.R);}
+            //printf("flaga = %d flagb = %d ---\n", flaga, flagb);
+            vector<int> ax = {A.L.x, A.R.x, B.L.x, B.R.x};
+            sort(ax.begin(), ax.end());
+            ax.erase(unique(ax.begin(), ax.end()), ax.end());
+            int al = lower_bound(ax.begin(), ax.end(), A.L.x) - ax.begin();
+            int ar = lower_bound(ax.begin(), ax.end(), A.R.x) - ax.begin();
+            int bl = lower_bound(ax.begin(), ax.end(), B.L.x) - ax.begin();
+            int br = lower_bound(ax.begin(), ax.end(), B.R.x) - ax.begin();
+            vector<seg> sa, sb;
+            for (int i = al; i < ar; ++ i) sa.push_back(seg(point(ax[i], A.calc(ax[i])), point(ax[i + 1], A.calc(ax[i + 1]))));
+            for (int i = bl; i < br; ++ i) sb.push_back(seg(point(ax[i], B.calc(ax[i])), point(ax[i + 1], B.calc(ax[i + 1]))));
+            for (seg a : sa) {
+                for (seg b : sb) {
+                    double tmp = calc(a, b, flaga, flagb);
+                    ans += tmp;
+                    //printf("a %d %d  b %d %d  + %.3f\n", a.L.x, a.R.x, b.L.x, b.R.x, tmp);
+                }
+            }
+        }
+    }
+    //printf("%.3f\n", ans);
+    return ans;
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    vector<pair<int, int>> all;
+    double area = 0;
+    for (int i = 1; i <= n; ++ i) {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        all.push_back({a, b});
+    }
+    all.push_back(all[0]);
+    for (int i = 1; i <= n; ++ i) {
+        area += 1.0 * all[i - 1].first * all[i].second - 1.0 * all[i - 1].second * all[i].first;
+    }
+    area = fabs(area) / 2.;
+    double ans = fabs(calc(all));
+    for (auto &e : all) swap(e.first, e.second);
+    ans += fabs(calc(all));
+    printf("%.20f\n", 2 * ans / area / area);
+}
+```
