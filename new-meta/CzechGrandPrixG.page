@@ -1,0 +1,165 @@
+``` {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+const int N(1111);
+int cnt[N];
+int tot;
+typedef int D;
+struct P {
+    D x, y;
+    P() {
+    }
+    P(const D & x, const D & y) : x(x), y(y){
+    }
+    void scan() {
+        scanf("%d%d", &x, &y);
+    }
+    P operator - (const P & b) const {
+        return P(x - b.x, y - b.y);
+    }
+    D operator * (const P & b) const {
+        return x * b.y - y * b.x;
+    }
+    D operator % (const P & b) const {
+        return x * b.x + y * b.y;
+    }
+    P operator + (const P & b) const {
+        return P(x + b.x, y + b.y);
+    }
+    bool operator < (const P & b) const {
+        if(x - b.x) {
+            return x < b.x;
+        }
+        if(y - b.y) {
+            return y < b.y;
+        }
+        return false;
+    }
+    bool operator == (const P & b) const {
+        return x == b.x && y == b.y;
+    }
+    void print() const{ 
+        printf("%d %d\n", x, y);
+    }
+    P flip() const {
+        return P(-x, -y);
+    }
+};
+inline P operator * (const D & x, const P & a) {
+    return P(x * a.x, x * a.y);
+}
+int ans;
+void renew() {
+    ans = max(ans, tot);
+}
+void inc(int delta, int j) {
+    tot -= cnt[j] > 0;
+    cnt[j] += delta;
+    tot += cnt[j] > 0;
+}
+struct Evt {
+    P d;
+    int delta, le, j;
+    Evt(const P & d, int delta, int le, int j) : d(d),delta(delta), le(le),j(j) {
+    }
+    bool operator < (const Evt & b) const {
+        int d1(d < P(0, 0)), d2(b.d < P(0, 0));
+        if(d1 != d2) {
+            return d1 < d2;
+        }
+        if(d * b.d) {
+            return d * b.d > 0;
+        }
+        return le < b.le;
+    }
+};
+int n;
+vector<Evt> evts;
+vector<P> pts;
+vector<P> vec[N];
+bool check() {//check whether P(eps, -1) lies between this event.
+    Evt a(evts[evts.size() - 2]), b(evts.back());
+    Evt tmpl(P(0, -1), 0, 0, 0);
+    Evt tmpr(P(0, -1), 0, 1, 0);
+    
+    return (a < b && a < tmpl && tmpr < b || b < a && (a < tmpl || tmpr < b))
+    || a.delta == 1 && a.le == 0 && a.d * P(0, 1) == 0 && a.d % P(0, 1) > 0;
+}
+int main() {
+    while(1 == scanf("%d", &n)) {
+        pts.clear();
+        ans = 0;
+        for(int i(1); i <= n; i++) {
+            vec[i].clear();
+            int x;
+            scanf("%d", &x);
+            for(int j(1); j <= x; j++) {
+                P p;
+                p.scan();
+                vec[i].push_back(p);
+                pts.push_back(p);
+            }
+            vec[i].push_back(vec[i].front());
+        }
+        for(int i(0); i < (int)pts.size(); i++) {
+            P a(pts[i]);
+            evts.clear();
+            tot = 0;
+            for(int j(1); j <= n; j++) {
+                cnt[j] = 0; 
+            }
+            for(int j(1); j <= n; j++) {
+                for(int k(0); k < (int)vec[j].size() - 1; k++) {
+                    if(a == vec[j][k] || a == vec[j][k + 1]) {
+                        P b = vec[j][k] + vec[j][k + 1] - a;
+                        evts.push_back(Evt((b - a).flip(), +1, 1, j));
+                        evts.push_back(Evt((b - a), -1, 0, j));
+                        if(check()) {
+                            inc(1, j);
+                        }
+                    }else if((a - vec[j][k]) * (vec[j][k + 1] - vec[j][k]) == 0) {
+                        if((a - vec[j][k + 1]) % (a - vec[j][k]) < 0) {
+                            evts.push_back(Evt((vec[j][k + 1] - a), +1, 1, j));
+                            evts.push_back(Evt((vec[j][k + 1] - a), -1, 0, j));
+                        }
+                    }else {
+                        P b = vec[j][k] - a;
+                        P c = vec[j][k + 1] - a;
+                        if(b * c < 0) {
+                            swap(b, c);
+                        }
+                        evts.push_back(Evt((b).flip(), +1, 1, j));
+                        evts.push_back(Evt((c).flip(), -1, 1, j));
+                        if(check()) {
+                            inc(1, j);
+                        }
+                        evts.push_back(Evt((b), +1, 0, j));
+                        evts.push_back(Evt((c), -1, 0, j));
+                        if(check()) {
+                            inc(1, j);
+                        }
+                    }
+                }
+            }
+            sort(evts.begin(), evts.end());
+            renew();
+            for(int j(0), k; j < (int)evts.size(); j = k) {
+                for(k = j; k < (int)evts.size() && evts[j].d * evts[k].d == 0 && evts[j].d % evts[k].d > 0; k++);
+                for(int l(j); l < k; l++) {
+                    if(evts[l].le == 0) {
+                        inc(evts[l].delta, evts[l].j);
+                    }
+                }
+
+                renew();
+                for(int l(j); l < k; l++) {
+                    if(evts[l].le == 1) {
+                        inc(evts[l].delta, evts[l].j);
+                    }
+                }
+            }
+        }
+        printf("%d\n", ans);
+    }
+}
+```
