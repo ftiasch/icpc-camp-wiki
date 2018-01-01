@@ -9,7 +9,7 @@ A. Rectangle Query
 
 分块bitset。考虑计算一块矩形里有多少个不同的$y$坐标。把点按x坐标排序，然后每$\sqrt{n}$个点分块，假设有$C$块。预处理$\frac{C(C+1)}{2}$个bitset，表示块$i$到$j$块里的所有y坐标是否出现过。每次询问一个矩形，就把没有出现在整块里的点单独拿出来，和整块预处理的答案or一下，然后左右移一下再count就得到答案了。注意由于一行里的点可能被拆成多个块，所以要分别记录某一行最早出现的块和最晚出现的块。复杂度$O(\frac{n^2+nq}{64}+q\sqrt{n})$。
 
-[A.cpp](Petrozavodsk%20Summer-2015.%20Moscow%20IPT%20Contest%20A.cpp)
+[A.cpp](Petrozavodsk Summer-2015. Moscow IPT Contest A.cpp)
 
 D. Maximal Common Subpair
 =========================
