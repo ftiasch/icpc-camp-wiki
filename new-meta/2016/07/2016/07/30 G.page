@@ -1,0 +1,94 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+const int N = 1e5 + 5, INF = 0x3f3f3f3f;
+int shen[N], ans[N], shen1[N];
+vector<int> G[N];
+int fix(int x)
+{
+    if (x % 2 == 0) return 2;
+    return 1;
+}
+void dfs(int x, int p)
+{
+    bool flag = 1;
+    shen1[x] = 0;
+    ans[x] = 0;
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == p) continue;
+        flag = 0;
+        dfs(u, x);
+        shen1[x] += shen[u];
+        ans[x] += ans[u] + shen[u];
+    }
+    if (flag)
+    {
+        shen[x] = 1;
+    }
+    else
+    {
+        shen[x] = fix(shen1[x]);
+    }
+}
+int A;
+void dfs2(int x, int p, int ans2, int shen2)
+{
+    if ((int) G[x].size() != 1) A = min(A, ans2 + ans[x] + shen2);
+    for (int i = 0; i < (int) G[x].size(); ++ i)
+    {
+        int u = G[x][i];
+        if (u == p) continue;
+        dfs2(u, x, ans2 + shen2 + ans[x] - ans[u] - shen[u], fix(shen2 + shen1[x] - shen[u]));
+    }
+}
+int main()
+{
+    int T;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n;
+        scanf("%d", &n);
+        for (int i = 1; i <= n; ++ i) G[i].clear();
+        for (int i = 1; i < n; ++ i)
+        {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        if (n == 1)
+        {
+            puts("0");
+            continue;
+        }
+        if (n == 2)
+        {
+            puts("1");
+            continue;
+        }
+        int st = 1;
+        for (int i = 2; i <= n; ++ i)
+        {
+            if (G[i].size() != 1)
+            {
+                st = i;
+                break;
+            }
+        }
+        dfs(st, -1);
+        A = INF;
+        dfs2(st, -1, 0, 0);
+        printf("%d\n", A);
+    }
+}
+```
