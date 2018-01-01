@@ -1,0 +1,77 @@
+Link
+====
+
+[vjudge](http://vjudge.net/contest/134955#overview)
+
+Summary
+=======
+
+Problems
+========
+
+A The Matrix Revolutions
+------------------------
+
+完全不会，看的[昂哥的题解](https://sd-invol.github.io/2015/05/31/Matrix-Tree-Polynomial/),
+抄的[别人的程序](http://www.cnblogs.com/oyking/p/4598601.html)。
+
+想要对一个$n$项多项式插值，需要至少知道$n$个这个多项式的值，将$x=0$到$n-1$代入矩阵，解出对应的行列式。
+
+多项式插值时是一个范德蒙德矩阵，不会怎么求逆，直接高斯消元。
+
+B Rotation
+----------
+
+又他么看的[别人的题解](http://www.cnblogs.com/oyking/p/4503098.html)。
+
+根据题意，车一定会回到原点，那么每个人的初始面向方向与最终面向方向相同，每个人旋转的圈数都必将是整数。
+
+若车在人的正左方下降了X次，上升了Y次，那么那个人的旋转圈数便是abs(X-Y)。
+
+C Seat Arrangement
+------------------
+
+D BombX
+-------
+
+E Block the Roads
+-----------------
+
+F Room Assignment
+-----------------
+
+还是看的[别人的题解](http://www.cnblogs.com/oyking/p/4508260.html)。
+
+G Game
+------
+
+H Lawn Mower
+------------
+
+I Defeat the Enemy
+------------------
+
+贪心，如果能不损失兵力击败对方就选择最小的防御力且能活下来的军队，否则就选择最小防御力的军队。
+
+J World Cup
+-----------
+
+A:获胜/败北中较大者
+
+B:平局分数
+
+C:获胜/败北中较小者
+
+想要最大的落榜分数，那么后面的队伍就要给前$M + 1$得分。每个队伍给max(A,
+B)分。
+
+那么前$M + 1$个队伍中，得分要尽量平均，有$\lfloor \frac{M}{2} \rfloor$场的得分为max(A
++ C, B + B)(算的是2场的得分)。如果$M$为奇数则还要加上max(B, C)。
+
+K LRIP
+------
+
+裸的树分治，妈嗨竟然是不严格单调的。
+
+L Top ACMers
+------------
