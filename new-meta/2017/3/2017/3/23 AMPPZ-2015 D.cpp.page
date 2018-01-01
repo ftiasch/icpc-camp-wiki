@@ -1,0 +1,50 @@
+``` {.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+void upd(int step, long long c, long long s, int &ans, long long &cnt, long long &sm) {
+    if (ans == -1 || ans > step) {
+        ans = step;
+        cnt = c;
+        sm = s;
+    }
+    else if (ans == step) {
+        cnt += c;
+        sm = min(sm, s);
+    }
+}
+int main() {
+    long long n, m;
+    cin >> n >> m;
+    int b = 0;
+    for (int i = 0; i < 62; ++ i) if (n >> i & 1) b = i + 1;
+    long long sm = 0, cnt = 0;
+    int ans = -1;
+    if (n / m <= 1e15 / (n / m)) {
+        long long i = 0;
+        while (i < (1LL << b)) {
+            int step = __builtin_popcountll(n ^ i);
+            upd(step, 1, i, ans, cnt, sm);
+            i += m;
+        }
+        cout << ans << " " << cnt << " " << sm << endl;
+        return 0;
+    }
+    int br = b / 2, bl = b - br;
+    for (int i = 0; i < m; ++ i) {
+        int a1 = -1, a2 = -1;
+        long long c1 = 0, s1 = 0, c2 = 0, s2 = 0;
+        for (int j = i; j < (1 << bl); j += m) {
+            int step = __builtin_popcount(j ^ (n >> br));
+            upd(step, 1, j, a1, c1, s1);
+        }
+        for (int j = (m - ((1LL * i) << br) % m) % m; j < (1 << br); j += m) {
+            int step = __builtin_popcount(j ^ (n & ((1 << br) - 1)));
+            upd(step, 1, j, a2, c2, s2);
+        }
+        if (a1 != -1 && a2 != -1) {
+            upd(a1 + a2, c1 * c2, ((1LL * s1) << br) + s2, ans, cnt, sm);
+        }
+    }
+    cout << ans << " " << cnt << " " << sm << endl;
+}
+```
