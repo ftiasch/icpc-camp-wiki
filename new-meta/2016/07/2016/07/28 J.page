@@ -1,0 +1,55 @@
+Code
+
+``` {.cpp}
+
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+const int N = 105, MOD = 1e9 + 7;
+int f[N][N][N], C[N * N][N];
+int main()
+{
+    C[0][0] = 1;
+    for (int i = 0; i < N * N; ++ i)
+    {
+        C[i][0] = 1;
+        for (int j = 1; j < N && j <= i; ++ j) C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+    }
+    for (int i = 1; i < N; ++ i)
+    {
+        f[i][0][0] = 1;
+        for (int j = 1; j < N; ++ j)
+        {
+            for (int k = j; k < N; ++ k)
+            {
+                for (int l = 1; l <= min(i, k); ++ l)
+                {
+                    (f[i][j][k] += 1LL * f[i][j - 1][k - l] * C[i][l] % MOD) %= MOD;
+                }
+            }
+        }
+    }
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --)
+    {
+        int n, m, k;
+        scanf("%d%d%d", &n, &m, &k);
+        if (k > n * m)
+        {
+            printf("Case %d: 0\n", ++ zzz);
+            continue;
+        }
+        if (n > m) swap(n, m);
+        if (n == 1)
+        {
+            printf("Case %d: %d\n", ++ zzz, C[m][k]);
+            continue;
+        }
+        int ans = (C[n * m][k] - 2LL * C[(n - 1) * m][k] - 2LL * C[n * (m - 1)][k] + 4LL * C[(n - 1) * (m - 1)][k] + C[(n - 2) * m][k] + C[n * (m - 2)][k] - 2LL * C[(n - 2) * (m - 1)][k] - 2LL * C[(n - 1) * (m - 2)][k] + C[(n - 2) * (m - 2)][k] + 2LL * f[n - 1][m][k] - f[n - 2][m][k] + 2LL * f[m - 1][n][k] - f[m - 2][n][k]) % MOD;
+        printf("Case %d: %d\n", ++ zzz, (ans + MOD) % MOD);
+    }
+}
+```
