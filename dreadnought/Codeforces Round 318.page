@@ -1,0 +1,26 @@
+Codeforces Round \#318 \[RussianCodeCup Thanks-Round\] (Div. 1)
+
+A, B 简单题不表
+
+[C. Bear and Drawing](http://codeforces.com/contest/573/problem/C)
+==================================================================
+
+题解：最终的答案是一条主链挂着很多简单链。先把所有简单链从叶子开始往上BFS标记出来，然后看剩下来的点是否形成一条链。
+
+代码：（Ugly分类讨论）[12757263](http://codeforces.com/contest/573/submission/12757263)
+
+[D. Bear and Cavalry](http://codeforces.com/contest/573/problem/D)
+==================================================================
+
+题解：首先要明白怎么DP。结论是一段的大小只可能是1，2，3。实际匹配的方式只有4种。然后再用线段树上矩阵维护转移即可。
+
+代码：（看了看其他人都写得好丑啊）[12791178](http://codeforces.com/contest/573/submission/12791178)
+
+[E. Bear and Bowling](http://codeforces.com/contest/573/problem/E)
+==================================================================
+
+题解：先要明白贪心做法。取每个元素的收益为ai \* x +
+bi。其中x是其左边取了的元素个数，bi是其右边取了的元素值之和。每次取收益最大的就是最优解。证明思路就是考虑从什么时候开始不是最优解然后分类讨论。然后看怎么实现贪心。根号分块之后每块维护一个凸壳。而询问由于x递增，可以均摊O(1)。取一个元素重建也可以只排序一次，故总的复杂度为O(n\sqrt(n))。
+
+代码：[12854212](http://codeforces.com/contest/573/submission/12854212)
+[ftiasch](http://codeforces.com/contest/573/submission/12802265)
