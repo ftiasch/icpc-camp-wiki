@@ -1,0 +1,27 @@
+增强切水题的速度和稳定性。
+
+准备模板，做各方面专题。
+
+准备线代。
+
+准备dp。
+
+Todo List
+=========
+
+-   hdu 5939（单调队列优化dp）
+-   cf851D【Done】
+-   spoj cot3
+-   hdu4609(fft)【Done】
+-   hdu5965 (平行四边形)
+-   hdu5072 (莫比乌斯反演)
+-   hdu5080 (置换群)
+-   hdu5017 (几何)
+-   cf437
+-   hiho1597 <br>
+
+Cautious
+========
+
+-   unsigned long long 输出%llu
+
