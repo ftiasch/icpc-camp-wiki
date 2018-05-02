@@ -1,0 +1,122 @@
+# Info
+
+Date: 2017.10.09 17:40-22:40
+
+[Link](http://www.bnuoj.com/v3/contest_show.php?cid=9264)
+
+# Solutions
+
+## A Assigning Workstations
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+相当于求最小的解锁次数，现在新来一个人，如果没有没锁上的电脑，那就只能解锁一台电脑，否则把待机时间最长的分给他，优先队列维护电脑最后一次使用时间。
+
+## B Better Productivity
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+先考虑区间互不严格包含的情况，那么将区间按照左端点排序后，每一组一定是一些连续的区间，可以直接$dp$求解。现在存在某些区间严格包含其他区间，先将这些“好”区间扔到一边，对剩下的互不严格包含的“坏”区间通过$dp$进行分组，然后枚举这些区间分成了多少组，剩下的组从“好”区间中依次选出最长的放进去，对于未分组的“好”区间，放入到它严格包含的某个区间对应的组中。
+
+## C Cleaning Pipes
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+建图，对于有交的两个线段连边，判断是否是二分图。
+
+## D Debugging
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+$dp_i$表示从$i$行代码中查错需要的最短时间，考虑将这份代码分成若干个$\leq j$行的代码段，那么至少要插入$\lceil \frac{i}{j} \rceil -1$个$printf$，然后再运行一次代码，也就是$dp_i=\min_{j<i}(dp_j+r+(\lceil \frac{i}{j} \rceil -1)p)$，观察到求出$dp_j$之后，可以成段更新$dp_{j+1,\dots,2j},dp_{2j+1,\dots,3j},\dots$的值，显然$dp$值不减，于是可以用树状数组维护后缀最小值。
+
+但是冷静分析一下，如果考虑将这份代码分成$j$段，那么代码段长度最大是$\lceil \frac{i}{j} \rceil$，也就是$dp_i=\min_{j<i}(dp_{\lceil \frac{i}{j} \rceil}+r+(j-1)p)$，只有形如$dp_{\lceil \frac{n}{k} \rceil}$的状态才是有效的，直接记忆化递归求解即可。
+
+## E Elementary Math
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+枚举加减乘，建图做二分图匹配，最大匹配为$n$时有解，输出方案，否则无解。
+
+
+## F Flight Plan Evaluation
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+题目保证了各种tricky的情况都不会出现，考虑耿直地做，抠出飞行轨迹和海岸线的交点，按照飞行的路程从小到大排序，就可以将飞行轨迹打断成很多线段，又已知起点在陆地上，也就可以知道每一段是陆地上空还是在海洋上空。
+
+那么问题在于如果求出球面上两段大圆劣弧的交点，首先考虑求出两个大圆的交点，只需将两个大圆所在平面的法向量叉积一下就能得到交线的方向向量，并且交线过圆心，也就能确定交线和球面的交点也就是两个大圆的交点。
+
+再考虑如何判断交点在劣弧上，一个简单的办法是让交点和劣弧的两个端点分别计算球面距离，判断和是否等于两个端点之间的球面距离，而计算球面距离只需要计算球心角，这是容易的。
+
+## G Guessing Camels
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+将一维看成$n,n-1,...2,1$，转化成有$(a_i,b_i)$这$n$个二维点，求有多少对$i<j$，满足$a_i>a_j$且$b_i<b_j$。总之是类似一个求二维点的逆序对个数的问题。$cdq$分治。
+
+## H Hole in One
+
+solved by sk, upsolved by none
+
+首先，墙的个数很小，可以$8 \times 8!$的枚举一个碰撞的顺序。关键是怎么找到这条反射路线。思路是将出发点按顺序沿着枚举的这些墙作对称点，一直对称下去，将最后对称到的位置与终点连线，这样就可能得到了连线与最后一面墙的交点，再与上一个对称点连回去，得到与倒数第二面墙的交点，重复这个过程直到连回出发点。连线的过程同时判断是否可行。一是每次连线与墙要有交点，二是连线不能与还没消失的墙撞上。
+
+## I Identifying Map Tiles
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+签到题。
+
+## J Jumbled Communication
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+直接枚举。
+
+## K Kitchen Combinatorics
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+直接枚举三种菜分别用哪一种，判断是否冲突，不冲突则统计用过哪些原料，乘起来即可。总的复杂度只有$O(n^4)$，注意乘法不要爆$long\ long$。
+
+## Replay
