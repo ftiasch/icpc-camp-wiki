@@ -1,0 +1,38 @@
+# 杜教筛原理
+
+求$F(n)=\sum_{i=1}^nf(i)$
+
+凑出$\sum_{d|n}f(d)g(\frac{n}{d})=h(n)$
+
+$g(1)F(n)=\sum_{i=1}^n(h(i)-\sum_{d|i,d<i}f(d)g(\frac{i}{d}))$
+
+$g(1)F(n)=\sum_{i=1}^nh(i)-\sum_{i=2}^ng(i)F(\frac{n}{i})$
+
+# 洲哥筛
+
+~~~{.cpp}
+#include<bits/stdc++.h>//求1~n素数个数
+#define LL long long
+#define N 1111111
+#define fr(i,n) for(LL i=1;i<=n;i++)
+using namespace std;
+LL n,m,i,j,p,w,f[N],g[N];
+int main(){
+	scanf("%lld",&n);
+	for(m=1;m*m<=n;m++);
+	fr(i,m)g[i]=i-1,f[i]=n/i-1;
+	for(i=2;i<=m;i++){
+		p=g[i-1];w=i*i;
+		if(g[i]==p)continue;
+		fr(j,min(m-1,n/w))f[j]-=(i*j<m?f[i*j]:g[n/(i*j)])-p;
+		for(j=m;j>=w;j--)g[j]-=g[j/i]-p;
+	}
+	printf("%lld",f[1]);
+}
+~~~
+
+数论都不会。。
+
+# 差分约束
+
+有负环无解
