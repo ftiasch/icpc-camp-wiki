@@ -1,8 +1,9 @@
 Easy：ADEL
 
-E：赌博水题，让$\sum \frac{1}{p}<1$即可，$p$为赌$1$元实际所得。坑点是要开long double，坑了好久。。
+E：赌博水题，让$\sum \frac{1}{p}<1$即可，$p$为赌$1$元实际所得。坑点是要开long
+double，坑了好久。。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111
 #define CL(a) memset(a,0,sizeof a)
@@ -10,58 +11,58 @@ using namespace std;
 int T,ca,n,an,i;char c;
 long double V,x,y,pl[N];
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&n);an=0;V=0;
-		for(i=1;i<=n;i++)cin>>x>>c>>y,pl[i]=x/(x+y);
-		sort(pl+1,pl+n+1);
-		for(i=1;i<=n;i++){
-			V+=pl[i];
-			if(V<1)an=i;
-		}
-		printf("Case #%d: %d\n",ca,an);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&n);an=0;V=0;
+        for(i=1;i<=n;i++)cin>>x>>c>>y,pl[i]=x/(x+y);
+        sort(pl+1,pl+n+1);
+        for(i=1;i<=n;i++){
+            V+=pl[i];
+            if(V<1)an=i;
+        }
+        printf("Case #%d: %d\n",ca,an);
+    }
 }
-~~~
+```
 
 MID：BCFH
 
 C：因为常数较小，$O(n^3)$暴枚即可通过，不用加任何优化
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1111
 #define CL(a) memset(a,0,sizeof a)
 using namespace std;
 int T,n,i,j,ca,an,L,R,cnt,c[N],a[N],v[N];
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&n);an=0;
-		for(i=1;i<=n;i++)scanf("%d",&a[i]),v[i]=a[i];
-		sort(v+1,v+n+1);cnt=unique(v+1,v+n+1)-v-1;
-		for(i=1;i<=n;i++)a[i]=lower_bound(v+1,v+cnt+1,a[i])-v;
-		for(i=1;i<=n;i++){
-			for(j=i;j<=n&&!c[a[j]];j++){
-				c[a[j]]++;
-				an=max(an,j-i+1);
-				for(L=j+2,R=0;L<=n;L++){
-					if(R<L)R=L;
-					for(;R<=n&&!c[a[R]];)c[a[R++]]=1;
-					an=max(an,j-i+1+R-L);
-					if(R>L)c[a[L]]=0;
-				}
-			}
-			for(;j>=i;j--)c[a[j]]=0;
-		}
-		printf("Case #%d: %d\n",ca,an);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&n);an=0;
+        for(i=1;i<=n;i++)scanf("%d",&a[i]),v[i]=a[i];
+        sort(v+1,v+n+1);cnt=unique(v+1,v+n+1)-v-1;
+        for(i=1;i<=n;i++)a[i]=lower_bound(v+1,v+cnt+1,a[i])-v;
+        for(i=1;i<=n;i++){
+            for(j=i;j<=n&&!c[a[j]];j++){
+                c[a[j]]++;
+                an=max(an,j-i+1);
+                for(L=j+2,R=0;L<=n;L++){
+                    if(R<L)R=L;
+                    for(;R<=n&&!c[a[R]];)c[a[R++]]=1;
+                    an=max(an,j-i+1+R-L);
+                    if(R>L)c[a[L]]=0;
+                }
+            }
+            for(;j>=i;j--)c[a[j]]=0;
+        }
+        printf("Case #%d: %d\n",ca,an);
+    }
 }
-~~~
+```
 
 H：每个格子分别考虑各自的贡献，从$[1,k]$枚举该格子的值$i$，那么它是超级格子的概率为$\frac{(i-1)^{n+m-2}}{k^{n+m-2}}$，总方案数为$k^{n*m}$，那么答案即为$k^{n*m}+n*m*k^{n*m-n-m+1}*\sum_i^k (i-1)^{n+m-2}$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define M 1000000007
 #define LL long long
@@ -69,24 +70,24 @@ using namespace std;
 int T,ca,n,m,k,i;
 LL V,an;
 LL Pw(LL a,LL b,LL p){
-	LL v=1;
-	for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
-	return v;
+    LL v=1;
+    for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
+    return v;
 }
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d%d%d",&n,&m,&k);V=0;
-		for(i=k;i;i--)V=(V+Pw(i-1,n+m-2,M))%M;
-		V=V*n%M*m%M*Pw(k,n*m-n-m+1,M)%M;;
-		printf("Case #%d: %I64d\n",ca,(V+Pw(k,n*m,M))%M);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d%d%d",&n,&m,&k);V=0;
+        for(i=k;i;i--)V=(V+Pw(i-1,n+m-2,M))%M;
+        V=V*n%M*m%M*Pw(k,n*m-n-m+1,M)%M;;
+        printf("Case #%d: %I64d\n",ca,(V+Pw(k,n*m,M))%M);
+    }
 }
-~~~
+```
 
 F：将第$2-n$个串建广义后缀自动机，第$1$个串在上面跑最短不公共子串即可。将m达成n调了好久。。。
 
-~~~{.cpp}
+``` {.cpp}
 using namespace std;
 #include<bits/stdc++.h>
 #define N 666666
@@ -94,53 +95,53 @@ using namespace std;
 char s[N],A[N];
 int T,ca,al,ar,n,m,i,j,x,p,np,q,nq,cnt,L,st[N],c[N][27],F[N];
 void add(int x){
-	p=np;st[np=++cnt]=st[p]+1;
-	for(;p&&!c[p][x];p=F[p])c[p][x]=np;
-	if(!p)F[np]=1;else 
-	if(st[p]+1==st[q=c[p][x]])F[np]=q;else{
-		st[nq=++cnt]=st[p]+1;memcpy(c[nq],c[q],sizeof c[q]);
-		F[nq]=F[q];F[q]=F[np]=nq;
-		for(;p&&c[p][x]==q;p=F[p])c[p][x]=nq;
-	}
+    p=np;st[np=++cnt]=st[p]+1;
+    for(;p&&!c[p][x];p=F[p])c[p][x]=np;
+    if(!p)F[np]=1;else 
+    if(st[p]+1==st[q=c[p][x]])F[np]=q;else{
+        st[nq=++cnt]=st[p]+1;memcpy(c[nq],c[q],sizeof c[q]);
+        F[nq]=F[q];F[q]=F[np]=nq;
+        for(;p&&c[p][x]==q;p=F[p])c[p][x]=nq;
+    }
 }
 void up(int ul,int ur){
-	if(ur-ul<ar-al)al=ul,ar=ur;else if(ur-ul==ar-al){
-		for(int j=0;j<=ar-al;j++)if(A[al+j]!=A[ul+j]){
-			if(A[ul+j]<A[al+j])al=ul,ar=ur;
-			return;
-		}
-	}
+    if(ur-ul<ar-al)al=ul,ar=ur;else if(ur-ul==ar-al){
+        for(int j=0;j<=ar-al;j++)if(A[al+j]!=A[ul+j]){
+            if(A[ul+j]<A[al+j])al=ul,ar=ur;
+            return;
+        }
+    }
 }
 int main(){
-	scanf("%d",&T); 
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&n);al=0;ar=1e9;
-		np=cnt=1;scanf("%s",A);
-		for(i=2;i<=n;i++){
-			scanf("%s",s);m=strlen(s);
-			for(j=0;j<m;j++)add(s[j]-'a');
-			add(26);
-		}
-		m=strlen(A);
-		for(p=1,L=i=0;i<m;i++)
-			if(c[p][x=A[i]-'a'])p=c[p][x],L=st[F[p]]+1;else{
-				for(;!c[p][x]&&p;p=F[p],L=st[F[p]]+1)up(i-L,i);
-				if(!p)p=1,L=0;else p=c[p][x],L=st[F[p]]+1;
-			}
-		printf("Case #%d: ",ca);
-		if(ar-al>m)puts("Impossible");else{
-			for(i=al;i<=ar;i++)printf("%c",A[i]);puts("");
-		}
-		for(i=1;i<=cnt;i++)for(F[i]=st[i]=0,j=0;j<27;j++)c[i][j]=0; 
-	}
+    scanf("%d",&T); 
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&n);al=0;ar=1e9;
+        np=cnt=1;scanf("%s",A);
+        for(i=2;i<=n;i++){
+            scanf("%s",s);m=strlen(s);
+            for(j=0;j<m;j++)add(s[j]-'a');
+            add(26);
+        }
+        m=strlen(A);
+        for(p=1,L=i=0;i<m;i++)
+            if(c[p][x=A[i]-'a'])p=c[p][x],L=st[F[p]]+1;else{
+                for(;!c[p][x]&&p;p=F[p],L=st[F[p]]+1)up(i-L,i);
+                if(!p)p=1,L=0;else p=c[p][x],L=st[F[p]]+1;
+            }
+        printf("Case #%d: ",ca);
+        if(ar-al>m)puts("Impossible");else{
+            for(i=al;i<=ar;i++)printf("%c",A[i]);puts("");
+        }
+        for(i=1;i<=cnt;i++)for(F[i]=st[i]=0,j=0;j<27;j++)c[i][j]=0; 
+    }
 }
-~~~
+```
 
 B：求长度为$n$字典序第$k$小的H回文串。H回文串：奇数位连起来是回文串或者偶数位连起来是回文串。$N\leq100000,K\leq 10^{18}$。
 
 如果已经确定了前$i$位，可以通过容斥求出后几位的方案数，即奇数是回文串+偶数是回文串-奇数、偶数都是回文串，那么可以逐位确定得到答案。但由于$N$较大，而只用求字典序$K$小的，于是只需要确定后$2log_2(K)$位即可得到正确答案。时间复杂度$O(NlgK)$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111111
 #define LL long long
@@ -149,36 +150,36 @@ LL k,an,pw[N];
 int T,ca,n,i,v[N];
 using namespace std;
 LL get(int A,int B){
-	bool ff;int V=0;
-	for(int i=1,j;i<=n;i++){
-		j=(n&1)?n-i+1:(i&1)?n-i:n-i+2;
-		if(j<i)continue;
-		ff=(i&1)?A:B;
-		if((v[i]&&v[j]&&v[i]!=v[j])&&ff)return 0;
-		if(i==j)V=(v[i])?V:V+1;
-		else if(!v[i]||!v[j])V+=(!ff)+(!v[i]&&!v[j]);
-	}
-	return pw[V];
+    bool ff;int V=0;
+    for(int i=1,j;i<=n;i++){
+        j=(n&1)?n-i+1:(i&1)?n-i:n-i+2;
+        if(j<i)continue;
+        ff=(i&1)?A:B;
+        if((v[i]&&v[j]&&v[i]!=v[j])&&ff)return 0;
+        if(i==j)V=(v[i])?V:V+1;
+        else if(!v[i]||!v[j])V+=(!ff)+(!v[i]&&!v[j]);
+    }
+    return pw[V];
 }
 LL CAL(){return get(1,0)+get(0,1)-get(1,1);}
 int main(){
-	for(pw[0]=i=1;i<N;i++)pw[i]=min(pw[i-1]*2,inf);
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		printf("Case #%d: ",ca);
-		scanf("%d%lld",&n,&k);
-		an=CAL();
-		if(k>an){puts("NOT FOUND!");continue;}
-		for(i=1;i<=n-130;i++)v[i]=1;
-		for(i=max(1,n-129);i<=n;i++){
-			v[i]=1;an=CAL();
-			if(an<k)k-=an,v[i]=2;
-		}
-		for(i=1;i<=n;i++)printf("%d",v[i]-1),v[i]=0;
-		puts("");
-	}
+    for(pw[0]=i=1;i<N;i++)pw[i]=min(pw[i-1]*2,inf);
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        printf("Case #%d: ",ca);
+        scanf("%d%lld",&n,&k);
+        an=CAL();
+        if(k>an){puts("NOT FOUND!");continue;}
+        for(i=1;i<=n-130;i++)v[i]=1;
+        for(i=max(1,n-129);i<=n;i++){
+            v[i]=1;an=CAL();
+            if(an<k)k-=an,v[i]=2;
+        }
+        for(i=1;i<=n;i++)printf("%d",v[i]-1),v[i]=0;
+        puts("");
+    }
 }
-~~~
+```
 
 MID-HARD：GJ
 
@@ -186,7 +187,7 @@ G：$N$个点$M$条边$(x,y,z)$的图，每个点有一个颜色$c_i$。在线$Q
 
 Kruskal重构树，询问树上倍增找到管理的点，相当于在线询问子树中出现最多的数。而这个在线是假的，只要求出所有子树出现最多的数就行了，用线段树合并处理出答案，询问时直接在树上倍增找到所对应的子树即可。时间复杂度$O((N+Q)logN)$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 222222
 #define M 4444444
@@ -199,58 +200,57 @@ bool cmp(P a,P b){return a.z<b.z;}
 void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
 int gf(int x){return fa[x]==x?x:fa[x]=gf(fa[x]);}
 int get(int x,int z){
-	for(int i=17;~i;i--)if(F[x][i]&&d[x][i]<=z)x=F[x][i];
-	return x;
+    for(int i=17;~i;i--)if(F[x][i]&&d[x][i]<=z)x=F[x][i];
+    return x;
 }
 void ins(int&k,int l,int r,int z){
-	k=++id;L[k]=R[k]=0;mv[k]=make_pair(0,0);int md=l+r>>1;
-	if(l==r)mv[k].first++,mv[k].second=-z;
-	else z<=md?ins(L[k],l,md,z):ins(R[k],md+1,r,z),mv[k]=max(mv[L[k]],mv[R[k]]);
+    k=++id;L[k]=R[k]=0;mv[k]=make_pair(0,0);int md=l+r>>1;
+    if(l==r)mv[k].first++,mv[k].second=-z;
+    else z<=md?ins(L[k],l,md,z):ins(R[k],md+1,r,z),mv[k]=max(mv[L[k]],mv[R[k]]);
 }
 int mg(int x,int y,int l,int r){
-	if(!x||!y)return x+y;
-	if(l==r)mv[x].first+=mv[y].first;else{
-		int md=l+r>>1;
-		L[x]=mg(L[x],L[y],l,md);
-		R[x]=mg(R[x],R[y],md+1,r);
-		mv[x]=max(mv[L[x]],mv[R[x]]);
-	}
-	return x;
+    if(!x||!y)return x+y;
+    if(l==r)mv[x].first+=mv[y].first;else{
+        int md=l+r>>1;
+        L[x]=mg(L[x],L[y],l,md);
+        R[x]=mg(R[x],R[y],md+1,r);
+        mv[x]=max(mv[L[x]],mv[R[x]]);
+    }
+    return x;
 }
 void dfs(int x){
-	if(x<=nn)ins(T[x],1,nn,c[x]);
-	for(int i=fir[x];i;i=ne[i])dfs(la[i]),T[x]=mg(T[x],T[la[i]],1,nn);
-	an[x]=-mv[T[x]].second;
+    if(x<=nn)ins(T[x],1,nn,c[x]);
+    for(int i=fir[x];i;i=ne[i])dfs(la[i]),T[x]=mg(T[x],T[la[i]],1,nn);
+    an[x]=-mv[T[x]].second;
 }
 int main(){
-	scanf("%d",&Te);
-	for(ca=1;ca<=Te;ca++){
-	CL(fa);CL(T);CL(fir);tot=id=AN=0;
-	printf("Case #%d:\n",ca);
-	scanf("%d%d",&n,&m);nn=n;
-	for(i=1;i<=n;i++)scanf("%d",&c[i]),fa[i]=i;
-	for(i=1;i<=m;i++)scanf("%d%d%d",&p[i].x,&p[i].y,&p[i].z);
-	sort(p+1,p+m+1,cmp);
-	for(i=1;i<=m;i++){
-		x=gf(p[i].x);y=gf(p[i].y);
-		if(x!=y){
-			fa[x]=fa[y]=F[x][0]=F[y][0]=++n;fa[n]=n;
-			d[x][0]=d[y][0]=p[i].z;ins(n,x);ins(n,y);
-		}
-	}
-	dfs(n);
-	for(j=1;j<=17;j++)for(i=1;i<=n;i++)d[i][j]=max(d[i][j-1],d[F[i][j-1]][j-1]),F[i][j]=F[F[i][j-1]][j-1];
-	for(scanf("%d",&Q);Q--;printf("%d\n",AN))scanf("%d%d",&x,&y),x=get(x^AN,y^AN),AN=an[x];
-	}
+    scanf("%d",&Te);
+    for(ca=1;ca<=Te;ca++){
+    CL(fa);CL(T);CL(fir);tot=id=AN=0;
+    printf("Case #%d:\n",ca);
+    scanf("%d%d",&n,&m);nn=n;
+    for(i=1;i<=n;i++)scanf("%d",&c[i]),fa[i]=i;
+    for(i=1;i<=m;i++)scanf("%d%d%d",&p[i].x,&p[i].y,&p[i].z);
+    sort(p+1,p+m+1,cmp);
+    for(i=1;i<=m;i++){
+        x=gf(p[i].x);y=gf(p[i].y);
+        if(x!=y){
+            fa[x]=fa[y]=F[x][0]=F[y][0]=++n;fa[n]=n;
+            d[x][0]=d[y][0]=p[i].z;ins(n,x);ins(n,y);
+        }
+    }
+    dfs(n);
+    for(j=1;j<=17;j++)for(i=1;i<=n;i++)d[i][j]=max(d[i][j-1],d[F[i][j-1]][j-1]),F[i][j]=F[F[i][j-1]][j-1];
+    for(scanf("%d",&Q);Q--;printf("%d\n",AN))scanf("%d%d",&x,&y),x=get(x^AN,y^AN),AN=an[x];
+    }
 }
-~~~
-
+```
 
 J：$N$行$M$列的网格，4种插头，要求一些点必须有插头，而且插头要连成若干环。两个插头连接有一个价值$V_{i,j}$，现在要在使连接合法的情况下价值最大。$N,M\leq30$。
 
 每个点$i$拆成两个点$i_1$和$i_2$，作为入点和出点。连边$(S,i_1)(i_2,T)$，如果这个点不是必选，再连$(i_1,i_2)$，两点$i,j$连边$(i_1,j_2,cost_{i,j})$，跑费用流即可。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 2222
 #define M 2222222
@@ -258,62 +258,62 @@ J：$N$行$M$列的网格，4种插头，要求一些点必须有插头，而且
 #define CL(a) memset(a,0,sizeof a)
 using namespace std;
 struct CostFlow{
-	int h,t,tot,an,fl,fir[N],va[M],la[M],ne[M],q[N ],d[N],fa[N],pre[N],co[M];bool v[N];
-	void in(){CL(fir);CL(pre);CL(fa);tot=1;}
-	void add(int x,int y,int fl,int z){
-		la[++tot]=y;ne[tot]=fir[x];va[tot]=fl;co[tot]=z;fir[x]=tot;
-		la[++tot]=x;ne[tot]=fir[y];va[tot]=0;co[tot]=-z;fir[y]=tot;
-	}
-	bool spfa(int S,int T,int n){
-		int i,x,y;
-		for(i=1;i<=n;i++)d[i]=inf;
-		for(CL(v),d[S]=h=0,v[q[t=1]=S]=1;h^t;)
-			for(i=fir[x=q[h=h%n+1]],v[x]=0;i;i=ne[i])
-				if(d[x]+co[i]<d[y=la[i]]&&va[i]){
-					d[y]=d[fa[y]=x]+co[pre[y]=i];
-					if(!v[y])v[q[t=t%n+1]=y]=1;
-				}
-		return d[T]<inf;
-	}
-	void end(int S,int T){
-		int i,p=inf;
-		for(i=T;i!=S;i=fa[i])p=min(p,va[pre[i]]);fl+=p;
-		for(i=T;i!=S;i=fa[i])va[pre[i]]-=p,va[pre[i]^1]+=p,an+=p*co[pre[i]];
-	}
-	void cal(int S,int T,int n){
-		for(an=fl=0;spfa(S,T,n);end(S,T));
-	}
+    int h,t,tot,an,fl,fir[N],va[M],la[M],ne[M],q[N ],d[N],fa[N],pre[N],co[M];bool v[N];
+    void in(){CL(fir);CL(pre);CL(fa);tot=1;}
+    void add(int x,int y,int fl,int z){
+        la[++tot]=y;ne[tot]=fir[x];va[tot]=fl;co[tot]=z;fir[x]=tot;
+        la[++tot]=x;ne[tot]=fir[y];va[tot]=0;co[tot]=-z;fir[y]=tot;
+    }
+    bool spfa(int S,int T,int n){
+        int i,x,y;
+        for(i=1;i<=n;i++)d[i]=inf;
+        for(CL(v),d[S]=h=0,v[q[t=1]=S]=1;h^t;)
+            for(i=fir[x=q[h=h%n+1]],v[x]=0;i;i=ne[i])
+                if(d[x]+co[i]<d[y=la[i]]&&va[i]){
+                    d[y]=d[fa[y]=x]+co[pre[y]=i];
+                    if(!v[y])v[q[t=t%n+1]=y]=1;
+                }
+        return d[T]<inf;
+    }
+    void end(int S,int T){
+        int i,p=inf;
+        for(i=T;i!=S;i=fa[i])p=min(p,va[pre[i]]);fl+=p;
+        for(i=T;i!=S;i=fa[i])va[pre[i]]-=p,va[pre[i]^1]+=p,an+=p*co[pre[i]];
+    }
+    void cal(int S,int T,int n){
+        for(an=fl=0;spfa(S,T,n);end(S,T));
+    }
 }G;
 int n,m;
 int C(int x,int y,int z){return z*n*m+x*m-m+y;}
 int main(){
-	int S,T,Te,ca,E,i,j,x,y,z,an,v[33][33];
-	scanf("%d",&Te);
-	for(ca=1;ca<=Te;ca++){
-		printf("Case #%d: ",ca);
-		G.in();CL(v);
-		scanf("%d%d",&n,&m);S=n*m*2+1;T=S+1;
-		for(i=1;i<=n;i++)for(j=1;j<m;j++){
-			scanf("%d",&z);
-			if((i+j)&1)G.add(C(i,j,0),C(i,j+1,1),1,-z);
-			else G.add(C(i,j+1,0),C(i,j,1),1,-z);
-		}
-		for(i=1;i<n;i++)for(j=1;j<=m;j++){
-			scanf("%d",&z);
-			if((i+j)&1)G.add(C(i+1,j,0),C(i,j,1),1,-z);
-			else G.add(C(i,j,0),C(i+1,j,1),1,-z);
-		}
-		for(scanf("%d",&E);E--;)scanf("%d%d",&x,&y),v[x][y]=1;
-		for(i=1;i<=n;i++)for(j=1;j<=m;j++){
-			x=C(i,j,0);y=C(i,j,1);
-			G.add(S,x,1,0),G.add(y,T,1,0);
-			if(!v[i][j])G.add(x,y,1,0);
-		}
-		G.cal(S,T,T);
-		if(G.fl!=n*m)puts("Impossible");else printf("%d\n",-G.an);
-	}
+    int S,T,Te,ca,E,i,j,x,y,z,an,v[33][33];
+    scanf("%d",&Te);
+    for(ca=1;ca<=Te;ca++){
+        printf("Case #%d: ",ca);
+        G.in();CL(v);
+        scanf("%d%d",&n,&m);S=n*m*2+1;T=S+1;
+        for(i=1;i<=n;i++)for(j=1;j<m;j++){
+            scanf("%d",&z);
+            if((i+j)&1)G.add(C(i,j,0),C(i,j+1,1),1,-z);
+            else G.add(C(i,j+1,0),C(i,j,1),1,-z);
+        }
+        for(i=1;i<n;i++)for(j=1;j<=m;j++){
+            scanf("%d",&z);
+            if((i+j)&1)G.add(C(i+1,j,0),C(i,j,1),1,-z);
+            else G.add(C(i,j,0),C(i+1,j,1),1,-z);
+        }
+        for(scanf("%d",&E);E--;)scanf("%d%d",&x,&y),v[x][y]=1;
+        for(i=1;i<=n;i++)for(j=1;j<=m;j++){
+            x=C(i,j,0);y=C(i,j,1);
+            G.add(S,x,1,0),G.add(y,T,1,0);
+            if(!v[i][j])G.add(x,y,1,0);
+        }
+        G.cal(S,T,T);
+        if(G.fl!=n*m)puts("Impossible");else printf("%d\n",-G.an);
+    }
 }
-~~~
+```
 
 HARD：IK
 
