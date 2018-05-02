@@ -1,131 +1,132 @@
-# F. Keys
+F. Keys
+=======
 
 就大力树dp啊。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 int dp[30][30][3][8], f[30], c[30][2];
 bool has_ring[30];
 int read(char c) {
-	if (c >= 'A' && c <= 'M') return 0;
-	if (c >= 'N' && c <= 'Z') return -1;
-	return c - 'a' + 1;
+    if (c >= 'A' && c <= 'M') return 0;
+    if (c >= 'N' && c <= 'Z') return -1;
+    return c - 'a' + 1;
 }
 int fat(int u) {
-	if (f[u] == u) return u;
-	return f[u] = fat(f[u]);
+    if (f[u] == u) return u;
+    return f[u] = fat(f[u]);
 }
 void upd(int &x, int y) { x = min(x, y); }
 vector<int> G[30];
 void dfs(int x, int p = 0) {
-	if (x) dp[x][c[x][0]][2][0] = 1; // ring attach
-	if (x) dp[x][c[x][1]][1][0] = 1; // ring attach
-	dp[x][c[x][0] + c[x][1]][0][0] = 0;
-	for (int u : G[x]) {
-		if (u == p) continue;
-		dfs(u, x);
-		static int tmp[30][3][8];
-		memset(tmp, 0x3f, sizeof(tmp));
-		for (int i = 0; i <= 26; ++ i) { // keys detached
-			for (int k = 0; k < 3; ++ k) { // ring x state
-				for (int mask1 = 0; mask1 < 8; ++ mask1) {
-					if (dp[x][i][k][mask1] > 100) continue;
-					for (int j = 0; j <= 26; ++ j) { // sub tree key detached
-						for (int l = 0; l < 3; ++ l) { // ring u state
-							for (int mask2 = 0; mask2 < 8; ++ mask2) {
-								if (dp[u][j][l][mask2] > 100) continue;
-								if (x != 0 && (l == 0 || l == k)) { // no ring detach
-									upd(tmp[i + j][k][mask1 | mask2], dp[x][i][k][mask1] + dp[u][j][l][mask2] - !!l); // save one ring attach
-								}
-								// ring detach
-								upd(tmp[i + j][k][mask1 | mask2 | (1 << l)], dp[x][i][k][mask1] + dp[u][j][l][mask2] + (x != 0));
-							}
-						}
-					}
-				}
-			}
-		}
-		for (int i = 0; i < 30; ++ i) {
-			for (int j = 0; j < 3; ++ j) {
-				for (int k = 0; k < 8; ++ k) dp[x][i][j][k] = tmp[i][j][k];
-			}
-		}
-	}
-	/*for (int i = 0; i <= 26; ++ i) {
-		for (int s = 0; s < 3; ++ s)
-		for (int j = 0; j < 8; ++ j) if (dp[x][i][s][j] <= 100) printf("dp[%d][%d][%d][%d] = %d\n", x, i, s, j, dp[x][i][s][j]);
-	}*/
+    if (x) dp[x][c[x][0]][2][0] = 1; // ring attach
+    if (x) dp[x][c[x][1]][1][0] = 1; // ring attach
+    dp[x][c[x][0] + c[x][1]][0][0] = 0;
+    for (int u : G[x]) {
+        if (u == p) continue;
+        dfs(u, x);
+        static int tmp[30][3][8];
+        memset(tmp, 0x3f, sizeof(tmp));
+        for (int i = 0; i <= 26; ++ i) { // keys detached
+            for (int k = 0; k < 3; ++ k) { // ring x state
+                for (int mask1 = 0; mask1 < 8; ++ mask1) {
+                    if (dp[x][i][k][mask1] > 100) continue;
+                    for (int j = 0; j <= 26; ++ j) { // sub tree key detached
+                        for (int l = 0; l < 3; ++ l) { // ring u state
+                            for (int mask2 = 0; mask2 < 8; ++ mask2) {
+                                if (dp[u][j][l][mask2] > 100) continue;
+                                if (x != 0 && (l == 0 || l == k)) { // no ring detach
+                                    upd(tmp[i + j][k][mask1 | mask2], dp[x][i][k][mask1] + dp[u][j][l][mask2] - !!l); // save one ring attach
+                                }
+                                // ring detach
+                                upd(tmp[i + j][k][mask1 | mask2 | (1 << l)], dp[x][i][k][mask1] + dp[u][j][l][mask2] + (x != 0));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 30; ++ i) {
+            for (int j = 0; j < 3; ++ j) {
+                for (int k = 0; k < 8; ++ k) dp[x][i][j][k] = tmp[i][j][k];
+            }
+        }
+    }
+    /*for (int i = 0; i <= 26; ++ i) {
+        for (int s = 0; s < 3; ++ s)
+        for (int j = 0; j < 8; ++ j) if (dp[x][i][s][j] <= 100) printf("dp[%d][%d][%d][%d] = %d\n", x, i, s, j, dp[x][i][s][j]);
+    }*/
 }
 int main() {
-	int zzz = 0;
-	char s[5];
-	while (scanf("%s", s) == 1) {
-		int tot[2]; tot[0] = tot[1] = 0;
-		memset(dp, 0x3f, sizeof(dp));
-		for (int i = 0; i < 30; ++ i) {
-			f[i] = i;
-			G[i].clear();
-		}
-		memset(c, 0, sizeof(c));
-		memset(has_ring, 0, sizeof(has_ring));
-		do {
-			int u = read(s[0]);
-			int v = read(s[1]);
-			if (u <= 0) swap(u, v);
-			if (v <= 0) {
-				c[u][-v] ++;
-				tot[-v] ++;
-				has_ring[u] = 1;
-			}
-			else {
-				has_ring[u] = has_ring[v] = 1;
-				G[u].push_back(v);
-				G[v].push_back(u);
-				f[fat(u)] = fat(v);
-			}
-			scanf("%s", s);
-		} while (s[0] != '0');
-		if (tot[0] == 0 || tot[1] == 0) {
-			if (tot[0] == 0 && tot[1] == 0) {
-				printf("Case %d: %d %d\n", ++ zzz, 0, 0);
-				continue;
-			}
-			int ans = 0;
-			for (int i = 1; i <= 26; ++ i) if (f[i] != i) c[fat(i)][0] += c[i][0], c[fat(i)][1] += c[i][1];
-			for (int i = 1; i <= 26; ++ i) {
-				if ((c[i][0] || c[i][1]) && f[i] == i) ans ++;
-			}
-			printf("Case %d: %d %d\n", ++ zzz, 0, ans - 1);
-			continue;
-		}
-		for (int i = 1; i <= 26; ++ i) if (f[i] == i && has_ring[i]) G[0].push_back(i);
-		dfs(0);
-		int ans1 = -1, ans2 = -1;
-		for (int i = 0; i <= 26; ++ i) {
-			for (int j = 0; j < 8; ++ j) {
-				if (dp[0][i][0][j] <= 100) {
-					bool has1 = (j >> 1 & 1);
-					bool has2 = (j >> 2 & 1);
-					bool has0 = (j & 1);
-					if (!has1 && has0) swap(has0, has1);
-					if (!has2 && has0) swap(has0, has2);
-					int t1 = i * 2;
-					int t2 = dp[0][i][0][j];
-					if (j >> 1 & 1) t2 --;
-					if (j >> 2 & 1) t2 --;
-					if (has1 && has2) {
-						if (ans2 == -1 || t2 < ans2) {
-							ans1 = t1;
-							ans2 = t2;
-						}
-					}
-				}
-			}
-			if (ans1 != -1) break;
-		}
-		if (ans1 == -1) printf("Case %d: impossible\n", ++ zzz);
-		else printf("Case %d: %d %d\n", ++ zzz, ans1, ans2);
-	}
+    int zzz = 0;
+    char s[5];
+    while (scanf("%s", s) == 1) {
+        int tot[2]; tot[0] = tot[1] = 0;
+        memset(dp, 0x3f, sizeof(dp));
+        for (int i = 0; i < 30; ++ i) {
+            f[i] = i;
+            G[i].clear();
+        }
+        memset(c, 0, sizeof(c));
+        memset(has_ring, 0, sizeof(has_ring));
+        do {
+            int u = read(s[0]);
+            int v = read(s[1]);
+            if (u <= 0) swap(u, v);
+            if (v <= 0) {
+                c[u][-v] ++;
+                tot[-v] ++;
+                has_ring[u] = 1;
+            }
+            else {
+                has_ring[u] = has_ring[v] = 1;
+                G[u].push_back(v);
+                G[v].push_back(u);
+                f[fat(u)] = fat(v);
+            }
+            scanf("%s", s);
+        } while (s[0] != '0');
+        if (tot[0] == 0 || tot[1] == 0) {
+            if (tot[0] == 0 && tot[1] == 0) {
+                printf("Case %d: %d %d\n", ++ zzz, 0, 0);
+                continue;
+            }
+            int ans = 0;
+            for (int i = 1; i <= 26; ++ i) if (f[i] != i) c[fat(i)][0] += c[i][0], c[fat(i)][1] += c[i][1];
+            for (int i = 1; i <= 26; ++ i) {
+                if ((c[i][0] || c[i][1]) && f[i] == i) ans ++;
+            }
+            printf("Case %d: %d %d\n", ++ zzz, 0, ans - 1);
+            continue;
+        }
+        for (int i = 1; i <= 26; ++ i) if (f[i] == i && has_ring[i]) G[0].push_back(i);
+        dfs(0);
+        int ans1 = -1, ans2 = -1;
+        for (int i = 0; i <= 26; ++ i) {
+            for (int j = 0; j < 8; ++ j) {
+                if (dp[0][i][0][j] <= 100) {
+                    bool has1 = (j >> 1 & 1);
+                    bool has2 = (j >> 2 & 1);
+                    bool has0 = (j & 1);
+                    if (!has1 && has0) swap(has0, has1);
+                    if (!has2 && has0) swap(has0, has2);
+                    int t1 = i * 2;
+                    int t2 = dp[0][i][0][j];
+                    if (j >> 1 & 1) t2 --;
+                    if (j >> 2 & 1) t2 --;
+                    if (has1 && has2) {
+                        if (ans2 == -1 || t2 < ans2) {
+                            ans1 = t1;
+                            ans2 = t2;
+                        }
+                    }
+                }
+            }
+            if (ans1 != -1) break;
+        }
+        if (ans1 == -1) printf("Case %d: impossible\n", ++ zzz);
+        else printf("Case %d: %d %d\n", ++ zzz, ans1, ans2);
+    }
 }
-~~~
+```
