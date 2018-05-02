@@ -1,0 +1,126 @@
+# [Jedi Council](http://acm.hdu.edu.cn/showproblem.php?pid=6142)
+
+最小割。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 505;
+typedef long long LL;
+const LL INF = 1e18;
+struct edge { int to, r; LL f; };
+vector<edge> G[N];
+void addedge(int u, int v, LL f) {
+	assert(f >= 0);
+	G[u].push_back((edge) {v, (int) G[v].size(), f});
+	G[v].push_back((edge) {u, (int) G[u].size() - 1, 0LL});
+}
+int S, T, d[N], st[N];
+bool BFS() {
+	for (int i = 0; i <= T; ++ i) d[i] = 0;
+	d[S] = 1;
+	queue<int> q;
+	q.push(S);
+	while (!q.empty()) {
+		int p = q.front(); q.pop();
+		for (edge e : G[p]) {
+			int u = e.to;
+			if (e.f && !d[u]) {
+				d[u] = d[p] + 1;
+				q.push(u);
+			}
+		}
+	}
+	return d[T];
+}
+LL DFS(int x, LL flow) {
+	if (x == T) return flow;
+	LL flow1 = flow;
+	for (int &i = st[x]; i < (int) G[x].size(); ++ i) {
+		edge &e = G[x][i];
+		if (e.f && d[x] + 1 == d[e.to]) {
+			LL tmp = DFS(e.to, min(flow, e.f));
+			e.f -= tmp;
+			G[e.to][e.r].f += tmp;
+			flow -= tmp;
+			if (!flow) return flow1;
+		}
+	}
+	return flow1 - flow;
+}
+LL maxflow() {
+	LL res = 0;
+	while (BFS()) {
+		for (int i = 0; i <= T; ++ i) st[i] = 0;
+		res += DFS(S, INF);
+	}
+	return res;
+}
+LL val[N][N][2][2], L[N], R[N];
+int main() {
+	int TT;
+	scanf("%d", &TT);
+	while (TT --) {
+		int n, W, p, q;
+		scanf("%d%d%d%d", &n, &W, &p, &q);
+		for (int i = 1; i <= n; ++ i) {
+			for (int j = 1; j <= n; ++ j) {
+				for (int k = 0; k < 2; ++ k) val[i][j][k][1 - k] = 0;
+			}
+			L[i] = W;
+			R[i] = -W;
+		}
+		S = n + 1, T = n + 2;
+		LL ans = 0;
+		for (int r = 1; r <= p; ++ r) {
+			static int x[3], aa[3], a[3];
+			for (int i = 0; i < 3; ++ i) scanf("%d", &x[i]);
+			for (int i = 0; i < 3; ++ i) scanf("%d", &aa[i]);
+			for (int i = 0; i < 3; ++ i) scanf("%d", &a[i]);
+			for (int i = 0; i < 3; ++ i) {
+				int u = x[i], v = x[(i + 1) % 3];
+				for (int ou = 0; ou <= 1; ou ++) {
+					int ov = 1 - ou;
+					val[u][v][ou][ov] += 2LL * aa[i] * W;
+					if (ou) L[u] += a[i] * W; else R[u] -= a[i] * W;
+					if (ov) L[v] -= a[i] * W; else R[v] += a[i] * W;
+				}
+			}
+		}
+		for (int r = 1; r <= q; ++ r) {
+			int x, y, type;
+			scanf("%d%d%d", &x, &y, &type);
+			if (type == 0) {
+				val[x][y][1][0] = INF;
+			}
+			else if (type == 1) {
+				val[x][y][1][0] = val[x][y][0][1] = INF;
+			}
+			else if (type == 2) {
+				L[x] = INF;
+				R[y] = INF;
+			}
+		}
+		for (int i = 1; i <= T; ++ i) G[i].clear();
+		for (int i = 1; i <= n; ++ i) {
+			if (L[i] < R[i]) {
+				ans += L[i];
+				addedge(S, i, R[i] - L[i]);
+			}
+			else {
+				ans += R[i];
+				addedge(i, T, L[i] - R[i]);
+			}
+			//printf("L[%d] = %d   R[%d] = %d\n", i, L[i], i, R[i]);
+			for (int j = 1; j <= n; ++ j) {
+				LL t;
+				if (t = val[i][j][0][1]) addedge(j, i, t);
+				if (t = val[i][j][1][0]) addedge(i, j, t);
+			}
+		}
+		ans += maxflow();
+		printf("%lld\n", ans);
+	}
+}
+~~~
+
