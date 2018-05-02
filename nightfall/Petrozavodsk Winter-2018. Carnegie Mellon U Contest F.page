@@ -1,146 +1,146 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5e4 + 5, B = 18;
 vector<int> G[N];
 int f[N][B], h[N];
 int dfs0(int x, int p) {
-	h[x] = h[p] + 1;
-	f[x][0] = p;
-	for (int u : G[x]) if (u != p) dfs0(u, x);
+    h[x] = h[p] + 1;
+    f[x][0] = p;
+    for (int u : G[x]) if (u != p) dfs0(u, x);
 }
 bool is_par(int u, int v) {
-	if (h[u] <= h[v]) return 0;
-	int d = h[u] - h[v];
-	for (int i = 0; i < B; ++ i) if (d >> i & 1) u = f[u][i];
-	return u == v;
+    if (h[u] <= h[v]) return 0;
+    int d = h[u] - h[v];
+    for (int i = 0; i < B; ++ i) if (d >> i & 1) u = f[u][i];
+    return u == v;
 }
 const int INF = 1e9;
 struct node {
-	int lazy, cnt_min, _min;
-	node() {}
-	void work(int x) {
-		lazy += x;
-		_min += x;
-		if (lazy >= INF) lazy = INF;
-		if (_min >= INF) _min = INF;
-	}
+    int lazy, cnt_min, _min;
+    node() {}
+    void work(int x) {
+        lazy += x;
+        _min += x;
+        if (lazy >= INF) lazy = INF;
+        if (_min >= INF) _min = INF;
+    }
 } tree[N * 4];
 node operator + (node a, node b) {
-	node c;
-	c.lazy = 0;
-	c._min = min(a._min, b._min);
-	c.cnt_min = 0;
-	if (c._min == a._min) c.cnt_min += a.cnt_min;
-	if (c._min == b._min) c.cnt_min += b.cnt_min;
-	return c;
+    node c;
+    c.lazy = 0;
+    c._min = min(a._min, b._min);
+    c.cnt_min = 0;
+    if (c._min == a._min) c.cnt_min += a.cnt_min;
+    if (c._min == b._min) c.cnt_min += b.cnt_min;
+    return c;
 }
 void pd(int x) {
-	if (tree[x].lazy) {
-		tree[x + x].work(tree[x].lazy);
-		tree[x + x + 1].work(tree[x].lazy);
-		tree[x].lazy = 0;
-	}
+    if (tree[x].lazy) {
+        tree[x + x].work(tree[x].lazy);
+        tree[x + x + 1].work(tree[x].lazy);
+        tree[x].lazy = 0;
+    }
 }
 int L[N], R[N], cnt, dfn[N];
 void build(int x, int l, int r) {
-	if (l == r) {
-		tree[x].lazy = 0;
-		tree[x]._min = INF;
-		tree[x].cnt_min = 1;
-		return;
-	}
-	int mid = (l + r) / 2;
-	build(x + x, l, mid);
-	build(x + x + 1, mid + 1, r);
-	tree[x] = tree[x + x] + tree[x + x + 1];
+    if (l == r) {
+        tree[x].lazy = 0;
+        tree[x]._min = INF;
+        tree[x].cnt_min = 1;
+        return;
+    }
+    int mid = (l + r) / 2;
+    build(x + x, l, mid);
+    build(x + x + 1, mid + 1, r);
+    tree[x] = tree[x + x] + tree[x + x + 1];
 }
 void add(int x, int l, int r, int ql, int qr, int c) {
-	if (l > qr) return;
-	if (r < ql) return;
-	if (l >= ql && r <= qr) {
-		tree[x].work(c);
-		return;
-	}
-	pd(x);
-	int mid = (l + r) / 2;
-	add(x + x, l, mid, ql, qr, c);
-	add(x + x + 1, mid + 1, r, ql, qr, c);
-	tree[x] = tree[x + x] + tree[x + x + 1];
+    if (l > qr) return;
+    if (r < ql) return;
+    if (l >= ql && r <= qr) {
+        tree[x].work(c);
+        return;
+    }
+    pd(x);
+    int mid = (l + r) / 2;
+    add(x + x, l, mid, ql, qr, c);
+    add(x + x + 1, mid + 1, r, ql, qr, c);
+    tree[x] = tree[x + x] + tree[x + x + 1];
 }
 void setval(int x, int l, int r, int q, int c) {
-	if (l > q || r < q) return;
-	if (l == r) {
-		tree[x].lazy = 0;
-		tree[x]._min = c;
-		tree[x].cnt_min = 1;
-		return;
-	}
-	int mid = (l + r) / 2;
-	pd(x);
-	setval(x + x, l, mid, q, c);
-	setval(x + x + 1, mid + 1, r, q, c);
-	tree[x] = tree[x + x] + tree[x + x + 1];
+    if (l > q || r < q) return;
+    if (l == r) {
+        tree[x].lazy = 0;
+        tree[x]._min = c;
+        tree[x].cnt_min = 1;
+        return;
+    }
+    int mid = (l + r) / 2;
+    pd(x);
+    setval(x + x, l, mid, q, c);
+    setval(x + x + 1, mid + 1, r, q, c);
+    tree[x] = tree[x + x] + tree[x + x + 1];
 }
 int getval() {
-	if (tree[1]._min != 1) return 0;
-	return tree[1].cnt_min;
+    if (tree[1]._min != 1) return 0;
+    return tree[1].cnt_min;
 }
 long long ans; int n;
 int dfs(int x, int p) {
-	R[x] = L[x] = ++ cnt;
-	setval(1, 1, n, cnt, 1);
-	add(1, 1, n, 1, cnt - 1, 1);
-	if (x > 1 && L[x - 1] < L[x]) {
-		if (is_par(x, x - 1))
-			add(1, 1, n, 1, R[x - 1], -1);
-		else
-			add(1, 1, n, L[x - 1], R[x - 1], -1);
-	}
-	if (x < n && L[x + 1] < L[x]) {
-		if (is_par(x, x + 1))
-			add(1, 1, n, 1, R[x + 1], -1);
-		else
-			add(1, 1, n, L[x + 1], R[x + 1], -1);
-	}
-	int tmp;
-	ans += (tmp = getval());
-	for (int u : G[x]) if (u != p) {
-		int tmp = dfs(u, x);
-		add(1, 1, n, R[x] + 1, tmp, 1);
-		if (x > 1 && (u == x - 1 || is_par(x - 1, u))) add(1, 1, n, L[x - 1], R[x - 1], -1);
-		if (x < n && (u == x + 1 || is_par(x + 1, u))) add(1, 1, n, L[x + 1], R[x + 1], -1);
-		R[x] = tmp;
-	}
-	if (x > 1 && L[x - 1] < L[x]) {
-		if (is_par(x, x - 1))
-			add(1, 1, n, 1, R[x - 1], 1);
-		else
-			add(1, 1, n, L[x - 1], R[x - 1], 1);
-	}
-	if (x < n && L[x + 1] < L[x]) {
-		if (is_par(x, x + 1))
-			add(1, 1, n, 1, R[x + 1], 1);
-		else
-			add(1, 1, n, L[x + 1], R[x + 1], 1);
-	}
-	add(1, 1, n, 1, L[x] - 1, -1);
-	return R[x];
+    R[x] = L[x] = ++ cnt;
+    setval(1, 1, n, cnt, 1);
+    add(1, 1, n, 1, cnt - 1, 1);
+    if (x > 1 && L[x - 1] < L[x]) {
+        if (is_par(x, x - 1))
+            add(1, 1, n, 1, R[x - 1], -1);
+        else
+            add(1, 1, n, L[x - 1], R[x - 1], -1);
+    }
+    if (x < n && L[x + 1] < L[x]) {
+        if (is_par(x, x + 1))
+            add(1, 1, n, 1, R[x + 1], -1);
+        else
+            add(1, 1, n, L[x + 1], R[x + 1], -1);
+    }
+    int tmp;
+    ans += (tmp = getval());
+    for (int u : G[x]) if (u != p) {
+        int tmp = dfs(u, x);
+        add(1, 1, n, R[x] + 1, tmp, 1);
+        if (x > 1 && (u == x - 1 || is_par(x - 1, u))) add(1, 1, n, L[x - 1], R[x - 1], -1);
+        if (x < n && (u == x + 1 || is_par(x + 1, u))) add(1, 1, n, L[x + 1], R[x + 1], -1);
+        R[x] = tmp;
+    }
+    if (x > 1 && L[x - 1] < L[x]) {
+        if (is_par(x, x - 1))
+            add(1, 1, n, 1, R[x - 1], 1);
+        else
+            add(1, 1, n, L[x - 1], R[x - 1], 1);
+    }
+    if (x < n && L[x + 1] < L[x]) {
+        if (is_par(x, x + 1))
+            add(1, 1, n, 1, R[x + 1], 1);
+        else
+            add(1, 1, n, L[x + 1], R[x + 1], 1);
+    }
+    add(1, 1, n, 1, L[x] - 1, -1);
+    return R[x];
 }
 int main() {
-	scanf("%d", &n);
-	for (int i = 1; i < n; ++ i) {
-		int u, v;
-		scanf("%d%d", &u, &v);
-		G[u].push_back(v);
-		G[v].push_back(u);
-	}
-	dfs0(1, 0);
-	for (int j = 1; j < B; ++ j) {
-		for (int i = 1; i <= n; ++ i) f[i][j] = f[f[i][j - 1]][j - 1];
-	}
-	build(1, 1, n);
-	dfs(1, 0);
-	printf("%lld\n", ans);
+    scanf("%d", &n);
+    for (int i = 1; i < n; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    dfs0(1, 0);
+    for (int j = 1; j < B; ++ j) {
+        for (int i = 1; i <= n; ++ i) f[i][j] = f[f[i][j - 1]][j - 1];
+    }
+    build(1, 1, n);
+    dfs(1, 0);
+    printf("%lld\n", ans);
 }
-~~~
+```
