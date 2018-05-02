@@ -1,0 +1,48 @@
+## A. Alpinism
+
+## B. Cards
+
+## C. System [MZH]
+
+设$s_j$表示所有恰有$j$项下标互不相同的$a_k$的乘积的和，有递推式
+$$s_0 = 1$$
+$$s_j = \frac{\sum_{k=1}^n (-1)^{k+1} a_k s_{j-k}} {j}$$
+
+考虑多项式
+
+$$
+\begin{align}
+f(x) &= \prod_{k=0}^n (x - x_k) \\
+     &= \sum_{k=0}^n (-1)^k s_{n-k} x^k
+\end{align}
+$$
+
+它的所有根即为所要的解。枚举$0 \leq k < p$判断是否是多项式的根，如果是的话加入答案并在多项式中除掉$x - k$。
+
+## D. Invisible points
+
+## E. Balance
+
+## F. Polynomial
+
+## G. Greetings, Belarus
+
+## H. Simple problem [MZH]
+
+标程做法不对。对$x \geq 2^{17}$
+$$A = [0, 2^{17}) \cup \{x\}$$
+$$B = [0, 2^{17}) \cup \{x \text{ xor } 2^{16}\}$$
+即可卡掉。
+
+## I. Prime
+
+## J. Squares [MZH]
+
+$$(2a+2b-c)^2 + (2b+2c-a)^2 + (2c+2a-b)^2 = (3a)^2 + (3b)^2 + (3c)^2$$
+$$(2a-2b+c)^2 + (2a-2c+b)^2 + (2b+2c+a)^2 = (3a)^2 + (3b)^2 + (3c)^2$$
+
+## K. Language [TDJ]
+
+数据中会有`"!!! !! !!!"`，处理的时候连续的`'!'`应算作多个token，这与字母的处理方式不同。
+
+以及`<cctype>`不同函数的返回值是个固定的2的幂次(大概实现是从一张表里&出某一位)
