@@ -19,32 +19,43 @@
 │I₆[-:--]│                                  ₀                         │
 │F₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Gambling [TDJ]
+A. Gambling \[TDJ\]
+-------------------
 
 类似EC-Final的环上加加减减求圈数题。
 
-## B. Colourings [TDJ]
+B. Colourings \[TDJ\]
+---------------------
 
 每次选出A中的单次颜色覆盖其在B中的整个同色块即可。
 
-## C. Counter-manifestation [TDJ]
+C. Counter-manifestation \[TDJ\]
+--------------------------------
 
 有向图环交。细节很多…
 
-## D. Championships [MZH]
+D. Championships \[MZH\]
+------------------------
 
-## E. Neon [GX]
+E. Neon \[GX\]
+--------------
 
 容斥dp
 
-## F. Robots
+F. Robots
+---------
 
-## G. Equation [MZH]
+G. Equation \[MZH\]
+-------------------
 
-## H. Hay [MZH]
+H. Hay \[MZH\]
+--------------
 
-## I. Gym
+I. Gym
+------
 
-## J. Triangles [MZH]
+J. Triangles \[MZH\]
+--------------------
