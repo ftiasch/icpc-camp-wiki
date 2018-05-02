@@ -1,45 +1,47 @@
-# [Being Solarly Systematic](http://codeforces.com/gym/100825)
+[Being Solarly Systematic](http://codeforces.com/gym/100825)
+============================================================
 
-##Nisiyama
+Nisiyama
+--------
 
-~~~ { .cpp }
+``` {.cpp}
 #include <bits/stdc++.h>
 
 void euclid (const long long &a, const long long &b,
-		long long &x, long long &y) {
-	if (b == 0) x = 1, y = 0;
-	else euclid (b, a % b, y, x), y -= a / b * x;
+        long long &x, long long &y) {
+    if (b == 0) x = 1, y = 0;
+    else euclid (b, a % b, y, x), y -= a / b * x;
 }
 
 long long gcd (const long long &a, const long long &b) {
-	if (!b) return a;
-	long long x = a, y = b;
-	while (x > y ? (x = x % y) : (y = y % x));
-	return x + y;
+    if (!b) return a;
+    long long x = a, y = b;
+    while (x > y ? (x = x % y) : (y = y % x));
+    return x + y;
 }
 
 struct crt {
 
-	long long fix (const long long &a, const long long &b) {
-		return (a % b + b) % b;
-	}
+    long long fix (const long long &a, const long long &b) {
+        return (a % b + b) % b;
+    }
 
-	bool solve (const std::vector <std::pair <long long, long long>> &input,
-			std::pair <long long, long long> &output) {
-		output = std::make_pair (1, 1);
-		for (int i = 0; i < (int) input.size (); ++i) {
-			long long number, useless;
-			euclid (output.second, input[i].second, number, useless);
-			long long divisor = gcd (output.second, input[i].second);
-			if ((input[i].first - output.first) % divisor) return false;
-			number *= (input[i].first - output.first) / divisor;
-			number = fix (number, input[i].second);
-			output.first += output.second * number;
-			output.second *= input[i].second / divisor;
-			output.first = fix (output.first, output.second);
-		}
-		return true;
-	}
+    bool solve (const std::vector <std::pair <long long, long long>> &input,
+            std::pair <long long, long long> &output) {
+        output = std::make_pair (1, 1);
+        for (int i = 0; i < (int) input.size (); ++i) {
+            long long number, useless;
+            euclid (output.second, input[i].second, number, useless);
+            long long divisor = gcd (output.second, input[i].second);
+            if ((input[i].first - output.first) % divisor) return false;
+            number *= (input[i].first - output.first) / divisor;
+            number = fix (number, input[i].second);
+            output.first += output.second * number;
+            output.second *= input[i].second / divisor;
+            output.first = fix (output.first, output.second);
+        }
+        return true;
+    }
 
 };
 
@@ -50,99 +52,101 @@ int M[110], P[110][3], V[110][3];
 bool ex[110];
 
 bool cmp (const int &a, const int &b) {
-	if (M[a] != M[b]) return M[a] > M[b];
-	for (int i = 0; i < 3; ++i)
-		if (P[a][i] != P[b][i]) return P[a][i] < P[b][i];
-	return false;
+    if (M[a] != M[b]) return M[a] > M[b];
+    for (int i = 0; i < 3; ++i)
+        if (P[a][i] != P[b][i]) return P[a][i] < P[b][i];
+    return false;
 }
 
 int main () {
-	scanf ("%d%d%d%d", &N, &NP[0], &NP[1], &NP[2]);
-	for (int i = 0; i < N; ++i) 
-		scanf ("%d%d%d%d%d%d%d", &M[i], &P[i][0], &P[i][1], &P[i][2], &V[i][0], &V[i][1], &V[i][2]);
-	bool f = true;
-	while (f) {
-		f = false;
-		long long mintime = 1E18;
-		for (int i = 0; i < N; ++i)
-			for (int j = i + 1; j < N; ++j) {
-				if (ex[i] || ex[j]) continue;
-				std::vector <std::pair <long long, long long>> co;
-				for (int k = 0; k < 3; ++k) {
-					long long a = V[j][k] - V[i][k];
-					long long b = P[i][k] - P[j][k];
-					long long mod = NP[k];
-					a = ((a % mod) + mod) % mod;
-					b = ((b % mod) + mod) % mod;
-					if (a == 0) {
-						if (b == 0) continue;
-						goto next_calc;
-					} else {
-						if (b == 0)
-							co.push_back (std::make_pair (0LL, mod / gcd (a, mod)));
-						else {
-							if (b % gcd (a, mod)) goto next_calc;
-							long long tmp = gcd (a, mod);
-							b /= tmp; a /= tmp; mod /= tmp;
-							long long x, y;
-							euclid (a, mod, x, y);
-							x = ((x % mod) + mod) % mod;
-							co.push_back (std::make_pair ((x * b) % mod, mod));
-						}
-					}
-				}
-				{
-					std::pair <long long, long long> d;
-					bool is = __crt.solve (co, d);
-					if (is) {
-						mintime = std::min (d.first, mintime); 
-						f = true;
-					}
-				}
+    scanf ("%d%d%d%d", &N, &NP[0], &NP[1], &NP[2]);
+    for (int i = 0; i < N; ++i) 
+        scanf ("%d%d%d%d%d%d%d", &M[i], &P[i][0], &P[i][1], &P[i][2], &V[i][0], &V[i][1], &V[i][2]);
+    bool f = true;
+    while (f) {
+        f = false;
+        long long mintime = 1E18;
+        for (int i = 0; i < N; ++i)
+            for (int j = i + 1; j < N; ++j) {
+                if (ex[i] || ex[j]) continue;
+                std::vector <std::pair <long long, long long>> co;
+                for (int k = 0; k < 3; ++k) {
+                    long long a = V[j][k] - V[i][k];
+                    long long b = P[i][k] - P[j][k];
+                    long long mod = NP[k];
+                    a = ((a % mod) + mod) % mod;
+                    b = ((b % mod) + mod) % mod;
+                    if (a == 0) {
+                        if (b == 0) continue;
+                        goto next_calc;
+                    } else {
+                        if (b == 0)
+                            co.push_back (std::make_pair (0LL, mod / gcd (a, mod)));
+                        else {
+                            if (b % gcd (a, mod)) goto next_calc;
+                            long long tmp = gcd (a, mod);
+                            b /= tmp; a /= tmp; mod /= tmp;
+                            long long x, y;
+                            euclid (a, mod, x, y);
+                            x = ((x % mod) + mod) % mod;
+                            co.push_back (std::make_pair ((x * b) % mod, mod));
+                        }
+                    }
+                }
+                {
+                    std::pair <long long, long long> d;
+                    bool is = __crt.solve (co, d);
+                    if (is) {
+                        mintime = std::min (d.first, mintime); 
+                        f = true;
+                    }
+                }
 next_calc:;
-			}
-		if (f) {
-			for (int i = 0; i < N; ++i) {
-				if (!ex[i]) {
-					for (int k = 0; k < 3; ++k)
-						P[i][k] = ((P[i][k] + V[i][k] * mintime) % NP[k] + NP[k]) % NP[k];
-				}
-			}
-			for (int i = 0; i < N; ++i) {
-				if (ex[i]) continue;
-				int nm = M[i], nc = 1, nd[3];
-				nd[0] = V[i][0]; nd[1] = V[i][1]; nd[2] = V[i][2];
-				for (int j = i + 1; j < N; ++j)
-					if (!ex[j] && P[i][0] == P[j][0] && P[i][1] == P[j][1] && P[i][2] == P[j][2]) {
-						ex[j] = true;
-						nm += M[j];
-						nd[0] += V[j][0];
-						nd[1] += V[j][1];
-						nd[2] += V[j][2];
-						++nc;
-					}
-				M[i] = nm;
-				V[i][0] = nd[0] / nc;
-				V[i][1] = nd[1] / nc;
-				V[i][2] = nd[2] / nc;
-			}
-		}
-	}
-	std::vector <int> ans;
-	for (int i = 0; i < N; ++i)
-		if (!ex[i]) ans.push_back (i);
-	std::sort (ans.begin (), ans.end (), cmp);
-	printf ("%d\n", (int) ans.size ());
-	int id = 0;
-	for (int i : ans)
-		printf ("P%d: %d %d %d %d %d %d %d\n", id++, M[i], P[i][0], P[i][1], P[i][2], V[i][0], V[i][1], V[i][2]);
+            }
+        if (f) {
+            for (int i = 0; i < N; ++i) {
+                if (!ex[i]) {
+                    for (int k = 0; k < 3; ++k)
+                        P[i][k] = ((P[i][k] + V[i][k] * mintime) % NP[k] + NP[k]) % NP[k];
+                }
+            }
+            for (int i = 0; i < N; ++i) {
+                if (ex[i]) continue;
+                int nm = M[i], nc = 1, nd[3];
+                nd[0] = V[i][0]; nd[1] = V[i][1]; nd[2] = V[i][2];
+                for (int j = i + 1; j < N; ++j)
+                    if (!ex[j] && P[i][0] == P[j][0] && P[i][1] == P[j][1] && P[i][2] == P[j][2]) {
+                        ex[j] = true;
+                        nm += M[j];
+                        nd[0] += V[j][0];
+                        nd[1] += V[j][1];
+                        nd[2] += V[j][2];
+                        ++nc;
+                    }
+                M[i] = nm;
+                V[i][0] = nd[0] / nc;
+                V[i][1] = nd[1] / nc;
+                V[i][2] = nd[2] / nc;
+            }
+        }
+    }
+    std::vector <int> ans;
+    for (int i = 0; i < N; ++i)
+        if (!ex[i]) ans.push_back (i);
+    std::sort (ans.begin (), ans.end (), cmp);
+    printf ("%d\n", (int) ans.size ());
+    int id = 0;
+    for (int i : ans)
+        printf ("P%d: %d %d %d %d %d %d %d\n", id++, M[i], P[i][0], P[i][1], P[i][2], V[i][0], V[i][1], V[i][2]);
 }
-~~~
+```
 
-##lbn187
+lbn187
+------
+
 一道傻逼扩展CRT，因为题目细节没读清除当场没有做出
 
-~~~ { .cpp }
+``` {.cpp}
 #include<bits/stdc++.h>
 #define LL int
 #define N 111
@@ -154,109 +158,114 @@ struct P{int m,x,y,z,vx,vy,vz;}q[N];
 bool cmp(P a,P b){return a.m>b.m||a.m==b.m&&a.x<b.x||a.m==b.m&&a.x==b.x&&a.y<b.y||a.m==b.m&&a.x==b.x&&a.y==b.y&&a.z<b.z;}
 LL gcd(LL x,LL y){return !y?x:gcd(y,x%y);}
 void exgcd(LL a,LL b,LL&x,LL&y,LL&d){
-	if(!b)x=1,y=0,d=a;else
-		exgcd(b,a%b,y,x,d),y-=a/b*x;
+    if(!b)x=1,y=0,d=a;else
+        exgcd(b,a%b,y,x,d),y-=a/b*x;
 }
 LL inv(LL a,LL n){
-	LL d,x,y;
-	exgcd(a,n,x,y,d);
-	return d==1?(x%n+n)%n:-1;
+    LL d,x,y;
+    exgcd(a,n,x,y,d);
+    return d==1?(x%n+n)%n:-1;
 }
 bool merge(LL a1,LL m1,LL a2,LL m2,LL&A,LL&M){
-	LL c=a2-a1,d=gcd(m1,m2);
-	if(c%d)return 0;
-	c=(c%m2+m2)%m2;
-	c/=d;m1/=d;m2/=d;
-	LL IV=inv(m1,m2);
-	if(IV==-1)return 0;
-	c=c*IV%m2;
-	M=m1*m2*d;
-	A=(c*m1%M*d%M+a1)%M;
-	return 1;
+    LL c=a2-a1,d=gcd(m1,m2);
+    if(c%d)return 0;
+    c=(c%m2+m2)%m2;
+    c/=d;m1/=d;m2/=d;
+    LL IV=inv(m1,m2);
+    if(IV==-1)return 0;
+    c=c*IV%m2;
+    M=m1*m2*d;
+    A=(c*m1%M*d%M+a1)%M;
+    return 1;
 }
 LL get(LL i,LL j){
-	LL a1,m1,a2,m2,a3,m3,a,m,o;
-	a1=(vx[i]-vx[j])%X;m1=(x[j]-x[i])%X;
-	if(a1<0)a1+=X;if(m1<0)m1+=X;
-	if(a1==0){
-		if(m1==0)a1=0,m1=1;else return -1;
-	}else if(m1==0){
-		m1=X/gcd(X,a1);
-		a1=0;
-	}else{
-		o=gcd(gcd(a1,X),m1);
-		a1/=o;m1/=o;
-		a1=inv(a1,X/o);
-		if(a1==-1)return -1;
-		a1=a1*m1%(X/o);m1=X/o;
-	}
-	
-	a2=(vy[i]-vy[j])%Y;m2=(y[j]-y[i])%Y;
-	if(a2<0)a2+=Y;if(m2<0)m2+=Y;
-	if(a2==0){
-		if(m2==0)a2=0,m2=1;else return -1;
-	}else if(m2==0){
-		m2=Y/gcd(Y,a2);
-		a2=0;
-	}else{
-		o=gcd(gcd(a2,Y),m2);
-		a2/=o;m2/=o;
-		a2=inv(a2,Y/o);
-		if(a2==-1)return -1;
-		a2=a2*m2%(Y/o);m2=Y/o;
-	}
-	
-	a3=(vz[i]-vz[j])%Z;m3=(z[j]-z[i])%Z;
-	if(a3<0)a3+=Z;if(m3<0)m3+=Z;
-	if(a3==0){
-		if(m3==0)a3=0,m3=1;else return -1;
-	}else if(m3==0){
-		m3=Z/gcd(Z,a3);
-		a3=0;
-	}else{
-		o=gcd(gcd(a3,Z),m3);
-		a3/=o;m3/=o;
-		a3=inv(a3,Z/o);
-		if(a3==-1)return -1;
-		a3=a3*m3%(Z/o);m3=Z/o;
-	}
-	
-	if(!merge(a1,m1,a2,m2,a,m))return -1;
-	if(!merge(a,m,a3,m3,a,m))return -1;
-	return (a+m)%m;
+    LL a1,m1,a2,m2,a3,m3,a,m,o;
+    a1=(vx[i]-vx[j])%X;m1=(x[j]-x[i])%X;
+    if(a1<0)a1+=X;if(m1<0)m1+=X;
+    if(a1==0){
+        if(m1==0)a1=0,m1=1;else return -1;
+    }else if(m1==0){
+        m1=X/gcd(X,a1);
+        a1=0;
+    }else{
+        o=gcd(gcd(a1,X),m1);
+        a1/=o;m1/=o;
+        a1=inv(a1,X/o);
+        if(a1==-1)return -1;
+        a1=a1*m1%(X/o);m1=X/o;
+    }
+    
+    a2=(vy[i]-vy[j])%Y;m2=(y[j]-y[i])%Y;
+    if(a2<0)a2+=Y;if(m2<0)m2+=Y;
+    if(a2==0){
+        if(m2==0)a2=0,m2=1;else return -1;
+    }else if(m2==0){
+        m2=Y/gcd(Y,a2);
+        a2=0;
+    }else{
+        o=gcd(gcd(a2,Y),m2);
+        a2/=o;m2/=o;
+        a2=inv(a2,Y/o);
+        if(a2==-1)return -1;
+        a2=a2*m2%(Y/o);m2=Y/o;
+    }
+    
+    a3=(vz[i]-vz[j])%Z;m3=(z[j]-z[i])%Z;
+    if(a3<0)a3+=Z;if(m3<0)m3+=Z;
+    if(a3==0){
+        if(m3==0)a3=0,m3=1;else return -1;
+    }else if(m3==0){
+        m3=Z/gcd(Z,a3);
+        a3=0;
+    }else{
+        o=gcd(gcd(a3,Z),m3);
+        a3/=o;m3/=o;
+        a3=inv(a3,Z/o);
+        if(a3==-1)return -1;
+        a3=a3*m3%(Z/o);m3=Z/o;
+    }
+    
+    if(!merge(a1,m1,a2,m2,a,m))return -1;
+    if(!merge(a,m,a3,m3,a,m))return -1;
+    return (a+m)%m;
 }
 int main(){
-	scanf("%d%d%d%d",&n,&X,&Y,&Z);
-	for(i=1;i<=n;i++)scanf("%d%d%d%d%d%d%d",&m[i],&x[i],&y[i],&z[i],&vx[i],&vy[i],&vz[i]);
-		for(;;){
-		LL nv=1e9;
-		for(i=1;i<=n;i++)if(!v[i])
-			for(j=i+1;j<=n;j++)if(!v[j])if(o=get(i,j),o!=-1)
-				if(o<nv)nv=o;
-		if(nv==1e9)break;
-		for(i=1;i<=n;i++)if(!v[i]){
-			x[i]=(x[i]+(((int)(nv%X))*vx[i]%X+X))%X;
-			y[i]=(y[i]+(((int)(nv%Y))*vy[i]%Y+Y))%Y;
-			z[i]=(z[i]+(((int)(nv%Z))*vz[i]%Z+Z))%Z;
-		}
-		for(i=1;i<=n;i++)if(!v[i]){
-			int vxx=vx[i],vyy=vy[i],vzz=vz[i],mm=m[i],e=1;
-			for(j=i+1;j<=n;j++)if(!v[j])
-				if(x[j]==x[i]&&y[j]==y[i]&&z[j]==z[i]){
-					v[j]=1;e++;mm+=m[j];
-					vxx+=vx[j];vyy+=vy[j];vzz+=vz[j];
-				}
-			vx[i]=vxx/e;vy[i]=vyy/e;vz[i]=vzz/e;m[i]=mm;
-		}
-	}
-	for(i=1;i<=n;i++)if(!v[i])q[t].m=m[i],q[t].x=x[i],q[t].y=y[i],q[t].z=z[i],q[t].vx=vx[i],q[t].vy=vy[i],q[t].vz=vz[i],t++;
-	printf("%d\n",t);sort(q,q+t,cmp);
-	for(i=0;i<t;i++)printf("P%d: %d %d %d %d %d %d %d\n",i,q[i].m,q[i].x,q[i].y,q[i].z,q[i].vx,q[i].vy,q[i].vz);
+    scanf("%d%d%d%d",&n,&X,&Y,&Z);
+    for(i=1;i<=n;i++)scanf("%d%d%d%d%d%d%d",&m[i],&x[i],&y[i],&z[i],&vx[i],&vy[i],&vz[i]);
+        for(;;){
+        LL nv=1e9;
+        for(i=1;i<=n;i++)if(!v[i])
+            for(j=i+1;j<=n;j++)if(!v[j])if(o=get(i,j),o!=-1)
+                if(o<nv)nv=o;
+        if(nv==1e9)break;
+        for(i=1;i<=n;i++)if(!v[i]){
+            x[i]=(x[i]+(((int)(nv%X))*vx[i]%X+X))%X;
+            y[i]=(y[i]+(((int)(nv%Y))*vy[i]%Y+Y))%Y;
+            z[i]=(z[i]+(((int)(nv%Z))*vz[i]%Z+Z))%Z;
+        }
+        for(i=1;i<=n;i++)if(!v[i]){
+            int vxx=vx[i],vyy=vy[i],vzz=vz[i],mm=m[i],e=1;
+            for(j=i+1;j<=n;j++)if(!v[j])
+                if(x[j]==x[i]&&y[j]==y[i]&&z[j]==z[i]){
+                    v[j]=1;e++;mm+=m[j];
+                    vxx+=vx[j];vyy+=vy[j];vzz+=vz[j];
+                }
+            vx[i]=vxx/e;vy[i]=vyy/e;vz[i]=vzz/e;m[i]=mm;
+        }
+    }
+    for(i=1;i<=n;i++)if(!v[i])q[t].m=m[i],q[t].x=x[i],q[t].y=y[i],q[t].z=z[i],q[t].vx=vx[i],q[t].vy=vy[i],q[t].vz=vz[i],t++;
+    printf("%d\n",t);sort(q,q+t,cmp);
+    for(i=0;i<t;i++)printf("P%d: %d %d %d %d %d %d %d\n",i,q[i].m,q[i].x,q[i].y,q[i].z,q[i].vx,q[i].vy,q[i].vz);
 }
-~~~
-# [Delete This!](http://codeforces.com/gym/100825)
-## Aki
-~~~{.cpp}
+```
+
+[Delete This!](http://codeforces.com/gym/100825)
+================================================
+
+Aki
+---
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 105;
@@ -264,116 +273,117 @@ vector<int> ax, ay;
 int cntb[N * 15][N * 9], cntw[N * 15][N * 9];
 int XX[N * N], YY[N * N];
 int getx(int x) {
-	//x = upper_bound(ax.begin(), ax.end(), x) - ax.begin() - 1;
-	return XX[x];
-	return x;
+    //x = upper_bound(ax.begin(), ax.end(), x) - ax.begin() - 1;
+    return XX[x];
+    return x;
 }
 int gety(int y) {
-	//y = upper_bound(ay.begin(), ay.end(), y) - ay.begin() - 1;
-	return YY[y];
-	return y;
+    //y = upper_bound(ay.begin(), ay.end(), y) - ay.begin() - 1;
+    return YY[y];
+    return y;
 }
 void calc(int cntb[N * 15][N * 9]) {
-	for (int i = 0; i < (int) ax.size(); ++ i) {
-		for (int j = 0; j < (int) ay.size(); ++ j) {
-			if (i) cntb[i][j] += cntb[i - 1][j];
-			if (j) cntb[i][j] += cntb[i][j - 1];
-			if (i && j) cntb[i][j] -= cntb[i - 1][j - 1];
-		}
-	}
+    for (int i = 0; i < (int) ax.size(); ++ i) {
+        for (int j = 0; j < (int) ay.size(); ++ j) {
+            if (i) cntb[i][j] += cntb[i - 1][j];
+            if (j) cntb[i][j] += cntb[i][j - 1];
+            if (i && j) cntb[i][j] -= cntb[i - 1][j - 1];
+        }
+    }
 }
 __inline int geta(int a[N * 15][N * 9], int x, int y) {
-	if (x < 0 || y < 0) return 0;
-	x = getx(x);
-	y = gety(y);
-	//x = min(x, (int) ax.size() - 1);
-	//y = min(y, (int) ay.size() - 1);
-	return a[x][y];
+    if (x < 0 || y < 0) return 0;
+    x = getx(x);
+    y = gety(y);
+    //x = min(x, (int) ax.size() - 1);
+    //y = min(y, (int) ay.size() - 1);
+    return a[x][y];
 }
 int getsum(int a[N * 15][N * 9], int x1, int y1, int x2, int y2) {
-	if (x1 > x2 || y1 > y2) return 0;
-	x1 --, y1 --;
-	return geta(a, x2, y2) - geta(a, x1, y2) - geta(a, x2, y1) + geta(a, x1, y1);
+    if (x1 > x2 || y1 > y2) return 0;
+    x1 --, y1 --;
+    return geta(a, x2, y2) - geta(a, x1, y2) - geta(a, x2, y1) + geta(a, x1, y1);
 }
 int main() {
-	int r, c, n, m;
-	scanf("%d%d%d%d", &r, &c, &n, &m);
-	vector<pair<int, int> > white, black;
-	for (int i = 1; i <= n; ++ i) {
-		int x, y;
-		scanf("%d%d", &x, &y);
-		black.push_back(make_pair(x, y));
-		for (int j = 0; j < 15; ++ j) if (x + j < r) ax.push_back(x + j);
-		for (int j = 0; j < 9; ++ j) if (y + j < c) ay.push_back(y + j);
-	}
-	for (int i = 1; i <= m; ++ i) {
-		int x, y;
-		scanf("%d%d", &x, &y);
-		white.push_back(make_pair(x, y));
-		for (int j = 0; j < 15; ++ j) if (x + j < r) ax.push_back(x + j);
-		for (int j = 0; j < 9; ++ j) if (y + j < c) ay.push_back(y + j);
-	}
-	ax.push_back(0);
-	ay.push_back(0);
-	ax.push_back(r - 1);
-	ay.push_back(c - 1);
-	sort(ax.begin(), ax.end());
-	ax.erase(unique(ax.begin(), ax.end()), ax.end());
-	sort(ay.begin(), ay.end());
-	ay.erase(unique(ay.begin(), ay.end()), ay.end());
-	vector<int> L, R, U, D;
-	for (int i = 0; i < N * N; ++ i) {
-	   	XX[i] = upper_bound(ax.begin(), ax.end(), i) - ax.begin() - 1;
-	   	YY[i] = upper_bound(ay.begin(), ay.end(), i) - ay.begin() - 1;
-	}
-	for (int i = 0; i < n; ++ i) {
-		int x = black[i].first;
-		int y = black[i].second;
-		cntb[getx(x)][gety(y)] ++;
-		//printf("<%d %d>\n", x, y);
-		U.push_back(x);
-		if (x + 14 < r) D.push_back(x + 14);
-		L.push_back(y);
-		if (y + 8 < c) R.push_back(y + 8);
-	}
-	for (int i = 0; i < m; ++ i) {
-		int x = white[i].first;
-		int y = white[i].second;
-		cntw[getx(x)][gety(y)] ++;
-		if (x > 0) D.push_back(x - 1);
-		if (x + 15 < r) U.push_back(x + 15);
-		if (y > 0) R.push_back(y - 1);
-		if (y + 9 < c) L.push_back(y + 9);
-	}
-	calc(cntb);
-	calc(cntw);
-	int ans = n + m;
-	for (int l1 = 0; l1 < L.size(); ++ l1) {
-		int l = L[l1];
-		for (int r1 = 0; r1 < R.size(); ++ r1) {
-			int r = R[r1];
-			if (l >= r) continue;
-			for (int u1 = 0; u1 < U.size(); ++ u1) {
-				int u = U[u1];
-				for (int d1 = 0; d1 < D.size(); ++ d1) {
-					int d = D[d1];
-					if (u >= d) continue;
-					//if (u == 50 && l == 5)
-					//printf("%d %d - %d %d\n", u, l, d, r);
-					//printf("%d\n", getsum(cntb, u, l, d - 14, r - 8));
-					int res = n - getsum(cntb, u, l, d - 14, r - 8) + getsum(cntw, u, l, d - 14, r - 8);
-					ans = min(ans, res);
-				}
-			}
-		}
-	}
-	printf("%d\n", ans);
+    int r, c, n, m;
+    scanf("%d%d%d%d", &r, &c, &n, &m);
+    vector<pair<int, int> > white, black;
+    for (int i = 1; i <= n; ++ i) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        black.push_back(make_pair(x, y));
+        for (int j = 0; j < 15; ++ j) if (x + j < r) ax.push_back(x + j);
+        for (int j = 0; j < 9; ++ j) if (y + j < c) ay.push_back(y + j);
+    }
+    for (int i = 1; i <= m; ++ i) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        white.push_back(make_pair(x, y));
+        for (int j = 0; j < 15; ++ j) if (x + j < r) ax.push_back(x + j);
+        for (int j = 0; j < 9; ++ j) if (y + j < c) ay.push_back(y + j);
+    }
+    ax.push_back(0);
+    ay.push_back(0);
+    ax.push_back(r - 1);
+    ay.push_back(c - 1);
+    sort(ax.begin(), ax.end());
+    ax.erase(unique(ax.begin(), ax.end()), ax.end());
+    sort(ay.begin(), ay.end());
+    ay.erase(unique(ay.begin(), ay.end()), ay.end());
+    vector<int> L, R, U, D;
+    for (int i = 0; i < N * N; ++ i) {
+        XX[i] = upper_bound(ax.begin(), ax.end(), i) - ax.begin() - 1;
+        YY[i] = upper_bound(ay.begin(), ay.end(), i) - ay.begin() - 1;
+    }
+    for (int i = 0; i < n; ++ i) {
+        int x = black[i].first;
+        int y = black[i].second;
+        cntb[getx(x)][gety(y)] ++;
+        //printf("<%d %d>\n", x, y);
+        U.push_back(x);
+        if (x + 14 < r) D.push_back(x + 14);
+        L.push_back(y);
+        if (y + 8 < c) R.push_back(y + 8);
+    }
+    for (int i = 0; i < m; ++ i) {
+        int x = white[i].first;
+        int y = white[i].second;
+        cntw[getx(x)][gety(y)] ++;
+        if (x > 0) D.push_back(x - 1);
+        if (x + 15 < r) U.push_back(x + 15);
+        if (y > 0) R.push_back(y - 1);
+        if (y + 9 < c) L.push_back(y + 9);
+    }
+    calc(cntb);
+    calc(cntw);
+    int ans = n + m;
+    for (int l1 = 0; l1 < L.size(); ++ l1) {
+        int l = L[l1];
+        for (int r1 = 0; r1 < R.size(); ++ r1) {
+            int r = R[r1];
+            if (l >= r) continue;
+            for (int u1 = 0; u1 < U.size(); ++ u1) {
+                int u = U[u1];
+                for (int d1 = 0; d1 < D.size(); ++ d1) {
+                    int d = D[d1];
+                    if (u >= d) continue;
+                    //if (u == 50 && l == 5)
+                    //printf("%d %d - %d %d\n", u, l, d, r);
+                    //printf("%d\n", getsum(cntb, u, l, d - 14, r - 8));
+                    int res = n - getsum(cntb, u, l, d - 14, r - 8) + getsum(cntw, u, l, d - 14, r - 8);
+                    ans = min(ans, res);
+                }
+            }
+        }
+    }
+    printf("%d\n", ans);
 }
-~~~
+```
 
-##Nisiyama
+Nisiyama
+--------
 
-~~~ { .cpp }
+``` {.cpp}
 #include <bits/stdc++.h>
 
 int NR, NC, N, M;
@@ -384,100 +394,106 @@ int pren[200][200];
 int prem[200][200];
 
 int main () {
-	scanf ("%d%d%d%d", &NR, &NC, &N, &M);
-	RB.push_back (NR - 1); CB.push_back (NC - 1);
-	RB.push_back (0); CB.push_back (0);
-	for (int i = 0; i < N; ++i) {
-		scanf ("%d%d", &RN[i], &CN[i]);
-		RN[i] += 7; CN[i] += 4;
-		RB.push_back (RN[i]);
-		CB.push_back (CN[i]);
-	}
-	for (int i = 0; i < M; ++i) {
-		scanf ("%d%d", &RM[i], &CM[i]);
-		RM[i] += 7; CM[i] += 4;
-		RB.push_back (RM[i]);
-		CB.push_back (CM[i]);
-	}
-	std::sort (RB.begin (), RB.end ());
-	std::sort (CB.begin (), CB.end ());
-	RB.resize (std::unique (RB.begin (), RB.end ()) - RB.begin ());
-	CB.resize (std::unique (CB.begin (), CB.end ()) - CB.begin ());	
-	for (int i = 0; i < N; ++i) {
-		RN[i] = std::lower_bound (RB.begin (), RB.end (), RN[i]) - RB.begin ();
-		CN[i] = std::lower_bound (CB.begin (), CB.end (), CN[i]) - CB.begin ();
-	}
-	for (int i = 0; i < M; ++i) {
-		RM[i] = std::lower_bound (RB.begin (), RB.end (), RM[i]) - RB.begin ();
-		CM[i] = std::lower_bound (CB.begin (), CB.end (), CM[i]) - CB.begin ();
-	}
-	for (int i = 0; i < N; ++i) 
-		pren[RN[i]][CN[i]] += 1;
-	for (int i = 0; i < M; ++i) 
-		prem[RM[i]][CM[i]] += 1;
-	for (int i = 0; i < RB.size (); ++i)
-		for (int j = 1; j < CB.size (); ++j) {
-			pren[i][j] += pren[i][j - 1];
-			prem[i][j] += prem[i][j - 1];
-		}
-	for (int j = 0; j < CB.size (); ++j)
-		for (int i = 1; i < RB.size (); ++i) {
-			pren[i][j] += pren[i - 1][j];
-			prem[i][j] += prem[i - 1][j];
-		}
-	int ans = N + M;
-	for (int i = 0; i < RB.size (); ++i)
-		for (int j = 0; j < CB.size (); ++j)
-			for (int k = i + 1; k < RB.size (); ++k)
-				for (int l = j + 1; l < CB.size (); ++l) {
-					if (RB[i] < 0 || CB[j] < 0 || RB[i] >= NR || CB[j] >= NC) continue;
-					if (RB[k] < 0 || CB[l] < 0 || RB[k] >= NR || CB[l] >= NC) continue;
-					int totn = pren[k][l] - pren[k][j] - pren[i][l] + pren[i][j];
-					int totm = prem[k][l] - prem[k][j] - prem[i][l] + prem[i][j];
-					ans = std::min (ans, N - totn + totm);
-				}
-	printf ("%d\n", ans);
+    scanf ("%d%d%d%d", &NR, &NC, &N, &M);
+    RB.push_back (NR - 1); CB.push_back (NC - 1);
+    RB.push_back (0); CB.push_back (0);
+    for (int i = 0; i < N; ++i) {
+        scanf ("%d%d", &RN[i], &CN[i]);
+        RN[i] += 7; CN[i] += 4;
+        RB.push_back (RN[i]);
+        CB.push_back (CN[i]);
+    }
+    for (int i = 0; i < M; ++i) {
+        scanf ("%d%d", &RM[i], &CM[i]);
+        RM[i] += 7; CM[i] += 4;
+        RB.push_back (RM[i]);
+        CB.push_back (CM[i]);
+    }
+    std::sort (RB.begin (), RB.end ());
+    std::sort (CB.begin (), CB.end ());
+    RB.resize (std::unique (RB.begin (), RB.end ()) - RB.begin ());
+    CB.resize (std::unique (CB.begin (), CB.end ()) - CB.begin ()); 
+    for (int i = 0; i < N; ++i) {
+        RN[i] = std::lower_bound (RB.begin (), RB.end (), RN[i]) - RB.begin ();
+        CN[i] = std::lower_bound (CB.begin (), CB.end (), CN[i]) - CB.begin ();
+    }
+    for (int i = 0; i < M; ++i) {
+        RM[i] = std::lower_bound (RB.begin (), RB.end (), RM[i]) - RB.begin ();
+        CM[i] = std::lower_bound (CB.begin (), CB.end (), CM[i]) - CB.begin ();
+    }
+    for (int i = 0; i < N; ++i) 
+        pren[RN[i]][CN[i]] += 1;
+    for (int i = 0; i < M; ++i) 
+        prem[RM[i]][CM[i]] += 1;
+    for (int i = 0; i < RB.size (); ++i)
+        for (int j = 1; j < CB.size (); ++j) {
+            pren[i][j] += pren[i][j - 1];
+            prem[i][j] += prem[i][j - 1];
+        }
+    for (int j = 0; j < CB.size (); ++j)
+        for (int i = 1; i < RB.size (); ++i) {
+            pren[i][j] += pren[i - 1][j];
+            prem[i][j] += prem[i - 1][j];
+        }
+    int ans = N + M;
+    for (int i = 0; i < RB.size (); ++i)
+        for (int j = 0; j < CB.size (); ++j)
+            for (int k = i + 1; k < RB.size (); ++k)
+                for (int l = j + 1; l < CB.size (); ++l) {
+                    if (RB[i] < 0 || CB[j] < 0 || RB[i] >= NR || CB[j] >= NC) continue;
+                    if (RB[k] < 0 || CB[l] < 0 || RB[k] >= NR || CB[l] >= NC) continue;
+                    int totn = pren[k][l] - pren[k][j] - pren[i][l] + pren[i][j];
+                    int totm = prem[k][l] - prem[k][j] - prem[i][l] + prem[i][j];
+                    ans = std::min (ans, N - totn + totm);
+                }
+    printf ("%d\n", ans);
 }
-~~~
+```
 
-##lbn187
+lbn187
+------
 
-~~~ { .cpp }
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111
 using namespace std;
 int X,Y,n,m,i,j,t,an,xl,xr,yl,yr,cntx,cnty,SA,SB;
 int xx[N],yy[N],vx[N],vy[N],A[N][N],B[N][N];
 int main(){
-	scanf("%d%d%d%d",&X,&Y,&n,&m);an=1e9;
-	for(i=1;i<=n+m;i++){
-		scanf("%d%d",&xx[i],&yy[i]);
-		vx[++t]=xx[i];vy[t]=yy[i];
-	}
-	vx[++t]=X;vy[t]=0;vx[++t]=15;vy[t]=m-9;
-	sort(vx+1,vx+t+1);cntx=unique(vx+1,vx+t+1)-vx-1;
-	sort(vy+1,vy+t+1);cnty=unique(vy+1,vy+t+1)-vy-1;
-	for(i=1;i<=n+m;i++){
-		xx[i]=lower_bound(vx+1,vx+cntx+1,xx[i])-vx;
-		yy[i]=lower_bound(vy+1,vy+cnty+1,yy[i])-vy;
-		if(i<=n)A[xx[i]][yy[i]]++;else B[xx[i]][yy[i]]++;
-	}
-	for(i=1;i<=cntx;i++)for(j=1;j<=cnty;j++)
-		A[i][j]+=A[i-1][j]+A[i][j-1]-A[i-1][j-1],
-		B[i][j]+=B[i-1][j]+B[i][j-1]-B[i-1][j-1];
-	for(xl=1;xl<=cntx;xl++)for(xr=xl;xr<=cntx;xr++)
-		for(yl=1;yl<=cnty;yl++)for(yr=yl;yr<=cnty;yr++)
-			if(vx[xr]+15<X&&vy[yr]+7<Y){
-				SA=A[xr][yr]+A[xl-1][yl-1]-A[xr][yl-1]-A[xl-1][yr];
-				SB=B[xr][yr]+B[xl-1][yl-1]-B[xr][yl-1]-B[xl-1][yr];
-				an=min(an,SB+n-SA);		
-			}
-	printf("%d",an);
+    scanf("%d%d%d%d",&X,&Y,&n,&m);an=1e9;
+    for(i=1;i<=n+m;i++){
+        scanf("%d%d",&xx[i],&yy[i]);
+        vx[++t]=xx[i];vy[t]=yy[i];
+    }
+    vx[++t]=X;vy[t]=0;vx[++t]=15;vy[t]=m-9;
+    sort(vx+1,vx+t+1);cntx=unique(vx+1,vx+t+1)-vx-1;
+    sort(vy+1,vy+t+1);cnty=unique(vy+1,vy+t+1)-vy-1;
+    for(i=1;i<=n+m;i++){
+        xx[i]=lower_bound(vx+1,vx+cntx+1,xx[i])-vx;
+        yy[i]=lower_bound(vy+1,vy+cnty+1,yy[i])-vy;
+        if(i<=n)A[xx[i]][yy[i]]++;else B[xx[i]][yy[i]]++;
+    }
+    for(i=1;i<=cntx;i++)for(j=1;j<=cnty;j++)
+        A[i][j]+=A[i-1][j]+A[i][j-1]-A[i-1][j-1],
+        B[i][j]+=B[i-1][j]+B[i][j-1]-B[i-1][j-1];
+    for(xl=1;xl<=cntx;xl++)for(xr=xl;xr<=cntx;xr++)
+        for(yl=1;yl<=cnty;yl++)for(yr=yl;yr<=cnty;yr++)
+            if(vx[xr]+15<X&&vy[yr]+7<Y){
+                SA=A[xr][yr]+A[xl-1][yl-1]-A[xr][yl-1]-A[xl-1][yr];
+                SB=B[xr][yr]+B[xl-1][yl-1]-B[xr][yl-1]-B[xl-1][yr];
+                an=min(an,SB+n-SA);     
+            }
+    printf("%d",an);
 }
-~~~
-# [KenKen You Do It?](http://codeforces.com/gym/100825)
-## Aki
-~~~{.cpp}
+```
+
+[KenKen You Do It?](http://codeforces.com/gym/100825)
+=====================================================
+
+Aki
+---
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 15;
@@ -486,96 +502,97 @@ long long tar;
 int n, m, x[N], y[N];
 int hang[N], lie[N];
 __inline bool test(int x, int y, int c) {
-	return (hang[x] >> c - 1 & 1) || (lie[y] >> c - 1 & 1);
+    return (hang[x] >> c - 1 & 1) || (lie[y] >> c - 1 & 1);
 }
 __inline void swift(int x, int y, int c) {
-	hang[x] ^= 1 << c - 1;
-	lie[y] ^= 1 << c - 1;
+    hang[x] ^= 1 << c - 1;
+    lie[y] ^= 1 << c - 1;
 }
 int ans = 0;
 void dfsadd(int x, long long res) {
-	if (res + m - x > tar) return;
-	int i = ::x[x], j = ::y[x];
-	for (int a = 1; a <= n; ++ a) {
-		if (test(i, j, a)) continue;
-		swift(i, j, a);
-		res += a;
-		if (x == m - 2) {
-			int ii = ::x[m - 1], jj = ::y[m - 1];
-			int b = tar - res;
-			if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
-		}
-		else {
-			dfsadd(x + 1, res);
-		}
-		res -= a;
-		swift(i, j, a);
-	}
+    if (res + m - x > tar) return;
+    int i = ::x[x], j = ::y[x];
+    for (int a = 1; a <= n; ++ a) {
+        if (test(i, j, a)) continue;
+        swift(i, j, a);
+        res += a;
+        if (x == m - 2) {
+            int ii = ::x[m - 1], jj = ::y[m - 1];
+            int b = tar - res;
+            if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
+        }
+        else {
+            dfsadd(x + 1, res);
+        }
+        res -= a;
+        swift(i, j, a);
+    }
 }
 long long calc(long long a, long long b) {
-	if (*op == '*') return a * b;
-	if (*op == '-') return a - b;
-	return a % b != 0 ? -1 : a / b;
+    if (*op == '*') return a * b;
+    if (*op == '-') return a - b;
+    return a % b != 0 ? -1 : a / b;
 }
 void dfs(int x, long long res) {
-	if ((*op == '-' || *op == '/') && res <= tar) return;
-	if ((*op == '*') && (tar % res != 0)) return;
-	int i = ::x[x], j = ::y[x], tt = tar / res;
-	for (int a = 1; a <= n; ++ a) {
-		if (test(i, j, a) || tt % a != 0) continue;
-		swift(i, j, a);
-		long long tmp = calc(res, a);
-		if (x == m - 2) {
-			int ii = ::x[m - 1], jj = ::y[m - 1];
-			int b;
-			if (*op == '-') b = tmp - tar;
-			else if (*op == '*') b = tar % tmp == 0 ? tar / tmp : -1;
-			else b = tmp % tar == 0 ? tmp / tar : -1;
-			if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
-		}
-		else {
-			dfs(x + 1, tmp);
-		}
-		swift(i, j, a);
-	}
+    if ((*op == '-' || *op == '/') && res <= tar) return;
+    if ((*op == '*') && (tar % res != 0)) return;
+    int i = ::x[x], j = ::y[x], tt = tar / res;
+    for (int a = 1; a <= n; ++ a) {
+        if (test(i, j, a) || tt % a != 0) continue;
+        swift(i, j, a);
+        long long tmp = calc(res, a);
+        if (x == m - 2) {
+            int ii = ::x[m - 1], jj = ::y[m - 1];
+            int b;
+            if (*op == '-') b = tmp - tar;
+            else if (*op == '*') b = tar % tmp == 0 ? tar / tmp : -1;
+            else b = tmp % tar == 0 ? tmp / tar : -1;
+            if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
+        }
+        else {
+            dfs(x + 1, tmp);
+        }
+        swift(i, j, a);
+    }
 }
 int main() {
-	ios::sync_with_stdio(false);
-	cin >> n >> m >> tar >> op;
-	for (int i = 0; i < m; ++ i) cin >> x[i] >> y[i];
-	if (m == 1) {cout << 1 << endl; return 0;}
-	for (int i = 0; i < m; ++ i) {
-		for (int j = 1; j <= n; ++ j) {
-			swift(x[i], y[i], j);
-			if (*op == '+') {
-				if (m - 2 == 0) {
-					int ii = ::x[m - 1], jj = ::y[m - 1];
-					int b = tar - j;
-					if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
-				}
-				else dfsadd(1, j);
-			}
-			else {
-				if (m - 2 == 0) {
-					int ii = ::x[m - 1], jj = ::y[m - 1];
-					int b;
-					if (*op == '-') b = j - tar;
-					else if (*op == '*') b = tar % j == 0 ? tar / j : -1;
-					else b = j % tar == 0 ? j / tar : -1;
-					if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
-				} else dfs(1, j);
-			}
-			swift(x[i], y[i], j);
-		}
-		if (*op == '+' || *op == '*') break;
-	}
-	cout << ans << endl;
+    ios::sync_with_stdio(false);
+    cin >> n >> m >> tar >> op;
+    for (int i = 0; i < m; ++ i) cin >> x[i] >> y[i];
+    if (m == 1) {cout << 1 << endl; return 0;}
+    for (int i = 0; i < m; ++ i) {
+        for (int j = 1; j <= n; ++ j) {
+            swift(x[i], y[i], j);
+            if (*op == '+') {
+                if (m - 2 == 0) {
+                    int ii = ::x[m - 1], jj = ::y[m - 1];
+                    int b = tar - j;
+                    if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
+                }
+                else dfsadd(1, j);
+            }
+            else {
+                if (m - 2 == 0) {
+                    int ii = ::x[m - 1], jj = ::y[m - 1];
+                    int b;
+                    if (*op == '-') b = j - tar;
+                    else if (*op == '*') b = tar % j == 0 ? tar / j : -1;
+                    else b = j % tar == 0 ? j / tar : -1;
+                    if (b >= 1 && b <= n && !test(ii, jj, b)) ans ++;
+                } else dfs(1, j);
+            }
+            swift(x[i], y[i], j);
+        }
+        if (*op == '+' || *op == '*') break;
+    }
+    cout << ans << endl;
 }
-~~~
+```
 
-##Nisiyama
+Nisiyama
+--------
 
-~~~ { .cpp }
+``` {.cpp}
 #include <bits/stdc++.h>
 
 int N, M, T;
@@ -585,102 +602,105 @@ int ur[20], uc[20];
 int c = -1;
 
 int calc (int a, int b) {
-	if (op == '+') return a + b;
-	if (op == '-') return a - b;
-	if (op == '*') return a * b;
-	if (a % b) return -1;
-	if (op == '/') return a / b;
+    if (op == '+') return a + b;
+    if (op == '-') return a - b;
+    if (op == '*') return a * b;
+    if (a % b) return -1;
+    if (op == '/') return a / b;
 }
 
 int getlast (int res) {
-	if (op == '+') return T - res;
-	if (op == '-') return res - T;
-	if (op == '*') return T % res ? -1 : T / res;
-	if (op == '/') return res % T ? -1 : res / T;
+    if (op == '+') return T - res;
+    if (op == '-') return res - T;
+    if (op == '*') return T % res ? -1 : T / res;
+    if (op == '/') return res % T ? -1 : res / T;
 }
 
 int dfsp (int x, int res) {
-	if ((res >= T || res + N * (M - x) < T)) return 0;
-	if (x >= M) return res == T;
-	int ans = 0;
-	for (int i = 1; i <= N; ++i) {
-		register int tmp = 1 << (i - 1);
-		if ((ur[R[x]] & tmp) || (uc[C[x]] & tmp)) continue;
-		if (x < M - 2) {
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-			ans += dfsp (x + 1, res + i);
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-		} else {
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-			register int last = T - res - i;
-			if (last <= 0 || last > N || (ur[R[M - 1]] & (1 << (last - 1))) || (uc[C[M - 1]] & (1 << (last - 1)))) {
-				ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-				continue;
-			}
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-			++ans;
-		}
-	}
-	return ans;
+    if ((res >= T || res + N * (M - x) < T)) return 0;
+    if (x >= M) return res == T;
+    int ans = 0;
+    for (int i = 1; i <= N; ++i) {
+        register int tmp = 1 << (i - 1);
+        if ((ur[R[x]] & tmp) || (uc[C[x]] & tmp)) continue;
+        if (x < M - 2) {
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+            ans += dfsp (x + 1, res + i);
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+        } else {
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+            register int last = T - res - i;
+            if (last <= 0 || last > N || (ur[R[M - 1]] & (1 << (last - 1))) || (uc[C[M - 1]] & (1 << (last - 1)))) {
+                ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+                continue;
+            }
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+            ++ans;
+        }
+    }
+    return ans;
 }
 
 int dfs (int x, int res) {
-	if (op == '+' && (res >= T || res + N * (M - x) < T)) return 0;
-	if (op == '-' && res < 0) return 0;
-	if (op == '*' && T % res) return 0;
-	if (op == '/' && res % T) return 0;
-	if (x == c) return dfs (x + 1, res);
-	if (x >= M) return res == T;
-	int ans = 0;
-	for (int i = 1; i <= N; ++i) {
-		register int tmp = 1 << (i - 1);
-		if ((ur[R[x]] & tmp) || (uc[C[x]] & tmp)) continue;
-		if (calc (res, i) <= 0) continue;
-		if (x != M - 2 || c == M - 1) {
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-			ans += dfs (x + 1, calc (res, i));
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-		} else {
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-			register int last = getlast (calc (res, i));
-			if (last <= 0 || last > N || (ur[R[M - 1]] & (1 << (last - 1))) || (uc[C[M - 1]] & (1 << (last - 1)))) {
-				ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-				continue;
-			}
-			ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
-			++ans;
-		}
-	}
-	return ans;
+    if (op == '+' && (res >= T || res + N * (M - x) < T)) return 0;
+    if (op == '-' && res < 0) return 0;
+    if (op == '*' && T % res) return 0;
+    if (op == '/' && res % T) return 0;
+    if (x == c) return dfs (x + 1, res);
+    if (x >= M) return res == T;
+    int ans = 0;
+    for (int i = 1; i <= N; ++i) {
+        register int tmp = 1 << (i - 1);
+        if ((ur[R[x]] & tmp) || (uc[C[x]] & tmp)) continue;
+        if (calc (res, i) <= 0) continue;
+        if (x != M - 2 || c == M - 1) {
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+            ans += dfs (x + 1, calc (res, i));
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+        } else {
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+            register int last = getlast (calc (res, i));
+            if (last <= 0 || last > N || (ur[R[M - 1]] & (1 << (last - 1))) || (uc[C[M - 1]] & (1 << (last - 1)))) {
+                ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+                continue;
+            }
+            ur[R[x]] ^= tmp; uc[C[x]] ^= tmp;
+            ++ans;
+        }
+    }
+    return ans;
 }
 
 int main () {
-	scanf ("%d%d%d %c", &N, &M, &T, &op);
-	for (int i = 0; i < M; ++i)
-		scanf ("%d%d", &C[i], &R[i]);
-	if (op == '-' || op == '/') {
-		int ans = 0;
-		for (int i = 1; i <= N; ++i) {
-			register int tmp = 1 << (i - 1);
-			for (int x = 0; x < M; ++x) {
-				ur[R[x]] ^= tmp; uc[C[x]] ^= tmp; c = x;
-				ans += dfs (0, i);
-				ur[R[x]] ^= tmp; uc[C[x]] ^= tmp; c = -1;
-			}	
-		}
-		printf ("%d\n", ans);
-	} else
-		if (op == '+')
-			printf ("%d\n", dfsp (0, 0));
-		else
-			printf ("%d\n", dfs (0, 1));
+    scanf ("%d%d%d %c", &N, &M, &T, &op);
+    for (int i = 0; i < M; ++i)
+        scanf ("%d%d", &C[i], &R[i]);
+    if (op == '-' || op == '/') {
+        int ans = 0;
+        for (int i = 1; i <= N; ++i) {
+            register int tmp = 1 << (i - 1);
+            for (int x = 0; x < M; ++x) {
+                ur[R[x]] ^= tmp; uc[C[x]] ^= tmp; c = x;
+                ans += dfs (0, i);
+                ur[R[x]] ^= tmp; uc[C[x]] ^= tmp; c = -1;
+            }   
+        }
+        printf ("%d\n", ans);
+    } else
+        if (op == '+')
+            printf ("%d\n", dfsp (0, 0));
+        else
+            printf ("%d\n", dfs (0, 1));
 }
-~~~
+```
 
-# [Trick Shot](http://codeforces.com/gym/100825)
+[Trick Shot](http://codeforces.com/gym/100825)
+==============================================
 
-##Aki
-~~~{.cpp}
+Aki
+---
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -691,107 +711,108 @@ __inline double sqr(double x) {return x * x;}
 // NS Teamplate
 
 struct point {
-	double x, y;
-	point() {}
-	point (const double &x, const double &y) : x (x), y (y) {}
-	double norm () const { return sqrt (x * x + y * y); }
-	double norm2 () const { return x * x + y * y; }
-	point unit () const {
-		double l = norm ();
-		return point (x / l, y / l);
-	}
-	point rot90 () const {return point (-y, x); }
-	point _rot90 () const {return point (y, -x); }
-	point rotate (const double &t) const {
-		double c = cos (t), s = sin (t);
-		return point (x * c - y * s, x * s + y * c);
-	}
-	void read() {
-		int _x, _y;
-		scanf("%d%d", &_x, &_y);
-		x = _x;
-		y = _y;
-	}
+    double x, y;
+    point() {}
+    point (const double &x, const double &y) : x (x), y (y) {}
+    double norm () const { return sqrt (x * x + y * y); }
+    double norm2 () const { return x * x + y * y; }
+    point unit () const {
+        double l = norm ();
+        return point (x / l, y / l);
+    }
+    point rot90 () const {return point (-y, x); }
+    point _rot90 () const {return point (y, -x); }
+    point rotate (const double &t) const {
+        double c = cos (t), s = sin (t);
+        return point (x * c - y * s, x * s + y * c);
+    }
+    void read() {
+        int _x, _y;
+        scanf("%d%d", &_x, &_y);
+        x = _x;
+        y = _y;
+    }
 };
 point operator + (const point &a, const point &b) {
-	return point (a.x + b.x, a.y + b.y);
+    return point (a.x + b.x, a.y + b.y);
 }
 point operator - (const point &a, const point &b) {
-	return point (a.x - b.x, a.y - b.y);
+    return point (a.x - b.x, a.y - b.y);
 }
 point operator * (const point &a, const double &b) {
-	return point (a.x * b, a.y * b);
+    return point (a.x * b, a.y * b);
 }
 point operator / (const point &a, const double &b) {
-	return point (a.x / b, a.y / b);
+    return point (a.x / b, a.y / b);
 }
 double dot (const point &a, const point &b) {
-	return a.x * b.x + a.y * b.y;
+    return a.x * b.x + a.y * b.y;
 }
 double det (const point &a, const point &b) {
-	return a.x * b.y - a.y * b.x;
+    return a.x * b.y - a.y * b.x;
 }
 double dis (const point &a, const point &b) {
-	return sqrt (sqr (a.x - b.x) + sqr (a.y - b.y));
+    return sqrt (sqr (a.x - b.x) + sqr (a.y - b.y));
 }
 struct line {
-	point s, t;
-	line (const point &s = point (), const point &t = point ()) : s (s), t (t) {}
-	double length () const { return dis (s, t); }
+    point s, t;
+    line (const point &s = point (), const point &t = point ()) : s (s), t (t) {}
+    double length () const { return dis (s, t); }
 };
 point line_intersect (const line &a, const line &b) {
-	double s1 = det (a.t - a.s, b.s - a.s);
-	double s2 = det (a.t - a.s, b.t - a.s);
-	return (b.s * s2 - b.t * s1) / (s2 - s1);
+    double s1 = det (a.t - a.s, b.s - a.s);
+    double s2 = det (a.t - a.s, b.t - a.s);
+    return (b.s * s2 - b.t * s1) / (s2 - s1);
 }
 point project_to_line (const point &a, const line &b) {
-	return b.s + (b.t - b.s) * (dot (a - b.s, b.t - b.s) / (b.t - b.s).norm2 ());
+    return b.s + (b.t - b.s) * (dot (a - b.s, b.t - b.s) / (b.t - b.s).norm2 ());
 }
 double distance_to_seg(const point &a, const line &b) {
-	point c = project_to_line(a, b);
-	if (dot(c - b.s, c - b.t) <= 0) return dis(c, a);
-	return min(dis(a, b.s), dis(a, b.t));
+    point c = project_to_line(a, b);
+    if (dot(c - b.s, c - b.t) <= 0) return dis(c, a);
+    return min(dis(a, b.s), dis(a, b.t));
 }
 
 //
 
 int r;
 point predict(point from, point to) {
-	point d = from - to;
-	return from + d / d.norm() * (2 * r);
+    point d = from - to;
+    return from + d / d.norm() * (2 * r);
 }
 bool boom(point from, point to, point wall) {
-	if (distance_to_seg(wall, line(from, to)) + eps < 2 * r) return 1;
-	return 0;
+    if (distance_to_seg(wall, line(from, to)) + eps < 2 * r) return 1;
+    return 0;
 }
 
 int main() {
-	int w, l, h;
-	scanf("%d%d", &w, &l);
-	point p1, p2, p3;
-	scanf("%d", &r);
-	p1.read();
-	p2.read();
-	p3.read();
-	scanf("%d", &h);
-	point should = predict(p1, predict(p3, point(w, l)));
-	point should1 = predict(p2, point(0, l));
-	point c = project_to_line(should1, line(should, p1));
-	point ans = line_intersect(line(should, c - (should1- c)), line(point(0, h), point(w, h)));
-	if (ans.x - r < 0 || ans.x + r > w) return 0 * puts("impossible");
-	double deg = atan2((should - ans).y, (should - ans).x);
-	if (boom(ans, should, p1)) return 0 * puts("impossible");
-	if (boom(ans, should, p2)) return 0 * puts("impossible");
-	if (boom(ans, should, p3)) return 0 * puts("impossible");
-	if (boom(p1, predict(p3, point(w, l)), p3)) return 0 * puts("impossible");
-	if (boom(should, should1, p2)) return 0 * puts("impossible");
-	printf("%.2f %.2f\n", ans.x, deg / pi * 180);
+    int w, l, h;
+    scanf("%d%d", &w, &l);
+    point p1, p2, p3;
+    scanf("%d", &r);
+    p1.read();
+    p2.read();
+    p3.read();
+    scanf("%d", &h);
+    point should = predict(p1, predict(p3, point(w, l)));
+    point should1 = predict(p2, point(0, l));
+    point c = project_to_line(should1, line(should, p1));
+    point ans = line_intersect(line(should, c - (should1- c)), line(point(0, h), point(w, h)));
+    if (ans.x - r < 0 || ans.x + r > w) return 0 * puts("impossible");
+    double deg = atan2((should - ans).y, (should - ans).x);
+    if (boom(ans, should, p1)) return 0 * puts("impossible");
+    if (boom(ans, should, p2)) return 0 * puts("impossible");
+    if (boom(ans, should, p3)) return 0 * puts("impossible");
+    if (boom(p1, predict(p3, point(w, l)), p3)) return 0 * puts("impossible");
+    if (boom(should, should1, p2)) return 0 * puts("impossible");
+    printf("%.2f %.2f\n", ans.x, deg / pi * 180);
 }
-~~~
+```
 
-##Nisiyama
+Nisiyama
+--------
 
-~~~ { .cpp }
+``` {.cpp}
 #include <bits/stdc++.h>
 
 const double EPS = 1E-8;
@@ -802,63 +823,63 @@ int cmp (const double &x, const double &y) { return sgn (x - y); }
 double sqr (const double &x) { return x * x; }
 
 struct point {
-	double x, y;
-	point (const double &x = 0, const double &y = 0) : x (x), y (y) {}
-	double norm () const { return sqrt (x * x + y * y); }
-	double norm2 () const { return x * x + y * y; }
-	point unit () const {
-		double l = norm ();
-		return point (x / l, y / l);
-	}
-	point rotate (const double &c, const double &s) const {
-		return point (x * c - y * s, x * s + y * c);
-	}
+    double x, y;
+    point (const double &x = 0, const double &y = 0) : x (x), y (y) {}
+    double norm () const { return sqrt (x * x + y * y); }
+    double norm2 () const { return x * x + y * y; }
+    point unit () const {
+        double l = norm ();
+        return point (x / l, y / l);
+    }
+    point rotate (const double &c, const double &s) const {
+        return point (x * c - y * s, x * s + y * c);
+    }
 };
 
 point operator + (const point &a, const point &b) {
-	return point (a.x + b.x, a.y + b.y);
+    return point (a.x + b.x, a.y + b.y);
 }
 
 point operator - (const point &a, const point &b) {
-	return point (a.x - b.x, a.y - b.y);
+    return point (a.x - b.x, a.y - b.y);
 }
 
 point operator * (const point &a, const double &b) {
-	return point (a.x * b, a.y * b);
+    return point (a.x * b, a.y * b);
 }
 
 point operator / (const point &a, const double &b) {
-	return point (a.x / b, a.y / b);
+    return point (a.x / b, a.y / b);
 }
 
 double det (const point &a, const point &b) {
-	return a.x * b.y - a.y * b.x;
+    return a.x * b.y - a.y * b.x;
 }
 
 double dot (const point &a, const point &b) {
-	return a.x * b.x + a.y * b.y;
+    return a.x * b.x + a.y * b.y;
 }
 
 double dis (const point &a, const point &b) {
-	return sqrt (sqr (a.x - b.x) + sqr (a.y - b.y));
+    return sqrt (sqr (a.x - b.x) + sqr (a.y - b.y));
 }
 
 struct line {
-	point s, t;
-	line (const point &s = point (), const point &t = point ()) : s (s), t (t) {}
-	double length () const { return dis (s, t); }
+    point s, t;
+    line (const point &s = point (), const point &t = point ()) : s (s), t (t) {}
+    double length () const { return dis (s, t); }
 };
 
 double point_to_segment (const point &a, const line &b) {
-	if (sgn (dot (b.s - a, b.t - b.s) * dot (b.t - a, b.t - b.s)) <= 0)
-		return fabs (det (b.t - b.s, a - b.s)) / dis (b.s, b.t);
-	return std::min (dis (a, b.s), dis (a, b.t));
+    if (sgn (dot (b.s - a, b.t - b.s) * dot (b.t - a, b.t - b.s)) <= 0)
+        return fabs (det (b.t - b.s, a - b.s)) / dis (b.s, b.t);
+    return std::min (dis (a, b.s), dis (a, b.t));
 }
 
 point line_intersect (const line &a, const line &b) {
-	double s1 = det (a.t - a.s, b.s - a.s);
-	double s2 = det (a.t - a.s, b.t - a.s);
-	return (b.s * s2 - b.t * s1) / (s2 - s1);
+    double s1 = det (a.t - a.s, b.s - a.s);
+    double s2 = det (a.t - a.s, b.t - a.s);
+    return (b.s * s2 - b.t * s1) / (s2 - s1);
 }
 
 point pl, pr, p1, p2, p3;
@@ -866,55 +887,55 @@ point pl, pr, p1, p2, p3;
 double W, L, R, X1, Y1, X2, Y2, X3, Y3, H;
 
 double fix (double x) {
-	if (sgn (x) == 0) return 0;
-	return x;
+    if (sgn (x) == 0) return 0;
+    return x;
 }
 
 bool bump1 (const line &l) {
-	return cmp (point_to_segment (p1, l), 2 * R) < 0;
+    return cmp (point_to_segment (p1, l), 2 * R) < 0;
 }
 
 bool bump2 (const line &l) {
-	return cmp (point_to_segment (p2, l), 2 * R) < 0;
+    return cmp (point_to_segment (p2, l), 2 * R) < 0;
 }
 
 bool bump3 (const line &l) {
-	return cmp (point_to_segment (p3, l), 2 * R) < 0;
+    return cmp (point_to_segment (p3, l), 2 * R) < 0;
 }
 
 int main () {
-	scanf ("%lf%lf %lf%lf%lf%lf%lf%lf%lf%lf", &W, &L, &R, &X1, &Y1, &X2, &Y2, &X3, &Y3, &H);
-	pl = point (0, L);
-	pr = point (W, L);
-	p1 = point (X1, Y1);
-	p2 = point (X2, Y2);
-	p3 = point (X3, Y3);
-	point p3d = p3 - (pr - p3).unit () * 2 * R;
-	if (bump3 (line (p1, p3d))) {
-		puts ("impossible");
-		return 0;
-	}
-	point pd = p1 - (p3d - p1).unit () * 2 * R;
-	point p2d = p2 - (pl - p2).unit () * 2 * R;
-	if (bump2 (line (pd, p2d))) {
-		puts ("impossible");
-		return 0;
-	}
-	double c = dot (p2d - pd, p3d - pd) / dis (pd, p2d) / dis (pd, p3d);
-	double s = det (p2d - pd, p3d - pd) / dis (pd, p2d) / dis (pd, p3d);
-	point pv = (p3d - pd).rotate (c, s);
-	if (sgn (pv.y) >= 0) {
-		puts ("impossible");
-		return 0;
-	}
-	point ct = line_intersect (line (pd, pd + pv), line (point (0, H), point (W, H)));
-	if (bump1 (line (ct, pd)) || bump2 (line (ct, pd)) || bump3 (line (ct, pd))) {
-		puts ("impossible");
-		return 0;
-	}
-	if (cmp (ct.x, R) >= 0 && cmp (ct.x, W - R) <= 0) {
-		printf ("%.2f %.2f\n", ct.x, fix (acos ((pd.x - ct.x) / fix (dis (pd, ct))) / PI * 180.));
-	} else
-		puts ("impossible");
+    scanf ("%lf%lf %lf%lf%lf%lf%lf%lf%lf%lf", &W, &L, &R, &X1, &Y1, &X2, &Y2, &X3, &Y3, &H);
+    pl = point (0, L);
+    pr = point (W, L);
+    p1 = point (X1, Y1);
+    p2 = point (X2, Y2);
+    p3 = point (X3, Y3);
+    point p3d = p3 - (pr - p3).unit () * 2 * R;
+    if (bump3 (line (p1, p3d))) {
+        puts ("impossible");
+        return 0;
+    }
+    point pd = p1 - (p3d - p1).unit () * 2 * R;
+    point p2d = p2 - (pl - p2).unit () * 2 * R;
+    if (bump2 (line (pd, p2d))) {
+        puts ("impossible");
+        return 0;
+    }
+    double c = dot (p2d - pd, p3d - pd) / dis (pd, p2d) / dis (pd, p3d);
+    double s = det (p2d - pd, p3d - pd) / dis (pd, p2d) / dis (pd, p3d);
+    point pv = (p3d - pd).rotate (c, s);
+    if (sgn (pv.y) >= 0) {
+        puts ("impossible");
+        return 0;
+    }
+    point ct = line_intersect (line (pd, pd + pv), line (point (0, H), point (W, H)));
+    if (bump1 (line (ct, pd)) || bump2 (line (ct, pd)) || bump3 (line (ct, pd))) {
+        puts ("impossible");
+        return 0;
+    }
+    if (cmp (ct.x, R) >= 0 && cmp (ct.x, W - R) <= 0) {
+        printf ("%.2f %.2f\n", ct.x, fix (acos ((pd.x - ct.x) / fix (dis (pd, ct))) / PI * 180.));
+    } else
+        puts ("impossible");
 }
-~~~
+```
