@@ -1,94 +1,118 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.09.10 12:00-17:00
 
 [practice link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=780)
 
-# Solutions
+Solutions
+=========
 
-## A. string string string
+A. string string string
+-----------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 裸后缀自动机
 
-## B. cable cable cable
+B. cable cable cable
+--------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 答案即 $K + (N - K) \times K$
 
-## C. happy happy happy
+C. happy happy happy
+--------------------
 
 upsolved by chitanda, braveTester
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-设 $f[\text{len}][i][j]$ 表示从 $i$ 开始长为 $\text{len}$ 的一段，由孩子开始选，两人差距为 $j$ 是否可行。
+设 $f[\text{len}][i][j]$ 表示从 $i$ 开始长为 $\text{len}$
+的一段，由孩子开始选，两人差距为 $j$ 是否可行。
 
-那么第一维可以通过滚动数组优化掉，第三维可以卡一个界，并且用 bitset 优化，就能 AC 这题了。
+那么第一维可以通过滚动数组优化掉，第三维可以卡一个界，并且用 bitset
+优化，就能 AC 这题了。
 
 这种做法应该是可以卡掉的，但是数据太弱。
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-DP 出一段长度为偶数的连续段，孩子先手时 Bob 可以拿的最好/最差分数，用于剪枝。
+DP 出一段长度为偶数的连续段，孩子先手时 Bob
+可以拿的最好/最差分数，用于剪枝。
 
-然后对于段长小于 $\text{BRUTE}$ 的段，背包出所有可能的取值，使用 bitset 的话在 $64$ 位机上复杂度为 $O\left(\frac{1}{64} \times \frac{(2n - \text{BRUTE})(\text{BRUTE} / 2)}{2} \times \left(\text{BRUTE} \times 10^5 / 2\right)\right)$，运用滚动数组空间复杂度 $O\left(\frac{1}{64} \times \text{BRUTE} \times 10^5 \times n\right)$。
+然后对于段长小于 $\text{BRUTE}$ 的段，背包出所有可能的取值，使用 bitset
+的话在 $64$ 位机上复杂度为
+$O\left(\frac{1}{64} \times \frac{(2n - \text{BRUTE})(\text{BRUTE} / 2)}{2} \times \left(\text{BRUTE} \times 10^5 / 2\right)\right)$，运用滚动数组空间复杂度
+$O\left(\frac{1}{64} \times \text{BRUTE} \times 10^5 \times n\right)$。
 
-搞完之后把段长为 $\text{BRUTE}$ 的段的所有可能取值扔到一个 set 中，当搜索的时候段长小于等于 $\text{BRUTE}$ 直接二分查找此时最好答案即可。
+搞完之后把段长为 $\text{BRUTE}$ 的段的所有可能取值扔到一个 set
+中，当搜索的时候段长小于等于 $\text{BRUTE}$
+直接二分查找此时最好答案即可。
 
-取 $\text{BRUTE} = 40$ 时，预处理复杂度在 $43750000$，搜索实际复杂度不超过这个级别，可通过本题。
+取 $\text{BRUTE} = 40$ 时，预处理复杂度在
+$43750000$，搜索实际复杂度不超过这个级别，可通过本题。
 
 **上述做法实际上并不能通过...会 MLE + TLE...**
 
-实测发现暴力的部分直接就没用到...小于 $40$ 个的时候，直接取 Bob 最优，否则剪掉...然后过了...过了...过了...神 tm 过了...
+实测发现暴力的部分直接就没用到...小于 $40$ 个的时候，直接取 Bob
+最优，否则剪掉...然后过了...过了...过了...神 tm 过了...
 
-## D. array array array
+D. array array array
+--------------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
 $O(n \log n)$ 找最长非升和最长非降子序列长度，之后稍微判断一下即可。
 
-## E. number number number
+E. number number number
+-----------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
-一个数如果不能被 $k$ 个 Fibonacci 数之和表示，那么它至少要用 $k + 1$ 个不同的 Fibonacci 数表示，考虑唯一分解的 Fibonacci 进制，进制下相邻位不能同时为 $1$，能包含 $k + 1$ 个 $1$ 的数字至少有 $2 k + 1$ 位，这个数字加一后会变成一个长度为 $2 k + 2$ 的数字，所以它的值是 $\text{Fib}_{2 k + 3} - 1$。
+一个数如果不能被 $k$ 个 Fibonacci 数之和表示，那么它至少要用 $k + 1$
+个不同的 Fibonacci 数表示，考虑唯一分解的 Fibonacci
+进制，进制下相邻位不能同时为 $1$，能包含 $k + 1$ 个 $1$ 的数字至少有
+$2 k + 1$ 位，这个数字加一后会变成一个长度为 $2 k + 2$
+的数字，所以它的值是 $\text{Fib}_{2 k + 3} - 1$。
 
-## F. gems gems gems
+F. gems gems gems
+-----------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-$f[i][j]$ 表示从第 $i$ 个开始拿，至少拿 $j$ 个，先手减后手的最大值，那么实际上 $j$ 只有 $O(\sqrt i)$ 级别。
+$f[i][j]$ 表示从第 $i$ 个开始拿，至少拿 $j$
+个，先手减后手的最大值，那么实际上 $j$ 只有 $O(\sqrt i)$ 级别。
 
-## G. mustedge mustedge mustedge
+G. mustedge mustedge mustedge
+-----------------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
@@ -96,101 +120,143 @@ skywalkert's solution
 
 为了支持加边操作，会需要将一条链上的树边清除，但是每条树边只会被清除一次，可以用并查集加速清除过程，到根的距离用树状数组维护即可。
 
-## H. transaction transaction transaction
+H. transaction transaction transaction
+--------------------------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-假设是在 $u$ 买在 $v$ 卖，收益即 $\text{pr}_u - \text{dist}(u, v) - \text{pr}_v$，对每个点 $u$ 可以用两遍树 DP 计算出 $\min\{\text{dist}(u, v) + \text{pr}_v\}$，其中第一遍树 DP 需要记录最小值和次小值。
+假设是在 $u$ 买在 $v$ 卖，收益即
+$\text{pr}_u - \text{dist}(u, v) - \text{pr}_v$，对每个点 $u$
+可以用两遍树 DP 计算出
+$\min\{\text{dist}(u, v) + \text{pr}_v\}$，其中第一遍树 DP
+需要记录最小值和次小值。
 
-## I. cube cube cube
+I. cube cube cube
+-----------------
 
 upsolved by braveTester, chitanda
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-手画个展开图，撕下来折成立体的，手造 $12$ 种转移，总共需要输入 $288$ 个数。造完转义直接搜索即可。
+手画个展开图，撕下来折成立体的，手造 $12$ 种转移，总共需要输入 $288$
+个数。造完转义直接搜索即可。
 
 复杂度 $O\left(24^3\right)$。
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-本质上只有两种转换，用两个过程来生成 $24$ 种转换之后，对每组数据直接搜索。
+本质上只有两种转换，用两个过程来生成 $24$
+种转换之后，对每组数据直接搜索。
 
-## J. ping ping ping
+J. ping ping ping
+-----------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-贪心，每次选一个 $\text{lca}$ 最深的询问，选 $\text{lca}$ 为坏掉的节点，然后删去所有经过这个点的询问。
+贪心，每次选一个 $\text{lca}$ 最深的询问，选 $\text{lca}$
+为坏掉的节点，然后删去所有经过这个点的询问。
 
-实际操作起来只需要先对于每个询问，将询问的 ID 加入询问的两个点的 set 中，然后 DFS 一遍，处理完儿子后，将儿子的 set 合并到自己的 set，如果合并过程中，一个 ID 在两个 set 中都出现了，那么说明这个点要作为 $\text{lca}$ 被选择。被选择的点将它的 set 清空即可消去经过它的所有询问。
+实际操作起来只需要先对于每个询问，将询问的 ID 加入询问的两个点的 set
+中，然后 DFS 一遍，处理完儿子后，将儿子的 set 合并到自己的
+set，如果合并过程中，一个 ID 在两个 set 中都出现了，那么说明这个点要作为
+$\text{lca}$ 被选择。被选择的点将它的 set 清空即可消去经过它的所有询问。
 
----
+------------------------------------------------------------------------
 
 braveTester's comment
 
-考虑 $\text{lca}$ 最深的询问，设其 $\text{lca}$ 为 $u$。由题意，该路径上必有坏点 $v$。
+考虑 $\text{lca}$ 最深的询问，设其 $\text{lca}$ 为
+$u$。由题意，该路径上必有坏点 $v$。
 
-设 $v$ 能影响的询问集合为 $Q_v$，则对任意 $q \in Q_v$，设其 $\text{lca}$ 为 $u'$，则有 $\text{dep}(v) \le \text{dep}(u) \le \text{dep}(u')$，所以如果 $u$ 为坏点，则其影响的询问集合 $Q_u$ 与 $Q_v$ 之间有 $Q_v \subseteq Q_u$，因此选 $u$ 解不会更差。
+设 $v$ 能影响的询问集合为 $Q_v$，则对任意 $q \in Q_v$，设其 $\text{lca}$
+为 $u'$，则有
+$\text{dep}(v) \le \text{dep}(u) \le \text{dep}(u')$，所以如果 $u$
+为坏点，则其影响的询问集合 $Q_u$ 与 $Q_v$ 之间有
+$Q_v \subseteq Q_u$，因此选 $u$ 解不会更差。
 
 又因为被 $u$ 影响的询问相当于没用了，所以上面的贪心做法是正确的。
 
-## K. triangulation triangulation triangulation
+K. triangulation triangulation triangulation
+--------------------------------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-正多边形的一个内接三角形的面积可以用其中两条边跨越过的正多边形边数确定，所以不同的内接三角形面积只会有 $\mathcal{O}\left(\frac{n^2}{12}\right)$ 种。
+正多边形的一个内接三角形的面积可以用其中两条边跨越过的正多边形边数确定，所以不同的内接三角形面积只会有
+$\mathcal{O}\left(\frac{n^2}{12}\right)$ 种。
 
-考虑 $n$ 次单位复根 $w_n = \cos\left(\frac{2 \pi}{n}\right) + i \sin\left(\frac{2 \pi}{n}\right)$，可以将正多边形用 $w_n, w_n^2, \cdots, w_n^n$ 这 $n$ 个点表示，设内接三角形的某两条边分别跨越了正多边形的 $a, b$ 条边，则其面积可以用叉积计算得到为 $\frac{1}{2}\left(\sin \frac{2 \pi a}{n} + \sin \frac{2 \pi b}{n} - \sin \frac{2 \pi (a + b)}{n}\right)$。
+考虑 $n$ 次单位复根
+$w_n = \cos\left(\frac{2 \pi}{n}\right) + i \sin\left(\frac{2 \pi}{n}\right)$，可以将正多边形用
+$w_n, w_n^2, \cdots, w_n^n$ 这 $n$
+个点表示，设内接三角形的某两条边分别跨越了正多边形的 $a, b$
+条边，则其面积可以用叉积计算得到为
+$\frac{1}{2}\left(\sin \frac{2 \pi a}{n} + \sin \frac{2 \pi b}{n} - \sin \frac{2 \pi (a + b)}{n}\right)$。
 
-Note: 这里面积需要进行浮点数比较，例如 $n = 12$ 时，$a = 2, b = 2$ 和 $a = 1, b = 4$ 应该得到相同的面积，但是可能会存在精度误差。
+Note: 这里面积需要进行浮点数比较，例如 $n = 12$ 时，$a = 2, b = 2$ 和
+$a = 1, b = 4$ 应该得到相同的面积，但是可能会存在精度误差。
 
-对于所有可能的面积，计算当它为最大面积时可能有多少种三角剖分的方案，实际上只需要知道剩下三个部分的剖分方法即可，不妨设其三条边分别跨越了正多边形的 $a, b, n - a - b$ 条边，则需要计算跨越不超过 $\max\{a, b, n - a - b\}$ 条边的多边形内部三角剖分出的三角形面积最大值小于某个定值的方案数，令 $f(m)$ 表示 跨越了 $m$ 条边的情况，只需要枚举最内侧的三角形剩下一条边是多少即可，这可以在 $\mathcal{O}\left(\frac{\max\{a, b, n - a - b\}^2}{4}\right)$ 的时间内求出。
+对于所有可能的面积，计算当它为最大面积时可能有多少种三角剖分的方案，实际上只需要知道剩下三个部分的剖分方法即可，不妨设其三条边分别跨越了正多边形的
+$a, b, n - a - b$ 条边，则需要计算跨越不超过 $\max\{a, b, n - a - b\}$
+条边的多边形内部三角剖分出的三角形面积最大值小于某个定值的方案数，令
+$f(m)$ 表示 跨越了 $m$
+条边的情况，只需要枚举最内侧的三角形剩下一条边是多少即可，这可以在
+$\mathcal{O}\left(\frac{\max\{a, b, n - a - b\}^2}{4}\right)$
+的时间内求出。
 
-据观察有 $\sum_{1 \leq a \leq b \leq n - a - b}{\frac{(n - a - b)^2}{4}} = \mathcal{O}\left(\frac{n^4}{144}\right)$，再适当减少取模的次数即可通过此题。
+据观察有
+$\sum_{1 \leq a \leq b \leq n - a - b}{\frac{(n - a - b)^2}{4}} = \mathcal{O}\left(\frac{n^4}{144}\right)$，再适当减少取模的次数即可通过此题。
 
-## L. card card card
+L. card card card
+-----------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-复制两倍变成长度为 $2n - 1$ 的序列。考虑从左开始模拟，设从 $i$ 开始，到 $j$ 停止，根据题意有
-$$
+复制两倍变成长度为 $2n - 1$ 的序列。考虑从左开始模拟，设从 $i$ 开始，到
+$j$ 停止，根据题意有 $$
 \begin{cases}
 \sum_{i \le t \le k} a_t - b_t \ge 0, &i \le k < j\\
 \sum_{i \le t \le k} a_t - b_t < 0, &k = j
 \end{cases}
 $$
 
-则对于任意 $k \in [i, j]$，由于 $\sum_{i \le t \le j} a_t - b_t < 0$ 以及 $\sum_{i \le t < k} a_t - b_t \ge 0$，故必有 $\sum_{k \le t \le j} a_t - b_t < 0$，所以中间的所有 $k$ 必定不可能成为解。因此只要暴力模拟，每次左端点重设为右端点的下一个点即可，复杂度 $O(n)$。注意当区间长已经为 $n$ 时已经是最优，需要特判一下。
+则对于任意 $k \in [i, j]$，由于 $\sum_{i \le t \le j} a_t - b_t < 0$
+以及 $\sum_{i \le t < k} a_t - b_t \ge 0$，故必有
+$\sum_{k \le t \le j} a_t - b_t < 0$，所以中间的所有 $k$
+必定不可能成为解。因此只要暴力模拟，每次左端点重设为右端点的下一个点即可，复杂度
+$O(n)$。注意当区间长已经为 $n$ 时已经是最优，需要特判一下。
 
-# Replay and Summary
+Replay and Summary
+==================
 
-## Replay
+Replay
+------
 
 `T` 日常迟到。
 
-`L` 从头开始看，`H` 则准备找个短的看，`L` 发现 A 是个水题，于是 `H` 立马上来写个 SAM，过了几分钟 `T` 过来了。
+`L` 从头开始看，`H` 则准备找个短的看，`L` 发现 A 是个水题，于是 `H`
+立马上来写个 SAM，过了几分钟 `T` 过来了。
 
-`H` 写了十几分钟过了 A，然后 `L` 上来写 D，`H` 开始研究那个被板切的 B，`T` 则开始一个个秒其他的题。
+`H` 写了十几分钟过了 A，然后 `L` 上来写 D，`H` 开始研究那个被板切的
+B，`T` 则开始一个个秒其他的题。
 
 `H` 发现 B 一句话，然后上来写掉了，`L` 继续写 D。
 
@@ -198,13 +264,15 @@ $$
 
 之后 `L` 终于改完了 D，交上去就过了。
 
-`H` 上来写 F，很快就光荣的 RE + WA 了，期间 `L` 想出了 L，然后写完让 `T` 加了个读入挂就过了。
+`H` 上来写 F，很快就光荣的 RE + WA 了，期间 `L` 想出了 L，然后写完让 `T`
+加了个读入挂就过了。
 
 `H` 在又 WA 了两发之后，发现自己输出放错地方了，改了之后终于过了。
 
 `T` 换上来写码农题 G，`L` 和 `H` 则开始想 J。
 
-`T` 在被卡常了之后加了些优化终于过了 G 题，期间 `L` 想出了 J 的贪心，`H` 则根据贪心想出了写法。
+`T` 在被卡常了之后加了些优化终于过了 G 题，期间 `L` 想出了 J 的贪心，`H`
+则根据贪心想出了写法。
 
 `H` 上来写 J，一发 MLE 之后和 `T` 一起查了些错，然后 AC 了。
 
@@ -212,9 +280,11 @@ $$
 
 `T` 的 K 在若干次优化之后还是 TLE，最后准备打表但是没来得及。
 
-期间 `L` 写了一小部分 I 然后就弃了，`H` 想写 C 的一个 bitset 瞎搞但是没有机时写（赛后随便写了 1kb 代码就过了
+期间 `L` 写了一小部分 I 然后就弃了，`H` 想写 C 的一个 bitset
+瞎搞但是没有机时写（赛后随便写了 1kb 代码就过了
 
-## braveTester
+braveTester
+-----------
 
 手上功夫生疏...D 还写了好久...
 
@@ -224,12 +294,14 @@ I 就不应该懒，直接折完照着写最快...
 
 亟需加强码力...
 
-## chitanda
+chitanda
+--------
 
 又因为一点小错误贡献了很多的罚时，写代码还是要更仔细！
 
 最后应该抢机时写一下 C，反正也不难写。
 
-## skywalkert
+skywalkert
+----------
 
 写得比较顺，调得不太顺，由于错误估计了难度，最后三个题没有安排好做题计划，导致最后两个小时没有过题，还需要锻炼判断能力。
