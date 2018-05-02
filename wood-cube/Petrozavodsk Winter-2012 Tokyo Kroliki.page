@@ -19,38 +19,49 @@
 │I₂[-:--]│                                         ₀                  │
 │A₂[-:--]│                                                    ₀       │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Arrangement of Carrots
+A. Arrangement of Carrots
+-------------------------
 
 【平面点构造题】
 
-## B. Brilliant Stars [TDJ]
+B. Brilliant Stars \[TDJ\]
+--------------------------
 
 可以证明每个连通块中度数最大的点一定跟其他所有点有连边。那么或者这个连通块是个团，或者这个点一定不被取，删掉继续。
 
-## C. Common Palindromes [TDJ]
+C. Common Palindromes \[TDJ\]
+-----------------------------
 
 PAM裸题，同14Xi'an。
 
-## D. Dangerous Tower [TDJ]
+D. Dangerous Tower \[TDJ\]
+--------------------------
 
 费用流，矩形一排点，长度一排点。
 
-## E. Ear Teleportation [MZH]
+E. Ear Teleportation \[MZH\]
+----------------------------
 
 枚举各种置换的等价表示，dp求解。
 
-## F. Following are Equivalent [GX]
+F. Following are Equivalent \[GX\]
+----------------------------------
 
 问题转化为求使用超过2N-3个边的N个点的有向图，使得整个图强联通而去掉任何一个点都不不再强联通，显然只有2N-2和2N-3两种情况，2N-2是无向图生成树情况，2N-3是扇子形套生成树的形状。
 
-## G. Ground Construction [MZH]
+G. Ground Construction \[MZH\]
+------------------------------
 
-## H. Hidden Palindrome [GX]
+H. Hidden Palindrome \[GX\]
+---------------------------
 
 签到题
 
-## I. Interfering the Cat [MZH]
+I. Interfering the Cat \[MZH\]
+------------------------------
 
-## J. Jumping Limits [MZH]
+J. Jumping Limits \[MZH\]
+-------------------------
