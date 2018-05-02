@@ -1,0 +1,81 @@
+# [坑]
+
+A Foldy but a Goody 绳子
+
+Aerodynamic 三维凸包
+
+# [POJ3476]A game with Colored Balls
+
+给定长度为$n$的字符串，每次消除最长一段连续相等的字符，并将剩下字符合并，模拟这个操作。$n\leq1000000$。
+
+使用优先队列维护，每次暴力删除，用链表来实现删除即可。然而T了。。
+
+# [SGU439]A Secret Book
+
+给定两个串A和B，求A串的最小表示C，然后求A串的第一个位置使得该位置开始对应C长度的子串最多有一个位置不和C相同，$n\leq1000000$
+
+正反各做一遍扩展KMP即可，整理了一下板子，然而T了。。
+
+# [WF2008]Air Conditioning Machinery
+
+从起点到终点拼接L型管道，最多6步，暴力即可，实现的时候用for缩短程序
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+struct P{int x,y,z;}s,t;
+bool operator==(P a,P b){return a.x==b.x&&a.y==b.y&&a.z==b.z;}
+P operator+(P a,P b){return P{a.x+b.x,a.y+b.y,a.z+b.z};}
+P e[6]={{1,0,0},{0,1,0},{0,0,1},{-1,0,0},{0,-1,0},{0,0,-1}};
+int X,Y,Z,ca,an;char ss[9],ts[9];bool v[22][22][22];
+int cal(char f,char x){return (x-'x')+(f=='-'?3:0);}
+bool GG(int x,int n){return x<=0||x>n;}
+void dfs(P u,int fx,int st){
+	if(st>=an)return;
+	if(u==t){an=st;return;}
+	int i,j,k,ff;P o;
+	for(k=1;k<3;k++)for(i=0;i<6;i++)if(i%3!=fx%3){
+		for(o=u,ff=j=0;j<4;j++){
+			if(v[o.x][o.y][o.z]||GG(o.x,X)||GG(o.y,Y)||GG(o.z,Z))ff=1;
+			o=o+e[j<k?fx:i];
+		}
+		if(ff)continue;
+		for(o=u,j=0;j<4;j++)v[o.x][o.y][o.z]=1,o=o+e[j<k?fx:i];
+		dfs(o,i,st+1);
+		for(o=u,j=0;j<4;j++)v[o.x][o.y][o.z]=0,o=o+e[j<k?fx:i];
+	}
+}
+int main(){
+	for(;scanf("%d",&X),X;){
+		scanf("%d%d%d%d%d%s%d%d%d%s",&Y,&Z,&s.x,&s.y,&s.z,ss,&t.x,&t.y,&t.z,ts);
+		t=t+e[cal(ts[0],ts[1])];an=7;
+		dfs(s,cal(ss[0],ss[1]),0);
+		printf("Case %d: ",++ca);
+		if(an==7)puts("Impossible");else printf("%d\n",an);
+	}
+}
+~~~
+
+# [Uva11802]All Your Bases Belong to Us
+
+$T$次给定 $n,k$，求有多少个$b$满足在$b$进制下$n!$恰以$k$个$0$结尾。$n,k\leq 10^{18},\frac{n}{k}<500$。
+
+容斥求大于等于$k$个$0$结尾的数量，我们需要求出每个质数$p_i^{w}$是否可以当基底，那么枚举每个质数，求出有几个$0$结尾，除以$k$再加$1$就可以求出$w$，由于有$n/k < 500$，所以只要枚举不超过$1000$的质数就好了
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define LL long long
+#define M 1000000007
+int T,i,j,t,ca,p[1010];
+bool f[1010];LL n,k;
+LL cal(LL n,LL p){return n<p?0:n/p+cal(n/p,p);}
+int G(LL n,LL k){
+	int V=1,i;
+	for(i=1;i<=t;i++)V=1ll*V*((cal(n,p[i])/k+1)%M)%M;
+	return V;
+}
+int main(){
+	for(i=2;i<=1000;i++)
+		if(!f[i])for(p[++t]=j=i;j<=1000;j+=i)f[j]=1;
+	for(scanf("%d",&T);T--;printf("Case %d: %d\n",++ca,(G(n,k)-G(n,k+1)+M)%M))scanf("%lld%lld",&n,&k);
+}
+~~~
