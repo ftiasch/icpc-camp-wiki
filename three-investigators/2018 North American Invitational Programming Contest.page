@@ -1,111 +1,152 @@
-# Contest Info
+Contest Info
+============
 
 date: 2018.04.16 11:10-16:10
 
 [practice link](https://open.kattis.com/contests/krumwy)
 
-# Solutions
+Solutions
+=========
 
-## A. Cut It Out!
+A. Cut It Out!
+--------------
 
 solved by chitanda, upsolved by none
 
-## B. Double Clique
+B. Double Clique
+----------------
 
 upsolved by chitanda
 
-## C. Flashing Fluorescents
+C. Flashing Fluorescents
+------------------------
 
 solved by chitanda, upsolved by none
 
-## D. Missing Gnomes
+D. Missing Gnomes
+-----------------
 
 solved by chitanda, upsolved by none
 
-## E. Prefix Free Code
+E. Prefix Free Code
+-------------------
 
 solved by chitanda, upsolved by none
 
-## F. Probe Droids
+F. Probe Droids
+---------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-在 Stern-Brocot Tree 上枚举答案所在的斜率，每次 $\mathcal{O}(\log n + \log m)$ 求解直线下整点个数，及时 break 可以通过。
+在 Stern-Brocot Tree 上枚举答案所在的斜率，每次
+$\mathcal{O}(\log n + \log m)$ 求解直线下整点个数，及时 break 可以通过。
 
-Stern-Brocot Tree 上的枚举次数可能达到单组询问 $\mathcal{O}(\min(n, m))$ 次，但是每次经过拐点可以使得增长速率加倍，二分具体的拐点可以做到单组询问枚举 $\mathcal{O}(\log^2 n)$ 次。
+Stern-Brocot Tree 上的枚举次数可能达到单组询问 $\mathcal{O}(\min(n, m))$
+次，但是每次经过拐点可以使得增长速率加倍，二分具体的拐点可以做到单组询问枚举
+$\mathcal{O}(\log^2 n)$ 次。
 
 直线下整点个数：由于横坐标取值范围确定，可采用下取整的式子提取可直接计算的项，然后尝试转移坐标系，在纵坐标方向上提取可直接计算的项，如此反复直到所有项可直接计算。
 
-comment: 除直线下整点个数外，曲线 $y = n/x$ 下第一象限整点个数也可采用另一种转移坐标系的方法计算。
+comment: 除直线下整点个数外，曲线 $y = n/x$
+下第一象限整点个数也可采用另一种转移坐标系的方法计算。
 
-## G. Rainbow Graph
+G. Rainbow Graph
+----------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 满足两个拟阵的解可以贪心调整得到，判断整个图是否满足条件，可以得到初始解。
 
-每次尝试在一个解的基础上删除 $k$ 条已有边，增加 $k - 1$ 条暂无边使得依旧满足两个拟阵。
+每次尝试在一个解的基础上删除 $k$ 条已有边，增加 $k - 1$
+条暂无边使得依旧满足两个拟阵。
 
 由于拟阵满足独立集交换性，增删过程可以用增广路径表示（删-增-删-增-删……），可以在每个"点"的入边处检查第一个拟阵，出边处检查第二个拟阵。
 
-建图可以暴力检查，增广路径可以用 floyd 求最短路，总时间复杂度 $\mathcal{O}(m^3 (n + m))$。
+建图可以暴力检查，增广路径可以用 floyd 求最短路，总时间复杂度
+$\mathcal{O}(m^3 (n + m))$。
 
-## H. Recovery
+H. Recovery
+-----------
 
 solved by chitanda, upsolved by none
 
-## I. Red Black Tree
+I. Red Black Tree
+-----------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-构建 dfs 序，令 $\mathrm{next}(i)$ 表示 dfs 序第 $i$ 个元素之后第一个不是它子树内节点的元素位置，以及 $f(i, j)$ 表示已经考虑完 dfs 序中前 $i$ 个元素，当前选了 $j$ 个红点的方案数。初始有 $f(0, 0) = 1$，每次根据第 $i + 1$ 个元素选还是不选决定将 $f(i, j)$ 转移给 $f(i + 1, j)$ 还是 $f(\mathrm{next}(i + 1), j')$，时间复杂度 $\mathrm{O}(n m)$。
+构建 dfs 序，令 $\mathrm{next}(i)$ 表示 dfs 序第 $i$
+个元素之后第一个不是它子树内节点的元素位置，以及 $f(i, j)$
+表示已经考虑完 dfs 序中前 $i$ 个元素，当前选了 $j$
+个红点的方案数。初始有 $f(0, 0) = 1$，每次根据第 $i + 1$
+个元素选还是不选决定将 $f(i, j)$ 转移给 $f(i + 1, j)$ 还是
+$f(\mathrm{next}(i + 1), j')$，时间复杂度 $\mathrm{O}(n m)$。
 
-## J. Winter Festival
+J. Winter Festival
+------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 假设存在一条边位于至少两个环内，且这个图有解，那么存在两个包含该条边的环使得它们的代价之和都是奇数，将这该条边从这两个环上去掉并合并剩余的边可以得到一个环的代价之和是偶数，与假设这个图有解矛盾，故当图有解时，每条边位于至多一个简单环中。
 
-考虑每个连通分量中的任意一棵生成树，非树边能覆盖的树边集合如果有交集，则这个图无解，否则随便选一个点做根把连通分量变成有根树，利用 dfs 可以得到一棵生成树，使得每条非树边覆盖的是点到根路径上的一部分边。
+考虑每个连通分量中的任意一棵生成树，非树边能覆盖的树边集合如果有交集，则这个图无解，否则随便选一个点做根把连通分量变成有根树，利用
+dfs 可以得到一棵生成树，使得每条非树边覆盖的是点到根路径上的一部分边。
 
-定义 $\mathrm{cover}(u)$ 表示 $u$ 到根路径上与 $u$ 直接相连的边被哪条非树边覆盖，或是没被覆盖，可以在 $\mathcal{O}(n + m)$ 的时间里判断一个图是否有解。
+定义 $\mathrm{cover}(u)$ 表示 $u$ 到根路径上与 $u$
+直接相连的边被哪条非树边覆盖，或是没被覆盖，可以在 $\mathcal{O}(n + m)$
+的时间里判断一个图是否有解。
 
-定义 $f(\mathrm{root}, \mathrm{cost}, \mathrm{parity}, \mathrm{mask})$ 表示当前考虑了以 $\mathrm{root}$ 为根的子树状态合法且 $\mathrm{root}$ 往上那条边的代价是 $\mathrm{cost}$ 时整个子树的最小代价，其中，在 $\mathrm{cover}(\mathrm{root})$ 非空时，$\mathrm{parity}$ 表示目前被这条非树边覆盖的树边代价之和的奇偶性，$\mathrm{mask}$ 表示被覆盖的最深点在之前有哪几种代价的邻接边。
+定义 $f(\mathrm{root}, \mathrm{cost}, \mathrm{parity}, \mathrm{mask})$
+表示当前考虑了以 $\mathrm{root}$ 为根的子树状态合法且 $\mathrm{root}$
+往上那条边的代价是 $\mathrm{cost}$ 时整个子树的最小代价，其中，在
+$\mathrm{cover}(\mathrm{root})$ 非空时，$\mathrm{parity}$
+表示目前被这条非树边覆盖的树边代价之和的奇偶性，$\mathrm{mask}$
+表示被覆盖的最深点在之前有哪几种代价的邻接边。
 
-不妨先考虑从 $u$ 的直接后代 $v$ 得到子树信息，再考虑 $u$ 到根那条边的选法。
+不妨先考虑从 $u$ 的直接后代 $v$ 得到子树信息，再考虑 $u$
+到根那条边的选法。
 
-如果 $\mathrm{cover}(v)$ 非空且 $\mathrm{cover}(u) \neq \mathrm{cover}(v)$，则需要根据 $f(v, \mathrm{cost}, \mathrm{parity}, \mathrm{mask})$ 中的 $\mathrm{cost}$ 和 $\mathrm{mask}$ 枚举那条非树边的代价，否则可以直接继承 $\mathrm{mask}$。该过程只需要维护当前 $u$ 的邻接边情况。
+如果 $\mathrm{cover}(v)$ 非空且
+$\mathrm{cover}(u) \neq \mathrm{cover}(v)$，则需要根据
+$f(v, \mathrm{cost}, \mathrm{parity}, \mathrm{mask})$ 中的
+$\mathrm{cost}$ 和 $\mathrm{mask}$
+枚举那条非树边的代价，否则可以直接继承
+$\mathrm{mask}$。该过程只需要维护当前 $u$ 的邻接边情况。
 
-然后根据 $\mathrm{cover}(u)$ 是不是第一次出现，枚举 $u$ 到根那条边的选法即可。根的父亲可以是一个无用点。
+然后根据 $\mathrm{cover}(u)$ 是不是第一次出现，枚举 $u$
+到根那条边的选法即可。根的父亲可以是一个无用点。
 
-## K. Zoning Houses
+K. Zoning Houses
+----------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 线段树维护横纵坐标最大最小次大次小值对应的点，每次询问时枚举删掉最大最小的至多四个点里的哪个点，计算剩下点集的答案即可。
 
-comment: 可以只维护最大最小值对应的点，然后枚举将询问区间划分成至多哪两个区间，再合并区间信息即可。
+comment:
+可以只维护最大最小值对应的点，然后枚举将询问区间划分成至多哪两个区间，再合并区间信息即可。
 
-# Replay and Summary
+Replay and Summary
+==================
 
 None is available.
