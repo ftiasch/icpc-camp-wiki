@@ -1,0 +1,103 @@
+# 结果
+
+Solve : 8/10
+
+Rank : 2
+
+# 表现
+
+## lbn187
+
+3小时前神志恍惚写题速度感人，3小时后只能吃东西看队友A题
+
+## Akigeor
+
+全程看队友过题。最后上了个I题算法解体了。
+
+# Upsolving
+
+## I. Colored Nodes
+
+先暴力染一轮，得到一个环套树。因为无限所以环套树环上的点等分整个环套树点的出现次数。所以每个环套树当成一种颜色再染一遍算一轮的答案。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5;
+vector<int> G[N];
+int c[N], f[N], cnt[N], las[N], tick, cc[N];
+bool v[N], vv[N];
+long long sum[N];
+int fat(int x) {
+	if (f[x] == x) return x;
+	return f[x] = fat(f[x]);
+}
+void join(int x, int y) {
+	x = fat(x), y = fat(y);
+	f[x] = y;
+}
+void change(int x, int delta) {
+	sum[x] += 1LL * (tick - las[x]) * cnt[x];
+	las[x] = tick;
+	cnt[x] += delta;
+}
+int main() {
+	int n, m;
+	while (scanf("%d%d", &n, &m) == 2) {
+		for (int i = 1; i <= n; ++ i) {
+			G[i].clear();
+			f[i] = c[i] = i;
+			sum[i] = cnt[i] = las[i] = 0;
+			v[i] = vv[i] = 0;
+		}
+		for (int i = 1; i <= m; ++ i) {
+			int u, v;
+			scanf("%d%d", &u, &v);
+			G[u].push_back(v);
+			G[v].push_back(u);
+		}
+		for (int i = 1; i <= n; ++ i) {
+			for (int j : G[i]) c[j] = c[i];
+		}
+		tick = 0;
+		for (int i = 1; i <= n; ++ i) join(i, cc[i] = c[i]);
+		for (int i = 1; i <= n; ++ i) cnt[c[i] = fat(i)] ++;
+		for (int i = 1; i <= n; ++ i) {
+			tick ++;
+			for (int j : G[i]) {
+				if (c[j] != c[i]) {
+					change(c[j], -1);
+					change(c[i], +1);
+				}
+				c[j] = c[i];
+			}
+		}
+		for (int i = 1; i <= n; ++ i) change(i, 0);
+		for (int i = 1; i <= n; ++ i) vv[i] = v[i] = cnt[i] = 0;
+		for (int i = 1; i <= n; ++ i) cnt[cc[i]] ++;
+		queue<int> q;
+		for (int i = 1; i <= n; ++ i) if (cnt[i] == 0) q.push(i);
+		while (!q.empty()) {
+			int p = q.front(); v[p] = 1; q.pop();
+			if (-- cnt[cc[p]] == 0) q.push(cc[p]);
+		}
+		vector<double> ans;
+		for (int i = 1; i <= n; ++ i) if (!v[i]) {
+			int x = fat(i);
+			if (vv[x]) continue;
+			vv[x] = 1;
+			double res = 1.0 * sum[x] / n;
+			x = cc[i];
+			int sz = 1;
+			while (x != i) {
+				sz ++;
+				x = cc[x];
+			}
+			res /= sz;
+			while (sz --) ans.push_back(res);
+		}
+		sort(ans.begin(), ans.end(), greater<double>());
+		for (double x : ans) printf("%.6f\n", x);
+	}
+}
+~~~
