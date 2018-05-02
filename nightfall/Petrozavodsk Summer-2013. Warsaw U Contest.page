@@ -1,0 +1,87 @@
+E - 动态树分治，维护每个距离和每个子树距离
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define MP make_pair
+#define PII pair<int,int>
+#define N 500500
+using namespace std;bool vs[N];vector<int>V[N];PII an;
+int n,x,y,i,j,T,id,gl[N*2],F[N*2][22],d[N],pos[N],fa[N],mv[N],sz[N];
+set<PII>A[N],B[N];set<PII>::iterator it;
+PII Max(set<PII>&A){if(!A.size())return MP(0,0);it=A.end();it--;return *it;}
+void ins(int x,int y){V[x].push_back(y);}
+void dfs(int x,int fa){
+	F[pos[x]=++id][0]=d[x]=d[fa]+1;
+	for(int y:V[x])if(y!=fa)dfs(y,x),F[++id][0]=d[x];
+}
+int dis(int x,int y){
+	int w=d[x]+d[y],t;
+	x=pos[x];y=pos[y];
+	if(x>y)swap(x,y);
+	t=gl[y-x+1];
+	return w-2*min(F[x][t],F[y-(1<<t)+1][t]);
+}
+void dsz(int x,int fa){
+	sz[x]=1;
+	for(int y:V[x])if(!vs[y]&&y!=fa)dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],mv[y]);
+}
+void dmv(int x,int fa,int sm,int&rt){
+	mv[x]=max(mv[x],sm-sz[x]);
+	if(mv[x]<mv[rt])rt=x;
+	for(int y:V[x])if(!vs[y]&&y!=fa)dmv(y,x,sm,rt);
+}
+void get(int x,int fa,int ds,set<PII>&S){
+	S.insert(MP(ds,x));
+	for(int y:V[x])if(!vs[y]&&y!=fa)get(y,x,ds+1,S);
+}
+int fz(int x){
+	int rt=x,p;
+	dsz(x,0);dmv(x,0,sz[x],rt);
+	vs[rt]=1;B[rt].insert(MP(0,rt));
+	for(int y:V[rt])if(!vs[y]){
+		set<PII>S;
+		get(y,0,1,S);
+		p=fz(y);
+		A[p]=S;
+		fa[p]=rt;
+		B[rt].insert(Max(A[p]));
+	}
+	return rt;
+}
+void up(int x,int y){
+	if(y)an=max(an,MP(dis(x,y),y));
+}
+int Qu(int x){
+	an=MP(0,0);
+	up(x,Max(B[x]).second);
+	for(int i=x,y;fa[i];i=fa[i]){
+		y=fa[i];
+		if(A[i].size())B[y].erase(B[y].find(Max(A[i])));
+		up(x,Max(B[y]).second);
+		if(A[i].size())B[y].insert(Max(A[i]));
+	}
+	return an.second;
+}
+void Del(int x){
+	B[x].erase(B[x].find(MP(0,x)));
+	for(int i=x,y;fa[i];i=fa[i]){
+		y=fa[i];
+		if(A[i].size())B[y].erase(B[y].find(Max(A[i])));
+		A[i].erase(A[i].find(MP(dis(y,x),x)));
+		if(A[i].size())B[y].insert(Max(A[i]));
+	}
+}
+int main(){
+	scanf("%d",&n);
+	for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+	for(dfs(1,0),i=2;i<=id;i++)gl[i]=gl[i/2]+1;
+	for(j=1;j<=gl[id];j++)
+		for(i=1;i+(1<<j)-1<=id;i++)F[i][j]=min(F[i][j-1],F[i+(1<<j-1)][j-1]);
+	fz(1);
+	for(putchar('1'),x=T=1;T<n;T++){
+		Del(x);
+		x=Qu(x);
+		printf(" %d",x);
+	}
+}
+~~~
