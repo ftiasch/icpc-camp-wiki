@@ -1,0 +1,104 @@
+# Info
+
+Date: 2017.10.07 12:15-17:15
+
+[Link](http://www.bnuoj.com/v3/contest_show.php?cid=9253)
+
+# Solutions
+
+## A Approximation
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+如果所有$b_i$都相同，显然应该取$a_i$的算术平均，现在考虑将原序列划分为若干段，每一段中$b_i$均取算术平均，且保证$b$序列非降。
+
+考虑增量构造，现在新来一个$a_i$自成一段，如果当前段平均值小于前一段，那么就把这两段合并，重复这个过程直到合法，用一个栈维护即可。
+
+这个做法的正确性并不显然，应该可以类似[中位数的版本](https://wenku.baidu.com/view/515f76e90975f46527d3e1d5.html)进行分析。
+
+## B Big Set
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+二分答案即可。
+
+## C Coins
+
+unsolved
+
+## D Duel
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+枚举公差$d$，将原序列、左移$d$位的序列、右移$d$位的序列$and$起来之后$1$的位置就是公差为$d$的等差中项，$bitset$优化，复杂度$O(n^2/w)$。
+
+quailty's comment
+
+就是对每个$j$求$\sum_{i<j}a_i a_{2j-i}$，$FFT$即可，复杂度$O(n\log{n})$。
+
+## E Environment Problems
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+下标范围可达$10^9$，考虑用$map$来实现树状数组。
+
+
+## F Formal Program Verification
+
+unsolved
+
+## G GridBagLayout 2
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+题意有毒，具有$Remainder$宽度的窗口会在所有窗口放下去之后计算最小包围盒的时候得到宽度数值，但是会保证至少是$1$。
+
+弄清题意之后做法很简单，只需观察到添加窗口的顺序是从上往下、从左往右，于是按照左上角坐标排序后直接按照题意模拟即可。
+
+## H High School Duels
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+相当于对每个球队，求一个不包含它的集合$Y$，使得$s/|Y|>t$，这里$t$是某个只和枚举的球队有关的常数，也就是$s-|Y|t>0$，考虑直接计算$\max(s-|Y|t)$，就是一个完全图上选一个子图使得权值和最大，注意到选一条边就必须选它的两个端点，可以得到一个最大权闭合子图模型。
+
+## I Impossible to Solve
+
+unsolved
+
+## J Jackpot
+
+solved by Jove, sk, upsolved by none
+
+---
+
+sk's solution
+
+因为编号是从小到大的，判断染当前点是否会输只用考虑已经染过的点，所以建图的话只需将编号较大的点连向编号较小的点。之后用一个带权并查集维护点集，编号最小的点作为各点集的根。从小到大枚举当前点$x$，扫描$x$连向的所有点集，如果有多条边连向同一点集，那么就可以用带权并查集通过维护到根的距离判断是否有冲突，有冲突的话染当前点的人就输了。再判断这些点集中根是对方染的点集个数是否大于1，大于1的话表示对方有一个可以使当前点$x$有冲突的策略。如果对方染的点集个数等于1并且染的时间与其他点集的根相比不是最早的，那么对方也可以使染当前点的人输掉。
+
+注意"no loops and no parallel edges"是没有自环和重边。
+
+# Replay
