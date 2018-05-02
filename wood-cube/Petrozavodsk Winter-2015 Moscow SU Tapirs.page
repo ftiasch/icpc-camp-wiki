@@ -1,0 +1,25 @@
+## A. Aho [TDJ]
+
+KMP即可。
+
+## B. Banach
+
+## C. Conway
+
+## D. Dirichlet
+
+## E. Euclid
+
+## F. Fulkerson
+
+## G. Galois
+
+## H. Harary
+
+## I. Ito
+
+## J. Jordan [MZH, TDJ]
+
+查分约束系统，a到b的最短距离即表示$W_b-W_a$的最大值。
+
+## K. Kolmogorov
