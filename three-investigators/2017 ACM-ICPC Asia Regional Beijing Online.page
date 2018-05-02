@@ -1,0 +1,181 @@
+# Contest Info
+
+date: 2017.09.23 12:00-17:00
+
+[practice link](http://hihocoder.com/contest/acmicpc2017beijingonline)
+
+# Solutions
+
+## A. Visiting Peking University
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+仔细理解题意之后，枚举第一天即可。
+
+## B. Reverse Suffix Array
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+考虑后缀排序后的每个后缀的开头字符，在前面的后缀首字符一定不大于在后面的。
+
+假设相邻两个后缀的首字符相同，如果去掉首字符之后新的两个后缀的排名出现矛盾，则说明这两个后缀的首字符不能相同。
+
+这些首字符之间呈现小于或小于等于的关系，且第一个字符不小于 `a`，最后一个字符不大于 `z`，适当改写不等式的变量，可以得到方案数是一个组合数，可以直接使用高精度计算。
+
+## C. Matrix
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+如果没有修改，则直接枚举子矩阵的上下边界，然后转化成一维。
+
+有修改的话，预处理一下前缀和后缀，枚举修改的位置即可。
+
+需要注意必须要有一次修改！
+
+## D. Agent Communication
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+如果存在一条原树的直径使得最优解连接的两个点不在这条直径上，那么最优解就是直径，否则只需要考虑最优解连接的两个点在任意一条直径上的情况。
+
+取出一条直径，令这条直径上的点依次为 $p_1, p_2, \cdots, p_m$，其中 $p_i$ 到 $p_1$ 的距离为 $f_i$，以及去除这条直径后距离 $p_i$ 最远的点对应的距离是 $g_i$。
+
+注意到答案具有二分性质，尝试检查最优解能否小于等于 $D$，不妨设最优解在 $p_u$ 和 $p_v$ $(u \leq v)$ 之间连一条边，那么对于所有 $i \leq j$ 且 $f_j - f_i + g_j + g_i > D$ 的点对 $(i, j)$，一定要满足 $|f_j - f_v| + 1 + |f_u - f_i| + g_j + g_i \leq D$。
+
+由于 $|x| = \max(-x, x)$，所以上述条件可以化为四种不等式，分别对应 $f_v - f_u$ 和 $f_v + f_u$ 的上下界。至此，已经可以通过枚举所有可能的点对 $(i, j)$ 再枚举所有可能的点对 $(u, v)$ 完成答案的检查，单次检查的时间复杂度为 $\mathcal{O}(n^2)$。
+
+实际上，可以利用数据结构在按照 $f_j + g_j$ 升序枚举 $j$ 的同时维护相应的 $\max\{f_i + g_i\}$ 和 $\min\{f_j - g_j\}$，而检查是否存在点对 $(u, v)$ 的部分也可以做到线性。如果这样做，单次检查的时间复杂度为 $\mathcal{O}(n \log n)$。
+
+事实上，如果直径上的点 $p_i$ 满足存在 $p_j$ 使得 $|f_i - f_j| + g_i \leq g_j$，那么 $p_i$ 是不会对最优解产生贡献的。去除这样的点之后，维护最大、最小值可以做到线性复杂度。
+
+此外，可以发现 $i \leq j, u \leq v$ 的限制是多余的，直接按照 $f_j + g_j$ 升序枚举 $j$，即可同时按照 $f_i - g_i$ 升序枚举 $i$ 并维护相应的信息，这意味着不需要去除点也可以使得单次检查为线性复杂度。
+
+## E. Territorial Dispute
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+首先 $n\le 2$ 肯定无解，对于 $n=3$ 的情况，只有三点共线有解，$n\ge 4$ 必定有解。
+
+对于 $n\ge 4$ 的情况，求个凸包，若凸包上只有三个点，那么凸包内部必然有点，将凸包染成同一种颜色，凸包内部的点染成另一种颜色即可。若凸包上有大于三个点，随便取两个不相邻的点然成一种颜色，将其他所有点染成另一种颜色即可。
+
+## F. Cake
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+注意到如果按照某种顺序安排第二轮事件，则第三轮事件按照这种顺序安排，不会使解变差。
+
+如果第一轮事件的安排顺序与第二轮不同，那么将第一轮事件的顺序调整至与第二轮事件顺序相同，不会使解变差。
+
+因此最优解一定存在于三轮事件使用相同顺序进行安排的情况中。
+
+对于固定的顺序 $p_1, p_2, \cdots, p_n$，可以 DP 出最优时间，注意到有 $\max\{b_i\} \leq \min\{c_j\}$，因此最优时间一定为 $\max_{i = 1}^{n}\{a_{p_1} + a_{p_2} + \cdots + a_{p_i} + b_{p_i} + c_{p_i} + c_{p_{i + 1}} + \cdots + c_{p_n}\}$。
+
+考虑交换其中两个位置 $p_i$ 和 $p_j$ $(i < j)$，交换前对最优时间的贡献是 $\max\{\cdots, \cdots + a_{p_i} + b_{p_i} + c_{p_i} + \cdots + c_{p_j} + \cdots, \cdots + a_{p_i} + \cdots + a_{p_j} + b_{p_j} + c_{p_j} + \cdots\}$，交换前后如果存在差异，那么这个差异等同于只含 $p_i$ 和 $p_j$ 时进行顺序交换得到的差异。
+
+具体来说，如果有 $a_{p_i} + \max\{b_{p_i} + c_{p_i}, a_{p_j} + b_{p_j}\} + c_{p_j} > a_{p_j} + \max\{b_{p_j} + c_{p_j}, a_{p_i} + b_{p_i}\} + c_{p_i}$，则交换 $p_i$ 和 $p_j$ 不会使解变差，利用这种偏序关系确定顺序后贪心即可。
+
+## G. Bounce
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+和 TC SRM591 Medium 的区别就是，这题只算经过一次的点，因此可以用所有的点数减去经过两次的点数。
+
+## H. Polynomial Product
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+注意到 $i$-bits 和 $j$-bits 相乘后的位数是 $[i > 0] [j > 0] (i - [i = 1] + j - [j = 1] + [i = 1] [j = 1])$，因此将 $i - [i = 1]$ 作为新的 bit 进行计算（只考虑 $i > 0$ 的）即可，由于 $w \geq 1$，那么 $[i = 1] [j = 1]$ 的情况不需要考虑。
+
+注意到相加是取 $\max$ 的关系，那么只要卷积时存在一种溢出的乘积则会使其溢出，按权值顺序枚举第一个序列的某个位置，第二个序列中与之卷积会溢出的位置集合可以 two pointer 求出，使用 bitset 统计可能溢出的位置即可。
+
+大数据和小数据分别用一种 bitset 即可，不需要手写 bitset。
+
+## I. Minimum
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+线段树维护区间最大值、最小值、是否存在 0，如果最大值与最小值异号，则答案可以为负，最优解为最大值乘以最小值，如果存在 0，则答案可以为 0，否则答案一定是某个最值的平方。
+
+## J. Typist's Problem
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+将所有状态看成一个点，预处理出图，然后每次求最短路。
+
+# Replay and Summary
+
+## Replay
+
+`T` 日常迟到。（并没有）
+
+`H` 先看 A，发现是个水题，就是题意有点坑，理解了几分钟之后过了，期间 `T` 过来了。
+
+`T` 发现 I 线段树搞一下就行了，也马上切掉了。
+
+`H` 发现 G 是一个 TC 原题，于是翻出了原来的代码抄了下，结果没过样例，仔细看了下题发现有个地方不一样，然后陷入沉思，于是 `T` 上来先写 B。
+
+`H` 终于看明白怎么改了，过了样例之后一交，AC！`T` 继续写 B，过了会也过了。期间，`L` 告诉了 `H` C 和 E 的做法。
+
+然后 `H` 上来切了 C 和 E。
+
+`T` 和 `H` 商量了下 J，`H` 写了一点觉得很麻烦，就让 `T` 先上来搞 H，`L` 和 `H` 则开始思考别的题。
+
+`T` 写完之后开始静态调试，`H` 想明白了 J 怎么写，于是上手码。
+
+`T` WA 了两发之后终于过了 H，`H` 也很快写完 J 一发 AC。
+
+之后，三个人开始思考 D 和 F，思考到死。
+
+## braveTester
+
+虽然 Replay 写了助攻 $2$ 题不过我觉得不需要助攻老浪哥也可以凭一己之力推出来...
+
+这场可能自己很没用啊...
+
+## chitanda
+
+前期节奏很好，自己也能够快准狠的切题，只在 C 上有一个罚时，但后期很乏力，需要加强做难题的能力。
+
+## skywalkert
+
+后期卡题，知识水平不够，敢想不敢证明、写，需要广挖坑，多积粮。
