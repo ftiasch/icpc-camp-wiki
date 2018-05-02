@@ -18,36 +18,48 @@
 ├────────┼════════════────────────════════════────────────════════════┤
 │+ [4:26]│o·oo··oooooooooo··oooooo···o·oooooooo··ooo···oo·o···oo····· │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Rearranging a Sequence [TDJ]
-
-签到题。
-
-## B. Quality of Check Digits [TDJ]
+A. Rearranging a Sequence \[TDJ\]
+---------------------------------
 
 签到题。
 
-## C. Distribution Center [MZH]
+B. Quality of Check Digits \[TDJ\]
+----------------------------------
 
-## D. Hidden Anagrams [MZH]
+签到题。
 
-## E. Infallibly Crack Perplexing Cryptarithm [TDJ]
+C. Distribution Center \[MZH\]
+------------------------------
+
+D. Hidden Anagrams \[MZH\]
+--------------------------
+
+E. Infallibly Crack Perplexing Cryptarithm \[TDJ\]
+--------------------------------------------------
 
 表达式计算，赛后觉得还是不要把`'='`视为运算会好一点，感谢样例…
 
-## F. Three Kingdoms of Bourdelot [GX]
+F. Three Kingdoms of Bourdelot \[GX\]
+-------------------------------------
 
-## G. Placing Medals on a Binary Tree [TDJ]
+G. Placing Medals on a Binary Tree \[TDJ\]
+------------------------------------------
 
 不断合并两个同层节点，平衡树维护即可。
 
-## H. Animal Companion in Maze [TDJ]
+H. Animal Companion in Maze \[TDJ\]
+-----------------------------------
 
 DAG + 树DP。
 
-## I. Skinny Polygon [MZH]
+I. Skinny Polygon \[MZH\]
+-------------------------
 
-## J. Cover the Polygon with Your Disk [MZH]
+J. Cover the Polygon with Your Disk \[MZH\]
+-------------------------------------------
 
-## K. Black and White Boxes [GX]
+K. Black and White Boxes \[GX\]
+-------------------------------
