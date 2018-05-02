@@ -21,29 +21,40 @@
 │G [-:--]│                      ₀                        ₁            │
 └────────┴────────────────────────────────────────────────────────────┘
 C题数据有误, E题校验器有问题，赛后去Yandex交都过了，重算罚时为1200+，排名为9。
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Virus [TDJ]
+A. Virus \[TDJ\]
+----------------
 
-## B. Expected length of the minimum cycle [GX]
+B. Expected length of the minimum cycle \[GX\]
+----------------------------------------------
 
-## C. Antipalindrome [MZH]
+C. Antipalindrome \[MZH\]
+-------------------------
 
-## D. Long Nim [MZH]
+D. Long Nim \[MZH\]
+-------------------
 
-## E. Guess Table [TDJ]
+E. Guess Table \[TDJ\]
+----------------------
 
-## F. Restrooms [TDJ]
+F. Restrooms \[TDJ\]
+--------------------
 
-构造，不断删除长度为1的区间，剩下的奇偶染色。
-不过另一种DP做法超好写呢…
+构造，不断删除长度为1的区间，剩下的奇偶染色。 不过另一种DP做法超好写呢…
 
-## G. Flying Doors
+G. Flying Doors
+---------------
 
-## H. MIPT Campus [MZH]
+H. MIPT Campus \[MZH\]
+----------------------
 
-## I. Tickets [TDJ]
+I. Tickets \[TDJ\]
+------------------
 
-## J. Total Control [GX]
+J. Total Control \[GX\]
+-----------------------
 
-## K. Mobius [MZH]
+K. Mobius \[MZH\]
+-----------------
