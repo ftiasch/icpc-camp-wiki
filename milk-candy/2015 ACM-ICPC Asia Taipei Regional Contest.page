@@ -1,128 +1,144 @@
-# Info
+Info
+====
 
 Date: 2017.09.29 18:00-23:00
 
 [Link](https://vjudge.net/contest/188087)
 
-# Solutions
+Solutions
+=========
 
-## A Parentheses
+A Parentheses
+-------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 直接扫一遍，每当前缀不合法时把一个右括号翻成左括号，最后如果左括号比右括号多，把最后几个左括号翻成右括号。
 
-## B Linear Ecosystem
+B Linear Ecosystem
+------------------
 
 solved by quailty, sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 根据初态等于终态可以列出一个线性方程组，只需判断矩阵的秩是否$<n$，高斯消元。
 
-## C Least Crucial Node
+C Least Crucial Node
+--------------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 由于点数只有$100$，枚举关键点，然后并查集判断与所给点联通的点的个数，取最小即可。
 
-## D Discrete Logarithm Problem
+D Discrete Logarithm Problem
+----------------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 直接$O(p)$枚举答案。
 
-## E Locating Facilities
+E Locating Facilities
+---------------------
 
 unsolved
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 每个团重构成一个菊花图，具体来说就是用一个虚点表示这个团，在虚点与所有团内的节点之间连一条权值为$0.5$的边，然后删去原来团内部的边，显然重构得到的新图是一棵树，并且任意两个节点在原图中的距离等于在新树上的距离，只需要在树上$dp$一个大小为$p$的连通块即可，这里认为虚点的大小是$0$。
 
-## F Decode Alien Message
+F Decode Alien Message
+----------------------
 
 unsolved
 
-## G Maximum Cut Order
+G Maximum Cut Order
+-------------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 按照题中描述的遍历顺序，优先队列bfs。
 
-## H Separating Pebbles
+H Separating Pebbles
+--------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 对一种颜色的求个凸包，判断另一种颜色的所有点首先不能有在凸包内的情况，其次所有线段不能和凸包的边相交。注意要颜色反过来再判一次，构不成凸包的特判。
 
-## I Social Network
+I Social Network
+----------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 可以发现最优情况是选一个最大独立集出来标为$1$，其余每个点依次标为$2,3,\dots$，由于$G_1 \otimes G_2$的最大独立集是$G_1$或$G_2$的最大独立集，$G_1 \cup G_2$的最大独立集是$G_1$和$G_2$的最大独立集的并，直接递归处理表达式即可。
 
-## J Task Review
+J Task Review
+-------------
 
 unsolved
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
-二分$res$，判定是否可能$S(C) \leq res$，根据$L(C) \leq res$和$B(C) \leq res$可以求出$max(C)$的上界$u$和$min(C)$的下界$d$，那么问题转化为判定是否可能在只包含权值在$[d,u]$内的边的子图中选取一个环覆盖，注意到环覆盖相当于给每个点指定一个不是自身的后继且不同的点指向不同的后继，拆点跑二分图匹配即可，利用[Hopcroft–Karp algorithm](https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm)可以做到$O(m\sqrt{n}\log{m})$。
+二分$res$，判定是否可能$S(C) \leq res$，根据$L(C) \leq res$和$B(C) \leq res$可以求出$max(C)$的上界$u$和$min(C)$的下界$d$，那么问题转化为判定是否可能在只包含权值在$[d,u]$内的边的子图中选取一个环覆盖，注意到环覆盖相当于给每个点指定一个不是自身的后继且不同的点指向不同的后继，拆点跑二分图匹配即可，利用[Hopcroft–Karp
+algorithm](https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm)可以做到$O(m\sqrt{n}\log{m})$。
 
 但是这个对如闪电的做法WA了，暂时认为是LA上数据有问题。
 
-## K Robots
+K Robots
+--------
 
 solved by Jove, sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 随便贪了贪就过了。
 
----
+------------------------------------------------------------------------
 
 quailty's comment
 
 这题[现场](http://icpc2015.csie.ntnu.edu.tw/index.php/contest/2015-12-08-00-51-12)并没有人AC，可能是LA上数据太弱，待研究。
 
-## L Reward the Troop
+L Reward the Troop
+------------------
 
 unsolved
 
-# Replay
+Replay
+======
 
 为了庆祝 `J` 和 `Q` 今天离职，决定开一场训练。
 
@@ -130,20 +146,26 @@ unsolved
 
 很快 `Q` 发现 D 题签到并秒了，然后 `K` 讲了 A 题题意，`Q` 顺手也秒了，
 
-`Q` 读到 H 题，发现是个比较用力的几何题，就给 `K` 讲了题意，但是 `K` 表示 B 题可做，就决定先把 H 题放一边，
+`Q` 读到 H 题，发现是个比较用力的几何题，就给 `K` 讲了题意，但是 `K`
+表示 B 题可做，就决定先把 H 题放一边，
 
-这时 `J` 发现 C 题比较简单，WA 了一发初始化之后就过了，期间 `Q` 读了半辈子题，啥都没读懂，非常难过，
+这时 `J` 发现 C 题比较简单，WA 了一发初始化之后就过了，期间 `Q`
+读了半辈子题，啥都没读懂，非常难过，
 
-`K` 大力 WA 了一发 B 题，无所事事的 `Q` 接过来 B 题代码，让 `K` 去写 H 题，但是 `J` 表示 G 题读懂了就很简单，上去敲了敲过了，
+`K` 大力 WA 了一发 B 题，无所事事的 `Q` 接过来 B 题代码，让 `K` 去写 H
+题，但是 `J` 表示 G 题读懂了就很简单，上去敲了敲过了，
 
 之后 `J` 读了很久的题，大概是把题都读完了，`K` 也过了 H 题，
 
-只有 `Q` 调试无果，决定 B 题扔一边，先去冷静分析 I 题，发现只有 parser 比较麻烦，结果写完发现只有 40 行？
+只有 `Q` 调试无果，决定 B 题扔一边，先去冷静分析 I 题，发现只有 parser
+比较麻烦，结果写完发现只有 40 行？
 
 同时 `J` 和 `K` 一直在想 K 题，但是想不出什么靠谱做法，就决定贪心乱搞，
 
-虽然 `Q` 觉得十分不靠谱，但是手上也没什么要写的题，就让 `J` 和 `K` 搞一发 K 题，结果随便就过了？
+虽然 `Q` 觉得十分不靠谱，但是手上也没什么要写的题，就让 `J` 和 `K`
+搞一发 K 题，结果随便就过了？
 
-`Q` 躺在地上对着 B 题代码不知所措，重新写了一个全整数的版本还是 WA，内心绝望，抱着试试的态度在最后加个换行就过了，
+`Q` 躺在地上对着 B 题代码不知所措，重新写了一个全整数的版本还是
+WA，内心绝望，抱着试试的态度在最后加个换行就过了，
 
 然后就溜了溜了。
