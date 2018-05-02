@@ -1,4 +1,5 @@
-# D. Lights at a Crossing
+D. Lights at a Crossing
+=======================
 
 首先数据一定是是对的（由某种system生成），-1是指有多解。
 
@@ -10,52 +11,53 @@
 
 思路一开始就不对，主要是一直在纠结怎么判不合法，比较灯的横向offset，没有发觉数据一定对时固定一个灯的性质。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 25;
 int a[N * N][N], n, go[N * N][N * N];
 int main() {
-	int m;
-	scanf("%d%d", &n, &m);
-	memset(go, -1, sizeof(go));
-	for (int i = 0; i < m; ++ i) {
-		for (int j = 0; j < n; ++ j) {
-			static char s[20];
-			scanf("%s", s);
-			if (s[0] == 'X') {
-				a[i][j] = -1;
-			}
-			else {
-				sscanf(s, "%d", &a[i][j]);
-			}
-		}
-	}
-	int ans = 0;
-	for (int k = 0; k < n; ++ k) {
-		vector<pair<int, int>> all;
-		for (int i = 0; i < m; ++ i) if (a[i][k] != -1) all.push_back({a[i][k], i});
-		sort(all.begin(), all.end(), greater<pair<int, int>>());
-		for (int i = 0; i < (int) all.size() - 1; ++ i) {
-			go[all[i].second][all[i + 1].second] = all[i].first - all[i + 1].first;
-		}
-	}
-	int at = 0;
-	do {
-		bool flag = 0;
-		for (int i = 0; i < m; ++ i) if (go[at][i] != -1) {
-			ans += go[at][i];
-			at = i;
-			flag = 1;
-			break;
-		}
-		if (!flag) at = 0, ans = -1;
-	} while (at);
-	printf("%d\n", ans);
+    int m;
+    scanf("%d%d", &n, &m);
+    memset(go, -1, sizeof(go));
+    for (int i = 0; i < m; ++ i) {
+        for (int j = 0; j < n; ++ j) {
+            static char s[20];
+            scanf("%s", s);
+            if (s[0] == 'X') {
+                a[i][j] = -1;
+            }
+            else {
+                sscanf(s, "%d", &a[i][j]);
+            }
+        }
+    }
+    int ans = 0;
+    for (int k = 0; k < n; ++ k) {
+        vector<pair<int, int>> all;
+        for (int i = 0; i < m; ++ i) if (a[i][k] != -1) all.push_back({a[i][k], i});
+        sort(all.begin(), all.end(), greater<pair<int, int>>());
+        for (int i = 0; i < (int) all.size() - 1; ++ i) {
+            go[all[i].second][all[i + 1].second] = all[i].first - all[i + 1].first;
+        }
+    }
+    int at = 0;
+    do {
+        bool flag = 0;
+        for (int i = 0; i < m; ++ i) if (go[at][i] != -1) {
+            ans += go[at][i];
+            at = i;
+            flag = 1;
+            break;
+        }
+        if (!flag) at = 0, ans = -1;
+    } while (at);
+    printf("%d\n", ans);
 }
-~~~
+```
 
-# F. Martian Maze
+F. Martian Maze
+===============
 
 看了标程：先随机游走delay步。然后开始可以逐步确定一些墙或者路。
 
@@ -63,6 +65,7 @@ int main() {
 
 不是很想写。
 
-# Comments
+Comments
+========
 
 前期略卡，后期不会做打出gg。
