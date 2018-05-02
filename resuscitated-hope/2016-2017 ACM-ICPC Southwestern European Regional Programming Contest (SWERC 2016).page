@@ -1,0 +1,34 @@
+# A. Within Arm's Reach  
+
+# B. Bribing Eve  
+
+# C. Candle Box[Cabnfever]
+Cabinfever:明白题意后可得（然而读了很久才弄懂）,$\frac{n*(n-1)}{2} - 6 + \frac{(n-D)*(n-D+1)}{2} - 3 = R + T$，$n$为姐姐的年纪，解出n后，答案为$\sum_{i=4}^{n} - R$
+
+# D. Dinner Bet 
+
+# E. Passwords  
+
+# F. Performance Review[Cabinfever]
+Cabinfever:很水的数据结构题，给出一棵树，节点有权值和一个rank值，对每个节点求出子树中小于其rank的权值和，按rank排序后（将rank看作加入时间），每次将一个节点加入，统计它的答案，再维护（dfs序+树状数组）即可，注意rank相同的情况
+
+# G. Cairo Corridor 
+
+# H. Pascal's Hyper-Pyramids [ConnorZhong]
+ConnorZhong: 考虑类似于二项式定理，我们可以注意到$K$维第$D$阶杨辉三角其实是$(x_1+x_2\cdots+x_K)^D$展开后的系数。所以类比二项式，可以得到系数是形如$C(D,i_1)C(D-i_1,i_2)\cdots C(D-\sum_{j=1}^{K-1}i_j,i_K)$这样的值，所以暴力枚举一下就可以了，复杂度最坏是$32$的划分数。
+
+# I. The White Rabbit Pocket Watch  
+
+# J. Risky Lottery  
+
+# K. Balls and Needles [ConnorZhong]
+ConnorZhong: 把点二维三维分别建图，随便判个环？
+
+# Summary
+**比赛记录：** 很正常的分别读题，jyb和hzh讨论了好一会干掉了C，好像还挺顺利的？Zjc上来因为英语水平太烂放弃了K，却被榜和hzh赶回去做K了，读完觉得是sb题zjc就上去大力艹了一发，样例没过；Jyb又上去干了F，Jyb竟然今天没有eat shit也是很奇怪啊？间隙中发现K读错了题，实际题意好像更sb啊，然后就过了，接着似乎就无题可做了啊？zjc下机后看了眼D，感觉是个傻逼概率dp随便搞搞，hzh觉得我太菜了就接手了D把我赶去搞H；B好像也很傻啊？然后hzh上去搞了，不久后zjc也搞清楚了H的做法，最后很幸运的两个题都过了。
+
+**ConnorZhong：** zjc今天表现没那么滑了啊，稍稍发挥了点作用？队伍对于简单题的把握还是太弱了啊，明明都不是很难就是迟迟A不掉啊。是时候~~甩锅~~ push一发队友了。
+
+**Cabinfever: ** 非常顺利地干了C,F，然后就开始辅助队友（划水了）
+
+**YOULLNEVERWA:**
