@@ -1,0 +1,258 @@
+# Contest Info
+
+date: 2017.07.24 - 2017.08.27
+
+[practice link](https://vjudge.net/contest/172382)
+
+# Knowledge
+
+## Manacher 算法
+
+[链接](https://segmentfault.com/a/1190000003914228)
+
+## 后缀树
+
+在后缀树的 McCreight 和 Ukkonen 构造算法中，最重要的是以下这个函数
+
+后缀链接（Suffix Link）
+: 对任意 $x \in \Sigma^*$ 以及 $a \in \Sigma$，$ax$ 的后缀链接为 $sl(ax) := x$。对于空串 $\varepsilon$，其后缀链接没有定义。
+
+下面再引入一个定义：
+
+分叉（Fork）
+: 一个分叉指一个非根节点，该节点要么有两个以上孩子，要么该节点是个非叶接受节点。
+
+容易证明：**一个分叉的后缀链接还是个分叉**。
+
+Ukkonen 的基本思想是**对于可隐式表示的后缀就不单独分离**，容易证明，可以隐式表示的后缀一定是包含 $\varepsilon$ 的连续一段。
+
+Ukkonen 算法维持的不变式是，对于树上已有的所有分叉，如果其后缀链接指针不存在，则其后缀链接为根。换言之，后缀树上的任意分叉的后缀链接都是已经被计算好的。正是该不变式保证了算法的正确性与时间复杂度。
+
+### 参考资料
+
+讲解不错，代码不要抄：[链接](http://www.cnblogs.com/gaochundong/p/suffix_tree.html)
+
+## 后缀自动机
+
+定义如下记号：
+
+（关于 $z$）的左逆和右逆
+: 设有三个字符串 $x, y, z$，如果 $z = xy$，则分别定义 $y$ 关于 $z$ 的左逆元 $zy^{-1} := x$ 和 $x$ 关于 $z$ 的右逆元 $x^{-1}z := y$。
+
+（关于语言 $X$）的右上下文
+: 设有一字符串 $y$，有一语言 $X$，则定义 $y$ 关于 $X$ 的右上下文 $y^{-1}X := \{y^{-1}x \mid x \in X\}$。
+
+右同余
+: 定义关于语言 $X$ 的右同余关系 $\equiv_{X}$ 为 $x \equiv_{X} y$ 当且仅当 $x^{-1}X = y^{-1}X$。
+
+关于串 $S$ 的后缀自动机的每个节点代表着在关于 $\text{Suff}(S)$ 的右同余关系 $\equiv_{\text{Suff}(S)}$ 中的一个等价类集合，也即常说的 $\text{Right}$ 集合。
+
+### 参考资料
+
+[链接](https://wenku.baidu.com/view/90f22eec551810a6f4248606.html)
+
+## Shift-and
+
+只需看可视化的部分理解精髓即可：[链接](http://alvaro-videla.com/2014/01/shift-and-visualization.html)
+
+## 回文自动机
+
+[链接](http://blog.csdn.net/u013368721/article/details/42100363)
+
+# Solutions
+
+## A. Password Suspects
+
+solved by chitanda, braveTester
+
+---
+
+braveTester's solution
+
+用补全转移图的形式将所有密码子串建立 AC 自动机，令 $f[i][s][have]$ 表示在生成完第 $i$ 个字母后，在 AC 自动机上的状态节点为 $s$，已经有的子串的 bitmap 是 $have$ 时有多少种不同的串（只考虑长度为 $i$ 的前缀部分）。
+
+顺推反推都可以，就是正推的话得到了字符串还得排个序，慢一些，反推的话直接 DFS 构造输出即可。
+
+时间复杂度 $O(n \times 2^m \times \sum_{i = 1}^{m}|\text{substring}_i|)$。
+
+## B. Suffixes and Palindromes
+
+solved by skywalkert, braveTester, chitanda
+
+---
+
+braveTester's solution
+
+考虑 Manacher 算法的流程，会发现算法流程中的关键事件发生同构成一个给定的回文数组是互为充要条件的，因此按照 Manacher 的流程可以验证下回文数组，同时用并查集维护在 Manacher 算法过程中必定相等的位置集合，用边表维护必定不等的位置对。在 Manacher 算法中，不等每轮至多发生一次，因此共 $O(n)$ 个。
+
+对于如何从 SA 构造最小的串，由 SA 的算法流程可以知道，SA 由字符串任意俩字母的大小关系确定，而 SA 已经使得这些字母有了一个非严格的升序，因此只需要确定严格升序的位置即可。
+
+因为后缀间由于长度原因，是不可能出现相等的情况，所以去掉第一个字母 $\text{rank}[SA[i] + 1] > \text{rank}[SA[i + 1] + 1]$，而 $\text{rank}[SA[i]] = i < i + 1 = \text{rank}[SA[i + 1]]$，就必有 $\text{charAt}(SA[i]) < \text{charAt}(SA[i + 1])$。这是一个必要条件，同时可以证明，满足这个条件，SA 一定是所给的数组。
+
+之后只需要依据字符相等，字符不等以及严格升序这三个必要条件，**同时利用字符相等的信息，推出 SA 上哪些段必须相等**，之后尝试在每个位置上用最小的字符构造串即可。因为是必要条件，所以如果按算法构造的出来，最小性是显然的。
+
+下面需要说明，如果是合法的，那么上述算法必定构造的出来。
+
+假设存在一个合法的串 $\text{str}$，使得 SA 按照相等的字符划分如图：`[...][...][...][...]`。
+
+设位置最小的与构造算法选择不同的位置是 $i$，容易得到，$i$ 一定是某一段的起点，设 $i$ 所在等价类与该段关系如图 `[(...)..]`，二者可以重合。
+
+假设该段选择的字符与前一段选择的字符 $c$ 至少差 $2$，那么该段可以无条件选择 $c + 1$，如果此时还不符合构造算法的选择，则意味着算法认为 $i$ 选择字符 $c$。
+
+由于根据黑字的扩展，使得等价类一定是 SA 上的一段区间，则该段区间内的字符与其它的字符没有必须相等的关系。因为在 $\text{str}$ 中有 `[(...)..]`，所以 `(...)` 选择 $c$ 而剩下部分选择 $c + 1$ 不违反字符相等，字符不等以及严格升序三个必要条件。显然，经过如此调整后，`(...)` 与后面的所有字符也不违反必要条件。
+
+因为算法认为 $i$ 可以选 $c$，所以 `(...)` 与前面的串也不违反必要条件。
+
+综上所述，将 `(...)` 调整至 $c$ 是可行的。所以只要存在一个合法的串，那么算法一定会构造出一个合法的串。
+
+如果不加黑字，上述调整可能失效，样例如下：
+
+```
+1
+9
+6 5 0 7 2 1 8 3 4
+1 0 3 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+```
+
+对应的一个合法串为 `cdcefbace`。
+
+总复杂度 $O(n)$。
+
+## C. Regular Number
+
+solved by chitanda, braveTester
+
+---
+
+chitanda's solution
+
+设 $b[i][j]$ 表示字符 $i$ 是否能匹配串 $T$ 的 $j$ 位置，扫一遍串 $S$ ，用 $now[i][j]$ 表示当前在 $S$ 的 $i$ 位置，是否能匹配 $T$ 中长度为 $j$ 的前缀，从串 $S$ 的 $i$ 位置到 $i+1$ 位置时，$now[i+1][j+1]=now[i][j]\&b[s[i+1]][j+1]$ ，不考虑输出，用 bitset 加速可以做到 $O\left(\frac{|S|\times N}{64}\right)$ 。
+
+L 注：hdu 评测简直玄学...同样代码一会儿超时一会 A...
+
+## D. To Queue or not to Queue
+
+solved by braveTester, upsolved by skywalkert
+
+---
+
+braveTester's solution
+
+用 Ukkonen 算法在线建立后缀树，删除头上一个字符的时候，只需要删除最长的路径即可。具体来说，从最长后缀的叶子开始，边删边爬，直到遇到根/有两个以上孩子的节点/$\text{activeNode}$。
+
+如果 $\text{activeNode}$ 成为了叶子，则强制插入其代表的最长后缀。如果 $\text{activeNode}$ 在删除的边上，强制插入其代表的最长后缀，则将那条边切开。强制插入完之后，$\text{activeNode}$ 要根据后缀链接进行相应改变。
+
+复杂度 $O(n)$。
+
+---
+
+skywalkert's comment
+
+Ukkonen 算法比逆串后缀自动机建立后缀树的方法更灵活，代码也只需要 30 行左右。$\text{activeEdge}$ 不妨用原串中的位置表示，比较方便进行转移。在经过一定的删头字符操作后后缀树可能不是完美压缩的，但不影响均摊复杂度。
+
+## E. Circular Palindromes
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+遇到循环位移，都可以先考虑加长一倍，之后，问题转变成每个长度为 $n$ 的子串的最长回文子串长度，考虑每个回文中心对答案的贡献，用一个数据结构维护。
+
+## F. Forensic Examination
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+先建立广义后缀自动机。
+
+首先，对于一个询问，我们需要利用倍增在后缀自动机中找到这个 $s$ 的子串所在的状态，然后将询问标记在这里 ，之后 dfs 后缀自动机的 $Parent$ 树，维护一个线段树表示当前状态在各个文本中的出现次数，每次需要将儿子的线段树和父亲的合并，并处理出当前状态下标记的询问。
+
+## G. Palindromic Border
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+每一对本质相同的回文串，都会对答案有 1 的贡献，那么我们只需利用回文自动机求出所有的回文串的数量即可。
+
+## H. Yong Zheng's Death
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+先建立 AC 自动机，设拼接的两个前缀及拼接方式为 $A+B$ 。考虑一个答案串，它可能能有很多种拼接方法，即可能有很多断点，我们需要用总的拼接数减去那些不是最后一个断点的拼接方式的数量。假如 $B$ 能分成 $B=B_{pre}+B_{suf}$ ，且 $B_{suf}$ 是一个尽量长的 AC自动机中的串，用 $fail$  可以得到 $B_{suf}$ ，然后需要减去那些以 $B_{pre}$ 作为后缀的串的数量，这个可以通过 dfs $fail$ 树求得。
+
+## I. Square Revolution
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+首先可以找出所有 square 的子串，方法为枚举 square 串的长度为 $2\times len$ ，将串 $s$ 切割成若干长为 $len$ 的段，那么一个长为 $2\times len$ 的 square 必然被切割 1 或 2 次，对每段求出它和前面那段的最长后缀，以及后面那段的最长前缀，可以通过后缀数组或后缀自动机实现。然后用两个线段树分别维护哪些位置作为子串的左（右）端点是可行的，每次计算出需要减去的子串数，并将一些位置禁止，由于每个位置只会被禁止一次，所以这里复杂度只有 $O(n\log n)$。
+
+## J. Cool Slogans
+
+solved by chitanda
+
+---
+
+后缀数组做法：
+
+首先需要注意到这么一个事实，一个串在比它 cooler 的串中出现，当且仅当出现在前缀和后缀位置，否则可以切掉一部分，不会使答案变差。
+
+因此，我们可以重定义 cooler 为出现在仅前缀和后缀。
+
+那么我们可以从大到小枚举一个下标，我们只需要找到以它为左端点的 level 最大的串（可以发现不存在以它为左端点的两个 level 相同长度不同的串），定义这个串为“好串”。
+
+找的方法可以是枚举前缀，判断这个前缀是否为一个“好串”，然后找到它最近的出现位置，拼接成一个新的好串。
+
+这样找效率肯定是不够的，因此可以在找到每一个好串后，对于它在整个串中的出现位置（在 sa 数组中是一个区间），对它的 level 取个 max。
+
+找到最近出现位置以及后面的维护都是可以通过线段树实现的。
+
+后缀自动机做法：
+
+基于上述的一些事实，可以发现 level 是在后缀自动机的 parent 树中往下非降的，一个比它 cooler 的状态一定是它子树中的状态。
+
+再基于上面的做法，我们对于后缀自动机的每个状态，只需要管 right 最大的那个串。
+
+因此可以 dfs 整个 parent 树，维护一个可持久化线段树，每次需要找到它的一个满足要求的祖先，并将 level +1。
+
+满足要求即，能找到一个小一点的 right，使得拼接之后的串长等于当前状态串长。
+
+## K. Om Nom and Necklace
+
+solved by skywalkert, chitanda
+
+---
+
+chitanda's solution
+
+首先可以利用 kmp 算法求得每个前缀的最小周期，设一个前缀为 $P$，其最小周期为 $S$ ，有 $P=SS\cdots ST$ ，其中 $T$ 为 $S$ 的一个前缀，那么设 $S$ 的出现次数为 $p$ ，分两种情况：
+
+* $T=S$ ，我们让 $A$ 的长度尽量小，那么只需满足 $p\bmod k\le \lfloor \frac{p}{k}\rfloor$ 即可
+* $T\ne S$ ，和上述情况类似，只需满足 $p \bmod k\lt \lfloor \frac{p}{k}\rfloor$ 即可。
+
+## L. The Problem to Slow Down You
+
+solved by chitanda
+
+---
+
+对两个串分别建立回文自动机，然后以两个自动机的根开始一起 dfs。
+
+## M. Find the Period
+
+unsolved
