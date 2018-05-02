@@ -2,80 +2,78 @@
 
 [比赛链接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006277)
 
-C -> LQY (done)
-  构造 第一个测试数据是样例
-  几种构造方法
-   1) <=5   1...10中间任意一个元素 概率为10 * 2^-10
-   2) >=9  1..10每个元素关于全集的补集 概率为10 * 2^-10
-   3) =7 分成7个组，每组两个元素，穷举全部情况 概率为2^-7
-   4) 6(8)的情况 分成两组每组7个 第一个组取1(6)个 第二个组取5(2)个
+C -&gt; LQY (done) 构造 第一个测试数据是样例 几种构造方法 1) &lt;=5
+1...10中间任意一个元素 概率为10 \* 2\^-10 2) &gt;=9
+1..10每个元素关于全集的补集 概率为10 \* 2\^-10 3) =7
+分成7个组，每组两个元素，穷举全部情况 概率为2\^-7 4) 6(8)的情况
+分成两组每组7个 第一个组取1(6)个 第二个组取5(2)个
 
-F -> LQY (done)
-   打表找出所有构造的情况，计算他们的lcm，最多15个均小于150
-   用个map预处理一下容斥原理的系数，再直接计算
+F -&gt; LQY (done)
+打表找出所有构造的情况，计算他们的lcm，最多15个均小于150
+用个map预处理一下容斥原理的系数，再直接计算
 
-G -> GY
+G -&gt; GY
 
-K -> WP
+K -&gt; WP
 
 ### 2017-05-02 XVI Open Cup named after E.V. Pankratiev. GP
 
 [比赛链接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010318)
 
-E -> LQY(done)
+E -&gt; LQY(done)
 
 ### 2017-04-30 2012-2013 ACM-ICPC, NEERC, Moscow Subregional
 
 [比赛链接](https://vjudge.net/contest/161284)
 
-B -> GY(done)
+B -&gt; GY(done)
 
-D -> WP
+D -&gt; WP
 
-H -> LQY(done)
+H -&gt; LQY(done)
 
 ### 2017-04-29 2016-2017 ACM-ICPC PNRC
 
 [比赛链接](https://vjudge.net/contest/161278)
 
-E, L -> WP(L done)
+E, L -&gt; WP(L done)
 
 ### 2017-04-25 XVI Open Cup named after E.V. Pankratiev
 
 [比赛链接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010316)
 
-C -> WP
+C -&gt; WP
 
 ### 2017-04-23 Petrozavodsk Summer-2015. Warsaw U Tasks
 
 [比赛连接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001468)
 
-K(21/97) -> WP
+K(21/97) -&gt; WP
 
-G(27/66) -> GY
+G(27/66) -&gt; GY
 
 ### 2017-04-16 Petrozavodsk Summer-2015. Ivan Smirnov Contest 1
 
 [比赛链接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001463)
 
-D(19/62) -> GY
+D(19/62) -&gt; GY
 
-F(37/135) -> WP
+F(37/135) -&gt; WP
 
-I(31/277) -> LQY
+I(31/277) -&gt; LQY
 
 ### 2017-04-11 Petrozavodsk Summer-2015. Moscow IPT Contest
 
 [比赛链接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001464)
 
-I(13/36) -> LQY/WP
+I(13/36) -&gt; LQY/WP
 
-A(11/141) -> GY
+A(11/141) -&gt; GY
 
 ### 2017-04-09 XVII Open Cup Grand Prix of Japan
 
 [比赛链接](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001489)
 
-I(18/82) -> WP
+I(18/82) -&gt; WP
 
-E(21/34) -> LQY(看起来像个数学题啊！)
+E(21/34) -&gt; LQY(看起来像个数学题啊！)
