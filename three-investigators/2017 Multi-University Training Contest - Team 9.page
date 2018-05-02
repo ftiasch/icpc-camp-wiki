@@ -1,0 +1,246 @@
+# Contest Info
+
+date: 2017.08.22 12:00-17:30
+
+[practice link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=768)
+
+# Solutions
+
+## A. Big binary tree
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+计 $f[i]$ 为从点 $i$ 向下走能获得的最大权值和。
+
+如果某个点 $i$ 的这棵子树都没有被修改过权值，那么 $f[i]$ 可以直接在 $O(\log n)$ 时间内算出来，否则我们用一个 map 来存 $f[i]$ 的值。
+
+如果修改了某个点，那么我们从这个点向父亲走，边走边更新该点的 $f$ 值存进 map 里，由于更新需要询问两个儿子的 $f$ 值，所以总复杂度是 $O(\log^2 n)$。
+
+对于一个询问，答案可能是两种，一种是路径通过 $u$ 的两个儿子，那么直接询问 $f[u\times 2]$ 和 $f[u\times 2+1]$ 即可，另一种是通过 $u$ 的某个祖先再向下走，那么枚举 $u$ 的祖先，通过查询祖先的子树不包含 $u$ 的那个儿子的 $f$ 值和 $u$ 的 $f$ 值以及 $u$ 和祖先之间的路径的权值和来更新答案。
+
+## B. Ch’s gift
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda' solution
+
+通过 DFS 对每个点建立主席树，对于一个询问，求出 $s$ 和 $t$ 的 $\text{LCA}(s, t)$ ，然后对 $s$ ，$t$ ，$\text{LCA}(s, t)$ 的主席树做区间询问即可得到答案。
+
+## C. CSGO
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+类似 [2013 ACM-ICPC Latin America H Hide and seek](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=615&page=show_problem&problem=4543)，不同之处在于本题不保证三点不共线，而且对于线段相交的定义是不严格相交。
+
+对每个询问点将其他点排序，选取一个不经过敌人的方向作为初始极角向量，按距离从近到远维护与极角向量不严格相交的线段，扫到每个敌人时只需要考虑到敌人的线段是否与维护的最近的线段不严格相交即可。
+
+判断距离大小涉及到 $10^{24}$ 级别的整数运算，可以用 __int128 或 double 完成。
+
+## D. Dying Light
+
+upsolved by chitanda
+
+---
+
+chitanda' solution
+
+直接模拟即可，将乘法改成取对数能使精度更优。
+
+## E. FFF at Valentine
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+强连通缩点之后，如果剩下的图是一条链，那么肯定是可以的，但这只是充分条件。
+
+必要条件是如果缩点之后的 DAG 进行拓扑排序，每次选取的点都固定，那么可行，否则不可行。
+
+## F. Senior Pan
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+赛场上写的随机做法：
+
+将 $k$ 个点随机分为两半，前一半作为起点，后一半作为终点，求最短路。
+
+假设答案的路径是 $u \leadsto v$，那么 $u$ 在前一半，$v$ 在后一半的概率为 $\frac{1}{4}$，如果我们随机 $16$ 次，那么得到正确答案的概率将大于 $99\%$ 。
+
+正确的做法：
+
+枚举二进制位，按照每个点在该位下的 01 来分组作为起点终点求最短路，这样能遍历到所有情况。
+
+## G. Missile Interception
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+二分答案。
+
+设需要在 $t$ 时间内打到所有导弹，则对于每个导弹来说，设其发射点为 $P$，速度矢量为 $\mathbf{v}$，其可行区域为 $\bigcup_{t' \le t} \{Q : |(P + t' \cdot \mathbf{v}) - Q| \le V\times t'\}$。
+
+对于 $t' \le t''$，如果 $|(P + t' \cdot \mathbf{v}) - Q| \le V \times t'$，则有 $|(P + t'' \cdot \mathbf{v}) - Q| \le |(P + t'\cdot \mathbf{v}) - Q| + (t'' - t')\times |\mathbf{v}| \le V \times t' + V \times (t'' - t') = V \times t''$。这个不等式用到了三角不等式和条件 $|\mathbf{v}| \le V$。所以 $\bigcup_{t' \le t} \{Q : |(P + t' \cdot \mathbf{v}) - Q| \le V\times t'\} = \{Q : |(P + t \cdot \mathbf{v}) - Q| \le V\times t\}$。
+
+问题转化为求圆是否有交。下面复杂度中的 $v$ 是可能坐标范围，本题中不超过 $1000$。
+
+**Solution 1**
+
+由于圆的数量很小，因此暴力 $O(n^2)$ 求出两两圆的交点，然后再 $O(n)$ 检查每个点是不是在所有圆内即可，复杂度 $O(n^3 \log v)$。
+
+**Solution 2**
+
+用[2013 ACM-ICPC Asia Regional Changchun Online, H. Network](2013 ACM-ICPC Asia Regional Changchun Online#h.-network)中圆交的做法，复杂度 $O(n \log^2 v)$。
+
+**Solution 3**
+
+由于所有圆的半径一样，因此所有圆有交等价于有一个大小为 $V\times t$ 的圆可以包住所有的圆心，用经典的随机最小圆覆盖可以做到期望 $O(n\log v)$。
+
+---
+
+braveTester's comment
+
+如果没有 $v \le V$ 的限制，那么最后会成为一个类似冰淇凌筒的形状。由于这个形状也是凸的，因此用 Solution 2 也是可以做的。
+
+## H. Numbers
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+签到题。
+
+由于每个数非负，因此如果按照输出的下标，对于 $1\le i < j \le n$，必有 $a_i, a_j < a_i + a_j$。所以将所有数从小到大排序，然后依次取出最小的，将其和已有的数的和从序列中删去即可。
+
+如果用对顶堆实现，复杂度 $O(n \log n^2)$。
+
+## I. Senior Pan II
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+2015 Shenyang Online 出过一次， 2016 Shenyang Online 又出过一次的题。
+
+所求即 $[L, R]$ 中能被 $K$ 整除且不含小于 $K$ 的质因子的数字之和。
+
+令 $p_k$ 为第 $k$ 个质数， $f(n, k)$ 表示不大于 $n$ 的正整数里不含前 $k$ 个质数作为因子的数字之和，则有 $f(n, 0) = {n + 1 \choose 2}, f(n, k) = f(n, k - 1) - p_k f(\frac{n}{p_k}, k - 1)$。
+
+当 $n \leq p_k$ 时，$f(n, k) = [n \geq 1]$。
+
+否则 $p_k < n$，当 $\sqrt{n} \leq p_k$ 时， $f(n, k)$ 等于 $[p_k + 1, n]$ 中的质数之和加上 $[n \geq 1]$。
+
+设一阈值 $T$，预处理 $p_k \leq T$ 的信息，并在 $p_k \leq T$ 时利用上面的方法预先结束递归计算，则复杂度可以做到 $\mathcal{O}(T + \frac{n}{\sqrt{T} \ln n})$，取 $T = \mathcal{O}((\frac{n}{\ln n})^{\frac{2}{3}})$ 即可得到最优复杂度。
+
+对于 $K$ 比较大的情况可以手动进行第一个判断。
+
+## J. Two strings
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+为了简化实现，将 $\mathtt{*}$ 作为属性加给前一个字符，因此 DP 的字符串中不含 $\mathtt{*}$。设正常的字符串为 $A$，带通配符的字符串为 $B$。
+
+令 $f[i][j][k]$ 表示 $A[i]$ 和 $B[j]$ 匹配完成是否可以达到。如果 $B[j + 1]$ 不是带 $\mathtt{*}$ 属性的字符，那么第三维一定是 $0$，否则，第三维为 $1$ 表示 $B[j + 1]$ 至少匹配了 $1$ 个字符，$0$ 表示还没有匹配任何字符。
+
+有以下转移：
+
+1. 如果 $A[i + 1] = B[j + 1]$ 或 $B[j + 1] = \mathtt{.}$，则转移到 $f[i + 1][j + 1][0]$；
+2. 如果 $B[j + 1]$ 具有 $\mathtt{*}$ 属性，且 $k = 0$，另外有 $A[i + 1] = B[j + 1]$ 或 $B[j + 1] = \mathtt{.}$，则转移到 $f[i + 1][j][1]$；
+3. 如果 $B[j + 1]$ 具有 $\mathtt{*}$ 属性，且 $k = 1$，另外有 $A[i] = A[i + 1]$，则转移到 $f[i + 1][j][1]$；
+4. 如果 $B[j + 1]$ 具有 $\mathtt{*}$ 属性，则转移到 $f[i][j + 1][0]$。
+
+初始条件为 $f[0][0][0] = \mathtt{True}$，答案为 $f[\text{len}(A)][\text{len}(B)][0] \vee f[\text{len}(A)][\text{len}(B)][1]$。
+
+复杂度 $O(\text{len}(A) \times \text{len}(B))$。
+
+---
+
+braveTester's comment
+
+有同学提出 $A$ 和 $B$ 互为子序列等价于原问题，因此只需要贪心 $O(n)$ 判断是否为子序列即可，但该解法不对。
+
+反例如下：
+
+```
+1
+aabbbc
+a*b*ac
+```
+
+输出为 `no`，但上述做法会判断为 `yes`。可能是数据太弱的原因，该解法在场上也通过了。
+
+# Replay and Summary
+
+## Replay
+
+由于 `T` 要赶 ddl，所以一开始只有 `H` 和 `L`。
+
+`H` 看到 C 标题是 CSGO，马上兴奋的打开了题开始看，`L` 则正常的看题。
+
+`H` 和 `L` 讨论了下，感觉 C 比较难搞，遂开始看别的题。然后 `L` 告诉了 `H` B 题题意，`H` 感觉是个水题，于是上来敲，并让 `L` 去看已经有人通过的 H 题。
+
+`L` 发现 H 用堆维护一下就行，于是先上来写，`H` 则下来去读了读 E，感觉很水。`L` 很快切了 H，之后 `H` 继续写 B。
+
+`H` 先是因为出题人没有标明多组数据 wa 了一发，然后又因为自己写傻逼 wa 了一发，第三发终于过了。
+
+`L` 也同意了 `H` 关于 E 题的想法，于是 `H` 赶紧写 E，交 wa 了之后让 `L` 上来写 J。`H` 之后改了改又交 wa 了一发，然后发现自己和 `L` 都想错了，二人尬了一小会儿之后 `H` 在 `L` 的帮助下终于改对了。
+
+`L` 交 wa 了一发 J 之后陷入了思索，看了看 Clarification 然后发现有坑！改了改转移之后就过了。
+
+`H` 和 `L` 讨论了下 C，然后让 `L` 上来写，`H` 则开始思考 F。
+
+突然 `H` 觉得 F 可以随机乱搞，于是把 `L` 踢下来上去开码，交了之后 wa 了，`L` 帮 `H` 重新算了下概率之后 `H` 增加了随机次数，然后就过了。
+
+`L` 继续写 C 题，`H` 开始思考 A 题，推了推之后感觉很简单，于是上来很快写完过了。
+
+`L` 接着写 C，这时 `T` 终于在还剩不到两小时的时候来了，于是 `L` 和 `H` 把 I 题丢给了他。
+
+`T` 先点了个外卖，然后开始思索 I，发现这是个原题，但他没写过，然后他又把问题转化成和以前自己写过的一道题类似，再稍微搞了搞就推出来了。
+
+于是 `T` 上来敲 I，wa 了两发之后过了。期间，`H` 发现 `L` 之前给的 G 题题意不对，于是重新思考终于想出了 G 的做法，让 `L` 去抄了个前不久写的圆交板子，`L` 也很快就过了。
+
+之后 `T` 找出了自己原来写的 C 题代码，抄过来之后没能通过。
+
+## braveTester
+
+第一次成为抄自己板选手并成功 AC 很开心。
+
+以后这种大几何可能一开始抱着写不出来的心态以准备随时换题比较好啊...
+
+还是要自己整个扫面线/环形扫面线的板子才行...
+
+## chitanda
+
+今天贡献的罚时有点多，然后就是没能安排好时间，不应该让老子渊那么早就开始写 C 题，导致最后 C 题不但没过，还浪费了很多时间，间接导致没时间写 D。
+
+## skywalkert
+
+看上去队友做题能力还行，补题能力倒是差了许多，要不怎么连 C, G, I 都没做过。
+
+本场没有收获，我看的都是原题，没有感受，只来了两个小时。
