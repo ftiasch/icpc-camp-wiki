@@ -1,22 +1,36 @@
-# A
+A
+=
 
-# B Beloved Sons
+B Beloved Sons
+==============
+
 KM模板题
 
-# C
+C
+=
 
-# D
+D
+=
 
-# E Strong Defence
+E Strong Defence
+================
+
 不断求最大流，对于当前这组最小割，将其边的容量全部改为1e9，直到当前最小割大于等于1e9为止
 
-# F Weird Dissimilarity
-f[i][j]表示第一个串摆放好i个字符，第二个串摆放好j个字符时的最小花费。每个状态下有三个决策：放a串一个字符并选取花费最小的字符放到b的位置，放b串一个字符并选取花费最小的字符放到a的位置，放ab串各一个字符。
+F Weird Dissimilarity
+=====================
 
-# G
+f\[i\]\[j\]表示第一个串摆放好i个字符，第二个串摆放好j个字符时的最小花费。每个状态下有三个决策：放a串一个字符并选取花费最小的字符放到b的位置，放b串一个字符并选取花费最小的字符放到a的位置，放ab串各一个字符。
 
-# H Royal Federation
+G
+=
+
+H Royal Federation
+==================
+
 块状树裸题
 
-# I Two Cylinders
+I Two Cylinders
+===============
+
 复合simpson积分公式
