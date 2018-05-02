@@ -1,11 +1,14 @@
-# **General**
+**General**
+===========
 
 比赛结束后连出两题是什么鬼啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！！！
 nike0good：我也很绝望啊。
 
-# **Solution**
+**Solution**
+============
 
-## A(Solved by lizi)
+A(Solved by lizi)
+-----------------
 
 考虑模数一定大于所有数的最大值，基本操作
 
@@ -15,42 +18,52 @@ nike0good：我也很绝望啊。
 
 随便讨论一下就行了
 
-## B(Solved by zbh & lizi)
+B(Solved by zbh & lizi)
+-----------------------
 
 考虑固定两个点，要使面积最大，第三个点必然是最靠近那条边两个端点之一的点
 
 所以答案只会在至多六个关键点之内选三个点产生，暴力枚举就行了
 
-## C(Solved by zbh & lizi)
+C(Solved by zbh & lizi)
+-----------------------
 
-考虑把1分解成三个分数之和，只有$1=\frac{1}{2}+\frac{1}{4}+\frac{1}{4}$ , $1=\frac{1}{3}+\frac{1}{3}+\frac{1}{3}$ , $1=\frac{1}{2}+\frac{1}{3}+\frac{1}{6}$，随便讨论一下就行了
+考虑把1分解成三个分数之和，只有$1=\frac{1}{2}+\frac{1}{4}+\frac{1}{4}$ ,
+$1=\frac{1}{3}+\frac{1}{3}+\frac{1}{3}$ ,
+$1=\frac{1}{2}+\frac{1}{3}+\frac{1}{6}$，随便讨论一下就行了
 
-## D(Solved by lizi)
+D(Solved by lizi)
+-----------------
 
 观察发现，如果一个子图满足要求，那么加入一个点之后的新图必然也满足要求
 
 所以直接判断原图是否满足要求即可，最短路选择BFS
 
-## E(Solved by lizi)
+E(Solved by lizi)
+-----------------
 
 水题，略
 
-## F(Solved by nike0good & lizi)
+F(Solved by nike0good & lizi)
+-----------------------------
 
 暴力DP即可，注意需要优化区间与点的关系，可以使用双指针DP，复杂度$O((365+5000)\times 50 \times 50)$
 
-## G(Unsolved)
+G(Unsolved)
+-----------
 
-## H(Unsolved)
+H(Unsolved)
+-----------
 
-## I(Solved by zbh)
+I(Solved by zbh)
+----------------
 
-## J(Solved by nike0good & zbh)
+J(Solved by nike0good & zbh)
+----------------------------
 
 题意：Y=-1处有无限长的马路，给出一些$1\times 1$景点的整数坐标，要求用$1 \times 1$的草坪把所有草坪围起来，草坪必须是4连通连通块，且必须和马路形成封闭区域。
 要求B的外轮廓线周长最小，相同情况下，要求B的个数最小，相同情况下，围住的点最少。
-求这三个参数。
-注意你显然是这么围的
+求这三个参数。 注意你显然是这么围的
 
 .....BBBBBBB
 
@@ -64,8 +77,7 @@ SSSSSSSSSSSSSSSS
 
 暴力处理一下2边就行了
 
-
-
-## K(Solved by zbh)
+K(Solved by zbh)
+----------------
 
 水题，略
