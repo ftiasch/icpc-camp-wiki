@@ -1,0 +1,266 @@
+## A. Trip For Meal
+
+签到题。
+
+除了第一次不是最小的剩下一定是走最短边。
+
+复杂度 $O(1)$。
+
+## B. Divisiblity of Differences
+
+签到题。
+
+按 $\bmod M$ 分类选最大的一类检查答案即可。
+
+复杂度 $O(n)$。
+
+## A. Classroom Watch
+
+签到题。
+
+位数和最大 $81$，枚举检查即可。
+
+复杂度 $O(81 \times 10)$。
+
+## B. Sorting the Coins
+
+每次只能把一个没与末尾连续的流通硬币与末尾接在一起，用一个 `bool` 数组维护有多少个流通硬币与末尾连在一起 $\text{cnt}$，然后用总数减去 $\text{cnt}$ 即可。
+
+复杂度 $O(n)$。
+
+## C. National Property
+
+稍加推倒会发现满足相邻之间的大小关系是整个序列升序的冲要条件，而这些条件又可以表示成由一些赋值关系和大写蕴含大写关系组成的 2-SAT 问题，套板即可。
+
+如果注意到在这些限制条件中，一个字母是小写是不会由蕴含关系推出任何东西的，换言之，如果没有其它条件迫使一个字母变成大写，那么它自己是小写不会影响任何事情。
+
+由此可以得到一个简化的算法。对蕴含关系的两个字母，前件向后件连一条有向边，对于赋值关系确定的大写，按照有向边将经过的所有字母变成大写。这样构造的解只满足必要条件，且没有添加任何多余信息。对于这组解，验证原始约束是否满足，如果满足则有解否则没解。
+
+复杂度 $O(n + m)$。
+
+## D. High Cry
+
+### 并查集
+
+考虑维护右端点为 $r$ 的贡献。易得随着左端点 $l$ 的减小，$[l, r]$ 的 `or` 会递增。
+
+固定 $r$，设 $[L, R]$ 为当 $l \in [L, R]$ 时使得 $[l, r]$ 的 `or` 不变的一个极大区间，设其 `or` 值为 $v$。考虑 $l \in [L, R]$ 时的 $[l, r]$ 对答案的贡献。由于 $[R + 1, r]$ 的 `or` 严格小于 $[l, r]$，因此如果有 $l_0 \in [L, R]$ 使得 $a[l_0] = v$（有多个选最右），则 $[l_0 + 1, R]$ 都是答案，$[L, l_0]$ 都不是答案。由于 `or` 的性质，对于下标在 $[L, R]$ 中的 $a$ 不可能大于 $v$。如果不存在等于 $v$ 的 $a$，则该区间所有下标都会与 $r$ 构成一个答案。
+
+由于 `or` 的性质，`or` 值递增意味着某个 bit 会被永久置 $1$，因此对于任意的 $r$，上文中提到的使 $v$ 不变的极大区间不超过 $\log_2 \max\{a_i\}$ 个。
+
+假设已经知道了 $r$ 时各个极大区间对于答案的贡献，极大段中最大值的位置（多个选最右），那么对于 $r + 1$ 的贡献，可以新增一个单点区间，然后对 $\log_2 \max\{a_i\}$ 个极大区间暴力更新、合并并根据已有信息修正对答案的贡献即可。
+
+运用并查集的话复杂度 $O(n \log \max\{a_i\})$。
+
+```cpp
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int NMAX = 210000;
+
+struct Node
+{
+	int v;
+	int pos;
+	int w;
+};
+
+int N, num[NMAX], ans;
+
+int fa[NMAX];
+int left[NMAX], value[NMAX], pos[NMAX], weight[NMAX];
+
+int find(int x)
+{
+	int pa, tmp;
+	for(pa = x;fa[pa] >= 0;pa = fa[pa]);
+	while(x != pa)
+	{
+		tmp = fa[x];
+		fa[x] = pa;
+		x = tmp;
+	}
+	return pa;
+}
+
+void Union(int x, int y)
+{
+	int X = find(x), Y = find(y);
+	if(X == Y)
+		return;
+	if(fa[X] > fa[Y])
+		swap(X, Y);
+	fa[X] += fa[Y];
+	fa[Y] = X;
+	left[X] = min(left[X], left[Y]);
+	if(num[pos[X]] == num[pos[Y]])
+		pos[X] = max(pos[X], pos[Y]);
+	else
+		pos[X] = num[pos[X]] > num[pos[Y]]?pos[X]:pos[Y];
+	ans -= weight[X] + weight[Y];
+	if(num[pos[X]] == value[X])
+		weight[X] = -fa[X] - (pos[X] + 1 - left[X]);
+	else
+		weight[X] = -fa[X];
+	ans += weight[X];
+}
+
+int main()
+{
+	int i, cur, nxt;
+	int v;
+	bool flag;
+	long long res = 0;
+	scanf("%d", &N);
+	memset(fa, -1, sizeof(fa));
+	for(i = 1;i <= N;i += 1)
+	{
+		scanf("%d", &num[i]);
+		left[i] = pos[i] = i;
+		v = value[i] = num[i];
+		weight[i] = 0;
+		nxt = i;
+		cur = find(left[nxt] - 1);
+		flag = true;
+		while(cur && flag)
+		{
+			if((value[cur] | v) > value[cur])
+			{
+				value[cur] |= v;
+				ans -= weight[cur];
+				weight[cur] = -fa[cur];
+				ans += weight[cur];
+			}
+			else
+				flag = false;
+			if(value[cur] == value[nxt])
+			{
+				Union(cur, nxt);
+				cur = nxt = find(cur);
+			}
+			nxt = cur;
+			cur = find(left[nxt] - 1);
+		}
+		res += ans;
+	}
+	printf("%lld\n", res);
+	exit(0);
+}
+```
+
+### 栈
+
+从题解下面的讨论学来的做法。
+
+考虑用全部答案减去不合法的答案，考虑用一个栈 $S$ 维护固定最左最大值位置为 $\text{pos}$ 时，区间 $[l, \text{pos}]$ 的 `or` 不变的候选分段点。
+
+对于 $\text{pos} + 1$，为了寻找不合法的答案，需要找到使得 $[l, \text{pos} + 1]$ 的 `or` 为 $a[\text{pos} + 1]$，但是 $[l - 1, \text{pos} + 1]$ 的 `or` 大于 $a[\text{pos} + 1]$ 的 $l$。为了做到这点，从栈 $S$ 顶部开始扫描，如果候选分段点不使得 `or` 改变，则弹出，否则说明找到了 $l$。虽然加入了 $a[\text{pos} + 1]$ 后，$S$ 中有一些点可能不再成为分段点，但所有分段点一定都在 $S$ 中。
+
+由于每个元素只会进栈一次出栈一次，因此复杂度为 $O(n)$。
+
+类似可以找到 $r$。注意由于定义 $\text{pos}$ 为最左最大值，因此处理 $l$ 和 $r$ 有些许不同。
+
+总复杂度 $O(n)$。
+
+## E. Delivery Club
+
+二分最大距离 $d$，用 `set` 维护一个人在 $x[i]$ 时另一个人可能的所在位置集合。
+
+当一个人在 $x[i + 1]$ 时，有两种可能：
+
+1. 在 $x[i]$ 的人移动到 $x[i + 1]$，则 `set` 所在的位置集合需要与 $[x[i] - d, x[i] + d]$ 做交
+2. 另一个人移动到 $x[i + 1]$，需要满足 $|x[i + 1] - x[i]| \le d$，则向 `set` 中添加 $x[i]$
+
+做交的操作可以分 $x[i]$ 在 $x[i + 1]$ 左还是右分别通过 `upper_bound` 和 `lower_bound` 加上 `erase` 完成。
+
+如果在某一个点时 `set` 为空，则 $d$ 不行，否则有解。
+
+复杂度 $O\left(n \log^2 n\right)$。
+
+## F. Royal Questions
+
+考虑费用流做二分图最大权匹配的过程，每次找权最大的增广路进行增广。由于本题里权在点上而不是在边上，可以发现增广路的权就是该路第一个未匹配点的权，于是对公主按照权从大到小排序，做最大匹配即可。
+
+由于一个公主只有两条边，可以发现从王子出发的交错路是唯一的，于是交错路构成一个唯一的有向树森林（公主边多了不唯一）。增广相当于是选一条交错路反向，然后在起点和另一个有向树合并。如果当前的有向树已经出现了环，那么不可能在该树上进行任何增广，否则可以。
+
+用并查集维护有向树森林及每棵树是否成环即可，复杂度 $O(n\log n + n)$。
+
+```cpp
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int NMAX = 210000, MMAX = 210000;
+
+struct Princess
+{
+	int a;
+	int b;
+	int w;
+	bool operator<(const Princess y)
+	const{
+		return w > y.w;
+	}
+};
+
+int N, M, ans;
+Princess pri[MMAX];
+
+int fa[NMAX];
+bool loop[NMAX];
+
+int find(int x)
+{
+	int pa, tmp;
+	for(pa = x;fa[pa] >= 0;pa = fa[pa]);
+	while(x != pa)
+	{
+		tmp = fa[x];
+		fa[x] = pa;
+		x = tmp;
+	}
+	return pa;
+}
+
+void Union(int x, int y)
+{
+	int X = find(x), Y = find(y);
+	if(X == Y)
+		return;
+	if(fa[X] > fa[Y])
+		swap(X, Y);
+	fa[X] += fa[Y];
+	fa[Y] = X;
+	loop[X] = loop[X] || loop[Y];
+}
+
+int main()
+{
+	int i;
+	scanf("%d %d", &N, &M);
+	for(i = 0;i < M;i += 1)
+		scanf("%d %d %d", &pri[i].a, &pri[i].b, &pri[i].w);
+	sort(pri, pri + M);
+	memset(fa, -1, sizeof(fa));
+	for(i = 0;i < M;i += 1)
+	{
+		if(!loop[find(pri[i].a)] || !loop[find(pri[i].b)])
+		{
+			ans += pri[i].w;
+			if(find(pri[i].a) == find(pri[i].b))
+				loop[find(pri[i].a)] = true;
+			else
+				Union(pri[i].a, pri[i].b);
+		}
+	}
+	printf("%d\n", ans);
+	exit(0);
+}
+```
