@@ -21,44 +21,58 @@
 │H₃[-:--]│                                                            │
 │I₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
 ![](https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/upload/images2/cac.png)
 
-## A. Adjustment Office [GX]
+A. Adjustment Office \[GX\]
+---------------------------
 
 签到题。
 
-## B. Binary vs Decimal [GX,TDJ]
+B. Binary vs Decimal \[GX,TDJ\]
+-------------------------------
 
 一个长度的方案前缀一定是前一长度的方案，类似BFS即可，判断用PY。
 
-## C. Cactus Jubilee [TDJ]
+C. Cactus Jubilee \[TDJ\]
+-------------------------
 
 点双建树。
 
-## D. Distance on Triangulation [TDJ]
+D. Distance on Triangulation \[TDJ\]
+------------------------------------
 
 树分治+BFS。另有用对角线分治+BFS的做法，更方便。
 
-## E. Easy Problemset [MZH]
+E. Easy Problemset \[MZH\]
+--------------------------
 
-## F. Froggy Ford [MZH]
+F. Froggy Ford \[MZH\]
+----------------------
 
-## G. Generators [MZH]
+G. Generators \[MZH\]
+---------------------
 
-## H. Hypercube
+H. Hypercube
+------------
 
-## I. Iceberg Orders
+I. Iceberg Orders
+-----------------
 
-## J. Jump [TDJ]
+J. Jump \[TDJ\]
+---------------
 
-先随机出一半的情况，然后判断之后每一位跟0号位的关系（同对同错 或 一对一错），然后试两种情况即可。
+先随机出一半的情况，然后判断之后每一位跟0号位的关系（同对同错 或
+一对一错），然后试两种情况即可。
 
-## K. King's Inspection [TDJ]
+K. King's Inspection \[TDJ\]
+----------------------------
 
 枚举出度大于1的点的出边后check，$O(2^{20}*20)$。
 
-## L. Landscape Improved [TDJ]
+L. Landscape Improved \[TDJ\]
+-----------------------------
 
 二分+check，check可以用单调队列维护最大对角线，$O(N*\log{N})$。
