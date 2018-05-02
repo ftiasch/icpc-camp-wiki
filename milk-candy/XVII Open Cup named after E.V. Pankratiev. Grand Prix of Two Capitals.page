@@ -1,71 +1,85 @@
-# Info
+Info
+====
 
 Date: 2017.10.25 18:00-23:00
 
 [Link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010375)
 
-# Solutions
+Solutions
+=========
 
-## A Artifact
+A Artifact
+----------
 
 solved by sk, Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 首先推出式子发现需要选出一个最小的子集，满足$\sum a >= max(a+b)$。那么按照$a+b$排序，再按照$a$的大小放到树状数组里面维护$\sum a$，对于每个$a+b$，二分找到满足条件的最小子集。总的复杂度是$O(nlog^2n)$。
 
-## B Book Pages
+B Book Pages
+------------
 
 upsolved by quailty
 
-## C Regular Bracket Sequence
+C Regular Bracket Sequence
+--------------------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 签到题，简单的构造。
 
-## D Brick Counting
+D Brick Counting
+----------------
 
 solved by quailty, upsolved by none
 
-## E Cross on a Plane
+E Cross on a Plane
+------------------
 
 unsolved
 
-## F Lights
+F Lights
+--------
 
 solved by quailty, upsolved by none
 
-## G Pigeonhole Principle
+G Pigeonhole Principle
+----------------------
 
 unsolved
 
-## H Sophie's Sets
+H Sophie's Sets
+---------------
 
 upsolved by quailty
 
-## I Puzzle with Tables
+I Puzzle with Tables
+--------------------
 
 unsolved
 
-## J Travelling to Random Cities
+J Travelling to Random Cities
+-----------------------------
 
 solved by sk, quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 并查集+双向$BFS$
 
-## K Cypher
+K Cypher
+--------
 
 solved by Jove, upsolved by none
 
-# Replay
+Replay
+======
