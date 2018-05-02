@@ -1,91 +1,92 @@
-# F. Secret Permutation
+F. Secret Permutation
+=====================
 
-先把0猜出来：zero=zero*p[i]+zero，遇到0以后就都是0了，所以n步。
+先把0猜出来：zero=zero\*p\[i\]+zero，遇到0以后就都是0了，所以n步。
 
 再猜1：每次随机挑两个数出来乘一下，如果结果不是这两个数中的任意一个，就都丢掉，否则把另一个疑似是1的放回去。所以期望n/2步。
 
 左后每次加1跑一圈就行了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 bool debug = 0;
 const int N = 5005;
 int per[N], n, rep[N], use;
 int query(int a, int b, int c) {
-	if (debug) {
-		++ use;
-		assert(a >= 0 && a < n && b >= 0 && b < n && c >= 0 && c < n);
-		return rep[(per[a] * per[b] + per[c]) % n];
-	}
-	printf("? %d %d %d\n", a, b, c);
-	fflush(stdout);
-	int x;
-	scanf("%d", &x);
-	return x;
+    if (debug) {
+        ++ use;
+        assert(a >= 0 && a < n && b >= 0 && b < n && c >= 0 && c < n);
+        return rep[(per[a] * per[b] + per[c]) % n];
+    }
+    printf("? %d %d %d\n", a, b, c);
+    fflush(stdout);
+    int x;
+    scanf("%d", &x);
+    return x;
 }
 int getzero() {
-	int cur = 0;
-	for (int i = 0; i < n; ++ i) {
-		cur = query(cur, i, cur);
-	}
-	return cur;
+    int cur = 0;
+    for (int i = 0; i < n; ++ i) {
+        cur = query(cur, i, cur);
+    }
+    return cur;
 }
 int getone(int z) {
-	vector<int> stack;
-	for (int i = 0; i < n; ++ i) if (z != i) stack.push_back(i);
-	random_shuffle(stack.begin(), stack.end());
-	int las = -1, cnt = 0;
-	while (stack.size() > 1) {
-		int x = stack.back(); stack.pop_back();
-		int y = stack.back(); stack.pop_back();
-		int res = query(x, y, z);
-		if (res == x) {
-			stack.push_back(y);
-			if (las == x) cnt ++; else las = x, cnt = 1;
-			if (cnt >= 8) return las;
-			//swap(stack.back(), stack[rand() % stack.size()]);
-		}
-		if (res == y) {
-			stack.push_back(x);
-			if (las == x) cnt ++; else las = x, cnt = 1;
-			if (cnt >= 8) return las;
-			//swap(stack.back(), stack[rand() % stack.size()]);
-		}
-	}
-	return stack[0];
+    vector<int> stack;
+    for (int i = 0; i < n; ++ i) if (z != i) stack.push_back(i);
+    random_shuffle(stack.begin(), stack.end());
+    int las = -1, cnt = 0;
+    while (stack.size() > 1) {
+        int x = stack.back(); stack.pop_back();
+        int y = stack.back(); stack.pop_back();
+        int res = query(x, y, z);
+        if (res == x) {
+            stack.push_back(y);
+            if (las == x) cnt ++; else las = x, cnt = 1;
+            if (cnt >= 8) return las;
+            //swap(stack.back(), stack[rand() % stack.size()]);
+        }
+        if (res == y) {
+            stack.push_back(x);
+            if (las == x) cnt ++; else las = x, cnt = 1;
+            if (cnt >= 8) return las;
+            //swap(stack.back(), stack[rand() % stack.size()]);
+        }
+    }
+    return stack[0];
 }
 int ans[N], sna[N];
 int main() {
-	//int seed = 1516641876; //time(0);
-	//if (debug) printf("%d\n", seed);
-	//srand(seed);
-	scanf("%d", &n);
-	if (n == 1) {
-		puts("! 0");
-		fflush(stdout);
-		return 0;
-	}
-	for (int i = 0; i < n; ++ i) per[i] = i;
-	random_shuffle(per, per + n);
-	//per[0] = 2; per[1] = 0; per[2] = 3; per[3] = 1;
-	for (int i = 0; i < n; ++ i) rep[per[i]] = i;
-	if (debug) { for (int i = 0; i < n; ++ i) printf("%d ", per[i]); puts(""); }
-	int z = getzero();
-	if (debug) assert(per[z] == 0);
-	int o = getone(z);
-	if (debug) assert(per[o] == 1);
-	ans[z] = 0; ans[o] = 1;
-	sna[0] = z; sna[1] = o;
-	for (int i = 2; i < n; ++ i) {
-		int pos = query(sna[i - 1], o, o);
-		ans[pos] = i;
-		sna[i] = pos;
-	}
-	printf("! ");
-	for (int i = 0; i < n; ++ i) printf("%d%c", ans[i], " \n"[i == n - 1]);
-	fflush(stdout);
-	if (debug) for (int i = 0; i < n; ++ i) assert(ans[i] == per[i]);
-	if (debug) printf("step=%d\n", use);
+    //int seed = 1516641876; //time(0);
+    //if (debug) printf("%d\n", seed);
+    //srand(seed);
+    scanf("%d", &n);
+    if (n == 1) {
+        puts("! 0");
+        fflush(stdout);
+        return 0;
+    }
+    for (int i = 0; i < n; ++ i) per[i] = i;
+    random_shuffle(per, per + n);
+    //per[0] = 2; per[1] = 0; per[2] = 3; per[3] = 1;
+    for (int i = 0; i < n; ++ i) rep[per[i]] = i;
+    if (debug) { for (int i = 0; i < n; ++ i) printf("%d ", per[i]); puts(""); }
+    int z = getzero();
+    if (debug) assert(per[z] == 0);
+    int o = getone(z);
+    if (debug) assert(per[o] == 1);
+    ans[z] = 0; ans[o] = 1;
+    sna[0] = z; sna[1] = o;
+    for (int i = 2; i < n; ++ i) {
+        int pos = query(sna[i - 1], o, o);
+        ans[pos] = i;
+        sna[i] = pos;
+    }
+    printf("! ");
+    for (int i = 0; i < n; ++ i) printf("%d%c", ans[i], " \n"[i == n - 1]);
+    fflush(stdout);
+    if (debug) for (int i = 0; i < n; ++ i) assert(ans[i] == per[i]);
+    if (debug) printf("step=%d\n", use);
 }
-~~~
+```
