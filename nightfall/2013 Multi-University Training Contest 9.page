@@ -1,0 +1,73 @@
+# [Great Sequence](http://acm.hdu.edu.cn/showproblem.php?pid=4692)
+
+# [Huge String](http://acm.hdu.edu.cn/showproblem.php?pid=4693)
+
+## AKi
+
+~~~{.java}
+import java.io.*;
+import java.util.*;;
+import java.math.*;
+public class Main {
+	static String [] ch = {
+		"ACM-ICPC", "BIDU", "consonant:BCDFGHJKLMNPQRSTVXZWY",
+		"D41D8CD98F00B204E9800998ECF8427E", "2.718281828459...",
+		"0xFACEB00C","1E100.net", "\\Huge{String}",
+		"InternationalCollegiateProgrammingContest", "JinKeLa",
+		"KeepItSimpleStupid", "1000mL", "Micro$oftCorp", "", "Oops",
+		"pneumonoultramicroscopicsilicovolcanoconiosis", "A", "P", "M",
+		"TheQuickBrownFoxJumpsOverTheLazyDog", "\\bigcup", "vowel:AEIOU",
+		"WWW", "X-ray", "YOOOOOO!", "ZheJiangUniversity"};
+	static BigInteger [][] len = new BigInteger [26][101];
+	static char getc(String s, BigInteger p, int lev) {
+		if (lev == 0) {
+			return p.compareTo(BigInteger.valueOf(s.length())) < 0 ? s.charAt(p.intValue()) : 0;
+		}
+		for (int i = 0; i < s.length(); ++ i) {
+			char c = s.charAt(i);
+			if (c >= 'A' && c <= 'Z') {
+				if (p.compareTo(len[c - 'A'][lev]) < 0) return getc(ch[c - 'A'], p, lev - 1);
+				p = p.subtract(len[c - 'A'][lev]);
+			}
+			else {
+				p = p.subtract(BigInteger.ONE);
+				if (p.compareTo(BigInteger.ZERO) < 0) {
+					return c;
+				}
+			}
+		}
+		return 0;
+	}
+	public static void main(String [] arg) {
+		for (int i = 0; i < 26; ++ i) len[i][0] = BigInteger.ONE;
+		for (int n = 1; n <= 100; ++ n) {
+			for (int i = 0; i < 26; ++ i) {
+				len[i][n] = BigInteger.ZERO;
+				for (int j = 0; j < ch[i].length(); ++ j) {
+					char c = ch[i].charAt(j);
+					if (c >= 'A' && c <= 'Z') {
+						len[i][n] = len[i][n].add(len[c - 'A'][n - 1]);
+					}
+					else {
+						len[i][n] = len[i][n].add(BigInteger.ONE);
+					}
+				}
+			}
+		}
+		Scanner cin = new Scanner(System.in);
+		while (cin.hasNext()) {
+			String target = cin.nextLine();
+			int n = cin.nextInt(), m = cin.nextInt();
+			BigInteger k = cin.nextBigInteger();
+			String ans = "";
+			for (int i = 0; i < m; ++ i) {
+				char c = getc(target, k.add(BigInteger.valueOf(i)), n);
+				if (c == 0) break;
+				ans += c;
+			}
+			System.out.println(ans);
+			if (cin.hasNext()) target = cin.nextLine();
+		}
+	}
+}
+~~~
