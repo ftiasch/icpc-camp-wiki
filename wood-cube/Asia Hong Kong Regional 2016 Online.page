@@ -19,28 +19,40 @@
 │+ [4:02]│·ooooooooooooooooo·o··oo·ooooo··ooooo·oo···o·oooo····       │
 └────────┴────────────────────────────────────────────────────────────┘
  网站前68分钟无法提交，比赛实际结束时间延迟至18:30
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. A+B Problem [MZH]
+A. A+B Problem \[MZH\]
+----------------------
 
-## B. Boxes [TDJ]
+B. Boxes \[TDJ\]
+----------------
 
-## C. Classrooms [MZH]
+C. Classrooms \[MZH\]
+---------------------
 
-## D. Curious Cupid [TDJ]
+D. Curious Cupid \[TDJ\]
+------------------------
 
-## E. Dim Sum [MZH]
+E. Dim Sum \[MZH\]
+------------------
 
-## F. Crazy Driver [GX]
+F. Crazy Driver \[GX\]
+----------------------
 
-## G. k-Colouring of a Graph [GX]
+G. k-Colouring of a Graph \[GX\]
+--------------------------------
 
 因为除掉树以外的边不多，所以直接枚举那些边涉及的点的颜色即可
 
-## H. Let's Meet [MZH]
+H. Let's Meet \[MZH\]
+---------------------
 
-## I. Palindromes [TDJ]
+I. Palindromes \[TDJ\]
+----------------------
 
-## J. 0-1 Sequences [MZH]
+J. 0-1 Sequences \[MZH\]
+------------------------
 
-## K. Take Two Stones [MZH]
+K. Take Two Stones \[MZH\]
+--------------------------
