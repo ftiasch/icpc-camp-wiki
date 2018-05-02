@@ -1,29 +1,29 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 55;
 bool dp[N][2];
 class OrAndSum {
-	public:
-	string isPossible(vector<long long> o, vector<long long> s) {
-		int n = (int) o.size();
-		vector<long long> a(n);
-		for (int i = 0; i < n; ++ i) a[i] = s[i] - o[i];
-		for (int d = 0; d <= 62; ++ d) {
-			memset(dp, 0, sizeof(dp));
-			dp[0][0] = dp[0][1] = 1;
-			for (int i = 1; i <= n; ++ i) {
-				for (int x = 0; x <= 1; ++ x) {
-					for (int y = 0; y <= 1; ++ y) {
-						if ((x | y) == (o[i - 1] >> d & 1) && (x & y) == (a[i - 1] >> d & 1)) {
-							dp[i][y] |= dp[i - 1][x];
-						}
-					}
-				}
-			}
-			if (!dp[n][0] && !dp[n][1]) return "Impossible";
-		}
-		return "Possible";
-	}
+    public:
+    string isPossible(vector<long long> o, vector<long long> s) {
+        int n = (int) o.size();
+        vector<long long> a(n);
+        for (int i = 0; i < n; ++ i) a[i] = s[i] - o[i];
+        for (int d = 0; d <= 62; ++ d) {
+            memset(dp, 0, sizeof(dp));
+            dp[0][0] = dp[0][1] = 1;
+            for (int i = 1; i <= n; ++ i) {
+                for (int x = 0; x <= 1; ++ x) {
+                    for (int y = 0; y <= 1; ++ y) {
+                        if ((x | y) == (o[i - 1] >> d & 1) && (x & y) == (a[i - 1] >> d & 1)) {
+                            dp[i][y] |= dp[i - 1][x];
+                        }
+                    }
+                }
+            }
+            if (!dp[n][0] && !dp[n][1]) return "Impossible";
+        }
+        return "Possible";
+    }
 };
-~~~
+```
