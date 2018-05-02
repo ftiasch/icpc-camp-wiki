@@ -1,0 +1,215 @@
+# Contest Info
+
+date: 2017.09.16 12:00-17:00
+
+[practice link](https://www.jisuanke.com/contest/876)
+
+# Solutions
+
+## A. Tree
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+沿用 tarjan 算法求 lca 的方法，可以将询问挂到 lca 处，一直到从 lca 向上回溯之前， lca 子树里的所有点都在 lca 所在并查集中。
+
+将点权维护到点与父亲的边上，维护每个点到并查集根路径上权值之积，在 lca 处询问即可。
+
+由于点权是矩阵，故与并查集辅助维护左乘、右乘到根路径上的权值之积，并查集采用路径压缩，均摊更新权值之积的次数是 $\mathcal{O}(n \log n + q)$ 的。
+
+至于 $64 \times 64$ 的 $01$ 矩阵进行乘法，采用位运算可以做到 $\mathcal{O}\left(64^2\right)$ 。
+
+## B. Coin
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+令 $f(i, j)$ 表示前 $i$ 次试验有 $j \pmod 2$ 次试验正面朝上的概率，矩阵快速幂加速递推即可。
+
+## C. Sum
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+将原数复制 233 遍就行。
+
+## D. Brain-baffling Game
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+对于没有无限的情况，就是一般的链的情况的 Blud-red Hackenbush，直接用 surreal number 做就行了，但是由于有无限的，需要考虑很多情况。
+
+如果是从开头开始无限循环一种数字，设这种串为特殊的，那么对 surreal number 有正无穷或者负无穷的贡献，如果最后正负无穷的个数不同，那么可以直接判断谁必胜。
+
+如果正负无穷相等，谁先动无穷，谁就必败，那么相当于可以忽略无穷的，把特殊的串括号后面的提出来作为新的一个串。
+
+如果这之后计算出来的 surreal number 不为 0，可以直接判断谁必胜，否则，谁先让 surreal number 不为 0，谁就必败。
+
+对每个串中，将那些拿掉之后使得 surreal number 仍然为 0 的字符提出来（括号前面最多一个字符和所有括号后面的字符），组成新的串，然后对这些新串重做一遍 surreal number，并根据新的 surreal number 判断是谁必胜或者 tie。
+
+## E. Maximum Flow
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+分析最小割可以发现，肯定是 $0 \to x \to n-1$ 中一条边被割，如果 $x$ 二进制下最高位小于 $n-1$，那么肯定是 $0 \to x$ 这条边被割，否则是 $x \to n-1$ 这条边被割，然后数位 DP 就行了。
+
+## F. Trig Function
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+根据 [De Moivre's formula](https://en.wikipedia.org/wiki/De_Moivre%27s_formula) 可得
+$$
+f(x) = \sum_{i \geq 0}{(-1)^i \binom{n}{n - 2i} x^{n - 2i} \left(1 - x^2\right)^i}，
+$$
+其中 $x^m$ 的系数为
+$$
+\sum_{i \geq \frac{n - m}{2}}{(-1)^i \binom{n}{n - 2i} \binom{i}{i - \frac{n - m}{2}}}。
+$$
+
+枚举 $i$ 的同时 $\mathcal{O}(\log p)$ 维护两个组合数即可。
+
+## G. Xor
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+坑爹啊...$q$ 比 $n$ 的数量级多个 $0$ 啊...
+
+先对询问进行预处理，将 $v$ 移动到距离 $u$ 为 $k$ 倍数的点，便于拆成至多两条到根路径上的询问，这一部分总的复杂度 $\mathcal{O}(q \log n)$。
+
+设定阈值 $T$，对于 $k \leq T$ 的询问，离线按 $k$ 排升序处理，每当 $k$ 产生变化时， dfs 重新计算每个点向根跳 $k$ 步能到达的所有点的权值异或和，询问时则直接向上跳到超出链的位置计算答案，这一部分总的复杂度 $\mathcal{O}(q \log q + n T + q \log n)$。
+
+对于 $k > T$ 的询问，将询问放至较深点处处理，dfs 过程中记录到根路径，处理询问时直接枚举跳跃到的点即可，这一部分总的复杂度 $\mathcal{O}\left(n + q \frac{n}{T}\right)$。
+
+取 $T = \mathcal{O}\left(\sqrt{q}\right)$ 取得最优时间复杂度 $\mathcal{O}\left(n \sqrt{q} + q \log q\right)$，相应的空间复杂度为 $\mathcal{O}(n)$。
+
+## H. Music
+
+upsolved by braveTester
+
+---
+
+braveTester's solution
+
+这题意是真 tm 坑爹...md 真是坑死我了...
+
+令 $f[i][\text{pressMask}]$ 表示过完第 $i$ 个单位时间，且按键方式为 $0 \le \text{pressMask} \le 2^n$ 时的最佳得分。当 $\text{pressMask} = 2^n$ 时，表示在第 $i$ 时刻没有 miss。
+
+令 $\text{interval_score}[l][r]$ 为 $[l, r]$ 没有 miss 时的得分。由于坑爹的题意，只需要算出 $[l, r]$ 与任意连续音符区间（完整的一段）的关系要么是前者包含后者，要么是二者不交时的值，其余的值认为不存在。
+
+令 $\text{ban}[x][y] = [\text{$y$ 不能紧接 $x$ 后出现}]$，$\text{allMask}[i]$ 为 $i$ 时刻所有按键的 mask。
+
+转移如下：
+
+1. $0 \le \text{pressMask} < 2^n$ 时，
+    - $0 \le \text{pressMask}' < 2^n \wedge \neg \text{ban}[\text{pressMask}'][\text{pressMask}]$ 时，$f[i - 1][\text{pressMask}'] + \text{score}(i, \text{pressMask}) \to f[i][\text{pressMask}]$
+    - $\text{pressMask} = 2^n \wedge \neg \text{ban}[\text{allMask}[i - 1]][\text{pressMask}]$ 时，$f[i - 1][2^n] + \text{score}(i, \text{pressMask}) \to f[i][\text{pressMask}]$
+2. $\text{pressMask} = 2^n$ 时，枚举无 miss 段长度，设该段为 $[i' + 1, i]$，当 $\neg \text{ban}[\text{pressMask}'][\text{allMask}[i' + 1]]$ 且 $\text{interval_score}[i' + 1][i]$ 存在时，有 $f[i'][\text{pressMask}'] + \text{interval_score}[i' + 1][i] \to f[i][\text{pressMask}]$。
+
+对于 1 中转移，复杂度为 $O\left(2^{2n} m\right)$，对于 2 中转移，如果把对于一个 $i'$ 的所有可能 $f[i'][\text{pressMask}']$ 中最大者存入一个新的数组 $g[i']$ 中，则复杂度为 $O\left(m^2\right)$。$g$ 的计算可以在 1 中枚举的时候顺便完成。
+
+由于这个软件由于走不了还可能崩溃...所以还要维护一下状态的可行性。
+
+$\text{interval_score}$ 和 $\text{ban}$ 以及 $\text{allMask}$ 都可以预处理，最后注意一下初始状态的转移即可。
+
+总复杂度 $O\left(2^{2n} m + m^2\right)$ 
+
+## I. Barty's Computer
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+离线做。如果将所有串按前缀排序，那么满足 $a$ 是前缀肯定是一个区间，对于 $b$、$c$、$d$ 同理，然后需要满足长度和标号的要求，相当于一个六维数点，可以用 bitset 加速，由于空间不够，所以实际操作可以每次枚举 64 个点。
+
+## J. Easy Problem
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+出题人英语不好还是怎么的...连续子序列不写 consecutive...
+
+用可持久化 Treap 支持两种造数组的操作，对于询问，首先找到至多前 $k$ 小的元素，然后以这些元素作为可选区间的左端点进行扩展，用堆找出前 $k$ 小的区间和。
+
+说是这么说，但是内存有些吃紧，造数组操作总的空间复杂度为 $\mathcal{O}(\sum{n} + q \log M)$，其中 $M = 10^6$ 为每个数组的最大长度，询问的空间可以回收，只需要考虑单组询问的空间，对于寻找前 $k$ 小的元素，可以在找到后将该元素赋权值为 $\infty$ 便于之后的查询，但是对于不在该询问之前产生的节点，不产生新的节点，这样可以做到空间复杂度为 $\mathcal{O}(\min(k \log M, M))$。
+
+因此总的时间复杂度为 $\mathcal{O}(\sum{n} + (q + \sum{k}) \log M)$，空间复杂度为 $\mathcal{O}(\sum{n} + q \log M + M)$。
+
+# Replay and Summary
+
+## Replay
+
+`T` 日常迟到了几分钟。
+
+看了一段时间题后，`L` 发现 C 只要复制 233 遍就行了，于是 `H` 过了这题。
+
+`T` 告诉 `H` 了 I 题，`H` 虽然觉得很难写但是看机时空着就先上了。
+
+`T` 终于回过头来看 B，然后上去写了个矩阵乘法。
+
+之后 `T` 和 `L` 推出了 F 的式子，然后 `T` 上去切了。
+
+期间 `H` 发现 E 分析下最小割就会做了，然后上去写，由于渣代码水平调了很久才过。
+
+`T` 和 `L` 又想出了 A，于是 `T` 上来莽过了。
+
+`H` 之前掏出了以前写的东西，然后和 `L` （瞎）分析了之后告诉了 `T`，`T` 觉得用 java 写高精度很容易实现，就错误的决定先不写 G 而是写 D，然后陷入 WA 地狱。
+
+以上空闲时间 `H` 一直在写 I，中间甚至推倒重写，经过超长时间的调试之后终于过了。
+
+然后 `T` 终于放弃了 D，转写 G，但时间不够没能调出来。
+
+## braveTester
+
+这回连签到题都没敲...瓜都没得吃...
+
+不应该坑 `T` 去写 D...虽然当时 D 看起来真的非常 promising...
+
+B 真是失了智净想推公式...
+
+对复杂题畏难是有的...主要是怕写/调不出来...码力啊码力...
+
+H 赛后写了可能 3h 不止吧...真菜啊...
+
+## chitanda
+
+E 和 I 都花了太多的时间，尤其是 I，说明代码能力还非常不足，并且对节奏的把握还很差。
+
+## skywalkert
+
+本场没有在思考上浪费时间，但是前期机时浪费严重，后期选题不够靠谱。题目在一定程度上反映出区域赛的常态，在确定题意方面我们还需要更严谨细致一些。此外，在上机前也需要强化 self-proof 的意识，尽量在想清楚所有可能的 trick 后再选择上机，当然，这意味着前期最好不要写后期题，但是不意味着把后期题放在最后思考。
+
+状态好的 `L` 善于分析问题，但对于写复杂代码有一定畏难情绪，需要及时克服。
+
+`H` 作为全队最能发挥出水平却又容易发挥失常的选手，需要对做题过程进行合理调控，以此保证发挥到稳定水平及以上。
+
+`T` 在写短又快代码方面有一定天赋(???)，但需要降低调试的时间，与队友充分打好配合。
