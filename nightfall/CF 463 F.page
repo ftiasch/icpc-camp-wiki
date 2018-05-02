@@ -1,0 +1,72 @@
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+const LL is_query = - (1LL << 62);
+struct Line {
+	LL k, b; // kx + b
+	mutable function<const Line*()> succ;
+	bool operator < (const Line &rhs) const {
+		if (rhs.b != is_query) return k < rhs.k;
+		const Line* s = succ();
+		if (!s) return 0;
+		LL x = rhs.k;
+		return 1.0L * b - s->b < 1.0L * (s->k - k) * x;
+	}
+};
+struct HullDynamic : public multiset<Line> { // upper hull for maximum
+	bool bad(iterator y) {
+		auto z = next(y);
+		if (y == begin()) {
+			if (z == end()) return 0;
+			return y->k == z->k && y->b <= z->b;
+		}
+		auto x = prev(y);
+		if (z == end()) return y->k == x->k && y->b <= x->b;
+		return 1.0L * (x->b - y->b) * (z->k - y->k) >= 1.0L * (y->b - z->b) * (y->k - x->k);
+	}
+	void insert_line(LL k, LL b) {
+		auto y = insert({k, b});
+		y->succ = [=] { return next(y) == end() ? 0 : &*next(y); };
+		if (bad(y)) { erase(y); return; }
+		while (next(y) != end() && bad(next(y))) erase(next(y));
+		while (y != begin() && bad(prev(y))) erase(prev(y));
+	}
+	LL eval(LL x) {
+		Line u = {x, is_query};
+		auto l = *lower_bound(u);
+		return l.k * x + l.b;
+	}
+};
+
+const int N = 1e5 + 5;
+int a[N], b[N];
+LL dp[N];
+vector<int> G[N];
+HullDynamic* dfs(int x, int p) {
+	HullDynamic *res = new HullDynamic();
+	for (int u : G[x]) if (u != p) {
+		auto *tmp = dfs(u, x);
+		if (tmp->size() > res->size()) swap(tmp, res);
+		for (Line y : *tmp) res->insert_line(y.k, y.b);
+	}
+	if (res->empty()) dp[x] = 0; else
+		dp[x] = -res->eval(-a[x]);
+	res->insert_line(b[x], -dp[x]);
+	return res;
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+	for (int i = 1; i <= n; ++ i) scanf("%d", &b[i]);
+	for (int i = 1; i < n; ++ i) {
+		int u, v;
+		scanf("%d%d", &u, &v);
+		G[u].push_back(v);
+		G[v].push_back(u);
+	}
+	dfs(1, 0);
+	for (int i = 1; i <= n; ++ i) printf("%lld%c", dp[i], " \n"[i == n]);
+}
+~~~
