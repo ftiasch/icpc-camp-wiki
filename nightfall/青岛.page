@@ -1,0 +1,369 @@
+EASY：ACD
+
+MID-EASY：BG
+
+B：模拟题，最好先打印手玩直接打表上
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+bool ff;
+int T,i,j,a[8][6],v[8],p[9],q[9],qq[9];
+bool ok(int x){
+	for(int i=1;i<=8;i++)qq[i]=q[(i+x-1)%8+1];
+	for(int i=1;i<=4;i++)if(p[i*2-1]!=p[i*2]||qq[i*2-1]!=qq[i*2]||p[i*2]!=qq[i*2])return 0;
+	return 1;
+}
+bool jg(){
+	return (ok(0)||ok(2)||ok(6));
+}
+int main(){
+	for(scanf("%d",&T);T--;){
+		for(i=1;i<=6;i++)
+			for(j=1;j<=4;j++)
+				scanf("%d",&a[i][j]);
+		ff=0;
+		for(i=1;i<=6;i++)
+			for(v[i]=1,j=1;j<4;j++)if(a[i][j]!=a[i][j+1])v[i]=0;
+		if(v[5]&&v[6]){
+			for(i=1;i<=4;i++)p[i*2-1]=a[i][1],p[i*2]=a[i][3],q[i*2-1]=a[i][2],q[i*2]=a[i][4];
+			if(jg())ff=1;
+		}
+		if(v[1]&&v[3]){
+			p[1]=a[2][1];p[2]=a[2][2];p[3]=a[6][3];p[4]=a[6][1];
+			p[5]=a[4][4];p[6]=a[4][3];p[7]=a[5][2];p[8]=a[5][4];
+			q[1]=a[2][3];q[2]=a[2][4];q[3]=a[6][4];q[4]=a[6][2];
+			q[5]=a[4][2];q[6]=a[4][1];q[7]=a[5][1];q[8]=a[5][3];
+			if(jg())ff=1;
+		}
+		if(v[2]&&v[4]){
+			p[1]=a[1][1];p[2]=a[1][2];p[3]=a[6][1];p[4]=a[6][2];
+			p[5]=a[3][4];p[6]=a[3][3];p[7]=a[5][1];p[8]=a[5][2];
+			q[1]=a[1][3];q[2]=a[1][4];q[3]=a[6][3];q[4]=a[6][4];
+			q[5]=a[3][2];q[6]=a[3][1];q[7]=a[5][3];q[8]=a[5][4];
+			if(jg())ff=1;
+		}
+		puts(ff?"YES":"NO");
+	}
+}
+~~~
+
+G:傻逼费用流，取对数加，暂时懒得写
+
+MID：K
+
+K：空间上$N$个点$(x_i,y_i,c_i)$，$M$个询问$(X,Y,C)$，询问所有$c_i\leq C$的点$i$中离$(X,Y)$最近的点。
+
+离线后实现有加点、求最近点两个操作的K-D树即可。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 200200
+#define LL long long
+using namespace std;
+const LL inf=1e18;
+LL an;
+int rt,O,anx,any,anz,anid,ANX[N],ANY[N],ANZ[N];
+struct P{int x,y,z,id;}p[N],q[N];
+bool cmpp(P a,P b){return a.z<b.z||a.z==b.z&&a.id<b.id;}
+struct KD{int d[2],mi[2],mx[2],l,r,s,v,z,id;}T[N];
+bool cmp(KD a,KD b){return a.d[O]<b.d[O]||a.d[O]==b.d[O]&&a.d[O^1]<b.d[O^1];}
+void Max(int&x,int y){x=max(x,y);}
+void Min(int&x,int y){x=min(x,y);}
+int bd(int l,int r,int o){
+	O=o;int k=l+r>>1,i;nth_element(T+l+1,T+k+1,T+r+1,cmp);
+	for(i=0;i<2;i++)T[k].mi[i]=T[k].mx[i]=T[k].d[i],T[k].l=T[k].r=T[k].v=T[k].s=T[k].z=T[k].id=0;
+	if(l<k)for(O=T[k].l=bd(l,k-1,o^1),i=0;i<2;i++)
+		Min(T[k].mi[i],T[O].mi[i]),Max(T[k].mx[i],T[O].mx[i]);
+	if(k<r)for(O=T[k].r=bd(k+1,r,o^1),i=0;i<2;i++)
+		Min(T[k].mi[i],T[O].mi[i]),Max(T[k].mx[i],T[O].mx[i]);
+	return k;
+}
+void ADD(int k,int X,int Y,int z,int id){
+	if(!k||X<T[k].mi[0]||X>T[k].mx[0]||Y<T[k].mi[1]||Y>T[k].mx[1])return;
+	if(T[k].d[0]==X&&T[k].d[1]==Y){
+		if(!T[k].v)T[k].v++,T[k].s++,T[k].z=z,T[k].id=id;
+		return;
+	}
+	ADD(T[k].l,X,Y,z,id);ADD(T[k].r,X,Y,z,id);
+	T[k].s=T[k].v+T[T[k].l].s+T[T[k].r].s;
+}
+LL sqr(LL x){return x*x;}
+LL dis(int X1,int Y1,int X2,int Y2){
+	return sqr(X2-X1)+sqr(Y2-Y1);
+}
+LL dis(KD a,int X,int Y){
+	LL V=0;
+	if(X<a.mi[0])V+=sqr(a.mi[0]-X);
+	if(X>a.mx[0])V+=sqr(a.mx[0]-X);
+	if(Y<a.mi[1])V+=sqr(a.mi[1]-Y);
+	if(Y>a.mx[1])V+=sqr(a.mx[1]-Y);
+	return V;
+}
+void qu(int k,int X,int Y){
+	LL d=dis(X,Y,T[k].d[0],T[k].d[1]),dl=inf,dr=inf;
+	if((d<an||d==an&&T[k].id<anid)&&T[k].v)an=d,anx=T[k].d[0],any=T[k].d[1],anz=T[k].z,anid=T[k].id;
+	if(T[T[k].l].s)dl=dis(T[T[k].l],X,Y);
+	if(T[T[k].r].s)dr=dis(T[T[k].r],X,Y);
+	if(dl<dr){
+		if(dl<=an&&T[T[k].l].s)qu(T[k].l,X,Y);
+		if(dr<=an&&T[T[k].r].s)qu(T[k].r,X,Y);
+	}else{
+		if(dr<=an&&T[T[k].r].s)qu(T[k].r,X,Y);
+		if(dl<=an&&T[T[k].l].s)qu(T[k].l,X,Y);
+	}
+}
+int main(){
+	int Te,n,m,x,y,z,i,j;
+	scanf("%d",&Te);
+	for(;Te--;){
+		scanf("%d%d",&n,&m);
+		for(i=1;i<=n;i++)scanf("%d%d%d",&x,&y,&z),p[i]=P{x,y,z,i},T[i].d[0]=x,T[i].d[1]=y;
+		rt=bd(1,n,0);
+		for(i=1;i<=m;i++)scanf("%d%d%d",&q[i].x,&q[i].y,&q[i].z),q[i].id=i;
+		sort(p+1,p+n+1,cmpp);sort(q+1,q+m+1,cmpp);
+		for(i=j=1;i<=m;i++){
+			for(;j<=n&&p[j].z<=q[i].z;j++)ADD(rt,p[j].x,p[j].y,p[j].z,p[j].id);
+			an=inf;
+			qu(rt,q[i].x,q[i].y);
+			ANX[q[i].id]=anx;
+			ANY[q[i].id]=any;
+			ANZ[q[i].id]=anz;
+		}
+		for(i=1;i<=m;i++)printf("%d %d %d\n",ANX[i],ANY[i],ANZ[i]);
+	}
+}
+~~~
+
+HARD：LM
+
+L：$N$个点的一颗有边权的树，$Q$次询问，每次删去两条边问剩下边的直径。$N,Q\leq100000$。
+
+删去两条边后变成三个联通块，每个联通块在树上都是几段DFS区间。那么先用线段树合并出所有DFS区间的直径，再对每个联通块分的几个区间进行暴力枚举得到答案即可。使用了ST算法单次求LCA做到O(1)的复杂度，理论复杂度O(nlgn)，单组1秒多，但交上去还是T。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 262144
+#define CL(a) memset(a,0,sizeof a)
+#define __ __attribute__ ((optimize("-O3")))
+#define _ __ __inline __attribute__ ((__gnu_inline__,__always_inline__,__artificial__))
+using namespace std;
+int T,n,m,x,y,z,i,j,di,mt,tot,pos[N],go[N],st[N],ed[N],d[N],h[N],to[N],F[N][18],G[N][18],fir[N],ne[N],la[N],va[N],id[N],A[N],B[N],gl[N];
+__ void rd(int&x){
+	char ch;
+	for(ch=getchar();ch<'0'||ch>'9';ch=getchar());
+	for(x=0;ch>='0'&&ch<='9';ch=getchar())x=x*10+ch-'0';
+}
+__ void ins(int x,int y,int z,int ID){
+	la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;id[tot]=ID;
+	la[++tot]=x;ne[tot]=fir[y];fir[y]=tot;va[tot]=z;id[tot]=ID;
+}
+__ int lca(int x,int y){
+	x=pos[x];y=pos[y];
+	if(x>y)swap(x,y);
+	int t=gl[y-x+1];
+	if(F[x][t]<F[y-(1<<t)+1][t])return G[x][t];else return G[y-(1<<t)+1][t];
+}
+__ int dis(int x,int y){
+	if(!x||!y)return 0;
+	return d[x]+d[y]-2*d[lca(x,y)];
+}
+__ void dfs(int x,int fa){
+	F[pos[x]=++mt][0]=h[x];G[mt][0]=x;
+	st[x]=++di;to[di]=x;
+	for(int i=fir[x],y;i;i=ne[i]){
+		y=la[i];
+		if(y!=fa){
+			go[id[i]]=y;
+			d[y]=d[x]+va[i];
+			h[y]=h[x]+1;
+			dfs(y,x);
+			F[++mt][0]=h[x];G[mt][0]=x;
+		}
+	}
+	ed[x]=di;
+}
+__ void ps(int&a,int&b,int a1,int b1,int a2,int b2){
+	int d=dis(a1,b1),d1=dis(a2,b2),d2=dis(a1,a2),d3=dis(a1,b2),d4=dis(b1,a2),d5=dis(b1,b2);a=a1;b=b1;
+	if(d1>d)d=d1,a=a2,b=b2;
+	if(d2>d)d=d2,a=a1,b=a2;
+	if(d3>d)d=d3,a=a1,b=b2;
+	if(d4>d)d=d4,a=b1,b=a2;
+	if(d5>d)d=d5,a=b1,b=b2;
+}
+__ void ps(int k){ps(A[k],B[k],A[k<<1],B[k<<1],A[k<<1|1],B[k<<1|1]);}
+__ void bd(int k,int l,int r){
+	if(l==r){A[k]=B[k]=to[l];return;}
+	int md=l+r>>1;
+	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+	ps(k);
+}
+__ void qu(int k,int l,int r,int x,int y,int&a,int&b){
+	if(x>y){a=b=0;return;}
+	if(x<=l&&r<=y){a=A[k];b=B[k];return;}
+	int md=l+r>>1;
+	if(y<=md){qu(k<<1,l,md,x,y,a,b);return;}
+	if(x>md){qu(k<<1|1,md+1,r,x,y,a,b);return;}
+	int a1,b1,a2,b2;
+	qu(k<<1,l,md,x,y,a1,b1);
+	qu(k<<1|1,md+1,r,x,y,a2,b2);
+	ps(a,b,a1,b1,a2,b2);
+}
+__ int get(int l,int r){
+	int a,b;
+	qu(1,1,n,l,r,a,b);
+	return dis(a,b);
+}
+__ int get(int l1,int r1,int l2,int r2){
+	int a1,b1,a2,b2,a,b;
+	qu(1,1,n,l1,r1,a1,b1);
+	qu(1,1,n,l2,r2,a2,b2);
+	ps(a,b,a1,b1,a2,b2);
+	return dis(a,b);
+}
+__ int get(int l1,int r1,int l2,int r2,int l3,int r3){
+	int a1,b1,a2,b2,a3,b3,a,b;
+	qu(1,1,n,l1,r1,a1,b1);
+	qu(1,1,n,l2,r2,a2,b2);
+	qu(1,1,n,l3,r3,a3,b3);
+	ps(a,b,a1,b1,a2,b2);
+	ps(a,b,a3,b3,a,b);
+	return dis(a,b);
+}
+__ int main(){
+	for(rd(T);T--;){
+		tot=di=mt=0;
+		rd(n),rd(m);
+		for(i=1;i<n;i++)rd(x),rd(y),rd(z),ins(x,y,z,i);
+		dfs(1,0);
+		for(i=2;i<=mt;i++)gl[i]=gl[i>>1]+1;
+		for(j=1;j<=gl[mt];j++)
+			for(i=1;i+(1<<j)-1<=mt;i++)
+				if(F[i][j-1]<F[i+(1<<j-1)][j-1])F[i][j]=F[i][j-1],G[i][j]=G[i][j-1];
+				else F[i][j]=F[i+(1<<j-1)][j-1],G[i][j]=G[i+(1<<j-1)][j-1];
+		bd(1,1,n);		
+		for(;m--;){
+			rd(x);rd(y);
+			x=go[x];y=go[y];z=lca(x,y);
+			if(h[x]>h[y])swap(x,y);
+			if(z==y){
+				printf("%d\n",max(max(get(st[x],ed[x]),get(st[y],st[x]-1,ed[x]+1,ed[y])),get(1,st[y]-1,ed[y]+1,n)));
+			}else{
+				if(st[x]>st[y])swap(x,y);
+				printf("%d\n",max(max(get(st[x],ed[x]),get(st[y],ed[y])),get(1,st[x]-1,ed[x]+1,st[y]-1,ed[y]+1,n)));
+			}
+		}
+		for(i=1;i<=n;i++)fir[i]=0;
+	}
+}
+~~~
+
+M：在线实现2种共$M$个操作，每个时刻1个操作。1、加入$[L_i,R_i,C_i]$，如果在某一时刻$j$，在$i$时刻到$j$时刻加入的在$[L_i,R_i]$之间的元素$x$恰好到了$C_i$个，在$j$时刻发出警报。2、加入一个数$x$。求出每次警报发出的时间。$N\leq200000,M\leq10000$。
+
+1操作相当于在平面上加上一个点$(L_i,R_i)$，权值为$C_i$，2操作相当于将平面上$([0,x],[x,n])$的点都$-1$。如果某个点变为$0$，将该点输出并赋$\infty$即可。用K-D树实现，时间复杂度$O(nlgn+m\sqrt{n})$。插入题目中可以离线插，但我为了练习一下K-D树在线加点写了个在线加的，在线加要注意标记的下传，ＷＡ了好久
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define L T[k].l
+#define R T[k].r
+#define inf 1e9
+#define N 222222
+using namespace std;
+int Te,ca,rt,id,an,ti,t,cnt,O,I[2],q[N];
+char s[9];
+struct P{int l,r,id,D,d[2],mi[2],mx[2],mv,v,sz,lz;}T[N];
+bool cmp(int x,int y){return T[x].d[O]<T[y].d[O]||T[x].d[O]==T[y].d[O]&&T[x].d[O^1]<T[y].d[O^1];}
+void pss(int k){T[k].mv=min(min(T[L].mv,T[R].mv),T[k].v);}
+void ps(int k){
+	T[k].sz=T[L].sz+T[R].sz+1;pss(k);
+	for(int i=0;i<2;i++)
+		T[k].mi[i]=min(T[k].d[i],min(T[L].mi[i],T[R].mi[i])),
+		T[k].mx[i]=max(T[k].d[i],max(T[L].mx[i],T[R].mx[i]));
+}
+void DEL(int k,int z){
+	if(!k)return;
+	T[k].lz+=z;
+	T[k].v-=z;
+	T[k].mv-=z;
+}
+void pd(int k){
+	if(T[k].lz)DEL(L,T[k].lz),DEL(R,T[k].lz),T[k].lz=0;
+}
+void bd(int&k,int l,int r,int o){
+	O=o;
+	int md=l+r>>1;
+	nth_element(q+l+1,q+md+1,q+r+1,cmp);
+	T[k=q[md]].D=o;T[k].lz=0;
+	if(l<md)bd(L,l,md-1,o^1);else L=0;
+	if(r>md)bd(R,md+1,r,o^1);else R=0;
+	ps(k);
+}
+void dfs(int k){
+	if(!k)return;
+	pd(k);
+	dfs(L);
+	q[++cnt]=k;
+	dfs(R);
+}
+void rbd(int&k){
+	cnt=0;dfs(k);bd(k,1,cnt,T[k].D);
+}
+void add(int&k,int o,int z,int v){
+	if(!k){
+		k=++id;T[k].d[0]=I[0];T[k].d[1]=I[1];T[k].id=v;T[k].D=o;
+		T[k].v=T[k].mv=z;T[k].sz=1;T[k].lz=T[k].l=T[k].r=0;
+	}else{
+		pd(k);
+		if(I[o]<T[k].d[o]||I[o]==T[k].d[o]&&I[o^1]<T[k].d[o^1]){
+			add(L,o^1,z,v);
+			if(T[L].sz*10>T[k].sz*7)rbd(k);
+		}else{
+			add(R,o^1,z,v);
+			if(T[R].sz*10>T[k].sz*7)rbd(k);
+		}
+	}
+	ps(k);
+}
+void del(int k,int X0,int X1,int Y0,int Y1){
+	if(!k||X0>T[k].mx[0]||X1<T[k].mi[0]||Y0>T[k].mx[1]||Y1<T[k].mi[1])return;
+	if(X0<=T[k].mi[0]&&X1>=T[k].mx[0]&&Y0<=T[k].mi[1]&&Y1>=T[k].mx[1]){DEL(k,1);return;}
+	if(X0<=T[k].d[0]&&T[k].d[0]<=X1&&Y0<=T[k].d[1]&&T[k].d[1]<=Y1)T[k].v--;
+	pd(k);del(L,X0,X1,Y0,Y1);del(R,X0,X1,Y0,Y1);
+	pss(k);
+}
+void fd(int k){
+	if(!k)return;
+	pd(k);
+	if(!T[k].v){
+		q[++t]=T[k].id;
+		T[k].v=inf;
+	}else
+	if(!T[L].mv)fd(L);
+	else if(!T[R].mv)fd(R);
+	pss(k);
+}
+int main(){
+	int x,z,n,m,i;
+	T[0].mv=T[0].mi[0]=T[0].mi[1]=T[0].v=inf;
+	for(scanf("%d",&Te),ca=1;ca<=Te;ca++){
+		scanf("%d%d",&m,&n);
+		printf("Case #%d:\n",ca);an=id=rt=0;
+		for(ti=1;ti<=m;ti++){
+			scanf("%s",s);
+			if(s[0]=='C'){
+				scanf("%d%d%d",&I[0],&I[1],&z);
+				add(rt,0,z,ti);
+			}else{
+				scanf("%d",&x);x^=an;
+				del(rt,1,x,x,n);
+				for(t=0;!T[rt].mv;)fd(rt);
+				if(t){
+					sort(q+1,q+t+1);
+					printf("%d",ti);
+					for(i=1;i<=t;i++)printf(" %d",q[i]),an^=q[i];
+					puts("");
+				}
+			}
+		}	
+	}
+}
+~~~
