@@ -1,9 +1,5 @@
----
-format: Markdown
-title: XVI Open Cup named after E.V. Pankratiev
-...
-
-## Solution (3/15)
+Solution (3/15)
+---------------
 
 Percentage: 64%, 109/171 (TBP +1)
 
@@ -11,169 +7,173 @@ Upsolved problems are highlighted in the following.
 
 ### Stage 01. Grand Prix of Ukraine (8/13)
 
-- A. Associated Vertices 压位 SCC + DP
-- B. Bishops **TBA**
-- C. Cool Numbers **TBA**
-- D. Diagram **TBA**
-- F. First And Last **TBA**
-- G. Game of Solitaire **TBA**
-- J. Joining Powers 容斥 + 二分
-- M. Merging 堆
+-   A. Associated Vertices 压位 SCC + DP
+-   B. Bishops **TBA**
+-   C. Cool Numbers **TBA**
+-   D. Diagram **TBA**
+-   F. First And Last **TBA**
+-   G. Game of Solitaire **TBA**
+-   J. Joining Powers 容斥 + 二分
+-   M. Merging 堆
 
 ### Stage 02. Grand Prix of Japan (7/10)
 
-- A. Where is the Boundary **TBA**
-- B. Vector Field 模拟
-- D. Identity Function 数论
-- F. Marching Course **TBA**
-- G. Surface Area of Cubes **TBA**
-- H. Laser Cutter **TBA**
-- J. Black Company **TBA**
+-   A. Where is the Boundary **TBA**
+-   B. Vector Field 模拟
+-   D. Identity Function 数论
+-   F. Marching Course **TBA**
+-   G. Surface Area of Cubes **TBA**
+-   H. Laser Cutter **TBA**
+-   J. Black Company **TBA**
 
 ### Stage 03. Grand Prix of Eurasia (8/12)
 
-- A. Nanoassembly **TBA**
-- B. Playof 模拟
-- D. How to measure the Ocean? 预处理 + 贪心
-- E. Navigation **TBA**
-- F. Bets 概率
-- H. Bouquet 分组背包
-- I. Hash function 模拟
-- K. Master Gambs chairs 排序 + 贪心
+-   A. Nanoassembly **TBA**
+-   B. Playof 模拟
+-   D. How to measure the Ocean? 预处理 + 贪心
+-   E. Navigation **TBA**
+-   F. Bets 概率
+-   H. Bouquet 分组背包
+-   I. Hash function 模拟
+-   K. Master Gambs chairs 排序 + 贪心
 
 ### Stage 04. Grand Prix of SPb (7/12)
 
 *Alternative title: XLII St. Petersburg State University Championship*
 
-- A. Bubbles **TBA**
-- E. Next Partition in RLE Notation 划分数 + 模拟
-- **F. Equation** 压位 + 扩展欧几里得
-- G. “Swap-Plus” Puzzle 暴力枚举 + 贪心
-- H. Wrong Sieve 数学 + 暴力
-- I. Space Cat **TBA**
-- **J. Tic-Tac-Toe Variation** 博弈 + 模拟
+-   A. Bubbles **TBA**
+-   E. Next Partition in RLE Notation 划分数 + 模拟
+-   **F. Equation** 压位 + 扩展欧几里得
+-   G. “Swap-Plus” Puzzle 暴力枚举 + 贪心
+-   H. Wrong Sieve 数学 + 暴力
+-   I. Space Cat **TBA**
+-   **J. Tic-Tac-Toe Variation** 博弈 + 模拟
 
 ### Stage 05. Grand Prix of Ekaterinburg (5/11)
 
 *Alternative title: Grand Prix of Yekaterinburg*
 
-- B. Black Widow **TBA**
-- D. Dr. Banner DP
-- **E. Egocentric Loki** 三角形外接圆区域判定
-- F. Fury **TBA**
-- G. Groot **TBA**
+-   B. Black Widow **TBA**
+-   D. Dr. Banner DP
+-   **E. Egocentric Loki** 三角形外接圆区域判定
+-   F. Fury **TBA**
+-   G. Groot **TBA**
 
-*E 题数据范围有误，集合大小超过了 1000，原场上提交的代码现也可以通过，不卡精度*
+*E 题数据范围有误，集合大小超过了
+1000，原场上提交的代码现也可以通过，不卡精度*
 
 ### Stage 06. Grand Prix of Siberia (12/12)
 
-- A. Passage 二分图染色
-- B. Files list **TBA**
-- C. Graph optimization 压位 SCC + DP
-- D. Housing payments 近似暴力 DP
-- E. Arithmetic expressions **TBA**
-- **F. Sputnik** 枚举 + 球面几何
-- G. Voting 树 DP
-- H. Novice urbanist **TBA**
-- **I. Rangefinder** 离线 + 可合并 Treap
-- J. Hive **TBA**
-- K. Side effects BFS
-- **L. Cypher** 扩展欧几里得 + 数位 DP
+-   A. Passage 二分图染色
+-   B. Files list **TBA**
+-   C. Graph optimization 压位 SCC + DP
+-   D. Housing payments 近似暴力 DP
+-   E. Arithmetic expressions **TBA**
+-   **F. Sputnik** 枚举 + 球面几何
+-   G. Voting 树 DP
+-   H. Novice urbanist **TBA**
+-   **I. Rangefinder** 离线 + 可合并 Treap
+-   J. Hive **TBA**
+-   K. Side effects BFS
+-   **L. Cypher** 扩展欧几里得 + 数位 DP
 
 ### Stage 07. Grand Prix of Europe (6/12)
 
 *Alternative title: Central Europe Regional Contest 2015*
 
-- A. ASCII Addition **TBA**
-- B. Book Borders **TBA**
-- D. Digit Division **TBA**
-- **F. Frightful Formula** 组合数学 + FFT
-- H. Hovering Hornet **TBA**
-- K. Kernel Knights **TBA**
+-   A. ASCII Addition **TBA**
+-   B. Book Borders **TBA**
+-   D. Digit Division **TBA**
+-   **F. Frightful Formula** 组合数学 + FFT
+-   H. Hovering Hornet **TBA**
+-   K. Kernel Knights **TBA**
 
 ### Stage 08. Grand Prix of Peterhof (7/9)
 
 *Alternative title: XLIII St. Petersburg State University Championship*
 
-- A. (a, b)-Tower 数论 + 暴力
-- **C. Equivalence Relation** 模拟，同构于正十二面体的空间对称群
-- D. Formula-1 **TBA**
-- E. Ideal Photo **TBA**
-- F. (p, q)-Knight 扩展欧几里得 + 小范围暴力
-- G. Random Wormholes 随机贪心
-- H. Second Maximum 概率 DP + 期望线性性
+-   A. (a, b)-Tower 数论 + 暴力
+-   **C. Equivalence Relation** 模拟，同构于正十二面体的空间对称群
+-   D. Formula-1 **TBA**
+-   E. Ideal Photo **TBA**
+-   F. (p, q)-Knight 扩展欧几里得 + 小范围暴力
+-   G. Random Wormholes 随机贪心
+-   H. Second Maximum 概率 DP + 期望线性性
 
 ### Stage 09. Grand Prix of Asia (13/13)
 
-*Alternative title: 2015-2016 Petrozavodsk Winter Training Camp, Makoto Soejima Contest 4*
+*Alternative title: 2015-2016 Petrozavodsk Winter Training Camp, Makoto
+Soejima Contest 4*
 
-- **A. 2016** 幂集枚举 + DP
-- B. Airports 二分 + 并查集
-- **C. Jump** BFS
-- **D. Merge** 最小表示 + DP
-- E. Mirror Rice Cake 排序贪心
-- **F. Number Cards** 分段枚举
-- **G. Paint** 容斥搜索 + 组合数
-- **H. Random Walk** 容斥 + 组合数
-- **I. Robots** 最短路
-- J. Ropes 组合数
-- **K. Stains** 高斯整环 + 欧几里得
-- L. String Modification 模拟
-- **M. Team Competition** 构造
+-   **A. 2016** 幂集枚举 + DP
+-   B. Airports 二分 + 并查集
+-   **C. Jump** BFS
+-   **D. Merge** 最小表示 + DP
+-   E. Mirror Rice Cake 排序贪心
+-   **F. Number Cards** 分段枚举
+-   **G. Paint** 容斥搜索 + 组合数
+-   **H. Random Walk** 容斥 + 组合数
+-   **I. Robots** 最短路
+-   J. Ropes 组合数
+-   **K. Stains** 高斯整环 + 欧几里得
+-   L. String Modification 模拟
+-   **M. Team Competition** 构造
 
 ### Stage 10. Grand Prix of Saratov (11/11)
 
-*Alternative title:  2015-2016 Petrozavodsk Winter Training Camp, Saratov SU Contest*
+*Alternative title: 2015-2016 Petrozavodsk Winter Training Camp, Saratov
+SU Contest*
 
-- A. Three Servers **TBA**
-- B. Game on Bipartite Graph **TBA**
-- **C. Black and White Board** 最小表示 + 搜索
-- D. Catenary **TBA**
-- **E. Evacuation Plan** 贪心 + 点分治
-- **F. Empty Vessels** BFS
-- G. Maximum Product **TBA**
-- H. Biathlon 2.0 凸包
-- I. Archaeological Research 线段树
-- J. Sockets **TBA**
-- K. Toll Roads **TBA**
+-   A. Three Servers **TBA**
+-   B. Game on Bipartite Graph **TBA**
+-   **C. Black and White Board** 最小表示 + 搜索
+-   D. Catenary **TBA**
+-   **E. Evacuation Plan** 贪心 + 点分治
+-   **F. Empty Vessels** BFS
+-   G. Maximum Product **TBA**
+-   H. Biathlon 2.0 凸包
+-   I. Archaeological Research 线段树
+-   J. Sockets **TBA**
+-   K. Toll Roads **TBA**
 
 ### Stage 11. Grand Prix of China (1/10)
 
-*Alternative title:  ICL 2016 Selection*
+*Alternative title: ICL 2016 Selection*
 
-- J. Welcome to ICPCCamp 2016! **TBA**
+-   J. Welcome to ICPCCamp 2016! **TBA**
 
 ### Stage 12. Grand Prix of Bashkortostan (8/13)
 
-- A. Abstract Picture **TBA**
-- C. Constant Ratio **TBA**
-- D. dir -C 枚举 + ST 表
-- F. Find the Length **TBA**
-- H. Hierarchy **TBA**
-- I. Interactive Casino 预处理 + 状压暴力
-- J. Judgement 压位 DP
-- L. Liesbeth and the String **TBA**
+-   A. Abstract Picture **TBA**
+-   C. Constant Ratio **TBA**
+-   D. dir -C 枚举 + ST 表
+-   F. Find the Length **TBA**
+-   H. Hierarchy **TBA**
+-   I. Interactive Casino 预处理 + 状压暴力
+-   J. Judgement 压位 DP
+-   L. Liesbeth and the String **TBA**
 
 ### Stage 13. Grand Prix of Tatarstan (8/13)
 
-- B. High-Speed Pedestrian walkway 1.0 按两列长度的差值设计 DP，然后矩阵乘法加速
-- C. Cubes **TBA**
-- F. GCD and LCM 容斥 + 分解质因数
-- G. Pots **TBA**
-- H. Messenger 打标记 + 模拟
-- I. Manhattan Project 枚举符号 + Set
-- J. Liquid **TBA**
-- M. The smallest fraction 模拟
+-   B. High-Speed Pedestrian walkway 1.0 按两列长度的差值设计
+    DP，然后矩阵乘法加速
+-   C. Cubes **TBA**
+-   F. GCD and LCM 容斥 + 分解质因数
+-   G. Pots **TBA**
+-   H. Messenger 打标记 + 模拟
+-   I. Manhattan Project 枚举符号 + Set
+-   J. Liquid **TBA**
+-   M. The smallest fraction 模拟
 
 ### Stage 14. Grand Prix of Baltics (5/10)
 
 *Alternative title: XLIV St. Petersburg State University Championship*
 
-- E. Unique element **TBA**
-- F. Pizza Delivery Guy **TBA**
-- G. Reversed Continued Fraction **TBA**
-- H. Technical support 枚举约数 + 去重
-- J. Draw Straight Walk DFS
+-   E. Unique element **TBA**
+-   F. Pizza Delivery Guy **TBA**
+-   G. Reversed Continued Fraction **TBA**
+-   H. Technical support 枚举约数 + 去重
+-   J. Draw Straight Walk DFS
 
 ### Stage 15. Grand Prix of Moscow (TBP)
 
@@ -181,73 +181,75 @@ To be practiced.
 
 ### Stage 16. Grand Prix of Southern Caucasus (3/10)
 
-- D. Pocket Money **TBA**
-- F. Toll Roads **TBA**
-- **G. Boxes** 组合数学 + FFT
+-   D. Pocket Money **TBA**
+-   F. Toll Roads **TBA**
+-   **G. Boxes** 组合数学 + FFT
 
-## Upsolving (25/62)
+Upsolving (25/62)
+-----------------
 
 Solution-knowned problems are highlighted in the following.
 
-- **01E. Effective Hiring** DP
-- **01H. Hero’s Quest** 状压 DP + 高斯消元
-- **01I. Important Or Not?** 后缀数组 + 线段树
-- **01K. Keyboard Map** 斜率优化 DP
-- **01L. Light Sources** 扫描线 + 状压 DP
-- 02C. Kuru Kuru Sushi 枚举 + 线段树？
-- 02E. Enclose Points 平面图点定位？
-- **02I. Live Programming** 斜率优化 DP
-- **03C. Inequalities** SCC + 差分约束
-- 03G. Ant on the road 最短路？
-- 03J. Civilization 网络流？
-- 03L. Scrabble 模拟？
-- 04B. Drop7 模拟？
-- **04C. Eulerian Graphs** 划分数 + Burnside 引理
-- **04D. At Least Half** 质因数分解 + DP
-- 04K. Captain Tarjan 树 DP？
-- **04L. Gardening Lesson** 树 Hash
-- 05A. Avengers, The 随机 + 三角剖分？
-- **05C. Chitauri** 博弈（海盗分宝问题）
-- **05H. Heimdall** 抽象代数（Schreier-Sims algorithm）
-- 05I. Iron Man DP + KM？
-- **05J. Jarvis** 高斯消元
-- **05K. KSON** 字符串模拟
-- **07C. Cow Confinement** 扫描线 + 线段树
-- 07E. Export Estimate 离线 + 并查集？
-- 07G. Greenhouse Growth 堆？
-- 07I. Ice Igloos 几何暴力？
-- 07J. Juice Junctions 全局最小割？
-- 07L. Looping Labyrinth 暴力 BFS？
-- **08B. Bridges Construction** 插头 DP
-- **08I. Ticket To Ride** 模拟 + 枚举
-- 11A. Graph Drawing 网络流？
-- 11B. Dominating Set 状压 DP？
-- 11C. Balls and Bins BFS？
-- 11D. Attack 树链剖分？
-- 11E. Graph Automorphism 缩点 + 树同构？
-- **11F. Similar Subsequence** DP
-- 11G. Random Arithmetics 组合 DP？
-- **11H. Optimal BST** 斜率优化 + 树 DP
-- 11I. Boxes on Tree 置换 + 最小树形图？
-- **12B. Battle Mage** 二分 + 曲线积分（扇形）
-- 12E. Extreme Permutations 状压 DP？
-- 12G. Game “Minesweeper” 搜索？
-- 12K. Krotek 扫描线？
-- **12M. Matrix, The** 插头 DP + 二分
-- 13A. Three Lighthouses 简单二维几何？
-- 13D. Camelogistics 暴力？
-- 13E. The Carpet 简单二维几何？
-- **13K. Partial Reverse** 构造
-- 13L. Three machines 分类讨论？
-- **14A. Covering** 状压 DP
-- 14B. Hovels 随机 + 构造？
-- 14C. Ancient city 分治 + 可持久化 Treap？
-- 14D. Kites Set？
-- 14I. Stack and Subroutines Machine 模拟 + DP + 矩阵乘法？
-- 16A. Business DP？
-- 16B. Edit 折半 + 状压？
-- 16C. Cellular Explosion DP + 最短路？
-- **16E. Lighting** 暴力近似
-- **16H. Track Gauge** 分段 + DP
-- 16I. States 可合并 Treap？
-- 16J. Dancing Course 费用流 + 堆？
+-   **01E. Effective Hiring** DP
+-   **01H. Hero’s Quest** 状压 DP + 高斯消元
+-   **01I. Important Or Not?** 后缀数组 + 线段树
+-   **01K. Keyboard Map** 斜率优化 DP
+-   **01L. Light Sources** 扫描线 + 状压 DP
+-   02C. Kuru Kuru Sushi 枚举 + 线段树？
+-   02E. Enclose Points 平面图点定位？
+-   **02I. Live Programming** 斜率优化 DP
+-   **03C. Inequalities** SCC + 差分约束
+-   03G. Ant on the road 最短路？
+-   03J. Civilization 网络流？
+-   03L. Scrabble 模拟？
+-   04B. Drop7 模拟？
+-   **04C. Eulerian Graphs** 划分数 + Burnside 引理
+-   **04D. At Least Half** 质因数分解 + DP
+-   04K. Captain Tarjan 树 DP？
+-   **04L. Gardening Lesson** 树 Hash
+-   05A. Avengers, The 随机 + 三角剖分？
+-   **05C. Chitauri** 博弈（海盗分宝问题）
+-   **05H. Heimdall** 抽象代数（Schreier-Sims algorithm）
+-   05I. Iron Man DP + KM？
+-   **05J. Jarvis** 高斯消元
+-   **05K. KSON** 字符串模拟
+-   **07C. Cow Confinement** 扫描线 + 线段树
+-   07E. Export Estimate 离线 + 并查集？
+-   07G. Greenhouse Growth 堆？
+-   07I. Ice Igloos 几何暴力？
+-   07J. Juice Junctions 全局最小割？
+-   07L. Looping Labyrinth 暴力 BFS？
+-   **08B. Bridges Construction** 插头 DP
+-   **08I. Ticket To Ride** 模拟 + 枚举
+-   11A. Graph Drawing 网络流？
+-   11B. Dominating Set 状压 DP？
+-   11C. Balls and Bins BFS？
+-   11D. Attack 树链剖分？
+-   11E. Graph Automorphism 缩点 + 树同构？
+-   **11F. Similar Subsequence** DP
+-   11G. Random Arithmetics 组合 DP？
+-   **11H. Optimal BST** 斜率优化 + 树 DP
+-   11I. Boxes on Tree 置换 + 最小树形图？
+-   **12B. Battle Mage** 二分 + 曲线积分（扇形）
+-   12E. Extreme Permutations 状压 DP？
+-   12G. Game “Minesweeper” 搜索？
+-   12K. Krotek 扫描线？
+-   **12M. Matrix, The** 插头 DP + 二分
+-   13A. Three Lighthouses 简单二维几何？
+-   13D. Camelogistics 暴力？
+-   13E. The Carpet 简单二维几何？
+-   **13K. Partial Reverse** 构造
+-   13L. Three machines 分类讨论？
+-   **14A. Covering** 状压 DP
+-   14B. Hovels 随机 + 构造？
+-   14C. Ancient city 分治 + 可持久化 Treap？
+-   14D. Kites Set？
+-   14I. Stack and Subroutines Machine 模拟 + DP + 矩阵乘法？
+-   16A. Business DP？
+-   16B. Edit 折半 + 状压？
+-   16C. Cellular Explosion DP + 最短路？
+-   **16E. Lighting** 暴力近似
+-   **16H. Track Gauge** 分段 + DP
+-   16I. States 可合并 Treap？
+-   16J. Dancing Course 费用流 + 堆？
+
