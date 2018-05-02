@@ -1,0 +1,117 @@
+# Info
+
+Date: 2017.10.15 09:00-14:00
+
+[Link](http://codeforces.com/gym/101572)
+
+# Solutions
+
+## A Airport Coffee
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+$dp_i$表示从起点出发到第$i$个咖啡厅的最短时间，转移枚举最后一杯咖啡在哪里买的，根据咖啡没凉/在喝咖啡/喝完咖啡分三段转移，线段树优化。
+
+## B Best Relay Team
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+签到题，按照题意排序即可。
+
+## C Compass Card Sales
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+用$stl$模拟。
+
+## D Distinctive Character
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+每个$01$串向改变恰好一个字符的$01$串连权值为$1$的边，跑一次多源最短路。
+
+## E Emptying the Baltic
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+按照深度从大到小添加格子，使用按秩合并的带权并查集维护每个格子第一次和抽水处连通时加入的格子深度，那么这个深度就是抽水机从当前格子能抽到的水量。
+
+## F Fractal Tree
+
+unsolved
+
+## G Galactic Collegiate Programming Contest
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+一个不用思考的做法是直接用平衡树维护。
+
+quailty's comment
+
+实际上只需要用$std::set$维护排名更高的队伍。
+
+## H Hubtown
+
+upsolved by sk
+
+---
+
+sk's solution
+
+如果有两辆火车与某人距离相等那么这个人可以选其中一辆，且每辆火车有容量上限，根据这个条件很容易建出网络流模型。建图要先对人和火车分别极角排序，然后用双指针扫描，找到距离每个人最近的火车。但是点数有$40w$，普通的网络流会超时。优化是考虑到在经过整点的角平分线不会太多，那么可以对原图进行缩点。可以用$atan2()$函数来实现极角排序，注意比较$atan2()$大小的时候，$eps$要设置到不大于$10^{-13}$。
+
+## I Import Spaghetti
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+有向图里面输出一个最小的环。从每个点出发$bfs$一遍，并记录前驱。对于联通的两点，看是否有反向的边判断是否有环。
+
+## J Judging Moose
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+真·签到题。
+
+## K Kayaking Trip
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+二分答案后贪心配对。
+
+# Replay
