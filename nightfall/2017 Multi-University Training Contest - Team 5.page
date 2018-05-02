@@ -1,128 +1,132 @@
-# [Rikka with Sequence](http://acm.hdu.edu.cn/showproblem.php?pid=6087)
+[Rikka with Sequence](http://acm.hdu.edu.cn/showproblem.php?pid=6087)
+=====================================================================
 
-## Aki
+Aki
+---
 
 可持久化平衡树，并不是很难写，就是内存开不下。
 
 解决方法也很简单：发现内存池不够用了，就把序列抠出来，清空内存池重建平衡树。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 #define nil mem
 const int MX = 2e6, LIM = 1e6;
 typedef long long LL;
 struct Node {
-	Node *l, *r;
-	int val, sz;
-	LL sum;
+    Node *l, *r;
+    int val, sz;
+    LL sum;
 } mem[MX] = {{nil, nil, 0, 0, 0LL}};
 int sz;
 using ptr = Node*;
 ptr COPY(ptr x) {
-	return new(mem + ++ sz) Node{x -> l, x -> r, x -> val, x -> sz, x -> sum};
+    return new(mem + ++ sz) Node{x -> l, x -> r, x -> val, x -> sz, x -> sum};
 }
 ptr renew(ptr x) {
-	if (x == nil) return x;
-	x -> sum = x -> l -> sum + x -> val + x -> r -> sum;
-	x -> sz = x -> l -> sz + 1 + x -> r -> sz;
-	return x;
+    if (x == nil) return x;
+    x -> sum = x -> l -> sum + x -> val + x -> r -> sum;
+    x -> sz = x -> l -> sz + 1 + x -> r -> sz;
+    return x;
 }
 pair<ptr, ptr> split(ptr x, int n) {
-	ptr t; if (x == nil) return {nil, nil};
-	x = COPY(x);
-	return x -> l -> sz + 1 > n
-		? (tie(t, x -> l) = split(x -> l, n), make_pair(t, renew(x)))
-		: (tie(x -> r, t) = split(x -> r, n - 1 - x -> l -> sz), make_pair(renew(x), t));
+    ptr t; if (x == nil) return {nil, nil};
+    x = COPY(x);
+    return x -> l -> sz + 1 > n
+        ? (tie(t, x -> l) = split(x -> l, n), make_pair(t, renew(x)))
+        : (tie(x -> r, t) = split(x -> r, n - 1 - x -> l -> sz), make_pair(renew(x), t));
 }
 ptr mergy(ptr x, ptr y) {
-	if (x == nil) return y;
-	if (y == nil) return x;
-	auto ttt = rand() % (x -> sz + y -> sz) < x -> sz
-		? (x = COPY(x), x -> r = mergy(x -> r, y), renew(x))
-		: (y = COPY(y), y -> l = mergy(x, y -> l), renew(y));
-	return ttt;
+    if (x == nil) return y;
+    if (y == nil) return x;
+    auto ttt = rand() % (x -> sz + y -> sz) < x -> sz
+        ? (x = COPY(x), x -> r = mergy(x -> r, y), renew(x))
+        : (y = COPY(y), y -> l = mergy(x, y -> l), renew(y));
+    return ttt;
 }
 const int N = 2e5 + 5;
 int a[N], b[N];
 ptr build(int l, int r, int a[N]) {
-	if (l > r) return nil;
-	int mid = (l + r) / 2;
-	ptr tmp = renew(new (mem + ++ sz) Node{build(l, mid - 1, a), build(mid + 1, r, a), a[mid], 0, 0LL});
-	return tmp;
+    if (l > r) return nil;
+    int mid = (l + r) / 2;
+    ptr tmp = renew(new (mem + ++ sz) Node{build(l, mid - 1, a), build(mid + 1, r, a), a[mid], 0, 0LL});
+    return tmp;
 }
 ptr cut(ptr x, int l, int r) {
-	if (l > r) return nil;
-	return split(split(x, r).first, l - 1).second;
+    if (l > r) return nil;
+    return split(split(x, r).first, l - 1).second;
 }
 ptr mpow(ptr x, int n) {
-	ptr res = nil;
-	while (n) {
-		if (n & 1) res = mergy(res, x);
-		x = mergy(x, x);
-		n >>= 1;
-	}
-	return res;
+    ptr res = nil;
+    while (n) {
+        if (n & 1) res = mergy(res, x);
+        x = mergy(x, x);
+        n >>= 1;
+    }
+    return res;
 }
 void dfs(ptr x, int && sz) {
-	if (x == nil) return;
-	dfs(x -> l, move(sz));
-	b[++ sz] = x -> val;
-	dfs(x -> r, move(sz));
+    if (x == nil) return;
+    dfs(x -> l, move(sz));
+    b[++ sz] = x -> val;
+    dfs(x -> r, move(sz));
 }
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
-	ptr old = build(1, n, a);
-	ptr root = old;
-	for (int i = 0; i < m; ++ i) {
-		int type, l, r;
-		scanf("%d%d%d", &type, &l, &r);
-		if (type == 1) {
-			printf("%lld\n", cut(root, l, r) -> sum);
-		}
-		else if (type == 2) {
-			int k;
-			scanf("%d", &k);
-			ptr s1 = cut(root, l - k, l - 1);
-			ptr s2 = cut(root, l - k, l - k + (r - l + 1) % k - 1);
-			auto t1 = split(root, r);
-			auto t2 = split(t1.first, l - 1);
-			auto tt = mergy(mpow(s1, (r - l + 1) / k), s2);
-			auto tmp = mergy(t2.first, tt);
-			root = mergy(tmp, t1.second);
-		}
-		else {
-			ptr tmp = cut(old, l, r);
-			auto t1 = split(root, r);
-			auto t2 = split(t1.first, l - 1);
-			root = mergy(mergy(t2.first, tmp), t1.second);
-		}
-		if (sz > LIM) {
-			sz = 0;
-			old = build(1, n, a);
-			static vector<int> tmp;
-			tmp.clear();
-			dfs(root, 0);
-			//for (int i = 1; i <= n; ++ i) printf("%d ", b[i]); puts("");
-			root = build(1, n, b);
-		}
-	}
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+    ptr old = build(1, n, a);
+    ptr root = old;
+    for (int i = 0; i < m; ++ i) {
+        int type, l, r;
+        scanf("%d%d%d", &type, &l, &r);
+        if (type == 1) {
+            printf("%lld\n", cut(root, l, r) -> sum);
+        }
+        else if (type == 2) {
+            int k;
+            scanf("%d", &k);
+            ptr s1 = cut(root, l - k, l - 1);
+            ptr s2 = cut(root, l - k, l - k + (r - l + 1) % k - 1);
+            auto t1 = split(root, r);
+            auto t2 = split(t1.first, l - 1);
+            auto tt = mergy(mpow(s1, (r - l + 1) / k), s2);
+            auto tmp = mergy(t2.first, tt);
+            root = mergy(tmp, t1.second);
+        }
+        else {
+            ptr tmp = cut(old, l, r);
+            auto t1 = split(root, r);
+            auto t2 = split(t1.first, l - 1);
+            root = mergy(mergy(t2.first, tmp), t1.second);
+        }
+        if (sz > LIM) {
+            sz = 0;
+            old = build(1, n, a);
+            static vector<int> tmp;
+            tmp.clear();
+            dfs(root, 0);
+            //for (int i = 1; i <= n; ++ i) printf("%d ", b[i]); puts("");
+            root = build(1, n, b);
+        }
+    }
 }
-~~~
+```
 
-# [Rikka with Rock-paper-scissors](http://acm.hdu.edu.cn/showproblem.php?pid=6088)
+[Rikka with Rock-paper-scissors](http://acm.hdu.edu.cn/showproblem.php?pid=6088)
+================================================================================
 
-## lbn187
+lbn187
+------
 
 $ans=3^n\sum_{i=0}^{n}\sum_{j=0}^{n-i}C(n,i)C(n-i,j)gcd(i,j)=3^n\sum_{d=1}^{n}\psi(d)\sum_{i=0}^{\left\lfloor\frac{n}{d}\right\rfloor}\sum_{j=0}^{\left\lfloor\frac{n}{d}\right\rfloor-i}C(n,id)C(n-id,jd)$
 
 发现里面的东西是一个卷积，但FFT姿势不优美会T，而且要注意边界情况。
 
-首先必须使用FFT模任意模数，而不能三模数FFT；第二由于要求C=A*A，两个要乘的相同，可以少做一次FFT；第三当序列长度较小时，直接暴力做。
+首先必须使用FFT模任意模数，而不能三模数FFT；第二由于要求C=A\*A，两个要乘的相同，可以少做一次FFT；第三当序列长度较小时，直接暴力做。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define W 100005
 #define NN 262144
@@ -135,160 +139,166 @@ int T,t,n,L,M,N,an,i,j,uu,I[W],p[W],phi[W],pw[W],g[NN],E[NN],AN[NN];
 bool f[W];
 CP a[NN],b[NN],A[NN],B[NN],C[NN],D[NN],w[NN];
 LL Pw(LL a,LL b,LL p){
-	LL v=1;
-	for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
-	return v;
+    LL v=1;
+    for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
+    return v;
 }
 int CC(int n,int m){
-	return 1ll*pw[n]*I[m]%M*I[n-m]%M;
+    return 1ll*pw[n]*I[m]%M*I[n-m]%M;
 }
 void up(int&x,int y){
-	x+=y;
-	if(x>=M)x-=M;
+    x+=y;
+    if(x>=M)x-=M;
 }
 void pre(){
-	for(int i=0;i<N;i++){
-		g[i]=g[i>>1]>>1|((i&1)<<(L-1));
-		w[i]=CP(cos(2*PI*i/N),sin(2*PI*i/N));;
-	}
+    for(int i=0;i<N;i++){
+        g[i]=g[i>>1]>>1|((i&1)<<(L-1));
+        w[i]=CP(cos(2*PI*i/N),sin(2*PI*i/N));;
+    }
 }
 void FFT(CP *a,int n){
-	int i,j,k,o;
-	rep(i,n)if(i<g[i])swap(a[i],a[g[i]]);
-	for(i=2,o=n>>1;i<=n;i<<=1,o>>=1)
-		for(j=0;j<n;j+=i){
-			CP *l=a+j,*r=a+j+(i>>1),*p=w;
-			for(k=0;k<i>>1;k++){
-				CP tmp=*r * *p;
-				*r=*l-tmp;*l=*l+tmp;
-				l++;r++;p+=o;
-			}
-		}
+    int i,j,k,o;
+    rep(i,n)if(i<g[i])swap(a[i],a[g[i]]);
+    for(i=2,o=n>>1;i<=n;i<<=1,o>>=1)
+        for(j=0;j<n;j+=i){
+            CP *l=a+j,*r=a+j+(i>>1),*p=w;
+            for(k=0;k<i>>1;k++){
+                CP tmp=*r * *p;
+                *r=*l-tmp;*l=*l+tmp;
+                l++;r++;p+=o;
+            }
+        }
 }
 void mul(int*x,int*y,int*z){//求x*y，存到z中
-	rep(i,N)a[i]=CP(x[i]&32767,x[i]>>15);
-	FFT(a,N);
-	rep(i,N){
-		int j=(N-i)&(N-1);
-		static CP da,db,dc,dd;
-		da=(a[i]+conj(a[j]))*CP(0.5,0);db=(a[i]-conj(a[j]))*CP(0,-0.5);
-		dc=(a[i]+conj(a[j]))*CP(0.5,0);dd=(a[i]-conj(a[j]))*CP(0,-0.5);
-		A[j]=da*dc;B[j]=da*dd;C[j]=db*dc;D[j]=db*dd;
-	}
-	rep(i,N)a[i]=A[i]+B[i]*CP(0,1),b[i]=C[i]+D[i]*CP(0,1);
-	FFT(a,N);FFT(b,N);
-	rep(i,N){
-		int da=(LL)(a[i].real()/N+0.5)%M,db=(LL)(a[i].imag()/N+0.5)%M,
-			dc=(LL)(b[i].real()/N+0.5)%M,dd=(LL)(b[i].imag()/N+0.5)%M;
-		z[i]=(da+((LL)(db+dc)<<15)+((LL)dd<<30))%M;
-	}
+    rep(i,N)a[i]=CP(x[i]&32767,x[i]>>15);
+    FFT(a,N);
+    rep(i,N){
+        int j=(N-i)&(N-1);
+        static CP da,db,dc,dd;
+        da=(a[i]+conj(a[j]))*CP(0.5,0);db=(a[i]-conj(a[j]))*CP(0,-0.5);
+        dc=(a[i]+conj(a[j]))*CP(0.5,0);dd=(a[i]-conj(a[j]))*CP(0,-0.5);
+        A[j]=da*dc;B[j]=da*dd;C[j]=db*dc;D[j]=db*dd;
+    }
+    rep(i,N)a[i]=A[i]+B[i]*CP(0,1),b[i]=C[i]+D[i]*CP(0,1);
+    FFT(a,N);FFT(b,N);
+    rep(i,N){
+        int da=(LL)(a[i].real()/N+0.5)%M,db=(LL)(a[i].imag()/N+0.5)%M,
+            dc=(LL)(b[i].real()/N+0.5)%M,dd=(LL)(b[i].imag()/N+0.5)%M;
+        z[i]=(da+((LL)(db+dc)<<15)+((LL)dd<<30))%M;
+    }
 }
 int main(){
-	for(phi[1]=1,i=2;i<W;i++){
-		if(!f[i])p[++t]=i,phi[i]=i-1;
-		for(j=1;j<=t&&i*p[j]<W;j++){
-			f[i*p[j]]=1;
-			if(i%p[j]==0){phi[i*p[j]]=phi[i]*p[j];break;}
-			phi[i*p[j]]=phi[i]*(p[j]-1);
-		}
-	}
-	scanf("%d",&T);
-	for(;T--;){
-		scanf("%d%d",&n,&M);an=0;uu=1;
-		for(pw[0]=i=1;i<=n;i++)pw[i]=1ll*pw[i-1]*i%M;
-		I[n]=Pw(pw[n],M-2,M);
-		for(i=n-1;~i;i--)I[i]=1ll*I[i+1]*(i+1)%M;
-		for(i=1;i<=n;i++)up(an,1ll*pw[n]*I[i]%M*I[n-i]%M*i%M),uu=3ll*uu%M;
-		an=an*2%M;
-		for(int d=1;d<=n;d++){
-			int o=n/d;
-			for(i=1;i<=o;i++)E[i]=I[i*d];
-			if(o<=50){
-				for(i=1;i<=o;i++)
-					for(AN[i]=0,j=0;j<=i;j++)
-						up(AN[i],1ll*E[j]*E[i-j]%M);
-			}else{
-				for(L=0;(1<<L)<o*2+1;L++);
-				N=1<<L;
-				pre();
-				mul(E,E,AN);
-			}
-			for(i=1;i<=o;i++)up(an,1ll*AN[i]*pw[n]%M*phi[d]%M*I[n-i*d]%M),E[i]=0;
-		}
-		printf("%d\n",1ll*an*uu%M);
-	}
+    for(phi[1]=1,i=2;i<W;i++){
+        if(!f[i])p[++t]=i,phi[i]=i-1;
+        for(j=1;j<=t&&i*p[j]<W;j++){
+            f[i*p[j]]=1;
+            if(i%p[j]==0){phi[i*p[j]]=phi[i]*p[j];break;}
+            phi[i*p[j]]=phi[i]*(p[j]-1);
+        }
+    }
+    scanf("%d",&T);
+    for(;T--;){
+        scanf("%d%d",&n,&M);an=0;uu=1;
+        for(pw[0]=i=1;i<=n;i++)pw[i]=1ll*pw[i-1]*i%M;
+        I[n]=Pw(pw[n],M-2,M);
+        for(i=n-1;~i;i--)I[i]=1ll*I[i+1]*(i+1)%M;
+        for(i=1;i<=n;i++)up(an,1ll*pw[n]*I[i]%M*I[n-i]%M*i%M),uu=3ll*uu%M;
+        an=an*2%M;
+        for(int d=1;d<=n;d++){
+            int o=n/d;
+            for(i=1;i<=o;i++)E[i]=I[i*d];
+            if(o<=50){
+                for(i=1;i<=o;i++)
+                    for(AN[i]=0,j=0;j<=i;j++)
+                        up(AN[i],1ll*E[j]*E[i-j]%M);
+            }else{
+                for(L=0;(1<<L)<o*2+1;L++);
+                N=1<<L;
+                pre();
+                mul(E,E,AN);
+            }
+            for(i=1;i<=o;i++)up(an,1ll*AN[i]*pw[n]%M*phi[d]%M*I[n-i*d]%M),E[i]=0;
+        }
+        printf("%d\n",1ll*an*uu%M);
+    }
 }
-~~~
+```
 
-# [Rikka with Terrorist](http://acm.hdu.edu.cn/showproblem.php?pid=6089)
+[Rikka with Terrorist](http://acm.hdu.edu.cn/showproblem.php?pid=6089)
+======================================================================
 
-# [Rikka with Match](http://acm.hdu.edu.cn/showproblem.php?pid=6091)
+[Rikka with Match](http://acm.hdu.edu.cn/showproblem.php?pid=6091)
+==================================================================
 
-## Aki
+Aki
+---
+
 dp套树上最大匹配的贪心。一个看起来是暴力（$nm^2$）的dp复杂度其实是对的（$nm$），注意背包的时候只for到sz和m取min。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5e4 + 5, M = 205, MOD = 998244353;
 int m, dp[N][M][2], sz[N], tmp[M][2];
 vector<int> G[N];
 __inline void upd(int &x, int y) {
-	if ((x += y) >= MOD) x -= MOD;
+    if ((x += y) >= MOD) x -= MOD;
 }
 void dfs(int x, int p = 0) {
-	sz[x] = 1;
-	for (int i = 0; i < m; ++ i) dp[x][i][0] = dp[x][i][1] = 0;
-	dp[x][0][0] = 1;
-	for (int u : G[x]) if (u != p) {
-		dfs(u, x);
-		for (int i = 0; i < m; ++ i) tmp[i][0] = tmp[i][1] = 0;
-		auto &f = dp[x], &g = dp[u];
-		for (int i = 0; i <= min(m - 1, sz[x] / 2); ++ i) {
-			for (int j = 0; j <= min(m - 1, sz[u] / 2); ++ j) {
-				upd(tmp[(i + j) % m][0], 1LL * f[i][0] * g[j][1] % MOD);
-				upd(tmp[(i + j + 1) % m][1], 1LL * f[i][0] * g[j][0] % MOD);
-				upd(tmp[(i + j) % m][1], 1LL * f[i][1] * (g[j][0] + g[j][1]) % MOD);
-			}
-		}
-		sz[x] += sz[u];
-		for (int i = 0; i < m; ++ i) dp[x][i][0] = tmp[i][0], dp[x][i][1] = tmp[i][1];
-	}
-	if (p) for (int i = 0; i < m; ++ i) {
-		upd(dp[x][i][1], dp[x][i][1]);
-		upd(dp[x][i][1], dp[x][i][0]);
-	}
-	//printf("%d : ", x);
-	//for (int i = 0; i <= 10; ++ i) printf("<%d %d> ", dp[x][i][0], dp[x][i][1]); puts("");
+    sz[x] = 1;
+    for (int i = 0; i < m; ++ i) dp[x][i][0] = dp[x][i][1] = 0;
+    dp[x][0][0] = 1;
+    for (int u : G[x]) if (u != p) {
+        dfs(u, x);
+        for (int i = 0; i < m; ++ i) tmp[i][0] = tmp[i][1] = 0;
+        auto &f = dp[x], &g = dp[u];
+        for (int i = 0; i <= min(m - 1, sz[x] / 2); ++ i) {
+            for (int j = 0; j <= min(m - 1, sz[u] / 2); ++ j) {
+                upd(tmp[(i + j) % m][0], 1LL * f[i][0] * g[j][1] % MOD);
+                upd(tmp[(i + j + 1) % m][1], 1LL * f[i][0] * g[j][0] % MOD);
+                upd(tmp[(i + j) % m][1], 1LL * f[i][1] * (g[j][0] + g[j][1]) % MOD);
+            }
+        }
+        sz[x] += sz[u];
+        for (int i = 0; i < m; ++ i) dp[x][i][0] = tmp[i][0], dp[x][i][1] = tmp[i][1];
+    }
+    if (p) for (int i = 0; i < m; ++ i) {
+        upd(dp[x][i][1], dp[x][i][1]);
+        upd(dp[x][i][1], dp[x][i][0]);
+    }
+    //printf("%d : ", x);
+    //for (int i = 0; i <= 10; ++ i) printf("<%d %d> ", dp[x][i][0], dp[x][i][1]); puts("");
 }
 int main() {
-	int T;
-	scanf("%d", &T);
-	while (T --) {
-		int n;
-		scanf("%d%d", &n, &m);
-		for (int i = 1; i <= n; ++ i) G[i].clear();
-		for (int i = 1; i < n; ++ i) {
-			int u, v;
-			scanf("%d%d", &u, &v);
-			G[u].push_back(v);
-			G[v].push_back(u);
-		}
-		dfs(1);
-		printf("%d\n", (dp[1][0][1] + dp[1][0][0]) % MOD);
-	}
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        int n;
+        scanf("%d%d", &n, &m);
+        for (int i = 1; i <= n; ++ i) G[i].clear();
+        for (int i = 1; i < n; ++ i) {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        dfs(1);
+        printf("%d\n", (dp[1][0][1] + dp[1][0][0]) % MOD);
+    }
 }
-~~~
+```
 
-# [Rikka with K-Match](http://acm.hdu.edu.cn/showproblem.php?pid=6094)
+[Rikka with K-Match](http://acm.hdu.edu.cn/showproblem.php?pid=6094)
+====================================================================
 
-## Aki
+Aki
+---
 
 考虑费用流的过程，每次增广，流量加1，费用的增大量不减。
 
 然后就是二分导数的套路了。二分增大量，变成求最小权匹配，以及此时使用的边数。状压dp即可。二分时要注意连续多段增大量相同的case。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 4e4 + 5;
@@ -300,61 +310,61 @@ pair<LL, int> dp[2][1 << 4];
 void upd(pair<LL, int> &x, pair<LL, int> y) { x = min(x, y); }
 pair<LL, int> operator + (const pair<LL, int> &a, LL b) { return make_pair(a.first + b, a.second - 1);}
 int main() {
-	int T;
-	scanf("%d", &T);
-	while (T --) {
-		int n, m, k;
-		scanf("%d%d%d", &n, &m, &k);
-		for (int i = 1; i < n; ++ i) {
-			for (int j = 1; j <= m; ++ j) {
-				scanf("%d", &a[i + i + 1][j + j]);
-			}
-		}
-		for (int i = 1; i <= n; ++ i) {
-			for (int j = 1; j < m; ++ j) {
-				scanf("%d", &a[i + i][j + j + 1]);
-			}
-		}
-		LL L = 0, R = 1e14L, ans = 0;
-		while (L <= R) {
-			LL mid = (L + R) / 2;
-			int all = (1 << m) - 1;
-			//memset(dp, 0x3f, sizeof(dp));
-			for (int i = 0; i < 2; ++ i) {
-				for (int j = 0; j <= all; ++ j) dp[i][j] = make_pair(inf_ll, inf_int);
-			}
-			dp[0][all] = {0LL, 0};
-			int cur = 0;
-			pair<LL, int> INF = dp[1][0];
-			for (int i = 1; i <= n; ++ i) {
-				for (int j = 1; j <= m; ++ j) {
-					cur ^= 1;
-					for (int mask = 0; mask < (1 << m); ++ mask) {
-						upd(dp[cur][(mask << 1) & all], dp[cur ^ 1][mask]);
-						if (i > 1 && (~mask >> (m - 1) & 1)) {
-							int cost = a[i + i - 1][j + j];
-							upd(dp[cur][(mask << 1) ^ 1], dp[cur ^ 1][mask] + (cost - mid));
-						}
-						if (j > 1 && (~mask & 1)) {
-							int cost = a[i + i][j + j - 1];
-							upd(dp[cur][((mask << 1) ^ 3) & all], dp[cur ^ 1][mask] + (cost - mid));
-						}
-						dp[cur ^ 1][mask] = INF;
-					}
-				}
-			}
-			pair<LL, int> res = INF;
-			for (int mask = 0; mask < (1 << m); ++ mask) upd(res, dp[cur][mask]);
-			//printf("test %lld res = %lld %d\n", mid, res.first, res.second);
-			if (-res.second >= k) {
-				ans = res.first + mid * k;
-				R = mid - 1;
-			}
-			else {
-				L = mid + 1;
-			}
-		}
-		printf("%lld\n", ans);
-	}
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        int n, m, k;
+        scanf("%d%d%d", &n, &m, &k);
+        for (int i = 1; i < n; ++ i) {
+            for (int j = 1; j <= m; ++ j) {
+                scanf("%d", &a[i + i + 1][j + j]);
+            }
+        }
+        for (int i = 1; i <= n; ++ i) {
+            for (int j = 1; j < m; ++ j) {
+                scanf("%d", &a[i + i][j + j + 1]);
+            }
+        }
+        LL L = 0, R = 1e14L, ans = 0;
+        while (L <= R) {
+            LL mid = (L + R) / 2;
+            int all = (1 << m) - 1;
+            //memset(dp, 0x3f, sizeof(dp));
+            for (int i = 0; i < 2; ++ i) {
+                for (int j = 0; j <= all; ++ j) dp[i][j] = make_pair(inf_ll, inf_int);
+            }
+            dp[0][all] = {0LL, 0};
+            int cur = 0;
+            pair<LL, int> INF = dp[1][0];
+            for (int i = 1; i <= n; ++ i) {
+                for (int j = 1; j <= m; ++ j) {
+                    cur ^= 1;
+                    for (int mask = 0; mask < (1 << m); ++ mask) {
+                        upd(dp[cur][(mask << 1) & all], dp[cur ^ 1][mask]);
+                        if (i > 1 && (~mask >> (m - 1) & 1)) {
+                            int cost = a[i + i - 1][j + j];
+                            upd(dp[cur][(mask << 1) ^ 1], dp[cur ^ 1][mask] + (cost - mid));
+                        }
+                        if (j > 1 && (~mask & 1)) {
+                            int cost = a[i + i][j + j - 1];
+                            upd(dp[cur][((mask << 1) ^ 3) & all], dp[cur ^ 1][mask] + (cost - mid));
+                        }
+                        dp[cur ^ 1][mask] = INF;
+                    }
+                }
+            }
+            pair<LL, int> res = INF;
+            for (int mask = 0; mask < (1 << m); ++ mask) upd(res, dp[cur][mask]);
+            //printf("test %lld res = %lld %d\n", mid, res.first, res.second);
+            if (-res.second >= k) {
+                ans = res.first + mid * k;
+                R = mid - 1;
+            }
+            else {
+                L = mid + 1;
+            }
+        }
+        printf("%lld\n", ans);
+    }
 }
-~~~
+```
