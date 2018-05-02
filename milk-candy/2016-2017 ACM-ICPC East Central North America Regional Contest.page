@@ -1,70 +1,79 @@
-# Info
+Info
+====
 
 Date: 2017.10.17 18:00-22:00
 
 [Link](http://codeforces.com/gym/101196)
 
-# Solutions
+Solutions
+=========
 
-## A Bubbly Troubly
+A Bubbly Troubly
+----------------
 
 unsolved
 
-## B Foosball Dynasty
+B Foosball Dynasty
+------------------
 
 solved by Jove, upsolve by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 用一个队列模拟比赛过程即可。
 
-## C The Key to Cryptography
+C The Key to Cryptography
+-------------------------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 前$|B|$个位置根据$|A|$和$|B|$的对应位置算，剩下位置根据答案往前第$|B|$位和$|A|$的对应位置算。
 
-## D Lost in Translation
+D Lost in Translation
+---------------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 $BFS$的同时记录每个点的最小前驱，表示相同距离下走到这个点还需要的最小花费，最后累加即是答案，存在走不到的点则输出无解。
 
-## E Red Rover
+E Red Rover
+-----------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 枚举子串作为$M$然后计算长度。
 
-## F Removal Game
+F Removal Game
+--------------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 $dp_{i,j}$表示把区间$[i,j]$内的数消除到只剩第$i$个和第$j$个的最小代价，转移枚举上一次消除了$k$，代价是$dp_{i,k}+dp_{k,j}+\gcd(a_i,a_j)$，最后枚举剩下第$i$和第$j$个数，用$dp_{i,j}+dp_{j,i}+\gcd(a_i,a_j)$更新答案。
 
-## G That's One Hanoi-ed Teacher
+G That's One Hanoi-ed Teacher
+-----------------------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
@@ -74,28 +83,32 @@ sk's solution
 
 现在只剩两种情况，情况一：圆盘$n$在$A$底部，说明还没到汉诺塔的步骤二、三，答案加上$2^{n-1}$，$swap(B,C)$。情况二：圆盘$n$在$C$底部，说明已经到步骤三了，这时只需要$swap(A,B)$。这样每次拿走圆盘$n$继续递归，直到$n=0$结束。
 
-## H Vin Diagrams
+H Vin Diagrams
+--------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 直接抠出所有区域进行讨论，数据比较水，没有难以处理的情况。
 
-## I Waif Until Dark
+I Waif Until Dark
+-----------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 简单的网络流模型。
 
-## J Yes, Yes, It's Nonograms
+J Yes, Yes, It's Nonograms
+--------------------------
 
 unsolved
 
-# Replay
+Replay
+======
