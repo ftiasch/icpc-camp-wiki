@@ -1,0 +1,16 @@
+## SRM700 Easy
+
+> 一场 TC，$roomCount$ 个房间，每个房间有 $roomSize$ 个人，已知每个房间的 $room\ winner$ 的总排名集合 $leaders$，求排名第 $friendPlace$ 的人可能在几个房间
+
+将所有 $room\ winner$ 的排名从小到大排序，然后枚举，每次令答案加 $1$，如果 $leaders[i+1]$ 的排名大于 $friendPlace$，那么返回答案。如果排名前 $leaders[i+1]-1$ 的人占满了前 $i$ 个房间，令答案归零。特殊的是如果 $friendPlace$ 等于 $leaders$ 中的某个值，直接返回 $1$。
+
+
+
+## SRM700 Meidum
+
+> 简化后的题意为，$n$ 个点每个点一条出边，构成基环内向森林，求环上点数恰为 $k$ 的方案数。
+
+首先 $n\choose k$ 选出 $k$ 个点，这 $k$ 个点构成环的方案数为 $k!$ ，然后需要求固定 $k$ 个点作为根的 $n$ 个点的带标号有根森林的方案数。有两种方法：
+
+1. $dp[i][j]$ 表示 $i$ 个森林用了 $j$ 个点的方案数，那么有 $dp[i][j]=\sum_{k=1}^{j}tr[k]\times dp[i-1][j-k]\times {j\choose k}$，转化一下变成 $\frac{dp[i][j]}{j!}=\sum_{k=1}^{j}\frac{tr[k]}{k!}\times \frac{dp[i-1][j-k]}{(j-k)!}$，这样相当于要做 $k$ 次多项式乘法，由于多项式乘法满足结合律，那么可以用快速幂优化到 $O(n^2\log k)$，如果用FFT可以优化到 $O(n\log n\log k)$，其中的 $tr[i]$ 即 $i$ 个点的有根树的方案数，即$i^{i-1}$。这个DP实际上隐含了 $n\choose k$，并且由于每个方案会算 $k!$ 次，那么最后 $dp[k][n]$ 即答案。
+2. 实际上上述方案数即 $k\times n^{n-k-1}$，证明方法待补。所以答案即 ${n\choose k}\times k! \times k\times n^{n-k-1}$。
