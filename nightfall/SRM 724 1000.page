@@ -1,53 +1,53 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 double D(vector<string> G) {
-	int n = (int) G.size();
-	double avg = 0, avg2 = 0;
-	for (int i = 0; i < n; ++ i) {
-		int cnt = 0;
-		for (int j = 0; j < n; ++ j) if (G[i][j] == 'W') cnt ++;
-		double x = 1.0 * cnt / (n - 1);
-		avg += x, avg2 += x * x;
-	}
-	avg /= n, avg2 /= n;
-	return avg2 - avg * avg;
+    int n = (int) G.size();
+    double avg = 0, avg2 = 0;
+    for (int i = 0; i < n; ++ i) {
+        int cnt = 0;
+        for (int j = 0; j < n; ++ j) if (G[i][j] == 'W') cnt ++;
+        double x = 1.0 * cnt / (n - 1);
+        avg += x, avg2 += x * x;
+    }
+    avg /= n, avg2 /= n;
+    return avg2 - avg * avg;
 }
 class UnfinishedTournament {
-	public:
-	vector<string> construct(vector<string> G, int x) {
-		double v = x / 1e6;
-		int n = (int) G.size();
-		vector<string> a = G;
-		vector<pair<int, int>> all;
-		for (int i = 0; i < n; ++ i) {
-			for (int j = i + 1; j < n; ++ j) {
-				if (a[i][j] == '?') {
-					all.push_back({i, j});
-					a[i][j] = rand() % 2 ? 'W' : 'L';
-					a[j][i] = a[i][j] == 'L' ? 'W' : 'L';
-				}
-			}
-		}
-		double las = fabs(D(a) - v);
-		if (las < 0.02 + 1e-8) return a;
-		int t0 = clock();
-		for (int S = 0; S < 100000; ++ S) {
-			auto b = a;
-			for (auto p : all) {
-				int i = p.first, j = p.second;
-				swap(a[i][j], a[j][i]);
-				double cur = fabs(D(a) - v);
-				if (cur < las) {
-					las = cur;
-					break;
-				}
-				else swap(a[i][j], a[j][i]);
-			}
-			if (las < 0.02 + 1e-8) return a;
-			if (clock() - t0 >= 1200000) return {};
-		}
-		return {};
-	}
+    public:
+    vector<string> construct(vector<string> G, int x) {
+        double v = x / 1e6;
+        int n = (int) G.size();
+        vector<string> a = G;
+        vector<pair<int, int>> all;
+        for (int i = 0; i < n; ++ i) {
+            for (int j = i + 1; j < n; ++ j) {
+                if (a[i][j] == '?') {
+                    all.push_back({i, j});
+                    a[i][j] = rand() % 2 ? 'W' : 'L';
+                    a[j][i] = a[i][j] == 'L' ? 'W' : 'L';
+                }
+            }
+        }
+        double las = fabs(D(a) - v);
+        if (las < 0.02 + 1e-8) return a;
+        int t0 = clock();
+        for (int S = 0; S < 100000; ++ S) {
+            auto b = a;
+            for (auto p : all) {
+                int i = p.first, j = p.second;
+                swap(a[i][j], a[j][i]);
+                double cur = fabs(D(a) - v);
+                if (cur < las) {
+                    las = cur;
+                    break;
+                }
+                else swap(a[i][j], a[j][i]);
+            }
+            if (las < 0.02 + 1e-8) return a;
+            if (clock() - t0 >= 1200000) return {};
+        }
+        return {};
+    }
 };
-~~~
+```
