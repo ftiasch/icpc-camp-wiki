@@ -1,4 +1,5 @@
-\section{SkyDec}\begin{itemize}
+\section{SkyDec}
+\begin{itemize}
 \item log 段 border
 \item lyndon 分解
 \item exkmp/最小表示 注释+检查
@@ -6,7 +7,9 @@
 \item FFT / NTT
 \item gay 洲筛
 \item ZZX simplex / 实数 simplex
-\end{itemize}\section{Syloviaely}\begin{itemize}
+\end{itemize}
+\section{Syloviaely}
+\begin{itemize}
 \item manacher (done)
 \item SA/UKK 封装 (done)
 \item 研究一下 UKK
@@ -18,7 +21,9 @@
 \item 三维凸包
 \item $n^2logn$ 判断简单多边形是否（严格）相交 (done)
 \item $nlogn$ 判断简单多边形和边是否严格相交 (done)
-\end{itemize}\section{shanquan2}\begin{itemize}
+\end{itemize}
+\section{shanquan2}
+\begin{itemize}
 \item KM (done)
 \item Pollard-rho + 快速乘 (done)
 \item 检查板子
