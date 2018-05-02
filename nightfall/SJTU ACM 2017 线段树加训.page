@@ -1,0 +1,373 @@
+# [Sasha and Array](http://codeforces.com/problemset/problem/718/C)
+
+## Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7;
+struct mat {
+	int a[2][2];
+	mat() {memset(a, 0, sizeof(a));}
+	mat(int) {memset(a, 0, sizeof(a)); a[0][0] = a[1][1] = 1;}
+};
+mat operator + (const mat &a, const mat &b) {
+	mat c = mat();
+	for (int i = 0; i < 2; ++ i) {
+		for (int j = 0; j < 2; ++ j) {
+			c.a[i][j] = (a.a[i][j] + b.a[i][j]) % MOD;
+		}
+	}
+	return c;
+}
+mat operator * (const mat &a, const mat &b) {
+	mat c = mat();
+	for (int k = 0; k < 2; ++ k) {
+		for (int i = 0; i < 2; ++ i) {
+			for (int j = 0; j < 2; ++ j) {
+				(c.a[i][j] += 1LL * a.a[i][k] * b.a[k][j] % MOD) %= MOD;
+			}
+		}
+	}
+	return c;
+}
+struct node {
+	mat a, lazy;
+	node() {
+		a = mat();
+		lazy = mat(1);
+	}
+	void work(mat x) {
+		a = a * x;
+		lazy = lazy * x;
+	}
+};
+node operator + (const node &a, const node &b) {
+	node tmp = node();
+	tmp.a = a.a + b.a;
+	return tmp;
+}
+const int N = 1e5 + 5;
+node tree[N * 4];
+void down(int x) {
+	tree[x + x].work(tree[x].lazy);
+	tree[x + x + 1].work(tree[x].lazy);
+	tree[x].lazy = mat(1);
+}
+void add(int x, int l, int r, int ql, int qr, mat c) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr) {
+		tree[x].work(c);
+		return;
+	}
+	int mid = (l + r) / 2;
+	down(x);
+	add(x + x, l, mid, ql, qr, c);
+	add(x + x + 1, mid + 1, r, ql, qr, c);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+mat query(int x, int l, int r, int ql, int qr) {
+	if (l > qr || r < ql) return mat();
+	if (l >= ql && r <= qr) return tree[x].a;
+	down(x);
+	int mid = (l + r) / 2;
+	return query(x + x, l, mid, ql, qr) + query(x + x + 1, mid + 1, r, ql, qr);
+}
+mat mpow(mat x, int n) {
+	mat res = mat(1);
+	while (n) {
+		if (n & 1) res = res * x;
+		x = x * x;
+		n >>= 1;
+	}
+	return res;
+}
+int a[N];
+mat unit;
+void build(int x, int l, int r) {
+	if (l == r) {
+		tree[x] = node();
+		tree[x].a = mpow(unit, a[l]);
+		return;
+	}
+	int mid = (l + r) / 2;
+	build(x + x, l, mid);
+	build(x + x + 1, mid + 1, r);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+int main() {
+	unit.a[0][0] = unit.a[1][0] = unit.a[0][1] = 1;
+	int n, m;
+	scanf("%d%d", &n, &m);
+	for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+	build(1, 1, n);
+	for (int i = 1; i <= m; ++ i) {
+		int type;
+		scanf("%d", &type);
+		if (type == 1) {
+			int l, r, x;
+			scanf("%d%d%d", &l, &r, &x);
+			add(1, 1, n, l, r, mpow(unit, x));
+		}
+		else {
+			int l, r;
+			scanf("%d%d", &l, &r);
+			mat res = query(1, 1, n, l, r);
+			printf("%d\n", res.a[1][0]);
+		}
+	}
+}
+~~~
+
+# [校门外的区间](http://www.lydsy.com/JudgeOnline/problem.php?id=3226)
+
+## Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 132000 * 2;
+bool a0[N * 4], a1[N * 4], fl[N * 4];
+void paint0(int x) {
+	a1[x] = fl[x] = 0;
+	a0[x] = 1;
+}
+void paint1(int x) {
+	a0[x] = fl[x] = 0;
+	a1[x] = 1;
+}
+void flip(int x) {
+	fl[x] = !fl[x];
+}
+void down(int x) {
+	if (a0[x]) {
+		paint0(x + x);
+		paint0(x + x + 1);
+		a0[x] = 0;
+	}
+	if (a1[x]) {
+		paint1(x + x);
+		paint1(x + x + 1);
+		a1[x] = 0;
+	}
+	if (fl[x]) {
+		flip(x + x);
+		flip(x + x + 1);
+		fl[x] = 0;
+	}
+}
+void paint0(int x, int l, int r, int ql, int qr) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr) {
+		paint0(x);
+		return;
+	}
+	down(x);
+	int mid = (l + r) / 2;
+	paint0(x + x, l, mid, ql, qr);
+	paint0(x + x + 1, mid + 1, r, ql, qr);
+}
+void paint1(int x, int l, int r, int ql, int qr) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr) {
+		paint1(x);
+		return;
+	}
+	down(x);
+	int mid = (l + r) / 2;
+	paint1(x + x, l, mid, ql, qr);
+	paint1(x + x + 1, mid + 1, r, ql, qr);
+}
+void flip(int x, int l, int r, int ql, int qr) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr) {
+		flip(x);
+		return;
+	}
+	down(x);
+	int mid = (l + r) / 2;
+	flip(x + x, l, mid, ql, qr);
+	flip(x + x + 1, mid + 1, r, ql, qr);
+}
+vector<int> ans;
+void print(int x, int l, int r) {
+	if (l == r) {
+		if (a1[x] ^ fl[x]) ans.push_back(l);
+		return;
+	}
+	down(x);
+	int mid = (l + r) / 2;
+	print(x + x, l, mid);
+	print(x + x + 1, mid + 1, r);
+}
+const int M = 65535 * 4 + 1;
+pair<int, int> getinterval() {
+	static char s[100];
+	scanf("%s", s);
+	int n = (int) strlen(s);
+	int da = 0, db = 0;
+	if (s[0] == '(') da = 1;
+	if (s[n - 1] == ')') db = 1;
+	for (int i = 0; i < n; ++ i) if (s[i] == ',') {
+		s[i] = s[n - 1] = 0;
+		int a, b;
+		sscanf(s + 1, "%d", &a);
+		sscanf(s + i + 1, "%d", &b);
+		return make_pair(a * 2 + da, b * 2 - db);
+	}
+	assert(false);
+}
+int main() {
+	char type[10];
+	int n = 65536 * 4;
+	while (scanf("%s", type) == 1) {
+		pair<int, int> tmp = getinterval();
+		int L = tmp.first, R = tmp.second;
+		if (type[0] == 'U') {
+			paint1(1, 0, n, L, R);
+		}
+		else if (type[0] == 'I') {
+			paint0(1, 0, n, 0, L - 1);
+			paint0(1, 0, n, R + 1, n);
+		}
+		else if (type[0] == 'D') {
+			paint0(1, 0, n, L, R);
+		}
+		else if (type[0] == 'C') {
+			paint0(1, 0, n, 0, L - 1);
+			paint0(1, 0, n, R + 1, n);
+			flip(1, 0, n, L, R);
+		}
+		else if (type[0] == 'S') {
+			flip(1, 0, n, L, R);
+		}
+	}
+	ans.clear();
+	print(1, 0, n);
+	vector<pair<int, int> > ans2;
+	for (int i = 0; i < (int) ans.size(); ++ i) {
+		int x = ans[i];
+		if (ans2.empty() || ans2.back().second + 1 != x) {
+			ans2.push_back(make_pair(x, x));
+		}
+		else {
+			ans2.back().second ++;
+		}
+	}
+	if (ans2.empty()) printf("empty set");
+	for (int i = 0; i < ans2.size(); ++ i) {
+		int L = ans2[i].first, R = ans2[i].second;
+		putchar(L & 1 ? '(' : '[');
+		printf("%d,%d", L / 2, (R + 1) / 2);
+		putchar(R & 1 ?  ')' : ']');
+		putchar(' ');
+	}
+	puts("");
+}
+~~~
+
+# [堵塞的交通traffic](http://www.lydsy.com/JudgeOnline/problem.php?id=1018)
+
+## Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+struct node {
+	bool adj[4][4];
+	int idl, idr;
+	node() {memset(adj, 0, sizeof(adj)); idl = idr = -1;}
+};
+const int N = 1e5 + 5;
+int tor[2][N], vec[N];
+node operator + (const node &a, const node &b) {
+	if (a.idl == -1) return b;
+	if (b.idl == -1) return a;
+	node c = node();
+	c.idl = a.idl;
+	c.idr = b.idr;
+	bool b0 = tor[0][a.idr];
+	bool b1 = tor[1][a.idr];
+	//printf("merge %d %d %d %d b0 = %d b1 = %d\n", a.idl, a.idr, b.idl, b.idr, b0, b1);
+	c.adj[0][1] = a.adj[0][1] || (a.adj[0][2] && b0 && b.adj[0][1] && b1 && a.adj[1][3]);
+	c.adj[0][2] = (a.adj[0][2] && b0 && b.adj[0][2]) || (a.adj[0][3] && b1 && b.adj[1][2]);
+	c.adj[0][3] = (a.adj[0][2] && b0 && b.adj[0][3]) || (a.adj[0][3] && b1 && b.adj[1][3]);
+	c.adj[1][2] = (a.adj[1][2] && b0 && b.adj[0][2]) || (a.adj[1][3] && b1 && b.adj[1][2]);
+	c.adj[1][3] = (a.adj[1][2] && b0 && b.adj[0][3]) || (a.adj[1][3] && b1 && b.adj[1][3]);
+	c.adj[2][3] = b.adj[2][3] || (b.adj[0][2] && b0 && a.adj[2][3] && b1 && b.adj[1][3]);
+	return c;
+}
+node tree[N * 4];
+void build(int x, int l, int r) {
+	if (l == r) {
+		tree[x] = node();
+		tree[x].idl = tree[x].idr = l;
+		tree[x].adj[0][2] = tree[x].adj[1][3] = 1;
+		tree[x].adj[0][1] = tree[x].adj[2][3] = vec[l];
+		return;
+	}
+	int mid = (l + r) / 2;
+	build(x + x, l, mid);
+	build(x + x + 1, mid + 1, r);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+node query(int x, int l, int r, int ql, int qr) {
+	if (l > qr || r < ql) return node();
+	if (l >= ql && r <= qr) return tree[x];
+	int mid = (l + r) / 2;
+	return query(x + x, l, mid, ql, qr) + query(x + x + 1, mid + 1, r, ql, qr);
+}
+void refresh(int x, int l, int r, int p) {
+	if (l > p || r < p) return;
+	if (l == r) {
+		tree[x] = node();
+		tree[x].idl = tree[x].idr = l;
+		tree[x].adj[0][2] = tree[x].adj[1][3] = 1;
+		tree[x].adj[0][1] = tree[x].adj[2][3] = tree[x].adj[0][3] = tree[x].adj[1][2] = vec[l];
+		return;
+	}
+	int mid = (l + r) / 2;
+	refresh(x + x, l, mid, p);
+	refresh(x + x + 1, mid + 1, r, p);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+int main() {
+	int c;
+	scanf("%d", &c);
+	build(1, 1, c);
+	char type[10];
+	while (scanf("%s", type) == 1 && type[0] != 'E') {
+		int r1, c1, r2, c2;
+		scanf("%d%d%d%d", &r1, &c1, &r2, &c2);
+		-- r1, -- r2;
+		if (type[0] == 'O' || type[0] == 'C') {
+			//printf("%d %d\n", c1, c2);
+			if (c1 == c2) {
+				vec[c1] = type[0] == 'O';
+				refresh(1, 1, c, c1);
+			}
+			else {
+				assert(r1 == r2);
+				tor[r1][min(c1, c2)] = type[0] == 'O';
+				refresh(1, 1, c, min(c1, c2));
+				refresh(1, 1, c, max(c1, c2));
+			}
+		}
+		else if (type[0] == 'A') {
+			if (c1 > c2) {
+				swap(r1, r2);
+				swap(c1, c2);
+			}
+			node L = query(1, 1, c, 1, c1);
+			node M = query(1, 1, c, c1, c2);
+			node R = query(1, 1, c, c2, c);
+			int i1 = (r1 == 1), i2 = (r2 == 1) + 2;
+			bool ans = M.adj[i1][i2];
+			ans |= L.adj[2][3] && (M.adj[0][i2] || M.adj[1][i2]);
+			ans |= R.adj[0][1] && (M.adj[i1][2] || M.adj[i1][3]);
+			ans |= L.adj[2][3] && R.adj[0][1] && (M.adj[0][2] || M.adj[0][3] || M.adj[1][2] || M.adj[1][3]);
+			puts(ans ? "Y" : "N");
+		}
+	}
+}
+~~~
