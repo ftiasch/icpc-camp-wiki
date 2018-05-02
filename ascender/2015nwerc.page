@@ -1,0 +1,45 @@
+---
+title: 2015-2016 Northwestern European Regional Contest (NWERC 2015)
+---
+
+# A. Assigning Workstations [zmy]
+
+用堆进行贪心
+
+# B. Better Productivity
+
+# C. Cleaning Pipes [zmy]
+
+判下相交情况，对于相交的两个 pipe 进行连边。然后考察原图是否可二分即可。
+
+# D. Debugging [zmy]
+
+dp 优化下就过了
+
+# E. Elementary Math [jds]
+
+算式在左，结果在右，二分图匹配
+
+# F. Flight Plan Evaluation [wbr]
+
+题目把所有的特殊情况都排除了，所以就变成算球面上线段的交点。算一下平面交线即可。
+
+# G. Guessing Camels [zmy]
+
+利用树状数组计算异色三角形个数
+
+# H. Hole in One [wbr]
+
+枚举经过哪些墙壁，模拟即可。
+
+# I. Identifying Map Tiles [zmy]
+
+签到题
+
+# J. Jumbled Communication [zmy]
+
+暴力枚举
+
+# K. Kitchen Combinatorics [???]
+
+签到题。。吧？
