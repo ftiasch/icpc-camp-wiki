@@ -1,0 +1,435 @@
+# 12.5 五边形数定理
+
+划分数$p(n)$的生成函数:$(1+x+x^2+x^3+...)(1+x^2+x^4+...)...=\prod_{i=1}^{\infty} \frac{1}{1-x^i}$
+
+则分母的系数为广义五边形数，即$\prod_{k\geq 1}(1-x^k)=\sum_{k=-\infty}^{\infty}(-1)^kx^{k(3k-1)/2}$
+
+###[HDU 4658](http://acm.hdu.edu.cn/showproblem.php?pid=4658)
+
+现在假设划分中每个数最多出现$k-1$次，则生成函数为$(1+x+x^2+x^3+...+x^{k-1})(1+x^2+x^4+...+x^{2(k-1)})...=\prod_{i=1}^{\infty} \frac{1-x^{ik}}{1-x^i}$
+
+所以$F(x,k)=\frac{P(x)}{P(x^k)}=P(x)(1-x^k-x^{2k}+x^{5k}+x^{7k}-...)$
+
+得到$f(n,k)=p(n)-p(n-k)-p(n-2k)+p(n-5k)+p(n-7k)-...$
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5, MOD = 1e9 + 7;
+int p[N];
+/*int dfs(int n, int m, int k) {
+	if (n == 0) return 1;
+	if (m > n) return 0;
+	int res = 0;
+	for (int i = 0; i < k; ++ i) if (n - m * i >= 0) {
+		res += dfs(n - m * i, m + 1, k);
+	}
+	return res;
+}*/
+int main() {
+	int n = N - 1;
+	p[0] = 1;
+	for (int i = 1; i <= n; ++ i) {
+		int &res = p[i] = 0;
+		bool stop1 = 0, stop2 = 0;
+		for (int k = 1; !stop1 || !stop2; k > 0 ? k *= -1 : k = -k + 1) {
+			int x = k * (3 * k - 1) / 2, f = 1;
+			if (i - x < 0) {
+				(k > 0 ? stop1 : stop2) = 1;
+				continue;
+			}
+			if (k % 2 == 0) f *= -1;
+			(res += (MOD + f * p[i - x]) % MOD) %= MOD;
+		}
+		//printf("p[%d] = %d\n", i, p[i]);
+	}
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, m;
+		scanf("%d%d", &n, &m);
+		int res = p[n];
+		bool stop1 = 0, stop2 = 0;
+		for (int k = 1; !stop1 || !stop2; k > 0 ? k *= -1 : k = -k + 1) {
+			int x = k * (3 * k - 1) / 2, f = -1;
+			if (n - m * x < 0) {
+				(k > 0 ? stop1 : stop2) = 1;
+				continue;
+			}
+			if (k % 2 == 0) f *= -1;
+			(res += (MOD + f * p[n - m * x]) % MOD) %= MOD;
+		}
+		//assert(dfs(n, 1, m) == res);
+		printf("%d\n", res);
+	}
+}
+~~~
+
+### PE 614
+
+定义$P(N)$为$N$满足(1)每个数最多用一次(2)所有偶数必须是4的倍数的划分方案数。
+
+求$\sum_{i=1}^{10^7}P(i)$
+
+易得生成函数为$\prod_{k\geq 1} (1+x^{2k-1})\prod_{k\geq 1}(1+x^{4k})$
+
+$=\frac{\prod(1+x^k)}{\prod(1+x^{2k})}\prod_{k\geq 1}(1+x^{4k})$
+
+设划分数的生成函数为$P(x)$
+
+由与$\prod(1+x^k)=\frac{1-x^{2k}}{1-x^k}=\frac{P(x)}{P(x^2)}$
+
+化简得到$\frac{P(x)P^2(x^4)}{P^2(x^2)P(x^8)}$
+
+所以先把划分数算出来，暴力卷积就好了？
+
+直接抄了NTT板子，结果模数的2的幂次不够大（1e7要2^25），查了一晚上。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e7 + 5, MOD0 = 1e9 + 7, MAXN = 1 << 25;
+int fpm(int x, int n, int mod) {
+	int res = 1;
+	x %= mod;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % mod;
+		n >>= 1;
+		x = 1LL * x * x % mod;
+	}
+	return res;
+}
+void ntt(int *a, int n, int f, int mod, int prt) {
+	for (int i = 0, j = 0; i < n; ++ i) {
+		if (i > j) swap(a[i], a[j]);
+		for (int t = n >> 1; (j ^= t) < t; t >>= 1);
+	}
+	for (int i = 2; i <= n; i <<= 1) {
+		static int exp[MAXN];
+		exp[0] = 1;
+		exp[1] = fpm(prt, (mod - 1) / i, mod);
+		if (f == 1) exp[1] = fpm(exp[1], mod - 2, mod);
+		for (int k = 2; k < (i >> 1); ++ k) {
+			exp[k] = int (1LL * exp[k - 1] * exp[1] % mod);
+		}
+		for (int j = 0; j < n; j += i) {
+			for (int k = 0; k < (i >> 1); ++ k) {
+				int &pA = a[j + k], &pB = a[j + k + (i >> 1)];
+				int A = pA, B = int (1LL * pB * exp[k] % mod);
+				pA = int ((1LL * A + B) % mod);
+				pB = int ((1LL * A - B + mod) % mod);
+			}
+		}
+	}
+	if (f == 1) {
+		int rev = fpm(n, mod - 2, mod);
+		for (int i = 0; i < n; ++ i) a[i] = int (1LL * a[i] * rev % mod);
+	}
+}
+const int PN = 3;
+//int MOD[PN] = {1045430273, 1051721729, 1053818881}, PRT[PN] = {3, 6, 7};
+int MOD[PN] = {167772161, 469762049, 1107296257}, PRT[PN] = {3, 3, 10};
+int crt(vector<int> a, int mod) {
+	static int inv[PN][PN];
+	for (int i = 0; i < PN; ++ i) {
+		for (int j = 0; j < PN; ++ j) {
+			inv[i][j] = fpm(MOD[i], MOD[j] - 2, MOD[j]);
+		}
+	}
+	static int x[PN];
+	for (int i = 0; i < PN; ++ i) {
+		x[i] = a[i];
+		for (int j = 0; j < i; ++ j) {
+			int t = (1LL * x[i] - x[j] + MOD[i]) % MOD[i];
+			if (t < 0) t += MOD[i];
+			x[i] = int (1LL * t * inv[j][i] % MOD[i]);
+		}
+	}
+	int sum = 1, ret = x[0] % mod;
+	for (int i = 1; i < PN; ++ i) {
+		sum = int (1LL * sum * MOD[i - 1] % mod);
+		ret += int (1LL * x[i] * sum % mod);
+		if (ret >= mod) ret -= mod;
+	}
+	return ret;
+}
+void mul(int *a, int *b, int n) {
+	static int res[PN][MAXN], ta[MAXN], tb[MAXN];
+	for (int i = n; i < n * 2 - 1; ++ i) a[i] = b[i] = 0;
+	n = n * 2 - 1;
+	while ((n & -n) != n) { a[n] = b[n] = 0; n ++; }
+	for (int i = 0; i < PN; ++ i) {
+		for (int j = 0; j < n; ++ j) ta[j] = a[j] % MOD[i], tb[j] = b[j] % MOD[i];
+		ntt(ta, n, 0, MOD[i], PRT[i]);
+		putchar('.'); fflush(stdout);
+		ntt(tb, n, 0, MOD[i], PRT[i]);
+		putchar('.'); fflush(stdout);
+		for (int j = 0; j < n; ++ j) {
+			res[i][j] = 1LL * ta[j] * tb[j] % MOD[i];
+		}
+		ntt(res[i], n, 1, MOD[i], PRT[i]);
+		putchar('.'); fflush(stdout);
+	}
+	puts("");
+	for (int i = 0; i < n; ++ i) {
+		vector<int> x;
+		for (int j = 0; j < PN; ++ j) x.push_back(res[j][i]);
+		a[i] = crt(x, MOD0);
+	}
+	/*for (int j = 0; j < n; ++ j) ta[j] = a[j], tb[j] = b[j];
+	for (int i = 0; i < n * 2 - 1; ++ i) a[i] = 0;
+	for (int i = 0; i < n; ++ i) {
+		for (int j = 0; j < n; ++ j) {
+			(a[i + j] += 1LL * ta[i] * tb[j] % MOD0) %= MOD0;
+		}
+	}*/
+}
+int p[N], A[MAXN], B[MAXN];
+void PK(int k, int *A) {
+	for (int i = 0; i < MAXN; ++ i) A[i] = 0;
+	for (int i = 0; i < N; i += k) A[i] = p[i / k];
+}
+void invPK(int K, int *A) {
+	for (int i = 0; i < MAXN; ++ i) A[i] = 0;
+	A[0] = 1;
+	bool f1 = 1, f2 = 1;
+	for (int k = 1; f1 || f2; k = k > 0 ? -k : -k + 1) {
+		int x = k * (3 * k - 1) / 2 * K;
+		if (x >= N) {
+			(k < 0 ? f1 : f2) = 0;
+			continue;
+		}
+		A[x] = (k % 2) ? MOD0 - 1 : 1;
+	}
+}
+/*bool isprime(long long x) {
+	for (long long i = 2; i * i <= x; ++ i) if (x % i == 0) return 0;
+	return 1;
+}*/
+int main() {
+	/*long long base = 1LL << 25;
+	for (int i = 1; base * i + 1 < 2e9; ++ i) if (isprime(base * i + 1)) printf("%d : %lld\n", i, base * i + 1);
+	return 0;*/
+	/*5 : 167772161  3
+	  14 : 469762049  3
+	  33 : 1107296257  10*/
+	/*for (int p : {1045430273, 1051721729, 1053818881, 998244353, 167772161, 469762049, 1107296257}) {
+		for (int i = 2; ; ++ i) {
+			bool flag = true;
+			for (int j = 2; j <= (p - 1) / j; ++j) {
+				if ((p - 1) % j) {
+					continue;
+				}
+				if (fpm(i, j, p) == 1 || fpm(i, (p - 1) / j, p) == 1) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				printf("%d : %d\n", p, i);
+				break;
+			}
+		}
+	}
+	return 0;*/
+	// P(x) = p[0] + p[1] x + p[2] x^2 + ...
+	p[0] = 1;
+	for (int i = 1; i < N; ++ i) {
+		bool f1 = 1, f2 = 1;
+		for (int k = 1; f1 || f2; k = k > 0 ? -k : -k + 1) {
+			int x = k * (3 * k - 1) / 2;
+			if (i - x < 0) {
+				(k < 0 ? f1 : f2) = 0;
+				continue;
+			}
+			int f = (k % 2) ? 1 : MOD0 - 1;
+			(p[i] += 1LL * f * p[i - x] % MOD0) %= MOD0;
+		}
+	}
+	puts("partition done!");
+	// A = P(x)
+	PK(1, A);
+	// A *= 1 / P(x^8)
+	invPK(8, B);
+	mul(A, B, N); for (int i = N; i < MAXN; ++ i) A[i] = 0;
+	puts("1/5");
+	// A *= P(x^4)^2
+	PK(4, B);
+	mul(B, B, N); for (int i = N; i < MAXN; ++ i) B[i] = 0;
+	puts("2/5");
+	mul(A, B, N); for (int i = N; i < MAXN; ++ i) A[i] = 0;
+	puts("3/5");
+	// A *= 1 / P(x^2)^2
+	invPK(2, B);
+	mul(B, B, N); for (int i = N; i < MAXN; ++ i) B[i] = 0;
+	puts("4/5");
+	mul(A, B, N); for (int i = N; i < MAXN; ++ i) A[i] = 0;
+	puts("5/5");
+	int ans = 0;
+	for (int i = 0; i <= 10; ++ i) printf("Q[%d] = %d\n", i, A[i]);
+	printf("Q[%d] = %d\n", 100, A[100]);
+	printf("Q[%d] = %d\n", 1000, A[1000]);
+	for (int i = 1; i <= 10000000; ++ i) (ans += A[i]) %= MOD0;
+	printf("%d\n", ans);
+}
+~~~
+
+# 8.3 决策单调性
+
+### Divide and Conquer
+注意删除没有任何决策的左下角。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+#define X first
+#define Y second
+using namespace std;
+vector<pair<int, int>> L, R;
+typedef long long LL;
+LL ans;
+LL calc(pair<int, int> x, pair<int, int> y) {
+	if (x.X > y.X || x.Y > y.Y) return -10;
+	return 1LL * (y.X - x.X) * (y.Y - x.Y);
+}
+void divide(int al, int ar, int bl, int br) {
+	if (al > ar || bl > br) return;
+	int mid = (al + ar) / 2;
+	int cho = bl;
+	LL chov = 0;
+	for (int i = bl; i <= br; ++ i) {
+		if (calc(L[mid], R[i]) > chov) {
+			chov = calc(L[mid], R[i]);
+			cho = i;
+		}
+	}
+	ans = max(ans, chov);
+	divide(al, mid - 1, bl, cho);
+	divide(mid + 1, ar, cho, br);
+}
+int main() {
+	int n, m;
+	scanf("%d%d", &n, &m);
+	for (int i = 0; i < n; ++ i) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		L.push_back({x, y});
+	}
+	for (int i = 0; i < m; ++ i) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		R.push_back({x, y});
+	}
+	vector<pair<int, int>> tmp;
+	sort(R.begin(), R.end(), greater<pair<int, int>>());
+	for (auto p : R) {
+		if (tmp.empty() || tmp.back().Y < p.Y) tmp.push_back(p);
+	}
+	R.swap(tmp);
+	reverse(R.begin(), R.end());
+	tmp.clear();
+	sort(L.begin(), L.end());
+	for (auto p : L) {
+		int xid = lower_bound(R.begin(), R.end(), p) - R.begin();
+		if (xid < R.size() && calc(p, R[xid]) < 0) continue;
+		if (tmp.empty() || tmp.back().Y > p.Y) tmp.push_back(p);
+	}
+	L.swap(tmp);
+	divide(0, (int) L.size() - 1, 0, (int) R.size() - 1);
+	cout << ans << endl;
+}
+~~~
+
+### Knuth
+
+主要是用来区间dp？先枚举长度然后卡一个决策的bound。
+
+# 7.26 扩展Lucas
+$\binom{n}{m}mod\ p^q$复杂度$O(p^q+logn)$
+
+原理非常不精妙，就是拿把p扣掉的阶乘算组合，然后把p的出现次数补上。
+
+[2015 ICL, Finals, Div. 1 J](http://codeforces.com/gym/100633/problem/J)
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long LL;
+
+LL mpow(LL p, LL q, LL m) {
+	LL res = 1;
+	while (q) {
+		if (q & 1) res = res * p % m;
+		p = p * p % m;
+		q >>= 1;
+	}
+	return res;
+}
+LL exgcd(LL a, LL b, LL &x, LL &y) {
+	if (b == 0) x = 1, y = 0;
+	else exgcd(b, a % b, y, x), y -= a / b * x;
+}
+LL inverse(LL x, LL m) {
+	assert(__gcd(x, m) == 1);
+	LL a, b; exgcd(x, m, a, b);
+	return ((a % m) + m) % m;
+}
+
+vector<LL> pre;
+LL fact(LL n, LL p, LL MOD) {
+	if (n < p) return pre[n];
+	LL res = mpow(pre[MOD - 1], n / MOD, MOD) * pre[n % MOD] % MOD;
+	res = res * fact(n / p, p, MOD) % MOD;
+	return res;
+}
+LL cntp(LL n, LL p) {
+	LL res = 0;
+	while (n) res += (n /= p);
+	return res;
+}
+LL choose(LL n, LL m, LL p, LL q) { // n choose m % p^q, p^q <= 1e6
+	if (m > n || n < 0 || m < 0) return 0;
+	LL MOD = 1; while (q --) MOD *= p;
+	pre.clear(); pre.push_back(1);
+	for (int i = 1; i < MOD; ++ i) {
+		pre.push_back(pre.back());
+		if (i % p) pre[i] = pre[i] * i % MOD;;
+	}
+	LL A = fact(n, p, MOD);
+	LL B1 = fact(n - m, p, MOD);
+	LL B2 = fact(m, p, MOD);
+	return mpow(p, cntp(n, p) - cntp(n - m, p) - cntp(m, p), MOD) * A % MOD * inverse(B1 * B2 % MOD, MOD) % MOD;
+}
+
+LL lucas(LL n, LL m, LL p) {
+	LL rx = 0, rm = 1;
+	for (LL i = 2; i <= p; ++ i) {
+		if (p % i) continue;
+		LL cnt = 0, nm = 1;
+		while (p % i == 0) {
+			cnt ++;
+			p /= i;
+			nm *= i;
+		}
+		LL nx = choose(n, m, i, cnt);
+		while (rx % nm != nx) rx += rm;
+		rm *= nm;
+	}
+	return rx;
+}
+int main() {
+	LL n, k, m;
+	cin >> n >> k >> m;
+	cout << lucas(n, k, m) << endl;
+}
+~~~
+
+# 8.9 滑雪
+
+并不会转向。
+
+# Todo
+
+## 面积并
+
+## PE
