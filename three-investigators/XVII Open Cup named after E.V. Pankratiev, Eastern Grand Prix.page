@@ -1,0 +1,180 @@
+# Contest Info
+
+date: 2017.09.20 19:20-23:40
+
+[practice link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=10354&locale_id=0)
+
+# Solutions
+
+## A. Count The Ones
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+因为 $c < b < a$，所以 $2^a + 2^b - 2^c$ 的答案为 $b - c + 1$。
+
+复杂度 $O(1)$。
+
+## B. Craters
+
+solved by chitanda, upsolved by none
+
+---
+
+braveTester's solution
+
+易经过调整可得最优解的三点必在凸包上。
+
+由于是随机生成的点，计算几何有定理这样的凸包点数为 $O(\log n)$。
+
+然后直接 $O\left((\log n)^3\right)$ 暴力即可。
+
+总复杂度 $O\left(n \log n + (\log n)^3\right)$
+
+## C. MSTrikes back!
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+考虑暴力 DP，设 $f[i][S]$ 为做完 $i$ 个点，最后五个点的连通状态为 $S$ 的最小花费，$S$ 用最小表示法最多只有 $52$ 种。
+
+考虑伪随机数的性质，其循环节为 54，刚好每 9 个点循环一次，那么考虑 $A[i][j]$ 为初始状态为 $j$，经过 $9$ 个点之后状态为 $i$ 的最小花费，接下来就能通过快速幂来做一个类似矩阵乘法的矩阵取 min 了。
+
+## D. Skyscrapers
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+模拟即可，用线段树分别维护区间 $a[i]-i$ 和 $a[i]+i$ 的最小值，每次按题目规则在线段树上二分找下一个炸，直到找不到或者碰到炸过的（将炸过的在两个线段树上的值设为负无穷更方便）。
+
+## E. Blackboard
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+分情况直接模拟即可。
+
+复杂度 $O\left(n^2\right)$。
+
+## F. Buddy Numbers
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+构一构可以发现只有 $n\le 4$ 或者 $n=6$ 有解。
+
+## G. Gmoogle
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+模拟即可，先将 $S$ 分成句子，然后将句子的每个单词放到这个句子的一个 map 里，对于一个询问，枚举每个句子，判断是否所有的单词都在句子的 map 中。
+
+## H. Generator
+
+sovled by braveTester, upsovled by none
+
+---
+
+braveTester's solution
+
+令 $f(n)$ 为检查 $n$ 所需要的除法次数。
+
+令随机变量 $X$ 为一次的总除法次数，令 $X_n$ 为检查 $n$ 所需要的总检查次数，$F_n$ 为 $n$ 被检查的次数，则有
+$$
+\begin{align}
+E[X] &= E\left[\sum_{i = 2}^n X_i\right]\\
+&= \sum_{i = 2}^n E[X_i]\\
+&= \sum_{i = 2}^n E[F_i \times f(i)]\\
+&= \sum_{i = 2}^n f(i)E[F_i]。
+\end{align}
+$$
+
+由于素数和合数各自平权，因此素数的 $F$ 都相等，合数的 $F$ 都相等。可以认为有 $p$ 个白球，$m$ 个黑球，有放回的随机抽取，问白球和黑球的期望拿取次数，其中 $p + m = n$。设白球和黑球的拿取次数的随机变量分别为 $W$ 和 $B$。
+
+对于白球，有
+$$
+\begin{align}
+E[W] &= \sum_{i = 0}^\infty \left(\frac{m}{n}\right)^i\frac{p}{n}\\
+&= \frac{p}{n} \frac{1}{1 - m / n}\\
+&= \frac{p}{p}\\
+&= 1
+\end{align}
+$$
+
+对于黑球，有
+$$
+\begin{align}
+E[B] &= \sum_{i = 1}^\infty \left(\frac{m}{n}\right)^i\\
+&= \frac{m/n}{1 - m/n}\\
+&= \frac{m}{p}
+\end{align}
+$$
+
+所以对于素数，$E[F] = 1/p$；对于合数，$E[F] = 1/p$。因此最终答案为 $(\sum_{i = 2}^{n} f(i)) / p$。
+
+所以只要线性筛预处理出 $\sum f$ 以及素数个数，即可 $O(1)$ 回答询问。
+
+复杂度 $O\left(10^7\right)$。
+
+## I. Addition
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+每次输入一个二进制数 $x$ ，需要查询大于等于 $2^m-x$ 的数有多少个，那么在字母树上查询即可。
+
+## J. Votter and Paul De Mort
+
+unsolved
+
+## K. GCD on the segments
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+枚举 gcd，把所有是 gcd 倍数的找出来，形成若干段连续的段， 通过 DP 来计算最大答案和方案数。
+
+对于一个连续的段，段内 DP 为，枚举右端点，使得 gcd 为枚举的 gcd 的最右的左端点是单调不降的，可以滑窗，但 gcd 不可逆，因此可以类似 camp 矩阵乘法那题一样做，找到左端点之后就是一个简单的 DP，只需要支持查询前缀和即可。
+
+段与段之间的 DP，很好处理，虽然看着麻烦，实际写起来并不很麻烦。
+
+## L. Fib onacci Equation
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+当 $\min\{i,j,k\}>0$ 时，只有 $j>i$ 且 $j>k$ 才有解，其中，只有当 $j=3$ 时才是一个解，否则为两个解。
+
+当 $\min\{i,j,k\}=0$ 时，需要对 $A=0$ 进行一下特判（此时不是一元二次方程了）。
+
+# Replay and Summary
+
+none is available
