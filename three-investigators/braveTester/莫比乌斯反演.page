@@ -1,0 +1,49 @@
+# 题目汇总
+
+## 51nod 1575 Gcd and Lcm
+
+推一下原式是积性函数前缀和：
+$$
+\begin{align}
+\sum_{i = 1}^n \sum_{j = 1}^i \sum_{k = 1}^i \text{lcm} ((i, j), (i, k))
+&= \sum_{i, j, k} \text{lcm}((i, j), (i, k)) [1 \le i \le n][j \le i][k \le i]\\
+&= \sum_{\substack{i, j, k\\d, d_1, d_2}} \frac{d_1 d_2}{d} [(d_1, d_2) = d][(i, j) = d_1][(i, k) = d_2][1 \le i \le n][j \le i][k \le i]\\
+&= \sum_{\substack{i, j, k\\d, d_1, d_2\\m, m_1, m_2}} \frac{d_1 d_2}{d} \mu(d, m) \zeta(m, (d_1, d_2)) \mu(d_1, m_1) \zeta(m_1, (i, j)) \mu(d_2, m_2) \zeta(m_2 , (i, k))[1 \le i \le n][j \le i][k \le i]\\
+&= \sum_{\substack{i, j, k\\d, d_1, d_2\\m, m_1, m_2}} \frac{m^2 d_1 d_2}{d} \mu(d, m) \mu(m d_1, m m_1) \zeta(m m_1, (i, j)) \mu(m d_2, m m_2) \zeta(m m_2 , (i, k))[1 \le i \le n][j \le i][k \le i]\\
+&= \sum_{\substack{i, j, k\\d\\m, m_1, m_2}} \frac{m^2}{d} \mu(d, m) \varphi(m_1) \varphi(m_2) \zeta(m m_1, (i, j)) \zeta(m m_2 , (i, k))[1 \le i \le n][j \le i][k \le i]\\
+&= \sum_{i = 1}^n \sum_{\substack{d\\m \mid i}} \frac{m^2}{d} \mu(d, m) \left(\sum_{\substack{j\\m' \mid \frac{i}{m}}} \varphi(m') \zeta(m m', (i, j)) [j \le i]\right)^2\\
+&= \sum_{i = 1}^n \sum_{\substack{d\\m \mid i}} \frac{m^2}{d} \mu(d, m) \left(\sum_{m' \mid \frac{i}{m}} \varphi(m') \frac{i}{m m'}\right)^2\\
+&= \sum_{i = 1}^n \sum_{\substack{d \mid m\\m \mid i}} \frac{m^2}{d} \mu\left(\frac{m}{d}\right) \left(\sum_{m' \mid \frac{i}{m}} \varphi(m') \frac{i}{m m'}\right)^2\\
+&= \sum_{i = 1}^n \sum_{xyz = i} \frac{(xy)^2}{x} \mu\left(\frac{xy}{x}\right) \left(\sum_{m' \mid z} \varphi(m') \frac{xyz}{xy m'}\right)^2\\
+&= \sum_{i = 1}^n \sum_{xyz = i} xy^2 \mu(y) \left(\sum_{m' \mid z} \varphi(m') \frac{z}{m'}\right)^2。
+\end{align}
+$$
+
+其中前三行很自然。第四行本来想缩 $\mu(d, m) / d$，可惜不会，于是为了消对应的 $\zeta$ 只能代换。第五行用性质缩了两项，很自然。后面的就是简单推导，很简单。
+
+## hdu 5341 Gcd and Lcm
+
+同上题一样，不过限制没那么强，因此更简单：
+$$
+\begin{align}
+\sum_{i = 1}^n \sum_{j = 1}^n \sum_{k = 1}^n \sum_{l = 1}^n \text{lcm} ((i, j), (k, l))
+&= \sum_{i, j, k, l} \text{lcm}((i, j), (i, k)) [1 \le i, j, k, l \le n]\\
+&= \sum_{\substack{i, j, k, l\\d, d_1, d_2}} \frac{d_1 d_2}{d} [(d_1, d_2) = d][(i, j) = d_1][(j, k) = d_2][1 \le i, j, k, l \le n]\\
+&= \sum_{\substack{i, j, k, l\\d, d_1, d_2\\m, m_1, m_2}} \frac{d_1 d_2}{d} \mu(d, m) \zeta(m, (d_1, d_2)) \mu(d_1, m_1) \zeta(m_1, (i, j)) \mu(d_2, m_2) \zeta(m_2 , (k, l))[1 \le i, j, k, l \le n]\\
+&= \sum_{\substack{i, j, k, l\\d, d_1, d_2\\m, m_1, m_2}} \frac{m^2 d_1 d_2}{d} \mu(d, m) \mu(m d_1, m m_1) \zeta(m m_1, (i, j)) \mu(m d_2, m m_2) \zeta(m m_2 , (k, l))[1 \le i, j, k, l \le n]\\
+&= \sum_{\substack{i, j, k, l\\d\\m, m_1, m_2}} \frac{m^2}{d} \mu(d, m) \varphi(m_1) \varphi(m_2) \zeta(m m_1, (i, j)) \zeta(m m_2 , (k, l))[1 \le i, j, k, l \le n]\\
+&= \sum_{\substack{m, d}} \frac{m^2}{d} \mu(d, m) \left(\sum_{\substack{i, j\\m'}} \varphi(m') [m m' \mid i][m m' \mid j][1 \le i, j \le n]\right)^2\\
+&= \sum_{\substack{m\\d \mid m}} \frac{m^2}{d} \mu\left(\frac{m}{d}\right) \left(\sum_{m'} \varphi(m') {\left\lfloor \frac{n}{m m'} \right\rfloor}^2\right)^2\\
+&= \sum_{\substack{m\\d \mid m}} m d \mu(d) \left(\sum_{m'} \varphi(m') {\left\lfloor \frac{n}{m m'} \right\rfloor}^2\right)^2\\
+&= \sum_{m = 1}^n m \left(\sum_{d \mid m} d \mu(d)\right) \left(\sum_{m' = 1}^{\left\lfloor \frac{n}{m} \right\rfloor} \varphi(m') {\left\lfloor \frac{n}{m m'} \right\rfloor}^2\right)^2\\
+&= \sum_{m = 1}^n f(m) g\left(\left\lfloor \frac{n}{m} \right\rfloor\right)。
+\end{align}
+$$
+
+对于 $m \le \sqrt{n}$，$\lfloor n / m \rfloor$ 最多有 $\sqrt{n}$ 种，对于 $m > \sqrt{n}$，$\lfloor n / m \rfloor < \sqrt{n}$，最多也只有 $\sqrt{n}$ 种。所以 $g$ 有用的自变量最多只有 $2 \sqrt{n}$ 种，而对于某个 $x$，$g(x)$ 中的下取整最多也只有根号种，因此可以在 $O(n)$ 的时间内完成对 $g$ 的计算。$f$ 是个积性函数，可以用线性筛 $O(n)$ 时间内做出来。总复杂度 $O(n)$。
+
+## 2017 Multi-University Training Contest - Team 7, A. All Kill
+
+## 2017 Multi-University Training Contest - Team 8, B. Battlestation Operational
+
+## 2017 中国大学生程序设计竞赛 - 网络选拔赛, J. Graph of Zhuper
