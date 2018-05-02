@@ -24,7 +24,7 @@ Yandex.Algorithm 2018, third qualification round
 E. Max \$\\mathcal{B}\$-Matching
 --------------------------------
 
-[code](yandex%202018%20third%20qual%20E)
+[code](yandex 2018 third qual E)
 
 VK Cup 2018 Round 2
 ===================
@@ -44,7 +44,7 @@ D. Contact ATC
 
 这个风速\[-w,w\]左闭又闭实在是有点恼人，待我学习学习先进做法。
 
-[code](VK%20R2%20D1)
+[code](VK R2 D1)
 
 Yandex Round 2 of Elimination
 =============================
@@ -60,7 +60,7 @@ D. Sports Analytics
 
 所以可以dp：$f[i][j][k]$表示做完前$i$个人，现在有连续$j$个人单调下降，下降总人数的奇偶性是$k$，就可以dp了。
 
-[code](code%20yandex%20r2%20d.cpp)
+[code](code yandex r2 d.cpp)
 
 PE 622
 ======
@@ -76,7 +76,7 @@ $x_{k+1}=2x_k-n+1$ if $2x_k\geq n$
 $x_{k+1}=2x_k\mod (n-1)$, so we need to find the least $p$ such that
 $2^p\equiv 1 \mod (2^n-1)$, where $n=60$ in PE 622.
 
-[code](pe622%20code)
+[code](pe622 code)
 
 三维几何一些基础操作
 ====================
@@ -91,7 +91,7 @@ D. World of Tank
 
 就，离散化dp一下到每个位置最多几条命（几炮+几秒），换行的时候命会和1取min。
 
-[code](CF%20467%20D)
+[code](CF 467 D)
 
 E. Iqea
 -------
@@ -100,7 +100,7 @@ E. Iqea
 
 维护点分治的结构。每个点是一段格子，需要开个前缀val-i和后缀val+i的树状数组。
 
-[code](CF%20467%20E)
+[code](CF 467 E)
 
 AGC 021
 =======
@@ -118,14 +118,14 @@ E. Ball Eat Chameleons
     a.  $R-B>=n$，此时所有子序列可以和都大于$0$，所以任意序列都合法。
     b.  $R-B<n$，此时有$n-(R-B)$个序列和为$0$，这里可以贪心地选$+1-1$，剩下来一个人全部吃掉，如果不足$n$个再把$+1$吐出来。因为要选$+1-1$，贪心就可以了，所以小于0的-1没有贡献，没有贡献的个数不能超过$B-(n-R+B)=n-R$个，卡特兰算一算。
 
-[code](agc%20021%20E)
+[code](agc 021 E)
 
 C. Tiling
 ---------
 
 要么填充2*2，要么放一个3*3横竖各2个，剩下的填充2\*2。
 
-[code](agc%20021%20C)
+[code](agc 021 C)
 
 PE 621
 ======
@@ -150,14 +150,14 @@ G. Palindrome Partition
 
 抄了个高级回文树板子。
 
-[code](CF%20463%20G)
+[code](CF 463 G)
 
 F. Escape Through Leaf
 ----------------------
 
 树上启发式合并凸包。抄了个set维护凸包+查询得凸壳板子。
 
-[code](CF%20463%20F)
+[code](CF 463 F)
 
 SRM 730
 =======
@@ -171,7 +171,7 @@ SRM 730
 
 讲故事法：先把式子除以2：$\sum_{i=0}^{n-1}2^i\binom{n-i-1}{x-1}$，这个其实是枚举倒数第$x$个1的位置在$i+1$，前面的$i$个位置随便放1的方案数，也就是$n$个里面选大于等于$x$个的集合的方案数。
 
-[code](SRM%20730%201000)
+[code](SRM 730 1000)
 
 SRM 717
 =======
@@ -188,7 +188,7 @@ $P_G(q)$ is the chromatic polynomial of the graph $G$.
 由于所有无环定向的反向也无环，所以答案一定是偶数。由于mod
 3意义下$-1\equiv 2 \mod 3$，所以就是求2染色的方案数。
 
-[code](SRM%20717%20800)
+[code](SRM 717 800)
 
 SRM 724
 =======
@@ -198,7 +198,7 @@ SRM 724
 
 随机调整卡时：随机一个初始解，每次改变一场比赛得结果，使得答案靠近要求。
 
-[code](SRM%20724%201000)
+[code](SRM 724 1000)
 
 500
 ---
@@ -211,14 +211,14 @@ SRM 724
 
 然后减掉两种顺序同时可以的方案数：就是散开之前的方案数相乘，就是行置换，列置换下的不同方案数。这个当时算不来。
 
-[code](SRM%20724%20500)
+[code](SRM 724 500)
 
 250
 ---
 
 $(a\&b)+(a|b)=a+b$，然后按位拆开dp。
 
-[code](SRM%20724%20250)
+[code](SRM 724 250)
 
 SRM 725
 =======
