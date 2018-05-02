@@ -1,0 +1,149 @@
+# Info
+
+Date: 2017.09.17 12:00-17:00
+
+[Link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=778)
+
+# Solutions
+
+## A Apple
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+以$(x_1,y_1)$为反演中心，$1$为反演半径做一个反演变换，那么过$(x_1,y_1),(x_2,y_2),(x_3,y_3)$的圆变为过$(x_2,y_2),(x_3,y_3)$的反演点的直线，如果$(x,y)$的反演点与$(x_1,y_1)$在直线同侧，那么反演前$(x,y)$在圆外部，于是只需判断点在直线的哪一侧，$Java$写个$BigInteger$算叉积就行了。
+
+## B Bomberman
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+记$L[i]$表示第$i$个格子向左能炸的距离，那么当$i=1,2H+1,4H+1,6H+1$时$L[i]=2$，否则$L[i]=3$，类似定义$R[i]$，如果在链上考虑这个问题，就是$dp[i][j]$表示把$[i,j]$这段区间炸完的期望次数，那么$dp[i][j]=\frac{\sum_{k=i}^{j}(dp[i][k-L[k]-1]+dp[k+R[k]+1][j])}{j-i+1}+1$，记$f[i][j]=\sum_{k=i}^{j}dp[i][k-L[k]-1]$，$g[i][j]=\sum_{k=i}^{j}dp[k+R[k]+1][j]$，那么$dp[i][j]=\frac{f[i][j]+g[i][j]}{j-i+1}+1$，复杂度$O(n^2)$，现在在环上考虑问题，实际上和链上是完全类似的。
+
+## C The Dominator of Strings
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+对所有串建一个$AC$自动机，选一个最长串在$AC$自动机上跑一遍，然后在$fail$树上$dp$出向上跳$fail$时可能经过的点，查询$n$个串是否都被经过即可。
+
+## D The Intersection
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+对于$K^{2/3}$不是整数的情况，在[Stern–Brocot tree](https://en.wikipedia.org/wiki/Stern%E2%80%93Brocot_tree)上找到端点分母不超过$100000$且包含$K^{2/3}$的最小区间，这需要在树上走出一条路径，注意到拐点只有$\log q$个，每次二分拐点即可，复杂度$O(\log^2 q)$。
+
+## E King's Visit
+
+unsolved
+
+## F Pythagoras
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+序列长度总是$2^{17}$的因子，只需要预处理出$y \mod 2^{17}$的分布。根据[Euclid's formula](https://en.wikipedia.org/wiki/Pythagorean_triple#Generating_a_triple)，即$x=m^2-n^2,y=2nm,z=m^2+n^2$，其中$m>n,gcd(m,n)=1$，且$m,n$不全为奇数，考虑暴力枚举所有$(m,n)$对，需要快速判定是否有$gcd(m,n)=1$，注意到对于固定的$m$，$[gcd(m,n)=1]$是关于$n$的（完全）积性函数，可以用线性筛求得，稍微卡一下常数即可通过。
+
+## G Zuma
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+$dp[i][j][k]$表示把$[i,j]$这个区间内的珠子消到至多剩一种颜色的珠子时的最少操作数，其中$k=0$表示消完了，$k=-2,-1$表示剩$-k$个黑珠子，$k=1,2$表示剩$k$个白珠子，转移考虑把区间分成两个子区间，内部消到剩下至多一种颜色，并且两个子区间剩下的珠子颜色相同，再考虑将两个子区间合并，然后打一些珠子进去，复杂度$O(n^3)$，需要大力卡常数。
+
+感谢chitanda同学提供参考资料，[POJ2915 Zuma 题解](http://www.docin.com/p-685411874.html)。
+
+## H Chinese Zodiac
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+直接做。
+
+## I Smallest Minimum Cut
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+边权设为$2000w+1$之后跑最小割。
+
+## J Brute Force Sorting
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+首先肯定要一次一次模拟这个操作，最坏的情况是比如一个长度为$8$的序列$5 6 7 8 1 2 3 4$，直接暴力的做复杂度$O(n^2)$，显然要优化。考虑到每次会删除一些递减的区间$[l_i,r_i]$，下一次再被删除的只有可能是区间两端最近的还没被删的点，我们把这些要被删的$pair$存到$set$里去重，下次操作就扫描这些$pair$，然后再连成被删区间，产生新的$pair$，直到$set$为空。赛中用的两个并查集记录每个点最左（右）边被删到的位置。时间复杂度应该是$O(n \log{n})$。
+
+---
+
+quailty's comment
+
+仍然考虑模拟，每删除一个数字只会导致$pre$和$nxt$需要检查，由于每个数至多被删除一次，只会导致两个数需要被检查，那么$set$去重是不需要的，链表维护一下应该就能$O(n)$。
+
+## K A Cubic number and A Cubic Number
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+$p=x^3-y^3=(x-y)(x^2+xy+y^2)$，于是$(x-y)|p$，显然$x-y<p$，只能是$x-y=1$，二分$x$之后判定即可。
+
+# Replay
+
+`J` 稍微迟到了一下，无伤大雅，`Q` 今天吃了午饭，精神抖擞。
+
+开场 `Q` 倒着读，发现 K 题是水题，`K` 正着读，认为 A 题也简单，这时 `Q` 先抢到了键盘秒了 K 题，发现还是个 FB，
+
+这时 `J` 过来了，读了 H 题发现是个签到，就交给 `Q` 来写，期间 `Q` 对 `J` 电脑屏幕上的防窥屏措施惊叹不已，
+
+之后 `K` 准备上 A 题，但是发现通过率感人，与 `Q` 讨论之后认为有精度问题，先放一边，
+
+经过一段时间的读题，`Q` 发现 I 题就是裸的最小割，交给 `K` 去抄板子，同时从 `K` 处获知 C 题题意，表示可以写个 AC 自动机，也交给 `K` 来抄板子，然后自己玩 A 题去了，
+
+很快 I 题过了，C 题由 `K` 抄完板子之后由 `Q` 优化了跳 fail 的部分，稍微 debug 了一下也过了，
+
+这时 `J` 基本把题目都读完了，场上 J 题也过了很多，三人一起讨论了一下题意之后 `Q` 表示一下子没什么思路，就接着玩 A 题，
+
+期间 `J` 和 `K` 一直在讨论 J 题，`Q` 多次表示 A 题太恶心希望他们想好思路就上来抢键盘，然而键盘一直没能让出去，
+
+最后 `Q` 憋出了圆反演做法以不长的代码通过了 A 题之后将键盘交给 `J` 和 `K`，自己则躺下来想 D 题，很快也想出了做法，
+
+然后开始双线程卡题，直到 D 题写了 Java 对拍发现才挂了精度，抠了抠精度过了，
+
+J 题则是写了暴力对拍一直在打补丁，期间多次反复讨论做法正确性，认定不是假算法之后决定让 `J` 和 `K` 继续 debug，`Q` 从剩下的题里选一个开，
+
+`Q` 根据榜单情况决定开 G 题，在 J 题通过后三人终于想出了一个常数较大的区间 dp 做法，并交由 `Q` 来 rush，虽然最后时刻调出了样例，但是交上去之后 TLE 了。
+
+## quailty
+
+前中期情绪需要更稳定一些，勇于把自己熟悉的锅接过来。后期容易受榜单影响，倾向于思考通过人数较多的题，反而会错过对于队伍来说更符合风格、更容易思考、更有利冲刺的题目，需要注意。
