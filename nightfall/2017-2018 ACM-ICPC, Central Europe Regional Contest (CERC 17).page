@@ -6,118 +6,121 @@ MID：GKL
 
 G.使用DIJKSTRA，从终点出发，每次找一个距离最小的点扩展，一个点$x$当前的距离$dis_x=\frac{\sum_{x\to y} dis_y+deg(x)}{cnt}$
 
-~~~{.cpp}
+``` {.cpp}
 int n,m,x,y,du[N];
 double sum[N],f[N];
 VI V[N];bool v[N];
 priority_queue<pair<double,int> >Q;
 void ins(int x,int y){V[x].PB(y);}
 int main(){
-	rd(n);rd(m);
-	fr(i,m)rd(x),rd(y),ins(x,y),ins(y,x);
-	fr(i,n)sum[i]=V[i].size();
-	Q.push(MP(0,n));
-	for(;!Q.empty();){
-		x=Q.top().Y;
-		Q.pop();
-		if(v[x])continue;
-		v[x]=1;
-		for(int y:V[x])if(!v[y]){
-			du[y]++;
-			sum[y]+=f[x];
-			f[y]=sum[y]/du[y];
-			Q.push(MP(-f[y],y));
-		}
-	}
-	printf("%.8f",f[1]);
+    rd(n);rd(m);
+    fr(i,m)rd(x),rd(y),ins(x,y),ins(y,x);
+    fr(i,n)sum[i]=V[i].size();
+    Q.push(MP(0,n));
+    for(;!Q.empty();){
+        x=Q.top().Y;
+        Q.pop();
+        if(v[x])continue;
+        v[x]=1;
+        for(int y:V[x])if(!v[y]){
+            du[y]++;
+            sum[y]+=f[x];
+            f[y]=sum[y]/du[y];
+            Q.push(MP(-f[y],y));
+        }
+    }
+    printf("%.8f",f[1]);
 }
-~~~
+```
 
-L. 坐标范围不超过$2000$，所以直接差分统计每个坐标有没有东西即可，菱形的差分可以取四个端点进行，再分四种情况讨论
+L.
+坐标范围不超过$2000$，所以直接差分统计每个坐标有没有东西即可，菱形的差分可以取四个端点进行，再分四种情况讨论
 
-~~~{.cpp}
+``` {.cpp}
 int n,x,y,z,an,A[N][N],B[N][N]; 
 char s[9];
 int main(){
-	rd(n);
-	fr(i,n){
-		scanf("%s",s);
-		rd(x);rd(y);rd(z);
-		z/=2;
-		if(s[0]=='A'){
-			A[x+z+2001][y+z+2001]++;
-			A[x-z+2001][y-z+2001]++;
-			A[x+z+2001][y-z+2001]--;
-			A[x-z+2001][y+z+2001]--;
-		}else{
-			B[x+z+2001][y+2001]++;
-			B[x-z+2001][y+2001]++;
-			B[x+2001][y+z+2001]--;
-			B[x+2001][y-z+2001]--;
-		}
-	}
-	fr(i,4001)fr(j,4001){
-		A[i][j]+=A[i-1][j]+A[i][j-1]-A[i-1][j-1];
-		B[i][j]+=B[i-1][j-1]+B[i-1][j+1];
-		if(i>=2)B[i][j]-=B[i-2][j];
-	}
-	fr(i,4001)fr(j,4001)
-		if(A[i][j])an+=4;else{
-			if(B[i][j]||B[i-1][j])an++;
-			if(B[i][j]||B[i][j+1])an++;
-			if(B[i-1][j+1]||B[i][j+1])an++;
-			if(B[i-1][j+1]||B[i-1][j])an++;
-		}
-	printf("%.2f",0.25*an);
+    rd(n);
+    fr(i,n){
+        scanf("%s",s);
+        rd(x);rd(y);rd(z);
+        z/=2;
+        if(s[0]=='A'){
+            A[x+z+2001][y+z+2001]++;
+            A[x-z+2001][y-z+2001]++;
+            A[x+z+2001][y-z+2001]--;
+            A[x-z+2001][y+z+2001]--;
+        }else{
+            B[x+z+2001][y+2001]++;
+            B[x-z+2001][y+2001]++;
+            B[x+2001][y+z+2001]--;
+            B[x+2001][y-z+2001]--;
+        }
+    }
+    fr(i,4001)fr(j,4001){
+        A[i][j]+=A[i-1][j]+A[i][j-1]-A[i-1][j-1];
+        B[i][j]+=B[i-1][j-1]+B[i-1][j+1];
+        if(i>=2)B[i][j]-=B[i-2][j];
+    }
+    fr(i,4001)fr(j,4001)
+        if(A[i][j])an+=4;else{
+            if(B[i][j]||B[i-1][j])an++;
+            if(B[i][j]||B[i][j+1])an++;
+            if(B[i-1][j+1]||B[i][j+1])an++;
+            if(B[i-1][j+1]||B[i-1][j])an++;
+        }
+    printf("%.2f",0.25*an);
 }
-~~~
+```
 
-K. 给你$n$个数，第$i$个数要转动模$7$余$p_i$次，每次可以选择一个区间同时转动$x$次，问最少操作数。$n\leq500$
+K.
+给你$n$个数，第$i$个数要转动模$7$余$p_i$次，每次可以选择一个区间同时转动$x$次，问最少操作数。$n\leq500$
 
 差分，求一下所有的$p_i-p_{i-1}$，包括$p_{n+1}-p_n$，区间修改变为一个数加$x$，一个数减$x$。那么现在问题是可以每次选取若干个和模$7$为$0$的数，然后付出选取数的个数减1的代价。
 
 那么先贪心地让$(1,6)(2,5)(3,4)$配对，然后剩下最多$3$种数，暴力$O(n^3)$进行DP即可
 
-~~~{.cpp}
+``` {.cpp}
 int n,_n,i,j,k,V,x,y,z,X,Y,Z,ZZ,an,a[8],b[8],cnt[8],p[N],f[N][N][N];
 string S;
 bool cmp(int x,int y){return a[x]<a[y];}
 int main(){
-	rd(_n);
-	fr(i,_n){
-		cin>>S;
-		f0(j,6){
-			for(V=k=0;k<7;k++)V=V*10+(S[(j+k)%7]-'0');
-			a[j]=V;b[j]=j;
-		}
-		sort(b,b+7,cmp);
-		if(a[b[0]]!=a[b[6]])p[++n]=b[6];
-	}
-	fr(i,n+1)cnt[(p[i]-p[i-1]+7)%7]++;
-	fr(i,3){
-		x=min(cnt[i],cnt[7-i]);
-		cnt[i]-=x;cnt[7-i]-=x;an+=x;
-	}
-	X=(cnt[1]?1:6);Y=(cnt[2]?2:5);Z=(cnt[3]?3:4);ZZ=Z*Z*Z*Z*Z%7;
-	f0(i,cnt[X])f0(j,cnt[Y])f0(k,cnt[Z])f[i][j][k]=1e9;
-	f[0][0][0]=0;
-	f0(i,cnt[X])f0(j,cnt[Y])f0(k,cnt[Z])f0(x,min(7,i))f0(y,min(7,j)){
-		if((x*X+y*Y)%7==0){
-			z=0;if(x+y+z)f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
-			if(k>=7)z=7,f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
-		}else{
-			z=(7-(x*X+y*Y)%7)*ZZ%7;
-			if(k>=z)f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
-		}
-		//if(x+y+z>0&&(x*X+y*Y+z*Z)%7==0)f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
-	}
-	printf("%d",an+f[cnt[X]][cnt[Y]][cnt[Z]]);
+    rd(_n);
+    fr(i,_n){
+        cin>>S;
+        f0(j,6){
+            for(V=k=0;k<7;k++)V=V*10+(S[(j+k)%7]-'0');
+            a[j]=V;b[j]=j;
+        }
+        sort(b,b+7,cmp);
+        if(a[b[0]]!=a[b[6]])p[++n]=b[6];
+    }
+    fr(i,n+1)cnt[(p[i]-p[i-1]+7)%7]++;
+    fr(i,3){
+        x=min(cnt[i],cnt[7-i]);
+        cnt[i]-=x;cnt[7-i]-=x;an+=x;
+    }
+    X=(cnt[1]?1:6);Y=(cnt[2]?2:5);Z=(cnt[3]?3:4);ZZ=Z*Z*Z*Z*Z%7;
+    f0(i,cnt[X])f0(j,cnt[Y])f0(k,cnt[Z])f[i][j][k]=1e9;
+    f[0][0][0]=0;
+    f0(i,cnt[X])f0(j,cnt[Y])f0(k,cnt[Z])f0(x,min(7,i))f0(y,min(7,j)){
+        if((x*X+y*Y)%7==0){
+            z=0;if(x+y+z)f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
+            if(k>=7)z=7,f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
+        }else{
+            z=(7-(x*X+y*Y)%7)*ZZ%7;
+            if(k>=z)f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
+        }
+        //if(x+y+z>0&&(x*X+y*Y+z*Z)%7==0)f[i][j][k]=min(f[i][j][k],f[i-x][j-y][k-z]+x+y+z-1);
+    }
+    printf("%d",an+f[cnt[X]][cnt[Y]][cnt[Z]]);
 }
-~~~
+```
 
 HARD：BDI
 
-D. 一个$n*m$的带权格子图，两种操作，改变一个格子权值或问从当前位置走$k$步所到的位置。每个格子只有一个出边，为其下一列相邻行中最大元素。$n,m\leq2000,Q\leq100000$。
+D.
+一个$n*m$的带权格子图，两种操作，改变一个格子权值或问从当前位置走$k$步所到的位置。每个格子只有一个出边，为其下一列相邻行中最大元素。$n,m\leq2000,Q\leq100000$。
 
 很明显如果动态维护图，那么整个图是一个基环+内向树，不妨用LCT维护。
 
@@ -125,101 +128,102 @@ D. 一个$n*m$的带权格子图，两种操作，改变一个格子权值或问
 
 跳到环上后$k$模环长，然后分两段看看跳到哪里就好了
 
-~~~{.cpp}
+``` {.cpp}
 int n,m,Q,id,x,y,z,k,nv,a[N][N],to[N][N],X[M],Y[M],c[M][2],F[M],sz[M],nxt[M];
 char s[9];
 bool ir(int x){return c[F[x]][0]!=x&&c[F[x]][1]!=x;}
 void ps(int x){sz[x]=sz[c[x][0]]+sz[c[x][1]]+1;}
 void R(int x){
-	int y=F[x],k=c[y][0]==x;
-	F[c[y][!k]=c[x][k]]=y;
-	F[x]=F[y];if(!ir(y))c[F[y]][c[F[y]][1]==y]=x;
-	F[c[x][k]=y]=x;ps(y);
+    int y=F[x],k=c[y][0]==x;
+    F[c[y][!k]=c[x][k]]=y;
+    F[x]=F[y];if(!ir(y))c[F[y]][c[F[y]][1]==y]=x;
+    F[c[x][k]=y]=x;ps(y);
 }
 void sy(int x){
-	for(;!ir(x);R(x))if(!ir(F[x]))
-		R(c[F[x]][0]==x^c[F[F[x]]][0]==F[x]?x:F[x]);
-	ps(x);
+    for(;!ir(x);R(x))if(!ir(F[x]))
+        R(c[F[x]][0]==x^c[F[F[x]]][0]==F[x]?x:F[x]);
+    ps(x);
 }
 int acs(int x){
-	int y=0;
-	for(;x;y=x,x=F[x])sy(x),c[x][1]=y,ps(x);
-	return y;
+    int y=0;
+    for(;x;y=x,x=F[x])sy(x),c[x][1]=y,ps(x);
+    return y;
 }
 int lca(int x,int y){acs(x);return acs(y);}
 int fd(int x){
-	acs(x);sy(x);
-	for(;c[x][0];x=c[x][0]);
-	return x;
+    acs(x);sy(x);
+    for(;c[x][0];x=c[x][0]);
+    return x;
 }
 int dis(int x){acs(x);sy(x);return sz[c[x][0]];}
 void lk(int x,int y){if(fd(x)!=fd(y))acs(x),sy(x),F[x]=y;}
 void ct(int x,int y){
-	int w=fd(x);
-	if(x==w)return;
-	acs(x);sy(x);
-	F[c[x][0]]=0;
-	c[x][0]=0;
-	ps(x);
-	lk(w,nxt[w]);
+    int w=fd(x);
+    if(x==w)return;
+    acs(x);sy(x);
+    F[c[x][0]]=0;
+    c[x][0]=0;
+    ps(x);
+    lk(w,nxt[w]);
 }
 void get(int x,int y){
-	int mx=-1,u;
-	for(int i=-1;i<=1;i++)
-		if(a[(x+i+n-1)%n+1][y%m+1]>mx){
-			mx=a[(x+i+n-1)%n+1][y%m+1];
-			u=to[(x+i+n-1)%n+1][y%m+1];
-		}
-	int o=to[x][y];
-	if(nxt[o]!=u){
-		ct(o,nxt[o]);
-		nxt[o]=u;
-		lk(o,u);
-	}
+    int mx=-1,u;
+    for(int i=-1;i<=1;i++)
+        if(a[(x+i+n-1)%n+1][y%m+1]>mx){
+            mx=a[(x+i+n-1)%n+1][y%m+1];
+            u=to[(x+i+n-1)%n+1][y%m+1];
+        }
+    int o=to[x][y];
+    if(nxt[o]!=u){
+        ct(o,nxt[o]);
+        nxt[o]=u;
+        lk(o,u);
+    }
 }
 int up(int x,int k){
-	k=dis(x)-k+1;
-	acs(x);sy(x);
-	for(;;){
-		if(sz[c[x][0]]+1==k)return x;
-		if(k<sz[c[x][0]]+1)x=c[x][0];
-		else k-=sz[c[x][0]]+1,x=c[x][1];
-	}
+    k=dis(x)-k+1;
+    acs(x);sy(x);
+    for(;;){
+        if(sz[c[x][0]]+1==k)return x;
+        if(k<sz[c[x][0]]+1)x=c[x][0];
+        else k-=sz[c[x][0]]+1,x=c[x][1];
+    }
 }
 int cal(int x,int k){
-	int rt=fd(x),y=nxt[rt],z=lca(x,y),dx=dis(x),dy=dis(y),dz=dis(z),o;
-	if(dx>dz)o=min(dx-dz,k),k-=o,x=up(x,o);
-	if(!k)return x;
-	k%=dy+1;o=min(dis(x),k);k-=o;x=up(x,o);
-	if(!k)return x;
-	if(!--k)return y;
-	return up(y,k);
+    int rt=fd(x),y=nxt[rt],z=lca(x,y),dx=dis(x),dy=dis(y),dz=dis(z),o;
+    if(dx>dz)o=min(dx-dz,k),k-=o,x=up(x,o);
+    if(!k)return x;
+    k%=dy+1;o=min(dis(x),k);k-=o;x=up(x,o);
+    if(!k)return x;
+    if(!--k)return y;
+    return up(y,k);
 }
 int main(){
-	rd(n);rd(m);
-	fr(i,n)fr(j,m){
-		rd(a[i][j]);
-		to[i][j]=++id;sz[id]=1;
-		X[id]=i;Y[id]=j;
-	}
-	rd(Q);nv=1;
-	fr(i,n)fr(j,m)get(i,j);
-	for(;Q--;){
-		scanf("%s",s);
-		if(s[0]=='c'){
-			rd(x);rd(y);rd(z);
-			a[x][y]=z;
-			for(int i=-1;i<=1;i++)get((x+i+n-1)%n+1,(y-2+m)%m+1);
-		}else{
-			rd(k);
-			nv=cal(nv,k);
-			printf("%d %d\n",X[nv],Y[nv]);
-		}
-	}
+    rd(n);rd(m);
+    fr(i,n)fr(j,m){
+        rd(a[i][j]);
+        to[i][j]=++id;sz[id]=1;
+        X[id]=i;Y[id]=j;
+    }
+    rd(Q);nv=1;
+    fr(i,n)fr(j,m)get(i,j);
+    for(;Q--;){
+        scanf("%s",s);
+        if(s[0]=='c'){
+            rd(x);rd(y);rd(z);
+            a[x][y]=z;
+            for(int i=-1;i<=1;i++)get((x+i+n-1)%n+1,(y-2+m)%m+1);
+        }else{
+            rd(k);
+            nv=cal(nv,k);
+            printf("%d %d\n",X[nv],Y[nv]);
+        }
+    }
 }
-~~~
+```
 
-I. 给你一个长度为$n$的排列，一个区间$[l,r]$被称为好当且仅当这个区间的最大值$max$和最小值$min$满足$max-min=r-l$，现在有$m$次询问，每次给出$x,y$，问最小的好区间$[a,b]$使得$a\leq x,y\leq b$。$n,m\leq100000$
+I.
+给你一个长度为$n$的排列，一个区间$[l,r]$被称为好当且仅当这个区间的最大值$max$和最小值$min$满足$max-min=r-l$，现在有$m$次询问，每次给出$x,y$，问最小的好区间$[a,b]$使得$a\leq x,y\leq b$。$n,m\leq100000$
 
 先把这些数放到一个二维平面上，可以发现我们可以不断扩展$[l,r,mi,mx]$，用两个ST表不断更新，最后会有$r-l=mx-mi$，这个是我们要找的最小的区间。
 
@@ -241,51 +245,52 @@ I. 给你一个长度为$n$的排列，一个区间$[l,r]$被称为好当且仅�
 
 对于在$[l,r]$得每个询问，找出一个能包含$l$的最小的左区间和能包含$r$的最大的右区间，用两个区间的并更新答案，最后时间复杂度$O((n+Q)\log n)$
 
-~~~{.cpp}
+``` {.cpp}
 int n,m,i,x,y,mi,mx,a[N],b[N],anmi[N],anmx[N],_anmi[N],_anmx[N];
 struct ST{
-	int g[N],mi[N][18],mx[N][18];
-	void bd(int*a,int *b,int n){
-		for(int i=2;i<=n;i++)g[i]=g[i/2]+1;
-		fr(i,n)mi[i][0]=a[i];fr(i,n)mx[i][0]=b[i];
-		fr(j,g[n])fr(i,n+1-(1<<j))mx[i][j]=max(mx[i][j-1],mx[i+(1<<j-1)][j-1]),mi[i][j]=min(mi[i][j-1],mi[i+(1<<j-1)][j-1]);
-	}
-	void qu(int x,int y,int&MI,int&MX){
-		int t=g[y-x+1];
-		MI=min(mi[x][t],mi[y-(1<<t)+1][t]);
-		MX=max(mx[x][t],mx[y-(1<<t)+1][t]);
-	}
+    int g[N],mi[N][18],mx[N][18];
+    void bd(int*a,int *b,int n){
+        for(int i=2;i<=n;i++)g[i]=g[i/2]+1;
+        fr(i,n)mi[i][0]=a[i];fr(i,n)mx[i][0]=b[i];
+        fr(j,g[n])fr(i,n+1-(1<<j))mx[i][j]=max(mx[i][j-1],mx[i+(1<<j-1)][j-1]),mi[i][j]=min(mi[i][j-1],mi[i+(1<<j-1)][j-1]);
+    }
+    void qu(int x,int y,int&MI,int&MX){
+        int t=g[y-x+1];
+        MI=min(mi[x][t],mi[y-(1<<t)+1][t]);
+        MX=max(mx[x][t],mx[y-(1<<t)+1][t]);
+    }
 }A,B,W;
 int main(){
-	rd(n);
-	fr(i,n)rd(a[i]),b[a[i]]=i;
-	A.bd(a,a,n);B.bd(b,b,n);
-	fr(i,n-1)anmi[i]=i,anmx[i]=i+1;
-	fr(j,17){
-		W.bd(anmi,anmx,n-1);
-		fr(i,n-1){
-			W.qu(anmi[i],anmx[i]-1,x,y);
-			A.qu(x,y,mi,mx);
-			B.qu(mi,mx,_anmi[i],_anmx[i]);
-		}
-		fr(i,n-1)anmi[i]=_anmi[i],anmx[i]=_anmx[i];
-	}
-	W.bd(anmi,anmx,n-1);
-	for(rd(m);m--;){
-		rd(x),rd(y);
-		if(x==y)printf("%d %d\n",x,y);
-		else W.qu(x,y-1,mi,mx),printf("%d %d\n",mi,mx);
-	}
+    rd(n);
+    fr(i,n)rd(a[i]),b[a[i]]=i;
+    A.bd(a,a,n);B.bd(b,b,n);
+    fr(i,n-1)anmi[i]=i,anmx[i]=i+1;
+    fr(j,17){
+        W.bd(anmi,anmx,n-1);
+        fr(i,n-1){
+            W.qu(anmi[i],anmx[i]-1,x,y);
+            A.qu(x,y,mi,mx);
+            B.qu(mi,mx,_anmi[i],_anmx[i]);
+        }
+        fr(i,n-1)anmi[i]=_anmi[i],anmx[i]=_anmx[i];
+    }
+    W.bd(anmi,anmx,n-1);
+    for(rd(m);m--;){
+        rd(x),rd(y);
+        if(x==y)printf("%d %d\n",x,y);
+        else W.qu(x,y-1,mi,mx),printf("%d %d\n",mi,mx);
+    }
 }
-~~~
+```
 
-B. 平面上有$n$只牛，分别在不同位置。现在放$m$次围栏，围栏起始位置$(x,y)$，分别向下、向左直到碰到第一个围栏或边界，这个围栏围出了一个区域，每次问这个区域有多少只牛。$n\leq100000$。
+B.
+平面上有$n$只牛，分别在不同位置。现在放$m$次围栏，围栏起始位置$(x,y)$，分别向下、向左直到碰到第一个围栏或边界，这个围栏围出了一个区域，每次问这个区域有多少只牛。$n\leq100000$。
 
 先离线处理每个区域最后有多少只牛，用扫描线从上往下扫，对于栅栏要维护当前能用的横坐标集合，每次看看横坐标比他小的那个是否出现在他后面，如果出现在他后面就将其删去，因为他已经死了；对于每只牛找到他右边第一个活着的栅栏，这只牛属于这个栅栏。同时加入栅栏的时候再往右找一个栅栏，这个栅栏是加入的栅栏的爸爸，如果删去这个栅栏，要将他和他爸爸合并。
 
 最后倒序删掉栅栏，就可以得到每一个时刻的答案了。
 
-~~~{.cpp}
+``` {.cpp}
 set<PII>S;
 set<PII>::iterator it;
 int n,m,t,x,y,z,F[N],an[N],nx[N],V[N];
@@ -293,36 +298,36 @@ struct P{int x,y,z;}p[N];
 bool cmp(P a,P b){return a.y>b.y||a.y==b.y&&a.z>b.z||a.y==b.y&&a.z==b.z&&a.x<b.x;}
 int gf(int x){return F[x]==x?x:F[x]=gf(F[x]);}
 void uni(int x,int y){
-	x=gf(x);y=gf(y);
-	if(x!=y)F[x]=y,V[y]+=V[x];
+    x=gf(x);y=gf(y);
+    if(x!=y)F[x]=y,V[y]+=V[x];
 }
 int main(){
-	rd(n);
-	fr(i,n)rd(x),rd(y),p[++t]=P{x,y,0};
-	rd(m);
-	fr(i,m)rd(x),rd(y),p[++t]=P{x,y,i},F[i]=i;
-	sort(p+1,p+t+1,cmp);
-	S.insert(MP(1e9+5,m+1));
-	fr(i,t){
-		x=p[i].x;z=p[i].z;
-		if(z){
-			S.insert(MP(x,z));
-			it=S.find(MP(x,z));
-			nx[z]=(*++it).Y;
-			for(;;){
-				it=S.find(MP(x,z));
-				if(it==S.begin())break;
-				if((*--it).Y<z)break;
-				S.erase(it);
-			}
-		}else V[(*S.lower_bound(MP(x,0))).Y]++;
-	}
-	for(int i=m;i;i--){
-		an[i]=V[gf(i)];
-		if(nx[i])uni(i,nx[i]);
-	}
-	fr(i,m)printf("%d\n",an[i]);
+    rd(n);
+    fr(i,n)rd(x),rd(y),p[++t]=P{x,y,0};
+    rd(m);
+    fr(i,m)rd(x),rd(y),p[++t]=P{x,y,i},F[i]=i;
+    sort(p+1,p+t+1,cmp);
+    S.insert(MP(1e9+5,m+1));
+    fr(i,t){
+        x=p[i].x;z=p[i].z;
+        if(z){
+            S.insert(MP(x,z));
+            it=S.find(MP(x,z));
+            nx[z]=(*++it).Y;
+            for(;;){
+                it=S.find(MP(x,z));
+                if(it==S.begin())break;
+                if((*--it).Y<z)break;
+                S.erase(it);
+            }
+        }else V[(*S.lower_bound(MP(x,0))).Y]++;
+    }
+    for(int i=m;i;i--){
+        an[i]=V[gf(i)];
+        if(nx[i])uni(i,nx[i]);
+    }
+    fr(i,m)printf("%d\n",an[i]);
 }
-~~~
+```
 
 VERY HARD：CE（没读）
