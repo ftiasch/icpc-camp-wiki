@@ -1,16 +1,19 @@
-# Info
+Info
+====
 
 Date: 2017.10.06 12:00-17:00
 
 [Link](http://www.bnuoj.com/v3/contest_show.php?cid=9252)
 
-# Solutions
+Solutions
+=========
 
-## A Achromatic Number
+A Achromatic Number
+-------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -24,11 +27,12 @@ quailty's solution
 
 那么只需要对每个$n$找出满足条件的最大$k$进行构造即可。
 
-## B Binary Search
+B Binary Search
+---------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -36,68 +40,76 @@ quailty's solution
 
 但是由于涉及大数运算，上述$dp$会$TLE$，观察到每次递归到叶子的时候只有深度个位置被确定，其余位置是任取的，枚举递归到叶子时的深度$d$再$dp$即可，最后将方案数乘以$n^{n-d}$加进答案，就可以通过了。
 
-## C Blind Flibs
+C Blind Flibs
+-------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 可以发现$n$个状态的自动机可以构造出所有循环节中包含$\leq n$个$0$和$\leq n$个$1$的循环串，于是枚举循环节长度$l$，注意到计算两个串的相似度只需要考虑前$lcm(l,w)$个位置，预处理出循环节内每个位置填$0$或者填$1$的贡献之后$dp$即可。
 
-## D Bubble Sort
+D Bubble Sort
+-------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 题目给了冒泡排序的交换过程，从有序的数列按照这个过程倒推回去即可，注意判断不合法情况，换或者不换都需要判断两者的大小关系。
 
-## E Word Cover
+E Word Cover
+------------
 
 upsolved by sk
 
-## F Permutations with Monotonic Segments
+F Permutations with Monotonic Segments
+--------------------------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 相当于给出了任意相邻两项的大小关系，然后求满足条件的排列数。考虑$dp_{i,j}$表示前$i$个位置放上了$1,2,3,\dots,i$的满足大小关系的排列且$a_i=j$的方案数，转移枚举下一个位置的值$k(1 \leq k \leq i+1)$，然后将前$i$个位置中$\geq k$的数$+1$，这样可以得到$1,2,3,\dots,i+1$的满足大小关系的排列，直接做是$O(n^3)$，简单前缀和优化即可$O(n^2)$。
 
-## G Persistent Queue
+G Persistent Queue
+------------------
 
 solved by quailty, upsolved by sk
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 对版本建树，每条边对应一个操作，下去时进行这个操作，上来时撤销这个操作，那么只需要在这棵树上$DFS$，同时维护一个双端队列。
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 用$rope$无脑签到。
 
-## H Sea Port
+H Sea Port
+----------
 
 solved by Jove, sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 将船按时间排序后用优先队列模拟题意。
 
-## I Shooting Game
+I Shooting Game
+---------------
 
 unsolved
 
-# Replay
+Replay
+======
