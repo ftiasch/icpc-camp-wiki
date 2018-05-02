@@ -1,0 +1,30 @@
+# A. Toda 2 [Cabinfever]
+  Cabinfever：构造题。每次找到最大的和次大的，如果最大的个数超过1，我们就只减最大的，否则就减最大的和次大的。然后把每次删减的答案存下来，因为每次要删减的个数如果大于2，一定可以被2或3分解开，按这样的方法输出即可。
+
+# B. Minimum and Maximum
+
+# C. Bulmart [ConnorZhong]
+
+# D. Running Over The Bridges [Cabinfever补&ConnorZhong补]
+  Cabinfever： 贪心。很明显，对每座桥，我们只需要保证在通过时间内通过就行，所以我们在最后关头喝药就行（当然也可能最开始喝药也不能通过），计算在什么时间喝药只需要列出一个二元一次方程组，然后药效可能会影响通过下一座桥。最后，如果答案超过1e5就不用输出具体答案了（神）。
+
+# E. Award Ceremony
+
+# F. Ber Patio
+
+# G. Car Repair Shop [ConnorZhong]
+
+# H. Delete Them
+
+# I. Olympiad in Programming and Sports
+
+# J. Bottles [ConnorZhong]
+
+# K. Roads Orientation Problem
+
+# L. Expression Queries
+
+# Summary
+**ConnorZhong：** 
+
+**Cabinfever：D题应该算道比较水的题，但过的人不多，对这种题应该多加练习，保证能高效1A**
