@@ -20,34 +20,45 @@
 │B₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
 
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Defense of the Ancients [GX]
+A. Defense of the Ancients \[GX\]
+---------------------------------
 
 经典向量分区域模型，3向量共线的时候两两垂线重合，需要将3个向量位置反转，因此排序时添加区分向量的大小，相同大小的向量交换的向量集统一反转。
 
-## B. Bombard
+B. Bombard
+----------
 
-## C. Combinations Strike Back [MZH]
+C. Combinations Strike Back \[MZH\]
+-----------------------------------
 
-## D. DFT for Dummies [MZH,TDJ]
+D. DFT for Dummies \[MZH,TDJ\]
+------------------------------
 
 问题转换后即为：查询子区间和，翻转子区间，Splay维护即可。
 
-## E. Linguistic Estimations [TDJ]
+E. Linguistic Estimations \[TDJ\]
+---------------------------------
 
 SA按height合并。
 
-## F. Passing Finals
+F. Passing Finals
+-----------------
 
-## G. Important Guests [TDJ]
+G. Important Guests \[TDJ\]
+---------------------------
 
 似曾相识……度数大于$\sqrt{N}$的点先$O(M)$做掉，并删掉相关边，然后再用$\sum{deg_i^2}$的枚举做掉剩下的点。复杂度$O(N*\sqrt{N})$。
 
-## H. Angel and Demon
+H. Angel and Demon
+------------------
 
-## I. Illegal Wage [MZH]
+I. Illegal Wage \[MZH\]
+-----------------------
 
-## J. For Fun and Lulz [TDJ]
+J. For Fun and Lulz \[TDJ\]
+---------------------------
 
 暴力版LCT，询问随机所以单次操作期望$O(\log{N})$。
