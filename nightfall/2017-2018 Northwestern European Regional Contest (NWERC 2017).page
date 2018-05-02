@@ -1,0 +1,129 @@
+# E. English resterunt
+
+先记录$cntf(i,j)$表示$[i,j]$都被占用且其他都没有被占用的方案，用$sumf(i,j)$表示这些方案的价值和
+
+$k$表示最后一个占用的桌子，那么$cntf(i,j)=\sum_{k=i}^j cntf(i,k-1)*cntf(k+1,j)*(a[k]-a[i-1])*C(j-i,k-i)$， $sumf(i,j)=\sum_{k=i}^j \frac{expf(i,k-1)+expf(k+1,j)+(a[k]+a[i-1]+1)/2}{cntf(i,k-1)*cntf(k+1,j)*(a[k]-a[i-1])*C(j-i,k-i)}$
+
+然后用$cntg(i,j)$表示前$i$个桌子占用$j$个的方案，$sumg(i,j)$表示这些方案的价值和，再推一下就好了
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 202
+#define LD double
+using namespace std;
+int n,mx,t,m,i,j,k,l,nv,a[N];
+LD c[N][N];
+struct P{
+	double sum,cnt;
+	double E(){return cnt==0?0:sum/cnt;}
+	void add(double x,double z){sum+=x*z;cnt+=z;}
+}f[N][N],g[N][N];
+LD getv(int x,int y,int nv){
+	if(nv>n)return 0;
+	return 0.5*(x+y+1);
+}
+int main(){
+	scanf("%d%d%d",&n,&mx,&t);
+	for(i=1;i<=n;i++)scanf("%d",&a[i]),a[i]=min(a[i],mx);
+	sort(a+1,a+n+1);
+	for(i=n+1;i<=n+t;i++)a[i]=mx;m=n+t;
+	for(i=0;i<=t;i++)for(c[i][0]=j=1;j<=i;j++)c[i][j]=c[i-1][j]+c[i-1][j-1];
+	for(i=1;i<=m+1;i++)f[i][i-1].add(0,1);
+	for(l=1;l<=t;l++)for(i=1;i+l-1<=m;i++)for(j=i+l-1,k=i;k<=j;k++)
+		f[i][j].add((long double)f[i][k-1].E()+f[k+1][j].E()+getv(a[k],a[i-1],k),(long double)f[i][k-1].cnt*f[k+1][j].cnt*(a[k]-a[i-1])*c[j-i][k-i]);
+	for(i=0;i<=t;i++)g[i+1][i]=f[1][i];
+	for(i=1;i<=m;i++)for(k=0;k<=t;k++)for(j=i;j<=m;j++)if(nv=k+j-i,nv<=t)
+		g[j+1][nv].add((long double)g[i][k].E()+f[i+1][j].E(),(long double)g[i][k].cnt*f[i+1][j].cnt*c[nv][k]);
+	printf("%.9f",g[m][t].E());
+}
+~~~
+
+# F. Factor-Free Tree
+
+每次dfs(l,r)想找任意一个l<=i<=r，使得li<l&&r<ri，然后递归到dfs(l,i-1)和dfs(i+1,r)。lbn可持久化线段树卡着内存过了。
+
+官方题解：
+
+每次从两边一起往里面for，暴力找就行了。复杂度：
+
+$T(n)=max_{0\leq x\leq n/2} \{2x+T(x)+T(n-x)\}$
+
+据说是$O(n\log n)$的（感觉上是说越靠中间虽然越晚找到但分得越平均），妙啊。
+
+# J. Juggling Troupe
+
+各种性质随便猜，然后很自然从左往右推，维护左边全是01，往右边发射了几个，快速模拟往左发射一个球的过程。
+
+赛场上全程死在C题上了，感觉C那个判定有一万个坑，早知道就按lbn那样写了。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6 + 5;
+char s[N];
+int main() {
+	scanf("%s", s);
+	int n = (int) strlen(s);
+	long long gor = 0;
+	deque<int> zero;
+	for (int i = 0; i < n; ++ i) {
+		long long x = s[i] - '0' + gor;
+		gor = 0;
+		while (x >= 2) {
+			gor ++;
+			x -= 2;
+			if (!zero.empty() && zero.back() == i - 1) {
+				s[zero.back()] = '1';
+				zero.pop_back();
+			}
+			else if (zero.empty()) {
+				if (i) {
+					x ++;
+					zero.push_front(0);
+					s[0] = '0';
+				}
+			}
+			else {
+				int step = max(1LL, min(i ? x + 1 : (x + 2) / 2, i - 1LL - zero.back()));
+				gor --;
+				x += 2;
+				gor += step;
+				x -= 2 * step;
+				if (i) x += step;
+				s[zero.back()] = '1';
+				s[zero.back() += step] = '0';
+			}
+		}
+		s[i] = '0' + x;
+		if (s[i] == '0') zero.push_back(i);
+	}
+	puts(s);
+}
+~~~
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 1111111
+using namespace std;
+int n,i,x,t,q[N];char s[N];bool v[N],vs[N];
+set<int>S;set<int>::iterator it,il,ir;
+int main(){
+	scanf("%s",s+1);n=strlen(s+1);
+	S.insert(0);S.insert(n+1);
+	for(i=1;i<=n;i++){
+		if(s[i]=='0')S.insert(i);
+		if(s[i]=='2')v[i]=1;
+	}
+	for(i=1;i<=n;i++)if(v[i]){
+		v[i]=0;
+		il=S.lower_bound(i);il--;
+		ir=S.upper_bound(i);
+		x=(*il)+(*ir)-i;
+		if(*il)S.erase(il);
+		if((*ir)!=n+1)S.erase(ir);
+		if(v[x])v[x]=0;else S.insert(x);
+	}
+	for(it=S.begin();it!=S.end();it++)vs[*it]=1;
+	for(i=1;i<=n;i++)putchar(vs[i]?'0':'1');
+}
+~~~
