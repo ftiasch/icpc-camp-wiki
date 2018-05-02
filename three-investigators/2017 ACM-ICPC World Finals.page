@@ -36,7 +36,7 @@ braveTester's solution
 枚举在直线上的两个顶点，然后判断该条直线 $l$ 在多边形内部的最长段即可。
 
 同 [2013 ACM-ICPC Asia Regional Nanjing Online, E.
-Polygon](2013%20ACM-ICPC%20Asia%20Regional%20Nanjing%20Online#e.-polygon)
+Polygon](2013 ACM-ICPC Asia Regional Nanjing Online#e.-polygon)
 类似，定义有效交点为经过该交点 $l$ 与 $P$ 的关系发生改变的点。显然严格在
 $P$ 一条边 $e$ 内部的交点，如果不是无穷个，则必为有效交点。
 
