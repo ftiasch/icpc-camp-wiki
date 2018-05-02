@@ -1,0 +1,17 @@
+![](http://pillarprint.net/images/home-problems.jpg)
+
+## D. Query on a graph [GX]
+
+首先可以发现双方内定的分配方案，然后dp，写出式子后发现是单峰函数，进一步讨论找到决策单调性，其他条件不变，当你钱比原来多一的时候你给当前物品的写的钱最多加一（也可能比这个还少），n^3即可。
+
+## J. Query on a graph [TDJ]
+
+BFS序+线段树。
+
+## L. A Random Turn Connection Game [GX]
+
+通过某些巧妙的转化之后可以变成非常好写的连通性状压DP
+
+## M. Subsequence [TDJ]
+
+可持久化堆优化K短路。
