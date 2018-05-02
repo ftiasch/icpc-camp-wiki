@@ -1,11 +1,13 @@
-## SRM657 Medium
+SRM657 Medium
+-------------
 
 > 给出一个$P(x)=\prod_{i=0}^{n}(x-i)^{a_i}$,问$P(x)$至少被哪正整数整除.
 
 设$solve(P(x),p)$为$P(x)$至少被$p$的多少次方整除,枚举质数$p$,即可得到答案.
 将$P(x)=\prod_{i=0}^{n}(x-i)^{a_i}$按照$i\mod p$的值分为$p$部分,设$P_j(x)=\prod_{i\mod p=j}(x-i)^{a_i}$,那么$solve(P(x),p)$的值显然为$min_{0\le j \lt p}(solve(P_j(x),p)+\sum_{i\mod p=j}a_i)$
 
-## SRM657 Hard
+SRM657 Hard
+-----------
 
 > 一个$N\times N$的棋盘,要在上面放置$K$个rook,任意两个rook之间的关系为$graph[i][j]$,若为$1$,则两个rook必须在同一行或者同一列,若为$0$,则必须在不同行不同列.问有多少种放法.
 
