@@ -1,8 +1,9 @@
-# B. Buffed Buffet
+B. Buffed Buffet
+================
 
 斜率优化+二分。准备了一个动态斜率优化板子完全不用动脑子。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 10005;
@@ -12,137 +13,137 @@ typedef long long LL;
 LL g[N], f[N];
 const LL is_query = - (1LL << 62);
 struct Line {
-	LL k, b;
-	mutable function<const Line*()> succ;
-	bool operator < (const Line &rhs) const {
-		if (rhs.b != is_query) return k < rhs.k;
-		const Line* s = succ();
-		if (!s) return 0; LL x = rhs.k;
-		return 1.0L * b - s-> b < 1.0L * (s->k - k) * x;
-	}
+    LL k, b;
+    mutable function<const Line*()> succ;
+    bool operator < (const Line &rhs) const {
+        if (rhs.b != is_query) return k < rhs.k;
+        const Line* s = succ();
+        if (!s) return 0; LL x = rhs.k;
+        return 1.0L * b - s-> b < 1.0L * (s->k - k) * x;
+    }
 };
 struct Hull : public multiset<Line> {
-	bool bad (iterator y) {
-		auto z = next(y); if (y == begin()) {
-			if (z == end()) return 0;
-			return y -> k == z -> k && y -> b <= z -> b;
-		}
-		auto x = prev(y);
-		if (z == end()) return y -> k == x -> k && y -> b <= x -> b;
-		return 1.0L * (x -> b - y -> b) * (z -> k - y -> k) >= 1.0L * (y -> b - z -> b) * (y -> k - x -> k);
-	}
-	void insert_line(LL k, LL b) {
-		auto y = insert({k, b});
-		y->succ = [=] { return next(y) == end() ? 0 : &*next(y); };
-		if (bad(y)) { erase(y); return; }
-		while (next(y) != end() && bad(next(y))) erase(next(y));
-		while (y != begin() && bad(prev(y))) erase(prev(y));
-	}
-	LL eval(LL x) {
-		Line u = {x, is_query};
-		auto l = *lower_bound(u);
-		return l.k * x + l.b;
-	}
+    bool bad (iterator y) {
+        auto z = next(y); if (y == begin()) {
+            if (z == end()) return 0;
+            return y -> k == z -> k && y -> b <= z -> b;
+        }
+        auto x = prev(y);
+        if (z == end()) return y -> k == x -> k && y -> b <= x -> b;
+        return 1.0L * (x -> b - y -> b) * (z -> k - y -> k) >= 1.0L * (y -> b - z -> b) * (y -> k - x -> k);
+    }
+    void insert_line(LL k, LL b) {
+        auto y = insert({k, b});
+        y->succ = [=] { return next(y) == end() ? 0 : &*next(y); };
+        if (bad(y)) { erase(y); return; }
+        while (next(y) != end() && bad(next(y))) erase(next(y));
+        while (y != begin() && bad(prev(y))) erase(prev(y));
+    }
+    LL eval(LL x) {
+        Line u = {x, is_query};
+        auto l = *lower_bound(u);
+        return l.k * x + l.b;
+    }
 };
 void upd(LL &x, LL y) {
-	x = max(x, y);
+    x = max(x, y);
 }
 const double eps = 1e-6;
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 0; i < n; ++ i) {
-		char s[5];
-		scanf("%s", s);
-		if (s[0] == 'D') {
-			scanf("%d%d%d", &w1[n1], &t1[n1], &d1[n1]);
-			n1 ++;
-		}
-		else {
-			scanf("%d%d", &t2[n2], &d2[n2]);
-			n2 ++;
-		}
-	}
-	for (int i = 0; i <= m; ++ i) g[i] = is_query;
-	g[0] = 0;
-	for (int i = 0; i < n1; ++ i) {
-		int w = w1[i], t = t1[i], d = d1[i];
-		for (int mod = 0; mod < w; ++ mod) {
-			static LL g[N], f[N], id[N];
-			int tot = 0;
-			for (int i = mod; i <= m; i += w) {
-				id[tot] = i;
-				f[tot] = g[tot] = ::g[i];
-				tot ++;
-			}
-			Hull h;
-			for (int i = 0; i < tot; ++ i) {
-				if (!h.empty()) {
-					LL y = h.eval(2LL * d * i);
-					y += 2LL * t * i + 1LL * d * i - 1LL * d * i * i;
-					upd(f[i], y);
-				}
-				if (g[i] != is_query) {
-					LL k = i;
-					LL b = g[i] - 2LL * t * i - 1LL * d * i * i - 1LL * d * i;
-					h.insert_line(k, b);
-				}
-			}
-			for (int i = 0; i < tot; ++ i) {
-				::g[id[i]] = f[i];
-			}
-		}
-	}
-	double ans = -1e18;
-	for (int i = 0; i <= m; ++ i) {
-		if (g[i] == is_query) continue;
-		int j = m - i;
-		double l = -1e9, r = 1e9, base = g[i];
-		for (int c = 0; c < 120; ++ c) {
-			double mid = (l + r) / 2, x = 0.;
-			bool found = 0;
-			for (int i = 0; i < n2; ++ i) {
-				int t = t2[i], d = d2[i];
-				if (t < mid) continue;
-				if (d == 0) {
-					x = 1e9;
-					break;
-				}
-				else {
-					double xi = (t - mid) / d;
-					x += xi;
-				}
-			}
-			if (x > j) {
-				l = mid;
-			}
-			else {
-				r = mid;
-			}
-		}
-		double mid = (l + r) / 2, x = 0, v = 0;
-		int special = -1;
-		for (int i = 0; i < n2; ++ i) {
-			int t = t2[i], d = d2[i];
-			if (t + 1e-6 < mid) continue;
-			if (d == 0) {
-				special = max(special, t);
-			}
-			else {
-				double xi = (t - mid) / d;
-				x += xi;
-				v += 0.5 * xi * (2 * t - d * xi);
-			}
-		}
-		if (x + eps < j) {
-			if (special != -1) {
-				v += special * (j - x);
-			}
-			else continue;
-		}
-		ans = max(ans, 0.5 * base + v);
-	}
-	if (ans < -1e17) puts("impossible"); else
-	printf("%.10f\n", ans);
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; ++ i) {
+        char s[5];
+        scanf("%s", s);
+        if (s[0] == 'D') {
+            scanf("%d%d%d", &w1[n1], &t1[n1], &d1[n1]);
+            n1 ++;
+        }
+        else {
+            scanf("%d%d", &t2[n2], &d2[n2]);
+            n2 ++;
+        }
+    }
+    for (int i = 0; i <= m; ++ i) g[i] = is_query;
+    g[0] = 0;
+    for (int i = 0; i < n1; ++ i) {
+        int w = w1[i], t = t1[i], d = d1[i];
+        for (int mod = 0; mod < w; ++ mod) {
+            static LL g[N], f[N], id[N];
+            int tot = 0;
+            for (int i = mod; i <= m; i += w) {
+                id[tot] = i;
+                f[tot] = g[tot] = ::g[i];
+                tot ++;
+            }
+            Hull h;
+            for (int i = 0; i < tot; ++ i) {
+                if (!h.empty()) {
+                    LL y = h.eval(2LL * d * i);
+                    y += 2LL * t * i + 1LL * d * i - 1LL * d * i * i;
+                    upd(f[i], y);
+                }
+                if (g[i] != is_query) {
+                    LL k = i;
+                    LL b = g[i] - 2LL * t * i - 1LL * d * i * i - 1LL * d * i;
+                    h.insert_line(k, b);
+                }
+            }
+            for (int i = 0; i < tot; ++ i) {
+                ::g[id[i]] = f[i];
+            }
+        }
+    }
+    double ans = -1e18;
+    for (int i = 0; i <= m; ++ i) {
+        if (g[i] == is_query) continue;
+        int j = m - i;
+        double l = -1e9, r = 1e9, base = g[i];
+        for (int c = 0; c < 120; ++ c) {
+            double mid = (l + r) / 2, x = 0.;
+            bool found = 0;
+            for (int i = 0; i < n2; ++ i) {
+                int t = t2[i], d = d2[i];
+                if (t < mid) continue;
+                if (d == 0) {
+                    x = 1e9;
+                    break;
+                }
+                else {
+                    double xi = (t - mid) / d;
+                    x += xi;
+                }
+            }
+            if (x > j) {
+                l = mid;
+            }
+            else {
+                r = mid;
+            }
+        }
+        double mid = (l + r) / 2, x = 0, v = 0;
+        int special = -1;
+        for (int i = 0; i < n2; ++ i) {
+            int t = t2[i], d = d2[i];
+            if (t + 1e-6 < mid) continue;
+            if (d == 0) {
+                special = max(special, t);
+            }
+            else {
+                double xi = (t - mid) / d;
+                x += xi;
+                v += 0.5 * xi * (2 * t - d * xi);
+            }
+        }
+        if (x + eps < j) {
+            if (special != -1) {
+                v += special * (j - x);
+            }
+            else continue;
+        }
+        ans = max(ans, 0.5 * base + v);
+    }
+    if (ans < -1e17) puts("impossible"); else
+    printf("%.10f\n", ans);
 }
-~~~
+```
