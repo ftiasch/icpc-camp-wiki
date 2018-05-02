@@ -19,40 +19,51 @@
 │A₀[-:--]│                                                            │
 │G₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Asynchronous Exceptions
+A. Asynchronous Exceptions
+--------------------------
 
 标程828行…什么鬼…
 
-## B. AYBABTU [GX]
+B. AYBABTU \[GX\]
+-----------------
 
 简单题
 
-## C. Billiards Sorting [MZH]
+C. Billiards Sorting \[MZH\]
+----------------------------
 
-## D. Digit
+D. Digit
+--------
 
 求一个东西的快速增长的数列mod一个数的值，利用循环节和欧拉公式？
 
-## E. Dungeon Creation [MZH]
+E. Dungeon Creation \[MZH\]
+---------------------------
 
 生成树计数。每一个点所在行只会与上下各$2m$行有关。
 
-## F. Longest Lane [MZH]
+F. Longest Lane \[MZH\]
+-----------------------
 
 答案所在直线一定过原图中的两点。
 
-## G. PLAY in BASIC
+G. PLAY in BASIC
+----------------
 
-## H. Skyland [GX]
+H. Skyland \[GX\]
+-----------------
 
 首先转化为求割然后求点斜率最大值，然后建立一个汇来去掉负权的情况。
 
-## I. Three-way Branch [MZH]
+I. Three-way Branch \[MZH\]
+---------------------------
 
 先预处理出矩阵的2的次幂次幂，每次计算矩乘时从右向左用矩阵乘向量。
 
-## J. Tree Allocation [TDJ]
+J. Tree Allocation \[TDJ\]
+--------------------------
 
 树DP。
