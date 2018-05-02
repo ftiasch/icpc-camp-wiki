@@ -18,34 +18,46 @@
 ├────────┼════════════────────────════════════────────────════════════┤
 │+ [3:48]│    ·oo·oooooooo·oo··oooooo·oooo··ooo·o··oo··· ···oo·oo··o  │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Cards [GX]
+A. Cards \[GX\]
+---------------
 
-## B. Doors [TDJ]
+B. Doors \[TDJ\]
+----------------
 
 查分约束系统强连通缩点。
 
-## C. Fine Brochures [GX]
+C. Fine Brochures \[GX\]
+------------------------
 
-## D. Fragile Keyboard [GX]
+D. Fragile Keyboard \[GX\]
+--------------------------
 
-## E. Goodness [MZH]
+E. Goodness \[MZH\]
+-------------------
 
-## F. Hotel 11 [GX]
+F. Hotel 11 \[GX\]
+------------------
 
-## G. Mosaic [MZH]
+G. Mosaic \[MZH\]
+-----------------
 
-## H. Rectangle Count [GX]
+H. Rectangle Count \[GX\]
+-------------------------
 
-## I. Second Trip [TDJ]
+I. Second Trip \[TDJ\]
+----------------------
 
 带权LCA。
 
-## J. Ship [TDJ]
+J. Ship \[TDJ\]
+---------------
 
 简单DP。
 
-## K. Table [TDJ]
+K. Table \[TDJ\]
+----------------
 
 扫描线处理面积并。
