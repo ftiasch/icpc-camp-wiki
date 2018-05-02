@@ -1,0 +1,105 @@
+# Info
+
+Date: 2017.11.15 18:00-23:00
+
+[Link](http://codeforces.com/gym/101615)
+
+# Solutions
+
+## A Odd Palindrome
+
+solved by sk, upsolved by none
+
+## B Enlarging Enthusiasm
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+考虑$dp_{S,i,j}$表示已经确定了最终名次最高的$|S|$个人且这些人构成的集合为$S$，排位为$|S|$的人是$i$，要做到这个情况至少需要$j$的总加分，为了保持最低限度的加分，此时$i$只获得了$1$的加分，现在新加进来一个$k$作为第$|S|+1$名，需要给前$|S|$个人同时加上相同的分数，保持加分不减的同时使$i$的最终得分高于$k$，需要注意最后一个人加入时要超过一开始的最高分。
+
+## C Fear Factoring
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+区间筛分解质因数之后套因子和公式。
+
+## D Rainbow Roads
+
+solved by sk, upsolved by none
+
+## E Straight Shot
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+二分角度，求出走到横坐标$X$时的纵坐标。
+
+## F Distinct Distances
+
+solved by sk, upsolved by none
+
+## G Security Badge
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+枚举一个下界，要求走过的边的$c_i$不小于这个下界，然后$Dijkstra$求出从起点走到终点经过的边的$\min d_i$的最大值，最后扫描线求线段并。
+
+## H Avoiding Airports
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+考虑$dp_i$表示要坐上第$i$条航线的最小代价，转移枚举目标城市和当前航线出发城市相同且到达时间早于当前航线的第$j$条航线，那么$dp_i=\min(dp_j+(s_i-e_j)^2)$，这是一个显然的斜率优化。
+
+按照出发时间对这些航线进行$dp$，对每个城市维护一个凸包，并用一个$std::set$维护尚未加入凸包的点，处理一条航线时，将当前城市时间不超过出发时间的点加入凸包，然后在凸包上三分更新当前航线的$dp$值，再向目标城市的$std::set$中加入一个点。
+
+## I Long Long Strings
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+维护每种新加入的字母在当前串的位置以及删去的原串字母在原串中的位置。
+
+## J Grid Coloring
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+可以发现每一行的黑格子一定是靠左的连续一段，且从上往下长度不增，于是$dp_{i,j}$表示当前放到$i$行且有$j$个黑格子，转移枚举下一行放多少个黑格子并检查是否可行。
+
+## K Spinning Up Palindromes
+
+solved by Jove, upsolved by none
+
+## L Delayed Work
+
+solved by Jove, upsolved by none
+
+## M Unsatisfying
+
+solved by Jove, upsolved by none
+
+# Replay
