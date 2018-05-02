@@ -1,0 +1,362 @@
+# B：Area Folding
+
+## lbn187
+
+求出两两直线的交点，连起来，强行加双向边，套用平面图板子就好了。注意平面图板子不能有重复点，不能有重复边，边的两点不能相同，都可以用map处理。
+当时在睡觉，假装这是不封闭的图平面图做不了就不做了。。其实平面图板子稍微改一下就过了。。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 111
+#define M 22222
+#define eps 1e-8
+#define pi acos(-1)
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+int n,m,i,j,t,cnt,id,qq[M];bool v[M];double Area,AN;
+int sgn(double x){return x<-eps?-1:x>eps;}//x>0-->1 x=0-->0 x<0-->-1
+int cmp(double x,double y){return sgn(x-y);}//x>y-->1 x=0-->0 x<y-->-1
+double sqr(double x){return x*x;}
+struct P{//一个点或者一个向量
+	double x,y;
+	P(double x=0,double y=0):x(x),y(y){}
+	void in(){scanf("%lf%lf",&x,&y);}
+	void out(){printf("%.7f %.7f\n",x,y);}
+	double norm(){return sqrt(x*x+y*y);}//模长 
+	double norm2(){return x*x+y*y;}
+	P unit(){//单位向量
+		double l=norm();
+		return P(x/l,y/l);
+	}
+	double angle(){return atan2(y,x);}//角度 
+}p[N],q[N],d[M];
+bool operator==(P a,P b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
+bool operator!=(P a,P b){return !(a==b);}
+bool operator<(P a,P b){return cmp(a.x,b.x)==0?cmp(a.y,b.y)<0:cmp(a.x,b.x)<0;}
+P operator-(P a){return P(-a.x,-a.y);}
+P operator+(P a,P b){return P(a.x+b.x,a.y+b.y);}
+P operator-(P a,P b){return P(a.x-b.x,a.y-b.y);}
+P operator*(P a,double b){return P(a.x*b,a.y*b);}
+P operator/(P a,double b){return P(a.x/b,a.y/b);}
+double dj(P a,P b){return a.x*b.x+a.y*b.y;}//点积
+double cj(P a,P b){return a.x*b.y-a.y*b.x;}//叉积
+double dis(P a,P b){return (a-b).norm();}//距离
+double area(P a,P b,P c){return cj(b-a,c-a)*.5; }//三角形面积
+struct L{//一个线段或者直线
+	P s,t;
+	L(P s=P(),P t=P()):s(s),t(t){}
+	void in(){scanf("%lf%lf%lf%lf",&s.x,&s.y,&t.x,&t.y);}
+	void out(){printf("%.6f %.6f --> %.6f %.6f\n",s.x,s.y,t.x,t.y);}
+	double length()const{return dis(s,t);}
+}l[N];
+bool point_on_line(P a,L b){//点是否在直线上
+	return !sgn(cj(a-b.s,b.t-b.s));
+}
+bool point_on_segment(P a,L b){//点是否在线段上
+	return !sgn(cj(a-b.s,b.t-b.s))&&sgn(dj(b.s-a,b.t-a))<=0;
+}
+bool two_side(P a,P b,L c){//两点是否再直线两边
+	return sgn(cj(a-c.s,c.t-c.s))*sgn(cj(b-c.s,c.t-c.s))<0;
+}
+bool segment_intersect_judge(L a,L b){//判断两线段是否相交
+	if(point_on_segment(b.s,a)||point_on_segment(b.t,a))return 0;
+	if(point_on_segment(a.s,b)||point_on_segment(a.t,b))return 0;
+	return two_side(a.s,a.t,b)&&two_side(b.s,b.t,a);
+}
+P line_intersect(L a,L b){//直线相交
+	double s1=cj(a.t-a.s,b.s-a.s),s2=cj(a.t-a.s,b.t-a.s);
+	return (b.s*s2-b.t*s1)/(s2-s1);
+}
+bool cmp2(P a,P b){return dis(a,p[i])<dis(b,p[i]);}
+map<P,int>mp;map<pair<int,int>,int>pm;
+struct W{int x,y;double o;}e[M];
+struct Cmp{bool operator()(int a,int b){return e[a].o<e[b].o;}};
+set<int,Cmp>S[M];set<int,Cmp>::iterator it;
+void add_point(P a){if(!mp[a])mp[a]=++id,d[id]=a;}
+void add(int x,int y){
+	if(x==y)return;
+	if(pm[make_pair(x,y)])return;
+	pm[make_pair(x,y)]=pm[make_pair(y,x)]=1;
+	e[m++]=W{x,y,(d[y]-d[x]).angle()};
+	e[m++]=W{y,x,(d[x]-d[y]).angle()};
+}
+void link(P a,P b){add(mp[a],mp[b]);}
+int main(){
+	mp.clear();id=m=cnt=0;CL(v);
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)p[i].in();
+	for(i=1;i<n;i++)l[i]=L(p[i],p[i+1]);
+	for(i=1;i<n;i++){
+		q[t=1]=l[i].s;q[++t]=l[i].t;
+		for(j=1;j<n;j++)if(i!=j)if(segment_intersect_judge(l[i],l[j]))q[++t]=line_intersect(l[i],l[j]);
+		sort(q+1,q+t+1,cmp2);
+		for(j=1;j<=t;j++)add_point(q[j]);
+		for(j=1;j<t;j++)link(q[j],q[j+1]);
+	}
+	for(i=0;i<m;i++)S[e[i].x].insert(i);
+	for(i=0;i<m;i++)if(!v[i]){
+		for(qq[t=1]=j=i;;qq[++t]=j=*it){
+
+			it=S[e[j].y].upper_bound(j^1);
+			if(it==S[e[j].y].end())it=S[e[j].y].begin();
+			if(*it==i)break;
+		}
+		for(Area=0,j=1;j<=t;j++)Area+=cj(d[e[qq[j]].x],d[e[qq[j]].y]),v[qq[j]]=1;
+		if(Area>0)AN+=Area;
+	}
+	for(i=1;i<=id;i++)S[i].clear();
+	printf("%.7f",AN/2);
+}
+~~~
+
+# E：Move on Dice
+
+题目大意：给你一个6面骰子，每一面是一个字符串，要从左上角走到右上角使得字典序最小。有些点只能左右走，有些点只能上下走，有些点不能走，求最小字典序，或者输出无穷大。$N,M,|S|\leq12$
+
+# F：Pipeline Plans
+
+## Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+int n, m, tmp[10], f[10];
+void changeto(int x, int y) {
+	x = f[x], y = f[y];
+	if (!y) swap(x, y);
+	vector<int> all;
+	for (int i = 0; i <= m + 3; ++ i) if (f[i] == y) all.push_back(i);
+	for (int i = 0; i < (int) all.size(); ++ i) f[all[i]] = x;
+}
+struct node {
+	int cnt[12], flag[4];
+	node() {memset(cnt, 0, sizeof(cnt)); memset(flag, 0, sizeof(flag));}
+	void clean() {
+		int tot = 1;
+		for (int i = 0; i <= m; ++ i) {
+			int &find = tmp[i] = -1;
+			if (flag[i] == 0) find = 0; else {
+				for (int j = 0; j < i; ++ j) if (flag[j] == flag[i]) find = tmp[j];
+			}
+			if (find == -1) find = tot ++;
+		}
+		for (int i = 0; i <= m; ++ i) flag[i] = tmp[i];
+	}
+	int extend(int t) {
+		for (int i = 0; i <= m; ++ i) f[i] = flag[i];
+		f[m + 1] = 50; f[m + 2] = 60; f[m + 3] = 70;
+		if (t == 2 || t == 4 || t == 7 || t == 8 || t == 10 || t == 11 || t == 12) changeto(m + 1, m);
+		if (t == 2 || t == 5 || t == 6 || t == 8 || t == 9 || t == 10 || t == 12) changeto(m + 2, m + 1);
+		if (t == 3 || t == 6 || t == 7 || t == 9 || t == 10 || t == 11 || t == 12) changeto(m + 1, 0);
+		if (t == 3 || t == 4 || t == 5 || t == 8 || t == 9 || t == 11 || t == 12) changeto(m + 3, m + 1);
+		for (int i = m; i >= 1; -- i) flag[i] = f[i - 1];
+		flag[0] = f[m + 3];
+		flag[1] = f[m + 2];
+		clean();
+		return f[m + 1];
+	}
+	void newline() {
+		flag[0] = 50;
+		clean();
+	}
+};
+bool operator < (const node &a, const node &b) {
+	for (int i = 0; i < 12; ++ i) if (a.cnt[i] != b.cnt[i]) return a.cnt[i] < b.cnt[i];
+	for (int i = 0; i <= m; ++ i) if (a.flag[i] != b.flag[i]) return a.flag[i] < b.flag[i];
+	return 0;
+}
+typedef long long LL;
+map<node, LL> dp[2];
+int a[15];
+#define forall(x) for (map<node, LL>::iterator it = dp[x].begin(); it != dp[x].end(); ++ it)
+int main() {
+	scanf("%d%d", &n, &m);
+	for (int i = 1; i <= 12; ++ i) scanf("%d", &a[i]);
+	if (m > n) {
+		swap(n, m);
+		swap(a[2], a[3]);
+		swap(a[4], a[6]);
+		swap(a[8], a[9]);
+		swap(a[10], a[11]);
+	}
+	assert(m <= 3);
+	int cur = 0; LL ans = 0;
+	for (int i = 0; i < n; ++ i) {
+		for (int j = 0; j < m; ++ j) {
+			cur ^= 1; dp[cur].clear();
+			if (i == 0 && j == 0) {
+				for (int t = 1; t < 12; ++ t) {
+					if (!a[t + 1] || t == 6) continue;
+					node tmp = node();
+					for (int i = 0; i < 12; ++ i) tmp.cnt[i] = a[i + 1] - (t == i);
+					for (int i = 0; i <= m; ++ i) tmp.flag[i] = i + 1;
+					if (t == 1 || t == 4 || t == 5 || t == 7 || t == 8 || t == 9 || t == 11) tmp.flag[1] = 0;
+					if (t == 2 || t == 3 || t == 4 || t == 7 || t == 8 || t == 10 || t == 11) tmp.flag[0] = 0;
+					tmp.clean();
+					dp[cur][tmp] ++;
+				}
+			}
+			else {
+				if (j == 0) {
+					forall(cur ^ 1) {
+						pair<node, LL> old = *it;
+						old.first.newline();
+						bool has0 = 0;
+						for (int i = 0; i <= m; ++ i) has0 |= old.first.flag[i] == 0;
+						if (!has0) continue;
+						dp[cur][old.first] += old.second;
+					}
+					cur ^= 1; dp[cur].clear();
+				}
+				forall(cur ^ 1) {
+					for (int use = 0; use < 12; ++ use) {
+						if (!(*it).first.cnt[use]) continue;
+						pair<node, LL> old = *it;
+						old.first.cnt[use] --;
+						int tt = old.first.extend(use + 1);
+						if (i == n - 1 && j == m - 1 && tt == 0) ans += old.second;
+						bool has0 = 0;
+						for (int i = 0; i <= m; ++ i) has0 |= old.first.flag[i] == 0;
+						if (!has0) continue;
+						dp[cur][old.first] += old.second;
+					}
+				}
+			}
+		}
+	}
+	printf("%lld\n", ans);
+}
+~~~
+
+# H：Repairing
+
+## lbn187
+
+题目大意：给出$n$条水管线，有$m$个阀门和一个起点和终点，要通过阀门让起点和终点不联通，且受到影响的水管长度最小，不知道题意对不对。。$n\leq100,m\leq3000$。
+
+是不是大力建出一个图，然后把和终点联通的阀门路径取出来就好了啊。。。我没看错吧。。。。。
+
+# I：Sun and Moon
+
+## lbn187
+
+题目大意：给出多项式$f(x)=\sum_i^n a_i*x^{p_i}$，找出最小的正整数$x$使得$f(x)=0$且$f'(x)=0$。其中$n\leq1000,a_i\leq 10^{15},p_i\leq 10^9$。
+
+解题报告：首先如果$f(x)=0$的整数解$x$必须能被次数最低的项整除，于是找出次数最低的项，将其分解质因数，然后一个一个暴力去判断就可以出解，由于$a_i$较大，可以对三个大质数取模后判断，时间复杂度$O(nlg^2mk)$，其中$k$为最低项因数个数。
+
+可以DP求出最坏的情况，$10^{15}$以内约数最多的数大约也就是一万个左右，出题人没有卡你，所以你可以卡过去
+
+当时太困了没敢冲。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define LL long long
+#define X first
+#define Y second
+#define N 1111
+using namespace std;
+LL MOD[]={1000000007,1000000009,998244353};
+LL A,B;
+int n,i,w,t;
+LL q[66];
+map<LL,int>pm;
+map<LL,LL>mp;
+map<LL,LL>::iterator it;
+vector<LL>U;
+vector<pair<LL,LL> >V;
+struct P{LL x,y;}e[N];//x*?^y
+bool cmp(P a,P b){return a.y<b.y;}
+LL ABS(LL x){return x<0?-x:x;}
+LL mul(LL a,LL b,LL p){
+	LL v=0;
+	for(;b;a=(a+a)%p,b>>=1)if(b&1)v=(v+a)%p;
+	return v;
+}
+LL Pw(LL a,LL b,LL p){
+	LL v=1;
+	for(a%=p;b;a=mul(a,a,p),b>>=1)
+		if(b&1)v=mul(v,a,p);
+	return v;
+}
+LL gcd(LL a,LL b){
+	if(a<0)return gcd(-a,b);
+	return b?gcd(b,a%b):a;
+}
+bool ck(LL a,LL n,LL d,LL t){
+	LL V=Pw(a,d,n),la=V,i;
+	for(i=1;i<=t;la=V,i++){
+		V=mul(V,V,n);
+		if(V==1&&la!=1&&la!=n-1)return 1;
+	}
+	return V!=1;
+}
+bool miller_rabin(LL n){
+	if(n==2)return 1;
+	if(n<2||n%2==0)return 0;
+	LL x=n-1,t=0,i;
+	for(;x%2==0;x>>=1)t++;
+	for(i=20;i;i--)
+		if(ck(rand()%(n-1)+1,n,x,t))return 0;
+	return 1;
+}
+LL pollard_rho(LL n,LL c){
+	LL i=1,k=2,x0=rand()%(n-1)+1,y=x0,d;
+	for(;;){
+		i++;
+		x0=(mul(x0,x0,n)+c)%n;
+		d=gcd(y-x0,n);
+		if(d!=1&&d!=n)return d;
+		if(y==x0)return n;
+		if(i==k)y=x0,k+=k;
+	}
+}
+void find_factor(LL n){
+	if(n==1)return;
+	if(miller_rabin(n)){q[++t]=n;return;}
+	LL p=n;
+	for(;p>=n;)p=pollard_rho(n,rand()%(n-1)+1);
+	find_factor(p);find_factor(n/p);
+}
+void fd(int p,LL v,int ff){
+	if(p>t){
+		if(!pm[v]){
+			pm[v]=1;
+			U.push_back(v);
+		}
+		return;
+	}
+	fd(p+1,v,0);
+	if(!ff&&q[p]==q[p-1])return;
+	fd(p+1,v*q[p],1);
+}
+bool ok(LL x){
+	for(int i=0;i<3;i++){
+		LL an=0,p;
+		for(int j=1;j<=w;j++)
+			(an+=mul(e[j].x%MOD[i],Pw(x,e[j].y,MOD[i]),MOD[i]))%=MOD[i];
+		if(an)return 0;
+		for(int j=1;j<=w;j++)if(e[j].y)
+			(an+=mul(mul(e[j].x%MOD[i],e[j].y%MOD[i],MOD[i]),Pw(x,e[j].y-1,MOD[i]),MOD[i]))%=MOD[i];
+		if(an)return 0;
+	}
+	return 1;
+}
+int main(){
+	srand(23333);
+	scanf("%d",&n);
+	for(i=1;i<=n;i++){
+		scanf("%lld%lld",&A,&B);
+		mp[A]+=B;
+	}
+	for(it=mp.begin();it!=mp.end();it++)
+		if(it->Y)e[++w]=P{it->Y,it->X};
+	if(!w)return puts("Yes 1"),0;
+	sort(e+1,e+w+1,cmp);
+	find_factor(ABS(e[1].x));
+	sort(q+1,q+t+1);
+	fd(1,1,0);
+	sort(U.begin(),U.end());
+	for(i=0;i<U.size();i++)if(ok(U[i]))return printf("Yes %lld\n",U[i]),0;
+	puts("No");
+}
+~~~
