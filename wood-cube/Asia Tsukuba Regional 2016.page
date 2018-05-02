@@ -1,0 +1,53 @@
+<pre><span style="font-family:Menlo,Consolas,Monospace; font-size:15px;">
+┌─────────────────────────────────────────────────────────────────────┐
+│       2017-03-08 09:15-14:15 · Fudan U Wood Cube · MZH/TDJ/GX       │
+├────────┬────────────────────────────────────────────────────────────┤
+│C [0:05]│     ·ō                                                     │
+│D [0:24]│             ·oo·⁇   oō                                     │
+│J [0:43]│                         · ··oooo!    ·ooo!ō                │
+│I [0:32]│                                                ····o!!!ō   │
+├────────┼════════════────────────════════════────────────════════════┤
+│A [0:05]│oō                                                          │
+│B [0:17]│  oo··ō                                                     │
+│G [0:08]│           ooō                                              │
+│E [0:47]│                  o·o·oo····ō                               │
+│H [0:26]│                                 oooo·ō                     │
+├────────┼════════════────────────════════════────────────════════════┤
+│F [0:29]│       oooo··!!·ō                                           │
+│K [0:38]│                   o                        ·oo··! ! ·  ··· x
+├────────┼════════════────────────════════════────────────════════════┤
+│+ [4:26]│o·oo··oooooooooo··oooooo···o·oooooooo··ooo···oo·o···oo····· │
+└────────┴────────────────────────────────────────────────────────────┘
+</span></pre><br>
+
+## A. Rearranging a Sequence [TDJ]
+
+签到题。
+
+## B. Quality of Check Digits [TDJ]
+
+签到题。
+
+## C. Distribution Center [MZH]
+
+## D. Hidden Anagrams [MZH]
+
+## E. Infallibly Crack Perplexing Cryptarithm [TDJ]
+
+表达式计算，赛后觉得还是不要把`'='`视为运算会好一点，感谢样例…
+
+## F. Three Kingdoms of Bourdelot [GX]
+
+## G. Placing Medals on a Binary Tree [TDJ]
+
+不断合并两个同层节点，平衡树维护即可。
+
+## H. Animal Companion in Maze [TDJ]
+
+DAG + 树DP。
+
+## I. Skinny Polygon [MZH]
+
+## J. Cover the Polygon with Your Disk [MZH]
+
+## K. Black and White Boxes [GX]
