@@ -1,0 +1,282 @@
+# Contest Info
+
+date: 2017.08.05 12:00-17:00
+
+[practice link](https://cn.vjudge.net/contest/176256)
+
+# Solutions
+
+## A. Area
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+注意到两个卫星分别能覆盖到的区域是不足一个半圆的球冠，两个这样的球冠只会有至多一块区域相交。
+
+设两个卫星分别位于 $A$ 和 $B$，球心为 $O$，两个卫星分别能覆盖到的角度为 $\theta_A$ 和 $\theta_B$，对应的半径为 $r_A$ 和 $r_B$， $A$ 与 $B$ 所夹球心角为 $\theta_C$，球面距离为 $d$，则有 $\cos \theta_A = \frac{R}{|\vec{A}|},$ $r_A = R \theta_A,$ $\cos \theta_B = \frac{R}{|\vec{B}|},$ $r_B = R \theta_B,$ $\cos \theta_C = \frac{\vec{A} \cdot \vec{B}}{|\vec{A}| |\vec{B}|},$ $d = R \theta_C$。
+
+若两区域不交，即 $r_A + r_B \leq d$，则根据球冠表面积公式可知对应区域所占比例为
+$$
+\frac{2 \pi R^2 (1 - \cos \theta_A)}{4 \pi R^2} + \frac{2 \pi R^2 (1 - \cos \theta_B)}{4 \pi R^2} = 1 - \frac{\cos \theta_A + \cos \theta_B}{2}。
+$$
+
+若两区域包含，即 $d \leq |r_A - r_B|$，则还是根据上述公式可知所占比例为
+$$\frac{\max(1 - \cos \theta_A, 1 - \cos \theta_B)}{2}。
+$$
+
+否则两区域不完全相交，总的区域可以表示成两个扇形加两个三角形，其中两个三角形分别对应两圆交点中的一个，扇形表面积同球冠表面积，主要需要计算三角形的面积，这里需要用到球面三角形的余弦定理 $\cos c = \cos a \cos b + \sin a \sin b \cos C$ 计算三角形的球面夹角，从而确定扇形扫过的角度，再用球面剩余公式 $E = A + B + C - \pi$ 得出三角形面积为 $R^2 E$，其中 $a, b, c$ 表示三角形三边对应的球心角， $A, B, C$ 表示三角形三点对应的球面角。
+
+设三角形其中两个在圆心的端点为 $A'$ 和 $B'$，不失一般性设第三个端点为 $C'$，则对应的贡献可以写为
+$$
+\frac{(1 - \cos \theta_A)(\pi - A') + (1 - \cos \theta_B)(\pi - B') + (A' + B' + C' - \pi)}{2 \pi}。
+$$
+
+具体实现时，注意到输入至多有两位小数，可以将所有数字乘以 $100$ 转化为整数计算，答案显然是不变的。
+
+注意到主要的误差在于两圆相离和内含的判断，将输入转化为整数后可以利用整数进行精确判断。
+
+因为 $\cos$ 在 $[0, \pi]$ 单调减，以及 $\cos(|a - b|) = \cos(a - b)$ ，判断 $a + b \leq c$ 可以利用判断 $\sin a \sin b - \cos a \cos b \geq \cos c$ 实现， $|a - b| \geq c$ 同理。
+
+具体化简一下，主要是需要 $|\vec{A}|^2 |\vec{B}|^2 - (|\vec{A}|^2 + |\vec{B}|^2) R^2 - (\vec{A} \cdot \vec{B})(\vec{A} \cdot \vec{B} - 2 R^2)$ 和 $\vec{A} \cdot \vec{B} - R^2$ 的正负性，前者可以使用 `__int128` 或者 `double` 处理，后者可以使用 `long long` 处理。
+
+还有一个小地方也可以用整数去判断：
+$$
+\frac{\max(1 - \cos \theta_A, 1 - \cos \theta_B)}{2} = \frac{1}{2} - \frac{R}{2 \sqrt{\max(|\vec{A}|^2, |\vec{B}|^2)}}。
+$$
+
+## B. Parade Show
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+一对字符串的相邻位置大小关系相等，相当于每个元素在字符串中的排名（相同字符比较出现位置）依次相等，也相当于第 $i$ 个元素在前 $i$ 个元素中的排名依次相等。
+
+利用树状数组维护当前前缀串的元素信息，每次进行匹配时则比较对应位置的排名，当排名相等时则匹配字符，时间复杂度 $\mathcal{O}((n + m) \log k)$ 。
+
+## C. Count The Pairs
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+按照 Kruskal 的流程求最小生成树，令 $\text{cnt}[e] := 2 \times |S| \times |T|$，其中 $S$ 和 $T$ 为加入边 $e$ 后合并的两个集合；如果 $e$ 连接两点已在同一集合中，则 $\text{cnt}[e] = 0$。
+
+对于一次询问 $t$，$\sum_{t \le \text{cost}(e)} \text{cnt}[e]$ 即为所求，所以按照边权大小预处理个后缀和即可。
+
+复杂度 $O(m\log m + p)$。
+
+## D. Divide Groups
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+构造图 $G$，其中二人不连边当且仅当二人相互认识，则如果 $G$ 是二分图输出 `YES`，否则输出 `NO`。
+
+可以黑白二染色或者模 $2$ 意义下的带权并查集。复杂度 $O(n)$。
+
+## E. Polygon
+
+upsolved by braveTester
+
+---
+
+braveTester's solution
+
+定义二次函数 $f$ 与简单多边形 $P$ 的一个有效交点 $u$ 为 $f$ 经过 $u$ 后，与 $P$ 的包含关系发生变化。显然，如果交点严格在边 $e$ 内部，那么其为有效交点，与联立直线 $e$ 与二次函数 $f$ 的二次方程的 $\Delta > 0$ 互为充要条件。
+
+如果 $f$ 与 $P$ 交在 $P$ 的顶点 $u$ 上，设其 $P$ 与 $u$ 相邻的两个顶点分别为 $v$ 和 $w$，那么只有当 $(u, v)$ 和 $(u, w)$ 在 $u$ 附近的小邻域内位于 $f$ 划分的不同平面区域内 $u$ 才是一个有效交点。设 $k := f'(u.x)$，则可以通过 $k(v.x - u.x) - v.y$ 与 $0$ 的大小区分 $(u, v)$ 所在区域。如果 $(u, v)$ 恰好是切线，可以根据 $f$ 的凹凸性区分其所在区域。对 $(u, w)$ 可做类似事情。
+
+找到所有交点后，排个序，设无穷远处 $f$ 在 $P$ 外部，每过一个有效交点，与 $P$ 的关系改变一次，通过这个关系可以得到 $f$ 在 $P$ 内部的坐标区间，带入二次函数曲线长的原函数即可。注意到，一个有效交点只能出现一次，但一个无效交点出现多少次都无所谓，所以可以先不管 $f$ 的定义域限制，扩展到 $\mathbb{R}$，然后将 $L$ 和 $R$ 对应的点当作无效点插入，这样写起来更方便一些。
+
+复杂度 $O(n \log n)$。
+
+下面推一下二次曲线长公式。设 $f(x) = ax^2 + bx + c$，所以曲线长的不定积分为
+$$
+\begin{align}
+\int \sqrt{1 + (f')^2} \mathrm{d}x &= \int \sqrt{1 + (2ax + b)^2}\ \mathrm{d}x\\
+&= \frac{1}{2a} \int \sqrt{1 + y^2}\ \mathrm{d}y\\
+&= \frac{1}{2a} \int \frac{1}{\cos^3 \theta}\ \mathrm{d} \theta\\
+&= \frac{1}{2a} \int \frac{1}{(1 - z^2)^2}\ \mathrm{d} z \\
+&= \frac{1}{2a} \int \frac{1}{4} \times \left(\frac{1}{(1 + z)^2} + \frac{1}{(1 - z)^2} + \frac{1}{1 + z} + \frac{1}{1 - z}\right)\ \mathrm{d} z\\
+&= \frac{1}{8a} \left(-\frac{1}{1 + z} + \frac{1}{1 - z} + \ln |1 + z| - \ln |1 - z|\right)\\
+&= \frac{1}{8a} \left(\frac{2z}{1 - z^2} + \ln \left|\frac{1 + z}{1 - z}\right|\right)，
+\end{align}
+$$
+其中 $y = 2ax + b$，$\theta = \tan^{-1} y$，$z = \sin \theta = \sin \tan^{-1} y = {(2ax + b)/\sqrt{1 + (2ax + b)^2}}$，$1 - z^2 = {1 / (1 + (2ax + b)^2)}$。代入化简可得原函数为
+$$
+\frac{(2ax + b)\sqrt{1 + (2ax + b)^2} + \ln\left(2ax + b + \sqrt{1 + (2ax + b)^2}\right)}{4a}。
+$$
+
+## F. Fishhead's Little Game
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+由于至少进行了 $12$ 轮，因此最多剩下 $12$ 轮，可以状压 DP，$f[\text{mask}]$ 表示已经画了 $\text{mask}$ 的边的，继续画剩下的边先手（即下一步画的人）能取得的最大值。
+
+## G. Spacecraft Monitoring
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+最大密度子图是分数规划 + 最小割的经典问题。题目中少提到一个条件，即保证解唯一。
+
+设点 $u$ 的点权为 $p_u$，$u$ 与 $v$ 之间的边权为 $e_{u, v}$，所有点组成的集合为 $V$，所求点集为 $S$，其补集为 $T = V - S$，定义函数
+$$
+f(k) = \max_{S}{\left(\sum_{u \in S}{p_u} + \sum_{u \in S, v \in S, u \leq v}{e_{u, v}} - k \cdot |S|\right)}，
+$$
+则对于原问题最优解 $\text{ans}$ ，有 
+$$
+\begin{cases}
+f(k) > 0, & \text{if $k < \text{ans}$}\\
+f(k) = 0, & \text{if $k \geq \text{ans}$}
+\end{cases}，
+$$
+不妨对 $f(k)$ 进行二分来查找 $\text{ans}$ 。
+
+注意到 
+$$
+\begin{align}
+f(k) &= \max_{S}{\left(\sum_{u \in S}{p_u} + \sum_{u \in S, v \in S, u \leq v}{e_{u, v}} - k \cdot |S|\right)} \\
+&= \max_{S}{\sum_{u \in S}{\left(p_u - k + \frac{1}{2}\sum_{v \in S}{e_{u, v}}\right)}} \\
+&= \frac{1}{2}\max_{S}{\sum_{u \in S}{\left(2p_u - 2k + \sum_{v \in V}{e_{u, v}} - \sum_{v \in T}{e_{u, v}}\right)}} \\
+&= -\frac{1}{2}\min_{S}{\left(\sum_{u \in S, v \in T}{e_{u, v}} + \sum_{u \in S}{\left(2k - 2p_u - \sum_{v \in V}{e_{u, v}}\right)}\right)}，
+\end{align}
+$$
+故存在至少一组最小割对应 $f(k)$ 的值，但为了使用最大流求解最小割，需要将网络中的容量定义为非负值，这里不妨定义 $g_u = 2 p_u + \sum_{v \in V}{e_{u, v}}$，其中 $\Delta = \max_{u \in V}{g_u}$，则上式化为
+$$
+\begin{align}
+f(k) &= -\frac{1}{2}\min_{S}{\left(\sum_{u \in S, v \in T}{e_{u, v}} + \sum_{u \in S}{\left(2k - 2p_u - \sum_{v \in V}{e_{u, v}}\right)}\right)} \\
+&= \frac{1}{2} \Delta \cdot |V| -\frac{1}{2}\min_{S}{\left(\sum_{u \in S, v \in T}{e_{u, v}} + \sum_{u \in S}{\left(2k - g_u\right) + \Delta \cdot |V|}\right)} \\
+&= \frac{1}{2} \Delta \cdot |V| -\frac{1}{2}\min_{S}{\left(\sum_{u \in S, v \in T}{e_{u, v}} + \sum_{u \in S}{\left(2k + \Delta - g_u\right) + \sum_{u \in T}{\Delta}}\right)}，
+\end{align}
+$$
+则可以建立相应的最大网络流模型。
+
+具体做法如下：设源点为 $s$，汇点为 $t$，点集 $V' = V \cup \{s, t\}$，$S' = S \cup \{s\}$，$T' = T \cup \{t\}$。现在要构建一个割 $\text{cut}(S', T')$ 满足上述条件，上式中 $S$ 同 $T$ 集联合产生的贡献可以直接表示成网络中的边， $S$ 集或 $T$ 集单独产生的贡献可以分别表示成连向 $t$ 或连自 $s$ 的边。
+
+输出解时，由于一定存在一种割使得 $S' = \{s\}$，但这种割对原问题来说不合法，所以不妨沿着残量网络的反向弧从 $t$ 搜索集合 $T'$，从而得出 $S'$，也可以将答案表示成两个整数相除。
+
+## H. Heroes of Might and Magic
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+按照题意模拟即可，注意在 A 进行魔法攻击后，判断一下 B 军队是否全灭，虽然题目很长，但实际上程序很好写。
+
+## I. Install Air Conditioning
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+使用 kruskal 算法求出原图的一棵最小生成树，注意到当某条非树边被断开时答案即为最小生成树大小，而当某条树边被断开时答案即为能够覆盖该边的权值最小非树边，因此建立最小生成树后按照权值从小到大枚举非树边，尝试覆盖还没被覆盖的树边，这个操作可以使用 lca + 并查集实现。时间复杂度 $\mathcal{O}(m \log m)$ 。
+
+---
+
+braveTester's comment
+
+这里给出伍俊洁队伍的解法。
+
+首先 Prim 出一棵最小生成树，设其权为 $w$，然后枚举一个 $v$ 作为根，设此时的生成树为 $T_v$。设 $S$ 为断掉 $T_v$ 中 $i$ 与其父亲的边后 $v$ 所在的集合，另一个集合为 $T$，设 $f_v[i]$ 表示 $T$ 中有点和 $v$ 直接相连所得到的生成树的最小代价。则 $f_v[i] = \min_{\text{$j$ is a child of $i$}}\{f_v[j]\}$，如果 $i$ 与 $v$ 有边相连，则 $\text{cost}(i, v)$ 也是 $f_v[i]$ 的一个选项。
+
+则最终答案为
+$$
+\max_{(u, v)} \left(w - \text{cost}(u, v) + \min_x
+\begin{cases}
+f_x[u], & v \in T_x - \{(u, v)\}\\
+f_x[v], & u \in T_x - \{(u, v)\}
+\end{cases}\right)。
+$$
+
+完全图的 Prim 复杂度 $O(n^2)$，因此总复杂度 $O(n^2)$。
+
+## J. Tree
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+对每个点建立从它到根的可持久化 trie，对于一个询问，在两个点和他们的 LCA 的 trie 上寻找答案，然后特判一下 LCA 即可。
+
+## K. Walk Through Squares
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+对两个串建立 AC 自动机，然后 DP 就行了
+
+# Replay and Summary
+
+## Replay
+
+T 因为今天有事，所以只有 H 和 L。
+
+上来 L 从前往后读，H 从后往前读。H 发现 K 是个水题，然后读了下 J，发现不太会做，然后就去写 K 了。
+
+此时的 L 从 A 顺着往下读，尴尬的发现一道都不会...
+
+0.5h 后 L 读完了 ABCD，发现 D 是个水。T 出乎意料的来了，原来本来有事改到周一了。
+
+L 和 T 交流了一下 ABCD，T 指出 B 是个 USACO 好多年前的原题，并对于 D 的水表示赞同。此时 H 交了一发 K，RE，于是换 L 开始写 D。
+
+期间 H 静态查错没发现啥，尝试改大了数组交了结果 AC。1min 后 L 交了 D 也 AC 了。接着 T 开始写 B。
+
+H 从 L 那里接过 C 的题意，开始思考。L 继续读题。H 表示不会做 C，并对一片板刷表示奇怪，L 重读了遍题，发现读错了，确实是个水。接着 L 继续读题，H 开始想 J。
+
+T 交了一发 TLE，于是换 L 开始写 C。5min 后 T 改了个数组越界过了，然后开始和 H 讨论 J 和 F，最后都讨论出了做法。
+
+L 写完一发入魂，换上 H 写 J。L 和 T 开始讨论 E 和 I。E 是个几何会做但是决定先搁着，接着发现 I 只要把最小生成树搞出来乱搞一下就好了。
+
+H 交了 J 一发入魂，然后换 T 写 I。期间 H 思考怎么写 F，然后和 L 讨论下 G，发现是个最大权闭合子图。
+
+T 1A 了 I 后换 H 写 F，期间三人交流了下 G，T 指出按 H 的做法会超时，然后 T 自己会更优的做法。L 注意力开始不集中，有一搭没一搭想 E 的实现。
+
+H 1A 了 F 之后，T 开始上去写 G，一直码到 16:10，过不了样例决定静态查错，换 L 写 E。
+
+期间二人互换了几次，L 一直在写，T 一直在调，直到最后双双也没有过去。
+
+## braveTester
+
+今天不知道怎么后半开始注意力不集中...可能是没睡好的缘故。
+
+几何写过类似的，但是不熟练，之前写的那个也不是 ACM 题，导致今天写了将近 1h 还是没有写出来。应该把扫描线整理个板子，以后直接往里填东西就好了。
+
+贡献就是两个水题，状态好差...同时也反映出几何上的欠缺，写过的写不出，A 也没推出来，还是需要大补一番。
+
+## chitanda
+
+稳定作出了自己能做的贡献（虽然不大）。过掉 F 之后趁 tls 和子渊写题看了下 H，发现其实是个很容易的模拟之后就进入挂机模式了。
+
+## skywalkert
+
+贡献 1 道水题 + 1 道套路题 + 1 道套路题的思路，死在一道现场 0 AC 题目，还好赛后爆搞调出来了。
+
+本场显现出来我队的几何短板。~~其他短板也陆续都展现出来了，感觉这队药丸。~~
