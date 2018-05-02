@@ -1,0 +1,114 @@
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 5e5 + 5;
+vector<int> dag[N];
+int in[N], out[N];
+struct edge { int to, f, r; };
+vector<edge> G[N * 3];
+void ae(int u, int v, int f) {
+	G[u].push_back({v, f, (int) G[v].size()});
+	G[v].push_back({u, 0, (int) G[u].size() - 1});
+}
+int S, T, d[N * 3];
+bool BFS() {
+	for (int i = 0; i <= T; ++ i) d[i] = 0;
+	d[T] = 1e9;
+	queue<int> q;
+	q.push(T);
+	while (!q.empty()) {
+		int p = q.front(); q.pop();
+		for (edge e : G[p]) if (G[e.to][e.r].f && !d[e.to]) {
+			d[e.to] = d[p] - 1;
+			q.push(e.to);
+			if (!!d[S]) return 1;
+		}
+	}
+	return !!d[S];
+}
+const int INF = 1e9 + 7;
+int st[N * 3];
+int DFS(int x, int arg = INF) {
+	if (x == T) return arg;
+	int arg1 = arg;
+	for (int &i = st[x]; i < (int) G[x].size(); ++ i) {
+		edge &e = G[x][i];
+		if (e.f && d[e.to] == d[x] + 1) {
+			int tmp = DFS(e.to, min(arg, e.f));
+			e.f -= tmp;
+			arg -= tmp;
+			G[e.to][e.r].f += tmp;
+			if (arg == 0) return arg1;
+		}
+	}
+	return arg1 - arg;
+}
+int flow() {
+	int ans = 0;
+	while (BFS()) {
+		for (int i = 0; i <= T; ++ i) st[i] = 0;
+		ans += DFS(S, INF);
+	}
+	return ans;
+}
+int main() {
+	int a, b, n, m;
+	while (scanf("%d%d%d%d", &n, &m, &a, &b) == 4) {
+		vector<pair<int, int>> edges;
+		for (int i = 0; i < m; ++ i) {
+			int u, v;
+			scanf("%d%d", &u, &v);
+			edges.push_back({u, v});
+			dag[u].push_back(v);
+			in[v] ++;
+			out[u] ++;
+		}
+		bool check = 1;
+		check &= (in[a] == 0);
+		check &= (out[b] == 0);
+		for (int i = 1; i <= n; ++ i) {
+			if (i != a) check &= (in[i] >= 1);
+			if (i != b) check &= (out[i] >= 1);
+		}
+		int ans;
+		if (!check) {
+			puts("NO");
+			goto eee;
+		}
+		S = 0, T = m + n * 2 + 1;
+		for (int i = 1; i <= m; ++ i) {
+			int u, v; tie(u, v) = edges[i - 1];
+			ae(S, i, 1);
+			ae(i, m + v, 1); // EA
+			ae(i, m + n + u, 1); // EB
+		}
+		for (int i = 1; i <= 2 * n; ++ i) ae(m + i, T, 1);
+		ans = flow();
+		if (ans == (n - 1) * 2) {
+			vector<int> EA, EB;
+			for (int i = 1; i <= m; ++ i) {
+				for (edge e : G[i]) {
+					if (e.to == S || e.f) continue;
+					(e.to > m + n ? EB : EA).push_back(i);
+				}
+			}
+			puts("YES");
+			assert((int) EA.size() == n - 1);
+			assert((int) EB.size() == n - 1);
+			for (int u : EA) printf("%d ", u); puts("");
+			for (int u : EB) printf("%d ", u); puts("");
+		}
+		else puts("NO");
+eee:
+		for (int i = 0; i <= T; ++ i) {
+			vector<edge> e;
+			G[i].swap(e);
+		}
+		for (int i = 1; i <= n; ++ i) {
+			vector<int> e;
+			dag[i].swap(e);
+			in[i] = out[i] = 0;
+		}
+	}
+}
+~~~
