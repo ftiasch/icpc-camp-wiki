@@ -1,37 +1,41 @@
-# [Billy, Willy and Moscow Underground](http://codeforces.com/gym/100685/problem/B)
+[Billy, Willy and Moscow Underground](http://codeforces.com/gym/100685/problem/B)
+=================================================================================
 
-## lbn187
+lbn187
+------
 
 贪心水过，可能是错的
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 222
 int n,A,B,i,j,x,cnt,ans,a[N],v[N];
 int main(){
-	scanf("%d%d%d",&n,&A,&B);
-	for(j=1;j<=2;j++)for(i=1;i<=n;i++)scanf("%d",&x),a[i]+=x;
-	for(i=1;i<=n;i++)if(a[i]){
-		cnt=A-1;ans++;a[i]--;
-		memset(v,0,sizeof(v));
-		for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]==2)a[j]=v[j]=1,cnt--;
-		for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]&&!v[j])a[j]=0,cnt--;
-		if(a[i]){
-			cnt=A-1;ans++;a[i]--;
-			memset(v,0,sizeof(v));
-			for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]==2)a[j]=v[j]=1,cnt--;
-			for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]&&!v[j])a[j]=0,cnt--;
-		}
-	}
-	printf("%d",ans);
+    scanf("%d%d%d",&n,&A,&B);
+    for(j=1;j<=2;j++)for(i=1;i<=n;i++)scanf("%d",&x),a[i]+=x;
+    for(i=1;i<=n;i++)if(a[i]){
+        cnt=A-1;ans++;a[i]--;
+        memset(v,0,sizeof(v));
+        for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]==2)a[j]=v[j]=1,cnt--;
+        for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]&&!v[j])a[j]=0,cnt--;
+        if(a[i]){
+            cnt=A-1;ans++;a[i]--;
+            memset(v,0,sizeof(v));
+            for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]==2)a[j]=v[j]=1,cnt--;
+            for(j=i+1;j<=n&&j-i<B&&cnt;j++)if(a[j]&&!v[j])a[j]=0,cnt--;
+        }
+    }
+    printf("%d",ans);
 }
-~~~
+```
 
-# [Darkwing Duck](http://codeforces.com/gym/100685/problem/D)
+[Darkwing Duck](http://codeforces.com/gym/100685/problem/D)
+===========================================================
 
-## Aki
+Aki
+---
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5e5 + 5, MOD = 1e9 + 7, MAG = 127;
@@ -39,70 +43,71 @@ char str[N];
 vector<pair<int, int>> Q[N];
 int P[N], H[N], n, ans[N];
 int geth(int l, int r) {
-	return (H[r] + MOD - 1LL * H[l - 1] * P[r - l + 1] % MOD) % MOD;
+    return (H[r] + MOD - 1LL * H[l - 1] * P[r - l + 1] % MOD) % MOD;
 }
 int lcp(int x, int y) {
-	assert(x != y);
-	int l = 1, r = min(n - x + 1, n - y + 1), res = 0;
-	while (l <= r) {
-		int mid = (l + r) / 2;
-		if (geth(x, x + mid - 1) == geth(y, y + mid - 1)) {
-			res = mid;
-			l = mid + 1;
-		}
-		else {
-			r = mid - 1;
-		}
-	}
-	return res;
+    assert(x != y);
+    int l = 1, r = min(n - x + 1, n - y + 1), res = 0;
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (geth(x, x + mid - 1) == geth(y, y + mid - 1)) {
+            res = mid;
+            l = mid + 1;
+        }
+        else {
+            r = mid - 1;
+        }
+    }
+    return res;
 }
 bool isless(int x, int y, int r) {
-	int z = lcp(x, y);
-	return r <= max(x, y) + z - 1 ? x > y : str[x + z] < str[y + z];
+    int z = lcp(x, y);
+    return r <= max(x, y) + z - 1 ? x > y : str[x + z] < str[y + z];
 }
 set<int> s;
 vector<int> evt[N];
 int main() {
-	gets(str + 1);
-	n = (int) strlen(str + 1);
-	P[0] = 1;
-	for (int i = 1; i <= n; ++ i) {
-		H[i] = (1LL * H[i - 1] * MAG % MOD + str[i]) % MOD;
-		P[i] = 1LL * P[i - 1] * MAG % MOD;
-	}
-	int q;
-	scanf("%d", &q);
-	for (int i = 0; i < q; ++ i) {
-		int l, r;
-		scanf("%d%d", &l, &r);
-		Q[r].push_back({l, i});
-	}
-	vector<int> dq;
-	for (int i = 1; i <= n; ++ i) {
-		while (!dq.empty() && isless(dq.back(), i, n)) {
-			evt[i + lcp(dq.back(), i)].push_back(dq.back());
-			dq.pop_back();
-		}
-		dq.push_back(i);
-		s.insert(i);
-		for (int x : evt[i]) s.erase(x);
-		for (auto q : Q[i]) {
-			ans[q.second] = *s.lower_bound(q.first);
-		}
-	}
-	for (int i = 0; i < q; ++ i) printf("%d\n", ans[i]);
+    gets(str + 1);
+    n = (int) strlen(str + 1);
+    P[0] = 1;
+    for (int i = 1; i <= n; ++ i) {
+        H[i] = (1LL * H[i - 1] * MAG % MOD + str[i]) % MOD;
+        P[i] = 1LL * P[i - 1] * MAG % MOD;
+    }
+    int q;
+    scanf("%d", &q);
+    for (int i = 0; i < q; ++ i) {
+        int l, r;
+        scanf("%d%d", &l, &r);
+        Q[r].push_back({l, i});
+    }
+    vector<int> dq;
+    for (int i = 1; i <= n; ++ i) {
+        while (!dq.empty() && isless(dq.back(), i, n)) {
+            evt[i + lcp(dq.back(), i)].push_back(dq.back());
+            dq.pop_back();
+        }
+        dq.push_back(i);
+        s.insert(i);
+        for (int x : evt[i]) s.erase(x);
+        for (auto q : Q[i]) {
+            ans[q.second] = *s.lower_bound(q.first);
+        }
+    }
+    for (int i = 0; i < q; ++ i) printf("%d\n", ans[i]);
 }
-~~~
+```
 
-## lbn187
+lbn187
+------
 
 将询问按右端点排序，然后维护一个后缀单调递减的单调栈，用HASH判断后缀的大小
 
-因为题目的性质，删除的时候先将栈顶弹出不直接删除，而是在i+lcp(i,q[t])（也就是出现第一个不相同的字符）再将栈顶完全删除
+因为题目的性质，删除的时候先将栈顶弹出不直接删除，而是在i+lcp(i,q\[t\])（也就是出现第一个不相同的字符）再将栈顶完全删除
 
-用set维护，每次找q[i].r的lower_bound即是最大值
+用set维护，每次找q\[i\].r的lower\_bound即是最大值
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define M 1000000007
 #define N 500500
@@ -113,148 +118,157 @@ struct P{int l,r,id;}p[N];
 bool cmp(P a,P b){return a.r<b.r;}
 int getv(int L,int R){return (V[R]-1ll*V[L-1]*pw[R-L+1]%M+M)%M;}
 int LCP(int A,int B){
-	int l=1,r=n-B+1,md,an=0;
-	for(;l<=r;){
-		md=l+r>>1;
-		if(getv(A,A+md-1)==getv(B,B+md-1))an=md,l=md+1;else r=md-1;
-	}
-	return an;
+    int l=1,r=n-B+1,md,an=0;
+    for(;l<=r;){
+        md=l+r>>1;
+        if(getv(A,A+md-1)==getv(B,B+md-1))an=md,l=md+1;else r=md-1;
+    }
+    return an;
 }
 bool small(int A,int B){
-	lcp=LCP(A,B);
-	return s[A+lcp]<s[B+lcp];
+    lcp=LCP(A,B);
+    return s[A+lcp]<s[B+lcp];
 }
 int main(){
-	scanf("%s%d",s+1,&m);n=strlen(s+1);s[n+1]=2333;
-	for(pw[0]=i=1;i<=n;i++)pw[i]=1ll*pw[i-1]*233%M,V[i]=(1ll*V[i-1]*233+s[i])%M;
-	for(i=k=1;i<=m;i++)scanf("%d%d",&p[i].l,&p[i].r),p[i].id=i;
-	sort(p+1,p+m+1,cmp);
-	for(i=1;i<=n;i++){
-		for(;t&&small(q[t],i);t--)E[i+lcp].push_back(q[t]);
-		q[++t]=i;S.insert(i);
-		for(j=0;j<E[i].size();j++)S.erase(S.find(E[i][j]));
-		for(;k<=m&&p[k].r==i;k++)an[p[k].id]=*S.lower_bound(p[k].l);
-	}
-	for(i=1;i<=m;i++)printf("%d\n",an[i]);
+    scanf("%s%d",s+1,&m);n=strlen(s+1);s[n+1]=2333;
+    for(pw[0]=i=1;i<=n;i++)pw[i]=1ll*pw[i-1]*233%M,V[i]=(1ll*V[i-1]*233+s[i])%M;
+    for(i=k=1;i<=m;i++)scanf("%d%d",&p[i].l,&p[i].r),p[i].id=i;
+    sort(p+1,p+m+1,cmp);
+    for(i=1;i<=n;i++){
+        for(;t&&small(q[t],i);t--)E[i+lcp].push_back(q[t]);
+        q[++t]=i;S.insert(i);
+        for(j=0;j<E[i].size();j++)S.erase(S.find(E[i][j]));
+        for(;k<=m&&p[k].r==i;k++)an[p[k].id]=*S.lower_bound(p[k].l);
+    }
+    for(i=1;i<=m;i++)printf("%d\n",an[i]);
 }
-~~~
+```
 
-# [Hunt for Treasure!](http://codeforces.com/gym/100685/problem/H)
+[Hunt for Treasure!](http://codeforces.com/gym/100685/problem/H)
+================================================================
 
-## Aki
+Aki
+---
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 4005;
 int a[N], b[N], v[N];
 long double fact[N], H[N];
 long double choose(int n, int m) {
-	return fact[n] - fact[n - m] - fact[m];
+    return fact[n] - fact[n - m] - fact[m];
 }
 int main() {
-	for (int i = 1; i < N; ++ i) {
-		fact[i] = fact[i - 1] + log(1.0 * i);
-		H[i] = H[i - 1] + 1.0 / i;
-	}
-	int T;
-	scanf("%d", &T);
-	while (T --) {
-		int n, m;
-		scanf("%d%d", &n, &m);
-		for (int i = 1; i <= n; ++ i) v[i] = b[i] = 0;
-		for (int i = 1; i <= n; ++ i) {
-			scanf("%d", &a[i]);
-			b[a[i]] ++;
-		}
-		int S = 0, L = 0, C = 0;
-		for (int i = 1; i <= n; ++ i) {
-			if (b[i] != 0) continue;
-			if (a[i] == 0) S ++; else L ++;
-			v[i] = 1;
-		}
-		for (int i = 1; i <= n; ++ i) {
-			if (v[i]) continue;
-			v[i] = 1;
-			int j;
-			for (j = a[i]; j && !v[j]; j = a[j]) v[j] = 1;
-			if (j == i) C ++;
-		}
-		int neg = -1;
-		long double A = 0, B = 0;
-		for (int i = 0; i <= S; ++ i) {
-			neg *= -1;
-			A += neg * exp(choose(S, i) + fact[L + S - i] - fact[L + S]) * (H[L + S - i] + i);
-			B += neg * exp(choose(S, i) + fact[L + S - i] - fact[L + S]);
-		}
-		printf("%.10f\n", m * (double) (C + A / B));
-	}
+    for (int i = 1; i < N; ++ i) {
+        fact[i] = fact[i - 1] + log(1.0 * i);
+        H[i] = H[i - 1] + 1.0 / i;
+    }
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        int n, m;
+        scanf("%d%d", &n, &m);
+        for (int i = 1; i <= n; ++ i) v[i] = b[i] = 0;
+        for (int i = 1; i <= n; ++ i) {
+            scanf("%d", &a[i]);
+            b[a[i]] ++;
+        }
+        int S = 0, L = 0, C = 0;
+        for (int i = 1; i <= n; ++ i) {
+            if (b[i] != 0) continue;
+            if (a[i] == 0) S ++; else L ++;
+            v[i] = 1;
+        }
+        for (int i = 1; i <= n; ++ i) {
+            if (v[i]) continue;
+            v[i] = 1;
+            int j;
+            for (j = a[i]; j && !v[j]; j = a[j]) v[j] = 1;
+            if (j == i) C ++;
+        }
+        int neg = -1;
+        long double A = 0, B = 0;
+        for (int i = 0; i <= S; ++ i) {
+            neg *= -1;
+            A += neg * exp(choose(S, i) + fact[L + S - i] - fact[L + S]) * (H[L + S - i] + i);
+            B += neg * exp(choose(S, i) + fact[L + S - i] - fact[L + S]);
+        }
+        printf("%.10f\n", m * (double) (C + A / B));
+    }
 }
-~~~
+```
 
-## lbn187
+lbn187
+------
 
 搞笑题，比赛时以为是精度错了，其实把判环判错了。。
 
 对于每个图求出点数、环数和链数
 
-记录f[i][j]表示i条链，j个点环的期望个数
+记录f\[i\]\[j\]表示i条链，j个点环的期望个数
 
-cnt[i][j]表示i条链，j个点的方案数
+cnt\[i\]\[j\]表示i条链，j个点的方案数
 
-求f[i][j]和cnt[i][j]时考虑四种情况：
+求f\[i\]\[j\]和cnt\[i\]\[j\]时考虑四种情况：
 
-1、链自交，有i * cnt[i-1][j]种情况，那么f[i][j]+=f[i-1][j] * cnt[i-1][j]*i/cnt[i][j]+1.0 * cnt[i-1][j]*i/cnt[i][j]
+1、链自交，有i \* cnt\[i-1\]\[j\]种情况，那么f\[i\]\[j\]+=f\[i-1\]\[j\]
+\* cnt\[i-1\]\[j\]*i/cnt\[i\]\[j\]+1.0 *
+cnt\[i-1\]\[j\]\*i/cnt\[i\]\[j\]
 
-2、链互交，有C(i,2) * cnt[i-1][j]种情况，那么f[i][j]=f[i-1][j] * cnt[i-1][j] * C(i,2)/cnt[i][j]
+2、链互交，有C(i,2) \*
+cnt\[i-1\]\[j\]种情况，那么f\[i\]\[j\]=f\[i-1\]\[j\] \* cnt\[i-1\]\[j\]
+\* C(i,2)/cnt\[i\]\[j\]
 
-3、点连链，有i * j * 2种情况，那么f[i][j]=f[i][j-1] * cnt[i][j-1] * i * j * 2/cnt[i][j]
+3、点连链，有i \* j \* 2种情况，那么f\[i\]\[j\]=f\[i\]\[j-1\] \*
+cnt\[i\]\[j-1\] \* i \* j \* 2/cnt\[i\]\[j\]
 
-4、点互连，有j * (j-1)种情况，那么f[i][j]=f[i+1][j-2] * cnt[i+1][j-2] * j * (j-1)/cnt[i][j]
+4、点互连，有j \* (j-1)种情况，那么f\[i\]\[j\]=f\[i+1\]\[j-2\] \*
+cnt\[i+1\]\[j-2\] \* j \* (j-1)/cnt\[i\]\[j\]
 
-由于cnt[i][j]会很大，DP时每次把i+j=S的一起处理，把cnt[i][S-i]都除以一个相同的数，这样他们就不会太大
+由于cnt\[i\]\[j\]会很大，DP时每次把i+j=S的一起处理，把cnt\[i\]\[S-i\]都除以一个相同的数，这样他们就不会太大
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 4002
 double c,an;
 int T,n,i,x,to[N],v[N],du[N],A,B,o,j,S;
 long double f[2005][N+5],cnt[2005][N+5];
 int main(){
-	cnt[0][0]=1.0;
-	for(S=1;S<N;S++){
-		for(i=0;i<S;i++)if(i*2+S-i-1<N)if(cnt[i][S-1-i]>1e-8)o=i;
-		for(i=0;i<S;i++)if(i*2+S-i-1<N)if(i!=o)cnt[i][S-1-i]/=cnt[o][S-o-1];
-		cnt[o][S-o-1]=1.0;
-		for(i=0;i<=S;i++){
-			j=S-i;
-			if(i*2+j<N){	
-				if(i)cnt[i][j]+=cnt[i-1][j]*i*i;
-				if(j>1)cnt[i][j]+=cnt[i+1][j-2]*j*(j-1);
-				if(j)cnt[i][j]+=cnt[i][j-1]*i*j*2;
-				if(cnt[i][j]<1e-10)continue;
-				if(i)f[i][j]+=cnt[i-1][j]/cnt[i][j]*i*i*f[i-1][j]+1.0*cnt[i-1][j]/cnt[i][j]*i;
-				if(j>1)f[i][j]+=cnt[i+1][j-2]/cnt[i][j]*j*(j-1)*f[i+1][j-2];
-				if(j)f[i][j]+=cnt[i][j-1]/cnt[i][j]*i*j*2*f[i][j-1];
-			}
-		}
-	}
-	scanf("%d",&T);
-	for(;T--;){
-		memset(v,0,sizeof(v));A=0;B=0;memset(du,0,sizeof(du));
-		scanf("%d%lf",&n,&c);an=0.0;
-		for(i=1;i<=n;i++)scanf("%d",&to[i]),du[to[i]]++;
-		for(i=1;i<=n;i++)if(!du[i]){
-			if(to[i])A++;else B++;
-			x=i;
-			for(;x;x=to[x])v[x]=1;
-		}
-		for(i=1;i<=n;i++)if(!v[i]&&to[i]){
-			for(x=i;!v[x]&&x;x=to[x])v[x]=1;
-			an+=1.0;
-		}
-		for(i=1;i<=n;i++)if(!v[i])B++;
-		printf("%.10f\n",((double)f[A][B]+an)*c);
-	}
+    cnt[0][0]=1.0;
+    for(S=1;S<N;S++){
+        for(i=0;i<S;i++)if(i*2+S-i-1<N)if(cnt[i][S-1-i]>1e-8)o=i;
+        for(i=0;i<S;i++)if(i*2+S-i-1<N)if(i!=o)cnt[i][S-1-i]/=cnt[o][S-o-1];
+        cnt[o][S-o-1]=1.0;
+        for(i=0;i<=S;i++){
+            j=S-i;
+            if(i*2+j<N){    
+                if(i)cnt[i][j]+=cnt[i-1][j]*i*i;
+                if(j>1)cnt[i][j]+=cnt[i+1][j-2]*j*(j-1);
+                if(j)cnt[i][j]+=cnt[i][j-1]*i*j*2;
+                if(cnt[i][j]<1e-10)continue;
+                if(i)f[i][j]+=cnt[i-1][j]/cnt[i][j]*i*i*f[i-1][j]+1.0*cnt[i-1][j]/cnt[i][j]*i;
+                if(j>1)f[i][j]+=cnt[i+1][j-2]/cnt[i][j]*j*(j-1)*f[i+1][j-2];
+                if(j)f[i][j]+=cnt[i][j-1]/cnt[i][j]*i*j*2*f[i][j-1];
+            }
+        }
+    }
+    scanf("%d",&T);
+    for(;T--;){
+        memset(v,0,sizeof(v));A=0;B=0;memset(du,0,sizeof(du));
+        scanf("%d%lf",&n,&c);an=0.0;
+        for(i=1;i<=n;i++)scanf("%d",&to[i]),du[to[i]]++;
+        for(i=1;i<=n;i++)if(!du[i]){
+            if(to[i])A++;else B++;
+            x=i;
+            for(;x;x=to[x])v[x]=1;
+        }
+        for(i=1;i<=n;i++)if(!v[i]&&to[i]){
+            for(x=i;!v[x]&&x;x=to[x])v[x]=1;
+            an+=1.0;
+        }
+        for(i=1;i<=n;i++)if(!v[i])B++;
+        printf("%.10f\n",((double)f[A][B]+an)*c);
+    }
 }
-~~~
+```
