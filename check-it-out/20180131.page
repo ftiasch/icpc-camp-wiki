@@ -1,9 +1,4 @@
----
-format: Latex
-...
-
-\section{ITMO2018China Day2}
-\subsection{TakanashiRikka}
+\section{ITMO2018China Day2}\subsection{TakanashiRikka}
 题目有点恶心..前期过了签到题J之后开始肛F，花了很长时间..后来仔细想了一会儿I然后就会做了
 
 H的板子有点问题，可能需要改一下
@@ -27,16 +22,15 @@ H的板子有点问题，可能需要改一下
 最后是在无题可做时才想起的了一开始读完就被扔在一旁的H，突然捡起来想，然后抄了个最小树形图板子过了，期间板子的初始化有错误，而且板子里有未定义行为。
 
 中途想B时得到了靠谱的做法，但是由于太麻烦所以不敢上，感觉这场我的主要问题还是出在卡C上。
-\subsection{shanquan2}
-没写题
+\subsection{shanquan2} 没写题
 
 C的时候一开始为了方便证明想了一个做法，其实直接大力撸过去就行了。【果然acm不需要证明的
 
 A一直纠结于固定了开始时间怎么计算胜率，其实把开始时间也放进积分里就很显然了。
-\subsection{补提}
-\subsubsection{A}
+\subsection{补提} \subsubsection{A}
 注意到开始时间是独立随机的，所以任意两个窗口等到下一个人办完的时间是独立随机的，直接列式积分即可。
-\subsubsection{K}
-一道有点胖的题..找到弦图的一个clique tree然后在上面DP，状态数是每一个团选了哪些点，最多两个，状态数是 $O(m\sqrt m)$ 的。
+\subsubsection{K} 一道有点胖的题..找到弦图的一个clique
+tree然后在上面DP，状态数是每一个团选了哪些点，最多两个，状态数是
+$O(m\sqrt m)$ 的。
 
 要预处理一些东西把转移撸到 $O(1)$ 然后因为要输出方案所以要倒着再搜回去。
