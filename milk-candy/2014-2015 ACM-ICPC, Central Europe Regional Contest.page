@@ -1,0 +1,123 @@
+# Info
+
+Date: 2017.10.12 12:15-17:15
+
+[Link](http://www.bnuoj.com/v3/contest_show.php?cid=9273)
+
+# Solutions
+
+## A Parades
+
+unsolved
+
+## B Mountainous landscape
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+所求即为对每条直线$p_ip_{i+1}$求出最小的$j>i$满足$p_{j+1}$在直线上方。考虑整体二分，假设现在询问集合$q$的答案落在$[l,r]$区间内，如果$l=r$那么直接检查是否合法，否则需要将询问划分进$[l,m]$和$[m+1,r]$这两个区间中。如果询问$i \geq m$，也就是对应的线段已经在右侧，那么直接划分进右侧即可，否则对每个询问$i$，需要考察$p_{i+2},p_{i+2},\dots,p_{m+1}$是否有点在直线$p_ip_{i+1}$上方，维护一个凸包然后三分有向面积最大值即可。
+
+## C Sums
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+签到题。
+
+## D Wheels
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+黑白染色判断转动方向，圈数根据半径比例直接算。
+
+## E Can't stop playing
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+~~一眼标算成功阻止科神胡乱贪心……~~
+
+过程中数字构成一个先递增再递减的序列，记$dp_{i,j}$表示已经放了$i$个数字之后最大值右边的和是否可能为$j$，那么可以最大值左边（含最大值）的和是$\sum_{k=1}^{i}a_k-j$，转移枚举下一个数放在左边还是右边，放置条件是要么这部分为空，要么这部分的$lowbit$不小于放入的数字，然后直接加进去即可，合并的过程体现在进位上，不需要手动模拟。值得注意的是，如果加进去之后右侧的$highbit$不小于左侧的$highbit$，就要把右侧最大的划给左边，这里可能会出现一次合并，但是不需要特殊处理。
+
+## F Vocabulary
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+~~别学何老师把dp当模拟写……~~
+
+如果字符串$s[0..|s|-1]<t[0..|t|-1]$，那么有$s[0]<t[0] \vee (s[0]=t[0] \wedge s[1..|s|-1]<t[1..|t|-1])$。
+
+于是考虑$dp_{i,l,r}$表示$[l,r]$内的字符串的第$i$位开始的后缀字典序递增的方案数，枚举这些串第$i$位填的字符，要求非降，并且如果前一个字符小于后一个字符，就已经确定前一个后缀的字典序小于后一个后缀，可以直接分裂区间，否则还要递归考虑下一位开始的后缀，需要预处理转移系数。
+
+## G Virus synthesis
+
+unsolved
+
+## H Good morning!
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+状态数很少，直接爆搜。
+
+## I Bricks
+
+solved by sk, upsolved by none
+
+## J Pork barrel
+
+upsolved by sk
+
+---
+
+sk's solution
+
+先考虑离线做法，按照询问左端点从大到小排序，线段树维护不同询问右端点的答案，维护当前的最小生成树，考虑下一个询问时，依次加入权值不小于询问左端点的边，替换掉环上权值最大的边，那么询问右端点不小于被替换边的权值的询问的答案会减少这个权值，使用可持久化线段树即可支持在线询问。由于$n$很小，最小生成树可以暴力维护，更优的做法是用$LCT$维护。
+
+## K The Imp
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+如果$n<k+1$就什么都买不了，下设$n \geq k+1$，那么问题相当于求一个序列$a_1,a_2,\dots,a_{k+1}$使得$\min_{1 \leq i \leq k+1}(v_{a_i}-\sum_{j=0}^{i}c_{a_j})$最大。
+
+考虑二分答案$res$，那么就需要判定是否存在满足条件的序列，也就是$f(i)=v_{a_i}-\sum_{j=1}^{i}c_{a_j} \geq res$对任意$i=1,2,\dots,k+1$成立。
+
+假设现在已经确定了序列内元素的集合，需要安排一个顺序使得尽可能多的条件成立，考虑交换相邻两个元素$a_i$和$a_{i+1}$，如果交换后满足$\min(f(i),f(i+1)) \geq \min(f'(i),f'(i+1))$，那么结果不会变优，大力推式子可以分析出这等价于$v_{a_i} \leq v_{a_{i+1}}$，满足传递性，因此按照$v$从小到大排序是最优的。
+
+那么先对所有物品排序，考虑$dp_{i,j}$表示从前$i$个物品选出$j$个之后$\sum c$的最小值，如果下一个物品选进来之后满足$v-(c+dp_{i,j}) \geq res$，那么这个物品就是可选的，只要能选出$k+1$个物品就有解。
+
+## L Outer space invaders
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+先离散化，考虑$dp_{i,j}$表示把出现时间完全落在$[i,j]$内的敌人打倒的最小代价，转移枚举一个$k$时间发出攻击，打倒这个时间存在的所有敌人，代价是这些敌人的最远距离，但是代价并不好维护，一个观察是最远的敌人迟早都要打，不如现在先打了，于是可以对每个$[i,j]$求出完全落在区间内的最远的敌人，转移枚举这个敌人出现的时间段发出攻击。
+
+# Replay
