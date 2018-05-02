@@ -1,0 +1,17 @@
+# Richard's comments:
+
+Wrote F twice, and after second time also had to debug for an hour. <br>
+Not having EFG by 180 is more or less kaput: just not enough time left to key stuff in by that point. <br>
+
+# Animesh's comments:
+
+We had a good start. I solved A, B, C quickly and then Rares took over.
+Rares' spent 45 mins coding O(n log n) which didn't work. I told him to print code and quickly ACed D. Rares tried to debug his F a little and then Majid and I got idea to do O(N * W) which was much easier to implement. I quickly coded it but made a very-hard-to-notice bug which RTEd on some large special cases. Wasted 40 mins trying to debug it on PC, gave up and then printed it out. Tried to debug on paper for another 30 mins and got no bugs. Meanwhile, Rares and Majid solved G. Suddenly, Rares reads my code and spots a plausible memory issue and we finally get AC. So we have wasted 2 hours of keyboard time on a 20 min problem - not good.
+
+We have 80 mins left now. I quickly read I, J. For J, I tell Majid it is 2D hashing. He says he can code it fast so I tell him to do so. Now he is coding J. Meanwhile, I realize I is similar to matrix-chain multiplication. I discuss my idea with Rares and he likes it. After Majid AC's J I explain my idea for I and he says he'll code it. My leg is hurting a lot (idk why) so I decide to rest a little. We decide it is safer to code I than E and Majid agrees. We get AC in 15 mins. Now we have 30 mins left, he begins coding E. We are unable to finish it on time, but I'm sure it would have worked if we had 10-15 more minutes. 
+
+Verdict: Got rekt by one problem. We could have gotten all 10. We had good ideas for H.
+
+Majid coded everything in the last 2 hours and I coded everything in the first 3. This is not optimal, IMO. It is better to rotate. For e.g., Majid read B today and told me what to do instead of coding it himself. I spent first-hour coding and didn't read any problem. In fact, I did not even read I, J till 3-hour mark. This is very bad. 
+
+We need to rotate. I feel Majid is great at solving but he doesn't like to code too much. He should code a lot of stuff to get back in flow. Rares needs to get more contest practice IMO. I've noticed that he tends to make more bugs during contests. I need to stop making dumb bugs like the one I made today, read everything and schedule properly.
