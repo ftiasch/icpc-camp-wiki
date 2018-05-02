@@ -1,0 +1,39 @@
+---
+format: Markdown
+title: lzy(lizi_lzy)
+...
+
+# Todolist
+
++ 2016ICPC-HongKong--G**``√``**
+
++ 2017-2018 ACM-ICPC, NEERC, Southern Subregional Contest--D**``√``**
+
++ 2017CCPC-Qinhuangdao--B**``√``**
+
++ NCPC2017**(Doing)**
+
++ ~~BAPC2014--H~~(扔给队友)
+
++ DAG上支配树&CF757F**``√``**
+
++ 李超线段树(标记永久化)&BZOJ3165&BZOJ1568**``√``**
+
++ 最小乘积&BZOJ2395&BZOJ3571&HDU5697**``√``**
+
++ 2017ICPC-Shenyang--B
+
++ ~~奇怪的东西~~(又扔给队友)
+
++ 2017-2018 ACM-ICPC, NEERC, Northern Subregional Contest--G**``√``**
+
++ 2017CCPC-Harbin--I(类欧几里德)(upd:题意为开区间)**``√``**
+
+# Practice
+
+<!-- `2017-07-00` [`---`]()                                           `--/--`   `.` `.` `.` `.` `.` `.` `.` `.` `.` `.` `.` -->
+
+`Date`       `Contest`                                                `Place`   `A` `B` `C` `D` `E` `F` `G` `H` `I` `J` `K` `L` `M`
+------------ ------------------------------------------------------- ---------  --- --- --- --- --- --- --- --- --- --- --- --- ---
+`2017-10-02` [`2017 JUST Programming Contest 4.0`]()                  `--/--`   `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
+`2017-11-02` [`2017 Nordic Collegiate Programming Contest`]()         `--/--`   `.` `O` `.` `O` `O` `.` `O` `.` `O` `O` `O` 
