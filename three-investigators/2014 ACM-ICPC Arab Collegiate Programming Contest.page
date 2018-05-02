@@ -1,0 +1,75 @@
+# Contest Info
+
+date: 2017.08.04 12:00-17:00
+
+[practice link](http://www.bnuoj.com/v3/contest_show.php?cid=9168)
+
+# Solutions
+
+## A. Game of Peace
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+签到题
+
+## B. Let's Play Tawla
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+签到题
+
+## C. Feast Coins
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+签到题，暴力枚举 $s$ 的约数
+
+## D. Wedding Selfie
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+找到凸包上一点使得它与 $(0,0)$ 点的连线将凸包面积分成两半，这个点即稳定后横坐标为 $0$ 的点，计算出需要旋转的角度即可算出其它点的稳定位置。
+
+## E. Connect the Cells
+
+unsolved
+
+## F. Bike Sharing
+
+upsolved by chitanda
+
+## G. Special Christmas Tree
+
+solved by chitanda, upsolved by none
+
+## H. Messed up Pictures
+
+solved by chitanda, upsolved by none
+
+## I. Equivalent Passwords
+
+upsolved by chitanda
+
+## J. Mario and Evil Toad
+
+upsolved by chitanda
+
+# Replay and Summary
+
+None is available.
