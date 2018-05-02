@@ -1,41 +1,53 @@
-# **Solution**
+**Solution**
+============
 
-## A(Solved by lizi)
+A(Solved by lizi)
+-----------------
 
 水题略过
 
-## B(Solved by lizi)
+B(Solved by lizi)
+-----------------
 
 扫描线 + BIT
 
-## C(Solved by nike0good)
+C(Solved by nike0good)
+----------------------
 
 听说是个模拟
 
-## D(Unsolved)
+D(Unsolved)
+-----------
 
-## E(Solved by nike0good & zbh & lizi)
+E(Solved by nike0good & zbh & lizi)
+-----------------------------------
 
 凸包严格包含$\Leftrightarrow$一个凸包的所有点严格在另一个凸包内，注意凸包边上多点共线
 
-## F(Solved by nike0good & lizi)
+F(Solved by nike0good & lizi)
+-----------------------------
 
 完全二叉树，随便暴力，注意建树可能有坑
 
-## G(Solved by lizi)
+G(Solved by lizi)
+-----------------
 
 很傻的DP
 
-## H(Solved by nike0good)
+H(Solved by nike0good)
+----------------------
 
 听说是个二分图？
 
-## I(Solved by zbh)
+I(Solved by zbh)
+----------------
 
-## J(Solved by zbh & lizi)
+J(Solved by zbh & lizi)
+-----------------------
 
 水题略过
 
-## K(Solved by nike0good & lizi)
+K(Solved by nike0good & lizi)
+-----------------------------
 
 折半枚举子集，复杂度$O(2^\frac{m}{2} \times n)$
