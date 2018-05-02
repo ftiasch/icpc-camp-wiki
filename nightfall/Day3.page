@@ -1,0 +1,193 @@
+# D. Secret Santa
+
+## Aki
+
+容斥。先做bad三角（n-a+1到n行）中放进bad区域的，再做1到n-a行，最后再做没放进bad区域的bad行，发现所有可放区间都一个包含前一个，简单dp一下就好了。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7;
+int dp[2][205];
+void upd(int &x, int y) { (x += y) %= MOD; }
+int mpow(int x, int n) {
+	int res = 1;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % MOD;
+		x = 1LL * x * x % MOD;
+		n >>= 1;
+	}
+	return res;
+}
+int main() {
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, a;
+		scanf("%d%d", &n, &a);
+		int cur = 0;
+		memset(dp, 0, sizeof(dp));
+		dp[0][0] = 1;
+		for (int i = 1; i <= a; ++ i) {
+			cur ^= 1;
+			for (int j = 0; j <= a; ++ j) {
+				if (dp[cur ^ 1][j]) {
+					upd(dp[cur][j], dp[cur ^ 1][j]);
+					upd(dp[cur][j + 1], 1LL * dp[cur ^ 1][j] * (i - j) % MOD);
+					dp[cur ^ 1][j] = 0;
+				}
+			}
+		}
+		int ans = 0;
+		for (int bad = 0; bad <= a; ++ bad) {
+			int tmp = 1LL * dp[cur][bad] * mpow(a - bad, n - a) % MOD;
+			if (bad & 1) tmp = 1LL * tmp * (MOD - 1) % MOD;
+			for (int i = 1; i <= a - bad; ++ i) tmp = 1LL * tmp * i % MOD;
+			(ans += tmp) %= MOD;
+		}
+		printf("%d\n", ans);
+	}
+}
+~~~
+
+## lbn187
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define M 1000000007
+#define LL long long
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+int T,n,a,i,j,an,nv,f[222][222];
+LL Pw(LL a,LL b){LL v=1;for(;b;b>>=1,a=a*a%M)if(b&1)v=v*a%M;return v;}
+void up(int&x,int y){x=(x+y)%M;}
+int main(){
+	for(scanf("%d",&T);T--;){
+		scanf("%d%d",&n,&a);
+		CL(f);f[0][0]=1;an=0;
+		for(i=0;i<=a;i++){
+			for(j=0;j<=a;j++){
+				up(f[i+1][j],f[i][j]);
+				up(f[i+1][j+1],1ll*f[i][j]*(i-j+1)%M);
+			}
+		}
+		for(i=0;i<=a;i++){
+			nv=1ll*f[a][i]*Pw(a-i,n-a)%M;
+			for(j=1;j<=a-i;j++)nv=1ll*nv*j%M;
+			up(an,(i&1)?M-nv:nv);
+		}
+		printf("%d\n",an);
+	}
+}
+~~~
+
+# H. Masterpiece
+
+## lbn187
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 101010
+#define M 1000000007
+using namespace std;
+int T,n,i,X1,X2,Y1,Y2,cnt,gg,an,XX1,a[N],b[N];
+int main(){
+	for(scanf("%d",&T);T--;){
+		scanf("%d",&n);
+		for(i=1;i<=n;i++)scanf("%d",&a[i]);
+		for(i=1;i<=n;i++)scanf("%d",&b[i]);
+		X1=Y1=X2=Y2=1;cnt=0;gg=0;an=1;
+		for(;(X1<n||X2<n||Y1<n||Y2<n)&&!gg;){
+			if(!a[Y1]||!a[Y2]||!b[X1]||!b[X2]||X1>n||X2>n||Y1>n||Y2>n)gg=1;
+			if(X1==X2&&Y1==Y2){
+				b[X1]--;a[Y1]--;
+				if(b[X1]&&a[Y1]){
+					for(i=X1+1;i<=X1+a[Y1];i++)b[i]--;
+					for(i=Y1+1;i<=Y1+b[X1];i++)a[i]--;
+					XX1=X1;
+					X1+=a[Y1];
+					a[Y1]=0;
+					Y1++;
+					Y2+=b[XX1];
+					b[XX1]=0;
+					X2++;
+					an=(an+an)%M;
+				}else{
+					if(b[X1])Y1++,Y2++;
+					else if(a[Y1])X1++,X2++;
+					else gg=1;
+				}
+			}else{
+				if(X2<X1){
+					b[X2]--;a[Y2]--;
+					if(b[X2])Y2++;else X2++;
+				}else
+				if(Y1<Y2){
+					b[X1]--;a[Y1]--;
+					if(a[Y1])X1++;else Y1++;
+				}
+			}
+		}
+		a[n]--;b[n]--;
+		for(i=1;i<=n;i++)if(a[i]||b[i])gg=1;
+		printf("%d\n",gg?0:an);
+	}
+}
+~~~
+
+# K. Triples
+
+## lbn187
+
+树形DP，用$f[i][j]$表示子树$i$有多少深度为$j$的子树，用$g[i][j]$表示子树$i$有多少pair使得往$i$的子树外伸距离$j$能构成三元组
+
+那么对于所有$x$的儿子$y$，有$an=\sum_{x\to y,i=1\cdots n} f[x][i-1]*g[y][i]+g[x][i+1]*f[y][i]$，转移方程$f[x][i]=\sum_{x\to y}f[y][i-1],g[x][i]=\sum_{x\to y}g[y][i-1]+f[x][i]*f[y][i-1]$
+
+暴力转移是$O(n^2)$的，考虑转移只和子树$y$的深度有关，那么用长链剖分，重链上的点直接传递过来，再把轻链上的点接上去，这样时间复杂度$O(n)$
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 101010
+#define M 1000000007
+#define LL long long
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+LL E[5555555];
+LL an,*f[N],*g[N];
+int T,n,i,x,y,tot,o,fir[N],ne[N*2],la[N*2],mx[N],F[N],hs[N],to[N],sz[N];
+void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
+void dfs(int x){
+	mx[x]=1;to[x]=x;
+	for(int i=fir[x],y;i;i=ne[i])if(y=la[i],F[x]!=y){
+		F[y]=x;dfs(y);mx[x]=max(mx[x],mx[y]+1);
+		if(mx[y]>mx[hs[x]])hs[x]=y,to[x]=to[y];
+	}
+	sz[to[x]]=mx[x];
+}
+void work(int x,int y){
+	for(int i=0;i<=mx[y];i++)an+=f[y][i]*g[x][i+1]+g[y][i]*f[x][i-1];
+    for(int i=0;i<=mx[y];i++)g[x][i+1]+=f[y][i]*f[x][i+1],g[x][i-1]+=g[y][i],f[x][i+1]+=f[y][i];
+}
+void dfs2(int x){
+	if(to[x]==x){f[x][0]=1;return;}
+	dfs2(hs[x]);f[x]=f[hs[x]]-1;g[x]=g[hs[x]]+1;f[x][0]=1;an+=g[x][0];
+	int i,j,y;
+	for(j=fir[x];j;j=ne[j])if(y=la[j],y!=F[x]&&y!=hs[x])dfs2(y),work(x,y);
+}
+int main(){
+	for(scanf("%d",&T);T--;){
+		scanf("%d",&n);an=tot=0;o=1;CL(fir);CL(F);CL(mx);CL(sz);CL(to);CL(hs);CL(E);
+		for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+		dfs(1);
+		for(i=1;i<=n;i++)if(to[i]==i){
+			o+=sz[i]-1;
+			f[i]=&E[o];
+			o++;
+			g[i]=&E[o];
+			o+=sz[i]*2+2;
+		}
+		dfs2(1);
+		printf("%lld\n",an);
+	}	
+}
+~~~
