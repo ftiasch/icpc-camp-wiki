@@ -1,0 +1,319 @@
+# M. Controlled Patterns
+
+观察：行和列可以交换，可以凑出很多对角线格子组成的2*2的正方形，然后一共有8种pattern，强行记忆化一下。大概就是个爆搜优化。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef size_t ULL;
+struct state {
+	int b1001, r01, r10, c01, c10, b0, b1, b2, d1, d2;
+	state() { b1001 = r01 = r10 = c01 = c10 = b0 = b1 = b2 = d1 = d2 = 0; }
+};
+struct shash {
+	ULL operator () (const state &s) const {
+		ULL res = s.b1001;
+		res = res * 33 + s.r01;
+		res = res * 33 + s.r10;
+		res = res * 33 + s.c01;
+		res = res * 33 + s.c10;
+		res = res * 33 + s.b0;
+		res = res * 33 + s.b1;
+		res = res * 33 + s.b2;
+		res = res * 2 + s.d1;
+		res = res * 2 + s.d2;
+		return res;
+	}
+};
+bool operator == (const state &a, const state &b) {
+	if (a.b1001 != b.b1001) return 0;
+	if (a.r01 != b.r01) return 0;
+	if (a.r10 != b.r10) return 0;
+	if (a.c01 != b.c01) return 0;
+	if (a.c10 != b.c10) return 0;
+	if (a.b0 != b.b0) return 0;
+	if (a.b1 != b.b1) return 0;
+	if (a.b2 != b.b2) return 0;
+	if (a.d1 != b.d1) return 0;
+	if (a.d2 != b.d2) return 0;
+	return 1;
+}
+unordered_map<state, int, shash> mem[35];
+const int MOD = 10007;
+int n;
+int dfs(state s, int step = 0) {
+	//printf("s%d dfs %d    %d %d    %d %d    %d %d %d   %d %d\n", step, s.b1001, s.r01, s.r10, s.c01, s.c10, s.b0, s.b1, s.b2, s.d1, s.d2);
+	/*if (s.b1001 == 0 && s.r01 == 0 && s.r10 == 0 && s.c01 == 0 && s.c10 == 0 && s.b2 == 0) {
+		if (s.b1 == 0 && s.d1 == 0) return 0;
+		if (s.b0 == 0 && s.d2 == 0) return 0;
+	}*/
+	if (step == n) return s.d1 && s.d2;
+	int free_col = n - step - s.b1001 * 2 - s.r01 * 2 - s.r10 * 2 - s.c01 - s.c10 - s.b0 - s.b1 - s.b2;
+	/*if (free_col) {
+		int base = 1;
+		for (int i = 1; i <= free_col; ++ i) base = base * i % MOD;
+		return base * dfs(s, step + free_col);
+	}*/
+	if (mem[n - step].count(s)) return mem[n - step][s];
+	int &res = mem[n - step][s];
+	int id, id2 = -1;
+	if (s.b1001) {
+		s.b1001 --; s.r01 ++;
+		state t = s; t.d1 = 1; t.r01 --; t.b1 ++;
+		res += dfs(t, step + 1);
+		t = s; t.d2 = 1; t.r01 --; t.b0 ++;
+		res += dfs(t, step + 1);
+		id = 0;
+		id2 = 2;
+	}
+	else if (s.r10) {
+		s.r10 --;
+		state t = s; t.d1 = 1;
+		res += dfs(t, step + 1);
+		t = s; t.d2 = 1;
+		res += dfs(t, step + 1);
+		id = 1;
+	}
+	else if (s.r01) {
+		s.r01 --;
+		state t = s; t.d1 = 1;
+		res += dfs(t, step + 1);
+		t = s; t.d2 = 1;
+		res += dfs(t, step + 1);
+		id = 2;
+	}
+	else if (s.c10) {
+		s.c10 --;
+		s.b0 ++;
+		state t = s; t.d1 = 1; t.b0 --;
+		res += dfs(t, step + 1);
+		id = 3;
+		id2 = 5;
+	}
+	else if (s.c01) {
+		s.c01 --;
+		s.b1 ++;
+		state t = s; t.d2 = 1; t.b1 --;
+		res += dfs(t, step + 1);
+		id = 4;
+		id2 = 6;
+	}
+	else if (s.b0) {
+		s.b0 --;
+		state t = s; t.d2 = 1;
+		res += dfs(t, step + 1);
+		id = 5;
+	}
+	else if (s.b1) {
+		s.b1 --;
+		state t = s; t.d1 = 1;
+		res += dfs(t, step + 1);
+		id = 6;
+	}
+	else if (s.b2) {
+		s.b2 --;
+		state t = s; t.d1 = t.d2 = 1;
+		res += dfs(t, step + 1);
+		id = 7;
+	}
+	//for (int i = 0; i < s.b1001; ++ i) {
+	if (s.b1001) {
+		state t = s; t.b1001 --; t.c10 ++;
+		res += (s.b1001) * dfs(t, step + 1);
+		t = s; t.b1001 --; t.c01 ++;
+		res += (s.b1001) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.r10; ++ i) {
+	if (s.r10) {
+		state t = s; t.r10 --; t.b0 ++;
+		res += (s.r10) * dfs(t, step + 1);
+		t = s; t.r10 --; t.b1 ++;
+		res += (s.r10) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.r01 - (id2 == 2); ++ i) {
+	if (s.r01 - (id2 == 2) > 0) {
+		state t = s; t.r01 --; t.b0 ++;
+		res += (s.r01 - (id2 == 2)) * dfs(t, step + 1);
+		t = s; t.r01 --; t.b1 ++;
+		res += (s.r01 - (id2 == 2)) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.c10; ++ i) {
+	if (s.c10) {
+		state t = s; t.c10 --;
+		res += (s.c10) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.c01; ++ i) {
+	if (s.c01) {
+		state t = s; t.c01 --;
+		res += (s.c01) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.b0 - (id2 == 5); ++ i) {
+	if (s.b0 - (id2 == 5) > 0) {
+		state t = s; t.b0 --;
+		res += (s.b0 - (id2 == 5)) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.b1 - (id2 == 6); ++ i) {
+	if (s.b1 - (id2 == 6) > 0) {
+		state t = s; t.b1 --;
+		res += (s.b1 - (id2 == 6)) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < s.b2; ++ i) {
+	if (s.b2) {
+		state t = s; t.b2 --;
+		res += (s.b2) * dfs(t, step + 1);
+	}
+	//for (int i = 0; i < free_col; ++ i) {
+	if (free_col) {
+		state t = s;
+		res += (free_col) * dfs(t, step + 1);
+	}
+	res %= MOD;
+	return res;
+}
+int duipai, ban1[35][35];
+int useCC[35], cho[35];
+void dpdfs(int x, int d1, int d2) {
+	if (x == n) {
+		if (d1 && d2) {
+			duipai ++;
+			duipai %= MOD;
+		}
+		return;
+	}
+	for (int i = 0; i < n; ++ i) {
+		if (useCC[i]) continue;
+		if (ban1[x][i]) continue;
+		useCC[i] ++;
+		cho[x] = i;
+		dpdfs(x + 1, d1 | (x == i), d2 | (x + i == n - 1));
+		useCC[i] --;
+	}
+}
+int main() {
+	int n, m;
+	scanf("%d%d", &n, &m);
+	::n = n;
+	vector<pair<int, int>> ban;
+	for (int i = 0; i < m; ++ i) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		ban1[x][y] = 1;
+		ban.push_back({x, y});
+	}
+	//dpdfs(0, 0, 0);
+	//printf("duipai = %d\n", duipai);
+	int ans = 0;
+	for (int mask = 0; mask < (1 << m); ++ mask) {
+		static int useR[35], useC[35];
+		memset(useR, 0, sizeof(useR));
+		memset(useC, 0, sizeof(useC));
+		int d1 = 0, d2 = 0;
+		for (int i = 0; i < m; ++ i) {
+			if (mask >> i & 1) {
+				int x, y;
+				tie(x, y) = ban[i];
+				useR[x] ++;
+				useC[y] ++;
+				if (x == y) d1 ++;
+				if (x + y == n - 1) d2 ++;
+			}
+		}
+		if (*max_element(useR, useR + n) > 1) continue;
+		if (*max_element(useC, useC + n) > 1) continue;
+		state s = state();
+		if ((n & 1) && !useR[n / 2] && !useC[n / 2]) s.b2 = 1;
+		s.d1 = !!d1, s.d2 = !!d2;
+		for (int i = 0; i < n / 2; ++ i) {
+			int j = n - 1 - i;
+			if (useR[i] && useR[j]) continue;
+			if (useC[i] && useC[j]) continue;
+			if (!useR[i] && !useR[j]) {
+				if (!useC[i] && !useC[j]) s.b1001 ++;
+				else if (!useC[i] && useC[j]) s.c10 ++;
+				else if (useC[i] && !useC[j]) s.c01 ++;
+				else assert(0);
+			}
+			else if (!useR[i] && useR[j]) {
+				if (!useC[i] && !useC[j]) s.r10 ++;
+				else if (!useC[i] && useC[j]) s.b1 ++;
+				else if (useC[i] && !useC[j]) s.b0 ++;
+				else assert(0);
+			}
+			else if (useR[i] && !useR[j]) {
+				if (!useC[i] && !useC[j]) s.r01 ++;
+				else if (!useC[i] && useC[j]) s.b0 ++;
+				else if (useC[i] && !useC[j]) s.b1 ++;
+				else assert(0);
+			}
+			else assert(0);
+		}
+		::n = n - __builtin_popcount(mask);
+		//for (int i = 0; i <= n; ++ i) mem[i].clear();
+		//printf("mask = %d  %d\n", mask, dfs(s));
+		if (__builtin_popcount(mask) & 1) {
+			(ans += MOD - dfs(s)) %= MOD;
+		}
+		else {
+			(ans += dfs(s)) %= MOD;
+		}
+	}
+	printf("%d\n", ans);
+}
+~~~
+
+# J. Farm Village
+
+考虑一共有三种点：自给自足$a$，不生产等别人来救$b$，自给自足并且去救别人$c$。那么生产的花费就是$a+2c$。
+
+考虑一个$dp[i][j]$表示我做完第$i$个点，目前手里捏着$j$个食物可以往右走，$j$为负数表示需要右边过来$-j$个食物。那么显然可以$n^2$dp：$dp[i][j+k]=min_{k=-1,0,1}(k+1)p_i+dp[i-1][j]+|j|\cdot d_i$。
+
+考虑使用凸性来优化：如果没有最后一项（运输花费），可以贪心：类似于排好序以后取一个前缀和，显然是凸的。考虑加上一个$|j|\cdot d_i$的项也是凸的。
+
+考虑前面两项，其实是在说：我先把整个函数往左移一下，我手里有两次$+p_i$的机会要用掉，其实就是在差分序列插入两个$p_i$，维护差分序列单增。
+
+考虑后面一项，就是给差分序列都加上一个数，可以正负拆开，维护一个全局的累加。
+
+唯一的问题是：正负的全局累加不一样，插入$p_i$以后，会改变个别几个值的正负号。可以使用两个堆：正的用小根堆，负的用大根堆，然后拿堆顶丢来丢去。
+
+好吧以上其实是我对着代码yy的，可以参考日问题解[J.pdf](http://acm-icpc.aitea.net/index.php?plugin=attach&refer=2017%2FPractice%2F模擬地区予選%2F講評&openfile=J.pdf)。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 2e5 + 5;
+typedef long long LL;
+int d[N], p[N];
+int main() {
+	int n;
+	scanf("%d", &n);
+	for (int i = 1; i < n; ++ i) scanf("%d", &d[i]);
+	for (int i = 0; i < n; ++ i) scanf("%d", &p[i]);
+	priority_queue<LL> neg;
+	priority_queue<LL, vector<LL>, greater<LL>> pos;
+	neg.push(p[0]);
+	pos.push(p[0]);
+	LL delta = 0, ans = 0;
+	for (int i = 1; i < n; ++ i) {
+		delta += d[i];
+		ans += 1LL * i * d[i];
+		LL slope_pos = p[i] - delta;
+		if (slope_pos >= pos.top()) {
+			pos.push(slope_pos);
+			pos.push(slope_pos);
+			neg.push(pos.top() + 2 * delta);
+			pos.pop();
+		}
+		else {
+			neg.push(slope_pos + 2 * delta);
+			neg.push(slope_pos + 2 * delta);
+			pos.push(neg.top() - 2 * delta);
+			neg.pop();
+		}
+	}
+	while (!neg.empty()) {
+		ans += neg.top() - delta;
+		neg.pop();
+	}
+	printf("%lld\n", ans);
+}
+~~~
