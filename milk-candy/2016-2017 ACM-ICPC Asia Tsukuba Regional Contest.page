@@ -1,145 +1,171 @@
-# Info
+Info
+====
 
 Date: 2017.10.02 12:00-17:00
 
 [Link](http://www.bnuoj.com/v3/contest_show.php?cid=9248)
 
-# Solutions
+Solutions
+=========
 
-## A Rearranging a Sequence
+A Rearranging a Sequence
+------------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 倒着扫一下，遇到一个之前没出现过的数就输出，最后把没出现过的数从小到大按原来顺序输出。
 
-## B Quality of Check Digits
+B Quality of Check Digits
+-------------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 直接模拟。
 
-## C Distribution Center
+C Distribution Center
+---------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 每个仓库可以接收一个区间内的生产线的物品，从左往右考虑，每遇到一个机械臂相当于合并两个区间。
 
-## D Hidden Anagrams
+D Hidden Anagrams
+-----------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 枚举长度然后$hash$每个子串中每种字符的出现次数构成的序列。
 
-## E Infallibly Crack Perplexing Cryptarithm
+E Infallibly Crack Perplexing Cryptarithm
+-----------------------------------------
 
 upsolved by sk
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 $O(8!)$枚举所有可能，然后用类似中缀表达式求值的做法去判断表达式是否合法以及合法情况下表达式的值，比较难的部分是$'-'$号可以作为一元运算。
 
-## F Three Kingdoms of Bourdelot
+F Three Kingdoms of Bourdelot
+-----------------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 对于一条信息$A \rightarrow B$，所有包含描述$A\ B$的文档必须标为$positive$，所有包含描述$B\ A$的文档必须标为$negative$，然后将新得到的所有形如$C \rightarrow D$的信息加入关系图中并更新传递闭包，直到无法再扩展出任何信息，再检查关系图中是否存在与形如$C \nrightarrow D$的信息的矛盾，复杂度$O(k^4/w)$，这里$k$表示人数。
 
-## G Placing Medals on a Binary Tree
+G Placing Medals on a Binary Tree
+---------------------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 如果大的奖牌放不下，那么小的奖牌也放不下，那么原问题相当于尽可能多地放奖牌，可以发现已经放好的奖牌满足$\sum \frac {1}{2^x} \leq 1$时是合法的，乘以$2^{10^9}$之后用线段树维护二进制数加法即可。
 
-## H Animal Companion in Maze
+H Animal Companion in Maze
+--------------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 先跑一次SCC缩点（无向边当作两条有向边），如果某个SCC中存在有向边，那么就是INF，否则所有SCC中的边都是无向边，如果有环也是INF，否则每个SCC都是无向边构成的树。现在要求出从每个点出发的最长路，考虑在缩点后得到的DAG上按照拓扑序dp，在处理完某个SCC的所有后继之后，通过两次树dp来求出SCC内部所有点的答案。
 
-## I Skinny Polygon
+I Skinny Polygon
+----------------
 
 upsolved by sk
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 对于三角形，选取$(0,0),(x,y)$之后，最小面积是$\frac{gcd(x,y)}{2}$，利用$exgcd$可以求出第三个点的坐标，对于正方形，选取$(0,0),(x,y-1),(\frac{x}{gcd(x,y)},\frac{y}{gcd(x,y)}),(x-1,y)$，面积是$\frac{x+y}{2gcd(x,y)}$，根据$gcd(x,y)$的大小分情况构造即可。
 
-## J Cover the Polygon with Your Disk
+J Cover the Polygon with Your Disk
+----------------------------------
 
 upsolved by sk
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 固定圆心之后就是圆和多边形求交，现在要求出圆心的最优位置，可以发现目标函数是凸的，爬山即可。
 
-## K Black and White Boxes
+K Black and White Boxes
+-----------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 感谢chitanda同学提供[参考资料](http://www.docin.com/p-454835374.html)，
 
-这个博弈是经典的Blue-Red Hackenbush，可以用[Surreal number](https://en.wikipedia.org/wiki/Surreal_number)解决。对每堆箱子计算Surreal number，现在要选出若干堆箱子使得两人获胜概率相同，就是要选出一个子集使得Surreal number之和为0（此时后手必胜），折半搜索。
+这个博弈是经典的Blue-Red Hackenbush，可以用[Surreal
+number](https://en.wikipedia.org/wiki/Surreal_number)解决。对每堆箱子计算Surreal
+number，现在要选出若干堆箱子使得两人获胜概率相同，就是要选出一个子集使得Surreal
+number之和为0（此时后手必胜），折半搜索。
 
-# Replay
+Replay
+======
 
 `Q` 日常迟到。
 
-开场 `K` 直接秒了 A 题，等到 `Q` 过来的时候 B 题也差不多了，但是写完之后 WA 了。
+开场 `K` 直接秒了 A 题，等到 `Q` 过来的时候 B 题也差不多了，但是写完之后
+WA 了。
 
-`Q` 接过来 D 题并秒了，然后拿到 C 也秒了，`K` 和 `J` 讨论之后发现题意没理解对，但是只需要修改一点细节，很快 B 题也通过了。
+`Q` 接过来 D 题并秒了，然后拿到 C 也秒了，`K` 和 `J`
+讨论之后发现题意没理解对，但是只需要修改一点细节，很快 B 题也通过了。
 
-这时 G 题已经通过不少，`Q` 认为直接让 x 和 60 取 min 就好，然后经过一番口胡成功骗过队友，然后 WA 得根本起不来。
+这时 G 题已经通过不少，`Q` 认为直接让 x 和 60 取 min
+就好，然后经过一番口胡成功骗过队友，然后 WA 得根本起不来。
 
-期间 `J` 把其他题都读了，然后 `Q` 提出了一个 I 题假算法让 `K` 去尝试，很快也 WA 了。
+期间 `J` 把其他题都读了，然后 `Q` 提出了一个 I 题假算法让 `K`
+去尝试，很快也 WA 了。
 
-在 `Q` 躺在地上不知所措的时候，`J` 提出了一个 G 题真算法，`Q` 冷静分析之后觉得对如闪电，写完就 AC 了。
+在 `Q` 躺在地上不知所措的时候，`J` 提出了一个 G 题真算法，`Q`
+冷静分析之后觉得对如闪电，写完就 AC 了。
 
-然而 `K` 对着 I 题也不知所措，为了拯救世界，`J` 和 `K` 开始搞 E 题，`Q` 决定 rush 之前一直按着的 F 题，
+然而 `K` 对着 I 题也不知所措，为了拯救世界，`J` 和 `K` 开始搞 E 题，`Q`
+决定 rush 之前一直按着的 F 题，
 
-`Q` 写错了三次动态传递闭包之后终于过了 F 题，`K` 沉迷写 E 题，最后也只差一点就能写完。
+`Q` 写错了三次动态传递闭包之后终于过了 F 题，`K` 沉迷写 E
+题，最后也只差一点就能写完。
 
-## quailty
+quailty
+-------
 
 对于不显然的事实要三思，多试着构造反例，要避免算法第一步就假了。
 
-## sk
+sk
+--
 
 敲之前冷静思考敲的是不是假算法。
