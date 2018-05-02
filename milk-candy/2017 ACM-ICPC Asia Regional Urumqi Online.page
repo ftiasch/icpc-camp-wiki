@@ -1,0 +1,117 @@
+# Info
+
+Date: 2017.09.09 12:00-17:00
+
+[Link](https://www.jisuanke.com/contest/870)
+
+# Solutions
+
+## A Banana
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+签到题。
+
+## B Out-out-control cars
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+如果相对静止，需要判断两个三角形是否有交集，这是个[经典题](http://acm.fzu.edu.cn/problem.php?pid=2273)，分别枚举两个三角形的一条边判断是否相交，然后枚举三角形的顶点判断是否在另一个三角形内即可。否则一定存在一个三角形的某一个顶点的运动轨迹（一条射线）会和另一个三角形相交，枚举之后判断即可。
+
+## C Coconut
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+签到题。
+
+## D Hack Portals
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+二分答案之后时光倒流，那么就是从$K$处出发，每个protal有一个时间限制，需要在这个时间限制内经过这个$portal$，实际路径是一条折线，考虑$dp[i][j][0/1]$表示走过了$[i,j]$内的$portal$且最后位于$i$或$j$处的最短时间，枚举下一步走到$i-1$或者$j+1$即可，一个细节是走完所有portal之后如果位于最右边的$portal$处，那么还需要走回$0$处，但此时不需要满足$0$处portal的时间限制。注意到原问题在等待足够长时间（激活时间的最大值）之后必然可以在接下来$2L$时间内完成任务，因此二分区间长度只有$2L$，复杂度$O(n^2\log L)$，稍微卡一下常数即可通过。
+
+当然这个二分答案是不必要的，根据上述分析可以知道存在最优路径使得在起点等待一段时间之后走出一条向$K$处收缩的折线，于是可以$dp[i][j][0/1]$表示当前还有$[i,j]$内的$portal$未被激活且当前位于$i$或者$j$处的最短时间，枚举下一步走到$i+1$或者$j-1$即可，一个细节是一开始可能会直接从$0$走到最右边的$portal$处，复杂度$O(n^2)$。
+
+## E Half-consecutive Numbers
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+设$T_r=k^2$，整理可得$(2r+1)^2-8k^2=1$，这就是[Pell's equation](https://en.wikipedia.org/wiki/Pell%27s_equation)，直接求通解即可。
+
+## F Islands
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+$SCC$缩点之后答案就是入度为$0$的点和出度为$0$的点个数最大值，注意特判初始已经强连通的情况。
+
+## G Query on a string
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+每次修改只会影响$|S|$至多$|T|$个子段，每次修改暴力检查，树状数组维护每个子段是否和$|T|$相等，复杂度$O(|S||T|+n|T|^2+n|T|\log(|S|))$。
+
+## H Skiing
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+$DAG$上最长路，按照拓扑序$dp$即可。
+
+## I Colored Graph
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+计算同色三角形是一个经典问题，具体来说是考虑用所有三角形减去不同色三角形，一个不同色三角形会对应两个不同色角，因此只需要最大化不同色角个数，也就是每个点连出去的白边数与黑边数的乘积之和，精神上就是使每个点连出去的黑白边数尽可能接近。
+
+对于$n \mod 2 = 0$，根据第三组样例画画葫芦即可，此时每个点连出去的黑白边数之差为$1$，显然是最优的。
+
+对于$n \mod 2 = 1$，可以证明当$n \mod 4 = 3$时不可能做到所有点连出去的黑白边数相同，如果可以构造出恰好有一个点连出去的黑白边数之差为$2$的方案，那么也是最优的。考虑增量构造，$n=1,3$是平凡的，每次加$4$个点，只需保证前$n$个点均后$4$个点中的某$2$个连黑边和另外$2$个连白边，同时满足后$4$个点连出去的黑白边数相同，这是容易的。
+
+复杂度$O(n^2)$。
+
+## J Out Journey of Dalian Ends
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+相当于从$Shanghai$出发走两条不相交路径分别到$Dalian$和$Xian$，经典费用流模型。
+
+# Replay
