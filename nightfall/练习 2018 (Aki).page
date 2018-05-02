@@ -1,10 +1,12 @@
-# 错误总结
+错误总结
+========
 
-1. det爆long long
-2. 分块去重点重边
-3. 使用map离散化：map[i]=map.size() + 1会先算左边再算右边
+1.  det爆long long
+2.  分块去重点重边
+3.  使用map离散化：map\[i\]=map.size() + 1会先算左边再算右边
 
-# 之后的寒假计划
+之后的寒假计划
+==============
 
 2/15-2/24：每天一场tc，不会的找题解或者大佬的代码改完，如果当时有比赛有空就参加
 
@@ -16,19 +18,23 @@
 
 2/22-2/24：做做POI
 
-# Yandex.Algorithm 2018, third qualification round
+Yandex.Algorithm 2018, third qualification round
+================================================
 
-## E. Max \$\\mathcal\{B\}\$-Matching
+E. Max \$\\mathcal{B}\$-Matching
+--------------------------------
 
-[code](yandex 2018 third qual E)
+[code](yandex%202018%20third%20qual%20E)
 
-# VK Cup 2018 Round 2
+VK Cup 2018 Round 2
+===================
 
-## D. Contact ATC
+D. Contact ATC
+--------------
 
 考虑风速从-w变化到w，相遇点跨过原点的pair即为所求。
 
-然后求风速-w时，相遇在左边的（<=0）pair数，减去风速正w时仍然相遇在左边的（<0）数。
+然后求风速-w时，相遇在左边的（&lt;=0）pair数，减去风速正w时仍然相遇在左边的（&lt;0）数。
 
 方向相反的很好求：算出到原点的时间，右半边的点到原点时，还没到原点的左半边的点，一定相遇在左边。
 
@@ -36,13 +42,15 @@
 
 同向朝左需要定义追不上（不相遇）时相遇在左侧无穷远除，这样减掉还是对的。这个定义下，就是统计所有人，在我左边并且比我先到原点的个数。
 
-这个风速[-w,w]左闭又闭实在是有点恼人，待我学习学习先进做法。
+这个风速\[-w,w\]左闭又闭实在是有点恼人，待我学习学习先进做法。
 
-[code](VK R2 D1)
+[code](VK%20R2%20D1)
 
-# Yandex Round 2 of Elimination
+Yandex Round 2 of Elimination
+=============================
 
-## D. Sports Analytics
+D. Sports Analytics
+-------------------
 
 容斥一下：考虑所有人所有属性的排名，减掉至少有1对相邻的人，各属性严格递减的，加上至少有2对这样的，以此类推。
 
@@ -52,9 +60,10 @@
 
 所以可以dp：$f[i][j][k]$表示做完前$i$个人，现在有连续$j$个人单调下降，下降总人数的奇偶性是$k$，就可以dp了。
 
-[code](code yandex r2 d.cpp)
+[code](code%20yandex%20r2%20d.cpp)
 
-# PE 622
+PE 622
+======
 
 permutation $P_n$ : 0, n/2, 1, n/2 + 1, 2, n/2 + 2, ...
 
@@ -64,81 +73,97 @@ $x_{k+1}=2x_k$ if $2x_k<n$
 
 $x_{k+1}=2x_k-n+1$ if $2x_k\geq n$
 
-$x_{k+1}=2x_k\mod (n-1)$, so we need to find the least $p$ such that $2^p\equiv 1 \mod (2^n-1)$, where $n=60$ in PE 622.
+$x_{k+1}=2x_k\mod (n-1)$, so we need to find the least $p$ such that
+$2^p\equiv 1 \mod (2^n-1)$, where $n=60$ in PE 622.
 
-[code](pe622 code)
+[code](pe622%20code)
 
-# 三维几何一些基础操作
+三维几何一些基础操作
+====================
 
 从[这里](http://wiki.unity3d.com/index.php/3d_Math_functions)抄的。
 
-# CF 467
+CF 467
+======
 
-## D. World of Tank
+D. World of Tank
+----------------
 
 就，离散化dp一下到每个位置最多几条命（几炮+几秒），换行的时候命会和1取min。
 
-[code](CF 467 D)
+[code](CF%20467%20D)
 
-## E. Iqea
+E. Iqea
+-------
 
 每行连续一段缩起来，相邻的点连边，整个图是个树结构。
 
 维护点分治的结构。每个点是一段格子，需要开个前缀val-i和后缀val+i的树状数组。
 
-[code](CF 467 E)
+[code](CF%20467%20E)
 
-# AGC 021
+AGC 021
+=======
 
-## E. Ball Eat Chameleons
+E. Ball Eat Chameleons
+----------------------
 
 设R为+1，B为-1，则一个子序列合法充要条件：和大于0或和等于0且最后一个为-1。
 
 讨论总序列中R和B的个数：
 
-1. $R<B$：$0$
-2. $R=B$：显然此时最后一个为$B$，固定，则前面转为$R>B-1$的情况。
-3. $R>B$：又分两种：
-    a. $R-B>=n$，此时所有子序列可以和都大于$0$，所以任意序列都合法。
-    b. $R-B<n$，此时有$n-(R-B)$个序列和为$0$，这里可以贪心地选$+1-1$，剩下来一个人全部吃掉，如果不足$n$个再把$+1$吐出来。因为要选$+1-1$，贪心就可以了，所以小于0的-1没有贡献，没有贡献的个数不能超过$B-(n-R+B)=n-R$个，卡特兰算一算。
+1.  $R<B$：$0$
+2.  $R=B$：显然此时最后一个为$B$，固定，则前面转为$R>B-1$的情况。
+3.  $R>B$：又分两种：
+    a.  $R-B>=n$，此时所有子序列可以和都大于$0$，所以任意序列都合法。
+    b.  $R-B<n$，此时有$n-(R-B)$个序列和为$0$，这里可以贪心地选$+1-1$，剩下来一个人全部吃掉，如果不足$n$个再把$+1$吐出来。因为要选$+1-1$，贪心就可以了，所以小于0的-1没有贡献，没有贡献的个数不能超过$B-(n-R+B)=n-R$个，卡特兰算一算。
 
-[code](agc 021 E)
+[code](agc%20021%20E)
 
-## C. Tiling
+C. Tiling
+---------
 
-要么填充2*2，要么放一个3*3横竖各2个，剩下的填充2*2。
+要么填充2*2，要么放一个3*3横竖各2个，剩下的填充2\*2。
 
-[code](agc 021 C)
+[code](agc%20021%20C)
 
-# PE 621
+PE 621
+======
 
 $n=\frac{a(a+1)}{2}+\frac{b(b+1)}{2}+\frac{c(c+1)}{2}$的方案数。
 
-枚举$c$，剩下的可以化成$8m+2=(2a+1)^2+(2b+1)^2$，奇数是天然成立的，用模4余3余1那个套路，可以分解质因数算这个，直接拍pollard rho跑了50min过了。
+枚举$c$，剩下的可以化成$8m+2=(2a+1)^2+(2b+1)^2$，奇数是天然成立的，用模4余3余1那个套路，可以分解质因数算这个，直接拍pollard
+rho跑了50min过了。
 
 看了评论区好像还有一种方法是有个公式，需要算class number，太深奥了。
 
-[Sum of Squares Function](http://mathworld.wolfram.com/SumofSquaresFunction.html)
+[Sum of Squares
+Function](http://mathworld.wolfram.com/SumofSquaresFunction.html)
 
 [code](pe621.cpp)
 
-# CF 463
+CF 463
+======
 
-## G. Palindrome Partition
+G. Palindrome Partition
+-----------------------
 
 抄了个高级回文树板子。
 
-[code](CF 463 G)
+[code](CF%20463%20G)
 
-## F. Escape Through Leaf
+F. Escape Through Leaf
+----------------------
 
 树上启发式合并凸包。抄了个set维护凸包+查询得凸壳板子。
 
-[code](CF 463 F)
+[code](CF%20463%20F)
 
-# SRM 730
+SRM 730
+=======
 
-## 1000
+1000
+----
 
 求$\sum_{i=1}^n2^i\binom{n-i}{x-1}$，其中$n\leq10^9$，$x\leq \min (n,10^6)$。
 
@@ -146,29 +171,37 @@ $n=\frac{a(a+1)}{2}+\frac{b(b+1)}{2}+\frac{c(c+1)}{2}$的方案数。
 
 讲故事法：先把式子除以2：$\sum_{i=0}^{n-1}2^i\binom{n-i-1}{x-1}$，这个其实是枚举倒数第$x$个1的位置在$i+1$，前面的$i$个位置随便放1的方案数，也就是$n$个里面选大于等于$x$个的集合的方案数。
 
-[code](SRM 730 1000)
+[code](SRM%20730%201000)
 
-# SRM 717
+SRM 717
+=======
 
-## 800
+800
+---
 
-使用Google搜索"Counting Acyclic Orientations"得到定理：The number of acyclic orientations of an n-vertex graph $G$ is $(−1)^nP_G(−1)$, where $P_G(q)$ is the chromatic polynomial of the graph $G$.
+使用Google搜索"Counting Acyclic Orientations"得到定理：The number of
+acyclic orientations of an n-vertex graph $G$ is $(−1)^nP_G(−1)$, where
+$P_G(q)$ is the chromatic polynomial of the graph $G$.
 
 然后算这个是P-Complete的，但是这里只要求mod 6.
 
-由于所有无环定向的反向也无环，所以答案一定是偶数。由于mod 3意义下$-1\equiv 2 \mod 3$，所以就是求2染色的方案数。
+由于所有无环定向的反向也无环，所以答案一定是偶数。由于mod
+3意义下$-1\equiv 2 \mod 3$，所以就是求2染色的方案数。
 
-[code](SRM 717 800)
+[code](SRM%20717%20800)
 
-# SRM 724
+SRM 724
+=======
 
-## 1000
+1000
+----
 
 随机调整卡时：随机一个初始解，每次改变一场比赛得结果，使得答案靠近要求。
 
-[code](SRM 724 1000)
+[code](SRM%20724%201000)
 
-## 500
+500
+---
 
 先特判掉不稳定的情况。现在假设所有块缩在左上角。
 
@@ -178,21 +211,24 @@ $n=\frac{a(a+1)}{2}+\frac{b(b+1)}{2}+\frac{c(c+1)}{2}$的方案数。
 
 然后减掉两种顺序同时可以的方案数：就是散开之前的方案数相乘，就是行置换，列置换下的不同方案数。这个当时算不来。
 
-[code](SRM 724 500)
+[code](SRM%20724%20500)
 
-## 250
+250
+---
 
 $(a\&b)+(a|b)=a+b$，然后按位拆开dp。
 
-[code](SRM 724 250)
+[code](SRM%20724%20250)
 
-# SRM 725
+SRM 725
+=======
 
-## 1000
+1000
+----
 
 最小割。和西安F，CCPC杭州I差不多的建图。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -202,180 +238,184 @@ struct edge { LL f; int to, r; };
 vector<edge> G[N * 105];
 int p[N][105], S, T, in[N], st[N * 105], d[N * 105], out[N], outs[N];
 void ae(int u, int v, LL f) {
-	G[u].push_back((edge) {f, v, (int) G[v].size()});
-	G[v].push_back((edge) {0, u, (int) G[u].size() - 1});
-	//printf("%d -> %d  %lld\n", u, v, f);
+    G[u].push_back((edge) {f, v, (int) G[v].size()});
+    G[v].push_back((edge) {0, u, (int) G[u].size() - 1});
+    //printf("%d -> %d  %lld\n", u, v, f);
 }
 int BFS() {
-	for (int i = 0; i <= T; ++ i) d[i] = 0;
-	d[S] = 1;
-	queue<int> q;
-	q.push(S);
-	while (!q.empty() && !d[T]) {
-		int p = q.front(); q.pop();
-		for (edge e : G[p]) {
-			if (e.f && !d[e.to]) {
-				d[e.to] = d[p] + 1;
-				q.push(e.to);
-			}
-		}
-	}
-	return d[T];
+    for (int i = 0; i <= T; ++ i) d[i] = 0;
+    d[S] = 1;
+    queue<int> q;
+    q.push(S);
+    while (!q.empty() && !d[T]) {
+        int p = q.front(); q.pop();
+        for (edge e : G[p]) {
+            if (e.f && !d[e.to]) {
+                d[e.to] = d[p] + 1;
+                q.push(e.to);
+            }
+        }
+    }
+    return d[T];
 }
 LL DFS(int x, LL arg) {
-	if (x == T) return arg;
-	LL arg0 = arg;
-	for (int &i = st[x]; i < (int) G[x].size(); ++ i) {
-		edge &e = G[x][i];
-		if (e.f && d[x] + 1 == d[e.to]) {
-			LL tmp = DFS(e.to, min(e.f, arg));
-			arg -= tmp;
-			e.f -= tmp;
-			G[e.to][e.r].f += tmp;
-			if (arg == 0) return arg0;
-		}
-	}
-	return arg0 - arg;
+    if (x == T) return arg;
+    LL arg0 = arg;
+    for (int &i = st[x]; i < (int) G[x].size(); ++ i) {
+        edge &e = G[x][i];
+        if (e.f && d[x] + 1 == d[e.to]) {
+            LL tmp = DFS(e.to, min(e.f, arg));
+            arg -= tmp;
+            e.f -= tmp;
+            G[e.to][e.r].f += tmp;
+            if (arg == 0) return arg0;
+        }
+    }
+    return arg0 - arg;
 }
 LL maxflow() {
-	LL res = 0;
-	while (BFS()) {
-		for (int i = 0; i <= T; ++ i) st[i] = 0;
-		res += DFS(S, INF);
-	}
-	return res;
+    LL res = 0;
+    while (BFS()) {
+        for (int i = 0; i <= T; ++ i) st[i] = 0;
+        res += DFS(S, INF);
+    }
+    return res;
 }
 class Overcooked {
-	public:
-	int minStale(vector<int> s, vector<int> a, vector<int> b) {
-		int n = s.size(), tot = 0;
-		for (int i = 0; i < n; ++ i) {
-			outs[i] = out[i] = in[i] = 0;
-			for (int j = 0; j <= TI; ++ j) {
-				p[i][j] = tot ++;
-			}
-		}
-		int m = a.size();
-		for (int u : a) out[u] ++;
-		for (int u : b) in[u] ++;
-		for (int i = 0; i < m; ++ i) {
-			outs[a[i]] += s[b[i]];
-		}
-		S = tot ++;
-		T = tot ++;
-		for (int i = 0; i < n; ++ i) {
-			ae(S, p[i][0], INF);
-			for (int j = 0; j < TI; ++ j) {
-				LL tmp = inf + out[i] * (j + 1) * (j + 1) + in[i] * (j + 1 - s[i]) * (j + 1 - s[i]) - 2 * (TI + 1) * in[i] * (j + 1 - s[i]);
-				tmp = tmp - 2 * (TI + 1) * outs[i] + 2 * (j + 1) * outs[i];
-				if (j + 1 < s[i]) tmp = INF;
-				ae(p[i][j], p[i][j + 1], tmp);
-			}
-			ae(p[i][TI], T, INF);
-		}
-		for (int i = 0; i < m; ++ i) {
-			int u = a[i], v = b[i];
-			for (int j = s[v]; j <= TI; ++ j) {
-				ae(p[u][j - s[v]], p[v][j], INF);
-			}
-			for (int j = 0; j <= TI; ++ j) {
-				for (int k = 0; k <= TI; ++ k) {
-					ae(p[v][j], p[u][k], 2);
-				}
-			}
-		}
-		LL ans = maxflow();
-		ans -= n * inf;
-		return (int) ans;
-	}
+    public:
+    int minStale(vector<int> s, vector<int> a, vector<int> b) {
+        int n = s.size(), tot = 0;
+        for (int i = 0; i < n; ++ i) {
+            outs[i] = out[i] = in[i] = 0;
+            for (int j = 0; j <= TI; ++ j) {
+                p[i][j] = tot ++;
+            }
+        }
+        int m = a.size();
+        for (int u : a) out[u] ++;
+        for (int u : b) in[u] ++;
+        for (int i = 0; i < m; ++ i) {
+            outs[a[i]] += s[b[i]];
+        }
+        S = tot ++;
+        T = tot ++;
+        for (int i = 0; i < n; ++ i) {
+            ae(S, p[i][0], INF);
+            for (int j = 0; j < TI; ++ j) {
+                LL tmp = inf + out[i] * (j + 1) * (j + 1) + in[i] * (j + 1 - s[i]) * (j + 1 - s[i]) - 2 * (TI + 1) * in[i] * (j + 1 - s[i]);
+                tmp = tmp - 2 * (TI + 1) * outs[i] + 2 * (j + 1) * outs[i];
+                if (j + 1 < s[i]) tmp = INF;
+                ae(p[i][j], p[i][j + 1], tmp);
+            }
+            ae(p[i][TI], T, INF);
+        }
+        for (int i = 0; i < m; ++ i) {
+            int u = a[i], v = b[i];
+            for (int j = s[v]; j <= TI; ++ j) {
+                ae(p[u][j - s[v]], p[v][j], INF);
+            }
+            for (int j = 0; j <= TI; ++ j) {
+                for (int k = 0; k <= TI; ++ k) {
+                    ae(p[v][j], p[u][k], 2);
+                }
+            }
+        }
+        LL ans = maxflow();
+        ans -= n * inf;
+        return (int) ans;
+    }
 };
-~~~
+```
 
-# Yandex Qualification
+Yandex Qualification
+====================
 
-## F. Network Topology
+F. Network Topology
+-------------------
 
 答案两个点一定在直径上。直径抠出来，枚举两个点中间点在哪里，左边右边取在哪里最优可以直接算出来。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 2e5 + 5;
 vector<int> G[N];
 pair<int, int> far(int x, int f, int f2 = 0) {
-	pair<int, int> res = {0, x};
-	for (int u : G[x]) {
-		if (u == f) continue;
-		if (u == f2) continue;
-		auto tmp = far(u, x);
-		tmp.first ++;
-		res = max(tmp, res);
-	}
-	return res;
+    pair<int, int> res = {0, x};
+    for (int u : G[x]) {
+        if (u == f) continue;
+        if (u == f2) continue;
+        auto tmp = far(u, x);
+        tmp.first ++;
+        res = max(tmp, res);
+    }
+    return res;
 }
 vector<int> st, D;
 void path(int x, int f, int tar) {
-	st.push_back(x);
-	if (tar == x) {
-		D = st;
-		st.pop_back();
-		return;
-	}
-	for (int u : G[x]) {
-		if (u == f) continue;
-		path(u, x, tar);
-	}
-	st.pop_back();
+    st.push_back(x);
+    if (tar == x) {
+        D = st;
+        st.pop_back();
+        return;
+    }
+    for (int u : G[x]) {
+        if (u == f) continue;
+        path(u, x, tar);
+    }
+    st.pop_back();
 }
 int d[N], L[N], R[N];
 int main() {
-	int n;
-	scanf("%d", &n);
-	for (int i = 1; i < n; ++ i) {
-		int u, v;
-		scanf("%d%d", &u, &v);
-		G[u].push_back(v);
-		G[v].push_back(u);
-	}
-	int u = far(1, 0).second;
-	int v = far(u, 0).second;
-	path(u, 0, v);
-	d[u] = d[v] = 0;
-	for (int i = 1; i < D.size() - 1; ++ i) {
-		int b1 = D[i - 1], b2 = D[i + 1];
-		d[D[i]] = far(D[i], b1, b2).first;
-	}
-	for (int i = 0; i < D.size(); ++ i) {
-		L[i] = d[D[i]] + i;
-		if (i) L[i] = max(L[i - 1], L[i]);
-	}
-	for (int i = D.size() - 1; i >= 0; -- i) {
-		R[i] = d[D[i]] - i;
-		if (i < (int) D.size() - 1) R[i] = max(R[i + 1], R[i]);
-	}
-	int ans = n - 1, ans1 = 1, ans2 = n;
-	for (int i = 0; i < D.size() - 1; ++ i) {
-		int p1 = L[i] / 2;
-		int p2 = ((int) D.size() - R[i + 1] - 1) / 2;
-		int a1 = max(p1, L[i] - p1);
-		int a2 = max((int) D.size() - 1 - p2, R[i + 1] + p2);
-		if (max(a1, a2) <= ans) {
-			ans = max(a1, a2);
-			ans1 = D[p1];
-			ans2 = D[p2];
-		}
-	}
-	printf("%d %d\n", ans1, ans2);
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i < n; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    int u = far(1, 0).second;
+    int v = far(u, 0).second;
+    path(u, 0, v);
+    d[u] = d[v] = 0;
+    for (int i = 1; i < D.size() - 1; ++ i) {
+        int b1 = D[i - 1], b2 = D[i + 1];
+        d[D[i]] = far(D[i], b1, b2).first;
+    }
+    for (int i = 0; i < D.size(); ++ i) {
+        L[i] = d[D[i]] + i;
+        if (i) L[i] = max(L[i - 1], L[i]);
+    }
+    for (int i = D.size() - 1; i >= 0; -- i) {
+        R[i] = d[D[i]] - i;
+        if (i < (int) D.size() - 1) R[i] = max(R[i + 1], R[i]);
+    }
+    int ans = n - 1, ans1 = 1, ans2 = n;
+    for (int i = 0; i < D.size() - 1; ++ i) {
+        int p1 = L[i] / 2;
+        int p2 = ((int) D.size() - R[i + 1] - 1) / 2;
+        int a1 = max(p1, L[i] - p1);
+        int a2 = max((int) D.size() - 1 - p2, R[i + 1] + p2);
+        if (max(a1, a2) <= ans) {
+            ans = max(a1, a2);
+            ans1 = D[p1];
+            ans2 = D[p2];
+        }
+    }
+    printf("%d %d\n", ans1, ans2);
 }
-~~~
+```
 
-# CF 462
+CF 462
+======
 
-## E. A Preponderant Reunion
+E. A Preponderant Reunion
+-------------------------
 
-考虑最后的形状：分成很多段，每段中间有一个大佬，然后两边往中间走。场上剩下的数越大，最后的答案越小，所以猜结论两边的长度不会太长（<=2）？然后随便dp一下就行了。
+考虑最后的形状：分成很多段，每段中间有一个大佬，然后两边往中间走。场上剩下的数越大，最后的答案越小，所以猜结论两边的长度不会太长（&lt;=2）？然后随便dp一下就行了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -384,401 +424,408 @@ const LL INF = 1e18;
 LL dp[N][2]; tuple<int, int, int> his[N][2];
 vector<int> ans;
 LL work(LL &a, LL &b, bool &gg) {
-	LL c = min(a, b);
-	a -= c;
-	b -= c;
-	if (c == 0) gg = 1;
-	return c;
+    LL c = min(a, b);
+    a -= c;
+    b -= c;
+    if (c == 0) gg = 1;
+    return c;
 }
 LL work(vector<int> a, int off) {
-	int n = (int) a.size();
-	for (int i = 1; i <= n; ++ i) {
-		dp[i][0] = dp[i][1] = INF;
-		for (int l = 0; l <= 2; ++ l) {
-			for (int r = 0; r <= 2; ++ r) {
-				if (l + r + 1 <= i) {
-					int j = i - (l + r + 1);
-					static LL tmp[5];
-					for (int k = 0; k < (l + r + 1); ++ k) tmp[k] = a[j + k];
-					LL base = 0;
-					bool gg = 0;
-					if (l >= 1) base += work(tmp[0], tmp[1], gg);
-					if (l >= 2) base += work(tmp[1], tmp[2], gg);
-					if (r >= 1) base += work(tmp[l + r - 1], tmp[l + r], gg);
-					if (r >= 2) base += work(tmp[l + r - 2], tmp[l + r - 1], gg);
-					for (int k = 0; k < (l + r + 1); ++ k) if (k != l) gg |= tmp[k];
-					if (gg) continue;
-					LL remain = tmp[l];
-					int sb = l ? 1 : !remain;
-					base += dp[j][sb];
-					int tb = r ? 0 : !!remain;
-					//printf("%d %d upd %d %d, %lld  sb=%d\n", l, r, i, tb, base, sb);
-					if (dp[i][tb] > base) {
-						dp[i][tb] = base;
-						his[i][tb] = make_tuple(l, r, sb);
-					}
-				}
-			}
-		}
-		if (dp[i][0] < dp[i][1]) {
-			dp[i][1] = dp[i][0];
-			his[i][1] = his[i][0];
-		}
-	}
-	for (int i = n, j, k = 1; i; i = j) {
-		int l, r;
-		tie(l, r, k) = his[i][k];
-		j = i - (l + r + 1);
-		if (l >= 1) ans.push_back(j + off);
-		if (l >= 2) ans.push_back(j + off + 1);
-		if (r >= 1) ans.push_back(i + off - 2);
-		if (r >= 2) ans.push_back(i + off - 3);
-	}
-	//printf("dp=%lld\n", dp[n][1]);
-	return dp[n][1];
+    int n = (int) a.size();
+    for (int i = 1; i <= n; ++ i) {
+        dp[i][0] = dp[i][1] = INF;
+        for (int l = 0; l <= 2; ++ l) {
+            for (int r = 0; r <= 2; ++ r) {
+                if (l + r + 1 <= i) {
+                    int j = i - (l + r + 1);
+                    static LL tmp[5];
+                    for (int k = 0; k < (l + r + 1); ++ k) tmp[k] = a[j + k];
+                    LL base = 0;
+                    bool gg = 0;
+                    if (l >= 1) base += work(tmp[0], tmp[1], gg);
+                    if (l >= 2) base += work(tmp[1], tmp[2], gg);
+                    if (r >= 1) base += work(tmp[l + r - 1], tmp[l + r], gg);
+                    if (r >= 2) base += work(tmp[l + r - 2], tmp[l + r - 1], gg);
+                    for (int k = 0; k < (l + r + 1); ++ k) if (k != l) gg |= tmp[k];
+                    if (gg) continue;
+                    LL remain = tmp[l];
+                    int sb = l ? 1 : !remain;
+                    base += dp[j][sb];
+                    int tb = r ? 0 : !!remain;
+                    //printf("%d %d upd %d %d, %lld  sb=%d\n", l, r, i, tb, base, sb);
+                    if (dp[i][tb] > base) {
+                        dp[i][tb] = base;
+                        his[i][tb] = make_tuple(l, r, sb);
+                    }
+                }
+            }
+        }
+        if (dp[i][0] < dp[i][1]) {
+            dp[i][1] = dp[i][0];
+            his[i][1] = his[i][0];
+        }
+    }
+    for (int i = n, j, k = 1; i; i = j) {
+        int l, r;
+        tie(l, r, k) = his[i][k];
+        j = i - (l + r + 1);
+        if (l >= 1) ans.push_back(j + off);
+        if (l >= 2) ans.push_back(j + off + 1);
+        if (r >= 1) ans.push_back(i + off - 2);
+        if (r >= 2) ans.push_back(i + off - 3);
+    }
+    //printf("dp=%lld\n", dp[n][1]);
+    return dp[n][1];
 }
 int main() {
-	int n, las = 1;
-	scanf("%d", &n);
-	vector<int> a;
-	for (int i = 1; i <= n; ++ i) {
-		int x;
-		scanf("%d", &x);
-		if (!x) {
-			if (!a.empty()) work(a, las);
-			a.clear();
-			las = i + 1;
-		}
-		else a.push_back(x);
-	}
-	if (!a.empty()) work(a, las);
-	printf("%d\n", (int) ans.size());
-	for (int x : ans) printf("%d\n", x);
+    int n, las = 1;
+    scanf("%d", &n);
+    vector<int> a;
+    for (int i = 1; i <= n; ++ i) {
+        int x;
+        scanf("%d", &x);
+        if (!x) {
+            if (!a.empty()) work(a, las);
+            a.clear();
+            las = i + 1;
+        }
+        else a.push_back(x);
+    }
+    if (!a.empty()) work(a, las);
+    printf("%d\n", (int) ans.size());
+    for (int x : ans) printf("%d\n", x);
 }
-~~~
+```
 
-## D. A Creative Cutout
+D. A Creative Cutout
+--------------------
 
 推公式死算。懒，然后插值T了。里面展开了一个平方求和，外面插值过了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 const int MOD = 1e9 + 7;
 LL mpow(LL x, LL n) {
-	x %= MOD;
-	LL res = 1;
-	while (n) {
-		if (n & 1) res = res * x % MOD;
-		n >>= 1;
-		x = x * x % MOD;
-	}
-	return res;
+    x %= MOD;
+    LL res = 1;
+    while (n) {
+        if (n & 1) res = res * x % MOD;
+        n >>= 1;
+        x = x * x % MOD;
+    }
+    return res;
 }
 typedef vector<LL> poly;
 LL prediv[10][10], L[10], R[10];
 LL resample(vector<LL> a, LL x) {
-	int n = (int) a.size() - 1;
-	if (x <= n) return a[x];
-	LL res = 0;
-	L[0] = 1;
-	x %= MOD;
-	for (int i = 1; i <= n + 1; ++ i) L[i] = L[i - 1] * (MOD + x - (i - 1)) % MOD;
-	R[n + 1] = 1;
-	for (int i = n; i >= 0; -- i) R[i] = R[i + 1] * (MOD + x - i) % MOD;
-	for (int i = 0; i <= n; ++ i) {
-		LL tmp = a[i];
-		tmp = tmp * L[i] % MOD * R[i + 1] % MOD * prediv[n][i] % MOD;
-		//for (int j = 0; j <= n; ++ j) if (i != j) tmp = tmp * (MOD + x % MOD - j) % MOD * mpow((MOD + i - j) % MOD, MOD - 2) % MOD;
-		(res += tmp) %= MOD;
-	}
-	return res;
+    int n = (int) a.size() - 1;
+    if (x <= n) return a[x];
+    LL res = 0;
+    L[0] = 1;
+    x %= MOD;
+    for (int i = 1; i <= n + 1; ++ i) L[i] = L[i - 1] * (MOD + x - (i - 1)) % MOD;
+    R[n + 1] = 1;
+    for (int i = n; i >= 0; -- i) R[i] = R[i + 1] * (MOD + x - i) % MOD;
+    for (int i = 0; i <= n; ++ i) {
+        LL tmp = a[i];
+        tmp = tmp * L[i] % MOD * R[i + 1] % MOD * prediv[n][i] % MOD;
+        //for (int j = 0; j <= n; ++ j) if (i != j) tmp = tmp * (MOD + x % MOD - j) % MOD * mpow((MOD + i - j) % MOD, MOD - 2) % MOD;
+        (res += tmp) %= MOD;
+    }
+    return res;
 }
 LL R6;
 LL calc(LL x, LL m) {
-	/*LL res = 0;
-	for (int i = 0; i <= x; ++ i) {
-		res += m * i - i * i + i;
-	}
-	return res;*/
-	x %= MOD;
-	return ((MOD - 2) * x % MOD * x % MOD * x % MOD + (3 * m % MOD) * x % MOD * x % MOD + (3 * m % MOD + 2) * x % MOD) % MOD * R6 % MOD;
+    /*LL res = 0;
+    for (int i = 0; i <= x; ++ i) {
+        res += m * i - i * i + i;
+    }
+    return res;*/
+    x %= MOD;
+    return ((MOD - 2) * x % MOD * x % MOD * x % MOD + (3 * m % MOD) * x % MOD * x % MOD + (3 * m % MOD + 2) * x % MOD) % MOD * R6 % MOD;
 }
 int main() {
-	R6 = mpow(6, MOD - 2);
-	for (int n = 0; n < 10; ++ n) {
-		for (int i = 0; i <= n; ++ i) {
-			LL &tmp = prediv[n][i] = 1;
-			for (int j = 0; j <= n; ++ j) if (i != j) tmp = tmp * mpow((MOD + i - j) % MOD, MOD - 2) % MOD;
-		}
-	}
-	LL m;
-	cin >> m;
-	LL Y = 1e6 + 5, ans = 0; LL tmptmp = MOD + calc(m, m);
-	for (LL x = 0; x * x <= m; ++ x) {
-		while (x * x + Y * Y > m) Y --;
-		LL pre = 0;
-		vector<LL> aa;
-		for (LL y = 0; y <= Y; ++ y) {
-			LL tmp = 0;
-			/*vector<LL> bb; LL i;
-			for (i = x * x + y * y; i <= m; ++ i) {
-				(tmp += (m - i + 1) % MOD * (i % MOD) % MOD) %= MOD;
-				bb.push_back(tmp);
-				if ((int) bb.size() >= 4) break;
-			}
-			tmp = resample(bb, m - (x * x + y * y));*/
-			tmp = tmptmp - calc(x * x + y * y - 1, m);
-			tmp = tmp * (y ? 2 : 1) % MOD;
-			(pre += tmp) %= MOD;
-			aa.push_back(pre);
-			if ((int) aa.size() >= 8) break;
-		}
-		LL tmp = resample(aa, Y);
-		tmp = tmp * (x ? 2 : 1) % MOD;
-		(ans += tmp) %= MOD;
-	}
-	printf("%lld\n", ans);
+    R6 = mpow(6, MOD - 2);
+    for (int n = 0; n < 10; ++ n) {
+        for (int i = 0; i <= n; ++ i) {
+            LL &tmp = prediv[n][i] = 1;
+            for (int j = 0; j <= n; ++ j) if (i != j) tmp = tmp * mpow((MOD + i - j) % MOD, MOD - 2) % MOD;
+        }
+    }
+    LL m;
+    cin >> m;
+    LL Y = 1e6 + 5, ans = 0; LL tmptmp = MOD + calc(m, m);
+    for (LL x = 0; x * x <= m; ++ x) {
+        while (x * x + Y * Y > m) Y --;
+        LL pre = 0;
+        vector<LL> aa;
+        for (LL y = 0; y <= Y; ++ y) {
+            LL tmp = 0;
+            /*vector<LL> bb; LL i;
+            for (i = x * x + y * y; i <= m; ++ i) {
+                (tmp += (m - i + 1) % MOD * (i % MOD) % MOD) %= MOD;
+                bb.push_back(tmp);
+                if ((int) bb.size() >= 4) break;
+            }
+            tmp = resample(bb, m - (x * x + y * y));*/
+            tmp = tmptmp - calc(x * x + y * y - 1, m);
+            tmp = tmp * (y ? 2 : 1) % MOD;
+            (pre += tmp) %= MOD;
+            aa.push_back(pre);
+            if ((int) aa.size() >= 8) break;
+        }
+        LL tmp = resample(aa, Y);
+        tmp = tmp * (x ? 2 : 1) % MOD;
+        (ans += tmp) %= MOD;
+    }
+    printf("%lld\n", ans);
 }
-~~~
+```
 
-## C. A Colourful Prospect
+C. A Colourful Prospect
+-----------------------
 
 欧拉公式：$E-V+C+1=A$，$E$边数，$V$点数，$C$联通块数，$A$区域数。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5;
 struct P {
-	double x, y;
-	P() {}
-	P(int x, int y) : x(x), y(y) {}
-	P(double x, double y) : x(x), y(y) {}
-	double len() const { return sqrt(x * x + y * y); }
-	P zoom(double k) const {
-		double L = len();
-		return P(k / L * x, k / L * y);
-	}
-	P rev() const {
-		return P(-y, x);
-	}
+    double x, y;
+    P() {}
+    P(int x, int y) : x(x), y(y) {}
+    P(double x, double y) : x(x), y(y) {}
+    double len() const { return sqrt(x * x + y * y); }
+    P zoom(double k) const {
+        double L = len();
+        return P(k / L * x, k / L * y);
+    }
+    P rev() const {
+        return P(-y, x);
+    }
 };
 P operator - (const P &a, const P &b) {
-	return P(a.x - b.x, a.y - b.y);
+    return P(a.x - b.x, a.y - b.y);
 }
 P operator + (const P &a, const P &b) {
-	return P(a.x + b.x, a.y + b.y);
+    return P(a.x + b.x, a.y + b.y);
 }
 P operator * (double k, const P &a) {
-	return P(a.x * k, a.y * k);
+    return P(a.x * k, a.y * k);
 }
 struct Circle {
-	P o;
-	double r;
-	Circle() {}
-	Circle(P o, double r) : o(o), r(r) {}
+    P o;
+    double r;
+    Circle() {}
+    Circle(P o, double r) : o(o), r(r) {}
 };
 const double eps = 1e-8;
 int sign(double x) {
-	return (x > eps) - (x < -eps);
+    return (x > eps) - (x < -eps);
 }
 using D = double;
 /////
 bool isCC(Circle a, Circle b, P &p1, P &p2) { 
-	D s1 = (a.o - b.o).len();
-	if (sign(s1 - a.r - b.r) > 0 || sign(s1 - abs(a.r - b.r)) < 0) return false;
-	D s2 = (a.r * a.r - b.r * b.r) / s1;
-	D aa = (s1 + s2) * 0.5, bb = (s1 - s2) * 0.5;
-	P o = aa / (aa + bb) * (b.o - a.o) + a.o;
-	P delta = sqrt(max(0., a.r * a.r - aa * aa)) * (b.o - a.o).zoom(1).rev();
-	p1 = o + delta, p2 = o - delta;
-	return true;
+    D s1 = (a.o - b.o).len();
+    if (sign(s1 - a.r - b.r) > 0 || sign(s1 - abs(a.r - b.r)) < 0) return false;
+    D s2 = (a.r * a.r - b.r * b.r) / s1;
+    D aa = (s1 + s2) * 0.5, bb = (s1 - s2) * 0.5;
+    P o = aa / (aa + bb) * (b.o - a.o) + a.o;
+    P delta = sqrt(max(0., a.r * a.r - aa * aa)) * (b.o - a.o).zoom(1).rev();
+    p1 = o + delta, p2 = o - delta;
+    return true;
 }
 /////
 Circle c[N];
 int countPoint(vector<P> all) {
-	int ans = 0;
-	for (int j = 0; j < (int) all.size(); ++ j) {
-		bool gg = 0;
-		for (int i = 0; i < j; ++ i) {
-			if (sign(all[j].x - all[i].x) == 0 && sign(all[j].y - all[i].y) == 0) {
-				gg = 1;
-			}
-		}
-		if (!gg) ans ++;
-	}
-	return ans;
+    int ans = 0;
+    for (int j = 0; j < (int) all.size(); ++ j) {
+        bool gg = 0;
+        for (int i = 0; i < j; ++ i) {
+            if (sign(all[j].x - all[i].x) == 0 && sign(all[j].y - all[i].y) == 0) {
+                gg = 1;
+            }
+        }
+        if (!gg) ans ++;
+    }
+    return ans;
 }
 int main() {
-	int n;
-	scanf("%d", &n);
-	for (int i = 0; i < n; ++ i) {
-		int x, y, r;
-		scanf("%d%d%d", &x , &y, &r);
-		c[i] = Circle(P(x, y), r);
-	}
-	vector<P> all;
-	int E = 0, C = 1;
-	for (int i = 0; i < n; ++ i) {
-		vector<P> tmp;
-		for (int j = 0; j < n; ++ j) if (i != j) {
-			P p1, p2;
-			if (isCC(c[i], c[j], p1, p2)) {
-				tmp.push_back(p1);
-				tmp.push_back(p2);
-			}
-		}
-		if (tmp.empty()) C ++;
-		E += countPoint(tmp);
-		for (P p : tmp) all.push_back(p);
-	}
-	if (C > n) C --;
-	int V = countPoint(all);
-	int ans = E - V + C + 1;
-	printf("%d\n", ans);
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++ i) {
+        int x, y, r;
+        scanf("%d%d%d", &x , &y, &r);
+        c[i] = Circle(P(x, y), r);
+    }
+    vector<P> all;
+    int E = 0, C = 1;
+    for (int i = 0; i < n; ++ i) {
+        vector<P> tmp;
+        for (int j = 0; j < n; ++ j) if (i != j) {
+            P p1, p2;
+            if (isCC(c[i], c[j], p1, p2)) {
+                tmp.push_back(p1);
+                tmp.push_back(p2);
+            }
+        }
+        if (tmp.empty()) C ++;
+        E += countPoint(tmp);
+        for (P p : tmp) all.push_back(p);
+    }
+    if (C > n) C --;
+    int V = countPoint(all);
+    int ans = E - V + C + 1;
+    printf("%d\n", ans);
 }
-~~~
+```
 
-# SRM 726
+SRM 726
+=======
 
-## 1000
+1000
+----
 
 左任务右时间建匹配图。
 
-首先因为某些原因（据说是拟阵，没有研究过）可以从大到小贪心能放就放。然后就是匈牙利的过程。用set维护没有visit的点，每次for一段区间就是不断lower_bound找下一个的过程。这样是$O(NT\log T)$的。注意到vis数组只有在匹配数变化时才需要清空，就变成$O((N+T^2)\log T)$了。
+首先因为某些原因（据说是拟阵，没有研究过）可以从大到小贪心能放就放。然后就是匈牙利的过程。用set维护没有visit的点，每次for一段区间就是不断lower\_bound找下一个的过程。这样是$O(NT\log T)$的。注意到vis数组只有在匹配数变化时才需要清空，就变成$O((N+T^2)\log T)$了。
 
 类似的题目感觉萎靡好像教过我，一时间忘记了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 2e6 + 5;
 int st[N], ed[N], cost[N], x[N * 3], match[N];
 set<int> unvis;
 bool dfs(int x) {
-	int L = st[x], R = ed[x];
-	while (L <= R) {
-		int i = *unvis.lower_bound(L);
-		if (i <= R) {
-			unvis.erase(i);
-			if (match[i] == -1 || dfs(match[i])) {
-				match[i] = x;
-				return 1;
-			}
-		}
-		L = i + 1;
-	}
-	return 0;
+    int L = st[x], R = ed[x];
+    while (L <= R) {
+        int i = *unvis.lower_bound(L);
+        if (i <= R) {
+            unvis.erase(i);
+            if (match[i] == -1 || dfs(match[i])) {
+                match[i] = x;
+                return 1;
+            }
+        }
+        L = i + 1;
+    }
+    return 0;
 }
 class HeroicSchedule {
-	public:
-	int getmax(int n, int A, int B, int C, int modS, int modL, int modC) {
-		x[0] = A;
-		for (int i = 1; i <= n * 3 - 1; ++ i) {
-			x[i] = (1LL * x[i - 1] * B + C) % (int) (1e9 + 7);
-		}
-		vector<int> p;
-		int T = 0;
-		for (int i = 0; i < n; ++ i) {
-			st[i] = x[i * 3] % modS;
-			ed[i] = st[i] + x[i * 3 + 1] % modL;
-			T = max(T, ed[i] + 1);
-			cost[i] = x[i * 3 + 2] % modC;
-			p.push_back(i);
-		}
-		sort(p.begin(), p.end(), [&] (int i, int j) {return cost[i] > cost[j];});
-		unvis.clear();
-		for (int i = 0; i <= T; ++ i) {
-			unvis.insert(i);
-			match[i] = -1;
-		}
-		int ans = 0;
-		for (int i : p) {
-			if (dfs(i)) {
-				ans += cost[i];
-				unvis.clear();
-				for (int i = 0; i <= T; ++ i) unvis.insert(i);
-			}
-		}
-		return ans;
-	}
+    public:
+    int getmax(int n, int A, int B, int C, int modS, int modL, int modC) {
+        x[0] = A;
+        for (int i = 1; i <= n * 3 - 1; ++ i) {
+            x[i] = (1LL * x[i - 1] * B + C) % (int) (1e9 + 7);
+        }
+        vector<int> p;
+        int T = 0;
+        for (int i = 0; i < n; ++ i) {
+            st[i] = x[i * 3] % modS;
+            ed[i] = st[i] + x[i * 3 + 1] % modL;
+            T = max(T, ed[i] + 1);
+            cost[i] = x[i * 3 + 2] % modC;
+            p.push_back(i);
+        }
+        sort(p.begin(), p.end(), [&] (int i, int j) {return cost[i] > cost[j];});
+        unvis.clear();
+        for (int i = 0; i <= T; ++ i) {
+            unvis.insert(i);
+            match[i] = -1;
+        }
+        int ans = 0;
+        for (int i : p) {
+            if (dfs(i)) {
+                ans += cost[i];
+                unvis.clear();
+                for (int i = 0; i <= T; ++ i) unvis.insert(i);
+            }
+        }
+        return ans;
+    }
 };
-~~~
+```
 
-## 600
+600
+---
 
 一直考虑他有起点终点，从叶子往里面一圈一圈缩，发现答案其实挺固定的，没有发现缩完最后那个点是重心，就可以每个子树大小小于一半。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 55;
 vector<int> G[N];
 int sz[N], n, belong[N], dp[N];
 int size(int x, int f = 0) {
-	sz[x] = 1;
-	for (int u : G[x]) if (u != f) {
-		sz[x] += size(u, x);
-	}
-	return sz[x];
+    sz[x] = 1;
+    for (int u : G[x]) if (u != f) {
+        sz[x] += size(u, x);
+    }
+    return sz[x];
 }
 int centroid(int x, int f = 0) {
-	for (int u : G[x]) if (u != f) {
-		if (sz[u] * 2 >= n) return centroid(u, x);
-	}
-	return x;
+    for (int u : G[x]) if (u != f) {
+        if (sz[u] * 2 >= n) return centroid(u, x);
+    }
+    return x;
 }
 void dfs(int x, int f, vector<int> &a) {
-	dp[x] = dp[f] + 1;
-	for (int u : G[x]) if (u != f) {
-		dfs(u, x, a);
-	}
-	a.push_back(x);
+    dp[x] = dp[f] + 1;
+    for (int u : G[x]) if (u != f) {
+        dfs(u, x, a);
+    }
+    a.push_back(x);
 }
 class HeroVacation {
-	public:
-	vector<int> getPermutation(vector<int> p) {
-		int n = p.size() + 1; ::n = n;
-		for (int i = 0; i < n; ++ i) G[i].clear();
-		for (int i = 0; i < n - 1; ++ i) {
-			G[i + 1].push_back(p[i]);
-			G[p[i]].push_back(i + 1);
-		}
-		size(0);
-		int root = centroid(0);
-		vector<vector<int>> all;
-		dp[root] = 0;
-		for (int u : G[root]) {
-			vector<int> tmp;
-			dfs(u, root, tmp);
-			sort(tmp.begin(), tmp.end(), [&] (int i, int j) { return dp[i] < dp[j]; } );
-			all.push_back(tmp);
-		}
-		sort(all.begin(), all.end(), [&] (const vector<int> &a, const vector<int> &b) {return a.size() > b.size();});
-		vector<int> ans = {root};
-		belong[root] = -1;
-		for (auto x : all) for (int y : x) belong[y] = x.back();
-		int cnt = n - 1;
-		while (cnt --) {
-			for (auto &x : all) if (!x.empty()) {
-				if (belong[x.back()] != belong[ans.back()]) {
-					ans.push_back(x.back());
-					x.pop_back();
-					break;
-				}
-			}
-			sort(all.begin(), all.end(), [&] (const vector<int> &a, const vector<int> &b) {return a.size() > b.size();});
-		}
-		return ans;
-	}
+    public:
+    vector<int> getPermutation(vector<int> p) {
+        int n = p.size() + 1; ::n = n;
+        for (int i = 0; i < n; ++ i) G[i].clear();
+        for (int i = 0; i < n - 1; ++ i) {
+            G[i + 1].push_back(p[i]);
+            G[p[i]].push_back(i + 1);
+        }
+        size(0);
+        int root = centroid(0);
+        vector<vector<int>> all;
+        dp[root] = 0;
+        for (int u : G[root]) {
+            vector<int> tmp;
+            dfs(u, root, tmp);
+            sort(tmp.begin(), tmp.end(), [&] (int i, int j) { return dp[i] < dp[j]; } );
+            all.push_back(tmp);
+        }
+        sort(all.begin(), all.end(), [&] (const vector<int> &a, const vector<int> &b) {return a.size() > b.size();});
+        vector<int> ans = {root};
+        belong[root] = -1;
+        for (auto x : all) for (int y : x) belong[y] = x.back();
+        int cnt = n - 1;
+        while (cnt --) {
+            for (auto &x : all) if (!x.empty()) {
+                if (belong[x.back()] != belong[ans.back()]) {
+                    ans.push_back(x.back());
+                    x.pop_back();
+                    break;
+                }
+            }
+            sort(all.begin(), all.end(), [&] (const vector<int> &a, const vector<int> &b) {return a.size() > b.size();});
+        }
+        return ans;
+    }
 };
-~~~
+```
 
-# SRM 728
+SRM 728
+=======
 
-## 1000
+1000
+----
 
 打表发现，他说的这个就是所有偶置换。
 
@@ -786,308 +833,315 @@ class HeroVacation {
 
 一直在想环套树计数，同构之类的，没有想置换。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 55, MOD = 998244353;
 int C[N][N], F[N], R[N];
 int mpow(int x, int n) {
-	int res = 1;
-	while (n) {
-		if (n & 1) res = 1LL * res * x % MOD;
-		x = 1LL * x * x % MOD;
-		n >>= 1;
-	}
-	return res;
+    int res = 1;
+    while (n) {
+        if (n & 1) res = 1LL * res * x % MOD;
+        x = 1LL * x * x % MOD;
+        n >>= 1;
+    }
+    return res;
 }
 vector<int> a;
 int cnt[N], ans, n;
 void dfs(int remain, int low, int parity) {
-	if (remain == 0) {
-		if (parity) return;
-		int base = F[n];
-		for (int i : a) base = 1LL * base * R[i] % MOD * F[i - 1] % MOD;
-		for (int i = 0; i <= n; ++ i) base = 1LL * base * R[cnt[i]] % MOD;
-		for (int i : a) {
-			int tmp = 0;
-			for (int j : a) if (i % j == 0) tmp += j;
-			base = 1LL * base * tmp % MOD;
-		}
-		(ans += base) %= MOD;
-		return;
-	}
-	for (int i = low; i <= remain; ++ i) {
-		a.push_back(i);
-		cnt[i] ++;
-		dfs(remain - i, i, parity ^ ((i - 1) & 1));
-		cnt[i] --;
-		a.pop_back();
-	}
+    if (remain == 0) {
+        if (parity) return;
+        int base = F[n];
+        for (int i : a) base = 1LL * base * R[i] % MOD * F[i - 1] % MOD;
+        for (int i = 0; i <= n; ++ i) base = 1LL * base * R[cnt[i]] % MOD;
+        for (int i : a) {
+            int tmp = 0;
+            for (int j : a) if (i % j == 0) tmp += j;
+            base = 1LL * base * tmp % MOD;
+        }
+        (ans += base) %= MOD;
+        return;
+    }
+    for (int i = low; i <= remain; ++ i) {
+        a.push_back(i);
+        cnt[i] ++;
+        dfs(remain - i, i, parity ^ ((i - 1) & 1));
+        cnt[i] --;
+        a.pop_back();
+    }
 }
 class Trisomorphism {
-	public:
-	int maxSubset(int n) {
-		if (n == 1) return 1;
-		F[0] = 1;
-		for (int i = 1; i <= n; ++ i) F[i] = 1LL * i * F[i - 1] % MOD;
-		R[0] = 1;
-		for (int i = 1; i <= n; ++ i) R[i] = mpow(F[i], MOD - 2);
-		ans = 0;
-		::n = n;
-		dfs(n, 1, 0);
-		ans = 2LL * ans * R[n] % MOD;
-		return ans;
-	}
+    public:
+    int maxSubset(int n) {
+        if (n == 1) return 1;
+        F[0] = 1;
+        for (int i = 1; i <= n; ++ i) F[i] = 1LL * i * F[i - 1] % MOD;
+        R[0] = 1;
+        for (int i = 1; i <= n; ++ i) R[i] = mpow(F[i], MOD - 2);
+        ans = 0;
+        ::n = n;
+        dfs(n, 1, 0);
+        ans = 2LL * ans * R[n] % MOD;
+        return ans;
+    }
 };
-~~~
+```
 
-# Yandex 2018 Warm-up
+Yandex 2018 Warm-up
+===================
 
-## E. Backup
+E. Backup
+---------
 
 简单树形dp。当时可能太困了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
 vector<int> G[N];
 int dp[N][2], m, n, sz[N];
 void dfs(int x) {
-	vector<pair<int, int>> child;
-	sz[x] = 1;
-	int tmp = 0;
-	for (int u : G[x]) {
-		dfs(u);
-		sz[x] += sz[u];
-		tmp += dp[u][0];
-		child.push_back({sz[u] - dp[u][0], u});
-	}
-	sort(child.rbegin(), child.rend());
-	dp[x][0] = tmp;
-	int cho = min(m - 1, (int) child.size());
-	for (int i = 0; i < cho; ++ i) dp[x][0] += child[i].first;
-	dp[x][1] = 0;
-	for (int i = 0; i < (int) child.size(); ++ i) {
-		int delta, u = child[i].second;
-		if (i < cho) {
-			delta = dp[u][1] - sz[u];
-			if (cho < (int) child.size()) delta += child[cho].first;
-		}
-		else {
-			delta = dp[u][1] - dp[u][0];
-		}
-		dp[x][1] = max(dp[x][1], delta);
-	}
-	dp[x][1] += dp[x][0] + 1;
+    vector<pair<int, int>> child;
+    sz[x] = 1;
+    int tmp = 0;
+    for (int u : G[x]) {
+        dfs(u);
+        sz[x] += sz[u];
+        tmp += dp[u][0];
+        child.push_back({sz[u] - dp[u][0], u});
+    }
+    sort(child.rbegin(), child.rend());
+    dp[x][0] = tmp;
+    int cho = min(m - 1, (int) child.size());
+    for (int i = 0; i < cho; ++ i) dp[x][0] += child[i].first;
+    dp[x][1] = 0;
+    for (int i = 0; i < (int) child.size(); ++ i) {
+        int delta, u = child[i].second;
+        if (i < cho) {
+            delta = dp[u][1] - sz[u];
+            if (cho < (int) child.size()) delta += child[cho].first;
+        }
+        else {
+            delta = dp[u][1] - dp[u][0];
+        }
+        dp[x][1] = max(dp[x][1], delta);
+    }
+    dp[x][1] += dp[x][0] + 1;
 }
 int main() {
-	int T;
-	scanf("%d", &T);
-	while (T --) {
-		scanf("%d%d", &n, &m); m --;
-		for (int i = 1; i < n; ++ i) {
-			int p;
-			scanf("%d", &p);
-			G[p].push_back(i);
-		}
-		dfs(n);
-		printf("%d\n", dp[n][1] - 1);
-		for (int i = 1; i <= n; ++ i) {
-			vector<int> e;
-			G[i].swap(e);
-		}
-	}
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        scanf("%d%d", &n, &m); m --;
+        for (int i = 1; i < n; ++ i) {
+            int p;
+            scanf("%d", &p);
+            G[p].push_back(i);
+        }
+        dfs(n);
+        printf("%d\n", dp[n][1] - 1);
+        for (int i = 1; i <= n; ++ i) {
+            vector<int> e;
+            G[i].swap(e);
+        }
+    }
 }
-~~~
+```
 
-## F. Lying Processors
+F. Lying Processors
+-------------------
 
 n==1要特判，是在下菜了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 14;
 int dp[105][10][1 << N][2];
 void upd(int &x, int y) {
-	if (y == -1) return;
-	if (x == -1) x = y;
-	x = min(x, y);
+    if (y == -1) return;
+    if (x == -1) x = y;
+    x = min(x, y);
 }
 int dp2[105][2][2];
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	if (n == 1) {
-		if (m == 1) return 0 * puts("1");
-		memset(dp2, -1, sizeof(dp2));
-		dp2[2][1][1] = 2; dp2[2][1][0] = 1;
-		for (int i = 3; i <= m; ++ i) {
-			for (int las1 = 0; las1 <= 1; ++ las1) {
-				for (int las2 = 0; las2 <= 1; ++ las2) {
-					if (dp2[i - 1][las1][las2] == -1) continue;
-					for (int cur = 0; cur <= 1; ++ cur) {
-						bool has0 = (las1 == 0 || cur == 0);
-						bool has1 = (las1 == 1 || cur == 1);
-						if ((has0 && has1) ^ las2) {
-							upd(dp2[i][las2][cur], dp2[i - 1][las1][las2] + cur);
-						}
-					}
-				}
-			}
-		}
-		int ans = -1;
-		upd(ans, dp2[m][0][1]);
-		upd(ans, dp2[m][1][1]);
-		printf("%d\n", ans);
-		return 0;
-	}
-	memset(dp, -1, sizeof(dp));
-	for (int i = 0; i < (1 << n); ++ i) {
-		int j = 0;
-		for (int k = 0; k < n; ++ k) {
-			bool both = 0;
-			if (k > 0 && k < n - 1)
-			if ((i >> (k - 1) & 1) != (i >> (k + 1) & 1)) both = 1;
-			if (both) j += (1 << k);
-		}
-		dp[1][n][(i << n) + j][0] = __builtin_popcount(i);
-	}
-	for (int i = 2; i <= m; ++ i) {
-		for (int mask = 0; mask < (1 << n + n); ++ mask) {
-			dp[i][0][mask][0] = dp[i - 1][n][mask][0];
-			dp[i][0][mask][1] = dp[i - 1][n][mask][1];
-		}
-		for (int j = 1; j <= n; ++ j) {
-			for (int las = 0; las <= 1; ++ las)
-			for (int mask = 0; mask < (1 << n + n); ++ mask) {
-				if (dp[i][j - 1][mask][las] == -1) continue;
-				int mask0 = mask >> n, mask1 = mask - (mask0 << n);
-				for (int cur = 0; cur <= 1; ++ cur) {
-					bool has0 = 0, has1 = 0;
-					if (j > 1) (las ? has1 : has0) = 1;
-					if (j < n) ((mask0 >> 1 & 1) ? has1 : has0) = 1;
-					if (mask1 & 1) has0 = has1 = 1;
-					(cur ? has1 : has0) = 1;
-					bool both = has0 && has1;
-					if (!(both ^ (mask0 & 1))) continue;
-					int nmask0 = (mask0 >> 1) + (cur << n - 1);
-					int nlas = (mask0 & 1);
-					int nmask1 = mask1;
-					if (j > 1) {
-						has0 = 0, has1 = 0;
-						(las ? has1 : has0) = 1;
-						(cur ? has1 : has0) = 1;
-						if (j > 2) ((mask0 >> n - 2 & 1) ? has1 : has0) = 1;
-						if (has0 && has1) nmask1 |= 1 << (n - 1);
-					}
-					nmask1 >>= 1;
-					has0 = 0, has1 = 0;
-					((mask0 & 1) ? has1 : has0) = 1;
-					if (j > 1) ((mask0 >> n - 1 & 1) ? has1 : has0) = 1;
-					if (has0 && has1) nmask1 |= 1 << (n - 1);
-					upd(dp[i][j][(nmask0 << n) + nmask1][nlas], dp[i][j - 1][mask][las] + cur);
-				}
-			}
-		}
-	}
-	int ans = -1;
-	for (int mask = 0; mask < (1 << n); ++ mask) {
-		upd(ans, dp[m][n][(mask << n) + (((1 << n) - 1) ^ mask)][0]);
-		upd(ans, dp[m][n][(mask << n) + (((1 << n) - 1) ^ mask)][1]);
-	}
-	printf("%d\n", ans);
+    int n, m;
+    scanf("%d%d", &n, &m);
+    if (n == 1) {
+        if (m == 1) return 0 * puts("1");
+        memset(dp2, -1, sizeof(dp2));
+        dp2[2][1][1] = 2; dp2[2][1][0] = 1;
+        for (int i = 3; i <= m; ++ i) {
+            for (int las1 = 0; las1 <= 1; ++ las1) {
+                for (int las2 = 0; las2 <= 1; ++ las2) {
+                    if (dp2[i - 1][las1][las2] == -1) continue;
+                    for (int cur = 0; cur <= 1; ++ cur) {
+                        bool has0 = (las1 == 0 || cur == 0);
+                        bool has1 = (las1 == 1 || cur == 1);
+                        if ((has0 && has1) ^ las2) {
+                            upd(dp2[i][las2][cur], dp2[i - 1][las1][las2] + cur);
+                        }
+                    }
+                }
+            }
+        }
+        int ans = -1;
+        upd(ans, dp2[m][0][1]);
+        upd(ans, dp2[m][1][1]);
+        printf("%d\n", ans);
+        return 0;
+    }
+    memset(dp, -1, sizeof(dp));
+    for (int i = 0; i < (1 << n); ++ i) {
+        int j = 0;
+        for (int k = 0; k < n; ++ k) {
+            bool both = 0;
+            if (k > 0 && k < n - 1)
+            if ((i >> (k - 1) & 1) != (i >> (k + 1) & 1)) both = 1;
+            if (both) j += (1 << k);
+        }
+        dp[1][n][(i << n) + j][0] = __builtin_popcount(i);
+    }
+    for (int i = 2; i <= m; ++ i) {
+        for (int mask = 0; mask < (1 << n + n); ++ mask) {
+            dp[i][0][mask][0] = dp[i - 1][n][mask][0];
+            dp[i][0][mask][1] = dp[i - 1][n][mask][1];
+        }
+        for (int j = 1; j <= n; ++ j) {
+            for (int las = 0; las <= 1; ++ las)
+            for (int mask = 0; mask < (1 << n + n); ++ mask) {
+                if (dp[i][j - 1][mask][las] == -1) continue;
+                int mask0 = mask >> n, mask1 = mask - (mask0 << n);
+                for (int cur = 0; cur <= 1; ++ cur) {
+                    bool has0 = 0, has1 = 0;
+                    if (j > 1) (las ? has1 : has0) = 1;
+                    if (j < n) ((mask0 >> 1 & 1) ? has1 : has0) = 1;
+                    if (mask1 & 1) has0 = has1 = 1;
+                    (cur ? has1 : has0) = 1;
+                    bool both = has0 && has1;
+                    if (!(both ^ (mask0 & 1))) continue;
+                    int nmask0 = (mask0 >> 1) + (cur << n - 1);
+                    int nlas = (mask0 & 1);
+                    int nmask1 = mask1;
+                    if (j > 1) {
+                        has0 = 0, has1 = 0;
+                        (las ? has1 : has0) = 1;
+                        (cur ? has1 : has0) = 1;
+                        if (j > 2) ((mask0 >> n - 2 & 1) ? has1 : has0) = 1;
+                        if (has0 && has1) nmask1 |= 1 << (n - 1);
+                    }
+                    nmask1 >>= 1;
+                    has0 = 0, has1 = 0;
+                    ((mask0 & 1) ? has1 : has0) = 1;
+                    if (j > 1) ((mask0 >> n - 1 & 1) ? has1 : has0) = 1;
+                    if (has0 && has1) nmask1 |= 1 << (n - 1);
+                    upd(dp[i][j][(nmask0 << n) + nmask1][nlas], dp[i][j - 1][mask][las] + cur);
+                }
+            }
+        }
+    }
+    int ans = -1;
+    for (int mask = 0; mask < (1 << n); ++ mask) {
+        upd(ans, dp[m][n][(mask << n) + (((1 << n) - 1) ^ mask)][0]);
+        upd(ans, dp[m][n][(mask << n) + (((1 << n) - 1) ^ mask)][1]);
+    }
+    printf("%d\n", ans);
 }
-~~~
+```
 
-# SRM 729
+SRM 729
+=======
 
-## 800
+800
+---
 
 异或上去大于目标之后直接退出，fst了。
 
 应该最后再来一遍消到最小，加5行就过了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 class XorAndLIS {
-	public :
-	int maximalLength(vector<LL> a) {
-		vector<pair<LL, int>> b;
-		vector<LL> dp;
-		dp.push_back(-1);
-		for (LL x : a) {
-			for (int i = (int) dp.size() - 1; i >= 0; -- i) {
-				LL las = dp[i], nex = x;
-				if (las == -1) {
-					for (auto y : b) {
-						if (nex >> y.second & 1) nex ^= y.first;
-					}
-				}
-				else {
-					nex = -1;
-					if (x > las) nex = x;
-					LL tmp = x;
-					for (int j = 0; j < (int) b.size(); ++ j) {
-						auto y = b[j];
-						int nex_pos = (j == (int) b.size() - 1 ? 0 : b[j + 1].second + 1);
-						if ((tmp ^ y.first) > las) {
-							if (nex == -1) nex = tmp ^ y.first;
-							nex = min(nex, tmp ^ y.first);
-						}
-						if (tmp > las) {
-							if (nex == -1) nex = tmp;
-							nex = min(nex, tmp);
-						}
-						LL nexnex = -1;
-						if (((tmp ^ y.first) >> nex_pos) >= (las >> nex_pos)) if (nexnex == -1 || nexnex > (tmp ^ y.first)) nexnex = tmp ^ y.first;
-						if ((tmp >> nex_pos) >= (las >> nex_pos)) if (nexnex == -1 || nexnex > tmp) nexnex = tmp;
-						tmp = nexnex;
-						if (tmp == -1) break;
-					}
-					if (tmp > las) {
-						if (nex == -1) nex = tmp;
-						nex = min(nex, tmp);
-					}
-					if (nex != -1) {
-						for (auto y : b) {
-							if (((nex ^ y.first) > las) && (nex >> y.second & 1)) nex ^= y.first;
-						}
-					}
-				}
-				if (nex > las) {
-					if (i == (int) dp.size() - 1) {
-						dp.push_back(nex);
-					}
-					else {
-						dp[i + 1] = min(dp[i + 1], nex);
-					}
-				}
-			}
-			for (auto y : b) {
-				if (x >> y.second & 1) x ^= y.first;
-			}
-			if (x) {
-				int piv = 62;
-				while ((x >> piv & 1) == 0) piv --;
-				for (auto &y : b) if (y.first >> piv & 1) y.first ^= x;
-				b.push_back({x, piv});
-				sort(b.rbegin(), b.rend());
-			}
-			//for (LL u : dp) printf("%lld ", u); puts("");
-		}
-		return (int) dp.size() - 1;
-	}
+    public :
+    int maximalLength(vector<LL> a) {
+        vector<pair<LL, int>> b;
+        vector<LL> dp;
+        dp.push_back(-1);
+        for (LL x : a) {
+            for (int i = (int) dp.size() - 1; i >= 0; -- i) {
+                LL las = dp[i], nex = x;
+                if (las == -1) {
+                    for (auto y : b) {
+                        if (nex >> y.second & 1) nex ^= y.first;
+                    }
+                }
+                else {
+                    nex = -1;
+                    if (x > las) nex = x;
+                    LL tmp = x;
+                    for (int j = 0; j < (int) b.size(); ++ j) {
+                        auto y = b[j];
+                        int nex_pos = (j == (int) b.size() - 1 ? 0 : b[j + 1].second + 1);
+                        if ((tmp ^ y.first) > las) {
+                            if (nex == -1) nex = tmp ^ y.first;
+                            nex = min(nex, tmp ^ y.first);
+                        }
+                        if (tmp > las) {
+                            if (nex == -1) nex = tmp;
+                            nex = min(nex, tmp);
+                        }
+                        LL nexnex = -1;
+                        if (((tmp ^ y.first) >> nex_pos) >= (las >> nex_pos)) if (nexnex == -1 || nexnex > (tmp ^ y.first)) nexnex = tmp ^ y.first;
+                        if ((tmp >> nex_pos) >= (las >> nex_pos)) if (nexnex == -1 || nexnex > tmp) nexnex = tmp;
+                        tmp = nexnex;
+                        if (tmp == -1) break;
+                    }
+                    if (tmp > las) {
+                        if (nex == -1) nex = tmp;
+                        nex = min(nex, tmp);
+                    }
+                    if (nex != -1) {
+                        for (auto y : b) {
+                            if (((nex ^ y.first) > las) && (nex >> y.second & 1)) nex ^= y.first;
+                        }
+                    }
+                }
+                if (nex > las) {
+                    if (i == (int) dp.size() - 1) {
+                        dp.push_back(nex);
+                    }
+                    else {
+                        dp[i + 1] = min(dp[i + 1], nex);
+                    }
+                }
+            }
+            for (auto y : b) {
+                if (x >> y.second & 1) x ^= y.first;
+            }
+            if (x) {
+                int piv = 62;
+                while ((x >> piv & 1) == 0) piv --;
+                for (auto &y : b) if (y.first >> piv & 1) y.first ^= x;
+                b.push_back({x, piv});
+                sort(b.rbegin(), b.rend());
+            }
+            //for (LL u : dp) printf("%lld ", u); puts("");
+        }
+        return (int) dp.size() - 1;
+    }
 };
-~~~
-# PE 619
+```
+
+PE 619
+======
 
 直接暴力线性基跑了12min。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 2e6 + 5, MOD = 1e9 + 7;
@@ -1097,185 +1151,187 @@ typedef unordered_set<int> vi;
 vector<pair<int, vi>> major;
 vi used[N];
 vi calc(int n) {
-	vi a;
-	for (int p : P) {
-		if (p * p > n) break;
-		int cnt = 0;
-		while (n % p == 0) {
-			n /= p;
-			cnt ++;
-		}
-		if (cnt & 1) a.insert(p);
-	}
-	if (n > 1) a.insert(n);
-	return a;
+    vi a;
+    for (int p : P) {
+        if (p * p > n) break;
+        int cnt = 0;
+        while (n % p == 0) {
+            n /= p;
+            cnt ++;
+        }
+        if (cnt & 1) a.insert(p);
+    }
+    if (n > 1) a.insert(n);
+    return a;
 }
 void work(vi &x, const vi &y) {
-	for (int i : y) if (x.count(i)) x.erase(i); else x.insert(i);
+    for (int i : y) if (x.count(i)) x.erase(i); else x.insert(i);
 }
 int main() {
-	isp.set();
-	for (int i = 2; i < N; ++ i) {
-		if (isp[i]) P.push_back(i);
-		for (int j : P) {
-			if (j * i >= N) break;
-			isp[j * i] = 0;
-			if (i % j == 0) break;
-		}
-	}
-	int L, R;
-	scanf("%d%d", &L, &R);
-	int ans = 1;
-	for (int n = L; n <= R; ++ n) {
-		if (n % 10000 == 0) printf("working %d\n", n);
-		vi tmp = calc(n);
-		for (auto i : major) {
-			if (tmp.count(i.first)) work(tmp, i.second);
-		}
-		if (tmp.empty()) ans = ans * 2LL % MOD; else {
-			int x = *tmp.begin();
-			vi backup = used[x];
-			for (int j : backup) {
-				auto &i = major[j];
-				assert(i.second.count(x));
-				for (int y : tmp) {
-					if (i.second.count(y)) {
-						i.second.erase(y);
-						used[y].erase(j);
-					}
-					else {
-						i.second.insert(y);
-						used[y].insert(j);
-					}
-				}
-			}
-			major.push_back({x, tmp});
-			for (int y : tmp) {
-				used[y].insert((int) major.size() - 1);
-			}
-		}
-	}
-	(ans += MOD - 1) %= MOD;
-	printf("%d\n", ans);
+    isp.set();
+    for (int i = 2; i < N; ++ i) {
+        if (isp[i]) P.push_back(i);
+        for (int j : P) {
+            if (j * i >= N) break;
+            isp[j * i] = 0;
+            if (i % j == 0) break;
+        }
+    }
+    int L, R;
+    scanf("%d%d", &L, &R);
+    int ans = 1;
+    for (int n = L; n <= R; ++ n) {
+        if (n % 10000 == 0) printf("working %d\n", n);
+        vi tmp = calc(n);
+        for (auto i : major) {
+            if (tmp.count(i.first)) work(tmp, i.second);
+        }
+        if (tmp.empty()) ans = ans * 2LL % MOD; else {
+            int x = *tmp.begin();
+            vi backup = used[x];
+            for (int j : backup) {
+                auto &i = major[j];
+                assert(i.second.count(x));
+                for (int y : tmp) {
+                    if (i.second.count(y)) {
+                        i.second.erase(y);
+                        used[y].erase(j);
+                    }
+                    else {
+                        i.second.insert(y);
+                        used[y].insert(j);
+                    }
+                }
+            }
+            major.push_back({x, tmp});
+            for (int y : tmp) {
+                used[y].insert((int) major.size() - 1);
+            }
+        }
+    }
+    (ans += MOD - 1) %= MOD;
+    printf("%d\n", ans);
 }
-~~~
+```
 
-# PE 611
+PE 611
+======
 
 欧拉曾经发现：平方数拆分的方案数等于模4余1的约数个数减去模4余3的约数个数。
 
 然后题目要求这个拆分数模2的前缀和（和不模2），然后这个看上去就挺积性的，魔改一下板子就好了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 
 //typedef vector<LL> poly;
 struct poly {
-	LL a[3];
-	poly() {}
-	poly(LL x, LL y, LL z) {a[0] = x; a[1] = y; a[2] = z;}
-	LL& operator [] (int x) { return a[x]; }
-	LL operator [] (int x) const { return a[x]; }
-	int size() const { return 3; }
+    LL a[3];
+    poly() {}
+    poly(LL x, LL y, LL z) {a[0] = x; a[1] = y; a[2] = z;}
+    LL& operator [] (int x) { return a[x]; }
+    LL operator [] (int x) const { return a[x]; }
+    int size() const { return 3; }
 };
 poly operator * (poly a, int p) {
-	if (p == 2) a.a[1] = a.a[2] = 0;
-	if (p % 4 == 3) swap(a.a[1], a.a[2]);
-	return a;
+    if (p == 2) a.a[1] = a.a[2] = 0;
+    if (p % 4 == 3) swap(a.a[1], a.a[2]);
+    return a;
 }
 poly operator - (const poly &a, const poly &b) {
-	poly c;
-	for (int i = 0; i < (int) a.size(); ++ i) {
-		c[i] = (a[i] - b[i]);
-	}
-	return c;
+    poly c;
+    for (int i = 0; i < (int) a.size(); ++ i) {
+        c[i] = (a[i] - b[i]);
+    }
+    return c;
 }
 poly fp(LL p) { return poly(1, p % 4 == 1, p % 4 == 3); }
 poly sum_fp(LL l, LL r) { return poly(r - l + 1, (r + 3) / 4 - (l - 1 + 3) / 4, (r + 1) / 4 - (l - 1 + 1) / 4); }
 LL fpk(LL p, LL k) {
-	if (p % 4 == 1) {
-		return k + 1;
-	}
-	else if (p % 4 == 3) {
-		return k % 2 == 0 ? 1 : 0;
-	}
-	return 1;
+    if (p % 4 == 1) {
+        return k + 1;
+    }
+    else if (p % 4 == 3) {
+        return k % 2 == 0 ? 1 : 0;
+    }
+    return 1;
 }
 LL Value(poly p) {
-	return p.a[1];
+    return p.a[1];
 }
 LL n; int m;
 vector<poly> A, B;
 vector<LL> P;
 LL calc(LL w, int id, LL f) {
-	LL T = w > m ? Value(B[n / w]) : Value(A[w]);
-	if (id) T -= Value(A[P[id - 1]]);
-	LL ret = T * (f % 2);
-	for (int i = id; i < P.size(); ++ i) {
-		int p = P[i];
-		LL q = (LL) p * p;
-		if (q > w) break;
-		ret += calc(w / p, i + 1, f * fpk(p, 1));
-		int e = 1;
-		while (1) {
-			++ e;
-			LL f2 = f * fpk(p, e);
-			ret += (f2 / 2) % 2;
-			LL qq = q * p;
-			if (qq <= w) {
-				ret += calc(w / q, i + 1, f2);
-				q = qq;
-			}
-			else break;
-		}
-	}
-	return ret;
+    LL T = w > m ? Value(B[n / w]) : Value(A[w]);
+    if (id) T -= Value(A[P[id - 1]]);
+    LL ret = T * (f % 2);
+    for (int i = id; i < P.size(); ++ i) {
+        int p = P[i];
+        LL q = (LL) p * p;
+        if (q > w) break;
+        ret += calc(w / p, i + 1, f * fpk(p, 1));
+        int e = 1;
+        while (1) {
+            ++ e;
+            LL f2 = f * fpk(p, e);
+            ret += (f2 / 2) % 2;
+            LL qq = q * p;
+            if (qq <= w) {
+                ret += calc(w / q, i + 1, f2);
+                q = qq;
+            }
+            else break;
+        }
+    }
+    return ret;
 }
 
 int main() {
-	cin >> n;
-	m = (int) sqrt(n + .5L);
-	A.resize(m + 1);
-	B.resize(m + 1);
-	P.clear();
-	vector<int> isp;
-	isp.resize(m + 1);
-	for (int i = 1; i <= m; ++ i) {
-		A[i] = sum_fp(2, i);
-		B[i] = sum_fp(2, n / i);
-		isp[i] = 1;
-	}
-	for (int p = 2; p <= m; ++ p) {
-		if (isp[p]) P.push_back(p);
-		for (int j : P) {
-			if (j * p > m) break;
-			isp[j * p] = 0;
-			if (j % p == 0) break;
-		}
-		if (!isp[p]) continue;
-		poly d = A[p - 1];
-		LL p2 = (LL) p * p;
-		int to = (int) min(n / p2, (LL) m);
-		int mid = m / p;
-		for (int i = 1; i <= mid; ++ i) {
-			B[i] = B[i] - (B[i * p] - d) * p;
-		}
-		LL tmp = n / p;
-		for (int i = mid + 1; i <= to; ++ i) {
-			B[i] = B[i] - (A[tmp / i] - d) * p;
-		}
-		for (int i = m; i >= p2; -- i) {
-			A[i] = A[i] - (A[i / p] - d) * p;
-		}
-	}
-	LL ans = calc(n, 0, 1);
-	cout << ans << endl;
+    cin >> n;
+    m = (int) sqrt(n + .5L);
+    A.resize(m + 1);
+    B.resize(m + 1);
+    P.clear();
+    vector<int> isp;
+    isp.resize(m + 1);
+    for (int i = 1; i <= m; ++ i) {
+        A[i] = sum_fp(2, i);
+        B[i] = sum_fp(2, n / i);
+        isp[i] = 1;
+    }
+    for (int p = 2; p <= m; ++ p) {
+        if (isp[p]) P.push_back(p);
+        for (int j : P) {
+            if (j * p > m) break;
+            isp[j * p] = 0;
+            if (j % p == 0) break;
+        }
+        if (!isp[p]) continue;
+        poly d = A[p - 1];
+        LL p2 = (LL) p * p;
+        int to = (int) min(n / p2, (LL) m);
+        int mid = m / p;
+        for (int i = 1; i <= mid; ++ i) {
+            B[i] = B[i] - (B[i * p] - d) * p;
+        }
+        LL tmp = n / p;
+        for (int i = mid + 1; i <= to; ++ i) {
+            B[i] = B[i] - (A[tmp / i] - d) * p;
+        }
+        for (int i = m; i >= p2; -- i) {
+            A[i] = A[i] - (A[i / p] - d) * p;
+        }
+    }
+    LL ans = calc(n, 0, 1);
+    cout << ans << endl;
 }
-~~~
+```
 
-# PE 616
+PE 616
+======
 
 考虑只要构造出无限个相同的数就行了，然后$a^{a^{a^{...}}}=a^{a^n}$可以构造任意$n$.
 
@@ -1285,65 +1341,67 @@ int main() {
 
 枚举第一次拆分，然后两项就都可以因式分解了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 const LL INF = 1e18;
 bool check(map<LL, int> cnt) {
-	int tot = 0;
-	for (auto x : cnt) tot += x.second;
-	//return cnt[2] >= 4 || (cnt[2] >= 2 && tot - cnt[2] >= 1) || (cnt[2] >= 1 && tot - cnt[2] >= 2);
-	return cnt[2] >= 4 || (tot - cnt[2] >= 1 && tot >= 3);
+    int tot = 0;
+    for (auto x : cnt) tot += x.second;
+    //return cnt[2] >= 4 || (cnt[2] >= 2 && tot - cnt[2] >= 1) || (cnt[2] >= 1 && tot - cnt[2] >= 2);
+    return cnt[2] >= 4 || (tot - cnt[2] >= 1 && tot >= 3);
 }
 LL mpow(LL x, int n) {
-	LL res = 1;
-	while (n --) {
-		if (INF / x < res) return INF;
-		res *= x;
-	}
-	return res;
+    LL res = 1;
+    while (n --) {
+        if (INF / x < res) return INF;
+        res *= x;
+    }
+    return res;
 }
 void fact(LL n, map<LL, int> &cnt) {
-	for (LL x = 2; x * x <= n; ++ x) {
-		while (n % x == 0) {
-			n /= x;
-			cnt[x] ++;
-		}
-	}
-	if (n > 1) cnt[n] ++;
+    for (LL x = 2; x * x <= n; ++ x) {
+        while (n % x == 0) {
+            n /= x;
+            cnt[x] ++;
+        }
+    }
+    if (n > 1) cnt[n] ++;
 }
 int main() {
-	LL n = 1e12L;
-	set<LL> ans;
-	for (int b = 2; b <= 50; ++ b) {
-		for (LL x = 2; mpow(x, b) <= n; ++ x) {
-			map<LL, int> cnt;
-			fact(b, cnt);
-			fact(x, cnt);
-			if (check(cnt)) {
-				//cout << mpow(x, b) << " : ";
-				//for (auto x : cnt) printf("%d * %lld, ", x.second, x.first); puts("");
-				ans.insert(mpow(x, b));
-				//getchar();
-			}
-		}
-	}
-	__int128 A = 0;
-	for (LL x : ans) A += x;
-	string s;
-	while (A) {
-		s += A % 10 + '0';
-		A /= 10;
-	}
-	reverse(s.begin(), s.end());
-	cout << s << endl;
+    LL n = 1e12L;
+    set<LL> ans;
+    for (int b = 2; b <= 50; ++ b) {
+        for (LL x = 2; mpow(x, b) <= n; ++ x) {
+            map<LL, int> cnt;
+            fact(b, cnt);
+            fact(x, cnt);
+            if (check(cnt)) {
+                //cout << mpow(x, b) << " : ";
+                //for (auto x : cnt) printf("%d * %lld, ", x.second, x.first); puts("");
+                ans.insert(mpow(x, b));
+                //getchar();
+            }
+        }
+    }
+    __int128 A = 0;
+    for (LL x : ans) A += x;
+    string s;
+    while (A) {
+        s += A % 10 + '0';
+        A /= 10;
+    }
+    reverse(s.begin(), s.end());
+    cout << s << endl;
 }
-~~~
+```
 
-# Hello 2018
+Hello 2018
+==========
 
-## G. Power Substring
+G. Power Substring
+------------------
 
 构造$k$使得$2^k$的最后100位包含$a<10^{11}$作为子串。
 
@@ -1355,56 +1413,58 @@ int main() {
 
 用递推来求离散对数。假设$2^{d_i}\equiv y \mod 5^i$,那么模数扩大5倍后,$d_{i+1}$有5种可能。我们可以乘上$2^{\phi (5^i)}\equiv j\cdot 5^i \mod 5^{i+1}$来遍历所有可能,其中$j\neq 0$,因为$\phi (5^i)\neq \phi (5^{i+1})$。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 void mul(LL &x, LL y, LL MOD) {
-	LL res = 0;
-	while (y) {
-		if (y & 1) (res += x) %= MOD;
-		(x += x) %= MOD;
-		y >>= 1;
-	}
-	x = res;
+    LL res = 0;
+    while (y) {
+        if (y & 1) (res += x) %= MOD;
+        (x += x) %= MOD;
+        y >>= 1;
+    }
+    x = res;
 }
 LL mpow(LL x, LL n, LL MOD = 1e18L) {
-	LL res = 1;
-	while (n) {
-		if (n & 1) mul(res, x, MOD);
-		n >>= 1;
-		mul(x, x, MOD);
-	}
-	return res;
+    LL res = 1;
+    while (n) {
+        if (n & 1) mul(res, x, MOD);
+        n >>= 1;
+        mul(x, x, MOD);
+    }
+    return res;
 }
 int main() {
-	int T; scanf("%d", &T);
-	while (T --) {
-		LL a; scanf("%lld", &a);
-		LL x = mpow(10, 6) * a;
-		LL base = mpow(2, 17);
-		x = (x + base - 1) / base * base;
-		if (x % 5 == 0) x += base;
-		LL y = x / base;
-		LL k = 0, phi = 1;
-		for (int i = 1; i <= 17; ++ i) {
-			for (int j = 0; j < 5; ++ j) {
-				LL kk = (k + j * phi) % mpow(5, i);
-				if (mpow(2, kk, mpow(5, i)) == y % mpow(5, i)) {
-					k = kk;
-					break;
-				}
-			}
-			phi *= (i == 1 ? 4 : 5);
-		}
-		printf("%lld\n", k + 17);
-	}
+    int T; scanf("%d", &T);
+    while (T --) {
+        LL a; scanf("%lld", &a);
+        LL x = mpow(10, 6) * a;
+        LL base = mpow(2, 17);
+        x = (x + base - 1) / base * base;
+        if (x % 5 == 0) x += base;
+        LL y = x / base;
+        LL k = 0, phi = 1;
+        for (int i = 1; i <= 17; ++ i) {
+            for (int j = 0; j < 5; ++ j) {
+                LL kk = (k + j * phi) % mpow(5, i);
+                if (mpow(2, kk, mpow(5, i)) == y % mpow(5, i)) {
+                    k = kk;
+                    break;
+                }
+            }
+            phi *= (i == 1 ? 4 : 5);
+        }
+        printf("%lld\n", k + 17);
+    }
 }
-~~~
+```
 
-# SRM 727
+SRM 727
+=======
 
-##900
+900
+---
 
 有$b\leq 2000$头熊，两点血，$h\leq 2000$个人，一点血。有个敌人，每次随即一个活着的单位砍一刀，一共砍t刀，问最后人数\*熊数\*活着单位数的期望。
 
@@ -1412,63 +1472,63 @@ int main() {
 
 考虑$dp[i][j]$转移:
 
-* 砍一头熊，概率$j/(i+j)$，转移到$dp[i+1][j-1]$，其中$h$不变
+-   砍一头熊，概率$j/(i+j)$，转移到$dp[i+1][j-1]$，其中$h$不变
 
-* 砍一个1血单位，概率$i/(i+j)$，转移到$dp[i-1][j]$，枚举砍的是人还是熊转移期望：
+-   砍一个1血单位，概率$i/(i+j)$，转移到$dp[i-1][j]$，枚举砍的是人还是熊转移期望：
 
 $E[h`]=E[\frac{(h-1)*h+h*(i-h)}{i}]$
 
 $E[h^2`]=E[\frac{(h-1)^2*h+h^2*(i-h)}{i}]$
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 2005, MOD = 1e9 + 7;
 int mpow(int x, int n) {
-	int res = 1;
-	while (n) {
-		if (n & 1) res = 1LL * res * x % MOD;
-		x = 1LL * x * x % MOD;
-		n >>= 1;
-	}
-	return res;
+    int res = 1;
+    while (n) {
+        if (n & 1) res = 1LL * res * x % MOD;
+        x = 1LL * x * x % MOD;
+        n >>= 1;
+    }
+    return res;
 }
 int R[N * 3], p[2 * N][N], eh[2 * N][N], ehh[2 * N][N];
 void upd(int &x, int y) { (x += y) %= MOD; }
 class DoubleLive {
-	public :
-	int findEV(int b, int h, int t) {
-		for (int i = 1; i < 2 * N; ++ i) R[i] = mpow(i, MOD - 2);
-		memset(p, 0, sizeof(p));
-		memset(eh, 0, sizeof(eh));
-		memset(ehh, 0, sizeof(ehh));
-		p[h][b] = 1;
-		eh[h][b] = h;
-		ehh[h][b] = h * h;
-		int ans = 0;
-		for (int hp2 = b; hp2 >= 0; -- hp2) {
-			for (int hp1 = h + b; hp1 >= 0; -- hp1) {
-				if (hp2) {
-					int cho = 1LL * R[hp2 + hp1] * hp2 % MOD;
-					upd(p[hp1 + 1][hp2 - 1], 1LL * p[hp1][hp2] * cho % MOD);
-					upd(eh[hp1 + 1][hp2 - 1], 1LL * eh[hp1][hp2] * cho % MOD);
-					upd(ehh[hp1 + 1][hp2 - 1], 1LL * ehh[hp1][hp2] * cho % MOD);
-				}
-				if (hp1) {
-					int cho = 1LL * R[hp2 + hp1] * hp1 % MOD;
-					upd(p[hp1 - 1][hp2], 1LL * p[hp1][hp2] * cho % MOD);
-					int c1 = (MOD + 1 - R[hp1]) % MOD;
-					upd(eh[hp1 - 1][hp2], 1LL * c1 * eh[hp1][hp2] % MOD * cho % MOD);
-					int c21 = (2LL * MOD + 1 - 2LL * R[hp1]) % MOD;
-					int c22 = R[hp1];
-					upd(ehh[hp1 - 1][hp2], (1LL * c21 * ehh[hp1][hp2] + 1LL * c22 * eh[hp1][hp2]) % MOD * cho % MOD);
-				}
-				if (hp1 + hp2 * 2 == h + 2 * b - t) {
-					upd(ans, (1LL * eh[hp1][hp2] * (hp1 + hp2) % MOD + MOD - ehh[hp1][hp2]) % MOD * (hp1 + hp2) % MOD);
-				}
-			}
-		}
-		return ans;
-	}
+    public :
+    int findEV(int b, int h, int t) {
+        for (int i = 1; i < 2 * N; ++ i) R[i] = mpow(i, MOD - 2);
+        memset(p, 0, sizeof(p));
+        memset(eh, 0, sizeof(eh));
+        memset(ehh, 0, sizeof(ehh));
+        p[h][b] = 1;
+        eh[h][b] = h;
+        ehh[h][b] = h * h;
+        int ans = 0;
+        for (int hp2 = b; hp2 >= 0; -- hp2) {
+            for (int hp1 = h + b; hp1 >= 0; -- hp1) {
+                if (hp2) {
+                    int cho = 1LL * R[hp2 + hp1] * hp2 % MOD;
+                    upd(p[hp1 + 1][hp2 - 1], 1LL * p[hp1][hp2] * cho % MOD);
+                    upd(eh[hp1 + 1][hp2 - 1], 1LL * eh[hp1][hp2] * cho % MOD);
+                    upd(ehh[hp1 + 1][hp2 - 1], 1LL * ehh[hp1][hp2] * cho % MOD);
+                }
+                if (hp1) {
+                    int cho = 1LL * R[hp2 + hp1] * hp1 % MOD;
+                    upd(p[hp1 - 1][hp2], 1LL * p[hp1][hp2] * cho % MOD);
+                    int c1 = (MOD + 1 - R[hp1]) % MOD;
+                    upd(eh[hp1 - 1][hp2], 1LL * c1 * eh[hp1][hp2] % MOD * cho % MOD);
+                    int c21 = (2LL * MOD + 1 - 2LL * R[hp1]) % MOD;
+                    int c22 = R[hp1];
+                    upd(ehh[hp1 - 1][hp2], (1LL * c21 * ehh[hp1][hp2] + 1LL * c22 * eh[hp1][hp2]) % MOD * cho % MOD);
+                }
+                if (hp1 + hp2 * 2 == h + 2 * b - t) {
+                    upd(ans, (1LL * eh[hp1][hp2] * (hp1 + hp2) % MOD + MOD - ehh[hp1][hp2]) % MOD * (hp1 + hp2) % MOD);
+                }
+            }
+        }
+        return ans;
+    }
 };
-~~~
+```
