@@ -1,7 +1,8 @@
-# E. Tree Paths
+E. Tree Paths
+=============
 
 考虑序列上的问题可以这样做：从左往右扫，维护每个点最为左端点，到当前右端点的段数，那么新加一个数$x$，前面所有人加1，跨过$x+1$或者$x-1$都可以减1，询问线段树里1的个数。这里1一定是最小值，所以很好维护。
 
 树上也是一样的。按照dfs序，线段树维护之前每个点到当前dfs到的点的段数，那么加减一操作可以看作是一段dfs序的操作。注意dfs中return的时候要还原现场。
 
-[code](Petrozavodsk Winter-2018. Carnegie Mellon U Contest F)
+[code](Petrozavodsk%20Winter-2018.%20Carnegie%20Mellon%20U%20Contest%20F)
