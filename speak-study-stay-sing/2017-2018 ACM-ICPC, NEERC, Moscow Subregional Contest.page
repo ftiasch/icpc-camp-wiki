@@ -1,14 +1,16 @@
-# Info
+Info
+====
 
 Date: 2017.11.12
 
 [Link](http://codeforces.com/gym/101611)
 
-# Solutions
+Solutions
+=========
 
-## J Judging the Trick
+J Judging the Trick
+-------------------
 
 upsolved by nike0good
 
-考虑一条将矩形分成2部分，此时必然有一边的三角形面积和<矩形部分的面积。二分答案。
-
+考虑一条将矩形分成2部分，此时必然有一边的三角形面积和&lt;矩形部分的面积。二分答案。
