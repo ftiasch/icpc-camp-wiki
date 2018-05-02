@@ -1,9 +1,11 @@
-# I. Permutations again
+I. Permutations again
+=====================
 
 比赛的时候使用线段树维护段数卡时卡过了。
 
 哈希做法：枚举中心的1，枚举最大值在哪一边。然后就是问另外一边存不存在一个位置到1的子串构成了一个挖掉某些位置的集合。可以使用集合哈希。
 
-然后使用unordered_map，集合hash用了1次方和，2次方和，3次方和，模1e9+7，然后揉成一个long long。
+然后使用unordered\_map，集合hash用了1次方和，2次方和，3次方和，模1e9+7，然后揉成一个long
+long。
 
-[code](Belarus I)
+[code](Belarus%20I)
