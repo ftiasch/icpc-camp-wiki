@@ -111,7 +111,7 @@ unsolved
 quailty's solution
 
 二分$res$，判定是否可能$S(C) \leq res$，根据$L(C) \leq res$和$B(C) \leq res$可以求出$max(C)$的上界$u$和$min(C)$的下界$d$，那么问题转化为判定是否可能在只包含权值在$[d,u]$内的边的子图中选取一个环覆盖，注意到环覆盖相当于给每个点指定一个不是自身的后继且不同的点指向不同的后继，拆点跑二分图匹配即可，利用[Hopcroft–Karp
-algorithm](https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm)可以做到$O(m\sqrt{n}\log{m})$。
+algorithm](https://en.wikipedia.org/wiki/Hopcroft–Karp_algorithm)可以做到$O(m\sqrt{n}\log{m})$。
 
 但是这个对如闪电的做法WA了，暂时认为是LA上数据有问题。
 
