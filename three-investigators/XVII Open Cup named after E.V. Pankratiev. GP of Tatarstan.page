@@ -1,0 +1,203 @@
+# Contest Info
+
+date: 2017.10.16 19:00-24:00
+
+[practice link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010374)
+
+# Solutions
+
+## A. Arithmetic Derivative
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+如果有 $n = \prod_{i = 1}^{t}{p_i^{e_i}}$，那么 $\frac{n'}{n} = \sum_{i = 1}^{t}{\frac{e_i}{p_i}}$。
+
+注意到两个以不同质数为分母的分数如果要线性表示一个整数，那么它们会分别表示一部分整数，因此 $n$ 的质因子幂次只会有 $p_i^{p_i}$，直接搜出所有的 $n$ 即可。
+
+## B. White Triangle
+
+unsolved
+
+## C. New Street
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+令第一类操作的数量为 $k$，第二类操作的元素最大值为 $v$。
+
+第二类操作的数量虽然很多，但是很多时候的效果是相同的，只有第一类操作可以使限制产生变化，显然本质不同的操作只有 $\mathcal{O}(k v)$ 种。
+
+对于某种限制，最多有 $k$ 种限制，利用容斥的技巧可以知道答案是 $\displaystyle\sum_{S \subseteq \mathrm{Limits}}{(-1)^{|S|}{n - 1 + A - \sum_{i \in S}{D_i - C_i + 1} \choose A - \sum_{i \in S}{D_i - C_i + 1}}}$，其中 $\mathrm{Limits}$ 表示受限制的集合，其元素个数可能达到 $n$，但 $D_i - C_i + 1$ 只会有 $\mathcal{O}(k)$ 种。
+
+考虑统计满足 $\sum_{i \in S}{D_i - C_i + 1} = w$ 的所有 $S$ 的 $(-1)^{|S|}$ 之和，并设其为 $f(w)$。令 $F(x) = \sum_{w \geq 0}{f(w) x^w}$，将 $\mathrm{Limits}$ 表示成 $k$ 组元素，其中第 $i$ 组元素有 $a_i$ 个，其 $D - C + 1$ 均为 $p_i$，则有 $F(x) = \prod_{i = 1}^{k}{(1 - x^{p_i})^{a_i}}$。
+
+本质是在求 $\displaystyle\frac{\prod_{i = 1}^{k}{(1 - x^{p_i})^{a_i}}}{(1 - x)^n}$ 的 $x^A$ 系数，直接用背包统计的复杂度是 $\mathcal{O}(k v^2)$，用 DFT 加速卷积后可以做到 $\mathcal{O}(k v \log v)$。实际上用第二类欧拉变换可以做到 $\mathcal{O}(k + v^2)$ 或 $\mathcal{O}(k + v \log v)$，由于本题限制较宽，直接用第二类欧拉变换配合暴力卷积即可。
+
+总时间复杂度 $\mathcal{O}(k^2 + k v^2)$，不需要使用 DFT，不需要观察到模数是个质数并且等于 $2^{17} \times 13 \times 587 + 1$。
+
+## D. Clones and Treasures
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+签到题。
+
+类似最大子段和贪心从左向右扫描即可。
+
+## E. Space Tourists
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+首先，$(i,i)\ (0\le i\lt k)$ 必须有。
+
+若 $n>k$ ，则根据容斥定理，必定有一个数字出现两次，所以不需要再加。
+
+否则，考虑所有数字都不同的情况，将 $k$ 个数分为 $n-1$ 组，由容斥定理可以知道，$n$ 个数字中必定有 $2$ 个数字在同一组，每组内的所有二元组都需要，那么显然可以知道尽量均分最好。
+
+---
+
+braveTester's comment
+
+老浪哥的证明完全没法看...
+
+直觉是组成一个大环不如一个二元环限制力强，所以肯定加无向边。
+
+画一画发现不变成完全图限制不住，所以直觉每个组成部分是个完全图。
+
+之后问题变为 $k$ 个数分为 $n - 1$ 组，每组是个完全图，怎么分边数最少。可以通过求导什么的发现越平均越好。
+
+然而并不会证明上述直觉...
+
+## F. Matrix Game
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+考虑横着的。
+
+若以每个位置作为起点，找到最大的，由于每次比较 $O(nm)$，所以总复杂度 $O(n^2m^2)$，太大。
+
+考虑以 $(i,k)$ 和 $(j,k)$ 作为起点的两个数字，两两比较的时候，若预处理好 $n$ 行的大小关系，比较只需要 $O(m)$。
+
+因此可以对每个 $k$ 求出最大的数字，然后暴力进行 $m$ 次 $O(nm)$ 的比较即可。
+
+复杂度 $O(nm^2)$
+
+## G. Milkland
+
+unsolved
+
+## H. Parallel Replay
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+考虑连续的若干个 $2$ 类型，它们前后都是 $1$ 类型，两个 $1$ 类型的位置构成一个区间，若一个 $2$ 类型可以选取的两个位置有一个在区间内，那么通过交换顺序可以使得它对答案没有影响。
+
+否则，若可以选取的两个位置都在区间的一边，那么选择距离区间较近的那个位置，那么通过交换可以只让最远的那个较近位置对答案有影响。
+
+若两个位置分别在区间的两边，那么也选择距离区间较近的位置，通过交换也可以只让最远的那个较近位置对答案有影响。
+
+## I. Minimum Prefix
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+二分长度，然后对每个长为 $k$ 的循环子串进行哈希，每个哈希值新建一个右边的点，每个串代表一个左边的点，第 $i$ 个串向所有它的 $k$ 长循环子串的哈希值点连边，跑二分图匹配，若匹配个数为 $n$ 则可行。
+
+## J. Terminal
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+如果可以只使用一架飞机，那么存在一组解的得分是 $N^2$。
+
+如果可以使用两架飞机，那么一定有一架飞机离开时间是 $N$，另一架飞机离开时间是某个队伍的最后一个人上飞机的时间，这只有 $\mathcal{O}(M)$ 种。
+
+每个队伍只需要考虑最后一个上飞机的人属于哪个飞机即可。
+
+枚举先起飞的那架飞机的起飞时间，那么这架飞机必选某个队伍，可选在这个队伍之前上去的队伍分配给这架飞机，显然要在人数限制的情况下尽量让多的人上这架飞机。
+
+按上飞机时间升序枚举队伍，用 bitset 维护之前的队伍能否选出一个子集使得人数之和是某个数值，查询一段前缀区间的最右 1 即可。
+
+## K. New Tetris
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+为了方便解题调整一下策略的时序，每次都是先向下掉再尝试左右移动，初始位置改到原来初始位置的上面一格。
+
+不难发现一个块能到达的列是一个区间，因为从列 $i$ 到 列 $j$ 至少向下移动 $|i - j| + 1$ 格。而最优位置就是这个区间里得分贡献最小的某一列。
+
+按 $j \leq i$ 和 $j \geq i$ 分别考虑。对于 $j \leq i$ 的情况，令列 $j$ 的最上面一个格子的位置是 $p_j$（初始是 $m + 1$），如果列 $j$ 可达，那么有 $|i - j| + 1 < p_j$ 和 $|i - k| + 1 < p_k - 1$ $(k = j + 1, j + 2, \cdots, i)$。 $j \geq i$ 的情况类似。
+
+用线段树维护区间最小得分，最小得分的最左、最右位置，区间 $p_j \pm j$ 最小值，支持单点修改和树上乱跑即可。
+
+## L. Canonical duel
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalker's solution
+
+一个炮塔的效果是激活整个行和列上的炮塔，这是一个二分图。
+
+枚举一个没有放置炮塔的位置，将行所在连通块和列所在连通块均激活（可能是同一个连通块），使得激活的炮塔数最多即可。
+
+并查集维护，时间复杂度 $\mathcal{O}(N M \alpha(N + M))$。
+
+# Replay and Summary
+
+## Replay
+
+## braveTester
+
+又是一次 $1$ 水题，$2$ 助攻的场。
+
+虽然整场我都在撺掇老浪哥去写 B，不过可能看来他拖着不写是个明智的选择？
+
+几何是不是最后或者碎片时间写比较明智啊...
+
+## chitanda
+
+久违的三人训练。
+
+题目整体不难，写 I 题的时候还是不够注意代码细节，并且在调试的时候仍然容易引起情绪，导致调试时间过长，影响了后面的节奏。
+
+## skywalkert
+
+这是一次康复性训练。智商受到了普通程度的激活，码力受到了中等程度的测试。
+
+重点关注了上机时间的分配，2-4 小时过程中卡题状态不好，和队友的配合有待恢复。
+
+题目算是比较友善的了。榜似乎有点歪。
