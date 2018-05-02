@@ -1,4 +1,5 @@
-# Round454 重现(72)
+Round454 重现(72)
+=================
 
 A当场5Y，B当场3Y，C当场3Y，有点无语。。
 
@@ -6,17 +7,19 @@ D当场莫名其妙挂了，做法是对的。。
 
 E是一道最小回文分割，学习了一下
 
-# GB2017(130)
+GB2017(130)
+===========
 
 当场过了ABCDF，F题很傻逼却卡了很久没有时间做别的题了
 
 E题是一道贝尔数DP，没有一眼秒，来不及了
 
-G 给定$X$，求$\sum_i^XS(i)$，其中$S(i)$表示把$i$中的数升序以后的值，$X\leq700$。
+G
+给定$X$，求$\sum_i^XS(i)$，其中$S(i)$表示把$i$中的数升序以后的值，$X\leq700$。
 
 枚举$X$的前$i$位，求前$i-1$位恰好为$X$中对应的数，第$i$位不超过$X$的数中所有数的和，那么先把所有数出现的次数求一下，就可以推出贡献了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define M 1000000007
 #define LL long long
@@ -24,25 +27,26 @@ int n,i,j,k,nv,cnt[12];LL an;char s[777];
 LL Pw(LL a,LL b){LL v=1;for(;b;b>>=1,a=a*a%M)if(b&1)v=v*a%M;return v;}
 LL cal(LL x,LL c,LL m){return (Pw(10,c)*Pw(100-9*x,m)-Pw(91-9*x,m)+M)%M*x%M*Pw(9,M-2)%M;}
 int main(){
-	scanf("%s",s+1);n=strlen(s+1);
-	for(i=1;i<=n;cnt[s[i++]-'0']++)
-		for(j=0;j<s[i]-'0'+(i==n);j++){
-			cnt[j]++;nv=0;
-			for(k=0;k<10;k++){
-				an=(an+cal(k,cnt[k],n-i)*Pw(10,i-nv-cnt[k]))%M;
-				nv+=cnt[k];
-			}
-			cnt[j]--;
-		}
-	printf("%d",an);
+    scanf("%s",s+1);n=strlen(s+1);
+    for(i=1;i<=n;cnt[s[i++]-'0']++)
+        for(j=0;j<s[i]-'0'+(i==n);j++){
+            cnt[j]++;nv=0;
+            for(k=0;k<10;k++){
+                an=(an+cal(k,cnt[k],n-i)*Pw(10,i-nv-cnt[k]))%M;
+                nv+=cnt[k];
+            }
+            cnt[j]--;
+        }
+    printf("%d",an);
 }
-~~~
+```
 
-H 给定一个$n$个点的图，给定图中每两点之间的关系：互相可达、恰有一个可达或大于等于一个可达，求图的最小边数
+H
+给定一个$n$个点的图，给定图中每两点之间的关系：互相可达、恰有一个可达或大于等于一个可达，求图的最小边数
 
 首先AND关系的肯定要在一个联通块中连成一个环，如果若干联通块都是OR关系可以连成一个大环不额外加边，而XOR关系必须额外加边，于是可以将XOR的边加入，求最小染色数，注意联通块大小位1的边不用考虑，因为不会影响结果。直接随机一下就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 50
 #define fr(i,n) for(int i=1;i<=n;i++)
@@ -51,48 +55,50 @@ int n,i,j,x,S,an,nv,id,to[N],c[N],b[N],F[N],sz[N];bool v[N][N];
 char s[N][N];
 int gf(int x){return F[x]==x?x:F[x]=gf(F[x]);}
 void uni(int x,int y){
-	x=gf(x);y=gf(y);
-	if(x!=y)F[x]=y,sz[y]+=sz[x];
+    x=gf(x);y=gf(y);
+    if(x!=y)F[x]=y,sz[y]+=sz[x];
 }
 int main(){
-	scanf("%d",&n);
-	fr(i,n)F[i]=i,sz[i]=1;
-	fr(i,n){
-		scanf("%s",s[i]+1);
-		fr(j,n)if(i!=j)
-			if(s[i][j]=='A')uni(i,j);
-	}
-	fr(i,n)if(gf(i)==i&&sz[i]>1)to[i]=++id;
-	fr(i,n)fr(j,n)if(gf(i)==gf(j)&&s[i][j]=='X')return puts("-1"),0;
-	fr(i,n)fr(j,n)if(s[i][j]=='X')v[to[gf(i)]][to[gf(j)]]=1;
-	fr(i,id)b[i]=i;an=n;
-	fr(T,9999){
-		random_shuffle(b+1,b+id+1);nv=0;
-		fr(i,id){
-			x=b[i];S=0;
-			fr(j,id)if(v[x][j])S|=1<<c[j];
-			for(j=1;;j++)if(!(S>>j&1)){
-				c[x]=j;
-				break;
-			}
-			nv=max(nv,c[x]);
-		}
-		fr(i,id)c[i]=0;
-		an=min(an,nv);
-	}
-	printf("%d\n",n-1+an);
+    scanf("%d",&n);
+    fr(i,n)F[i]=i,sz[i]=1;
+    fr(i,n){
+        scanf("%s",s[i]+1);
+        fr(j,n)if(i!=j)
+            if(s[i][j]=='A')uni(i,j);
+    }
+    fr(i,n)if(gf(i)==i&&sz[i]>1)to[i]=++id;
+    fr(i,n)fr(j,n)if(gf(i)==gf(j)&&s[i][j]=='X')return puts("-1"),0;
+    fr(i,n)fr(j,n)if(s[i][j]=='X')v[to[gf(i)]][to[gf(j)]]=1;
+    fr(i,id)b[i]=i;an=n;
+    fr(T,9999){
+        random_shuffle(b+1,b+id+1);nv=0;
+        fr(i,id){
+            x=b[i];S=0;
+            fr(j,id)if(v[x][j])S|=1<<c[j];
+            for(j=1;;j++)if(!(S>>j&1)){
+                c[x]=j;
+                break;
+            }
+            nv=max(nv,c[x]);
+        }
+        fr(i,id)c[i]=0;
+        an=min(an,nv);
+    }
+    printf("%d\n",n-1+an);
 }
-~~~
+```
 
-# Round453 重现(31)
+Round453 重现(31)
+=================
 
 当场过了ABC，AB是两道构造题，乱搞了一下过了，C直接上了LCT+离线树状数组处理强行过掉
 
-D 给你$n$个点的带权度数$deg_i=[-n,n]$和$m$条边，让你给每条边赋值$v\in[-2n^2,2n^2]$，这条边两端的点的度数都加$v$，构造出合法方案或输出无解。
+D
+给你$n$个点的带权度数$deg_i=[-n,n]$和$m$条边，让你给每条边赋值$v\in[-2n^2,2n^2]$，这条边两端的点的度数都加$v$，构造出合法方案或输出无解。
 
 如果这个图是一个二分图，那么左半边的权值和必须等于右半边的权值和，此时可以比较容易地构造出一种方案。那么在不是二分图的情况下，找出一条构成奇环的边，通过这条边将二分图两部的权值凑成相等，然后剩下的边按照二分图的做法去做就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 222222
 #define M 1000000007
@@ -110,129 +116,136 @@ int n,m,i,tot,fir[N],ne[N],la[N],X[N],Y[N],c[N],F[N];
 LL o,v[N],S[4],e[N];
 void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
 void dfs(int x){
-	S[c[x]]+=v[x];
-	for(int i=fir[x],y;i;i=ne[i])if(y=la[i],!c[y])F[y]=x,c[y]=3-c[x],dfs(y);
+    S[c[x]]+=v[x];
+    for(int i=fir[x],y;i;i=ne[i])if(y=la[i],!c[y])F[y]=x,c[y]=3-c[x],dfs(y);
 }
 void dfs2(int x){
-	for(int i=fir[x],y;i;i=ne[i])if(F[y=la[i]]==x)dfs2(y),e[(i+1)/2]=v[y],v[x]-=v[y];
+    for(int i=fir[x],y;i;i=ne[i])if(F[y=la[i]]==x)dfs2(y),e[(i+1)/2]=v[y],v[x]-=v[y];
 }
 int main(){
-	rd(n);rd(m);
-	fr(i,n)scanf("%I64d",&v[i]);
-	fr(i,m){
-		rd(X[i]);rd(Y[i]);
-		ins(X[i],Y[i]);
-		ins(Y[i],X[i]);
-	}
-	c[1]=1;dfs(1);
-	fr(i,m)if(c[X[i]]==c[Y[i]]){
-		o=(S[c[X[i]]]-S[3-c[X[i]]])/2;
-		v[X[i]]-=o;v[Y[i]]-=o;
-		S[c[X[i]]]-=o*2;
-		e[i]=o;
-		break;
-	}
-	if(S[1]!=S[2])return puts("NO"),0;
-	puts("YES");
-	dfs2(1);
-	fr(i,m)printf("%I64d\n",e[i]);
+    rd(n);rd(m);
+    fr(i,n)scanf("%I64d",&v[i]);
+    fr(i,m){
+        rd(X[i]);rd(Y[i]);
+        ins(X[i],Y[i]);
+        ins(Y[i],X[i]);
+    }
+    c[1]=1;dfs(1);
+    fr(i,m)if(c[X[i]]==c[Y[i]]){
+        o=(S[c[X[i]]]-S[3-c[X[i]]])/2;
+        v[X[i]]-=o;v[Y[i]]-=o;
+        S[c[X[i]]]-=o*2;
+        e[i]=o;
+        break;
+    }
+    if(S[1]!=S[2])return puts("NO"),0;
+    puts("YES");
+    dfs2(1);
+    fr(i,m)printf("%I64d\n",e[i]);
 }
-~~~
+```
 
-# Round446 重现(74)
+Round446 重现(74)
+=================
 
 当场过了ABC，A和C细节问题各WA了一发，B想得太久了，主要是一直在想数据范围只有22，没想到是一道能出到1000000的傻逼题
 
-E - 给你$n$个数$a_i$，进行$k$次操作，每次选择一个数$a_i$，有其他$a_j$乘积的贡献，然后把$a_i$减$1$，求期望贡献
+E -
+给你$n$个数$a_i$，进行$k$次操作，每次选择一个数$a_i$，有其他$a_j$乘积的贡献，然后把$a_i$减$1$，求期望贡献
 
 英文太差看不懂题解，反正最后是求$a_i$乘积的期望
 
-# Round449 重现(37)
+Round449 重现(37)
+=================
 
 当场过了ABC，B不小心少写了一句话WA一发，C是大马力题，好几个地方没改LL和一些细节问题WA了5发
 
-D - 给你一个网格图，每次可以向右上、右下和右边走一步，问你从$(0,0)$走到$(n,[l,r])$的总方案数，但$y$不能走到$0$以下，$n\leq100000$。
+D -
+给你一个网格图，每次可以向右上、右下和右边走一步，问你从$(0,0)$走到$(n,[l,r])$的总方案数，但$y$不能走到$0$以下，$n\leq100000$。
 
 想歪了，往默慈金数的方向想了。。
 
 首先不考虑往右走的情况，那么答案就是$C(n,(n+l+1)/2)-C(n,(n+r)/2+1)$，然后枚举往右走几步，将他们乘起来就好了，模数不是质数，懒得写了
 
-E - 维护一个数列，两种操作。1、将$[l,r]$中大于$x$的数减去$x$；2、统计$[l,r]$中有多少个数等于$x$。$n\leq100000$。
+E -
+维护一个数列，两种操作。1、将$[l,r]$中大于$x$的数减去$x$；2、统计$[l,r]$中有多少个数等于$x$。$n\leq100000$。
 
 将序列分成$\sqrt{n}$块，每一块记录每种数出现的次数，同时记录最大值$max$和懒惰标记$tag$。
 
 修改一整块时，设整块减$x$。如果$2x\leq max$，那么将$[1,x]$合并到$[x+1,2x]$上，然后区间减少$x$；如果$2x>max$，那么将$[x+1,max]$合并到$[1,max-x]$上。对于散块暴力修改。询问时直接询问，加上标记的值即可。时间复杂度$O(n\sqrt{n})$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111111
 using namespace std;
 int S,n,m,i,j,op,l,r,x,an,cnt[222][N],F[222][N],a[N],bl[N],mx[N],mi[N],tag[N];
 int fd(int x,int z){return F[x][z]==z?z:F[x][z]=fd(x,F[x][z]);}
 void rbd(int B){
-	for(int i=B*S-S+1;i<=min(B*S,n);i++){
-		a[i]=fd(B,a[i]);
-		cnt[B][a[i]]--;
-		if(a[i]-tag[B]>x&&l<=i&&i<=r)a[i]-=x;
-		cnt[B][a[i]]++;
-	}
+    for(int i=B*S-S+1;i<=min(B*S,n);i++){
+        a[i]=fd(B,a[i]);
+        cnt[B][a[i]]--;
+        if(a[i]-tag[B]>x&&l<=i&&i<=r)a[i]-=x;
+        cnt[B][a[i]]++;
+    }
 }
 void cg(int B){
-	if(mi[B]+x>mx[B])return;
-	if(mi[B]+x+x<=mx[B]){
-		tag[B]+=x;
-		for(int i=mi[B]+1;i<=mi[B]+x;i++)
-			F[B][i]=i+x,cnt[B][i+x]+=cnt[B][i],cnt[B][i]=0;
-		mi[B]+=x;
-	}else{
-		for(int i=mi[B]+x+1;i<=mx[B];i++)
-			F[B][i]=i-x,cnt[B][i-x]+=cnt[B][i],cnt[B][i]=0;
-		mx[B]=mi[B]+x;
-	}
+    if(mi[B]+x>mx[B])return;
+    if(mi[B]+x+x<=mx[B]){
+        tag[B]+=x;
+        for(int i=mi[B]+1;i<=mi[B]+x;i++)
+            F[B][i]=i+x,cnt[B][i+x]+=cnt[B][i],cnt[B][i]=0;
+        mi[B]+=x;
+    }else{
+        for(int i=mi[B]+x+1;i<=mx[B];i++)
+            F[B][i]=i-x,cnt[B][i-x]+=cnt[B][i],cnt[B][i]=0;
+        mx[B]=mi[B]+x;
+    }
 }
 int qu(int B){
-	int v=0;
-	for(int i=B*S-S+1;i<=min(B*S,n);i++){
-		a[i]=fd(B,a[i]);
-		if(a[i]==x+tag[B]&&l<=i&&i<=r)v++;
-	}
-	return v;
+    int v=0;
+    for(int i=B*S-S+1;i<=min(B*S,n);i++){
+        a[i]=fd(B,a[i]);
+        if(a[i]==x+tag[B]&&l<=i&&i<=r)v++;
+    }
+    return v;
 }
 int qu2(int B){
-	if(x+tag[B]>=mi[B]&&x+tag[B]<=mx[B])return cnt[B][x+tag[B]];
-	return 0;
+    if(x+tag[B]>=mi[B]&&x+tag[B]<=mx[B])return cnt[B][x+tag[B]];
+    return 0;
 }
 int main(){
-	scanf("%d%d",&n,&m);S=500;
-	for(i=1;i<=n;i++)scanf("%d",&a[i]),bl[i]=(i-1)/S+1,cnt[bl[i]][a[i]]++;
-	for(i=1;i<=bl[n];i++)for(j=0,mx[i]=100001;j<N;j++)F[i][j]=j;
-	for(;m--;){
-		scanf("%d%d%d%d",&op,&l,&r,&x);
-		if(op==1){
-			if(bl[l]==bl[r])rbd(bl[l]);else{
-				rbd(bl[l]);rbd(bl[r]);
-				for(i=bl[l]+1;i<bl[r];i++)cg(i);
-			}
-		}else{
-			if(bl[l]==bl[r])an=qu(bl[l]);else
-				for(an=qu(bl[l])+qu(bl[r]),i=bl[l]+1;i<bl[r];i++)an+=qu2(i);
-			printf("%d\n",an);
-		}
-	}
+    scanf("%d%d",&n,&m);S=500;
+    for(i=1;i<=n;i++)scanf("%d",&a[i]),bl[i]=(i-1)/S+1,cnt[bl[i]][a[i]]++;
+    for(i=1;i<=bl[n];i++)for(j=0,mx[i]=100001;j<N;j++)F[i][j]=j;
+    for(;m--;){
+        scanf("%d%d%d%d",&op,&l,&r,&x);
+        if(op==1){
+            if(bl[l]==bl[r])rbd(bl[l]);else{
+                rbd(bl[l]);rbd(bl[r]);
+                for(i=bl[l]+1;i<bl[r];i++)cg(i);
+            }
+        }else{
+            if(bl[l]==bl[r])an=qu(bl[l]);else
+                for(an=qu(bl[l])+qu(bl[r]),i=bl[l]+1;i<bl[r];i++)an+=qu2(i);
+            printf("%d\n",an);
+        }
+    }
 }
-~~~
+```
 
-# Round445
+Round445
+========
 
 B题死也A不掉，然后有一场div2，就弃疗了
 
 B题是字典序弄错了，可能有多个串，要对他们排序
 
-C - 问有多少种排列使得存在一个$a[i]$有对于$1<j<i,i<j<=i+k$有$a[j]<a[i]$，且$a[i]\neq n$
+C -
+问有多少种排列使得存在一个$a[i]$有对于$1<j<i,i<j<=i+k$有$a[j]<a[i]$，且$a[i]\neq n$
 
 首先令$f[i]$表示当$f[i]=i$时有多少合法排列，那么有$f[i]=(i-k-1)*(i-2)!+\sum_{j=i-k}^{i-1}f[j]*\frac{(i-2)!}{(j-1)!}$，而答案为$\sum_{i=k+1}^nf[i]\frac{(n-1)!}{(i-1)!}$
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1111111
 #define M 1000000007
@@ -242,24 +255,26 @@ int n,k,i;
 LL an,pw[N],ipw[N],S[N],f[N];
 LL Pw(LL a,LL b,LL p){LL v=1;for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;return v;}
 int main(){
-	scanf("%d%d",&n,&k);
-	for(pw[0]=i=1;i<=n;i++)pw[i]=pw[i-1]*i%M;
-	ipw[n]=Pw(pw[n],M-2,M);
-	for(i=n;i;i--)ipw[i-1]=ipw[i]*i%M;
-	for(i=k+1;i<=n;i++){
-		f[i]=pw[i-2]*(i-k-1+S[i-1]-S[i-k-1]+M)%M;
-		S[i]=(S[i-1]+f[i]*ipw[i-1])%M;
-		an=(an+f[i]*pw[n-1]%M*ipw[i-1])%M;
-	}
-	printf("%I64d",an);
+    scanf("%d%d",&n,&k);
+    for(pw[0]=i=1;i<=n;i++)pw[i]=pw[i-1]*i%M;
+    ipw[n]=Pw(pw[n],M-2,M);
+    for(i=n;i;i--)ipw[i-1]=ipw[i]*i%M;
+    for(i=k+1;i<=n;i++){
+        f[i]=pw[i-2]*(i-k-1+S[i-1]-S[i-k-1]+M)%M;
+        S[i]=(S[i-1]+f[i]*ipw[i-1])%M;
+        an=(an+f[i]*pw[n-1]%M*ipw[i-1])%M;
+    }
+    printf("%I64d",an);
 }
-~~~
+```
 
 D读不懂
 
-E - 给定$n$个数$a_i$，令$x_i=x\mod a_1\mod a_2\cdots \mod a_i$，求$max(\sum_{i=1}^nx_i)$。$n\leq200000,a_i\leq10^{13}$。
+E -
+给定$n$个数$a_i$，令$x_i=x\mod a_1\mod a_2\cdots \mod a_i$，求$max(\sum_{i=1}^nx_i)$。$n\leq200000,a_i\leq10^{13}$。
 
-# Round457(div2)
+Round457(div2)
+==============
 
 垃圾比赛，五道垃圾题。前三道签到，D强行可持久化平衡树，E强行换根
 
@@ -269,82 +284,84 @@ E - 给定$n$个数$a_i$，令$x_i=x\mod a_1\mod a_2\cdots \mod a_i$，求$max(\
 
 D - 开两个可持久化类强行做就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111111
 using namespace std;int m,i,id,o,x;
 char op[9];string s;map<string,int>mp;
 struct Tree{
-	int id,rt[N],L[N*60],R[N*60],S[N*60];
-	void add(int&x,int y,int l,int r,int z,int v){
-		x=++id;L[x]=L[y];R[x]=R[y];S[x]=S[y]+v;
-		if(l==r)return;int md=l+r>>1;
-		if(z<=md)add(L[x],L[y],l,md,z,v);else add(R[x],R[y],md+1,r,z,v);
-	}
-	int qu(int k,int l,int r,int x,int y){
-		if(!k)return 0;
-		if(x<=l&&r<=y)return S[k];
-		int md=l+r>>1,v=0;
-		if(x<=md)v+=qu(L[k],l,md,x,y);
-		if(y>md)v+=qu(R[k],md+1,r,x,y);
-		return v;
-	}
-	void cg(int x,int y,int z){add(rt[x],rt[x],0,1e9,y,z);}
-	int qu(int x,int z){return qu(rt[x],0,1e9,z,z);}
-	int qu(int x,int l,int r){return qu(rt[x],0,1e9,l,r);}
-	void cp(int x,int y){rt[x]=rt[y];}
+    int id,rt[N],L[N*60],R[N*60],S[N*60];
+    void add(int&x,int y,int l,int r,int z,int v){
+        x=++id;L[x]=L[y];R[x]=R[y];S[x]=S[y]+v;
+        if(l==r)return;int md=l+r>>1;
+        if(z<=md)add(L[x],L[y],l,md,z,v);else add(R[x],R[y],md+1,r,z,v);
+    }
+    int qu(int k,int l,int r,int x,int y){
+        if(!k)return 0;
+        if(x<=l&&r<=y)return S[k];
+        int md=l+r>>1,v=0;
+        if(x<=md)v+=qu(L[k],l,md,x,y);
+        if(y>md)v+=qu(R[k],md+1,r,x,y);
+        return v;
+    }
+    void cg(int x,int y,int z){add(rt[x],rt[x],0,1e9,y,z);}
+    int qu(int x,int z){return qu(rt[x],0,1e9,z,z);}
+    int qu(int x,int l,int r){return qu(rt[x],0,1e9,l,r);}
+    void cp(int x,int y){rt[x]=rt[y];}
 }A,B;
 int main(){
-	for(scanf("%d",&m),i=1;i<=m;i++){
-		scanf("%s",op);A.cp(i,i-1);B.cp(i,i-1);
-		if(op[0]=='s'){
-			cin>>s;scanf("%d",&x);
-			if(!mp[s])mp[s]=++id,o=0;else o=B.qu(i,mp[s]);
-			A.cg(i,x,1);B.cg(i,mp[s],x-o);
-			if(o)A.cg(i,o,-1);
-		}
-		if(op[0]=='r'){
-			cin>>s;
-			if(o=B.qu(i,mp[s]))B.cg(i,mp[s],-o),A.cg(i,o,-1);
-		}
-		if(op[0]=='q'){
-			cin>>s;
-			if(o=B.qu(i,mp[s]))printf("%d\n",A.qu(i,0,o-1));else puts("-1");
-		}
-		if(op[0]=='u')scanf("%d",&x),A.cp(i,i-x-1),B.cp(i,i-x-1);
-		fflush(stdout);
-	}
+    for(scanf("%d",&m),i=1;i<=m;i++){
+        scanf("%s",op);A.cp(i,i-1);B.cp(i,i-1);
+        if(op[0]=='s'){
+            cin>>s;scanf("%d",&x);
+            if(!mp[s])mp[s]=++id,o=0;else o=B.qu(i,mp[s]);
+            A.cg(i,x,1);B.cg(i,mp[s],x-o);
+            if(o)A.cg(i,o,-1);
+        }
+        if(op[0]=='r'){
+            cin>>s;
+            if(o=B.qu(i,mp[s]))B.cg(i,mp[s],-o),A.cg(i,o,-1);
+        }
+        if(op[0]=='q'){
+            cin>>s;
+            if(o=B.qu(i,mp[s]))printf("%d\n",A.qu(i,0,o-1));else puts("-1");
+        }
+        if(op[0]=='u')scanf("%d",&x),A.cp(i,i-x-1),B.cp(i,i-x-1);
+        fflush(stdout);
+    }
 }
-~~~
+```
 
-# HL2018(1924)
+HL2018(1924)
+============
 
 只做了4题，还FST了2题。。B把题翻译错了一个地方，D写了一个搞笑错误
 
 E没做出来不太应该，打表打不完了，其实只要直接暴力，记录三种优先级转移就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
 int Q,n,i,j,v,ff;string s[256][3],S;
 void up(string&A,string B){if(B.length()<A.length()||B.length()==A.length()&&B<A)ff=1,A=B;}
 int main(){
-	for(i=0;i<256;i++)for(j=0;j<3;j++)s[i][j]="GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG";
-	s[15][0]="x";s[51][0]="y";s[85][0]="z";
-	for(ff=1;ff;){
-		ff=0;
-		for(i=0;i<256;i++)for(j=0;j<2;j++)up(s[i][j+1],s[i][j]);
-		for(i=0;i<256;i++)up(s[i^255][0],"!"+s[i][0]);
-		for(i=0;i<256;i++)for(j=0;j<256;j++)
-			up(s[i&j][1],s[i][1]+"&"+s[j][0]),up(s[i|j][2],s[i][2]+"|"+s[j][1]);
-		for(i=0;i<256;i++)up(s[i][0],"("+s[i][2]+")");
-	}
-	for(scanf("%d",&Q);Q--;cout<<s[v][2]<<endl)
-		for(cin>>S,v=i=0;i<8;i++)v=v*2+S[i]-'0'; 
+    for(i=0;i<256;i++)for(j=0;j<3;j++)s[i][j]="GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG";
+    s[15][0]="x";s[51][0]="y";s[85][0]="z";
+    for(ff=1;ff;){
+        ff=0;
+        for(i=0;i<256;i++)for(j=0;j<2;j++)up(s[i][j+1],s[i][j]);
+        for(i=0;i<256;i++)up(s[i^255][0],"!"+s[i][0]);
+        for(i=0;i<256;i++)for(j=0;j<256;j++)
+            up(s[i&j][1],s[i][1]+"&"+s[j][0]),up(s[i|j][2],s[i][2]+"|"+s[j][1]);
+        for(i=0;i<256;i++)up(s[i][0],"("+s[i][2]+")");
+    }
+    for(scanf("%d",&Q);Q--;cout<<s[v][2]<<endl)
+        for(cin>>S,v=i=0;i<8;i++)v=v*2+S[i]-'0'; 
 }
-~~~
+```
 
-F - 有$n$个人，对于$i<j$，第$i$个人获胜的概率是$p_i$，现在每次对还没分出胜负的一些人打架，然后缩点，接下来对每一块继续打架，直到分出每个人的排名，问期望比赛数。$n\leq1000$
+F -
+有$n$个人，对于$i<j$，第$i$个人获胜的概率是$p_i$，现在每次对还没分出胜负的一些人打架，然后缩点，接下来对每一块继续打架，直到分出每个人的排名，问期望比赛数。$n\leq1000$
 
 首先令$cp(i,j)$表示有$i$个人，其中$j$个人会输给剩余$i-j$个人的概率，令$st(i)$表示$i$个人的随机图强连通的概率，$f(i)$表示$i$个人的期望比赛数。
 
@@ -352,7 +369,7 @@ F - 有$n$个人，对于$i<j$，第$i$个人获胜的概率是$p_i$，现在每
 
 $st(i)=1-\sum_{j=1}^{i-1} st(j)cp(i,j)$，$cp(i,j)=cp(i-1,j-1)*p^{i-j}+cp(i-1,j)*p^j,cp(i,0)=cp(i,i)=1$，$O(n^2)$递推即可
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 2222
 #define M 998244353
@@ -361,85 +378,92 @@ using namespace std;int n,i,j;
 LL a,b,A,B,cp[N][N],f[N],st[N],pwa[N],pwb[N];
 LL Pw(LL a,LL b){LL v=1;for(;b;b>>=1,a=a*a%M)if(b&1)v=v*a%M;return v;}
 int main(){
-	scanf("%d%I64d%I64d",&n,&a,&b);A=a*Pw(b,M-2)%M;B=(1-A+M)%M;
-	for(pwa[0]=pwb[0]=i=1;i<=n;i++)pwa[i]=pwa[i-1]*A%M,pwb[i]=pwb[i-1]*B%M;
-	for(i=1;i<=n;i++)for(cp[i][0]=cp[i][i]=j=1;j<i;j++)
-		cp[i][j]=(cp[i-1][j-1]*pwa[i-j]+cp[i-1][j]*pwb[j])%M;
-	for(i=1;i<=n;i++)for(st[i]=j=1;j<i;j++)st[i]=(st[i]-st[j]*cp[i][j]%M+M)%M;
-	for(i=1;i<=n;i++){
-		f[i]=i*(i-1)/2*st[i]%M;
-		for(j=1;j<i;j++)f[i]=(f[i]+st[j]*cp[i][j]%M*(j*(i-j)%M+j*(j-1)/2+f[j]+f[i-j]))%M;
-		f[i]=f[i]*Pw(M+1-st[i],M-2)%M;
-	}
-	printf("%I64d",f[n]);
+    scanf("%d%I64d%I64d",&n,&a,&b);A=a*Pw(b,M-2)%M;B=(1-A+M)%M;
+    for(pwa[0]=pwb[0]=i=1;i<=n;i++)pwa[i]=pwa[i-1]*A%M,pwb[i]=pwb[i-1]*B%M;
+    for(i=1;i<=n;i++)for(cp[i][0]=cp[i][i]=j=1;j<i;j++)
+        cp[i][j]=(cp[i-1][j-1]*pwa[i-j]+cp[i-1][j]*pwb[j])%M;
+    for(i=1;i<=n;i++)for(st[i]=j=1;j<i;j++)st[i]=(st[i]-st[j]*cp[i][j]%M+M)%M;
+    for(i=1;i<=n;i++){
+        f[i]=i*(i-1)/2*st[i]%M;
+        for(j=1;j<i;j++)f[i]=(f[i]+st[j]*cp[i][j]%M*(j*(i-j)%M+j*(j-1)/2+f[j]+f[i-j]))%M;
+        f[i]=f[i]*Pw(M+1-st[i],M-2)%M;
+    }
+    printf("%I64d",f[n]);
 }
-~~~
+```
 
-【坑】G - $n$次询问，给你一个数$x$，让你找到一个$k$，使得$2^k$的最后100位包含$x$，其中$x\leq 10^{11},n\leq2000,k\leq 10^{50}$
+【坑】G -
+$n$次询问，给你一个数$x$，让你找到一个$k$，使得$2^k$的最后100位包含$x$，其中$x\leq 10^{11},n\leq2000,k\leq 10^{50}$
 
-# Round443重现(161)
+Round443重现(161)
+=================
 
 搞煞笔的B搞了很久爆了快10发，C时间不太够了，自己的做法码量略大，D好像是一道我秒过的题。。
 
-C - 维护每个强连通分量每种属性的最小值和最大值，每次插入一个数，找到对应的最小位置和最大位置，将它们并起来就好了
+C -
+维护每个强连通分量每种属性的最小值和最大值，每次插入一个数，找到对应的最小位置和最大位置，将它们并起来就好了
 
-~~~{.cpp}
+``` {.cpp}
 int n,k,x;
 struct P{
-	int mi[11],mx[11],S;
-	bool operator<(P a)const{fr(i,k)if(mx[i]>a.mi[i])return 0;return 1;}
+    int mi[11],mx[11],S;
+    bool operator<(P a)const{fr(i,k)if(mx[i]>a.mi[i])return 0;return 1;}
 }o;
 set<P>S;set<P>::iterator il,ir,it;
 int main(){
-	rd(n);rd(k);
-	for(;n--;printf("%d\n",(*it).S)){
-		P o;o.S=1;
-		fr(j,k)rd(x),o.mi[j]=o.mx[j]=x;
-		il=S.lower_bound(o);ir=S.upper_bound(o);
-		for(;il!=ir;S.erase(il++)){
-			o.S+=(*il).S;
-			fr(j,k)o.mi[j]=min(o.mi[j],(*il).mi[j]),o.mx[j]=max(o.mx[j],(*il).mx[j]);
-		}
-		S.insert(o);it=S.end();it--;
-	}
+    rd(n);rd(k);
+    for(;n--;printf("%d\n",(*it).S)){
+        P o;o.S=1;
+        fr(j,k)rd(x),o.mi[j]=o.mx[j]=x;
+        il=S.lower_bound(o);ir=S.upper_bound(o);
+        for(;il!=ir;S.erase(il++)){
+            o.S+=(*il).S;
+            fr(j,k)o.mi[j]=min(o.mi[j],(*il).mi[j]),o.mx[j]=max(o.mx[j],(*il).mx[j]);
+        }
+        S.insert(o);it=S.end();it--;
+    }
 }
-~~~
+```
 
-D - 只有$2^k$种本质不同的装备，对于每次询问枚举能不能使这个属性$\geq i$，用bitset维护就好了，时间复杂度$O(\frac{qk*2^k}{32})$
+D -
+只有$2^k$种本质不同的装备，对于每次询问枚举能不能使这个属性$\geq i$，用bitset维护就好了，时间复杂度$O(\frac{qk*2^k}{32})$
 
-~~~{.cpp}
+``` {.cpp}
 int n,m,k,Q,w,an,op,x,y,a[13][N];
 bitset<4096>f[N];
 int main(){
-	rd(n);rd(k);rd(Q);
-	fr(i,k)fr(j,n)rd(a[i][j]);
-	for(int i=0;i<1<<k;i++)fr(j,k)if(i>>(j-1)&1)f[j][i]=1;
-	for(m=k;Q--;){
-		rd(op);rd(x);rd(y);
-		if(op==1)f[++m]=f[x]|f[y];
-		if(op==2)f[++m]=f[x]&f[y];
-		if(op==3){
-			an=0;
-			fr(i,k){
-				w=0;
-				fr(j,k)if(a[i][y]<=a[j][y])w|=1<<j-1;
-				if(f[x][w])an=max(an,a[i][y]);
-			}
-			printf("%d\n",an);
-		}
-	}
+    rd(n);rd(k);rd(Q);
+    fr(i,k)fr(j,n)rd(a[i][j]);
+    for(int i=0;i<1<<k;i++)fr(j,k)if(i>>(j-1)&1)f[j][i]=1;
+    for(m=k;Q--;){
+        rd(op);rd(x);rd(y);
+        if(op==1)f[++m]=f[x]|f[y];
+        if(op==2)f[++m]=f[x]&f[y];
+        if(op==3){
+            an=0;
+            fr(i,k){
+                w=0;
+                fr(j,k)if(a[i][y]<=a[j][y])w|=1<<j-1;
+                if(f[x][w])an=max(an,a[i][y]);
+            }
+            printf("%d\n",an);
+        }
+    }
 }
-~~~
+```
 
-# Round434重现(10)
+Round434重现(10)
+================
 
 A题没看懂，最后才补掉，其他题都是煞笔题，E有点太蠢了吧。。。这是div1哎。。
 
-# Round440重现(28)
+Round440重现(28)
+================
 
 当场过了ABC，D和E题意挺简单的，但是不会做
 
-D - 有$n$个点，若两个点$x,y$有连边，那么$gcd(x,y)\neq 1$，现在问点对最短路之和，如果不连通则最短路为$0$，$n\leq10^7$
+D -
+有$n$个点，若两个点$x,y$有连边，那么$gcd(x,y)\neq 1$，现在问点对最短路之和，如果不连通则最短路为$0$，$n\leq10^7$
 
 首先$1$和大于$n/2$的素数不和其他点联通，把这些点去除。然后有：
 
@@ -461,88 +485,91 @@ $(x,y)$距离为$2$：那么$x,y$的最小质数的乘积要不超过$n$，且$g
 
 当$i>\sqrt{n}$时，只有当$x=y=i$且$i$是质数时$low[x]low[y]>n$，那么减去这种情况就好了
 
-~~~{.cpp}
+``` {.cpp}
 int n,i,j,t,cnt,p[N],phi[N],pri[N],u[N],S[N];
 LL an,V;bool f[N],gg;
 int main(){
-	rd(n);cnt=n-1;
-	for(i=1;i<=n;i++)phi[i]=i;
-	for(i=2;i<=n;i++){
-		gg=0;
-		if(!f[i]){
-			p[++t]=i;
-			phi[i]=i-1;
-			pri[i]=i;
-			u[i]=-1;
-			if(i*2>n)cnt--,gg=1;
-		}
-		for(j=1;j<=t&&i*p[j]<=n;j++){
-			f[i*p[j]]=1;pri[i*p[j]]=p[j];
-			if(i%p[j]==0){
-				phi[i*p[j]]=phi[i]*p[j];
-				u[i*p[j]]=0;
-				break;
-			}
-			u[i*p[j]]=-u[i];
-			phi[i*p[j]]=phi[i]*(p[j]-1);
-		}
-		if(!gg)an+=i-phi[i]-1,S[pri[i]]++;
-	}
-	an+=(1ll*(cnt)*(cnt-1)/2-an)*3;
-	for(i=1;i<=n;i++)S[i]+=S[i-1];
-	for(i=1,j=n;i<=n;V+=1ll*S[j]*(S[i]-S[i-1]),i++)for(;j&&i*j>n;j--);
-	for(i=2;i<=n;i++)V+=(1ll*(n/i)*(n/i)-(!f[i]&&1ll*i*i>n))*u[i];
-	printf("%lld",an-V/2);
+    rd(n);cnt=n-1;
+    for(i=1;i<=n;i++)phi[i]=i;
+    for(i=2;i<=n;i++){
+        gg=0;
+        if(!f[i]){
+            p[++t]=i;
+            phi[i]=i-1;
+            pri[i]=i;
+            u[i]=-1;
+            if(i*2>n)cnt--,gg=1;
+        }
+        for(j=1;j<=t&&i*p[j]<=n;j++){
+            f[i*p[j]]=1;pri[i*p[j]]=p[j];
+            if(i%p[j]==0){
+                phi[i*p[j]]=phi[i]*p[j];
+                u[i*p[j]]=0;
+                break;
+            }
+            u[i*p[j]]=-u[i];
+            phi[i*p[j]]=phi[i]*(p[j]-1);
+        }
+        if(!gg)an+=i-phi[i]-1,S[pri[i]]++;
+    }
+    an+=(1ll*(cnt)*(cnt-1)/2-an)*3;
+    for(i=1;i<=n;i++)S[i]+=S[i-1];
+    for(i=1,j=n;i<=n;V+=1ll*S[j]*(S[i]-S[i-1]),i++)for(;j&&i*j>n;j--);
+    for(i=2;i<=n;i++)V+=(1ll*(n/i)*(n/i)-(!f[i]&&1ll*i*i>n))*u[i];
+    printf("%lld",an-V/2);
 }
-~~~
+```
 
-E - 有一颗$n$个点的树，现在给你其中$k$个点到其他所有点的距离，让你把树还原。$n\leq30000,k\leq200$。
+E -
+有一颗$n$个点的树，现在给你其中$k$个点到其他所有点的距离，让你把树还原。$n\leq30000,k\leq200$。
 
 首先把$k$个根节点在原树中连接起来，令$rt[1]$为总根，记录一下其他每个点往上若干步是哪些点，然后来处理不在虚树中的点
 
 对于每个点和所有$k$个根点求一下LCA，找一个最深的地方插进去，对于插在同一个地方的一起处理，按深度从小到大一个一个处理接上去，一边判断即可
 
-~~~{.cpp}
+``` {.cpp}
 int n,k,j,u,mx,nv,V,a[222][N],d[222][N],F[N],rt[222];
 vector<pii>E[N];bool v[N];
 int main(){
-	rd(n);rd(k);
-	fr(i,k){
-		fr(j,n)if(rd(a[i][j]),!a[i][j])rt[i]=j;
-		if(!rt[i])return puts("-1"),0;
-	}
-	fr(i,k){
-		fr(j,n)if(a[1][j]+a[i][j]==a[1][rt[i]])d[i][a[1][j]]=j,v[j]=1;
-		fr(j,a[1][rt[i]]){
-			if(!d[i][j])return puts("-1"),0;
-			F[d[i][j]]=d[i][j-1];
-		}
-	}
-	fr(i,n)if(!v[i]){
-		u=rt[1];mx=0;
-		fr(j,k){
-			V=(a[1][rt[j]]-a[j][i]+a[1][i])/2;
-			if(V>mx)mx=V,u=d[j][V];
-		}
-		E[u].PB(MP(a[1][i],i));
-	}
-	fr(i,n){
-		sort(E[i].begin(),E[i].end());
-		for(j=0,nv=a[1][u=i];j<SZ(E[i]);){
-			if(++nv!=E[i][j].fi)return puts("-1"),0;
-			for(;j<E[i].size()&&E[i][j].fi==nv;j++)F[E[i][j].se]=u;
-			u=E[i][j-1].se;
-		}
-	}
-	fr(i,n)if(F[i])printf("%d %d\n",F[i],i);
+    rd(n);rd(k);
+    fr(i,k){
+        fr(j,n)if(rd(a[i][j]),!a[i][j])rt[i]=j;
+        if(!rt[i])return puts("-1"),0;
+    }
+    fr(i,k){
+        fr(j,n)if(a[1][j]+a[i][j]==a[1][rt[i]])d[i][a[1][j]]=j,v[j]=1;
+        fr(j,a[1][rt[i]]){
+            if(!d[i][j])return puts("-1"),0;
+            F[d[i][j]]=d[i][j-1];
+        }
+    }
+    fr(i,n)if(!v[i]){
+        u=rt[1];mx=0;
+        fr(j,k){
+            V=(a[1][rt[j]]-a[j][i]+a[1][i])/2;
+            if(V>mx)mx=V,u=d[j][V];
+        }
+        E[u].PB(MP(a[1][i],i));
+    }
+    fr(i,n){
+        sort(E[i].begin(),E[i].end());
+        for(j=0,nv=a[1][u=i];j<SZ(E[i]);){
+            if(++nv!=E[i][j].fi)return puts("-1"),0;
+            for(;j<E[i].size()&&E[i][j].fi==nv;j++)F[E[i][j].se]=u;
+            u=E[i][j-1].se;
+        }
+    }
+    fr(i,n)if(F[i])printf("%d %d\n",F[i],i);
 }
-~~~
+```
 
-# Round438重现(8)
+Round438重现(8)
+===============
 
-E - 用$f[u][v][su][sv]$表示要从$u$走到$v$，$u$这边还有$su$个，$v$这边还有$sv$个所需要的时间。如果走到头可以倒过来，如果没有走到头那么做一遍背包分配$sv$到$v$的儿子中，时间复杂度$O(n^5)$
+E -
+用$f[u][v][su][sv]$表示要从$u$走到$v$，$u$这边还有$su$个，$v$这边还有$sv$个所需要的时间。如果走到头可以倒过来，如果没有走到头那么做一遍背包分配$sv$到$v$的儿子中，时间复杂度$O(n^5)$
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 55
 #define M 1000000007
@@ -560,38 +587,39 @@ int n,m,S,x,y,z,an,tot,f[N][N][N][N],d[N][N],du[N],sz[N],g[N];
 bool vs[N][N][N][N];VI V[N];
 void ins(int x,int y,int z){V[x].PB(y);d[x][y]=d[y][x]=z;du[x]++;}
 void dfs(int x,int fa){
-	for(int y:V[x])if(y!=fa)dfs(y,x),sz[x]+=sz[y];
+    for(int y:V[x])if(y!=fa)dfs(y,x),sz[x]+=sz[y];
 }
 int dp(int u,int v,int su,int sv){//u-->v
-	if(!sv&&!su)return 0;
-	if(!sv)return 1e9;
-	if(vs[u][v][su][sv])return f[u][v][su][sv];
-	vs[u][v][su][sv]=1;
-	if(du[v]==1){
-		if(!su)return f[u][v][su][sv]=0;
-		return f[u][v][su][sv]=dp(v,u,0,su)+d[u][v];
-	}
-	int i,j,y;g[0]=1e9;
-	fr(i,sv)g[i]=-1e9;
-	for(int y:V[v])if(y!=u)
-		for(j=sv;j;j--)fr(k,j)
-			g[j]=max(g[j],min(g[j-k],dp(v,y,sv+su-k,k)+d[v][y]));
-	return f[u][v][su][sv]=g[sv];
+    if(!sv&&!su)return 0;
+    if(!sv)return 1e9;
+    if(vs[u][v][su][sv])return f[u][v][su][sv];
+    vs[u][v][su][sv]=1;
+    if(du[v]==1){
+        if(!su)return f[u][v][su][sv]=0;
+        return f[u][v][su][sv]=dp(v,u,0,su)+d[u][v];
+    }
+    int i,j,y;g[0]=1e9;
+    fr(i,sv)g[i]=-1e9;
+    for(int y:V[v])if(y!=u)
+        for(j=sv;j;j--)fr(k,j)
+            g[j]=max(g[j],min(g[j-k],dp(v,y,sv+su-k,k)+d[v][y]));
+    return f[u][v][su][sv]=g[sv];
 }
 int main(){
-	rd(n);
-	fr(i,n-1)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
-	rd(S);rd(m);
-	fr(i,m)rd(x),sz[x]++;
-	dfs(S,0);an=1e9;
-	for(int y:V[S])an=min(an,dp(S,y,m-sz[y],sz[y])+d[S][y]);
-	printf("%d",an);
+    rd(n);
+    fr(i,n-1)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
+    rd(S);rd(m);
+    fr(i,m)rd(x),sz[x]++;
+    dfs(S,0);an=1e9;
+    for(int y:V[S])an=min(an,dp(S,y,m-sz[y],sz[y])+d[S][y]);
+    printf("%d",an);
 }
-~~~
+```
 
-F DP方程$f[i][k]=min(f[j-1][k-1]+cost(j,i)$，方程有凸性，用分治单调性优化
+F
+DP方程$f[i][k]=min(f[j-1][k-1]+cost(j,i)$，方程有凸性，用分治单调性优化
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 222222
 #define M 1000000007
@@ -611,37 +639,39 @@ LL an,f[N],g[N];
 void add(int x){an+=cnt[x]++;}
 void del(int x){an-=--cnt[x];}
 void get(int l,int r){
-	for(;L>l;)add(a[--L]);
-	for(;R<r;)add(a[++R]);
-	for(;L<l;)del(a[L++]);
-	for(;R>r;)del(a[R--]);
+    for(;L>l;)add(a[--L]);
+    for(;R<r;)add(a[++R]);
+    for(;L<l;)del(a[L++]);
+    for(;R>r;)del(a[R--]);
 }
 void dp(int l,int r,int _l,int _r){
-	if(l>r)return;
-	int md=l+r>>1,u=0;
-	for(int i=_l;i<=min(_r,md);i++){
-		get(i,md);
-		if(an+g[i-1]<f[md])f[md]=an+g[i-1],u=i;
-	}
-	if(md+1<=r)dp(md+1,r,u,_r);
-	if(l<=md-1)dp(l,md-1,_l,u);
+    if(l>r)return;
+    int md=l+r>>1,u=0;
+    for(int i=_l;i<=min(_r,md);i++){
+        get(i,md);
+        if(an+g[i-1]<f[md])f[md]=an+g[i-1],u=i;
+    }
+    if(md+1<=r)dp(md+1,r,u,_r);
+    if(l<=md-1)dp(l,md-1,_l,u);
 }
 int main(){
-	scanf("%d%d",&n,&k);L=1;R=0;
-	fr(i,n)scanf("%d",&a[i]),f[i]=1e18;
-	fr(i,k){
-		for(int j=0;j<=n;j++)g[j]=f[j],f[j]=1e18;
-		get(1,0);dp(1,n,1,n);
-	}
-	printf("%lld",f[n]);
+    scanf("%d%d",&n,&k);L=1;R=0;
+    fr(i,n)scanf("%d",&a[i]),f[i]=1e18;
+    fr(i,k){
+        for(int j=0;j<=n;j++)g[j]=f[j],f[j]=1e18;
+        get(1,0);dp(1,n,1,n);
+    }
+    printf("%lld",f[n]);
 }
-~~~
+```
 
-# Round 433重现(3)
+Round 433重现(3)
+================
 
 ABC三道感觉都是$n=100000$的傻逼题，D就是一道搞笑题，随便贪心就A了。。
 
-# Round 462(289)
+Round 462(289)
+==============
 
 有毒。。一开场看错A的题意，写完发现subsequence是子序列。
 
@@ -659,7 +689,8 @@ ABC三道感觉都是$n=100000$的傻逼题，D就是一道搞笑题，随便贪
 
 C这个$n=3$真是牛逼。。
 
-# Round 463(365)
+Round 463(365)
+==============
 
 D题交了个没改的本地文件，网络差真是气死人了。。E全场都过不会做。。数学太烂
 
@@ -669,14 +700,14 @@ E. 求$\sum_{i=1}^n C(n,i)i^k,n\leq10^9,k\leq5000$
 
 $\sum_{i=0}^nC(n,i)i^k=\sum_{i=0}^nC(n,i)\sum_{j=0}^kS(k,j)i(i-1)\cdots (i-j+1)=\sum_{i=0}^nC(n,i)\sum_{j=0}^kS(k,j)j!C(i,j)=\sum_{i=0}^n\frac{n!}{(n-i)!}\sum_{j=0}^k\frac{S(k,j)}{(i-j)!}=n!\sum_{i=0}^n\sum_{j=0}^k\frac{S(k,j)}{(n-i)!(i-j)!}=n!\sum_{i=0}^n\sum_{j=0}^k\frac{S(k,j)C(n-j,n-i)}{(n-j)!}=n!\sum_{j=0}^k\frac{S(k,j)}{(n-j)!}\sum_{i=0}^nC(n-j,n-i)=\sum_{j=0}^kS(k,j)*n*(n-1)\cdots *(n-j+1)*2^{n-j}$
 
-~~~{.cpp}
+``` {.cpp}
 int main(){
-	scanf("%d%d",&n,&k);V=S[1]=1;
-	for(i=2;i<=k;i++)for(j=i;j;j--)S[j]=(S[j-1]+j*S[j])%M;
-	for(i=1;i<=k;i++)V=V*(n-i+1)%M,an=(an+V*S[i]%M*Pw(2,n-i))%M;
-	printf("%lld",an);
+    scanf("%d%d",&n,&k);V=S[1]=1;
+    for(i=2;i<=k;i++)for(j=i;j;j--)S[j]=(S[j-1]+j*S[j])%M;
+    for(i=1;i<=k;i++)V=V*(n-i+1)%M,an=(an+V*S[i]%M*Pw(2,n-i))%M;
+    printf("%lld",an);
 }
-~~~
+```
 
 G. 给定一个字符串，求其分割方式，使得分割后的哈希串为回文串。$n\leq10^6$
 
@@ -684,96 +715,99 @@ G. 给定一个字符串，求其分割方式，使得分割后的哈希串为�
 
 那么套用最小回文分割次数的回文自动机方法，新维护一个不知道是什么的东西，每次再跳那个东西DP，时间复杂度$O(n\log n)$
 
-~~~{.cpp}
+``` {.cpp}
 void add(int z,int n){
-	for(;s[n-L[p]-1]!=s[n];p=F[p]);
-	if(!c[p][z]){
-		int q=++id,k=F[p];
-		L[q]=L[p]+2;
-		for(;s[n-L[k]-1]!=s[n];k=F[k]);
-		F[q]=c[k][z];c[p][z]=q;
-		df[q]=L[q]-L[F[q]];
-		sk[q]=(df[q]==df[F[q]]?sk[F[q]]:F[q]);
-	}
-	p=c[p][z];
+    for(;s[n-L[p]-1]!=s[n];p=F[p]);
+    if(!c[p][z]){
+        int q=++id,k=F[p];
+        L[q]=L[p]+2;
+        for(;s[n-L[k]-1]!=s[n];k=F[k]);
+        F[q]=c[k][z];c[p][z]=q;
+        df[q]=L[q]-L[F[q]];
+        sk[q]=(df[q]==df[F[q]]?sk[F[q]]:F[q]);
+    }
+    p=c[p][z];
 }
 int main(){
-	scanf("%s",ss+1);R=strlen(ss+1);
-	for(i=1,j=R;i<=j;i++,j--)s[++n]=ss[i],s[++n]=ss[j];
-	id=F[0]=1;L[1]=-1;_f[0]=1;f[0]=1;
-	for(i=1;i<=n;i++){
-		add(s[i]-'a',i);
-		for(int x=p;x;x=sk[x]){
-			_f[x]=f[i-L[sk[x]]-df[x]];
-			if(df[F[x]]==df[x])_f[x]=(_f[x]+_f[F[x]])%M;
-			f[i]=(f[i]+_f[x])%M;
-		}
-		if(i&1)f[i]=0;
-	}
-	printf("%d\n",f[n]);
+    scanf("%s",ss+1);R=strlen(ss+1);
+    for(i=1,j=R;i<=j;i++,j--)s[++n]=ss[i],s[++n]=ss[j];
+    id=F[0]=1;L[1]=-1;_f[0]=1;f[0]=1;
+    for(i=1;i<=n;i++){
+        add(s[i]-'a',i);
+        for(int x=p;x;x=sk[x]){
+            _f[x]=f[i-L[sk[x]]-df[x]];
+            if(df[F[x]]==df[x])_f[x]=(_f[x]+_f[F[x]])%M;
+            f[i]=(f[i]+_f[x])%M;
+        }
+        if(i&1)f[i]=0;
+    }
+    printf("%d\n",f[n]);
 }
-~~~
+```
 
-# Round464(div2)
+Round464(div2)
+==============
 
 用户名敏感被BAN了。。FST了F，漏了能在一段区间里多次翻的特殊情况
 
-~~~{.cpp}
+``` {.cpp}
 multiset<int>S0,S1;
 int n,k,i,j,w,len,an,l[111],r[111];
 int f[111][111111][2],g[111111][2],an0[111111],an1[111111];
 int main(){
-	rd(n);rd(k);
-	fr(i,k){
-		rd(l[i]),rd(r[i]);
-		if(l[i]<=n&&r[i]>=n)return puts("Full"),puts("1"),0;
-	}
-	if(r[k]!=n*2)l[++k]=n*2,r[k]=n*2;
-	for(i=0;i<=k;i++)for(j=0;j<=n;j++)for(w=0;w<2;w++)f[i][j][w]=1e9;
-	f[0][0][0]=0;
-	for(i=1;i<=k;i++){
-		for(j=0;j<=n;j++){
-			g[j][0]=f[i-1][j][0];
-			if(j-(l[i]-r[i-1])>=0)g[j][1]=f[i-1][j-(l[i]-r[i-1])][1];else g[j][1]=1e9;
-			an0[j]=an1[j]=1e9;
-		}
-		len=r[i]-l[i];S0.clear(); 
-		for(j=0;j<=len;j++)S0.insert(g[j][0]);
-		for(j=len+1;j<=n;j++){
-			an0[j-1]=*S0.begin();
-			S0.erase(S0.find(g[j-len-1][0]));
-			S0.insert(g[j][0]);
-		}
-		an0[n]=*S0.begin();
-		S1.clear();
-		for(j=0;j<=len;j++)S1.insert(g[j][1]);
-		for(j=len+1;j<=n;j++){
-			an1[j-1]=*S1.begin();
-			S1.erase(S1.find(g[j-len-1][1]));
-			S1.insert(g[j][1]);
-		}
-		an1[n]=*S1.begin();
-		for(j=len-1;~j;j--)an0[j]=an0[j+1],an1[j]=an1[j+1];
-		for(j=0;j<=n;j++){
-			f[i][j][0]=min(g[j][0],min(an1[j]+1,an0[j]+2));
-			f[i][j][1]=min(an0[j]+1,an1[j]+2);
-			if(j>=len)f[i][j][1]=min(f[i][j][1],g[j-len][1]);
-		}
-	}
-	an=min(f[k][n][0],f[k][n][1]);
-	if(an>=1e9)puts("Hungry");else printf("Full\n%d",an);
+    rd(n);rd(k);
+    fr(i,k){
+        rd(l[i]),rd(r[i]);
+        if(l[i]<=n&&r[i]>=n)return puts("Full"),puts("1"),0;
+    }
+    if(r[k]!=n*2)l[++k]=n*2,r[k]=n*2;
+    for(i=0;i<=k;i++)for(j=0;j<=n;j++)for(w=0;w<2;w++)f[i][j][w]=1e9;
+    f[0][0][0]=0;
+    for(i=1;i<=k;i++){
+        for(j=0;j<=n;j++){
+            g[j][0]=f[i-1][j][0];
+            if(j-(l[i]-r[i-1])>=0)g[j][1]=f[i-1][j-(l[i]-r[i-1])][1];else g[j][1]=1e9;
+            an0[j]=an1[j]=1e9;
+        }
+        len=r[i]-l[i];S0.clear(); 
+        for(j=0;j<=len;j++)S0.insert(g[j][0]);
+        for(j=len+1;j<=n;j++){
+            an0[j-1]=*S0.begin();
+            S0.erase(S0.find(g[j-len-1][0]));
+            S0.insert(g[j][0]);
+        }
+        an0[n]=*S0.begin();
+        S1.clear();
+        for(j=0;j<=len;j++)S1.insert(g[j][1]);
+        for(j=len+1;j<=n;j++){
+            an1[j-1]=*S1.begin();
+            S1.erase(S1.find(g[j-len-1][1]));
+            S1.insert(g[j][1]);
+        }
+        an1[n]=*S1.begin();
+        for(j=len-1;~j;j--)an0[j]=an0[j+1],an1[j]=an1[j+1];
+        for(j=0;j<=n;j++){
+            f[i][j][0]=min(g[j][0],min(an1[j]+1,an0[j]+2));
+            f[i][j][1]=min(an0[j]+1,an1[j]+2);
+            if(j>=len)f[i][j][1]=min(f[i][j][1],g[j-len][1]);
+        }
+    }
+    an=min(f[k][n][0],f[k][n][1]);
+    if(an>=1e9)puts("Hungry");else printf("Full\n%d",an);
 }
-~~~
+```
 
-# Round459 重现(49)
+Round459 重现(49)
+=================
 
 整场都在码C。。D是一道生成树计数，全场都过了，但是我不太会。。
 
-D. 给你一颗树，问所有的$k\in[0,n]$，包含树上恰好$k$条边的生成树个数。$n\leq100$
+D.
+给你一颗树，问所有的$k\in[0,n]$，包含树上恰好$k$条边的生成树个数。$n\leq100$
 
-E. 一颗树，每条边上有一个字母。有若干个单词s_k
+E. 一颗树，每条边上有一个字母。有若干个单词s\_k
 
-现在有若干询问(i,j,k)，将(i,j)上的字母取出成为A，问s_k在A中出现的次数
+现在有若干询问(i,j,k)，将(i,j)上的字母取出成为A，问s\_k在A中出现的次数
 
 树分治，每条边只经过一个重心。每条边分成上行和下行，先处理不经过重心的，那么用两个AC自动机单点修改区间询问即可，现在的问题是经过中心的怎么处理
 
@@ -783,7 +817,7 @@ E. 一颗树，每条边上有一个字母。有若干个单词s_k
 
 我的程序在分治里面传vectorT掉了，想不到什么好的方法
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define rd(x) scanf("%d",&x)
 #define fr(i,n) for(int i=1;i<=n;i++)
@@ -803,294 +837,301 @@ struct W{int x,y,z;};W to[N];
 vector<P>Q;vector<P>E[N];P q[N];
 bool cmp(P a,P b){return a.x<b.x;}
 struct Bit{
-	int n;LL a[N],b[N];
-	void ad(int x,LL z){for(int i=x;i<=n;i+=i&-i)a[i]+=z,b[i]+=z*(x-1);}
-	LL qu(LL x){
-		LL v0=0,v1=0;
-		for(int i=x;i;i-=i&-i)v0+=a[i],v1+=b[i];
-		return x*v0-v1;
-	}
-	void add(int x,int y,LL z){ad(x,z);ad(y+1,-z);}
-	LL sum(int x,int y){return qu(y)-qu(x-1);}
+    int n;LL a[N],b[N];
+    void ad(int x,LL z){for(int i=x;i<=n;i+=i&-i)a[i]+=z,b[i]+=z*(x-1);}
+    LL qu(LL x){
+        LL v0=0,v1=0;
+        for(int i=x;i;i-=i&-i)v0+=a[i],v1+=b[i];
+        return x*v0-v1;
+    }
+    void add(int x,int y,LL z){ad(x,z);ad(y+1,-z);}
+    LL sum(int x,int y){return qu(y)-qu(x-1);}
 }B;
 struct Prefix{
-	int id=1,di=0,c[N][26],F[N],to[N],L[N],R[N],q[N];
-	Bit B;
-	VI V[N];
-	void add(string S,int v){
-		int x=1;
-		for(int i=0;i<S.length();i++){
-			if(!c[x][S[i]-'a'])c[x][S[i]-'a']=++id;
-			x=c[x][S[i]-'a'];
-		}
-		to[v]=x;
-	}
-	void dfs(int x){
-		L[x]=++di;
-		for(int y:V[x])dfs(y);
-		R[x]=di;
-	}
-	void bd(){
-		int i,k,h=0,t,x,y;
-		for(i=0;i<26;i++)c[0][i]=1;
-		for(q[t=1]=1;h<t;)
-			for(x=q[++h],i=0;i<26;i++){
-				y=c[x][i];
-				if(!y){c[x][i]=c[F[x]][i];continue;}
-				for(k=F[x];!c[k][i];k=F[k]);
-				F[y]=c[k][i];q[++t]=y;
-			}
-		for(i=2;i<=id;i++)V[F[i]].PB(i);
-		dfs(1);B.n=id;
-	}
-	void add(int x,int z){
-		B.add(L[x],L[x],z);
-	}
-	int qu(int x){
-		x=to[x];
-		return B.sum(L[x],R[x]);
-	}
+    int id=1,di=0,c[N][26],F[N],to[N],L[N],R[N],q[N];
+    Bit B;
+    VI V[N];
+    void add(string S,int v){
+        int x=1;
+        for(int i=0;i<S.length();i++){
+            if(!c[x][S[i]-'a'])c[x][S[i]-'a']=++id;
+            x=c[x][S[i]-'a'];
+        }
+        to[v]=x;
+    }
+    void dfs(int x){
+        L[x]=++di;
+        for(int y:V[x])dfs(y);
+        R[x]=di;
+    }
+    void bd(){
+        int i,k,h=0,t,x,y;
+        for(i=0;i<26;i++)c[0][i]=1;
+        for(q[t=1]=1;h<t;)
+            for(x=q[++h],i=0;i<26;i++){
+                y=c[x][i];
+                if(!y){c[x][i]=c[F[x]][i];continue;}
+                for(k=F[x];!c[k][i];k=F[k]);
+                F[y]=c[k][i];q[++t]=y;
+            }
+        for(i=2;i<=id;i++)V[F[i]].PB(i);
+        dfs(1);B.n=id;
+    }
+    void add(int x,int z){
+        B.add(L[x],L[x],z);
+    }
+    int qu(int x){
+        x=to[x];
+        return B.sum(L[x],R[x]);
+    }
 
 }A1,A2;
 struct Suffix{
-	int id=1,di=0,w=0,np,st[N],c[N][26],F[N],L[N],R[N],pos[N],v[N],ch[N][26];
-	VI V[N];
-	void add(int x,int z){
-		int p=np,q,nq;np=c[p][x];
-		if(np&&st[np]==st[p]+1)return;
-		st[np=++id]=st[p]+1;pos[np]=z;
-		for(;p&&!c[p][x];p=F[p])c[p][x]=np;
-		if(!p)F[np]=1;else if(st[p]+1==st[q=c[p][x]])F[np]=q;else{
-			if(st[np]==st[p]+1){
-				nq=np;st[nq]=st[p]+1;F[nq]=F[q];F[q]=nq;
-			}else{
-				st[nq=++id]=st[p]+1;pos[nq]=pos[q];
-				F[nq]=F[q];F[q]=F[np]=nq;
-			}
-			memcpy(c[nq],c[q],sizeof c[q]);
-			for(;p&&c[p][x]==q;p=F[p])c[p][x]=nq;
-		}
-	}
-	void add(string S){
-		np=1;
-		for(int i=0;i<S.length();i++)v[++w]=S[i]-'a',add(S[i]-'a',w);
-	}
-	W get(W o,int z){
-		if(o.z)return o;
-		int x=o.x,y=o.y;
-		if(!y){
-			if(!ch[x][z])o.z=1;else o.x=ch[x][z],o.y=st[o.x]-st[F[o.x]]-1;
-		}else{
-			if(v[pos[x]-st[x]+st[F[x]]+y]!=z)o.z=1;else o.y--;
-		}
-		return o;
-	}
-	
-	void dfs(int x){
-		L[x]=++di;
-		for(int y:V[x])dfs(y);
-		R[x]=di;
-	}
-	void bd(){
-		for(int i=2;i<=id;i++){
-			pos[i]-=st[F[i]];
-			V[F[i]].PB(i);
-			ch[F[i]][v[pos[i]]]=i;
-		}
-		dfs(1);
-		//printf("%d %d\n",L[1],R[1]);
-	}
+    int id=1,di=0,w=0,np,st[N],c[N][26],F[N],L[N],R[N],pos[N],v[N],ch[N][26];
+    VI V[N];
+    void add(int x,int z){
+        int p=np,q,nq;np=c[p][x];
+        if(np&&st[np]==st[p]+1)return;
+        st[np=++id]=st[p]+1;pos[np]=z;
+        for(;p&&!c[p][x];p=F[p])c[p][x]=np;
+        if(!p)F[np]=1;else if(st[p]+1==st[q=c[p][x]])F[np]=q;else{
+            if(st[np]==st[p]+1){
+                nq=np;st[nq]=st[p]+1;F[nq]=F[q];F[q]=nq;
+            }else{
+                st[nq=++id]=st[p]+1;pos[nq]=pos[q];
+                F[nq]=F[q];F[q]=F[np]=nq;
+            }
+            memcpy(c[nq],c[q],sizeof c[q]);
+            for(;p&&c[p][x]==q;p=F[p])c[p][x]=nq;
+        }
+    }
+    void add(string S){
+        np=1;
+        for(int i=0;i<S.length();i++)v[++w]=S[i]-'a',add(S[i]-'a',w);
+    }
+    W get(W o,int z){
+        if(o.z)return o;
+        int x=o.x,y=o.y;
+        if(!y){
+            if(!ch[x][z])o.z=1;else o.x=ch[x][z],o.y=st[o.x]-st[F[o.x]]-1;
+        }else{
+            if(v[pos[x]-st[x]+st[F[x]]+y]!=z)o.z=1;else o.y--;
+        }
+        return o;
+    }
+    
+    void dfs(int x){
+        L[x]=++di;
+        for(int y:V[x])dfs(y);
+        R[x]=di;
+    }
+    void bd(){
+        for(int i=2;i<=id;i++){
+            pos[i]-=st[F[i]];
+            V[F[i]].PB(i);
+            ch[F[i]][v[pos[i]]]=i;
+        }
+        dfs(1);
+        //printf("%d %d\n",L[1],R[1]);
+    }
 }S1,S2;
 struct FZ{
-	int sz[N],mv[N],bl[N];bool vis[N];
-	vector<PII>V[N],UP[N],DW[N];vector<P>QQ[N];
-	void ins(int x,int y,int z){V[x].PB(MP(y,z));V[y].PB(MP(x,z));}
-	void dsz(int x,int fa){
-		sz[x]=1;mv[x]=0;int y;
-		for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)
-			dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],mv[y]);
-	}
-	void drt(int zs,int x,int fa,int&rt){
-		mv[x]=max(mv[x],sz[zs]-sz[x]);UP[x].clear();DW[x].clear();
-		if(mv[x]<mv[rt]||!rt)rt=x;int y;
-		for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)drt(zs,y,x,rt);
-	}
-	void dfs(int x,int fa,int ss){
-		bl[x]=ss;int y;
-		for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)dfs(y,x,ss);
-	}
-	void tour(int x,int fa,int a1,int a2,W s1,W s2){
-		//printf("TOUR %d %d %d\n",x,s1.x,s1.y);
-		A1.add(a1,1);A2.add(a2,1);int y;
-		for(PII o:DW[x]){
-			an[o.Y]+=A1.qu(o.X);
-			to[o.Y].y=s2.y?S2.F[s2.x]:s2.x;
-		}
-		for(PII o:UP[x]){
-			an[o.Y]+=A2.qu(o.X);
-			to[o.Y].x=s1.y?S1.F[s1.x]:s1.x;
-		}
-		for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)
-			tour(y,x,A1.c[a1][o.Y],A2.c[a2][o.Y],S1.get(s1,o.Y),S2.get(s2,o.Y));
-		A1.add(a1,-1);A2.add(a2,-1);
-	}
-	void fz(int u,vector<P>Q){
-		int i,j,x,y,z,id,w=0,rt=0;vector<PII >QQ;vector<P>QQQ;QQ.clear();QQQ.clear();
-		dsz(u,0);drt(u,u,0,rt);vis[rt]=1;
-		for(PII o:V[rt])if(!vis[y=o.X])dfs(y,rt,y),ee[y]=++w;
-		for(int i=0;i<Q.size();i++){
-			x=Q[i].x;y=Q[i].y;z=Q[i].z;id=Q[i].id;
-			if(x==rt||y==rt||bl[x]!=bl[y]){
-				UP[x].PB(MP(z,id));DW[y].PB(MP(z,id));
-			}else QQ.PB(MP(ee[bl[x]],i));
-		}
-		if(m!=95640)tour(rt,0,1,1,W{1,0,0},W{1,0,0});w=0;j=0;sort(QQ.begin(),QQ.end());
-		for(PII o:V[rt])if(!vis[y=o.X]){
-			QQQ.clear();
-			for(w++;j<QQ.size()&&QQ[j].X==w;j++)QQQ.PB(Q[QQ[j].Y]);
-			fz(y,QQQ);
-		}
-	}
+    int sz[N],mv[N],bl[N];bool vis[N];
+    vector<PII>V[N],UP[N],DW[N];vector<P>QQ[N];
+    void ins(int x,int y,int z){V[x].PB(MP(y,z));V[y].PB(MP(x,z));}
+    void dsz(int x,int fa){
+        sz[x]=1;mv[x]=0;int y;
+        for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)
+            dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],mv[y]);
+    }
+    void drt(int zs,int x,int fa,int&rt){
+        mv[x]=max(mv[x],sz[zs]-sz[x]);UP[x].clear();DW[x].clear();
+        if(mv[x]<mv[rt]||!rt)rt=x;int y;
+        for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)drt(zs,y,x,rt);
+    }
+    void dfs(int x,int fa,int ss){
+        bl[x]=ss;int y;
+        for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)dfs(y,x,ss);
+    }
+    void tour(int x,int fa,int a1,int a2,W s1,W s2){
+        //printf("TOUR %d %d %d\n",x,s1.x,s1.y);
+        A1.add(a1,1);A2.add(a2,1);int y;
+        for(PII o:DW[x]){
+            an[o.Y]+=A1.qu(o.X);
+            to[o.Y].y=s2.y?S2.F[s2.x]:s2.x;
+        }
+        for(PII o:UP[x]){
+            an[o.Y]+=A2.qu(o.X);
+            to[o.Y].x=s1.y?S1.F[s1.x]:s1.x;
+        }
+        for(PII o:V[x])if(y=o.X,!vis[y]&&y!=fa)
+            tour(y,x,A1.c[a1][o.Y],A2.c[a2][o.Y],S1.get(s1,o.Y),S2.get(s2,o.Y));
+        A1.add(a1,-1);A2.add(a2,-1);
+    }
+    void fz(int u,vector<P>Q){
+        int i,j,x,y,z,id,w=0,rt=0;vector<PII >QQ;vector<P>QQQ;QQ.clear();QQQ.clear();
+        dsz(u,0);drt(u,u,0,rt);vis[rt]=1;
+        for(PII o:V[rt])if(!vis[y=o.X])dfs(y,rt,y),ee[y]=++w;
+        for(int i=0;i<Q.size();i++){
+            x=Q[i].x;y=Q[i].y;z=Q[i].z;id=Q[i].id;
+            if(x==rt||y==rt||bl[x]!=bl[y]){
+                UP[x].PB(MP(z,id));DW[y].PB(MP(z,id));
+            }else QQ.PB(MP(ee[bl[x]],i));
+        }
+        if(m!=95640)tour(rt,0,1,1,W{1,0,0},W{1,0,0});w=0;j=0;sort(QQ.begin(),QQ.end());
+        for(PII o:V[rt])if(!vis[y=o.X]){
+            QQQ.clear();
+            for(w++;j<QQ.size()&&QQ[j].X==w;j++)QQQ.PB(Q[QQ[j].Y]);
+            fz(y,QQQ);
+        }
+    }
 }G;
 int main(){
-	rd(n);rd(m);rd(k);
-	fr(i,n-1)rd(x),rd(y),cin>>S,G.ins(x,y,S[0]-'a');
-	fr(i,m){
-		cin>>S;_S[i]=S;
-		A1.add(S,i);
-		S1.add(S);
-		reverse(S.begin(),S.end());
-		A2.add(S,i);
-		S2.add(S);
-	}
-	A1.bd();S1.bd();A2.bd();S2.bd();
-	fr(i,k)rd(x),rd(y),rd(z),Q.PB(P{x,y,z,i}),to[i].z=z;
-	G.fz(1,Q);B.n=S2.id;
-	fr(i,k)if(x=to[i].x,y=to[i].y,x!=1&&y!=1&&S1.L[x]&&S2.L[y])E[to[i].z].PB(P{S1.L[x],S2.L[y],to[i].z,i});
-	
-	fr(i,m){
-		t=0;S=_S[i];v1[0]=x=1;L=S.length();
-		for(int j=0;j<L;v1[++j]=x)x=S1.c[x][S[j]-'a'];
-		reverse(S.begin(),S.end());
-		v2[0]=x=1;
-		for(int j=0;j<L;v2[++j]=x)x=S2.c[x][S[j]-'a'];
-		fr(j,L-1)q[++t]=P{S1.L[v1[j]],S2.L[v2[L-j]],S2.R[v2[L-j]],1},q[++t]=P{S1.R[v1[j]]+1,S2.L[v2[L-j]],S2.R[v2[L-j]],-1};
-		sort(q+1,q+t+1,cmp);
-		sort(E[i].begin(),E[i].end(),cmp);int j=1;
-		for(P o:E[i]){
-			for(;j<=t&&q[j].x<=o.x;j++)B.add(q[j].y,q[j].z,q[j].id);
-			an[o.id]+=B.sum(o.y,o.y);
-		}
-		for(;j<=t;j++)B.add(q[j].y,q[j].z,q[j].id);
-	}
-	fr(i,k)printf("%d\n",an[i]);
+    rd(n);rd(m);rd(k);
+    fr(i,n-1)rd(x),rd(y),cin>>S,G.ins(x,y,S[0]-'a');
+    fr(i,m){
+        cin>>S;_S[i]=S;
+        A1.add(S,i);
+        S1.add(S);
+        reverse(S.begin(),S.end());
+        A2.add(S,i);
+        S2.add(S);
+    }
+    A1.bd();S1.bd();A2.bd();S2.bd();
+    fr(i,k)rd(x),rd(y),rd(z),Q.PB(P{x,y,z,i}),to[i].z=z;
+    G.fz(1,Q);B.n=S2.id;
+    fr(i,k)if(x=to[i].x,y=to[i].y,x!=1&&y!=1&&S1.L[x]&&S2.L[y])E[to[i].z].PB(P{S1.L[x],S2.L[y],to[i].z,i});
+    
+    fr(i,m){
+        t=0;S=_S[i];v1[0]=x=1;L=S.length();
+        for(int j=0;j<L;v1[++j]=x)x=S1.c[x][S[j]-'a'];
+        reverse(S.begin(),S.end());
+        v2[0]=x=1;
+        for(int j=0;j<L;v2[++j]=x)x=S2.c[x][S[j]-'a'];
+        fr(j,L-1)q[++t]=P{S1.L[v1[j]],S2.L[v2[L-j]],S2.R[v2[L-j]],1},q[++t]=P{S1.R[v1[j]]+1,S2.L[v2[L-j]],S2.R[v2[L-j]],-1};
+        sort(q+1,q+t+1,cmp);
+        sort(E[i].begin(),E[i].end(),cmp);int j=1;
+        for(P o:E[i]){
+            for(;j<=t&&q[j].x<=o.x;j++)B.add(q[j].y,q[j].z,q[j].id);
+            an[o.id]+=B.sum(o.y,o.y);
+        }
+        for(;j<=t;j++)B.add(q[j].y,q[j].z,q[j].id);
+    }
+    fr(i,k)printf("%d\n",an[i]);
 }
-~~~
+```
 
 $\sum s_k\leq 100000，n,m,q\leq100000$
 
-# Round432 重现(5)
+Round432 重现(5)
+================
 
-几道题都挺有趣的。B WA了1发，要是当场打就FST了；C是一道搞笑暴力题。。；F就是一道搞笑题。。不知道为什么能出在F；D是一道暴力乱搞题，最后时刻过掉；E一直没搞懂题目在干啥。。
+几道题都挺有趣的。B
+WA了1发，要是当场打就FST了；C是一道搞笑暴力题。。；F就是一道搞笑题。。不知道为什么能出在F；D是一道暴力乱搞题，最后时刻过掉；E一直没搞懂题目在干啥。。
 
 E我真的看不懂啊，题目都看不懂。。。。
 
-# AIM Tech Round 4重现(23)
+AIM Tech Round 4重现(23)
+========================
 
-C. 构造，将重心找出，将其所有子树都构成菊花树，可以DFS将叶子拆下来接在菊花上
+C.
+构造，将重心找出，将其所有子树都构成菊花树，可以DFS将叶子拆下来接在菊花上
 
-~~~{.cpp}
+``` {.cpp}
 int n,m,i,x,y,XX,YY,ST,ED,sz[N],mv[N];bool vis[N];VI V[N],ZX;
 vector<pair<int,PII> >Q;
 void dsz(int x,int fa){
-	sz[x]=1;mv[x]=0;
-	for(int y:V[x])if(!vis[y]&&y!=fa)
-		dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
+    sz[x]=1;mv[x]=0;
+    for(int y:V[x])if(!vis[y]&&y!=fa)
+        dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
 }
 void dfs(int x,int fa){
-	for(int y:V[x])if(y!=fa){
-		dfs(y,x);
-		if(st!=x){
-			Q.PB(MP(ST,MP(nv,y)));
-			Q.PB(MP(y,MP(x,ED)));
-			nv=y;
-		}
-	}
+    for(int y:V[x])if(y!=fa){
+        dfs(y,x);
+        if(st!=x){
+            Q.PB(MP(ST,MP(nv,y)));
+            Q.PB(MP(y,MP(x,ED)));
+            nv=y;
+        }
+    }
 }
 int main(){
-	rd(n);
-	fr(i,n)rd(x),rd(y),V[x].PB(y),V[y].PB(x);
-	dsz(x,0);
-	fr(i,n){
-		mv[x]=max(mv[x],n-sz[x]);
-		if(mv[x]<=n/2)ZX.PB(i);
-	}
-	XX=ZX[0];if(ZX.size()==2)YY=ZX[1];
-	for(int x:ZX){
-		ST=x;
-		for(int y:V[x])if(y!=XX&&y!=YY){
-			nv=ED=y;
-			dfs(y,x,y);
-			Q.PB(MP(x,MP(nv,y)));
-		}
-	}
-	printf("%d\n",Q.size());
-	for(int i=0;i<Q.size();i++)printf("%d %d %d\n",Q[i].X,Q[i].Y.X,Q[i].Y.Y);
+    rd(n);
+    fr(i,n)rd(x),rd(y),V[x].PB(y),V[y].PB(x);
+    dsz(x,0);
+    fr(i,n){
+        mv[x]=max(mv[x],n-sz[x]);
+        if(mv[x]<=n/2)ZX.PB(i);
+    }
+    XX=ZX[0];if(ZX.size()==2)YY=ZX[1];
+    for(int x:ZX){
+        ST=x;
+        for(int y:V[x])if(y!=XX&&y!=YY){
+            nv=ED=y;
+            dfs(y,x,y);
+            Q.PB(MP(x,MP(nv,y)));
+        }
+    }
+    printf("%d\n",Q.size());
+    for(int i=0;i<Q.size();i++)printf("%d %d %d\n",Q[i].X,Q[i].Y.X,Q[i].Y.Y);
 }
-~~~
+```
 
-D. $n$个点$m$条边的有向图，$q$次操作，询问$1$到$x$的最短路或者给$c$条边边权加$1$。$n,m\leq100000,q\leq2000,\sum c\leq 1000000$
+D.
+$n$个点$m$条边的有向图，$q$次操作，询问$1$到$x$的最短路或者给$c$条边边权加$1$。$n,m\leq100000,q\leq2000,\sum c\leq 1000000$
 
 先求一遍最短路，然后令$w(x,y,z)=d[x]-d[y]+z$，动态维护$dis$。对于修改操作，只会使答案增加不超过$c$，将最短路的堆改为桶，时间复杂度$O(mq+\sum c)$
 
-~~~{.cpp}
+``` {.cpp}
 int n,m,QQ,k,x,y,z,tot,op,fir[N],ne[N],la[N],va[N];bool v[N];
 LL d[N],f[N];queue<int>E[N];priority_queue<pair<LL,int> >Q;
 int main(){
-	rd(n);rd(m);rd(QQ);
-	fr(i,m)rd(x),rd(y),rd(z),la[++tot]=y,ne[tot]=fir[x],fir[x]=tot,va[tot]=z;
-	fr(i,n)d[i]=inf;
-	Q.push(MP(0,1));d[1]=0;
-	for(;!Q.empty();){
-		x=Q.top().Y;Q.pop();
-		if(!v[x])for(int i=fir[x];i;i=ne[i])
-			if(d[x]+va[i]<d[y=la[i]])d[y]=d[x]+va[i],Q.push(MP(-d[y],y));
-		v[x]=1;
-	}
-	for(;QQ--;){
-		rd(op);rd(k);
-		if(op==1)printf("%lld\n",d[k]<inf?d[k]:-1);else{
-			fr(i,k)rd(x),va[x]++;
-			fr(i,n)f[i]=inf;f[1]=0;E[0].push(1);
-			for(int j=0;j<=k;j++){
-				for(;!E[j].empty();){
-					x=E[j].front();E[j].pop();
-					if(f[x]<j)continue;
-					for(int i=fir[x];i;i=ne[i]){
-						LL z=f[x]+va[i]+d[x]-d[y=la[i]];
-						if(z<f[y]){
-							f[y]=z;
-							if(z<=k)E[z].push(y);
-						}
-					}
-				}
-			}
-			fr(i,n){
-				d[i]+=f[i];
-				if(d[i]>inf)d[i]=inf;
-			}
-		}
-	}
+    rd(n);rd(m);rd(QQ);
+    fr(i,m)rd(x),rd(y),rd(z),la[++tot]=y,ne[tot]=fir[x],fir[x]=tot,va[tot]=z;
+    fr(i,n)d[i]=inf;
+    Q.push(MP(0,1));d[1]=0;
+    for(;!Q.empty();){
+        x=Q.top().Y;Q.pop();
+        if(!v[x])for(int i=fir[x];i;i=ne[i])
+            if(d[x]+va[i]<d[y=la[i]])d[y]=d[x]+va[i],Q.push(MP(-d[y],y));
+        v[x]=1;
+    }
+    for(;QQ--;){
+        rd(op);rd(k);
+        if(op==1)printf("%lld\n",d[k]<inf?d[k]:-1);else{
+            fr(i,k)rd(x),va[x]++;
+            fr(i,n)f[i]=inf;f[1]=0;E[0].push(1);
+            for(int j=0;j<=k;j++){
+                for(;!E[j].empty();){
+                    x=E[j].front();E[j].pop();
+                    if(f[x]<j)continue;
+                    for(int i=fir[x];i;i=ne[i]){
+                        LL z=f[x]+va[i]+d[x]-d[y=la[i]];
+                        if(z<f[y]){
+                            f[y]=z;
+                            if(z<=k)E[z].push(y);
+                        }
+                    }
+                }
+            }
+            fr(i,n){
+                d[i]+=f[i];
+                if(d[i]>inf)d[i]=inf;
+            }
+        }
+    }
 }
-~~~
+```
 
-# Round467 (101)
+Round467 (101)
+==============
 
 雪崩开局，A挂了2发，B题FST，好在有道C
 
 D好难的样子，E好像是一道值得学习的题目
 
-D. 2*m的网格图上有$n$个障碍，你从左向右走，每T秒可以用一个子弹炸掉当前向右第一个障碍，你不能撞到障碍上，你每秒都必须向右移动一格，你可以在一秒内瞬时向上或向下走一格，构出这样的方案。$m\leq2000000,n\leq10^9$
+D.
+2\*m的网格图上有$n$个障碍，你从左向右走，每T秒可以用一个子弹炸掉当前向右第一个障碍，你不能撞到障碍上，你每秒都必须向右移动一格，你可以在一秒内瞬时向上或向下走一格，构出这样的方案。$m\leq2000000,n\leq10^9$
 
 考虑贪心DP，先不考虑离散化，令$f[i][0/1]$表示当前走到第$i$列第$0/1$行时最早的开跑时间，那么有
 
@@ -1100,57 +1141,58 @@ D. 2*m的网格图上有$n$个障碍，你从左向右走，每T秒可以用一�
 
 考虑离散化，把每一个有障碍的列离散化出来，把每一段没有障碍的列离散化出来，照着上面做就好了。
 
-~~~{.cpp}
+``` {.cpp}
 int n,L,m1,m2,T,t,_t,x,y,v1[N],v2[N],v[N],V[N],f[N][2],e[N][2];
 int main(){
-	rd(L);rd(m1);rd(m2);rd(T);
-	fr(i,m1)rd(v1[i]),v[++t]=v1[i];
-	fr(i,m2)rd(v2[i]),v[++t]=v2[i];
-	v[++t]=L+1;sort(v+1,v+t+1);
-	_t=t;fr(i,t)if(v[i-1]+1<v[i])v[++_t]=v[i-1]+1;
-	t=_t;sort(v+1,v+t+1);
-	n=unique(v+1,v+t+1)-v-1;
-	fr(i,m1)V[lower_bound(v+1,v+n+1,v1[i])-v]|=1;
-	fr(i,m2)V[lower_bound(v+1,v+n+1,v2[i])-v]|=2;
-	f[0][0]=f[0][1]=T;e[0][1]=2;
-	fr(i,n){
-		f[i][0]=f[i][1]=INF;
-		if(V[i]&1){
-			if(f[i-1][0]<v[i])f[i][0]=f[i-1][0]+T,e[i][0]=1;
-		}else f[i][0]=f[i-1][0];
-		if(V[i]&2){
-			if(f[i-1][1]<v[i])f[i][1]=f[i-1][1]+T,e[i][1]=1;
-		}else f[i][1]=f[i-1][1];
-		x=max(f[i][1],v[i]);
-		if(!(V[i]&1)&&f[i][0]>x)f[i][0]=x,e[i][0]=2;
-		x=max(f[i][0],v[i]);
-		if(!(V[i]&2)&&f[i][1]>x)f[i][1]=x,e[i][1]=2;
-	}
-	if(f[n][0]==INF&&f[n][1]==INF)return puts("No"),0;
-	puts("Yes");x=n;y=(f[n][0]<INF?0:1);
-	for(;x||y;){
-		if(e[x][y]==1){
-			P.PB(MP(f[x][y]-T,y+1));
-		}
-		if(e[x][y]==2){
-			y^=1;
-			Q.PB(v[x]);
-			continue;
-		}
-		x--;
-	}
-	printf("%d\n",Q.size());
-	for(int i=Q.size()-1;~i;i--)printf("%d%c",Q[i],i==0?'\n':' ');
-	printf("%d\n",P.size());
-	for(int i=P.size()-1;~i;i--)printf("%d %d\n",P[i].X,P[i].Y);
+    rd(L);rd(m1);rd(m2);rd(T);
+    fr(i,m1)rd(v1[i]),v[++t]=v1[i];
+    fr(i,m2)rd(v2[i]),v[++t]=v2[i];
+    v[++t]=L+1;sort(v+1,v+t+1);
+    _t=t;fr(i,t)if(v[i-1]+1<v[i])v[++_t]=v[i-1]+1;
+    t=_t;sort(v+1,v+t+1);
+    n=unique(v+1,v+t+1)-v-1;
+    fr(i,m1)V[lower_bound(v+1,v+n+1,v1[i])-v]|=1;
+    fr(i,m2)V[lower_bound(v+1,v+n+1,v2[i])-v]|=2;
+    f[0][0]=f[0][1]=T;e[0][1]=2;
+    fr(i,n){
+        f[i][0]=f[i][1]=INF;
+        if(V[i]&1){
+            if(f[i-1][0]<v[i])f[i][0]=f[i-1][0]+T,e[i][0]=1;
+        }else f[i][0]=f[i-1][0];
+        if(V[i]&2){
+            if(f[i-1][1]<v[i])f[i][1]=f[i-1][1]+T,e[i][1]=1;
+        }else f[i][1]=f[i-1][1];
+        x=max(f[i][1],v[i]);
+        if(!(V[i]&1)&&f[i][0]>x)f[i][0]=x,e[i][0]=2;
+        x=max(f[i][0],v[i]);
+        if(!(V[i]&2)&&f[i][1]>x)f[i][1]=x,e[i][1]=2;
+    }
+    if(f[n][0]==INF&&f[n][1]==INF)return puts("No"),0;
+    puts("Yes");x=n;y=(f[n][0]<INF?0:1);
+    for(;x||y;){
+        if(e[x][y]==1){
+            P.PB(MP(f[x][y]-T,y+1));
+        }
+        if(e[x][y]==2){
+            y^=1;
+            Q.PB(v[x]);
+            continue;
+        }
+        x--;
+    }
+    printf("%d\n",Q.size());
+    for(int i=Q.size()-1;~i;i--)printf("%d%c",Q[i],i==0?'\n':' ');
+    printf("%d\n",P.size());
+    for(int i=P.size()-1;~i;i--)printf("%d %d\n",P[i].X,P[i].Y);
 }
-~~~
+```
 
-E. 一个网格联通图，在一个联通块中，且联通块里不会包含空块，现在在某个地方加点，并询问离某个地方最近的点的距离。$n\leq300000$
+E.
+一个网格联通图，在一个联通块中，且联通块里不会包含空块，现在在某个地方加点，并询问离某个地方最近的点的距离。$n\leq300000$
 
 把每一列连续的块看成一个点，相邻行之间连边，图变成一颗树。在树上如果是简单的问题直接动态树分治即可。这个问题稍微复杂一点，对于每个重心暴力BFS其他点，记录一下最短的距离$D$和接到的位置$Y$。那么每个点要求$max(D_i+D_j+|Y_i-Y_j|)$，拆成两个式子，即求$max(D_i+D_j+Y_i-Y_j)(Y_i\geq Y_j) max(D_i+D_j-Y_i+Y_j)(Y_i\leq Y_j)$，用两个set，一个维护$D+Y$，一个维护$D-Y$，询问时要满足关键值$Y$大于或小于某数，set更新时弹一下栈就好了，常数大T掉了。
 
-~~~{.cpp}
+``` {.cpp}
 int dx[]={-1,1,0,0},dy[]={0,0,-1,1};
 int n,m,i,j,id,op,u,x,y,z,di,TM,an,sz[N],mv[N],X[N],L[N],R[N],vv[N],F[N];
 PII p[N],d[N];VI V[N];bool vs[N];
@@ -1159,92 +1201,94 @@ unordered_map<int,PII>bg[N];
 void ins(int x,int y){V[x].PB(y);V[y].PB(x);}
 set<PII>S[N][2];set<PII>::iterator it;
 void add(set<PII>&S,int x,int z){
-	it=S.upper_bound(MP(x,1e9));
-	if(it!=S.begin())if((*--it).Y<=z)return;
-	for(;;){
-		it=S.lower_bound(MP(x,-1e9));
-		if(it==S.end())break;
-		if((*it).Y<z)break;
-		S.erase(it);
-	}
-	S.insert(MP(x,z));
+    it=S.upper_bound(MP(x,1e9));
+    if(it!=S.begin())if((*--it).Y<=z)return;
+    for(;;){
+        it=S.lower_bound(MP(x,-1e9));
+        if(it==S.end())break;
+        if((*it).Y<z)break;
+        S.erase(it);
+    }
+    S.insert(MP(x,z));
 }
 int qu(set<PII>&S,int x){
-	it=S.upper_bound(MP(x,1e9));
-	if(it==S.begin())return 1e9;
-	return (*--it).Y;
+    it=S.upper_bound(MP(x,1e9));
+    if(it==S.begin())return 1e9;
+    return (*--it).Y;
 }
 void add(int u,PII o){
-	int x=o.X,z=o.Y;
-	add(S[u][0],-z,x+z);add(S[u][1],z,x-z);
+    int x=o.X,z=o.Y;
+    add(S[u][0],-z,x+z);add(S[u][1],z,x-z);
 }
 int qu(int u,PII o){
-	int x=o.X,z=o.Y;
-	return min(qu(S[u][1],z)+x+z,qu(S[u][0],-z)+x-z);
+    int x=o.X,z=o.Y;
+    return min(qu(S[u][1],z)+x+z,qu(S[u][0],-z)+x-z);
 }
 
 void dsz(int x,int fa){
-	sz[x]=1;mv[x]=0;
-	for(int y:V[x])if(!vs[y]&&y!=fa)dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
+    sz[x]=1;mv[x]=0;
+    for(int y:V[x])if(!vs[y]&&y!=fa)dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
 }
 void drt(int zs,int x,int fa,int&rt){
-	mv[x]=max(mv[x],sz[zs]-sz[x]);
-	if(mv[x]<mv[rt]||!rt)rt=x;
-	for(int y:V[x])if(!vs[y]&&y!=fa)drt(zs,y,x,rt);
+    mv[x]=max(mv[x],sz[zs]-sz[x]);
+    if(mv[x]<mv[rt]||!rt)rt=x;
+    for(int y:V[x])if(!vs[y]&&y!=fa)drt(zs,y,x,rt);
 }
 int fz(int u){
-	int i,x,y,z,xx,yy,rt=0;queue<PII>Q;
-	dsz(u,0);drt(u,u,0,rt);vs[rt]=1;TM++;
-	for(i=L[rt];i<=R[rt];i++)Q.push(MP(X[rt],i)),d[to[X[rt]][i]]=MP(0,i),vv[to[X[rt]][i]]=TM;
-	for(;!Q.empty();){
-		x=Q.front().X;y=Q.front().Y;z=to[x][y];
-		bg[rt][z]=MP(d[z].X,d[z].Y);
-		Q.pop();
-		for(int i=0;i<4;i++){
-			if(to[xx=x+dx[i]][yy=y+dy[i]])if(!vs[bl[xx][yy]]&&vv[to[xx][yy]]!=TM){
-				d[to[xx][yy]]=MP(d[z].X+1,d[z].Y);vv[to[xx][yy]]=TM;
-				Q.push(MP(xx,yy));
-			}
-		}
-	}
-	for(int y:V[rt])if(!vs[y])F[fz(y)]=rt;
-	return rt;
+    int i,x,y,z,xx,yy,rt=0;queue<PII>Q;
+    dsz(u,0);drt(u,u,0,rt);vs[rt]=1;TM++;
+    for(i=L[rt];i<=R[rt];i++)Q.push(MP(X[rt],i)),d[to[X[rt]][i]]=MP(0,i),vv[to[X[rt]][i]]=TM;
+    for(;!Q.empty();){
+        x=Q.front().X;y=Q.front().Y;z=to[x][y];
+        bg[rt][z]=MP(d[z].X,d[z].Y);
+        Q.pop();
+        for(int i=0;i<4;i++){
+            if(to[xx=x+dx[i]][yy=y+dy[i]])if(!vs[bl[xx][yy]]&&vv[to[xx][yy]]!=TM){
+                d[to[xx][yy]]=MP(d[z].X+1,d[z].Y);vv[to[xx][yy]]=TM;
+                Q.push(MP(xx,yy));
+            }
+        }
+    }
+    for(int y:V[rt])if(!vs[y])F[fz(y)]=rt;
+    return rt;
 }
 int main(){
-	rd(n);
-	fr(i,n)rd(p[i].X),rd(p[i].Y),to[p[i].X][p[i].Y]=++di;
-	sort(p+1,p+n+1);
-	for(i=j=1;i<=n;i=j+1){
-		for(++id,j=i;j<n&&p[i].X==p[j].X&&p[j].Y+1==p[j+1].Y;j++)bl[p[j].X][p[j].Y]=id;
-		bl[p[j].X][p[j].Y]=id;
-		L[id]=p[i].Y;R[id]=p[j].Y;X[id]=p[i].X;
-	}
-	fr(i,n){
-		x=p[i].X,y=p[i].Y;
-		if(bl[x-1][y])ins(bl[x][y],bl[x-1][y]);
-	}
-	fr(i,n)sort(V[i].begin(),V[i].end()),V[i].erase(unique(V[i].begin(),V[i].end()),V[i].end());
-	fz(1);
-	rd(m);
-	for(;m--;){
-		rd(op);rd(x);rd(y);
-		if(op==1){
-			u=bl[x][y];z=to[x][y];
-			for(;u;u=F[u])add(u,bg[u][z]);
-		}else{
-			u=bl[x][y];z=to[x][y];an=1e9;
-			for(;u;u=F[u])an=min(an,qu(u,bg[u][z]));
-			printf("%d\n",an>n?-1:an);
-		}
-	}
+    rd(n);
+    fr(i,n)rd(p[i].X),rd(p[i].Y),to[p[i].X][p[i].Y]=++di;
+    sort(p+1,p+n+1);
+    for(i=j=1;i<=n;i=j+1){
+        for(++id,j=i;j<n&&p[i].X==p[j].X&&p[j].Y+1==p[j+1].Y;j++)bl[p[j].X][p[j].Y]=id;
+        bl[p[j].X][p[j].Y]=id;
+        L[id]=p[i].Y;R[id]=p[j].Y;X[id]=p[i].X;
+    }
+    fr(i,n){
+        x=p[i].X,y=p[i].Y;
+        if(bl[x-1][y])ins(bl[x][y],bl[x-1][y]);
+    }
+    fr(i,n)sort(V[i].begin(),V[i].end()),V[i].erase(unique(V[i].begin(),V[i].end()),V[i].end());
+    fz(1);
+    rd(m);
+    for(;m--;){
+        rd(op);rd(x);rd(y);
+        if(op==1){
+            u=bl[x][y];z=to[x][y];
+            for(;u;u=F[u])add(u,bg[u][z]);
+        }else{
+            u=bl[x][y];z=to[x][y];an=1e9;
+            for(;u;u=F[u])an=min(an,qu(u,bg[u][z]));
+            printf("%d\n",an>n?-1:an);
+        }
+    }
 }
-~~~
+```
 
-# Round468 (26)
+Round468 (26)
+=============
 
 D做得复杂了点，直接转切比就好了。E还没补
 
-# Round469 (59)
+Round469 (59)
+=============
 
 A没有一眼秒，导致先去做B，做完后才发现是个傻吊题。
 
@@ -1252,64 +1296,66 @@ D把贪心SKIP掉换了二分，不知为何直接瞎贪心是对的，数据估
 
 E就是个傻吊题，直接暴搜就好了，每次会少一半的数，但是我比傻吊更傻吊，没想到数据规模会变小。。
 
-~~~{.cpp}
+``` {.cpp}
 int n,an=100,x,V[22];VI Q;bool v1[19][N],v2[19][N];
 void dfs(int x,int mv,int nv){
-	if(nv>=an)return;
-	int ff=0;
-	fr(i,mv)if(v1[x-1][i]||v2[x-1][i])ff=1;
-	if(!ff){
-		if(nv<an){
-			Q.clear();
-			for(int i=0;i<x;i++)if(V[i]){
-				if(V[i]==-1)Q.PB(1<<i-1);
-				else Q.PB(-(1<<i-1));
-			}
-			an=SZ(Q);
-		}
-	}else{
-		ff=0;
-		fr(i,mv)if((i&1)&&(v1[x-1][i]||v2[x-1][i]))ff=1;
-		V[x]=0;
-		if(!ff){
-			fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
-			dfs(x+1,mv/2,nv);
-		}
-		V[x]=1;
-		fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
-		fr(i,mv/2){
-			if(v1[x-1][i*2-1])v1[x][i]=1;
-			if(v2[x-1][i*2+1])v2[x][i]=1;
-		}
-		dfs(x+1,mv/2,nv+1);
-		V[x]=-1;
-		fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
-		fr(i,mv/2){
-			if(v2[x-1][i*2-1])v2[x][i]=1;
-			if(v1[x-1][i*2+1])v1[x][i]=1;
-		}
-		dfs(x+1,mv/2,nv+1);
-	}
+    if(nv>=an)return;
+    int ff=0;
+    fr(i,mv)if(v1[x-1][i]||v2[x-1][i])ff=1;
+    if(!ff){
+        if(nv<an){
+            Q.clear();
+            for(int i=0;i<x;i++)if(V[i]){
+                if(V[i]==-1)Q.PB(1<<i-1);
+                else Q.PB(-(1<<i-1));
+            }
+            an=SZ(Q);
+        }
+    }else{
+        ff=0;
+        fr(i,mv)if((i&1)&&(v1[x-1][i]||v2[x-1][i]))ff=1;
+        V[x]=0;
+        if(!ff){
+            fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
+            dfs(x+1,mv/2,nv);
+        }
+        V[x]=1;
+        fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
+        fr(i,mv/2){
+            if(v1[x-1][i*2-1])v1[x][i]=1;
+            if(v2[x-1][i*2+1])v2[x][i]=1;
+        }
+        dfs(x+1,mv/2,nv+1);
+        V[x]=-1;
+        fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
+        fr(i,mv/2){
+            if(v2[x-1][i*2-1])v2[x][i]=1;
+            if(v1[x-1][i*2+1])v1[x][i]=1;
+        }
+        dfs(x+1,mv/2,nv+1);
+    }
 }
 int main(){
-	rd(n);
-	fr(i,n){
-		rd(x);
-		if(x>0)v1[0][x]=1;else v2[0][-x]=1;
-	}
-	dfs(1,262144,0);
-	printf("%d\n",an);
-	for(int y:Q)printf("%d ",y);
+    rd(n);
+    fr(i,n){
+        rd(x);
+        if(x>0)v1[0][x]=1;else v2[0][-x]=1;
+    }
+    dfs(1,262144,0);
+    printf("%d\n",an);
+    for(int y:Q)printf("%d ",y);
 }
-~~~
+```
 
-# Round470 (80)
+Round470 (80)
+=============
 
 手速过了ABC，然后D找了很久规律，但情况太多了。。写不出来
 
 勉强靠着手速上了红
 
-# Round472 (104)
+Round472 (104)
+==============
 
 手速过了ABC，D卡了一会，最后决定直接写CDQ分治
 
@@ -1317,11 +1363,12 @@ int main(){
 
 一开始WA了，查了一会改了很多地方才改过去
 
-最后MLE。。。赛后一分钟发现CDQ里面l>r没判爆了
+最后MLE。。。赛后一分钟发现CDQ里面l&gt;r没判爆了
 
 少了一分钟，掉了一点分，又掉回橙名
 
-# Round474 (49)
+Round474 (49)
+=============
 
 手速过了ABCEF，然后卡了一会D，尝试了很多种写法，最后总算是自己也搞不清楚地过了样例
 
@@ -1339,4 +1386,5 @@ int main(){
 
 G不会做，一看998244353我就不想做了，看程序又是FFT
 
-G. 问有多少长度是$N$的排列，其前缀最大值有$A$种，后缀最大值有$B$种，$N\leq 100000$。
+G.
+问有多少长度是$N$的排列，其前缀最大值有$A$种，后缀最大值有$B$种，$N\leq 100000$。
