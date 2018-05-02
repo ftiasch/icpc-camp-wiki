@@ -1,0 +1,79 @@
+# K. Dependent Subsets
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef vector<int> vec;
+typedef vector<long double> vecd;
+const long double eps = 1e-12L;
+bool same(const vecd &a, const vecd &b) {
+	for (int i = 0; i < (int) a.size(); ++ i) {
+		if (fabs(a[i] - b[i]) > eps) return 0;
+	}
+	return 1;
+}
+bool cmp(const pair<vecd, int> &a, const pair<vecd,int> &b) {
+	for (int i = 0; i < (int) a.first.size(); ++ i) {
+		if (a.first[i] + eps < b.first[i]) return 0 < 1;
+		if (a.first[i] - eps > b.first[i]) return 1 < 0;
+	}
+	return 0;
+}
+int main() {
+	freopen("subset.in", "r", stdin);
+	freopen("subset.out", "w", stdout);
+	int n, m;
+	scanf("%d%d", &n, &m);
+	vector<vec> a;
+	for (int i = 0; i < n; ++ i) {
+		vec x;
+		for (int j = 0; j < m; ++ j) {
+			int y;
+			scanf("%d", &y);
+			x.push_back(y);
+		}
+		a.push_back(x);
+	}
+	vector<int> ans;
+	for (int must1 = 0; must1 < n; ++ must1) {
+		vector<pair<vecd, int>> b;
+		int pivot = 0;
+		while (a[must1][pivot] == 0) pivot ++;
+		vector<int> base;
+		for (int i = 0; i < n; ++ i) {
+			vecd tmp;
+			long double bei = -1.0 * a[i][pivot] / a[must1][pivot];
+			vecd x;
+			for (int j = 0; j < m; ++ j) x.push_back(bei * a[must1][j] + a[i][j]);
+			long double len = 0;
+			for (long double y : x) len += y * y;
+			bool flag = 0;
+			for (long double y : x) if (fabs(y) > eps) {
+				flag = (y < 0);
+				break;
+			}
+			if (fabs(len) < eps) {
+				base.push_back(i);
+				continue;
+			}
+			len = sqrt(len);
+			if (flag) len = -len;
+			for (long double &y : x) y /= len;
+			b.push_back({x, i});
+		}
+		sort(b.begin(), b.end(), cmp);
+		vector<int> res;
+		for (int i = 0, j; i < (int) b.size(); i = j) {
+			for (j = i; j < (int) b.size() && same(b[i].first, b[j].first); ++ j);
+			if (j - i > res.size()) {
+				res.clear();
+				for (int k = i; k < j; ++ k) res.push_back(b[k].second);
+			}
+		}
+		for (int y : base) res.push_back(y);
+		if (ans.size() < res.size()) ans = res;
+	}
+	printf("%d\n", (int) ans.size());
+	for (int x : ans) printf("%d ", x + 1); puts("");
+}
+~~~
