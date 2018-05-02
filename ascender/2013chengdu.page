@@ -1,36 +1,45 @@
----
-title: Regionals 2013 :: Asia - Chengdu
----
+A. Assignment For Princess
+==========================
 
-# A. Assignment For Princess
+B. Beautiful Soup \[wbr\]
+=========================
 
-# B. Beautiful Soup [wbr]
 模拟题，注意不要多空格，tag里不要少空格。注意有单词和tag之间没有空格的情况。
 
-# C. Clumsy Algorithm
+C. Clumsy Algorithm
+===================
 
-# D. Dinner Coming Soon [wbr]
-DP，f[time][place][salt][universe]代表处于某时间某地点某空间身上几包盐情况下身上最多多少钱。买卖和移动一起转移就可以了。因为会有环的情况，所以SPFA会超时。考虑到每次转移的前置状态都是在之前的时间，只要naive的把第一层循环设为T就可以了。
+D. Dinner Coming Soon \[wbr\]
+=============================
 
-# E. Exhausted Robot
+DP，f\[time\]\[place\]\[salt\]\[universe\]代表处于某时间某地点某空间身上几包盐情况下身上最多多少钱。买卖和移动一起转移就可以了。因为会有环的情况，所以SPFA会超时。考虑到每次转移的前置状态都是在之前的时间，只要naive的把第一层循环设为T就可以了。
 
-# F. Fibonacci Tree
+E. Exhausted Robot
+==================
 
-# G. GRE Words Revenge
+F. Fibonacci Tree
+=================
 
-# H. Hard Disk Drive
+G. GRE Words Revenge
+====================
 
-# I. ICPC Ranking
+H. Hard Disk Drive
+==================
 
-# J. Just Random [wbr]
-考虑x+y的频度曲线，肯定是一个等腰梯形。那么mod p的意义下就是在三段区间里求一个等差数列的和。乱搞一下就可以通过啦。
+I. ICPC Ranking
+===============
 
+J. Just Random \[wbr\]
+======================
 
-# 总结反思 
+考虑x+y的频度曲线，肯定是一个等腰梯形。那么mod
+p的意义下就是在三段区间里求一个等差数列的和。乱搞一下就可以通过啦。
+
+总结反思
+========
 
 **zmy** 通宵导致雪崩，全场几乎无贡献。然后回来就发烧了，得调整好状态。
 
 **jds** zmy不要再通宵了
-
 
 **wbr**zmy再通宵倒立吧
