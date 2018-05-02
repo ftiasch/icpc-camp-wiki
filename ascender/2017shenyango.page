@@ -1,0 +1,58 @@
+---
+title: 2017 ACM/ICPC Asia Regional Shenyang Online
+---
+
+# A. string string string [jds]
+
+后缀数组枚举相邻的k个。
+
+# B. cable cable cable [zmy]
+
+$ans=(m-k+1) \times k$
+
+# C. happy happy happy
+
+# D. array array array [zmy]
+
+求一遍最长不下降子序列，再求一遍最长不上升子序列即可
+
+# E. number number number [zmy]
+
+$ans=F_{2k+3}-1$
+
+# F. gems gems gems [zmy]
+
+由于$k$最多到$200$，暴力 dp 即可
+
+# G. mustedge mustedge mustedge [zmy]
+
+首先双联通分量缩点。建出一棵树。考虑操作$1$，我们会将环上的点全部缩一遍，由于一共只会缩$\mathcal{O}(n)$次，所以可以用并查集暴力缩。主要在于操作$2$，如何动态维护树上两点距离。我们考虑树上$(x,y)$的距离应该为$dep[x]+dep[y]-dep[lca(x,y)]$，因此我们只要动态维护$dep[x]$即可。考虑加边缩点的影响，会导致一系列的点向其父亲进行合并。$dep[x]$的缩小量，应该为根到$x$这条链中有多少个点向其父亲合并了。所以我们利用 dfs 序+树状数组维护下即可。
+
+# H. transaction transaction transaction [zmy]
+
+裸树 dp
+
+# I. cube cube cube
+
+# J. ping ping ping [zmy]
+
+很容易发现选坏点一定是在$lca$的位置选。我们从底向上贪心，判断一个$lca$是否需要被选为坏点，只需要判断之前在$lca->x$和$lca->y$这两条链上是否出现过坏点。这部分我们仍然用 dfs 序和树状数组维护。
+
+# K. triangulation triangulation triangulation
+
+# L. card card card [zmy]
+
+利用前缀和随便搞搞就行了。
+
+
+
+# 总结反思
+
+###replay
+开局切了04、02、05、08、12五道题。jds 01很早就想出来了，但是代码有很多bug，直到zmy A完5道题，才搞定了01 。然后wbr讲了下06，zmy一开始写的记忆化搜索，T了一发。然后又写错了一点细节，WA了一发。仔细想了下，改好就A了。之后jds想出了一个10的贪心做法，然而zmy dfs序写错了两次，非常的愚蠢。之后全力写07，MLE了很久，之后又变成了T。最后一发提交WA了，打出GG。赛后zmy发现倍增lca部分，数组开小了，非常的愚蠢。
+
+**zmy** 前期节奏还不错，但是10和07两个题太蠢了，zmy背大锅，之后认真提升代码能力。不要再犯类似的低级错误。
+
+**jds** 万万没想到后缀数组板子里面的一个数组还需要清空，以前从没清过，对拍了半天才拍出错。。。写完就去想了下10，想到一个贪心算法感觉很合理，就告诉zmy了。
+
+**wbr** 
