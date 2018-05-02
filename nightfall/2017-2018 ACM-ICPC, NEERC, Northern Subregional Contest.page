@@ -1,0 +1,44 @@
+# F. Fygon
+
+缩点，求出点数即为时间复杂度，DP求出常数
+
+~~~{.cpp}
+int n,m,id,x,y,z,bl[55],v[55][55],F[55],V[55],e[55];char s[99];
+LL fz,fm,o,f[1234567];
+int gf(int x){return F[x]==x?x:F[x]=gf(F[x]);}
+int cal(char ch){
+	if(ch=='1'||ch=='n')return 0;
+	if(!bl[ch-'a'])bl[ch-'a']=++m;
+	return bl[ch-'a'];
+}
+void ins(int x,int y){
+	if(x&&y)v[x][y]=1;
+}
+int main(){
+	freopen("fygon20.in","r",stdin);
+	freopen("fygon20.out","w",stdout);
+	rd(n);
+	fr(i,n-1){
+		scanf("%s",s);
+		scanf("%s",s);
+		x=cal(s[0]);
+		scanf("%s",s);
+		scanf("%s",s);
+		y=cal(s[6]);
+		scanf("%s",s);
+		z=cal(s[0]);
+		ins(y,x);ins(x,z);
+	}
+	fr(k,m)fr(i,m)fr(j,m)v[i][j]|=v[i][k]&&v[k][j];
+	fr(i,m)F[i]=i;
+	fr(i,m)fr(j,m)if(v[i][j]&&v[j][i])F[gf(i)]=gf(j);
+	fr(i,m)if(gf(i)==i)V[i]=++id;
+	fr(i,m)fr(j,m)if(V[i]!=V[j]&&v[i][j])e[V[gf(i)]]|=1<<(V[gf(j)]-1);
+	f[0]=1;
+	for(int i=0;i<1<<id;i++)if(f[i])fr(j,id)if(!(i>>(j-1)&1)&&!(e[j]&i))f[i|(1<<(j-1))]+=f[i];
+	fz=f[(1<<id)-1];fm=1;
+	fr(i,id)fm*=i;
+	o=__gcd(fz,fm);fz/=o;fm/=o;
+	printf("%d %lld/%lld",id,fz,fm);
+}
+~~~
