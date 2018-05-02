@@ -1,103 +1,130 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.10.05 14:00-19:00
 
 [practice link](http://codeforces.com/gym/100417)
 
-# Solutions
+Solutions
+=========
 
-## A. 12:30PM
+A. 12:30PM
+----------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-检查完格式之后用折半查找的方式分别 $O(8!)$ 枚举段的排列顺序，然后用 `map` 维护 $l$ 个等式哈希之后的字符串即可。
+检查完格式之后用折半查找的方式分别 $O(8!)$ 枚举段的排列顺序，然后用
+`map` 维护 $l$ 个等式哈希之后的字符串即可。
 
-## B. Blackjack
+B. Blackjack
+------------
 
 unsolved
 
-## C. Spending Budget
+C. Spending Budget
+------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 二分答案，贪心 check
 
-## D. Circuit Design
+D. Circuit Design
+-----------------
 
 unsolved
 
-## E. Strange Digits
+E. Strange Digits
+-----------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 将 $n$ 转化为 $b$ 进制，设该进制下第 $i$ 位为 $a[i]$ 。
 
-$f[i][j]$ 表示从低到高做到第 $i$ 位，需要进位 $j$ 的方案数，枚举当前位填的数字 $k$ ，若 $(j+k)\bmod b=a[i]$ ，转移到 $f[i + 1][\frac{j+k}{b}]$。
+$f[i][j]$ 表示从低到高做到第 $i$ 位，需要进位 $j$
+的方案数，枚举当前位填的数字 $k$ ，若 $(j+k)\bmod b=a[i]$ ，转移到
+$f[i + 1][\frac{j+k}{b}]$。
 
-## F. Graph Factorization
+F. Graph Factorization
+----------------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-抽一个点出来当特殊点，然后可以用 $n - 1$ 个哈密顿回路以及一个大小为 $n$ 的匹配构成 $K_{2n}$ 的一个划分。把每个哈密顿回路拆成两个大小为 $n$ 的匹配，于是总共就有 $2n - 1$ 个匹配，最后按照题意一个匹配一个匹配输出就行了。
+抽一个点出来当特殊点，然后可以用 $n - 1$ 个哈密顿回路以及一个大小为 $n$
+的匹配构成 $K_{2n}$ 的一个划分。把每个哈密顿回路拆成两个大小为 $n$
+的匹配，于是总共就有 $2n - 1$
+个匹配，最后按照题意一个匹配一个匹配输出就行了。
 
-![哈密顿回路画法](/2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich Contest 35, F Graph Factorization.png)
+![哈密顿回路画法](/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035,%20F%20Graph%20Factorization.png)
 
-## G. Permutations
+G. Permutations
+---------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 数位 DP 一下。
 
-## H. Robots' Art
+H. Robots' Art
+--------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-设 $dp[i][j]$ 表示第一个串从第 $i$ 位开始，第二个串从第 $j$ 位开始，最少需要的数字个数。
+设 $dp[i][j]$ 表示第一个串从第 $i$ 位开始，第二个串从第 $j$
+位开始，最少需要的数字个数。
 
-枚举下一个数字 $k$，那么需要找到第一个串 $i$ 位之后第一个 $k$ 和第二个串 $j$ 位之后第一个 $k$ ，设位置分别为 $i'$ 和 $j'$ ，那么可以从 $dp[i'][j']$ 转移到 $dp[i][j]$。
+枚举下一个数字 $k$，那么需要找到第一个串 $i$ 位之后第一个 $k$ 和第二个串
+$j$ 位之后第一个 $k$ ，设位置分别为 $i'$ 和 $j'$ ，那么可以从
+$dp[i'][j']$ 转移到 $dp[i][j]$。
 
-考虑 $dp[i][j - 1]$ 和 $dp[i][j]$ 能从哪些地方转移过来，可以发现只有一处不同，即涉及到第二个串第 $j$ 位的那个转移，将变化为涉及到 $nex[j]$ 的转移，$nex[j]$ 为第二个串中下一个和 $b[j]$ 相同的位置。
+考虑 $dp[i][j - 1]$ 和 $dp[i][j]$
+能从哪些地方转移过来，可以发现只有一处不同，即涉及到第二个串第 $j$
+位的那个转移，将变化为涉及到 $nex[j]$ 的转移，$nex[j]$
+为第二个串中下一个和 $b[j]$ 相同的位置。
 
 若找不到，问题将简化为一维，预处理好这种情况即可。
 
-## I. Roof Skeleton
+I. Roof Skeleton
+----------------
 
 unsolved
 
-## J. RSA
+J. RSA
+------
 
 upsolved by chitanda
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-通过推导（看 qls 的 wiki），设 $a=m^3,b=(m+1)^3$ ，那么有 $m=\frac{2a+b-1}{a-b+2}\bmod n$ ，通过 `Java` 的 `BigInteger.modInverse()` 可以计算逆元，计算出后需要再检测。
+通过推导（看 qls 的 wiki），设 $a=m^3,b=(m+1)^3$ ，那么有
+$m=\frac{2a+b-1}{a-b+2}\bmod n$ ，通过 `Java` 的
+`BigInteger.modInverse()` 可以计算逆元，计算出后需要再检测。
 
-# Replay and Summary
+Replay and Summary
+==================
 
 None is available.
