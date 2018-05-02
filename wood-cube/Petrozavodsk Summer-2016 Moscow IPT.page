@@ -20,34 +20,46 @@
 │H₆[-:--]│                                    ₀                       │
 │B₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Almost Longest Increasing Subsequence [GX]
+A. Almost Longest Increasing Subsequence \[GX\]
+-----------------------------------------------
 
-## B. Bitwise Queries
+B. Bitwise Queries
+------------------
 
-## C. Cocktails [GX]
+C. Cocktails \[GX\]
+-------------------
 
-f[i][j]表示前i个被子里需要换出j个鸡尾酒，j有可能是负数，dp即可
+f\[i\]\[j\]表示前i个被子里需要换出j个鸡尾酒，j有可能是负数，dp即可
 
-## D. Downhill [MZH]
+D. Downhill \[MZH\]
+-------------------
 
-## E. Expected LCP [MZH]
+E. Expected LCP \[MZH\]
+-----------------------
 
-## F. Finite Walking [TDJ]
+F. Finite Walking \[TDJ\]
+-------------------------
 
 性质题，我们发现奇模数的边来回走可走出任意值，偶模数边能走出同奇偶的所有值，于是问题变成了给你一些边问有多少条路径最多经过每条边一次，线性无关即可。注意多个连通块的计算。
 
-## G. Guess the Distribution [MZH]
+G. Guess the Distribution \[MZH\]
+---------------------------------
 
-## H. Hash Table
+H. Hash Table
+-------------
 
-## I. Immigration [MZH]
+I. Immigration \[MZH\]
+----------------------
 
-## J. Jumping on a Tree [TDJ]
+J. Jumping on a Tree \[TDJ\]
+----------------------------
 
 点分治。出题人卡常数。
 
-## K. King's Roads [TDJ]
+K. King's Roads \[TDJ\]
+-----------------------
 
 模域最小和数对，经典套路。
