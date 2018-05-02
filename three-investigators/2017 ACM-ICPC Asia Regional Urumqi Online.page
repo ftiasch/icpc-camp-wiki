@@ -1,0 +1,183 @@
+# Contest Info
+
+date: 2017.09.09 12:00-17:00
+
+[practice link](https://www.jisuanke.com/contest/870)
+
+# Solutions
+
+## A. Banana
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+签到题，随便怎么搞都行。
+
+## B. Out-out-control cars
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+若相对静止，则只需要考虑三角形边相交或三角形包含的情况。
+
+否则有解时必然存在一个时间点使得一个三角形某个点与另一个三角形某个边相交，将交于边的三角形进行相对运动，找到相应的覆盖区域，用至多 5 个半平面的交集表示，然后检查另一个三角形是否有点落在区域内即可。
+
+## C. Coconut
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+签到题
+
+## D. Hack Portals
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+如果从左往右走到了一个位置然后回头，那么就不可能再回到这个位置了，否则我刚开始可以先等会再向右走，不会使时间更长。那么第一次就必须从起点走到最右的位置了。
+
+于是我们将起点和终点也加入点集中，设将所有点排序后终点在 $\text{mid}$ 位置，那么我们设 $f[i][j]$ 为还有从 $i$ 到 $j$ 个点没搞定，当前在第 $i$ 个的最短时间，$g[i][j]$ 则是当前在第 $j$ 个最短时间。
+
+以 $f[i][j]$ 为例，可以转移到 $f[i+1][j]$ 和 $g[i + 1][j]$ ，最终答案为 $\min\{f[\text{mid}][\text{mid}],g[\text{mid}][\text{mid}]\}$ 。
+
+## E. Half-consecutive Numbers
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+三角平方数满足 $\frac{r (r + 1)}{2} = k^2$ $(k \in \mathbb{N})$，即 $(2 r + 1)^2 - 8 k^2 = 1$，通解可由 $(3 + \sqrt{8})(3 - \sqrt{8}) = 1$ 得到，最终所有的解 $r_1, r_2, \cdots$ 可以用线性递推得出，其中 $r_1 = 0, r_2 = 1, r_{n + 2} = 6 r_{n + 1} - r_n + 2$。
+
+## F. Islands
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+除了整个图已经强连通的情况，其他情况下每连一条边只能让某个强连通分量的入度增加 $1$，某个强连通分量的出度增加 $1$，设入度为 $0$ 的强连通分量有 $a$ 个，出度为 $0$ 的强连通分量有 $b$ 个，要使所有的强连通分量变成一个强连通分量，则至少要增加 $\max(a, b)$ 条边。
+
+## G. Query on a string
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+暴力算出 $S$ 每个长为 $|T|$ 的子串的哈希值，每次修改只会修改 $|T|$ 个哈希值，然后用树状数组维护前缀和 $T$ 相同的子串的个数。
+
+## H. Skiing
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+题目保证给出的是一个有向无环图，直接记忆化搜索即可。
+
+## I. Colored Graph
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+设与第 $i$ 个点相连的白色边数量为 $d_i$，则同色三角形的数量为 ${n \choose 3} - \frac{1}{2} \sum_{i = 1}^{n}{d_i (n - 1 - d_i)}$，所以目标是尽可能地让多的点满足 $d_i = \left\lfloor\frac{n - 1}{2}\right\rfloor$ 或 $d_i = \left\lceil\frac{n - 1}{2}\right\rceil$。
+
+对于 $n = 2 k$ 的情况，将点划分为两个点数相等的点集，位于相同点集的点对之间连黑色边，位于不同点集的点对之间连白色边即可。
+
+对于 $n = 2 k + 1$ 的情况，优先让前 $2 k$ 个点的 $d_i = k$，考虑图中的 $k$ 条边不相交的哈密顿回路，从第 $n$ 个点的位置处断开，每条路上的边交替连黑白边，即可保证前 $2 k$ 个点的 $d_i = k$，而关于第 $n$ 个点的连边，只需要使 $\left\lfloor\frac{k}{2}\right\rfloor$ 条回路是与第 $n$ 个点只连白边的即可。
+
+## J. Out Journey of Dalian Ends
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+以中间点为新起点，所求即分别到达原起点和原终点的两条点不相交的最短路径之和，使用费用流解决。点不相交的限制可以利用拆点技巧，将流量限制设置在点上。
+
+# Replay and Summary
+
+## Replay
+
+由于今天要照相，所以没有人迟到。
+
+一上来被计蒜客感人的服务器承受能力卡了 5min，后来得到了 PDF 版本才开始看题。
+
+按照惯例，`L` 从前往后，`T` 从后往前，`H` 中间挑着看。
+
+`T` 一看 E 是一个和他出过的题差不多的题，推了推随手过了。
+
+`L` 看完 A 觉得是个签到题，然而样例过不了，Clarification 也没人答，没敢写。
+
+`H` 看完 C 觉得是个签到题，上来直接切了。
+
+`L` 终于等来了想要的 Clarification，于是等 `H` 写完上去把 A 切了。
+
+期间 `H` 和 `T` 手上握了 F，H，I 三个题。
+
+`T` 开始写 I，写完 WA 了，查了会儿没看出来，于是开始写 H。写完了 H 也 WA 了。`H` 又想了个 I 的做法，告诉 `T`，`T` 改完之后一交，还是 WA。
+
+期间 `L` 读完了 B，和 `T` 隔空交流了下，被告知了做法，但是由于是个几何，于是搁置。`H` 读完 J 后和 `L` 交换了一下题意。`L` 想了想 J 觉得是个水题，和 `H` 交流了之后，又隔空和 `T` 确认了一下发现确实是个水。
+
+`H` 仔细和 WA 了好多发的 `T` 交流了一下 H 的题意，发现 `T` 理解有问题想多了，改掉就过了。
+
+然后 `H` 和 `T` 又想了一会儿 I，发现做法还是有问题，于是 `T` 开始写 F。
+
+`T` 写完 F 交了又 WA，改了改还是 WA，被 `H` 提醒要特判之后终于过了。之后 `H` 开始上机写 G。
+
+被 carry 的 `L` 开始瞎想 I，然后瞎做就做出来了...可是不会证，只是觉得异常靠谱。 之后 `L` 和换下来的 `T` 交流了一下，顺便把做法正确性证明了...
+
+`H` 写完 G，交了 WA，改一改交，WA，再改再交，WA，遂弃，换 `T` 写 I。中间 `H` 又改了一发还是 WA。
+
+`L` 帮着 `H` 查代码，读了一遍没看出来，再读一遍发现了一个傻逼错误，改了改就过了。
+
+`T` 写完 I 过了之后开始抄板写 J。`L` 本想和 `T` 确认一下建图，然而 `T` 说知道，于是就让他写了。
+
+期间 `L` 和 `H` 开始想 D，`L` 想了个性质之后 `H` 立马发现是个区间 DP，但是复杂度是 $O(n^3)$，决定莽一发。`H` 还想抄半平面交板莽一发 B，然而被 `L` 逼着先莽 D。
+
+`T` 写完之后交了 WA，改了改又交了一发 RE。`T` 和 `L` 交流之后发现图建错了，于是改改改，交了之后还是 RE。然而 `T` 还以为自己 WA 了，经过 `L` 提醒是 RE 后查了查数组大小改了就过了。
+
+`T` 下来之后 `H` 开始上去莽 D。写完了之后果不其然 TLE。
+
+期间 `L` 和 `T` 讨论了下 B，本来想抄半平面交板，后来想了想决定做两次判断。
+
+`H` TLE 之后，换 `T` 开始写 B。期间 `L` 和 `H` 思考如何优化复杂度，`L` 一个乱搞做法提醒了 `H`，马上想到了一个优化到 $O(n^2)$ 的做法。于是 `H` 换下 `T`，没敲一会儿就过了。
+
+`T` 写完了之后要 `H` 和 `L` 出几组数据，结果随便被叉了。三人一起调调改改，最后 1A 过了。
+
+黑人问号.jpg 队终于 AK 了本场，然而已经有 20+ 的队伍 AK 了。比赛结束后，由于罚时的原因，最终排名成功掉到了 28。
+
+## braveTester
+
+本场彻底沦为只写了一道签到的吃瓜选手，专业打辅助，助攻 3 题。
+
+我的队友好棒啊！好棒啊！好棒啊！
+
+## chitanda
+
+在一个简单题上贡献了四个 wa，D 题想了太久。
+
+## skywalkert
+
+在许多简单题上 wa 拖慢了进度，题目难度不高，做了一整场码农。
