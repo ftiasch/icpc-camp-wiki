@@ -64,7 +64,7 @@ solved by quailty, upsolved by none
 quailty's solution
 
 设$T_r=k^2$，整理可得$(2r+1)^2-8k^2=1$，这就是[Pell's
-equation](https://en.wikipedia.org/wiki/Pell%27s_equation)，直接求通解即可。
+equation](https://en.wikipedia.org/wiki/Pell's_equation)，直接求通解即可。
 
 F Islands
 ---------
