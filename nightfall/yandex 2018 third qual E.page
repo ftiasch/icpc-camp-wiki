@@ -1,4 +1,4 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
@@ -6,69 +6,69 @@ unordered_set<int> GL[20][21], GR[20][21];
 int a[N], b[N], ma[N], mb[N];
 bool v[20];
 bool dfs(int x, bool change, unordered_set<int> G[20][21], int mat[N], int a[N]) {
-	if (v[x]) return 0;
-	v[x] = 1;
-	if (!G[x][0].empty()) {
-		int u = *G[x][0].begin();
-		assert(mat[u] == -1);
-		if (change) {
-			for (int i = 0; i < 20; ++ i) if (a[u] >> i & 1) {
-				G[i][mat[u] + 1].erase(u);
-				G[i][x + 1].insert(u);
-			}
-			mat[u] = x;
-		}
-		return 1;
-	}
-	for (int cho = 0; cho < 20; ++ cho) if (cho != x) {
-		if (G[x][cho + 1].empty()) continue;
-		int u = *G[x][cho + 1].begin();
-		assert(mat[u] == cho);
-		bool tmp = dfs(cho, change, G, mat, a);
-		if (tmp) {
-			if (change) {
-				for (int i = 0; i < 20; ++ i) if (a[u] >> i & 1) {
-					G[i][mat[u] + 1].erase(u);
-					G[i][x + 1].insert(u);
-				}
-				mat[u] = x;
-			}
-			return 1;
-		}
-	}
-	return 0;
+    if (v[x]) return 0;
+    v[x] = 1;
+    if (!G[x][0].empty()) {
+        int u = *G[x][0].begin();
+        assert(mat[u] == -1);
+        if (change) {
+            for (int i = 0; i < 20; ++ i) if (a[u] >> i & 1) {
+                G[i][mat[u] + 1].erase(u);
+                G[i][x + 1].insert(u);
+            }
+            mat[u] = x;
+        }
+        return 1;
+    }
+    for (int cho = 0; cho < 20; ++ cho) if (cho != x) {
+        if (G[x][cho + 1].empty()) continue;
+        int u = *G[x][cho + 1].begin();
+        assert(mat[u] == cho);
+        bool tmp = dfs(cho, change, G, mat, a);
+        if (tmp) {
+            if (change) {
+                for (int i = 0; i < 20; ++ i) if (a[u] >> i & 1) {
+                    G[i][mat[u] + 1].erase(u);
+                    G[i][x + 1].insert(u);
+                }
+                mat[u] = x;
+            }
+            return 1;
+        }
+    }
+    return 0;
 }
 bool test(unordered_set<int> G[20][21], int a[N], int x, int mat[N]) {
-	for (int i = 0; i < 20; ++ i) v[i] = 0;
-	return dfs(x, 0, G, mat, a);
+    for (int i = 0; i < 20; ++ i) v[i] = 0;
+    return dfs(x, 0, G, mat, a);
 }
 bool match(unordered_set<int> G[20][21], int a[N], int x, int mat[N]) {
-	for (int i = 0; i < 20; ++ i) v[i] = 0;
-	return dfs(x, 1, G, mat, a);
+    for (int i = 0; i < 20; ++ i) v[i] = 0;
+    return dfs(x, 1, G, mat, a);
 }
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 1; i <= n; ++ i) {
-		scanf("%d", &a[i]);
-		for (int j = 0; j < 20; ++ j) if (a[i] >> j & 1) GL[j][0].insert(i);
-	}
-	for (int i = 1; i <= m; ++ i) {
-		scanf("%d", &b[i]);
-		for (int j = 0; j < 20; ++ j) if (b[i] >> j & 1) GR[j][0].insert(i);
-	}
-	long long ans = 0;
-	memset(ma, -1, sizeof(ma));
-	memset(mb, -1, sizeof(mb));
-	for (int x = 20; x >= 0; -- x) {
-		while (test(GL, a, x, ma) && test(GR, b, x, mb)) {
-			match(GL, a, x, ma);
-			match(GR, b, x, mb);
-			ans += 1 << x;
-			//for (int i = 1; i <= n; ++ i) printf("ma[%d] = %d\n", a[i], ma[i]); puts("");
-			//for (int i = 1; i <= m; ++ i) printf("mb[%d] = %d\n", b[i], mb[i]); puts("");
-		}
-	}
-	printf("%lld\n", ans);
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; ++ i) {
+        scanf("%d", &a[i]);
+        for (int j = 0; j < 20; ++ j) if (a[i] >> j & 1) GL[j][0].insert(i);
+    }
+    for (int i = 1; i <= m; ++ i) {
+        scanf("%d", &b[i]);
+        for (int j = 0; j < 20; ++ j) if (b[i] >> j & 1) GR[j][0].insert(i);
+    }
+    long long ans = 0;
+    memset(ma, -1, sizeof(ma));
+    memset(mb, -1, sizeof(mb));
+    for (int x = 20; x >= 0; -- x) {
+        while (test(GL, a, x, ma) && test(GR, b, x, mb)) {
+            match(GL, a, x, ma);
+            match(GR, b, x, mb);
+            ans += 1 << x;
+            //for (int i = 1; i <= n; ++ i) printf("ma[%d] = %d\n", a[i], ma[i]); puts("");
+            //for (int i = 1; i <= m; ++ i) printf("mb[%d] = %d\n", b[i], mb[i]); puts("");
+        }
+    }
+    printf("%lld\n", ans);
 }
-~~~
+```
