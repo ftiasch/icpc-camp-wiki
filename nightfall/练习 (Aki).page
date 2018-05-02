@@ -1,0 +1,344 @@
+# CODE FESTIVAL 2017 Final
+
+## J. Tree MST
+
+推销Borůvka最小生成树算法？
+
+一开始每个点都是孤立联通块然后重复以下过程，直到整个图联通：
+
+1.  每个联通块找一条到其他联通块的最小的边（如果有相等的边权需要tie break）
+2.  把每个联通块找到的边加入最小生成树（可能会有重边，但不会有环）
+
+每次找边是$O(E)$的，每做一轮联通块个数至少减半，所以总复杂度$O(E\log V)$。
+
+本题中step 1可以使用树形dp来解决。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 2e5 + 5;
+vector<int> G[N], w[N];
+struct node { long long d; int to; node(long long d = 1e18, int to = 0) : d(d), to(to) {} };
+node operator + (const node &a, int x) { return node(a.d + x, a.to); }
+bool operator < (const node &a, const node &b) {
+	if (a.d != b.d) return a.d < b.d;
+	return a.to < b.to;
+}
+int f[N], col[N], x[N];
+int fat(int x) {
+	if (f[x] == x) return x;
+	return f[x] = fat(f[x]);
+}
+node cho1[N], cho2[N];
+pair<node, node> pick_different_color(const vector<node> &child, int ban1 = -1, int ban2 = -1, int ban3 = -1) {
+	node cho1 = node(), cho2 = node();
+	for (int i = 0; i < (int) child.size(); ++ i) {
+		if (child[i].to == ban1 || child[i].to == ban2 || child[i].to == ban3) continue;
+		cho1 = child[i];
+		for (int j = i + 1; j < (int) child.size(); ++ j) {
+			if (child[j].to == ban1 || child[j].to == ban2 || child[j].to == ban3) continue;
+			if (col[child[j].to] == col[cho1.to]) continue;
+			cho2 = child[j];
+			break;
+		}
+		break;
+	}
+	return {cho1, cho2};
+}
+int tick[N], Cnt[N], xxx;
+int &cnt(int x) {
+	if (tick[x] < xxx) {
+		tick[x] = xxx;
+		Cnt[x] = 0;
+	}
+	return Cnt[x];
+}
+void clean(vector<node> &child) {
+	xxx ++;
+	vector<node> yy;
+	for (node x : child) {
+		int c = col[x.to];
+		if (cnt(c) < 4) {
+			yy.push_back(x);
+			cnt(c) ++;
+		}
+	}
+	child.swap(yy);
+}
+void dfs_d(int x, int p) {
+	vector<node> child;
+	for (int i = 0; i < (int) G[x].size(); ++ i) {
+		int w = ::w[x][i], u = G[x][i];
+		if (u == p) continue;
+		dfs_d(u, x);
+		node tmp1 = cho1[u] + w, tmp2 = cho2[u] + w, tmp3 = node(::x[u], u) + w;
+		if (tmp1.to) child.push_back(tmp1);
+		if (tmp2.to) child.push_back(tmp2);
+		if (tmp3.to) child.push_back(tmp3);
+	}
+	sort(child.begin(), child.end());
+	clean(child);
+	tie(cho1[x], cho2[x]) = pick_different_color(child);
+}
+void dfs_u(int x, int p, node up1, node up2, node up3) {
+	vector<node> child;
+	if (up1.to) child.push_back(up1);
+	if (up2.to) child.push_back(up2);
+	if (up3.to) child.push_back(up3);
+	for (int i = 0; i < (int) G[x].size(); ++ i) {
+		int w = ::w[x][i], u = G[x][i];
+		if (u == p) continue;
+		node tmp1 = cho1[u] + w, tmp2 = cho2[u] + w, tmp3 = node(::x[u], u) + w;
+		if (tmp1.to) child.push_back(tmp1);
+		if (tmp2.to) child.push_back(tmp2);
+		if (tmp3.to) child.push_back(tmp3);
+	}
+	sort(child.begin(), child.end());
+	clean(child);
+	tie(cho1[x], cho2[x]) = pick_different_color(child);
+	for (int i = 0; i < (int) G[x].size(); ++ i) {
+		int w = ::w[x][i], u = G[x][i];
+		if (u == p) continue;
+		node s_tmp1 = cho1[u] + w, s_tmp2 = cho2[u] + w, s_tmp3 = node(::x[u], u) + w;
+		node tmp1, tmp2, tmp3 = node(::x[x], x);
+		tie(tmp1, tmp2) = pick_different_color(child, s_tmp1.to, s_tmp2.to, s_tmp3.to);
+		dfs_u(u, x, tmp1 + w, tmp2 + w, tmp3 + w);
+	}
+}
+pair<long long, pair<int, int>> compo_cho[N];
+int tot;
+long long ans;
+void join(int x, int y, long long z) {
+	x = fat(x), y = fat(y);
+	if (x != y) {
+		f[x] = y;
+		tot --;
+		ans += z;
+	}
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	for (int i = 1; i <= n; ++ i) scanf("%d", &x[i]);
+	for (int i = 1; i < n; ++ i) {
+		int a, b, c;
+		scanf("%d%d%d", &a, &b, &c);
+		G[a].push_back(b);
+		G[b].push_back(a);
+		w[a].push_back(c);
+		w[b].push_back(c);
+	}
+	for (int i = 1; i <= n; ++ i) f[i] = i;
+	tot = n;
+	ans = 0;
+	while (tot > 1) {
+		for (int i = 1; i <= n; ++ i) col[i] = fat(i);
+		dfs_d(1, 0);
+		dfs_u(1, 0, node(), node(), node());
+		for (int i = 1; i <= n; ++ i) compo_cho[i] = {1e18, {0, 0}};
+		for (int i = 1; i <= n; ++ i) {
+			node &tmp = cho1[i];
+			if (col[tmp.to] == col[i]) tmp = cho2[i];
+			if (tmp.to) {
+				int u = i, v = tmp.to;
+				long long d = x[i] + tmp.d;
+				if (u > v) swap(u, v);
+				compo_cho[col[i]] = min(compo_cho[col[i]], {d, {u, v}});
+			}
+		}
+		for (int i = 1; i <= n; ++ i) if (col[i] == i) {
+			auto tmp = compo_cho[i];
+			if (tmp.second.first) {
+				join(tmp.second.first, tmp.second.second, tmp.first);
+			}
+		}
+	}
+	printf("%lld\n", ans);
+}
+~~~
+
+# CF446
+
+## D. Sloth
+
+讨论加边在不在匹配中。两种的方案数没有交（考虑两块的奇偶性）。
+
+这条边不在匹配中：dpa[2][2]表示某棵子树中有没有删掉边，以及根有没有被匹配掉。删掉边的时候会贡献两个联通块大小的乘积。
+
+这条边在匹配中：dpb[2][2][3]表示某棵子树中有没有删掉边，以及根有没有被匹配掉，还有新加的边（匹配）确定了几个点了。一个trick是删边的时候要求新加边恰好确定了一个点。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+int n;
+struct state {
+	LL a[2][2], b[2][2][3];
+	state() { memset(a, 0, sizeof(a)); memset(b, 0, sizeof(b)); }
+	state(int) {
+		memset(a, 0, sizeof(a));
+		memset(b, 0, sizeof(b));
+		b[0][0][0] = a[0][0] = 1;
+	}
+	void extend(int sz) {
+		if (sz != -1) a[1][1] += a[0][1] * sz * (n - sz);
+		for (int d : {0, 1}) {
+			for (int i = 1; i >= 0; -- i) b[d][1][i + 1] += b[d][0][i];
+		}
+		if (sz != -1) b[1][1][1] += b[0][1][1];
+	}
+	void merge(const state x) {
+		static LL aa[2][2], bb[2][2][3];
+		memset(bb, 0, sizeof(bb));
+		memset(aa, 0, sizeof(aa));
+		for (int d0 : {0, 1}) {
+			for (int d1 = 0; d0 + d1 <= 1; ++ d1) {
+				for (int u0 : {0, 1}) {
+					for (int u1 : {0, 1}) {
+						if (u0 && !u1) continue;
+						int u2 = u0 || !u1;
+						aa[d0 + d1][u2] += a[d0][u0] * x.a[d1][u1];
+						for (int l0 : {0, 1, 2}) {
+							for (int l1 = 0; l0 + l1 <= 2; ++ l1) {
+								bb[d0 + d1][u2][l0 + l1] += b[d0][u0][l0] * x.b[d1][u1][l1];
+							}
+						}
+					}
+				}
+			}
+		}
+		for (int d : {0, 1}) for (int u : {0, 1}) {
+			for (int l : {0, 1, 2}) b[d][u][l] = bb[d][u][l];
+			a[d][u] = aa[d][u];
+		}
+	}
+};
+const int N = 5e5 + 5;
+vector<int> G[N];
+state dp[N];
+int sz[N];
+void dfs(int x, int p) {
+	dp[x] = state(1);
+	sz[x] = 1;
+	for (int u : G[x]) if (u != p) {
+		dfs(u, x);
+		sz[x] += sz[u];
+		dp[u].extend(sz[u]);
+		dp[x].merge(dp[u]);
+	}
+}
+int main() {
+	scanf("%d", &n);
+	for (int i = 1; i < n; ++ i) {
+		int u, v;
+		scanf("%d%d", &u, &v);
+		G[u].push_back(v);
+		G[v].push_back(u);
+	}
+	dfs(1, 0);
+	dp[1].extend(-1);
+	LL ans = dp[1].b[1][1][2] + dp[1].a[1][1];
+	printf("%lld\n", ans);
+}
+~~~
+
+## E. Lust
+
+设最终数组是$a_i-b_i$。一个结论是$res=\prod a_i-\prod (a_i-b_i)$（考虑一个高维超立方体的体积，每次相当于某一维削掉了1，问最后削掉了多少体积，就是初始体积减终止体积）。
+
+考虑负号后面那坨的期望是$\frac{k!}{n^k}\prod \frac{a_i-bi}{b_i!}$满足$\sum b_i=k$。
+
+构造多项式$\prod \sum_{j\geq 0} \frac{a_i-j}{j!}x^j$，要用的就是$x^k$的系数。
+
+化简得$\prod(a_ie^x-xe^x)=e^{nx}\prod(a_i-x)$，后面那项可以平方计算
+
+再展开回去得$\sum_{j\geq 0}\frac{n^jx^j}{j!}\prod(a_i-x)$就能算了。
+
+~~唯一丑陋的地方是，$k$有1e9，算阶乘要打表。~~后面要除掉一个$j!$，$k-j$是$O(n)$的，所以不用打表。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7, B = 1e7;
+int FAC[105] = {1, 682498929, 491101308, 76479948, 723816384, 67347853, 27368307, 625544428, 199888908, 888050723, 927880474, 281863274, 661224977, 623534362, 970055531, 261384175, 195888993, 66404266, 547665832, 109838563, 933245637, 724691727, 368925948, 268838846, 136026497, 112390913, 135498044, 217544623, 419363534, 500780548, 668123525, 128487469, 30977140, 522049725, 309058615, 386027524, 189239124, 148528617, 940567523, 917084264, 429277690, 996164327, 358655417, 568392357, 780072518, 462639908, 275105629, 909210595, 99199382, 703397904, 733333339, 97830135, 608823837, 256141983, 141827977, 696628828, 637939935, 811575797, 848924691, 131772368, 724464507, 272814771, 326159309, 456152084, 903466878, 92255682, 769795511, 373745190, 606241871, 825871994, 957939114, 435887178, 852304035, 663307737, 375297772, 217598709, 624148346, 671734977, 624500515, 748510389, 203191898, 423951674, 629786193, 672850561, 814362881, 823845496, 116667533, 256473217, 627655552, 245795606, 586445753, 172114298, 193781724, 778983779, 83868974, 315103615, 965785236, 492741665, 377329025, 847549272, 698611116};
+int fact(int k) {
+	int res = FAC[k / B];
+	for (int i = k / B * B + 1; i <= k; ++ i) res = 1LL * res * i % MOD;
+	return res;
+}
+int mpow(int x, int n) {
+	int res = 1;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % MOD;
+		x = 1LL * x * x % MOD;
+		n >>= 1;
+	}
+	return res;
+}
+const int N = 5005;
+int main() {
+	/*int res = 1;
+	for (int i = 1; i < MOD; ++ i) {
+		res = 1LL * res * i % MOD;
+		if (i % (int) 1e7 == 0) printf("%d, ", res);
+	}
+	puts("");*/
+	int n, k, ans = 1;
+	scanf("%d%d", &n, &k);
+	vector<int> poly = {1};
+	for (int i = 0; i < n; ++ i) {
+		int a;
+		scanf("%d", &a);
+		ans = 1LL * a * ans % MOD;
+		vector<int> tmp(poly.size() + 1);
+		for (int i = 0; i < (int) poly.size(); ++ i) {
+			(tmp[i] += 1LL * a * poly[i] % MOD) %= MOD;
+			(tmp[i + 1] += MOD - poly[i]) %= MOD;
+		}
+		poly.swap(tmp);
+	}
+	int fj = fact(k);
+	int cof = 1LL * fj * mpow(mpow(n, MOD - 2), k) % MOD;
+	for (int i = 0; k - i >= 0 && i < (int) poly.size(); ++ i) {
+		int j = k - i;
+		(ans += MOD - 1LL * poly[i] * mpow(fj, MOD - 2) % MOD * mpow(n, j) % MOD * cof % MOD) %= MOD;
+		fj = 1LL * fj * mpow(j, MOD - 2) % MOD;
+	}
+	printf("%d\n", ans);
+}
+~~~
+
+# CF445
+
+## D. Symmetric Projections
+
+重心的投影就是投影后的重心，然后转转转一下？
+
+## E. Mod Mod Mod
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+void upd(LL &x, LL y) { x = max(x, y); }
+int main() {
+	int n;
+	scanf("%d", &n);
+	map<LL, LL> dp;
+	dp[(LL) 1e18L] = 0;
+	for (int i = 0; i < n; ++ i) {
+		long long x;
+		scanf("%lld", &x);
+		auto it = dp.begin();
+		while ((it = dp.lower_bound(x)) != dp.end()) {
+			LL r = it -> first, k = it -> second;
+			upd(dp[r % x], k + (r - r % x) * i);
+			upd(dp[x - 1], k + (r / x * x - x) * i);
+			dp.erase(it);
+		}
+	}
+	LL ans = 0;
+	for (auto it : dp) upd(ans, it.first * n + it.second);
+	printf("%lld\n", ans);
+}
+~~~
