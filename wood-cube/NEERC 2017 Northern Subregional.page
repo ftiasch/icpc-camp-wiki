@@ -1,0 +1,54 @@
+<pre><span style="font-family:Menlo,Consolas,Monospace; font-size:15px;">
+┌─────────────────────────────────────────────────────────────────────┐
+│       2017-11-20 18:15-23:15 · Fudan U Wood Cube · MZH/TDJ/GX       │
+├────────┬────────────────────────────────────────────────────────────┤
+│I [0:05]│ oō                                                         │
+│K [0:10]│  ooō                                                       │
+│L [0:10]│      o!ō                                                   │
+│J [0:10]│                                 ·o·                        x
+├────────┼════════════────────────════════════────────────════════════┤
+│A [0:07]│ooō                                                         │
+│C [0:16]│         ·o·oō                                              │
+│G [0:36]│                  o·   oooo·ooō                             │
+│F [1:07]│                                   {oooo‼·!·!}o·ooo!·ō      │ {MZH}
+├────────┼════════════────────────════════════────────────════════════┤
+│E [0:08]│    ooō                                                     │
+│B [0:07]│        o! ō                                                │
+│H [0:24]│              o‼··!oō                                       │
+│D [1:02]│                    oo!   ·!            ·      !   oooo·⁉!⁈?x
+├────────┼════════════────────────════════════────────────════════════┤
+│+ [4:14]│ooooooooo·o·o·oo··ooooooooo·oo·  ·o·oooo·····oooooooooo····o│
+└────────┴────────────────────────────────────────────────────────────┘
+</span></pre><br>
+
+- D的正解是奇怪的搜索或者包含一种非常复杂情况的构造，但不少简单的错误(?)搜索能过。
+
+- J是一道简单的分块，训练的时候MZH想成了块链就没有优先去写…
+
+## A. Auxiliary Project [TDJ]
+
+## B. Boolean Satisfability [GX]
+
+## C. Consonant Fencity [TDJ]
+
+## D. Dividing Marbles [GX]
+
+## E. Equal Numbers [GX]
+
+## F. Fygon 2.0 [TDJ]
+
+强连通分量一开始以为是0就没仔细想…
+
+## G. Grand Test [TDJ]
+
+可能…只有…我们队…是用…仙人掌…做的吧…
+
+## H. Hidden Supervisors [GX]
+
+## I. Intelligence in Perpendicularia [MZH]
+
+## J. Joker1 [MZH]
+
+## K. Kotlin Island [MZH]
+
+## L. Little Difference [MZH]
