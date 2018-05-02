@@ -16,24 +16,34 @@
 │+ [3:38]│    ooo·oooo·  ooooooo··o·ooooo·o··ooooo······oo··oooooo·oo·│  
 └────────┴────────────────────────────────────────────────────────────┘  
 </span></pre>
+A. A+B
+------
 
-## A. A+B
+B. Break Free
+-------------
 
-## B. Break Free
+C. Covering Words with Carrying
+-------------------------------
 
-## C. Covering Words with Carrying
+D. Decisions
+------------
 
-## D. Decisions
+E. Enigmatic Matrix
+-------------------
 
-## E. Enigmatic Matrix
+F. Four Russians on a Tree
+--------------------------
 
-## F. Four Russians on a Tree
+G. Grundy
+---------
 
-## G. Grundy
+H. Hardware Hashing \[TDJ\]
+---------------------------
 
-## H. Hardware Hashing [TDJ]
 构造题；模拟一个线性探查的hash表，hash函数设为`(x ^ c) * b % p`，多次随机三个参数并贪心构造hash表使得元素存放的位置不超过其hash值+4即可
 
-## I. Interactive Proofs
+I. Interactive Proofs
+---------------------
 
-## J. Jackpot
+J. Jackpot
+----------
