@@ -1,0 +1,59 @@
+<pre><span style="font-family:Menlo,Consolas,Monospace; font-size:15px;">
+┌─────────────────────────────────────────────────────────────────────┐
+│       2016-07-29 12:40-17:40 · Fudan U Wood Cube · MZH/TDJ/GX       │
+├────────┬────────────────────────────────────────────────────────────┤
+│B [0:14]│ oooō                                                       │
+│C [0:09]│         oo!ō                                               │
+│D [0:34]│               o ·     ooo···ō                              │
+├────────┼════════════────────────════════════────────────════════════┤
+│A [0:04]│ oō                                                         │
+│G [0:27]│           ·ooo·o··   ō                                     │
+│F [0:19]│                               oooo!   ō                    │
+│J₄[0:47]│                                        {··o·}   ooooo·‼ō   │ {MZH}
+├────────┼════════════────────────════════════────────────════════════┤
+│E [0:28]│    ·o·oo···ō                                               │
+│I₃[0:39]│                 oooo·?             ‼?  ō                   │
+│K₃[0:14]│                            ooo!ō                           │
+├────────┼════════════────────────════════════────────────════════════┤
+│+ [3:47]│ ooo·o·oooo·ooooooooo··ooo··ooooooo··· ····o·    ooooo····  │
+└────────┴────────────────────────────────────────────────────────────┘
+┌────────┬────────────────────────────────────────────────────────────┐
+│H₂[-:--]│                                                            │
+└────────┴────────────────────────────────────────────────────────────┘
+</span></pre><br>
+
+## A. Decimal Sequences [TDJ]
+
+题面指的是连续子串，签到题。
+
+## B. Squeeze the Cylinders [MZH]
+
+## C. Sibling Rivalry [MZH]
+
+## D. Wall Clocks [MZH]
+
+## E. Bringing Order to Disorder [GX]
+
+分情况半搜半统计即可。
+
+## F. Deadlock Detection [TDJ]
+
+二分+check，$O(N^3*\log{T})$，亦可$O(N^3+T)$倒着做。
+
+## G. Do Geese See God? [TDJ]
+
+二维DP。
+
+## H. Rotating Cutter Bits
+
+## I. Routing a Marathon Race [GX]
+
+在最终状态图里dijkstra
+
+## J. Post Office Investigation [TDJ]
+
+Dominator Tree 裸题。
+
+## K. Min-Max Distance Game [GX]
+
+分2种情况，一种配对，一种分堆。
