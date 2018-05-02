@@ -20,47 +20,60 @@
 │B₆[-:--]│                                           ₀                │
 │J₅[-:--]│                                               ₀            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Add and Reverse [GX]
+A. Add and Reverse \[GX\]
+-------------------------
 
 签到题。
 
-## B. Analyze This
+B. Analyze This
+---------------
 
-## C. Bipartite Graph [TDJ]
+C. Bipartite Graph \[TDJ\]
+--------------------------
 
 右排i号点连左排i、i+1、i+2号点。证明见Petrozavodsk 2009 Warsaw B题。
 
-## D. Bridge Building [TDJ]
+D. Bridge Building \[TDJ\]
+--------------------------
 
-二分宽度后分两种情况，当$l\geq\sqrt{500}$时，f[i][j]表示i根a木条，j根b木条最多能拼出几排桥，转移时枚举长的木条（最多$O(\sqrt{500})$）；当$l<\sqrt{500}$时，g[i][j]表示拼出i排桥使用了恰好j根a木条时至少需要几根b木条；两种情况的DP复杂度均为$O(500^{2.5})$。
+二分宽度后分两种情况，当$l\geq\sqrt{500}$时，f\[i\]\[j\]表示i根a木条，j根b木条最多能拼出几排桥，转移时枚举长的木条（最多$O(\sqrt{500})$）；当$l<\sqrt{500}$时，g\[i\]\[j\]表示拼出i排桥使用了恰好j根a木条时至少需要几根b木条；两种情况的DP复杂度均为$O(500^{2.5})$。
 
-## E. Child's Game with Robot [TDJ]
+E. Child's Game with Robot \[TDJ\]
+----------------------------------
 
 签到题。
 
-## F. Four Points [TDJ]
+F. Four Points \[TDJ\]
+----------------------
 
-以1/2概率随机取一些点集，用扫描线+BIT check每个矩形是否取了这些点集中恰好一半的点，这样重复测试几十次。比赛中强行优化常数卡过，正解则是对每个点集随机设一个权，然后用权值和的一半check。
+以1/2概率随机取一些点集，用扫描线+BIT
+check每个矩形是否取了这些点集中恰好一半的点，这样重复测试几十次。比赛中强行优化常数卡过，正解则是对每个点集随机设一个权，然后用权值和的一半check。
 
-## G. Mosaic Tracery [TDJ]
+G. Mosaic Tracery \[TDJ\]
+-------------------------
 
 以正方形为单位记忆搜。
 
-## H. List of Powers [GX]
+H. List of Powers \[GX\]
+------------------------
 
 两种策略，一种枚举$l$到$r$之间所有数判断是不是$a^k$，判断用分块加哈希，另一种策略枚举$a$所有幂次，两种结合即可。
 
-## I. Potential Well [MZH]
+I. Potential Well \[MZH\]
+-------------------------
 
 问题等价于找最小均值的环。二分答案后SPFA判断图中是否存在负环。
 
-## J. Steiner Tree in Random Graph [GX]
+J. Steiner Tree in Random Graph \[GX\]
+--------------------------------------
 
 在后K个点枚举两个拿出来一起坐最小生成树即可。
 
-## K. Rotation Transformation [MZH]
+K. Rotation Transformation \[MZH\]
+----------------------------------
 
 绕单位向量$(x, y, z)$旋转$\theta$的矩阵为
 
