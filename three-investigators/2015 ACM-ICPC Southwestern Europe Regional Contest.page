@@ -1,111 +1,128 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.03.12 11:00-16:00
 
-[practice link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006279)
+[practice
+link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006279)
 
-# Solutions
+Solutions
+=========
 
-## A. Promotions
+A. Promotions
+-------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 对于每个点考虑它不能支配的点数即可确定它是否会升值加薪迎娶白富美出任CEO走上人生巅峰。
 
-## B. Black Vienna
+B. Black Vienna
+---------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 枚举藏起来的是哪三张牌，则给出的条件可以视为某张牌是否在某人手上或某两张牌是否不在同一人手上，并查集判定即可。
 
-## C. Canvas Painting
+C. Canvas Painting
+------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 石子合并。
 
-## D. Dice Cup
+D. Dice Cup
+-----------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 模拟，或者发现答案就是 $\min(N, M) + 1$ 到 $\max(N, M) + 1$ 的所有数。
 
-## E. Wooden Signs
+E. Wooden Signs
+---------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-题意题。第 $i$ 层的木板的两端一定是 $\mathrm{perm}_i$ 和一个其他的 $\mathrm{perm}_j$ $(j < i)$，定义 $f(i, j)$ 表示这样安排前 $i$ 层的方案数，转移时判断木板是否严格相交即可。
+题意题。第 $i$ 层的木板的两端一定是 $\mathrm{perm}_i$ 和一个其他的
+$\mathrm{perm}_j$ $(j < i)$，定义 $f(i, j)$ 表示这样安排前 $i$
+层的方案数，转移时判断木板是否严格相交即可。
 
-## F. Landscaping
+F. Landscaping
+--------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 经典最小割。
 
-## G. Game of Cards
+G. Game of Cards
+----------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 模拟求 sg 值。
 
-## H. Sheldon Numbers
+H. Sheldon Numbers
+------------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 数字很少，枚举生成即可。
 
-## I. Text Processor
+I. Text Processor
+-----------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-利用 Ukkonen 算法实现后缀树，在字符串末尾动态地增加字符、在开头动态地删除字符，同时维护所有边的长度之和，注意到叶子的边的长度与当前字符串长度有关。
+利用 Ukkonen
+算法实现后缀树，在字符串末尾动态地增加字符、在开头动态地删除字符，同时维护所有边的长度之和，注意到叶子的边的长度与当前字符串长度有关。
 
-## J. Saint John Festival
+J. Saint John Festival
+----------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 对大点求凸包，对小点进行点定位。
 
-# Replay and Summary
+Replay and Summary
+==================
 
 none is available
