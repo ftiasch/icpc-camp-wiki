@@ -19,38 +19,49 @@
 │I₆[-:--]│           ₀                                                │
 │D₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Billiard
+A. Billiard
+-----------
 
 【台球撞击题】
 
-## B. Counting 1's [TDJ]
+B. Counting 1's \[TDJ\]
+-----------------------
 
-通过第0位的1的个数我们可以确定[A,B]的长度范围，枚举长度，找到区间被切开（即1的个数既不等于0也不等于B+1-A）的最高位即可确定区间，最后check一遍。
+通过第0位的1的个数我们可以确定\[A,B\]的长度范围，枚举长度，找到区间被切开（即1的个数既不等于0也不等于B+1-A）的最高位即可确定区间，最后check一遍。
 
-## C. Dictionary [TDJ]
+C. Dictionary \[TDJ\]
+---------------------
 
 签到题。
 
-## D. Hashigo Sama
+D. Hashigo Sama
+---------------
 
 【梯子树DP题】
 
-## E. Texas Hold'em [MZH]
+E. Texas Hold'em \[MZH\]
+------------------------
 
-## F. Magical Bridges [MZH]
+F. Magical Bridges \[MZH\]
+--------------------------
 
-## G. Stack Maze [GX]
+G. Stack Maze \[GX\]
+--------------------
 
 水题
 
-## H. Median Tree [MZH]
+H. Median Tree \[MZH\]
+----------------------
 
-## I. Ancient Commemorative Monolith
+I. Ancient Commemorative Monolith
+---------------------------------
 
 【字符图识别题】
 
-## J. Ancient Scrolls [GX]
+J. Ancient Scrolls \[GX\]
+-------------------------
 
 贪心题
