@@ -1,49 +1,111 @@
-## 1. 最小生成树计数
+1. 最小生成树计数
+-----------------
 
 poster: skywalkert
 
-problem: [SPOJ MSTS](http://www.spoj.com/problems/MSTS/) [bzoj 1543 生成树计数](http://www.lydsy.com/JudgeOnline/problem.php?id=1543) [51nod 1601 完全图的最小生成树计数](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1601)
+problem: [SPOJ MSTS](http://www.spoj.com/problems/MSTS/) [bzoj 1543
+生成树计数](http://www.lydsy.com/JudgeOnline/problem.php?id=1543) [51nod
+1601
+完全图的最小生成树计数](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1601)
 
-solution: 考虑 kruskal 算法的过程，不论相同权值边的检验顺序如何，使用权值不超过 $w$ 的边构成的连通状态相同，不同的只有在相同权值的边里选了哪些边加入最小生成树，对最小生成树计数只需要考虑相同权值的边组成的每个连通块的生成树数量。对于第一个题目，计算生成树的数量则可以采用 Matrix-Tree 定理；第二个题目保证相同边权的边不会超过 $5$ 条，直接枚举选择哪些边即可；第三个题目虽然给出的是 $10^5$ 个点的完全图，但是相同权值的边只会在连接字典树不同的分支时出现，于是可以自底向上 DP。看上去最小树形图也是可以算的咯？不妨阅读 Koyo Hayashi 和 Satoru Iwata 在今年 3 月公开的论文 [Counting Minimum Weight Arborescences](http://www.keisu.t.u-tokyo.ac.jp/research/techrep/data/2017/METR17-07.pdf)。
+solution: 考虑 kruskal
+算法的过程，不论相同权值边的检验顺序如何，使用权值不超过 $w$
+的边构成的连通状态相同，不同的只有在相同权值的边里选了哪些边加入最小生成树，对最小生成树计数只需要考虑相同权值的边组成的每个连通块的生成树数量。对于第一个题目，计算生成树的数量则可以采用
+Matrix-Tree 定理；第二个题目保证相同边权的边不会超过 $5$
+条，直接枚举选择哪些边即可；第三个题目虽然给出的是 $10^5$
+个点的完全图，但是相同权值的边只会在连接字典树不同的分支时出现，于是可以自底向上
+DP。看上去最小树形图也是可以算的咯？不妨阅读 Koyo Hayashi 和 Satoru
+Iwata 在今年 3 月公开的论文 [Counting Minimum Weight
+Arborescences](http://www.keisu.t.u-tokyo.ac.jp/research/techrep/data/2017/METR17-07.pdf)。
 
-## 2. 树形依赖背包
+2. 树形依赖背包
+---------------
 
 poster: skywalkert
 
-problem: [vijos 1676 陶陶吃苹果](https://vijos.org/p/1676) [vijos 2020 小Q的苹果树](https://vijos.org/p/2020)
+problem: [vijos 1676 陶陶吃苹果](https://vijos.org/p/1676) [vijos 2020
+小Q的苹果树](https://vijos.org/p/2020)
 
-solution: 树形依赖背包主要处理选取物品必须形成一个包含树根的连通块时的树形背包问题，常见做法是根据 dfs 序完成对连通块的枚举。第一个题目中有一个不寻常的限制是选取的点数减去连通块深度满足定值，事实上是指连通块内存在一条链上的物品可以不花费代价就得到价值，类似于普通的树形依赖背包，我们可以枚举这条链，预处理按照 dfs 序做到这条链之前的其他子树 DP 值，按照 dfs 序逆序做到这条链之后的其他子树 DP 值，从而合并出答案。第二个题目加上了多重背包的限制，这导致预处理的信息无法直接合并，但是对两个预处理的 DP 信息的定义进行微调之后便可以直接合并了。
+solution:
+树形依赖背包主要处理选取物品必须形成一个包含树根的连通块时的树形背包问题，常见做法是根据
+dfs
+序完成对连通块的枚举。第一个题目中有一个不寻常的限制是选取的点数减去连通块深度满足定值，事实上是指连通块内存在一条链上的物品可以不花费代价就得到价值，类似于普通的树形依赖背包，我们可以枚举这条链，预处理按照
+dfs 序做到这条链之前的其他子树 DP 值，按照 dfs
+序逆序做到这条链之后的其他子树 DP
+值，从而合并出答案。第二个题目加上了多重背包的限制，这导致预处理的信息无法直接合并，但是对两个预处理的
+DP 信息的定义进行微调之后便可以直接合并了。
 
-## 3. 切方块
+3. 切方块
+---------
 
 poster: skywalkert
 
-problem: [51nod 1415 切方块](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1415)
+problem: [51nod 1415
+切方块](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1415)
 
-solution: 这个题我推了推式子，有些意识模糊，最终是利用轮换对称性猜出的答案： $\frac{1}{2}(A B + B C + C A - \frac{\gcd(A, B) \gcd(B, C) \gcd(C, A)}{\gcd(A, B, C)})$。
+solution:
+这个题我推了推式子，有些意识模糊，最终是利用轮换对称性猜出的答案：
+$\frac{1}{2}(A B + B C + C A - \frac{\gcd(A, B) \gcd(B, C) \gcd(C, A)}{\gcd(A, B, C)})$。
 
-## 4. Coprimes
+4. Coprimes
+-----------
 
 poster: skywalkert
 
 problem: [codechef AMCOP](https://www.codechef.com/problems/AMCOP)
 
-solution: 考虑容斥，所求即 $\sum_{d}{\mu(d){\sum_{i = L}^{R}{[d | a_i]} \choose K}}$，直接计算比较麻烦，考虑将 $c(d) = \sum_{i = L}^{R}{[d | a_i]}$ 相等的 $d$ 合并在一起计算，因为每个数 $x$ $(x \leq 10^5)$ 只有 $2^{\omega(x)}$ $(\omega(x) \leq 6)$ 个无平方因子约数，所以 $\sum{c(d)} \leq 2^6 (R - L + 1)$，这意味着不同的 $c(d)$ 至多只有 $2^4 \sqrt{R - L + 1}$ 种，因此只需要维护 $s(v) = \sum_{d}{[c(d) = v] \mu(d)}$ 非零的部分即可单次询问 $\mathcal{O}(\sqrt{n})$ 计算答案，而维护 $s(v)$ 和所涉及的 $c(d)$ 则需要用莫队，每次 $\mathcal{O}(2^6)$ 添加/删除一个元素，总复杂度 $\mathcal{O}(2^6 n \sqrt{n})$，由于莫队的信息只涉及加减和顺序扫数组的操作，所以跑得不慢。
+solution: 考虑容斥，所求即
+$\sum_{d}{\mu(d){\sum_{i = L}^{R}{[d | a_i]} \choose K}}$，直接计算比较麻烦，考虑将
+$c(d) = \sum_{i = L}^{R}{[d | a_i]}$ 相等的 $d$
+合并在一起计算，因为每个数 $x$ $(x \leq 10^5)$ 只有 $2^{\omega(x)}$
+$(\omega(x) \leq 6)$ 个无平方因子约数，所以
+$\sum{c(d)} \leq 2^6 (R - L + 1)$，这意味着不同的 $c(d)$ 至多只有
+$2^4 \sqrt{R - L + 1}$ 种，因此只需要维护
+$s(v) = \sum_{d}{[c(d) = v] \mu(d)}$ 非零的部分即可单次询问
+$\mathcal{O}(\sqrt{n})$ 计算答案，而维护 $s(v)$ 和所涉及的 $c(d)$
+则需要用莫队，每次 $\mathcal{O}(2^6)$ 添加/删除一个元素，总复杂度
+$\mathcal{O}(2^6 n \sqrt{n})$，由于莫队的信息只涉及加减和顺序扫数组的操作，所以跑得不慢。
 
-## 5. 最大子段和及其变种
+5. 最大子段和及其变种
+---------------------
 
 poster: skywalkert
 
-problem: [全局最大子段和(51nod 1049 最大子段和)](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1049) [动态区间最大子段和(SPOJ GSS1)](http://www.spoj.com/problems/GSS1/) [环序列最大子段和(51nod 1050 循环数组最大子段和)](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1050) [动态区间最大K子段和(codeforces 280D k-Maximum Subsequence Sum)](http://codeforces.com/contest/280/problem/D) [至多交换K次全局最大子段和(XVII OpenCup Grand Prix of Eurasia 1 Maximum Sum with Swaps)](https://official.contest.yandex.ru/opencupXVII/contest/2887/problems/1/)
+problem: [全局最大子段和(51nod 1049
+最大子段和)](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1049)
+[动态区间最大子段和(SPOJ GSS1)](http://www.spoj.com/problems/GSS1/)
+[环序列最大子段和(51nod 1050
+循环数组最大子段和)](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1050)
+[动态区间最大K子段和(codeforces 280D k-Maximum Subsequence
+Sum)](http://codeforces.com/contest/280/problem/D)
+[至多交换K次全局最大子段和(XVII OpenCup Grand Prix of Eurasia 1 Maximum
+Sum with
+Swaps)](https://official.contest.yandex.ru/opencupXVII/contest/2887/problems/1/)
 
-solution: 全局最大子段和可以通过维护前缀和最小值求得，也可以动态规划求得，更可以分治求得。注意到分治做法是基于区间合并的，因此动态区间最大子段和可以用线段树维护。而对于环序列，可以分跨越和不跨越考虑，分别是最大子段和与最小子段和问题，后者可以全局取负计算得到。仔细分析环序列的做法与选取两个子段和有什么不同，可以发现K个子段的最大和是可以动态求出的，做法类似于堆或费用流（最大K不重叠子段和）可以用线段树维护增广信息，即每次选取出一个最大子段和后将对应位置取反再次计算即可。至于带交换的全局最大子段和，则是考虑最优解内部与外部的贡献，相当于至多有K个外部元素产生贡献、K个内部元素取消贡献，这个是可以用动态规划求得的。
+solution:
+全局最大子段和可以通过维护前缀和最小值求得，也可以动态规划求得，更可以分治求得。注意到分治做法是基于区间合并的，因此动态区间最大子段和可以用线段树维护。而对于环序列，可以分跨越和不跨越考虑，分别是最大子段和与最小子段和问题，后者可以全局取负计算得到。仔细分析环序列的做法与选取两个子段和有什么不同，可以发现K个子段的最大和是可以动态求出的，做法类似于堆或费用流（最大K不重叠子段和）可以用线段树维护增广信息，即每次选取出一个最大子段和后将对应位置取反再次计算即可。至于带交换的全局最大子段和，则是考虑最优解内部与外部的贡献，相当于至多有K个外部元素产生贡献、K个内部元素取消贡献，这个是可以用动态规划求得的。
 
-## 6. 最小回文串划分
+6. 最小回文串划分
+-----------------
 
 poster: skywalkert
 
-problem: [codeforces 906E](http://codeforces.com/contest/906/problem/E) [codeforces 932G](http://codeforces.com/contest/932/problem/G) [Five Palindromes](http://acm.timus.ru/problem.aspx?space=1&num=1954) [31 Palindromes](http://acm.timus.ru/problem.aspx?space=1&num=2044) [100500 palidnromes](http://acm.timus.ru/problem.aspx?space=1&num=2058)
+problem: [codeforces 906E](http://codeforces.com/contest/906/problem/E)
+[codeforces 932G](http://codeforces.com/contest/932/problem/G) [Five
+Palindromes](http://acm.timus.ru/problem.aspx?space=1&num=1954) [31
+Palindromes](http://acm.timus.ru/problem.aspx?space=1&num=2044) [100500
+palidnromes](http://acm.timus.ru/problem.aspx?space=1&num=2058)
 
-solution: palindrome string 是 string，自然满足 string 的性质。string 的 palindrome border 可以根据相邻长度之差划分为 $\log |S|$ 组，每组中的 palindrome border 长度之差为定值。考虑在当前 string 末尾增加一个 character，每组 palindrome border 内部的状态变化可以证明是相同的，只需要对内部和边界处的 palindrome border 进行检查和更新。在动态规划时，同一组的信息也可进行维护，这样在转移时只需要对分别对不同组的信息进行合并。906E 本质需要计算字符串的最小偶回文串划分，只需要忽略奇回文串划分即可。932G 本质需要计算字符串的偶回文串划分个数，也是类似的做法。注意到如果存在长度为 $x$ $(x + 2 \leq |S|)$ 的划分，那么也存在长度为 $x + 2$ 的划分，在 DP 时维护奇偶性即可完成后三个题目，并构造解。
+solution: palindrome string 是 string，自然满足 string 的性质。string 的
+palindrome border 可以根据相邻长度之差划分为 $\log |S|$ 组，每组中的
+palindrome border 长度之差为定值。考虑在当前 string 末尾增加一个
+character，每组 palindrome border
+内部的状态变化可以证明是相同的，只需要对内部和边界处的 palindrome border
+进行检查和更新。在动态规划时，同一组的信息也可进行维护，这样在转移时只需要对分别对不同组的信息进行合并。906E
+本质需要计算字符串的最小偶回文串划分，只需要忽略奇回文串划分即可。932G
+本质需要计算字符串的偶回文串划分个数，也是类似的做法。注意到如果存在长度为
+$x$ $(x + 2 \leq |S|)$ 的划分，那么也存在长度为 $x + 2$ 的划分，在 DP
+时维护奇偶性即可完成后三个题目，并构造解。
 
-tips: 与构建 palindrome tree 不同的是，该方法只需要记录 border sequence，在空间和效率上有一定改善。
+tips: 与构建 palindrome tree 不同的是，该方法只需要记录 border
+sequence，在空间和效率上有一定改善。
