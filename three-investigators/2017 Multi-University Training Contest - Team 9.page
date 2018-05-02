@@ -141,7 +141,7 @@ $1000$。
 **Solution 2**
 
 用[2013 ACM-ICPC Asia Regional Changchun Online, H.
-Network](2013%20ACM-ICPC%20Asia%20Regional%20Changchun%20Online#h.-network)中圆交的做法，复杂度
+Network](2013 ACM-ICPC Asia Regional Changchun Online#h.-network)中圆交的做法，复杂度
 $O(n \log^2 v)$。
 
 **Solution 3**
