@@ -1,0 +1,36 @@
+# A. Abbreviation [ConnorZhong]
+ConnorZhong：恶心的字符串模拟，想清楚，注意细节，没什么好说的。
+
+# B. Binary Code 
+
+# C. Cactus Construction 
+
+# D. Delight for a Cat 
+
+# E. Expect to Wait 
+
+# F. Foreign Postcards 
+
+# G. Game on Graph 
+
+# H. Hard Refactoring [Cabinfever]
+Cabinfever: 题意给出一些区间，现要用尽量少的描述区间并。用L表示左端点，R表示右端点，对于两个表达式的直接赋值，对于一个表达式的将一边赋为极限，排序，贪心即可。判断是不是为false需要所有表达式都为矛盾。输入输出较恶心
+
+# I. Indiana Jones and the Uniform Cave 
+
+# J. Jenga Boom 
+
+# K. Kids Designing Kids 
+
+# L. List of Primes 
+
+# M. Mole Tunnels 
+
+# Summary
+**比赛记录：** 开局迅速定位A和H两个大水题，zjc和hzh商量后决定上去签到，zjc在A上疯狂吃屎占用大量机时，中间又换上jyb去签H，双wa收场。还好hzh持续输出磕磕绊绊也过了F和E。（接下来zjc和jyb请开始你们的表演），静态查，动态查，互相查，顺带讨论讨论J，未果，换hzh上去尝试输出B，未果。最后10分钟吃屎双人组仿佛回光返照？(by zjc)
+
+**ConnorZhong：** 上题前需要充足的准备，模拟题尤其如此，这样才能减少机时占用。头脑不清醒的时候应该更早一点让出机位，或许需要更多的一些交流？比赛两小时手上卡了3个签到题，如果在现场赛那就是灾难。急需调整状态。
+
+**Cabinfever: ** H很惨，逻辑出了大问题，最后才想到。 教训是所有逻辑点都要check一下，不要先入为主、惯性思维
+
+**YOULLNEVERWA:**
