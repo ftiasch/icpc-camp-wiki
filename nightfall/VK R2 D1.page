@@ -1,102 +1,102 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
 struct frac {
-	int p, q, i;
-	frac(int p, int q, int i) : p(p), q(q), i(i) {}
+    int p, q, i;
+    frac(int p, int q, int i) : p(p), q(q), i(i) {}
 };
 bool operator < (const frac &a, const frac &b) {
-	return 1LL * a.p * b.q < 1LL * a.q * b.p;
+    return 1LL * a.p * b.q < 1LL * a.q * b.p;
 }
 bool operator == (frac a, frac b) {
-	return !(a < b) && !(b < a);
+    return !(a < b) && !(b < a);
 }
 int tree[2 * N];
 void add(int x, int c) {
-	//printf("add %d %d\n", x, c);
-	while (x < 2 * N) {
-		tree[x] += c;
-		x += x & -x;
-	}
+    //printf("add %d %d\n", x, c);
+    while (x < 2 * N) {
+        tree[x] += c;
+        x += x & -x;
+    }
 }
 int query(int x) {
-	//printf("query %d\n", x);
-	int ans = 0;
-	while (x) {
-		ans += tree[x];
-		x -= x & -x;
-	}
-	return ans;
+    //printf("query %d\n", x);
+    int ans = 0;
+    while (x) {
+        ans += tree[x];
+        x -= x & -x;
+    }
+    return ans;
 }
 long long calc(vector<pair<int, int>> L, vector<pair<int, int>> R, int wind, string cmp) {
-	sort(L.begin(), L.end());
-	sort(R.begin(), R.end());
-	for (auto &x : L) x.second += wind;
-	for (auto &x : R) x.second += wind;
-	vector<frac> need_R;
-	int cnt1 = -1, las = -1;
-	for (auto x : R) {
-		if (x.first != las) cnt1 ++;
-		las = x.first;
-		need_R.push_back(frac(abs(x.first), abs(x.second), cnt1));
-		//printf("R %.4f\n", -1.0 * x.first / x.second);
-	}
-	vector<frac> need_L;
-	cnt1 = -1;
-	las = 1;
-	for(auto x : L) {
-		if (x.first != las) cnt1 ++;
-		las = x.first;
-		need_L.push_back(frac(abs(x.first), abs(x.second), cnt1));
-		//printf("L %.4f\n", -1.0 * x.first / x.second);
-	}
-	long long ans = 0;
-	sort(need_L.begin(), need_L.end());
-	sort(need_R.begin(), need_R.end());
-	for (int i = 0; i < (int) need_R.size(); ++ i) {
-		frac x = need_R[i];
-		if (cmp == "<0") {
-			ans += need_L.end() - upper_bound(need_L.begin(), need_L.end(), x);
-		}
-		else if (cmp == "<=0") {
-			ans += need_L.end() - lower_bound(need_L.begin(), need_L.end(), x);
-		}
-	}
-	memset(tree, 0, sizeof(tree));
-	las = (int) need_L.size() - 1;
-	for (int i = (int) need_L.size() - 1; i >= 0; -- i) {
-		frac x = need_L[i];
-		if (!(x == need_L[las])) {
-			for (int j = i + 1; j <= las; ++ j) add((int) L.size() - need_L[j].i, 1);
-			las = i;
-		}
-		ans += query((int) L.size() - x.i);
-		if (cmp == "<=0") ans += las - i;
-	}
-	memset(tree, 0, sizeof(tree));
-	las = 0;
-	for (int i = 0; i < (int) need_R.size(); ++ i) {
-		frac x = need_R[i];
-		if (!(x == need_R[las])) {
-			for (int j = las; j < i; ++ j) add(need_R[j].i + 1, 1);
-			las = i;
-		}
-		ans += query(x.i + 1);
-		if (cmp == "<=0") ans += i - las;
-	}
-	return ans;
+    sort(L.begin(), L.end());
+    sort(R.begin(), R.end());
+    for (auto &x : L) x.second += wind;
+    for (auto &x : R) x.second += wind;
+    vector<frac> need_R;
+    int cnt1 = -1, las = -1;
+    for (auto x : R) {
+        if (x.first != las) cnt1 ++;
+        las = x.first;
+        need_R.push_back(frac(abs(x.first), abs(x.second), cnt1));
+        //printf("R %.4f\n", -1.0 * x.first / x.second);
+    }
+    vector<frac> need_L;
+    cnt1 = -1;
+    las = 1;
+    for(auto x : L) {
+        if (x.first != las) cnt1 ++;
+        las = x.first;
+        need_L.push_back(frac(abs(x.first), abs(x.second), cnt1));
+        //printf("L %.4f\n", -1.0 * x.first / x.second);
+    }
+    long long ans = 0;
+    sort(need_L.begin(), need_L.end());
+    sort(need_R.begin(), need_R.end());
+    for (int i = 0; i < (int) need_R.size(); ++ i) {
+        frac x = need_R[i];
+        if (cmp == "<0") {
+            ans += need_L.end() - upper_bound(need_L.begin(), need_L.end(), x);
+        }
+        else if (cmp == "<=0") {
+            ans += need_L.end() - lower_bound(need_L.begin(), need_L.end(), x);
+        }
+    }
+    memset(tree, 0, sizeof(tree));
+    las = (int) need_L.size() - 1;
+    for (int i = (int) need_L.size() - 1; i >= 0; -- i) {
+        frac x = need_L[i];
+        if (!(x == need_L[las])) {
+            for (int j = i + 1; j <= las; ++ j) add((int) L.size() - need_L[j].i, 1);
+            las = i;
+        }
+        ans += query((int) L.size() - x.i);
+        if (cmp == "<=0") ans += las - i;
+    }
+    memset(tree, 0, sizeof(tree));
+    las = 0;
+    for (int i = 0; i < (int) need_R.size(); ++ i) {
+        frac x = need_R[i];
+        if (!(x == need_R[las])) {
+            for (int j = las; j < i; ++ j) add(need_R[j].i + 1, 1);
+            las = i;
+        }
+        ans += query(x.i + 1);
+        if (cmp == "<=0") ans += i - las;
+    }
+    return ans;
 }
 int main() {
-	int n, w;
-	scanf("%d%d", &n, &w);
-	vector<pair<int, int>> L, R;
-	for (int i = 1; i <= n; ++ i) {
-		int x, v;
-		scanf("%d%d", &x, &v);
-		(x < 0 ? L : R).push_back({x, v});
-	}
-	long long ans = calc(L, R, -w, "<=0") - calc(L, R, w, "<0");
-	printf("%lld\n", ans);
+    int n, w;
+    scanf("%d%d", &n, &w);
+    vector<pair<int, int>> L, R;
+    for (int i = 1; i <= n; ++ i) {
+        int x, v;
+        scanf("%d%d", &x, &v);
+        (x < 0 ? L : R).push_back({x, v});
+    }
+    long long ans = calc(L, R, -w, "<=0") - calc(L, R, w, "<0");
+    printf("%lld\n", ans);
 }
-~~~
+```
