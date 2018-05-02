@@ -1,91 +1,116 @@
-# Contest Info
+Contest Info
+============
 
 date: 2018.04.06 12:10-17:10
 
 [practice link](http://codeforces.com/gym/101205)
 
-# Solutions
+Solutions
+=========
 
-## A. Asteroid Rangers
+A. Asteroid Rangers
+-------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-考虑 ${n \choose 2}$ 条边之间的大小关系，可以列出方程求出它们大小关系变化的时间点。
+考虑 ${n \choose 2}$
+条边之间的大小关系，可以列出方程求出它们大小关系变化的时间点。
 
-然后在相邻时间点之间取一个位置重构生成树，检查与之前的是否相同即可，复杂度最坏 $\mathcal{O}(n^5 \log n)$。
+然后在相邻时间点之间取一个位置重构生成树，检查与之前的是否相同即可，复杂度最坏
+$\mathcal{O}(n^5 \log n)$。
 
-由于题目保证了这些时间点之间的距离超过 $10^{-6}$，那么直接用浮点数做就可以了。
+由于题目保证了这些时间点之间的距离超过
+$10^{-6}$，那么直接用浮点数做就可以了。
 
 最后祝你玩得开心。
 
-## B. Curvy Little Bottles
+B. Curvy Little Bottles
+-----------------------
 
 solved by braveTester, upsolved by none
 
-## C. Bus Tour
+C. Bus Tour
+-----------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-考虑将点集划分为 $\{0\}, S, T, \{n - 1\}$，其中 $|S| = \left\lfloor\frac{n - 2}{2}\right\rfloor$，则路径为 $\{0\} \rightarrow S \rightarrow T \rightarrow \{n - 1\} \rightarrow S \rightarrow T \rightarrow \{0\}$，用状压 DP 算出遍历某个点集且最后一步在某个点的最短路径，枚举上述路径中 $S$ 与 $T$ 之间是哪条路径即可，注意 $S, T$ 可能为空集。
+考虑将点集划分为 $\{0\}, S, T, \{n - 1\}$，其中
+$|S| = \left\lfloor\frac{n - 2}{2}\right\rfloor$，则路径为
+$\{0\} \rightarrow S \rightarrow T \rightarrow \{n - 1\} \rightarrow S \rightarrow T \rightarrow \{0\}$，用状压
+DP 算出遍历某个点集且最后一步在某个点的最短路径，枚举上述路径中 $S$ 与
+$T$ 之间是哪条路径即可，注意 $S, T$ 可能为空集。
 
-## D. Fibonacci Words
+D. Fibonacci Words
+------------------
 
 solved by chitanda, upsolved by none
 
-## E. Infiltration
+E. Infiltration
+---------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-由于给定的图保证任意两点间至少有一条边，所以每次选择度数最大的点进行覆盖，总能覆盖一半的点，最坏情况是选 $6$ 个点，可以预先贪心得到。
+由于给定的图保证任意两点间至少有一条边，所以每次选择度数最大的点进行覆盖，总能覆盖一半的点，最坏情况是选
+$6$ 个点，可以预先贪心得到。
 
 然后搜 $5$ 步看看有没有更好的解就行了。
 
-## F. Keys
+F. Keys
+-------
 
 unsolved
 
-## G. Minimum Cost Flow
+G. Minimum Cost Flow
+--------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-枚举水位所在高度，问题变成用最小代价将点 $1$ 所在点集和点 $N$ 所在点集连通并填补所在点集中未使用的洞。两个点的斯坦纳树问题可以使用最短路解决，对于此题，只需要在第一次进入某个点集时将填补新点集中未使用的洞的代价产生、将少补两个洞的代价消去即可。为了知道点上是否还有洞可以用，可以在求最短路时增加一维表示该点已经使用的洞数量，这个数量只会是 $0$ 或 $1$。时间复杂度 $\mathcal{O}(N M \log M)$。
+枚举水位所在高度，问题变成用最小代价将点 $1$ 所在点集和点 $N$
+所在点集连通并填补所在点集中未使用的洞。两个点的斯坦纳树问题可以使用最短路解决，对于此题，只需要在第一次进入某个点集时将填补新点集中未使用的洞的代价产生、将少补两个洞的代价消去即可。为了知道点上是否还有洞可以用，可以在求最短路时增加一维表示该点已经使用的洞数量，这个数量只会是
+$0$ 或 $1$。时间复杂度 $\mathcal{O}(N M \log M)$。
 
-## H. Room Service
-
-unsolved
-
-## I. A Safe Bet
-
-unsolved
-
-## J. Shortest Flight Path
+H. Room Service
+---------------
 
 unsolved
 
-## K. Stacking Plates
+I. A Safe Bet
+-------------
+
+unsolved
+
+J. Shortest Flight Path
+-----------------------
+
+unsolved
+
+K. Stacking Plates
+------------------
 
 solved by braveTester, upsolved by none
 
-## L. Takeover Wars
+L. Takeover Wars
+----------------
 
 solved by chitanda, upsolved by none
 
-# Replay and Summary
+Replay and Summary
+==================
 
 None is available.
