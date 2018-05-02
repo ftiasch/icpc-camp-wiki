@@ -1,35 +1,35 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
 vector<int> G[N];
 int c[N], gg;
 void dfs(int x, int col) {
-	if (c[x]) {
-		if (c[x] != col) gg = 1;
-		return;
-	}
-	c[x] = col;
-	for (int u : G[x]) dfs(u, 3 - col);
+    if (c[x]) {
+        if (c[x] != col) gg = 1;
+        return;
+    }
+    c[x] = col;
+    for (int u : G[x]) dfs(u, 3 - col);
 }
 class AcyclicOrientation {
-	public:
-	int count(int n, vector<int> u, vector<int> v) {
-		int m = (int) u.size();
-		if (u.empty()) return 1;
-		for (int i = 0; i < m; ++ i) {
-			G[u[i]].push_back(v[i]);
-			G[v[i]].push_back(u[i]);
-		}
-		int ans = n % 2 ? 2 : 1;
-		for (int i = 0; i < n; ++ i) {
-			if (c[i]) continue;
-			dfs(i, 1);
-			ans = ans * 2 % 3;
-		}
-		if (gg) return 0;
-		if (ans == 1) return 4;
-		return 2;
-	}
+    public:
+    int count(int n, vector<int> u, vector<int> v) {
+        int m = (int) u.size();
+        if (u.empty()) return 1;
+        for (int i = 0; i < m; ++ i) {
+            G[u[i]].push_back(v[i]);
+            G[v[i]].push_back(u[i]);
+        }
+        int ans = n % 2 ? 2 : 1;
+        for (int i = 0; i < n; ++ i) {
+            if (c[i]) continue;
+            dfs(i, 1);
+            ans = ans * 2 % 3;
+        }
+        if (gg) return 0;
+        if (ans == 1) return 4;
+        return 2;
+    }
 };
-~~~
+```
