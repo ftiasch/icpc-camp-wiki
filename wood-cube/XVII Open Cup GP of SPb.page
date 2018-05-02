@@ -18,40 +18,52 @@
 ├────────┼════════════────────────════════════────────────════════════┤
 │+ [3:36]│  ooooooooo··oo·o·ooooooo·o·oo··o··o · ·      oo ·ooooo····o│
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Array Factory [TDJ]
+A. Array Factory \[TDJ\]
+------------------------
 
 签到题。
 
-## B. Purchases and Bonuses [GX]
+B. Purchases and Bonuses \[GX\]
+-------------------------------
 
 dp签到
 
-## C. Number of Solutions [MZH]
+C. Number of Solutions \[MZH\]
+------------------------------
 
-## D. Cutting Potatoes [GX]
+D. Cutting Potatoes \[GX\]
+--------------------------
 
 枚举签到
 
-## E. Divide and Conquer [MZH]
+E. Divide and Conquer \[MZH\]
+-----------------------------
 
-## F. Doubling [GX]
+F. Doubling \[GX\]
+------------------
 
 贪心搞搞，能×2就x2，小的特判下
 
-## G. New Collection [GX]
+G. New Collection \[GX\]
+------------------------
 
 贝叶斯公式算下概率，取最大的一个
 
-## H. Path or Coloring [MZH]
+H. Path or Coloring \[MZH\]
+---------------------------
 
-## I. Double Shuffle [TDJ]
+I. Double Shuffle \[TDJ\]
+-------------------------
 
 首先我们发现移动距离最大的一些(我选了12个)数字有很高概率是只移动两次的，那么我们可以枚举某个数字第一次移动的位置，于是我们就有两次确定的随机值范围了，这样可以枚举出所有可能的seed，然后再用那选出的几个数check即可。
 
-## J. Timer [TDJ]
+J. Timer \[TDJ\]
+----------------
 
 枚举签到题。
 
-## K. Ultraprime Numbers [MZH]
+K. Ultraprime Numbers \[MZH\]
+-----------------------------
