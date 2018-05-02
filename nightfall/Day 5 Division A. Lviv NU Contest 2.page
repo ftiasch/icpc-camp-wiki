@@ -1,0 +1,263 @@
+# C. Paint the Tree
+
+二分距离x。
+
+按BFS序一次确定颜色，可以发现：和当前点距离为x以内的点，两两之间距离一定也小于x，所以他们颜色两两不同。所以这个点可选择的颜色数是可以算的。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7, N = 2005;
+vector<int> G[N];
+int d[N][N];
+vector<int> BFS(int s, int d[N]) {
+	queue<int> q;
+	q.push(s);
+	memset(d, -1, N * sizeof(int));
+	d[s] = 0;
+	vector<int> all;
+	while (!q.empty()) {
+		int p = q.front(); q.pop();
+		all.push_back(p);
+		for (int u : G[p]) if (d[u] == -1) {
+			d[u] = d[p] + 1;
+			q.push(u);
+		}
+	}
+	return all;
+}
+int main() {
+	int n, k;
+	scanf("%d%d", &n, &k);
+	for (int i = 1; i < n; ++ i) {
+		int u, v;
+		scanf("%d%d", &u, &v);
+		G[u].push_back(v);
+		G[v].push_back(u);
+	}
+	for (int i = 1; i <= n; ++ i) BFS(i, d[i]);
+	vector<int> st = BFS(1, d[1]);
+	int l = 1, r = n - 1, ans = n - 1, ans_val = 1;
+	while (l <= r) {
+		int mid = (l + r) / 2;
+		bool gg = 0;
+		int val = 1;
+		for (int i = 0; i < n; ++ i) {
+			int u = st[i], cnt = 0;
+			for (int j = 0; j < i; ++ j) {
+				int v = st[j];
+				if (d[u][v] < mid) cnt ++;
+			}
+			if (cnt + 1 > k) {
+				gg = 1;
+				break;
+			}
+			val = 1LL * val * (k - cnt) % MOD;
+		}
+		if (gg) {
+			r = mid - 1;
+		}
+		else {
+			l = mid + 1;
+			ans = mid;
+			ans_val = val;
+		}
+	}
+	printf("%d %d\n", ans, ans_val);
+}
+~~~
+
+# H. Things
+
+观察：选择一些区间覆盖目标区间，只会有相邻区间相交。每个区间强拆2个就可以dp了。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 405;
+int L[N], R[N]; bool dp[N][N];
+bool solve(vector<pair<int, int>> all) {
+	int n = (int) all.size(), MAXR = 0;
+	for (int i = 0; i < n; ++ i) L[i] = all[i].first, R[i] = all[i].first + (all[i].second - all[i].first) / 2;
+	for (int i = 0; i < n; ++ i) {
+		L[n + i] = all[i].first + (all[i].second - all[i].first) / 2, R[n + i] = all[i].second;
+		MAXR = max(MAXR, R[n + i]);
+	}
+	vector<int> tmp;
+	for (int i = 0; i < 2 * n; ++ i) tmp.push_back(i);
+	sort(tmp.begin(), tmp.end(), [&] (int i, int j) { return L[i] == L[j] ? R[i] < R[j] : L[i] < L[j]; });
+	memset(dp, 0, sizeof(dp));
+	for (int i = 0; i < 2 * n; ++ i) {
+		int u = tmp[i];
+		if (L[u] == L[tmp[0]]) {
+			for (int j = i + 1; j < 2 * n; ++ j) {
+				int v = tmp[j];
+				if (v != u + n && R[u] >= L[v]) {
+					dp[i][j] = 1;
+					if (R[v] == MAXR) return 1;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < 2 * n; ++ i) {
+		for (int j = i + 1; j < 2 * n; ++ j) if (dp[i][j]) {
+			int u = tmp[i], v = tmp[j];
+			for (int k = j + 1; k < 2 * n; ++ k) {
+				int w = tmp[k];
+				if (w == v + n || L[w] <= R[u] || L[w] > R[v]) continue;
+				dp[j][k] = 1;
+				if (R[w] == MAXR) return 1;
+			}
+		}
+	}
+	return 0;
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	vector<pair<int, int>> all;
+	for (int i = 0; i < n; ++ i) {
+		int l, r;
+		scanf("%d%d", &l, &r);
+		all.push_back({l, r});
+	}
+	sort(all.begin(), all.end());
+	vector<pair<int, int>> tmp;
+	int R = 0;
+	for (auto seg : all) {
+		if (tmp.empty()) {
+			tmp.push_back(seg);
+			R = seg.second;
+		}
+		else {
+			if (R < seg.first) {
+				if (!solve(tmp)) return 0 * puts("NO");
+				R = seg.second;
+				tmp.clear();
+				tmp.push_back(seg);
+			}
+			else {
+				tmp.push_back(seg);
+				R = max(R, seg.second);
+			}
+		}
+	}
+	if (!solve(tmp)) return 0 * puts("NO");
+	puts("YES");
+}
+~~~
+
+# G. Game with Strings
+
+## Aki
+
+先贪一个最靠左的，然后每次把最后一个调整到最靠前的可能的修复位置。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 7;
+char s[N], t[N];
+int cnt[N], go[N][2];
+bool check(int l, int r) {
+	int tmp = cnt[r] - cnt[l - 1];
+	return tmp == r - l + 1 || tmp == 0;
+}
+int main() {
+	scanf("%s%s", s + 1, t + 1);
+	int n = (int) strlen(s + 1), m = (int) strlen(t + 1);
+	for (int i = 1; i <= n; ++ i) cnt[i] = cnt[i - 1] + (s[i] == 'A');
+	go[n + 1][0] = go[n + 1][1] = n + 1;
+	for (int i = n; i >= 1; -- i) {
+		go[i][0] = go[i + 1][0];
+		if (s[i] == 'A') go[i][0] = i;
+		go[i][1] = go[i + 1][1];
+		if (s[i] == 'B') go[i][1] = i;
+	}
+	vector<int> cho;
+	int j = 1;
+	for (int i = 1; i <= m; ++ i) {
+		while (j <= n && s[j] != t[i]) ++ j;
+		if (j > n) return 0 * puts("NO");
+		cho.push_back(j ++);
+	}
+	for (int i = m - 1; i >= 0; -- i) {
+		int &pos = cho[i];
+		int nex = (i == m - 1 ? n : cho[i + 1] - 1);
+		int l = pos, r = nex;
+		while (l <= r) {
+			int mid = (l + r) / 2;
+			int midmid = go[mid][t[i + 1] - 'A'];
+			if (midmid > nex || check(midmid + 1, nex)) {
+				if (midmid <= nex) pos = midmid;
+				r = mid - 1;
+			}
+			else {
+				l = mid + 1;
+			}
+		}
+	}
+	if (check(1, cho[0] - 1)) {
+		puts("YES");
+		for (int x : cho) printf("%d ", x); puts("");
+	}
+	else puts("NO");
+}
+~~~
+# I. More Things To Do
+
+结论：答案一定能取到最大值：离散化后每一段都能基本等分。
+
+构造解：考虑把所有左右端点不去重地排好，考虑数组$c_i$表示$i$到$i+1$这段被几个区间覆盖，那么数组$c$一定是奇偶交替的，所以我只需要在所有偶数的地方等分好，奇数显然就对了。考虑所有偶数的位置，其实是在修补上一个奇数位置留下的坑，拿位置3和4举例：如果3是一个左端点，4也是一个左端点，那么这两个区间一定不在同一个分组内；类似地有：3是一个左端点，4是一个右端点，那么这两个区间一定是同一个颜色。
+
+结论：这样连好边之后，染一遍色一定有解。首先每个点（代表一个区间）度数是2（左端点+右端点）。所以整张图是若干个环。考虑一个环上一定不同颜色的边一定是偶数条：所有一定相同的边，代表了一个左端点，一个右端点，因为绕一圈要绕回去，所以一样颜色的边数的奇偶性和环长一样，所以一定不一样的边数是偶数。
+
+但是真的再遇到类似的问题，直接玩一玩猜一猜冲一冲就行了吧。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5;
+vector<pair<int, int>> G[N];
+int col[N];
+void dfs(int x, int c) {
+	if (col[x]) {
+		assert(col[x] == c);
+		return;
+	}
+	col[x] = c;
+	for (auto e : G[x]) {
+		dfs(e.first, e.second ? 3 - c : c);
+	}
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	vector<pair<int, int>> all;
+	long long ans = 0;
+	for (int i = 1; i <= n; ++ i) {
+		int l, r;
+		scanf("%d%d", &l, &r);
+		all.push_back({l, i});
+		all.push_back({r, -i});
+	}
+	sort(all.begin(), all.end());
+	int cnt = 0;
+	for (int i = 0; i < 2 * n; ++ i) {
+		cnt += (all[i].second > 0 ? 1 : -1);
+		if (i < 2 * n - 1) ans += 1LL * (cnt / 2) * (cnt - cnt / 2) * (all[i + 1].first - all[i].first);
+		if (i & 1) {
+			int u = all[i - 1].second;
+			int v = all[i].second;
+			G[abs(u)].push_back({abs(v), (int) ((u > 0) == (v > 0))});
+			G[abs(v)].push_back({abs(u), (int) ((u > 0) == (v > 0))});
+		}
+	}
+	printf("%lld\n", ans);
+	for (int i = 1; i <= n; ++ i) {
+		if (col[i]) continue;
+		dfs(i, 1);
+	}
+	for (int i = 1; i <= n; ++ i) printf("%d ", col[i] - 1); puts("");
+}
+~~~
