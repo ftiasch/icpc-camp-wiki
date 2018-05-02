@@ -1,45 +1,45 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int MOD = 998244353;
 int mpow(int x, int n) {
-	int res = 1;
-	while (n) {
-		if (n & 1) res = 1LL * res * x % MOD;
-		x = 1LL * x * x % MOD;
-		n >>= 1;
-	}
-	return res;
+    int res = 1;
+    while (n) {
+        if (n & 1) res = 1LL * res * x % MOD;
+        x = 1LL * x * x % MOD;
+        n >>= 1;
+    }
+    return res;
 }
 const int N = 1e6;
 int f[N + 5], r[N + 5];
 int C(int n, int m) {
-	if (m < 0 || m > n) return 0;
-	return 1LL * f[n] * r[n - m] % MOD * r[m] % MOD;
+    if (m < 0 || m > n) return 0;
+    return 1LL * f[n] * r[n - m] % MOD * r[m] % MOD;
 }
 int count(int R, int B, int T) {
-	if (T >= 0) return 0;
-	return (MOD + C(R + B, B) - C(R + B, B + T)) % MOD;
+    if (T >= 0) return 0;
+    return (MOD + C(R + B, B) - C(R + B, B + T)) % MOD;
 }
 int main() {
-	f[0] = 1;
-	for (int i = 1; i <= N; ++ i) f[i] = 1LL * i * f[i - 1] % MOD;
-	r[N] = mpow(f[N], MOD - 2);
-	for (int i = N - 1; i >= 0; -- i) r[i] = 1LL * r[i + 1] * (i + 1) % MOD;
-	int n, k, ans = 0;
-	scanf("%d%d", &n, &k);
-	for (int B = 0; B <= k - B; ++ B) {
-		int R = k - B;
-		if (R == B) {
-			(ans += count(R, B - 1, n - R - 1)) %= MOD;
-		}
-		else if (R - B < n) {
-			(ans += count(R, B, n - R - 1)) %= MOD;
-		}
-		else {
-			(ans += C(R + B, R)) %= MOD;
-		}
-	}
-	printf("%d\n", ans);
+    f[0] = 1;
+    for (int i = 1; i <= N; ++ i) f[i] = 1LL * i * f[i - 1] % MOD;
+    r[N] = mpow(f[N], MOD - 2);
+    for (int i = N - 1; i >= 0; -- i) r[i] = 1LL * r[i + 1] * (i + 1) % MOD;
+    int n, k, ans = 0;
+    scanf("%d%d", &n, &k);
+    for (int B = 0; B <= k - B; ++ B) {
+        int R = k - B;
+        if (R == B) {
+            (ans += count(R, B - 1, n - R - 1)) %= MOD;
+        }
+        else if (R - B < n) {
+            (ans += count(R, B, n - R - 1)) %= MOD;
+        }
+        else {
+            (ans += C(R + B, R)) %= MOD;
+        }
+    }
+    printf("%d\n", ans);
 }
-~~~
+```
