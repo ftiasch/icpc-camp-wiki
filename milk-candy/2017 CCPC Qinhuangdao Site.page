@@ -1,0 +1,147 @@
+# Info
+
+Date: 2017.10.29 09:00-14:00
+
+[Link](http://acm.zju.edu.cn/onlinejudge/showContestProblems.do?contestId=365)
+
+# Solutions
+
+## A Balloon Robot
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+记出发点为$x$，那么第$i$个事件的等待时间是$(s_{a_i}-b_i-x)\mod m$，记$t_i=(s_{a_i}-b_i)\mod m$，可以发现最优的$x$一定是某个$t_i$，将$t_i$从小到大排序之后扫一遍。
+
+## B Expected Waiting Time
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+本质是对所有情况求和，考虑枚举一对括号计算贡献，枚举这对括号的间距，括号内和括号外的方案数都是$Catalan$数，预处理阶乘及其逆元可以快速计算出来，只需要求出这对括号的权值之差的和，前缀和搞一下。
+
+## C Crusaders Quest
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+$3!$枚举删掉字母的顺序，取得分的最大值即可。
+
+## D Graph Generator
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+对于每个连通块，最后加进去的点一定是唯一度数最大的点，那么如果有解，必然存在一种按照度数从小到大加点的方案，模拟这个加点过程，并查集判断是否合法。
+
+## E String of CCPC
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+可以发现不会加入太多字符，于是$dp_{i,j,k}$表示读了前$i$个字符添加了$j$个字符当且匹配到状态$k$的最大收益，转移枚举读一个字符或者加一个字符，第三维转移相当于在自动机上走，由于串给定且很短，可以直接手玩转移表。
+
+## F Getting Lost
+
+upsolved by sk
+
+---
+
+sk's solution
+
+抠关键点建图跑最短路。
+
+先考虑要抠出哪些关键点，需要考虑的几何元素包括起点、障碍圆和目标位置集合$T$，可以发现$T$的边界由若干个线段和圆弧构成，那么实际上只有点、直线和圆，其中圆还分为目标圆和障碍圆，两两讨论这些元素之间的走法，抠出对应的关键点即可。
+
+然后考虑建图，如果两个点位于同一个圆上，可以沿着圆走，如果两个点之间的连线不经过任何障碍圆，可以沿着连线走。
+
+建完图之后从起点出发跑一个单源最短路，然后考察起点到每个可能的终点的最短路即可。
+
+## G Numbers
+
+solved by Jove, upsolved by none
+
+## H Prime Set
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+先考虑选出贡献为$2$的对，如果不考虑$1$和$1$配对，就是个显然的二分图匹配，为了让$1$和$1$尽可能配对上，要求二分图匹配的时候尽可能少使用$1$，只需要最后从这些$1$出发增广即可，使用Hopcraft-Karp算法可以做到复杂度$O(n^{2.5})$。对于剩下的数字，要么是能配对的数字都已经脱单了，选出这个数字可以贡献$1$，要么根本不能和其他数字配对，直接忽略。
+
+## I Triangulation
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+随机转平面使得任意两个点横坐标不同，接下来考虑如何遍历所有三角剖分。
+
+维护一条从最左边点到最右边点的横坐标递增的折线，每次可以加入折线上方一个点和某条边构成三角形，或者加入折线上方一条边和某两条相邻边构成三角形，要求三角形内没有其他点。当这条折线从凸包下轮廓变成凸包上轮廓时，转移过程中连出的边构成一个三角剖分，于是可以考虑以折线为状态进行$dp$。
+
+观察到折线横坐标递增，那么折线上拐点的集合可以和折线本身一一对应，状态数是$O(2^n)$。但是由于从一条折线变化成另一条折线可以按照不同的操作顺序，为了保证每种三角剖分只被遍历一次，还需要记录当前在处理折线上的哪一条边，状态数是$O(n2^n)$。
+
+至此问题得到解决，由于转移复杂度是$O(n)$，总的复杂度是$O(n^22^n)$，实际上由于折线的两个端点是确定的，这里的$n$不会超过$16$。
+
+## J Tree Equation
+
+unsolved
+
+## K Diversity and Variance
+
+unsolved
+
+## L One-Dimensional Maze
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+要么把$[2,m]$的都变成$'L'$，要么把$[m,n-1]$的都变成$'R'$。
+
+## M Safest Buildings
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+可以发现概率关于距离递减，且在$\leq |R-2r|$时取到最大值，所求即为$\max(x^2+y^2,(R-2r)^2)$最小的那些点。
+
+# Replay
+
+比赛开始前发现有几种气球颜色鲜艳，感觉是简单题。
+
+开场 `Q` 先读了红色球对应的 L 题，发现水题，抢到了全场 FB。
+
+然后不记得了 ……
+
+## quailty
+
+读题不要心急，反复确定题意，不放过任何一个细节。多和队友交流想法，力求完善思路得到解法。
+
+## sk
+
+M 题及时质疑了题意，挽救了局面。E 题及时充当小黄鸭成功解救队友。最后幻想抢 F 题一血，写了半场，赛后得知队友读错了题...除此之外，全程划水。应该多和队友交流，不能一味的把自己不想管的题都交给队友。
