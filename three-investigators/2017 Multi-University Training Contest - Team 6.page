@@ -96,7 +96,7 @@ braveTester's comment
 将椭圆和圆联立，令
 $\Delta = 0$，确实可以得出第三种情况的答案，但是如果该解不合法，联立的做法不能说明下一步应该怎么办。用切线的解法全程用的必要条件，说明了最小值一定在这三种情况中取到。
 
-[这里](https://wiki-ascender.icpc-camp.org/2017multi_6#b.-mindis-wbr)是另一种用极坐标求解的方法。
+[这里](2017multi_6#b.-mindis-wbr)是另一种用极坐标求解的方法。
 
 题解的圆反演简直 666 啊！
 
