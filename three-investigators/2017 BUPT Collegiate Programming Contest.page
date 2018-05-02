@@ -1,30 +1,35 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.04.09
 
 [practice link](http://code.bupt.edu.cn/contest/662)
 
-username: 2017buptcpc_buaa001
+username: 2017buptcpc\_buaa001
 
-# Solutions
+Solutions
+=========
 
-## A. Simple Math Problem
+A. Simple Math Problem
+----------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 假如没有平方，那么可以枚举每个二进制位然后计算，有平方的话则可以枚举两个二进制位计算。
 
-那么接下来只需要计算 $[0,n]$ 内二进制下第 $i$ 位为 $x$ ，第 $j$ 位为 $y$ 的数的个数即可。
+那么接下来只需要计算 $[0,n]$ 内二进制下第 $i$ 位为 $x$ ，第 $j$ 位为 $y$
+的数的个数即可。
 
-## B. Pearl Necklace
+B. Pearl Necklace
+-----------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
@@ -32,11 +37,12 @@ braveTester's solution
 
 由于用到快速幂算逆元，因此复杂度 $O((n + k)\log(n + k))$。
 
-## C. Cellular Network
+C. Cellular Network
+-------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
@@ -46,11 +52,12 @@ skywalkert's solution
 
 时间复杂度 $\mathcal{O}(3^m n^2 + 2^m n^2 \log n)$ 。
 
-## D. Alterable Sequence
+D. Alterable Sequence
+---------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
@@ -58,13 +65,17 @@ skywalkert's solution
 
 考虑将序列分块，每块维护原序列与排序后的序列。
 
-对于 Ask 操作，涉及不完全大块（至多两块）则暴力枚举，否则根据排序序列二分。
+对于 Ask
+操作，涉及不完全大块（至多两块）则暴力枚举，否则根据排序序列二分。
 
-对于 Reverse 和 Swap 操作，将涉及到的不完全大块切成小块，然后当作大块维护。
+对于 Reverse 和 Swap
+操作，将涉及到的不完全大块切成小块，然后当作大块维护。
 
 操作时可以将大块用链表串起来便于定位给定的区间并进行操作。
 
-在块数达到一定数量时重新计算整个序列并分块，这样看上去复杂度是 $\mathcal{O}(m \sqrt{n} \log n)$ 的，实际上和暴力差得不多，很玄乎地就过去了，每组数据耗时是时限的一半左右。
+在块数达到一定数量时重新计算整个序列并分块，这样看上去复杂度是
+$\mathcal{O}(m \sqrt{n} \log n)$
+的，实际上和暴力差得不多，很玄乎地就过去了，每组数据耗时是时限的一半左右。
 
 这里再给出我实现的一些细节。
 
@@ -72,13 +83,15 @@ skywalkert's solution
 
 全局维护原序列、排序后序列、原序列里每个位置对应的块标号。
 
-实现重构操作、分裂块操作、定位操作（从左往右数第 $k$ 个数在原序列中的标号）辅助完成题目所述操作。
+实现重构操作、分裂块操作、定位操作（从左往右数第 $k$
+个数在原序列中的标号）辅助完成题目所述操作。
 
-## E. Easy Polynome
+E. Easy Polynome
+----------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
@@ -90,94 +103,114 @@ skywalkert's solution
 
 最后在本地枚举一下 eps 能通过随机数据就好啦。
 
-## F. Gabriel's Pocket Money
+F. Gabriel's Pocket Money
+-------------------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-先按成绩，再按第几周排序，之后从小到大枚举成绩，设为 $x$，用树状数组维护前 $i$ 周比 $x$ 小的成绩的最大值，依次将成绩插入树状数组转移即可。
+先按成绩，再按第几周排序，之后从小到大枚举成绩，设为
+$x$，用树状数组维护前 $i$ 周比 $x$
+小的成绩的最大值，依次将成绩插入树状数组转移即可。
 
 复杂度 $O(n\log n)$。
 
-## G. Trailing Zeros
+G. Trailing Zeros
+-----------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-计算 $n!$ 的质因子分解式中有多少 $5$ 即可，即 $\sum_{i \ge 0} \left\lfloor \frac{n}{5^i} \right\rfloor$。
+计算 $n!$ 的质因子分解式中有多少 $5$ 即可，即
+$\sum_{i \ge 0} \left\lfloor \frac{n}{5^i} \right\rfloor$。
 
 复杂度 $O(n)$。
 
-## H. Black-white Tree
+H. Black-white Tree
+-------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-令 $f[i]$ 为 $i$ 的子树的 SG 值（只可能 $0$ 或 $1$），$g[i]$ 表示 $i$ 这棵子树的所有点的 SG 值异或和。
+令 $f[i]$ 为 $i$ 的子树的 SG 值（只可能 $0$ 或 $1$），$g[i]$ 表示 $i$
+这棵子树的所有点的 SG 值异或和。
 
 那么，$f[i]$ 为所有儿子的 $g$ 值得异或和再异或 $1$。
 
 最后统计一下总的异或和即可。
 
-## I. Beautiful Array
+I. Beautiful Array
+------------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-令 $f[i][j]$ 表示用前 $i$ 个数中某些数构成的美丽度至少为 $L$，且最后一个数被 $j$ 乘除的序列的最大长度，对于一个 $a_i$，直接 $O\left(\sqrt{a_i}\right)$ 枚举因子然后转移即可。
+令 $f[i][j]$ 表示用前 $i$ 个数中某些数构成的美丽度至少为
+$L$，且最后一个数被 $j$ 乘除的序列的最大长度，对于一个 $a_i$，直接
+$O\left(\sqrt{a_i}\right)$ 枚举因子然后转移即可。
 
 复杂度 $O\left(n\sqrt{\max_i a_i}\right)$。
 
-## J. Hopscotch
+J. Hopscotch
+------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-设矩阵从 $(0, 0)$ 开始标号，显然与 $(0, 0)$ 横纵坐标模 $S$ 同余的等价类是所有等价类中大小最大的，其大小为 $\lceil n / S \rceil \times \lceil m / S \rceil$，与其同等大小的等价类共有 $((n - 1) \bmod S + 1) \times ((m - 1) \bmod S + 1)$ 个，二者相乘即为所求。
+设矩阵从 $(0, 0)$ 开始标号，显然与 $(0, 0)$ 横纵坐标模 $S$
+同余的等价类是所有等价类中大小最大的，其大小为
+$\lceil n / S \rceil \times \lceil m / S \rceil$，与其同等大小的等价类共有
+$((n - 1) \bmod S + 1) \times ((m - 1) \bmod S + 1)$
+个，二者相乘即为所求。
 
 复杂度 $O(1)$。
 
-## K. Permutation
+K. Permutation
+--------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-考虑 $f[i][j][k]$ 为枚举到 $i$ ，当前和为 $j$ ，前面还有 $k$ 个空需要填。考虑 $a[i+1]$ 在 $b$ 序列中放哪，
+考虑 $f[i][j][k]$ 为枚举到 $i$ ，当前和为 $j$ ，前面还有 $k$
+个空需要填。考虑 $a[i+1]$ 在 $b$ 序列中放哪，
 
-* 如果直接放 $i+1$，那么转移到 $f[i+1][j+a[i+1]][k]$。
-* 如果放到后面，并留下一个空，那么 $a[i+1]$ 将会有两次贡献，转移到 $f[i+1][j+a[i+1]*2][k+1]$
-* 如果填补前面一个空，并且留下一个空，那么转移到 $f[i+1][j+a[i+1]][k]$
-* 如果放到前面，并且这个空被前面的填补，那么转移到 $f[i+1][j][k-1]$
-* 如果放到后面，并且这个空被前面的填补，那么转移到 $f[i+1][j+a[i]][k]$
+-   如果直接放 $i+1$，那么转移到 $f[i+1][j+a[i+1]][k]$。
+-   如果放到后面，并留下一个空，那么 $a[i+1]$ 将会有两次贡献，转移到
+    $f[i+1][j+a[i+1]*2][k+1]$
+-   如果填补前面一个空，并且留下一个空，那么转移到 $f[i+1][j+a[i+1]][k]$
+-   如果放到前面，并且这个空被前面的填补，那么转移到 $f[i+1][j][k-1]$
+-   如果放到后面，并且这个空被前面的填补，那么转移到 $f[i+1][j+a[i]][k]$
 
-## L. ch's Gifts
+L. ch's Gifts
+-------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 二分答案，计算至少需要的礼物数是否不超过 $n$。
 
-# Relay and Summary
+Relay and Summary
+=================
 
 none is available
