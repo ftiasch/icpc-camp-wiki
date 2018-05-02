@@ -1,88 +1,92 @@
-# A. Arkanoid
+A. Arkanoid
+===========
 
 将X,Y坐标分开，每个砖块可以看成平面上八个坐标(X,Y,VX,VY)，打到一个就会消失，那么用set维护(X,Y,VX,VY)的相对顺序就好了，相对顺序可以以(A/2,0)为起点，用CRT合并求出
 
-## lbn187
+lbn187
+------
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define LL long long
 using namespace std;
 int A,B,n,SA,SB,NA,NB;
 LL an,nv;bool vs[111111];
 struct P{
-	LL z;
-	int id,x,y,vx,vy;
-	bool operator<(P a)const{return a.z>z;}
+    LL z;
+    int id,x,y,vx,vy;
+    bool operator<(P a)const{return a.z>z;}
 };
 set<P>S;set<P>::iterator it;
 int GA(int X,int VX){
-	if(X<=A&&VX==-1)return A-X;
-	if(VX==1)return A+X;
-	return A*5-X;
+    if(X<=A&&VX==-1)return A-X;
+    if(VX==1)return A+X;
+    return A*5-X;
 }
 int GB(int Y,int VY){return VY==1?Y:(B*4-Y)%(B*4);}
 void exgcd(LL a,LL b,LL&x,LL&y){
-	if(!b)x=1,y=0;else exgcd(b,a%b,y,x),y-=a/b*x;
+    if(!b)x=1,y=0;else exgcd(b,a%b,y,x),y-=a/b*x;
 }
 LL inv(LL a,LL n){
-	LL x,y;
-	exgcd(a,n,x,y);
-	return (x+n)%n;
+    LL x,y;
+    exgcd(a,n,x,y);
+    return (x+n)%n;
 }
 LL crt(LL a1,LL m1,LL a2,LL m2){
-	LL c=a2-a1;
-	if(c%4)return -1;
-	c/=4;c=(c%m2+m2)%m2;
-	m1/=4;m2/=4;
-	c=c*inv(m1,m2)%m2;
-	LL M=m1*m2*4;
-	return (c*m1*4+a1)%M;
+    LL c=a2-a1;
+    if(c%4)return -1;
+    c/=4;c=(c%m2+m2)%m2;
+    m1/=4;m2/=4;
+    c=c*inv(m1,m2)%m2;
+    LL M=m1*m2*4;
+    return (c*m1*4+a1)%M;
 }
 void up(int id,int X,int Y,int VX,int VY){
-	LL z=crt(GA(X,VX),A*4,GB(Y,VY),B*4);
-	if(z!=-1)S.insert(P{z,id,X,Y,VX,VY});
+    LL z=crt(GA(X,VX),A*4,GB(Y,VY),B*4);
+    if(z!=-1)S.insert(P{z,id,X,Y,VX,VY});
 }
 int main(){
-	int i,x,y;
-	scanf("%d%d%d",&A,&B,&n);
-	SA=GA(A,-1);
-	SB=GB(0,1);
-	for(i=1;i<=n;i++){
-		scanf("%d%d",&x,&y);
-		up(i,(x-1)*2,y*2-1,1,1);
-		up(i,(x-1)*2,y*2-1,1,-1);
-		up(i,x*2-1,(y-1)*2,-1,1);
-		up(i,x*2-1,(y-1)*2,1,1);
-		up(i,x*2-1,y*2,-1,-1);
-		up(i,x*2-1,y*2,1,-1);
-		up(i,x*2,y*2-1,-1,1);
-		up(i,x*2,y*2-1,-1,-1);
-	}
-	for(i=1;i<=n;i++){
-		for(nv=crt(SA,A*4,SB,B*4);;){
-			it=S.lower_bound(P{nv,0,0,0,0,0});
-			if(it==S.end())an+=4ll*A*B-nv,it=S.begin(),an+=(*it).z;else an+=(*it).z-nv;
-			nv=(*it).z;
-			if(!vs[(*it).id])break;
-			S.erase(it);
-		}
-		vs[(*it).id]=1;
-		SA=GA((*it).x,((*it).x&1)?(*it).vx:-(*it).vx);
-		SB=GB((*it).y,((*it).y&1)?(*it).vy:-(*it).vy);
-		S.erase(it);
-	}
-	printf("%lld",an);
+    int i,x,y;
+    scanf("%d%d%d",&A,&B,&n);
+    SA=GA(A,-1);
+    SB=GB(0,1);
+    for(i=1;i<=n;i++){
+        scanf("%d%d",&x,&y);
+        up(i,(x-1)*2,y*2-1,1,1);
+        up(i,(x-1)*2,y*2-1,1,-1);
+        up(i,x*2-1,(y-1)*2,-1,1);
+        up(i,x*2-1,(y-1)*2,1,1);
+        up(i,x*2-1,y*2,-1,-1);
+        up(i,x*2-1,y*2,1,-1);
+        up(i,x*2,y*2-1,-1,1);
+        up(i,x*2,y*2-1,-1,-1);
+    }
+    for(i=1;i<=n;i++){
+        for(nv=crt(SA,A*4,SB,B*4);;){
+            it=S.lower_bound(P{nv,0,0,0,0,0});
+            if(it==S.end())an+=4ll*A*B-nv,it=S.begin(),an+=(*it).z;else an+=(*it).z-nv;
+            nv=(*it).z;
+            if(!vs[(*it).id])break;
+            S.erase(it);
+        }
+        vs[(*it).id]=1;
+        SA=GA((*it).x,((*it).x&1)?(*it).vx:-(*it).vx);
+        SB=GB((*it).y,((*it).y&1)?(*it).vy:-(*it).vy);
+        S.erase(it);
+    }
+    printf("%lld",an);
 }
-~~~
+```
 
-# B. Vari-directional Streets
+B. Vari-directional Streets
+===========================
 
 变成DAG后按拓扑序排序，然后对于每个点判断是不是他拓扑序前面每个点都能到他，那么每个点找一个拓扑序在他后面的最前面的点$mi_i$，如果所有点都能到$i$，那么必定对于$1\leq j<i$有$mi_j\leq i$。然后反过来再做一遍判断这个点是否能到所有点就好了，时间复杂度$O(m)$。
 
-## lbn187
+lbn187
+------
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define PB push_back
 #define N 505050
@@ -91,61 +95,65 @@ int n,m,x,y,h,t,i,j,scc,id,mx,w,q[N],dfn[N],low[N],bl[N],du[N],to[N];
 bool is[N],vs[N],gg[N];
 vector<int>V[N],A[N],B[N],AN;
 void ins_new(int x,int y){
-	A[x].PB(y);B[y].PB(x);du[y]++;
+    A[x].PB(y);B[y].PB(x);du[y]++;
 }
 void tj(int x){
-	int i,y,o=0,E=V[x].size();
-	low[x]=dfn[x]=++id;is[x]=1;q[++t]=x;
-	for(i=0;i<E;i++)
-		if(!dfn[y=V[x][i]])tj(y),low[x]=min(low[x],low[y]);
-		else if(is[y])low[x]=min(low[x],dfn[y]);
-	if(dfn[x]==low[x])for(scc++;o!=x;o=q[t--],bl[o]=scc,is[o]=0);
+    int i,y,o=0,E=V[x].size();
+    low[x]=dfn[x]=++id;is[x]=1;q[++t]=x;
+    for(i=0;i<E;i++)
+        if(!dfn[y=V[x][i]])tj(y),low[x]=min(low[x],low[y]);
+        else if(is[y])low[x]=min(low[x],dfn[y]);
+    if(dfn[x]==low[x])for(scc++;o!=x;o=q[t--],bl[o]=scc,is[o]=0);
 }
 int main(){
-	scanf("%d%d",&n,&m);
-	for(i=1;i<=m;i++)scanf("%d%d",&x,&y),V[x].PB(y);	
-	for(i=1;i<=n;i++)if(!dfn[i])tj(i);
-	for(x=1;x<=n;x++){
-		for(i=0;i<V[x].size();i++)
-			if(y=V[x][i],bl[x]!=bl[y]&&!vs[y])ins_new(bl[x],bl[y]),vs[y]=1;
-		for(i=0;i<V[x].size();i++)vs[V[x][i]]=0;
-	}
-	for(i=1;i<=scc;i++)if(!du[i])q[++t]=i,to[i]=t;
-	for(;h^t;)for(x=q[++h],i=0;i<A[x].size();i++)if(!--du[y=A[x][i]])q[++t]=y,to[y]=t;
-	for(mx=0,i=1;i<=t;i++){
-		if(mx>i)gg[q[i]]=1;
-		w=1e9;
-		for(j=0;j<A[q[i]].size();j++){
-			y=A[q[i]][j];
-			if(to[y]>i)w=min(w,to[y]);
-		}
-		mx=max(mx,w);
-	}
-	for(mx=1e9,i=t;i;i--){
-		if(mx<i)gg[q[i]]=1;
-		w=0;
-		for(j=0;j<B[q[i]].size();j++){
-			y=B[q[i]][j];
-			if(to[y]<i)w=max(w,to[y]);
-		}
-		mx=min(mx,w);
-	}
-	for(i=1;i<=n;i++)if(!gg[bl[i]])AN.PB(i);
-	printf("%d\n",AN.size());
-	for(i=0;i<AN.size();i++)printf("%d%c",AN[i],i==AN.size()-1?'\n':' ');
+    scanf("%d%d",&n,&m);
+    for(i=1;i<=m;i++)scanf("%d%d",&x,&y),V[x].PB(y);    
+    for(i=1;i<=n;i++)if(!dfn[i])tj(i);
+    for(x=1;x<=n;x++){
+        for(i=0;i<V[x].size();i++)
+            if(y=V[x][i],bl[x]!=bl[y]&&!vs[y])ins_new(bl[x],bl[y]),vs[y]=1;
+        for(i=0;i<V[x].size();i++)vs[V[x][i]]=0;
+    }
+    for(i=1;i<=scc;i++)if(!du[i])q[++t]=i,to[i]=t;
+    for(;h^t;)for(x=q[++h],i=0;i<A[x].size();i++)if(!--du[y=A[x][i]])q[++t]=y,to[y]=t;
+    for(mx=0,i=1;i<=t;i++){
+        if(mx>i)gg[q[i]]=1;
+        w=1e9;
+        for(j=0;j<A[q[i]].size();j++){
+            y=A[q[i]][j];
+            if(to[y]>i)w=min(w,to[y]);
+        }
+        mx=max(mx,w);
+    }
+    for(mx=1e9,i=t;i;i--){
+        if(mx<i)gg[q[i]]=1;
+        w=0;
+        for(j=0;j<B[q[i]].size();j++){
+            y=B[q[i]][j];
+            if(to[y]<i)w=max(w,to[y]);
+        }
+        mx=min(mx,w);
+    }
+    for(i=1;i<=n;i++)if(!gg[bl[i]])AN.PB(i);
+    printf("%d\n",AN.size());
+    for(i=0;i<AN.size();i++)printf("%d%c",AN[i],i==AN.size()-1?'\n':' ');
 }
-~~~
-# 【坑】C
+```
+
+【坑】C
+=======
 
 构造题，构造$2^{19}$个数把他们连起来，相邻两个数位数差$1$
 
-# E. Amusing journeys
+E. Amusing journeys
+===================
 
-漏了一种情况：1->2->3,1->4->3,1->5->3，此时所有环的长度也相同，但不是仙人掌。
+漏了一种情况：1-&gt;2-&gt;3,1-&gt;4-&gt;3,1-&gt;5-&gt;3，此时所有环的长度也相同，但不是仙人掌。
 
-## Aki
+Aki
+---
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5e5 + 5, MOD = 1e9 + 7;
@@ -154,21 +162,21 @@ vector<pair<int, int>> stk;
 int low[N], dfn[N];
 vector<int> adj[N];
 int tarjan(int u, int fu) {
-	static int tot = 0;
-	low[u] = dfn[u] = ++tot;
-	for (auto v : adj[u]) {
-		if (v == fu) continue;
-		if (dfn[v] < dfn[u]) stk.push_back({u, v});
-		if (!dfn[v]) {
-			low[u] = min(low[u], tarjan(v, u));
-			if (low[v] >= dfn[u]) {
-				bcc.push_back({});
-				do { bcc.back().push_back(stk.back());
-					stk.pop_back();
-				} while (bcc.back().back() != make_pair(u, v));
-			}
-		} else low[u] = min(low[u], dfn[v]);
-	} return low[u];
+    static int tot = 0;
+    low[u] = dfn[u] = ++tot;
+    for (auto v : adj[u]) {
+        if (v == fu) continue;
+        if (dfn[v] < dfn[u]) stk.push_back({u, v});
+        if (!dfn[v]) {
+            low[u] = min(low[u], tarjan(v, u));
+            if (low[v] >= dfn[u]) {
+                bcc.push_back({});
+                do { bcc.back().push_back(stk.back());
+                    stk.pop_back();
+                } while (bcc.back().back() != make_pair(u, v));
+            }
+        } else low[u] = min(low[u], dfn[v]);
+    } return low[u];
 }
 bool gg;
 vector<int> G[N];
@@ -176,147 +184,151 @@ bool vis[N];
 int circle_len = 0;
 long long total = 0;
 void upd(int len, long long cnt = 1) {
-	if (gg) return;
-	if (!circle_len) circle_len = len;
-	if (circle_len != len) {
-		gg = 1;
-		return;
-	}
-	(total += cnt) %= MOD;
+    if (gg) return;
+    if (!circle_len) circle_len = len;
+    if (circle_len != len) {
+        gg = 1;
+        return;
+    }
+    (total += cnt) %= MOD;
 }
 void solve(const vector<pair<int, int>> &E) {
-	if ((int) E.size() <= 1) return;
-	vector<int> V;
-	for (auto e : E) {
-		V.push_back(e.first);
-		V.push_back(e.second);
-		G[e.first].push_back(e.second);
-		G[e.second].push_back(e.first);
-	}
-	sort(V.begin(), V.end());
-	V.erase(unique(V.begin(), V.end()), V.end());
-	if (E.size() == V.size()) {
-		upd((int) E.size());
-		for (int u : V) {
-			vector<int> emp;
-			emp.swap(G[u]);
-		}
-		return;
-	}
-	int cnt = (int) E.size() - (int) V.size() + 2;
-	vector<int> side;
-	for (int u : V) {
-		if (G[u].size() == cnt) side.push_back(u);
-		vis[u] = 0;
-	}
-	if (side.size() != 2) {
-		gg = 1;
-		return;
-	}
-	int s = side[0], t = side[1];
-	vis[s] = 1;
-	int len = 0;
-	for (int u : G[s]) {
-		int x = u, l = 1;
-		while (x != t) {
-			vis[x] = 1;
-			if (G[x].size() != 2) {
-				gg = 1;
-				return;
-			}
-			int nex = -1;
-			for (int u : G[x]) {
-				if (!vis[u]) {
-					nex = u;
-					break;
-				}
-			}
-			if (nex == -1) {
-				gg = 1;
-				return;
-			}
-			x = nex;
-			l ++;
-		}
-		if (!len) len = l;
-		if (len != l) len = -1;
-	}
-	if (len == -1) {
-		gg = 1;
-	}
-	else {
-		upd(2 * len, 1LL * cnt * (cnt - 1) / 2);
-	}
-	for (int u : V) {
-		vector<int> emp;
-		emp.swap(G[u]);
-	}
+    if ((int) E.size() <= 1) return;
+    vector<int> V;
+    for (auto e : E) {
+        V.push_back(e.first);
+        V.push_back(e.second);
+        G[e.first].push_back(e.second);
+        G[e.second].push_back(e.first);
+    }
+    sort(V.begin(), V.end());
+    V.erase(unique(V.begin(), V.end()), V.end());
+    if (E.size() == V.size()) {
+        upd((int) E.size());
+        for (int u : V) {
+            vector<int> emp;
+            emp.swap(G[u]);
+        }
+        return;
+    }
+    int cnt = (int) E.size() - (int) V.size() + 2;
+    vector<int> side;
+    for (int u : V) {
+        if (G[u].size() == cnt) side.push_back(u);
+        vis[u] = 0;
+    }
+    if (side.size() != 2) {
+        gg = 1;
+        return;
+    }
+    int s = side[0], t = side[1];
+    vis[s] = 1;
+    int len = 0;
+    for (int u : G[s]) {
+        int x = u, l = 1;
+        while (x != t) {
+            vis[x] = 1;
+            if (G[x].size() != 2) {
+                gg = 1;
+                return;
+            }
+            int nex = -1;
+            for (int u : G[x]) {
+                if (!vis[u]) {
+                    nex = u;
+                    break;
+                }
+            }
+            if (nex == -1) {
+                gg = 1;
+                return;
+            }
+            x = nex;
+            l ++;
+        }
+        if (!len) len = l;
+        if (len != l) len = -1;
+    }
+    if (len == -1) {
+        gg = 1;
+    }
+    else {
+        upd(2 * len, 1LL * cnt * (cnt - 1) / 2);
+    }
+    for (int u : V) {
+        vector<int> emp;
+        emp.swap(G[u]);
+    }
 }
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 0; i < m; ++ i) {
-		int u, v;
-		scanf("%d%d", &u, &v);
-		adj[u].push_back(v);
-		adj[v].push_back(u);
-	}
-	if (m <= n - 1) return 0 * puts("BRAK");
-	tarjan(1, 0);
-	for (auto &x : bcc) {
-		solve(x);
-		if (gg) break;
-	}
-	if (gg) {
-		puts("NIE");
-	}
-	else {
-		puts("TAK");
-		printf("%d %lld\n", circle_len, 2LL * total % MOD * circle_len % MOD);
-	}
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < m; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    if (m <= n - 1) return 0 * puts("BRAK");
+    tarjan(1, 0);
+    for (auto &x : bcc) {
+        solve(x);
+        if (gg) break;
+    }
+    if (gg) {
+        puts("NIE");
+    }
+    else {
+        puts("TAK");
+        printf("%d %lld\n", circle_len, 2LL * total % MOD * circle_len % MOD);
+    }
 }
-~~~
+```
 
-# F. Nim with a twist
+F. Nim with a twist
+===================
 
 从小到大直接DP即可，异或值不会超过当前值两倍
 
-## lbn187
+lbn187
+------
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define M 1000000007
 using namespace std;
 int an,f[12][2048576],g[12][2048576];
 int n,d,i,j,k,S,w,a[555555];
 void up(int&x,int y){
-	x+=y;
-	if(x>=M)x-=M;
+    x+=y;
+    if(x>=M)x-=M;
 }
 int main(){
-	scanf("%d%d",&n,&d);
-	for(i=1;i<=n;i++)scanf("%d",&a[i]),w^=a[i];
-	sort(a+1,a+n+1);
-	f[0][0]=1;
-	for(i=1;i<=n;i++){
-		for(k=0;k<d;k++)
-			for(j=0;j<=a[i]*2;j++)
-				up(g[(k+1)%d][j^a[i]],f[k][j]);
-		for(k=0;k<d;k++)
-			for(j=0;j<=a[i]*2;j++){
-				up(f[k][j],g[k][j]);
-				g[k][j]=0;
-			}	
-	}
-	an=f[n%d][0];
-	if(n%d==0)an=(an-1+M)%M;
-	printf("%d",an);
+    scanf("%d%d",&n,&d);
+    for(i=1;i<=n;i++)scanf("%d",&a[i]),w^=a[i];
+    sort(a+1,a+n+1);
+    f[0][0]=1;
+    for(i=1;i<=n;i++){
+        for(k=0;k<d;k++)
+            for(j=0;j<=a[i]*2;j++)
+                up(g[(k+1)%d][j^a[i]],f[k][j]);
+        for(k=0;k<d;k++)
+            for(j=0;j<=a[i]*2;j++){
+                up(f[k][j],g[k][j]);
+                g[k][j]=0;
+            }   
+    }
+    an=f[n%d][0];
+    if(n%d==0)an=(an-1+M)%M;
+    printf("%d",an);
 }
-~~~
+```
 
-# H. Messenger
+H. Messenger
+============
 
-## lbn187
+lbn187
+------
 
 容斥DP，用$f[S][T][len]$表示从$S$到$T$走$len$步的方案数，易求得
 
@@ -328,7 +340,7 @@ int main(){
 
 时间复杂度$O(n^3l)$
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 #define fr(i,n) for(int i=1;i<=n;i++)
 #define N 102
@@ -337,16 +349,16 @@ int Q,n,m,P,x,y,z,f[N][N][N],g[N][N][N],h[N][N][N],an[N][N][N];
 bool v[N][N];
 void up(int&x,int y){x+=y;if(x>=P)x-=P;}
 int main(){
-	scanf("%d%d%d",&n,&m,&P);
-	fr(i,m)scanf("%d%d",&x,&y),v[x][y]=1;
-	fr(i,n)f[i][i][0]=1;
-	fr(len,50)fr(S,n)fr(x,n)fr(y,n)if(v[x][y])up(f[S][y][len],f[S][x][len-1]);
-	fr(len,50)fr(S,n)fr(T,n){
-		g[S][T][len]=f[S][T][len];h[S][T][len]=f[S][S][len];
-		fr(l,len-1)up(g[S][T][len],P-1ll*g[S][T][l]*f[S][S][len-l]%P),up(h[S][T][len],P-1ll*f[S][T][l]*g[T][S][len-l]%P);
-		an[S][T][len]=g[S][T][len];
-		fr(l,len-1)up(an[S][T][len],P-1ll*an[S][T][l]*h[T][S][len-l]%P);
-	}
-	for(scanf("%d",&Q);Q--;)scanf("%d%d%d",&x,&y,&z),printf("%d\n",an[x][y][z]);
+    scanf("%d%d%d",&n,&m,&P);
+    fr(i,m)scanf("%d%d",&x,&y),v[x][y]=1;
+    fr(i,n)f[i][i][0]=1;
+    fr(len,50)fr(S,n)fr(x,n)fr(y,n)if(v[x][y])up(f[S][y][len],f[S][x][len-1]);
+    fr(len,50)fr(S,n)fr(T,n){
+        g[S][T][len]=f[S][T][len];h[S][T][len]=f[S][S][len];
+        fr(l,len-1)up(g[S][T][len],P-1ll*g[S][T][l]*f[S][S][len-l]%P),up(h[S][T][len],P-1ll*f[S][T][l]*g[T][S][len-l]%P);
+        an[S][T][len]=g[S][T][len];
+        fr(l,len-1)up(an[S][T][len],P-1ll*an[S][T][l]*h[T][S][len-l]%P);
+    }
+    for(scanf("%d",&Q);Q--;)scanf("%d%d%d",&x,&y,&z),printf("%d\n",an[x][y][z]);
 }
-~~~
+```
