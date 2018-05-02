@@ -1,0 +1,85 @@
+## A. ABBA
+
+solved by hzh
+
+---
+
+hzh's Solution：
+
+明显是求矩阵的秩，但对精度要求高，不能用小数，要多次取模去个最大的ans
+
+## C. Mr. Credo
+
+solved by hzh
+
+---
+
+hzh's Solution：
+
+找一个空隙取个中心直接射出一个1e9的线取末端的点即可
+
+## E. Elvis Presley 
+
+solved by ConnorZhong
+
+---
+
+ConnorZhong's Solution：
+
+其实只要考虑 $a$ 和 $b$ 的祖先所对应的兄弟. 处理一下就可以了。
+
+## H. Hans Zimmer 
+
+upsolved by cabinfever
+
+---
+
+ConnorZhong's Solution：
+
+题目主要关注的是：长度为 $1$ 的绳子被均匀分布随机切成 $n$ 段后最短长度段的期望。
+
+$P(X)$ 表示所有段长度大于等于 $X$ 时的概率，考虑先给 $n$ 段每段都预分配 $x$ 长度，问题就变成了将每一刀都落在 $(1-nx)$ 区域内的概率，即 $P(X)=(1-nx)^{n-1}$
+
+对这个积分就可以得到结论 $\frac{1}{n^2}$。
+
+---
+
+Cabinfever's supplement
+
+根据上面的结论，又发现长宽互不影响，枚举对长宽的切割次数，得到表达式为$\displaystyle\sum_{i = 0}^{n} {n \choose i} \frac{1}{2^n} \frac{h}{(i+1)^2} \frac{w}{(n-i+1)^2}$
+
+发现精度会炸的很厉害，而除去sum，式子里都是乘法，所以直接取对数，可以简化很多代码
+
+## J. Jimi Hendrix
+
+solved by cabinfever
+
+---
+
+Cabinfever's solution:
+
+dp[x]表示从x为根的子树的叶子节点中，到x组成的字符串，s[1...dp[x]]是其子序列，且dp[x]尽可能大。然后将s翻转，再做一遍。若dp1[x] + dp2[x] >= len，且来自不同链则有答案。因为有可能来自同一根链，树dp记录最大和次大。
+
+
+## Replay
+
+A 出发.. hzh 精度炸了... 卡住.. zjc 不久后把 E 做掉...之后又想了 J.. 
+
+给 jyb 讲了 J 的做法后，jyb 自告奋勇上去写...于是就 go die 了。
+
+hzh 去写了 G，也卡住了.. zjc 跟着 hzh 的思路补了补锅然后 G 就过了，A 改了整数取模后也过了。
+
+zjc 又去尝试给 jyb 补锅...hzh 去写 C.. 等到 C 过了，这口锅还没有补上..
+
+hzh 也来给 jyb 补锅.. zjc 去想 H。
+
+zjc 知道了 H 的做法，推了式子又仍给刚下锅的 jyb 码..
+
+H 因为输出不够机智就 gg 了啊。。
+
+
+**zjc** 今天甩了很多锅给 jyb.. 很不该啊.. 多补题..多鼓励队友补题..
+
+**jyb** 树dp写得很顺利，用pre输出dp路径，但带上次大，脑子就不太对了。 最后15min写H，蛮顺利的，但还是对这种精度的spj不太熟悉。
+
+**hzh** 开始A明显是个高斯消元，但是对这种精度要求比较高的没什么经验，后面知道了用莫意义下的才过掉，G题开始有了思路，但是交了发现有点问题，过了一会才想懂过掉，然后去写C，发现是个傻逼题，过掉，最后去拯救jyb，没时间做新题了
