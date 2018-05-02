@@ -1,38 +1,45 @@
-# Info
+Info
+====
 
 Date: 2017.10.30 18:00-23:00
 
 [Link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006298)
 
-# Solutions
+Solutions
+=========
 
-## A Tree Orientation
+A Tree Orientation
+------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 考虑$dp_{u,j,0/1}$表示以$u$为根的子树中除$u$以外恰好有$i$个汇点且$i$是否向子树内连过边，转移枚举$u$的一个儿子$v$挂上来，枚举两棵子树内汇点数以及$u-v$这条边的方向，可以确定$v$是否为汇点，复杂度$O(n^2)$。
 
-## B A Masterpiece
+B A Masterpiece
+---------------
 
 solved by Jove, upsolved by none
 
-## C Auction
+C Auction
+---------
 
 solved by sk, upsolved by none
 
-## D Deck Building
+D Deck Building
+---------------
 
 unsolved
 
-## E The Secret of Betting
+E The Secret of Betting
+-----------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -42,30 +49,36 @@ $k=0$特判，否则考虑记录前$k$个点是否有入边和出边，枚举当
 
 对于上述方法，极限数据是$n=10^6,k=4$，直接$dp$卡常数并没有成功，考虑优化矩阵的状态数，从初始状态出发$BFS$一遍，发现此时只有$70$个有效状态，就可以通过了。
 
-## F Financial Reports
+F Financial Reports
+-------------------
 
 solved by sk, upsolved by none
 
-## G Moore's Law
+G Moore's Law
+-------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 对于$n-1$的答案$x$，如果$x/2^{n-1}$是奇数，那么给$x$加一个$10^n$得到$n$的答案，否则加一个$2 \times 10^n$，$Python$打表。
 
-## H Plagiarism
+H Plagiarism
+------------
 
 unsolved
 
-## I Number Builder
+I Number Builder
+----------------
 
 solved by Jove, upsolved by none
 
-## J Find a Triangle
+J Find a Triangle
+-----------------
 
 unsolved
 
-# Replay
+Replay
+======
