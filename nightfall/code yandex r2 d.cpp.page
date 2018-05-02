@@ -1,0 +1,37 @@
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 998244353;
+int mpow(int x, int n) {
+	int res = 1;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % MOD;
+		x = 1LL * x * x % MOD;
+		n >>= 1;
+	}
+	return res;
+}
+const int N = 1005;
+int dp[N][N][2], F[N], R[N];
+int main() {
+	F[0] = R[0] = 1;
+	for (int i = 1; i < N; ++ i) F[i] = 1LL * i * F[i - 1] % MOD, R[i] = mpow(F[i], MOD - 2);
+	int n, m, f = 1;
+	scanf("%d%d", &n, &m);
+	for (int i = 1; i <= n; ++ i) f = 1LL * f * i % MOD;
+	f = mpow(f, m - 1);
+	dp[0][0][0] = 1;
+	for (int i = 1; i < n; ++ i) {
+		for (int j = 0; j < i; ++ j) {
+			for (int k = 0; k < 2; ++ k) {
+				(dp[i][0][k] += dp[i - 1][j][k]) %= MOD;
+				(dp[i][j + 1][k ^ 1] += 1LL * dp[i - 1][j][k] * mpow(mpow(j + 2, MOD - 2), m) % MOD) %= MOD;
+			}
+		}
+	}
+	int ans = 0;
+	for (int i = 0; i <= n; ++ i) (ans += 1LL * mpow(F[n], m) * dp[n - 1][i][0] % MOD) %= MOD;
+	for (int i = 0; i <= n; ++ i) (ans += MOD - 1LL * mpow(F[n], m) * dp[n - 1][i][1] % MOD) %= MOD;
+	printf("%d\n", 1LL * ans * mpow(mpow(F[n], MOD - 2), m - 1) % MOD);
+}
+~~~
