@@ -1,4 +1,5 @@
-# F. Favorite Restaurants
+F. Favorite Restaurants
+=======================
 
 题解的意思似乎是，一个SCC缩环后的DAG中，$\sum_icnt(i)\cdot deg(i)=O(N)$，$cnt(i)$是第$i$个连通分量的点数，$deg(i)$是dag中他的度数。
 
@@ -6,7 +7,7 @@
 
 似乎就是这样。构了个500个点的团，一个点再连出去500个点。这样复杂度是$O(500*500*500*1.5)$，就是三方除以5.33，但也已经足够快了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1005;
@@ -14,96 +15,97 @@ vector<int> G[N], rG[N], lis, cat[N], g[N];
 bool vis[N];
 int belong[N], x[N], y[N], dp1[N][N], dp2[N][N], deg[N], ans[N];
 void dfs(int x) {
-	vis[x] = 1;
-	for (int u : G[x]) if (!vis[u]) dfs(u);
-	lis.push_back(x);
+    vis[x] = 1;
+    for (int u : G[x]) if (!vis[u]) dfs(u);
+    lis.push_back(x);
 }
 void rdfs(int x, int c) {
-	vis[x] = 1;
-	cat[c].push_back(x);
-	belong[x] = c;
-	for (int u : rG[x]) if (!vis[u]) rdfs(u, c);
+    vis[x] = 1;
+    cat[c].push_back(x);
+    belong[x] = c;
+    for (int u : rG[x]) if (!vis[u]) rdfs(u, c);
 }
 int main() {
-	int n;
-	scanf("%d", &n);
-	for (int i = 1; i <= n; ++ i) {
-		scanf("%d%d", &x[i], &y[i]);
-		int q;
-		scanf("%d", &q);
-		while (q --) {
-			int u;
-			scanf("%d", &u);
-			G[i].push_back(u);
-			rG[u].push_back(i);
-		}
-	}
-	for (int i = 1; i <= n; ++ i) if (!vis[i]) dfs(i);
-	reverse(lis.begin(), lis.end());
-	for (int i = 1; i <= n; ++ i) vis[i] = 0;
-	int cnt = 0;
-	for (int i : lis) if (!vis[i]) rdfs(i, ++ cnt);
-	for (int i = 1; i <= cnt; ++ i) {
-		memset(dp1[i], 0x3f, sizeof(dp1[i]));
-		for (int fir : cat[i]) {
-			vector<int> tmp;
-			int base = y[fir];
-			for (int other : cat[i]) if (other != fir) tmp.push_back(x[other]);
-			sort(tmp.begin(), tmp.end());
-			dp1[i][1] = min(dp1[i][1], base);
-			for (int j = 0; j < (int) tmp.size(); ++ j) {
-				base += tmp[j];
-				dp1[i][j + 2] = min(dp1[i][j + 2], base);
-			}
-		}
-	}
-	for (int i = 1; i <= cnt; ++ i) {
-		for (int u : cat[i]) {
-			for (int v : G[u]) {
-				int to = belong[v];
-				if (to == i) continue;
-				g[i].push_back(to);
-				deg[to] ++;
-			}
-		}
-	}
-	vector<int> tp;
-	queue<int> q;
-	for (int i = 1; i <= cnt; ++ i) if (deg[i] == 0) q.push(i);
-	while (!q.empty()) {
-		int p = q.front(); q.pop();
-		tp.push_back(p);
-		for (int u : g[p]) {
-			deg[u] --;
-			if (deg[u] == 0) q.push(u);
-		}
-	}
-	reverse(tp.begin(), tp.end());
-	memset(ans, 0x3f, sizeof(ans));
-	for (int i : tp) {
-		sort(g[i].begin(), g[i].end());
-		g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
-		for (int k = 1; k <= n; ++ k) {
-			dp2[i][k] = dp1[i][k];
-			for (int j : g[i]) {
-				dp2[i][k] = min(dp2[i][k], dp2[j][k]);
-				for (int kk = 1; kk < k; ++ kk) {
-					if (dp1[i][kk] == 0x3f3f3f3f) break;
-					dp2[i][k] = min(dp2[i][k], dp1[i][kk] + dp2[j][k - kk]);
-				}
-			}
-			ans[k] = min(ans[k], dp2[i][k]);
-		}
-	}
-	for (int i = 1; i <= n; ++ i) {
-		if (ans[i] < 0x3f3f3f3f) printf("%d\n", ans[i]);
-	}
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++ i) {
+        scanf("%d%d", &x[i], &y[i]);
+        int q;
+        scanf("%d", &q);
+        while (q --) {
+            int u;
+            scanf("%d", &u);
+            G[i].push_back(u);
+            rG[u].push_back(i);
+        }
+    }
+    for (int i = 1; i <= n; ++ i) if (!vis[i]) dfs(i);
+    reverse(lis.begin(), lis.end());
+    for (int i = 1; i <= n; ++ i) vis[i] = 0;
+    int cnt = 0;
+    for (int i : lis) if (!vis[i]) rdfs(i, ++ cnt);
+    for (int i = 1; i <= cnt; ++ i) {
+        memset(dp1[i], 0x3f, sizeof(dp1[i]));
+        for (int fir : cat[i]) {
+            vector<int> tmp;
+            int base = y[fir];
+            for (int other : cat[i]) if (other != fir) tmp.push_back(x[other]);
+            sort(tmp.begin(), tmp.end());
+            dp1[i][1] = min(dp1[i][1], base);
+            for (int j = 0; j < (int) tmp.size(); ++ j) {
+                base += tmp[j];
+                dp1[i][j + 2] = min(dp1[i][j + 2], base);
+            }
+        }
+    }
+    for (int i = 1; i <= cnt; ++ i) {
+        for (int u : cat[i]) {
+            for (int v : G[u]) {
+                int to = belong[v];
+                if (to == i) continue;
+                g[i].push_back(to);
+                deg[to] ++;
+            }
+        }
+    }
+    vector<int> tp;
+    queue<int> q;
+    for (int i = 1; i <= cnt; ++ i) if (deg[i] == 0) q.push(i);
+    while (!q.empty()) {
+        int p = q.front(); q.pop();
+        tp.push_back(p);
+        for (int u : g[p]) {
+            deg[u] --;
+            if (deg[u] == 0) q.push(u);
+        }
+    }
+    reverse(tp.begin(), tp.end());
+    memset(ans, 0x3f, sizeof(ans));
+    for (int i : tp) {
+        sort(g[i].begin(), g[i].end());
+        g[i].erase(unique(g[i].begin(), g[i].end()), g[i].end());
+        for (int k = 1; k <= n; ++ k) {
+            dp2[i][k] = dp1[i][k];
+            for (int j : g[i]) {
+                dp2[i][k] = min(dp2[i][k], dp2[j][k]);
+                for (int kk = 1; kk < k; ++ kk) {
+                    if (dp1[i][kk] == 0x3f3f3f3f) break;
+                    dp2[i][k] = min(dp2[i][k], dp1[i][kk] + dp2[j][k - kk]);
+                }
+            }
+            ans[k] = min(ans[k], dp2[i][k]);
+        }
+    }
+    for (int i = 1; i <= n; ++ i) {
+        if (ans[i] < 0x3f3f3f3f) printf("%d\n", ans[i]);
+    }
 }
-~~~
+```
 
-# K. Kings and Rooks
+K. Kings and Rooks
+==================
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int MOD = 1e9 + 7;
@@ -111,140 +113,141 @@ typedef long long LL;
 struct poi { int x, y; };
 vector<poi> all;
 bool cmpx(poi a, poi b) {
-	if (a.x != b.x) return a. x < b.x;
-	return a.y < b.y;
+    if (a.x != b.x) return a. x < b.x;
+    return a.y < b.y;
 }
 bool cmpy(poi a, poi b) {
-	if (a.y != b.y) return a. y < b.y;
-	return a.x < b.x;
+    if (a.y != b.y) return a. y < b.y;
+    return a.x < b.x;
 }
 int n, m, k; LL area;
 int segment(int l) {
-	int res = MOD - (area - 2) % MOD * l % MOD * (l - 1) % MOD * ((MOD + 1) / 2) % MOD;
-	(res += 2LL * l * (l - 1) % MOD * (l - 2) % MOD * ((MOD + 1) / 6)  % MOD) %= MOD;
-	return res;
+    int res = MOD - (area - 2) % MOD * l % MOD * (l - 1) % MOD * ((MOD + 1) / 2) % MOD;
+    (res += 2LL * l * (l - 1) % MOD * (l - 2) % MOD * ((MOD + 1) / 6)  % MOD) %= MOD;
+    return res;
 }
 const int N = 3e6 + 5;
 int L[N], R[N], tot; LL sum[N];
 int newnode() {
-	++ tot;
-	assert(tot < N);
-	L[tot] = R[tot] = 0;
-	sum[tot] = 0LL;
-	return tot;
+    ++ tot;
+    assert(tot < N);
+    L[tot] = R[tot] = 0;
+    sum[tot] = 0LL;
+    return tot;
 }
 void modify(int &x, int l, int r, int p, int c) {
-	if (l > p || r < p) return;
-	if (!x) x = newnode();
-	if (l == r) {
-		sum[x] = c;
-		return;
-	}
-	int mid = (l + r) / 2;
-	modify(L[x], l, mid, p, c);
-	modify(R[x], mid + 1, r, p, c);
-	sum[x] = 0;
-	if (L[x]) sum[x] += sum[L[x]];
-	if (R[x]) sum[x] += sum[R[x]];
+    if (l > p || r < p) return;
+    if (!x) x = newnode();
+    if (l == r) {
+        sum[x] = c;
+        return;
+    }
+    int mid = (l + r) / 2;
+    modify(L[x], l, mid, p, c);
+    modify(R[x], mid + 1, r, p, c);
+    sum[x] = 0;
+    if (L[x]) sum[x] += sum[L[x]];
+    if (R[x]) sum[x] += sum[R[x]];
 }
 LL query(int x, int l, int r, int ql, int qr) {
-	if (!x || l > qr || r < ql) return 0;
-	if (l >= ql && r <= qr) return sum[x];
-	int mid = (l + r) / 2;
-	return query(L[x], l, mid, ql, qr) + query(R[x], mid + 1, r, ql, qr);
+    if (!x || l > qr || r < ql) return 0;
+    if (l >= ql && r <= qr) return sum[x];
+    int mid = (l + r) / 2;
+    return query(L[x], l, mid, ql, qr) + query(R[x], mid + 1, r, ql, qr);
 }
 int cntL() {
-	int las_Y = 0, root = 0, ans = 0;
-	tot = 0;
-	for (int i = 0, j; i < k; i = j) {
-		vector<int> col;
-		for (j = i; j < k && all[j].y == all[i].y; ++ j) col.push_back(all[j].x);
-		if (all[i].y - las_Y - 1) {
-			LL sumX = query(root, 1, n, 1, n);
-			int a1 = las_Y, an = all[i].y - 2, len = all[i].y - las_Y - 1;
-			int res = 1LL * n * (n - 1) % MOD * (1LL * (a1 + an) * len / 2 % MOD) % MOD;
-			(res += MOD - sumX % MOD * (n - 1) % MOD * len % MOD) %= MOD;
-			(ans += res) %= MOD;
-		}
-		las_Y = all[i].y;
-		col.push_back(n + 1);
-		int las = 0;
-		for (int x : col) {
-			int l = x - las - 1;
-			if (l >= 1) {
-				LL sumX = query(root, 1, n, las + 1, x - 1);
-				int res = 1LL * l * (l - 1) % MOD * (all[i].y - 1) % MOD;
-				(res += MOD - sumX % MOD * (l - 1) % MOD) %= MOD;
-				(ans += res) %= MOD;
-			}
-			if (x <= n) {
-				modify(root, 1, n, x, all[i].y);
-			}
-			las = x;
-		}
-	}
-	if (m - las_Y) {
-		LL sumX = query(root, 1, n, 1, n);
-		int a1 = las_Y, an = m - 1, len = m - las_Y;
-		int res = 1LL * n * (n - 1) % MOD * (1LL * (a1 + an) * len / 2 % MOD) % MOD;
-		(res += MOD - sumX % MOD * (n - 1) % MOD * len % MOD) %= MOD;
-		(ans += res) %= MOD;
-	}
-	return ans;
+    int las_Y = 0, root = 0, ans = 0;
+    tot = 0;
+    for (int i = 0, j; i < k; i = j) {
+        vector<int> col;
+        for (j = i; j < k && all[j].y == all[i].y; ++ j) col.push_back(all[j].x);
+        if (all[i].y - las_Y - 1) {
+            LL sumX = query(root, 1, n, 1, n);
+            int a1 = las_Y, an = all[i].y - 2, len = all[i].y - las_Y - 1;
+            int res = 1LL * n * (n - 1) % MOD * (1LL * (a1 + an) * len / 2 % MOD) % MOD;
+            (res += MOD - sumX % MOD * (n - 1) % MOD * len % MOD) %= MOD;
+            (ans += res) %= MOD;
+        }
+        las_Y = all[i].y;
+        col.push_back(n + 1);
+        int las = 0;
+        for (int x : col) {
+            int l = x - las - 1;
+            if (l >= 1) {
+                LL sumX = query(root, 1, n, las + 1, x - 1);
+                int res = 1LL * l * (l - 1) % MOD * (all[i].y - 1) % MOD;
+                (res += MOD - sumX % MOD * (l - 1) % MOD) %= MOD;
+                (ans += res) %= MOD;
+            }
+            if (x <= n) {
+                modify(root, 1, n, x, all[i].y);
+            }
+            las = x;
+        }
+    }
+    if (m - las_Y) {
+        LL sumX = query(root, 1, n, 1, n);
+        int a1 = las_Y, an = m - 1, len = m - las_Y;
+        int res = 1LL * n * (n - 1) % MOD * (1LL * (a1 + an) * len / 2 % MOD) % MOD;
+        (res += MOD - sumX % MOD * (n - 1) % MOD * len % MOD) %= MOD;
+        (ans += res) %= MOD;
+    }
+    return ans;
 }
 int main() {
-	scanf("%d%d%d", &n, &m, &k);
-	for (int i = 0; i < k; ++ i) {
-		int x, y;
-		scanf("%d%d", &x, &y);
-		x ++, y ++;
-		all.push_back({x, y});
-	}
-	sort(all.begin(), all.end(), cmpx);
-	area = 1LL * n * m - k;
-	int ans = (area % MOD) * ((area - 1) % MOD) % MOD * ((area - 2) % MOD) % MOD * ((MOD + 1) / 6) % MOD;
-	int cnt_x = 0;
-	for (int i = 0, j; i < k; i = j) {
-		vector<int> row;
-		for (j = i; j < k && all[j].x == all[i].x; ++ j) row.push_back(all[j].y);
-		cnt_x ++;
-		row.push_back(m + 1);
-		int las = 0;
-		for (int y : row) {
-			int l = y - las - 1;
-			las = y;
-			if (l >= 2) (ans += segment(l)) %= MOD;
-		}
-	}
-	(ans += 1LL * (n - cnt_x) * segment(m) % MOD) %= MOD;
-	int cnt_y = 0;
-	sort(all.begin(), all.end(), cmpy);
-	for (int i = 0, j; i < k; i = j) {
-		vector<int> col;
-		for (j = i; j < k && all[j].y == all[i].y; ++ j) col.push_back(all[j].x);
-		cnt_y ++;
-		col.push_back(n + 1);
-		int las = 0;
-		for (int x : col) {
-			int l = x - las - 1;
-			las = x;
-			if (l >= 2) (ans += segment(l)) %= MOD;
-		}
-	}
-	(ans += 1LL * (m - cnt_y) * segment(n) % MOD) %= MOD;
-	(ans += cntL()) %= MOD;
-	for (poi &p : all) p.y = m - p.y + 1;
-	sort(all.begin(), all.end(), cmpy);
-	(ans += cntL()) %= MOD;
-	printf("%d\n", ans);
+    scanf("%d%d%d", &n, &m, &k);
+    for (int i = 0; i < k; ++ i) {
+        int x, y;
+        scanf("%d%d", &x, &y);
+        x ++, y ++;
+        all.push_back({x, y});
+    }
+    sort(all.begin(), all.end(), cmpx);
+    area = 1LL * n * m - k;
+    int ans = (area % MOD) * ((area - 1) % MOD) % MOD * ((area - 2) % MOD) % MOD * ((MOD + 1) / 6) % MOD;
+    int cnt_x = 0;
+    for (int i = 0, j; i < k; i = j) {
+        vector<int> row;
+        for (j = i; j < k && all[j].x == all[i].x; ++ j) row.push_back(all[j].y);
+        cnt_x ++;
+        row.push_back(m + 1);
+        int las = 0;
+        for (int y : row) {
+            int l = y - las - 1;
+            las = y;
+            if (l >= 2) (ans += segment(l)) %= MOD;
+        }
+    }
+    (ans += 1LL * (n - cnt_x) * segment(m) % MOD) %= MOD;
+    int cnt_y = 0;
+    sort(all.begin(), all.end(), cmpy);
+    for (int i = 0, j; i < k; i = j) {
+        vector<int> col;
+        for (j = i; j < k && all[j].y == all[i].y; ++ j) col.push_back(all[j].x);
+        cnt_y ++;
+        col.push_back(n + 1);
+        int las = 0;
+        for (int x : col) {
+            int l = x - las - 1;
+            las = x;
+            if (l >= 2) (ans += segment(l)) %= MOD;
+        }
+    }
+    (ans += 1LL * (m - cnt_y) * segment(n) % MOD) %= MOD;
+    (ans += cntL()) %= MOD;
+    for (poi &p : all) p.y = m - p.y + 1;
+    sort(all.begin(), all.end(), cmpy);
+    (ans += cntL()) %= MOD;
+    printf("%d\n", ans);
 }
-~~~
+```
 
-# L. Logical Expression
+L. Logical Expression
+=====================
 
 蠢到像是从没打过ACM。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1005, MOD = 1e9 + 7;
@@ -253,94 +256,94 @@ vector<pair<int, sat2>> G[N], st;
 bool vis[N], done;
 long long ans = 1;
 bool check(int u, int v, int a, int b) {
-	if (u < 0) a = !a;
-	if (v < 0) b = !b;
-	return a || b;
+    if (u < 0) a = !a;
+    if (v < 0) b = !b;
+    return a || b;
 }
 void solve_chain(vector<pair<int, sat2>> a) {
-	static int dp[N][2];
-	memset(dp, 0, sizeof(dp));
-	dp[0][0] = dp[0][1] = 1;
-	for (int i = 0; i < (int) a.size() - 1; ++ i) {
-		for (int cho : {0, 1}) {
-			for (int nex : {0, 1}) {
-				if (check(a[i].second.u, a[i].second.v, cho, nex)) {
-					(dp[i + 1][nex] += dp[i][cho]) %= MOD;
-				}
-			}
-		}
-	}
-	ans = 1LL * ans * (dp[(int) a.size() - 1][0] + dp[(int) a.size() - 1][1]) % MOD;
+    static int dp[N][2];
+    memset(dp, 0, sizeof(dp));
+    dp[0][0] = dp[0][1] = 1;
+    for (int i = 0; i < (int) a.size() - 1; ++ i) {
+        for (int cho : {0, 1}) {
+            for (int nex : {0, 1}) {
+                if (check(a[i].second.u, a[i].second.v, cho, nex)) {
+                    (dp[i + 1][nex] += dp[i][cho]) %= MOD;
+                }
+            }
+        }
+    }
+    ans = 1LL * ans * (dp[(int) a.size() - 1][0] + dp[(int) a.size() - 1][1]) % MOD;
 }
 void solve_cycle(vector<pair<int, sat2>> a) {
-	int tmp = 0;
-	for (int fir : {0, 1}) {
-		static int dp[N][2];
-		memset(dp, 0, sizeof(dp));
-		dp[0][fir] = 1;
-		for (int i = 0; i < (int) a.size() - 1; ++ i) {
-			for (int cho : {0, 1}) {
-				for (int nex : {0, 1}) {
-					if (check(a[i].second.u, a[i].second.v, cho, nex)) {
-						(dp[i + 1][nex] += dp[i][cho]) %= MOD;
-					}
-				}
-			}
-		}
-		for (int las : {0, 1}) {
-			if (check(a.back().second.u, a.back().second.v, las, fir)) {
-				(tmp += dp[(int) a.size() - 1][las]) %= MOD;
-			}
-		}
-	}
-	ans = 1LL * ans * tmp % MOD;
+    int tmp = 0;
+    for (int fir : {0, 1}) {
+        static int dp[N][2];
+        memset(dp, 0, sizeof(dp));
+        dp[0][fir] = 1;
+        for (int i = 0; i < (int) a.size() - 1; ++ i) {
+            for (int cho : {0, 1}) {
+                for (int nex : {0, 1}) {
+                    if (check(a[i].second.u, a[i].second.v, cho, nex)) {
+                        (dp[i + 1][nex] += dp[i][cho]) %= MOD;
+                    }
+                }
+            }
+        }
+        for (int las : {0, 1}) {
+            if (check(a.back().second.u, a.back().second.v, las, fir)) {
+                (tmp += dp[(int) a.size() - 1][las]) %= MOD;
+            }
+        }
+    }
+    ans = 1LL * ans * tmp % MOD;
 }
 void dfs(int x, int las = -1) {
-	vis[x] = 1;
-	for (auto e : G[x]) {
-		if (e.second.id == las) continue;
-		if (vis[e.first]) {
-			st.push_back(e);
-			solve_cycle(st);
-			done = 1;
-			return;
-		}
-		st.push_back(e);
-		dfs(e.first, e.second.id);
-		if (done) return;
-	}
-	st.push_back(make_pair(x, (sat2) {0, 0, 0}));
-	solve_chain(st);
-	done = 1;
-	return;
+    vis[x] = 1;
+    for (auto e : G[x]) {
+        if (e.second.id == las) continue;
+        if (vis[e.first]) {
+            st.push_back(e);
+            solve_cycle(st);
+            done = 1;
+            return;
+        }
+        st.push_back(e);
+        dfs(e.first, e.second.id);
+        if (done) return;
+    }
+    st.push_back(make_pair(x, (sat2) {0, 0, 0}));
+    solve_chain(st);
+    done = 1;
+    return;
 }
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 0; i < m; ++ i) {
-		int u, v;
-		scanf("%d%d", &u, &v);
-		G[abs(u)].push_back(make_pair(abs(v), (sat2) {u, v, i}));
-		G[abs(v)].push_back(make_pair(abs(u), (sat2) {v, u, i}));
-	}
-	for (int i = 1; i <= n; ++ i) {
-		if (vis[i]) continue;
-		if (G[i].empty()) {
-			ans = ans * 2 % MOD;
-			continue;
-		}
-		if ((int) G[i].size() == 1) {
-			st.clear();
-			done = 0;
-			dfs(i);
-		}
-	}
-	for (int i = 1; i <= n; ++ i) {
-		if (vis[i]) continue;
-		done = 0;
-		st.clear();
-		dfs(i);
-	}
-	printf("%d\n", ans);
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < m; ++ i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        G[abs(u)].push_back(make_pair(abs(v), (sat2) {u, v, i}));
+        G[abs(v)].push_back(make_pair(abs(u), (sat2) {v, u, i}));
+    }
+    for (int i = 1; i <= n; ++ i) {
+        if (vis[i]) continue;
+        if (G[i].empty()) {
+            ans = ans * 2 % MOD;
+            continue;
+        }
+        if ((int) G[i].size() == 1) {
+            st.clear();
+            done = 0;
+            dfs(i);
+        }
+    }
+    for (int i = 1; i <= n; ++ i) {
+        if (vis[i]) continue;
+        done = 0;
+        st.clear();
+        dfs(i);
+    }
+    printf("%d\n", ans);
 }
-~~~
+```
