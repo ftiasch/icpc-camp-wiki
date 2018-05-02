@@ -21,46 +21,59 @@
 │I₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
  开错比赛，晚开20分钟
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. North North West [TDJ]
+A. North North West \[TDJ\]
+---------------------------
 
 签到题。
 
-## B. Unknown Switches [MZH]
+B. Unknown Switches \[MZH\]
+---------------------------
 
-压位模拟。注意对long long需要使用__builtin_popcountll而非__builtin_popount。
+压位模拟。注意对long
+long需要使用\_\_builtin\_popcountll而非\_\_builtin\_popount。
 
-## C. Speedrun [GX]
+C. Speedrun \[GX\]
+------------------
 
 决策单调性dp。
 
-## D. Flowers [GX]
+D. Flowers \[GX\]
+-----------------
 
 发现导数是n个分段函数的和，枚举分段点即可。
 
-## E. Square in Circles [MZH]
+E. Square in Circles \[MZH\]
+----------------------------
 
 二分答案求区间并。
 
-## F. Reverse a Road II [TDJ]
+F. Reverse a Road II \[TDJ\]
+----------------------------
 
 先跑一个最大流，可以证明如果某条边已经满流，那翻转这条边不会增加流量，对于剩下的边判一下两端是否分别在“与汇连通的点集”和“与源连通的点集“即可。
 
-## G. Cookie Counter [GX,TDJ]
+G. Cookie Counter \[GX,TDJ\]
+----------------------------
 
 dp签到题。
 
-## H. Points and Lines [TDJ]
+H. Points and Lines \[TDJ\]
+---------------------------
 
 表达式计算模拟题。
 
-## I. Color the Map Extreme
+I. Color the Map Extreme
+------------------------
 
-## J. Website Tour [TDJ]
+J. Website Tour \[TDJ\]
+-----------------------
 
 强连通缩点+多重背包，点数很少，怎么糙快猛怎么写……
 
-## K. Idempotent Filter [MZH]
+K. Idempotent Filter \[MZH\]
+----------------------------
 
 枚举一个点及周围两圈的共$2^{19}$种情况，模拟一次和两次判断是否中间格子相同。
