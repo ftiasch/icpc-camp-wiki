@@ -21,30 +21,43 @@
 │F₁[-:--]│                                                       ₀    │
 │H₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-- C题一开始的决定是“试一发SPFA”…TLE了之后忘了让GX停下来…于是GX开始优化常数了…
+-   C题一开始的决定是“试一发SPFA”…TLE了之后忘了让GX停下来…于是GX开始优化常数了…
 
-## A. Balance [TDJ]
+A. Balance \[TDJ\]
+------------------
 
-## B. Entanglement
+B. Entanglement
+---------------
 
-## C. Gravity [TDJ]
+C. Gravity \[TDJ\]
+------------------
 
-## D. Infinite Pattern Matching [TDJ]
+D. Infinite Pattern Matching \[TDJ\]
+------------------------------------
 
-## E. Inheritance
+E. Inheritance
+--------------
 
-## F. Movies
+F. Movies
+---------
 
-## G. Origami [MZH]
+G. Origami \[MZH\]
+------------------
 
-## H. Qnp
+H. Qnp
+------
 
-## I. Salaj [MZH]
+I. Salaj \[MZH\]
+----------------
 
-## J. Taxi [MZH]
+J. Taxi \[MZH\]
+---------------
 
-## K. Tris [TDJ]
+K. Tris \[TDJ\]
+---------------
 
-## L. Xormites [GX]
+L. Xormites \[GX\]
+------------------
