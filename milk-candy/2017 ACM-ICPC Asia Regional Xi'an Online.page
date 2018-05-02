@@ -71,7 +71,7 @@ quailty's solution
 考虑$f_n(\cos x)=\cos(nx),g_n(\cos x)=\frac{\sin(nx)}{\sin x}$，可以得到$f_n(x)=xf_{n-1}(x)+(1-x^2)g_{n-1}(x),g_n(x)=xg_{n-1}(x)+f_{n-1}(x)$，于是可以构造一个元素是多项式的矩阵跑快速幂，FFT优化多项式乘法即可，复杂度$O(m\log{m}\log{n})$。
 
 显然这个做法会TLE，所以赛中不是这么过的，根据[De Moivre's
-formula](https://en.wikipedia.org/wiki/De_Moivre%27s_formula)，即$\cos(nx)+i\sin(nx)=(\cos x+i\sin x)^n$，二项式展开后考虑$x^m$项的系数，可以知道$ans=\sum_{p+2q=n,p+2r=m}(-1)^{q+r}\binom{n}{p}\binom{q}{r}$，式中出现的组合数可以递推预处理，复杂度$O(m\log{p})$，这里$O(\log{p})$是因为求逆元。
+formula](https://en.wikipedia.org/wiki/De_Moivre's_formula)，即$\cos(nx)+i\sin(nx)=(\cos x+i\sin x)^n$，二项式展开后考虑$x^m$项的系数，可以知道$ans=\sum_{p+2q=n,p+2r=m}(-1)^{q+r}\binom{n}{p}\binom{q}{r}$，式中出现的组合数可以递推预处理，复杂度$O(m\log{p})$，这里$O(\log{p})$是因为求逆元。
 
 G Xor
 -----
