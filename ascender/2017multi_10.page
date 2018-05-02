@@ -1,0 +1,148 @@
+---
+title: 2017 Multi-University Training Contest - Team 10
+---
+
+# A. Admiral [jds]
+
+数据很小，头尾各处理一半。
+
+# B. Array Challenge [zmy]
+
+通过找规律可以得到
+$$F_{n}=7*F_{n-1}-4*F_{n-2}$$
+矩阵倍增
+
+# C. Boring Game [zmy]
+
+对于二维的翻硬币游戏，显然我们需要使用 NIM 积来计算 SG 函数。论文《从"k倍动态减法游戏"出发探究一类组合游戏问题》给出了一个$\mathcal{O}(log^2x)$ 的解法，但是由于此题的数据范围较大。所以这个方法不足以解决改题。下面是根据$03$官方题解和官方标程，得到的另一种非常高效的做法。
+
+假设我们已经求了$x,y \in [0,255]$的所有$x\otimes y$的值（$\otimes$即表示NIM积运算），我们现在用这个预处理的结果$\mathcal{O}(1)$计算出$x,y \in [0,65535]$的所有$x\otimes y$的值。
+
+我们需要用到一些 NIM 积的性质。
+
+- 交换律： $x \otimes y = y \otimes x$
+- 结合律： $(x\otimes y) \otimes z = x \otimes (y \otimes z)$
+- 分配律：$(x \oplus y) \otimes z = (x \otimes z) \oplus (y \otimes z)$
+- 对于$x,y<2^{2^\alpha}$
+  - $x \otimes 2^{2^ \alpha} = 2 ^ {2^ \alpha}x$
+  - $2^{2^ \alpha} \otimes 2^{2^ \alpha} = \frac{3}{2} \times 2^{2^ \alpha} = 2^{2^ \alpha} \oplus 2^{2^ \alpha-1}$
+
+设$x=a_1\times2^8+a_2=(a_1\times2^8) \oplus a_2$，$y=b_1\times2^8+b_2=(b_1\times2^8) \oplus b_2$
+
+$$\therefore x \otimes y = ((a_1\times2^8) \oplus a_2) \otimes ((b_1\times2^8) \oplus b_2)$$
+
+$$\therefore x \otimes y = ((a_1 \times 2^8)\otimes (b_1 \times 2^8))\oplus ((a_1 \times 2^8)\otimes b_2) \oplus (a_2 \otimes (b_1 \times 2^8))\oplus(a_2 \otimes b_2)$$
+
+$$\therefore x\otimes y = (a_1 \otimes b_1 \otimes(2^7 \oplus 2^8))\oplus ((a_1 \times 2^8)\otimes b_2) \oplus (a_2 \otimes (b_1 \times 2^8))\oplus(a_2 \otimes b_2)$$
+
+$$\therefore x \otimes y = (a_1 \otimes b_1 \otimes 2^7) \oplus (a_1 \otimes b_1 \otimes 2^8)\oplus (a_1 \otimes b_2 \otimes 2^8)\oplus (a_2 \otimes b_1 \otimes 2^8)\oplus (a_2 \otimes b_2)$$
+
+$$\therefore x \otimes y = (2^8((a_1 \otimes b_1) \oplus (a_1 \otimes b_2) \oplus (a_2 \otimes b_1)))\oplus (a_1 \otimes b_1 \otimes 2^7) \oplus (a_2 \otimes b_2)$$
+
+$$\therefore x \otimes y =(2^8(((a_1 \oplus a_2) \otimes (b_1 \oplus b_2))\oplus (a_2 \otimes b_2)))\oplus (a_1 \otimes b_1 \otimes 2^7) \oplus (a_2 \otimes b_2)$$
+
+
+
+因此我们可以得到代码：
+
+```cpp
+inline uint nim16(uint x, uint y) {
+	uint a1=x>>8,a2=x&255;
+	uint b1=y>>8,b2=y&255;
+	uint c1=nim8[a1][b1];
+	uint c2=nim8[a1^a2][b1^b2];
+	uint c3=nim8[a2][b2];
+	return ((c2^c3)<<8)|(nim8[c1][128]^c3);
+}
+```
+
+通过同样的方法，最终我们可以在$\mathcal{O}(1)$的时间内，得到任意一个$x,y \in [0,2^{32}-1]$的$x \otimes y$的值。
+
+对于需要预处理的部分，我们可以先利用同样的思路，计算出所有$2^a \otimes 2^b$的值，再算出所有$x,y \in [0,255]$的所有$x\otimes y$的值。
+
+至此，对于 NIM 积的求解得到了很好的解决。
+
+回归到此题上，此题是一个经典的 Rugs 游戏，即二维 Ruler 游戏模型。根据 tartan 定理，我们只要求出对应两维的 Ruler 游戏的 SG 值，通过 NIM 积即可得到 Rugs 游戏的 SG 值。在 Ruler 游戏中，$SG(x) = lowbit(x)$，而$[1,n]$中所有数的$lowbit(x)$的异或和为$n \oplus [\frac{n}{2}]$ ，因此我们可以利用类似求矩形面积并的的方式，求解整个的 SG 值。
+
+# D. Brother and Sister [zmy]
+
+利用期望的线性性，我们只需要考虑每个女生对答案的贡献即可。
+不难发现这个图是一个内向树。
+假设有$m$个节点能够到达这个女生，对于任意一种没有选取该女生的方案，这$m$个点一定都没有被选过。这种情况下选取$0$号女生的概率与选取该女生的概率之比为$m:1$，但是从结果上来说，选取$0$号女生是必然事件，所以选取该女生的概率为$\frac{m}{m+1}$。
+我们拓扑排序，先计算好链的部分，再枚举环，计算每个点的贡献。
+还有一个小问题就是答案的输出，题目要求$pq^{-1}$，且$p$和$q$是互质的状态。看上去很麻烦，实际是很好处理的。
+我们先考虑两个不互质的数$p_1$和$q_1$和其约分后的结果$p_2$和$q_2$，不难发现$p_1\times q_1^{-1}=p_2 \times q_2^{-1} (\mod 1000000007)$，所以约分是没有意义的。
+此外，不难发现，两个分数$\frac{p_1}{q_1}$和$\frac{p_2}{q_2}$我们分别计算$pq^{-1}$并求和，即可得到这个分数通分后$pq^{-1}$的结果。因此，实际上输出是比较简单的。
+
+# E. Cube Summation [zmy]
+
+因为是$3$次方，所以我们考虑$3$个数$a,b,c$对答案的贡献。假设$a,b,c$互不相同，它对答案的贡献为选出这$3$的方案数乘以$n-ia-jb-kc$的划分数$p(n-ia-jb-kc)$。
+因此我们首先要解决划分数的问题。利用生成函数的知识，我们容易得到
+$$p(x)=\frac{1}{\prod (1-x^i)}$$
+我们先用五边形数定理求其倒数：
+$$\prod (1-x^i)=\sum_{k=0}^{\infty}(-1)^kx^{\frac{k(3 k\pm 1)}{2}}$$
+之后利用分治+NTT的做法得到$p(N)$的生成函数
+接下来考虑$a,b,c$的方案数，根据数字相同的个数，利用的轮转对称性：。
+$$\sum_{a,b,c,i,j,k,a\not=b,b\not= c,a\not =c}x^{ia+jb+kc}+3\sum_{a=b\not=c,i,j,k}x^{a\max\{i,j\}+ck}+\sum_{a=b=c,i,j,k}x^{a\max\{i,j,k\}}$$
+利用容斥原理可得
+第一项： 
+$$(\sum_{a,i}x^{ai})^3-3(\sum_{a,i,j}x^{a(i+j)})(\sum_{a,i}x^{ai})+2\sum_{a,i,j,k}x^{a(i+j+k)}$$
+第二项：
+$$3(\sum_{a=b,i,j}x^{a\max\{i,j\}})(\sum_{a,i}x^{ai})-3\sum_{a=b=c,i,j,k}x^{a(\max\{i,j\}+k)}$$
+第三项不变
+最后整理得到
+$$(D(x)^3+3S(x)D(x)+S_2(x))$$
+其中$D(x)$表示$x$的约数个数，$S(x)$表示$x$的约数和，$S_2(x)$表示$x$的约数的平方和
+利用NTT可以得到这部分
+再乘上之前我们得到的$p(x)$，即可得到最终的生成函数。
+
+
+# F. Function Counting [zmy]
+
+仔细分析题目，容易的得到以下几个性质：
+
+- 我们认为$x$向$f(x)$连了一条有向边，这样我们会得到若干个环。
+- 这个环中$x$与$-x$的距离一定恰好是环长的一半。
+- 这个环长的一半，即绝对值的个数$n$一定能整除$k$，且$k/n$为奇数，否则不会恰好到$-x$的位置。
+
+下来我们来考虑下每个环的样子：
+
+- $n=1$，方案只有一种
+- $n=2$，方案有两种，但值得注意的是，由于两个数的间距可以为$1$,也可以为$2$，所以我们要考虑连续一段长度为$4$时，有特殊的构造方法。
+- $n=3$，不妨设一段是$1,2,3$，每次一个数可以连向和它相同正负性的，也可以是相反正负性的，一共有$4$种。然后，我们会发现在连的时候，大多数长度都为$2$，但是会出现两次长度为$1$的跳跃。这个跳跃只能发生在开始或结束，所以一共有$2$种，总方案数为$2^3$。
+- $n>3$ 和之前相同的思路，方案数为$2^n$
+
+这样我们能想到一个简单的 dp 方程，但是这个是$\mathcal{O}(n\sqrt{k})$的，当$k$比较大的时候，可以直接 dp ，比较小的时候，我们需要构造线性递推，用矩阵倍增来进行转移。
+
+# G. Jacana Number [zmy]
+
+按照题解的方法做了一遍。。。
+
+# H. Monkeys [zmy]
+
+实际上我们只需要求出最多的联通块个数。考虑到每个联通块至少有两个猴子，所以我们需要在树上求最大匹配，用 dp 解决即可。
+
+# I. Rotating Line [wbr]
+
+首先考虑无论怎样旋转 线段两侧的点的个数是维持不变的。因此问题转化成在坐标轴旋转的过程中如何按x轴维护点的序列。考虑在坐标轴y以外方向的点对，当坐标轴旋转时其相对顺序不会发生改变。因此按点对的向量将点对预处理好，扫一遍即可。
+
+# J. Schedule [zmy]
+
+贪心。我们每次把任务分给在空闲状态下，上一次任务结束时间最晚的那台机器。用堆维护下即可。
+
+# K. Two Paths [zmy]
+
+次小短路。正反跑两边 dijkstra 判断下每条非最短路径树的边对答案的贡献。
+
+
+# 总结反思
+
+###replay
+
+开局读题。zmy 发现11只要dijkstra两遍即可，上去写了1A。然后和wbr交流了下12，上去A了12 。然后jds 08也有了一定的想法，zmy和jds交流一番，写完了08 。jds说08很奇怪，几乎每个人都是WA一发才过的。zmy觉得很奇怪，觉得这题毫无WA点。然后就交了，T了。仔细看了下别人的提交记录。明明别人都是T的。然后加了个读入优化就A了。然后开始漫长的想题。zmy和wbr一直在想02，到比赛结束也无果。jds发现01是到暴力，然后写完WA了一发。zmy帮jds看了遍代码，改到了一个小bug，交上去A了。比赛还有2个小时。三人一起想02无果，打出GG。
+
+**zmy** 乱搞能力太差。面对这种很多人用玄学做法过的题，不能很快的找出乱搞做法。02一直在想推出一个标准的公式，但是数学能力太差，并未得到答案。虽然中间jds发现了答案成等比关系，但是没有意识到它可能是个线性递推。在剩余暑期回家个人训练时，应该多多看题，多了解一些操作方法。
+
+**jds** 我看到一排人都-1、-2就感叹了一句大家都至少wa了一发，根本没看status。。。
+
+**wbr** 咕咕咕，咕咕咕咕咕，计算几何咕咕咕咕咕，咕咕咕咕咕咕，咕咕。
