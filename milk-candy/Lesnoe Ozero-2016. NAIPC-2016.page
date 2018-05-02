@@ -1,34 +1,40 @@
-# Info
+Info
+====
 
 Date: 2017.10.31 12:30-17:30
 
 [Link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006280)
 
-# Solutions
+Solutions
+=========
 
-## A Fancy Antiques
-
-unsolved
-
-## B Alternative Bracket Notation
+A Fancy Antiques
+----------------
 
 unsolved
 
-## C Greetings!
+B Alternative Bracket Notation
+------------------------------
+
+unsolved
+
+C Greetings!
+------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 显然同一种明信片只会装进同一种信封，$dp_{i,S}$表示买了$i$种信封装好了$S$这个集合的明信片的最小代价，转移枚举$S$的补集的子集$T$，那么装下这个集合的明信片需要使用$\max h \times \max w$的信封，预处理转移的代价，复杂度$O(n2^n+k3^n)$。
 
-## D Programming Team
+D Programming Team
+------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
@@ -38,62 +44,70 @@ $01$分数规划+树形$DP$
 
 $DP$转移可以做到$O(N^2)$，总的时间复杂度$O(N^2log{C})$。
 
-## E K-Inversions
+E K-Inversions
+--------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 构造多项式$f(x)=\sum_{s_i='A'}x^{i},g(x)=\sum_{s_i='B'}x^{-i}$，所求即为$f \times g$的各正次项系数，$FFT$优化多项式乘法。
 
-## F Mountain Scenes
+F Mountain Scenes
+-----------------
 
 solved by Jove, upsolved by none
 
-## G Symmetry
+G Symmetry
+----------
 
 unsolved
 
-## H Jewel Thief
+H Jewel Thief
+-------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 体积相同的物品必然是按照价值从大到小的顺序取，考虑$dp_{i,j}$表示处理到体积为$i$的物品且背包容量为$j$时的最大收益，转移枚举选了多少个体积为$i$的物品，注意到这些物品的总价值关于个数是上凸函数，那么（？）对于$\mod i$相同的$j$存在决策单调性，利用经典的分治优化，复杂度$O(sn\log{n})$。
 
-## I Tourists
+I Tourists
+----------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 枚举$x$，枚举$x$的倍数$y$，复杂度$O(n\log{n})$，求树上两点间的距离可以用树链剖分，总的时间复杂度$O(n\log^2{n})$。
 
-## J Whiteboard
+J Whiteboard
+------------
 
 upsolved by sk
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 从终点往回走，用（四个方向的）并查集模拟这个过程，可以求出到最后一次到每个点的时间戳，最早的画笔没颜料时间$ans1$为访问有色格子的最大时间戳，最晚没颜料时间$ans2$为访问空白格子的最小时间戳减$1$，如果存在没有走到的有色格子或者$ans1>ans2$则无解。
 
-## K YATP
+K YATP
+------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 考虑点分治，先求出每个点到根的路径长度$len$，现在对每个点$u$求出从它出发经过重心的最小代价路径，也就是查询一个点$v$使得$p_up_v+len_u+len_v$最小，由于边权非负，经过重复边不会使得代价更小，并不需要去掉位于相同子树内的信息，对所有$(p_u,len_u)$做一个下凸壳，每次三分查询$(p_u,len_u)\cdot(p_v,1)$的最小值，复杂度$O(n\log^2{n})$。
 
-# Replay
+Replay
+======
