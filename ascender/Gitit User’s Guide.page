@@ -154,21 +154,22 @@ documents will be valid metadata blocks.)
 Currently the following keys are supported:
 
 format
-:   Overrides the default page type as specified in the configuration
-    file. Possible values are `markdown`, `rst`, `latex`, `html`,
-    `markdown+lhs`, `rst+lhs`, `latex+lhs`. (Capitalization is ignored,
-    so you can also use `LaTeX`, `HTML`, etc.) The `+lhs` variants
-    indicate that the page is to be interpreted as literate Haskell. If
-    this field is missing, the default page type will be used.
+:   Overrides the default page type as specified in the
+    configuration file. Possible values are `markdown`, `rst`, `latex`,
+    `html`, `markdown+lhs`, `rst+lhs`, `latex+lhs`. (Capitalization is
+    ignored, so you can also use `LaTeX`, `HTML`, etc.) The `+lhs`
+    variants indicate that the page is to be interpreted as
+    literate Haskell. If this field is missing, the default page type
+    will be used.
 
 categories
 :   A space or comma separated list of categories to which the
     page belongs.
 
 toc
-:   Overrides default setting for table-of-contents in the configuration
-    file. Values can be `yes`, `no`, `true`, or `false` (capitalization
-    is ignored).
+:   Overrides default setting for table-of-contents in the
+    configuration file. Values can be `yes`, `no`, `true`, or `false`
+    (capitalization is ignored).
 
 title
 :   By default the displayed page title is the page name. This metadata
