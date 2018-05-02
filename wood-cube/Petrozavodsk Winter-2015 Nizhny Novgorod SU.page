@@ -1,0 +1,20 @@
+## A. Prevent a Galactic War! [TDJ]
+算出比例然后迭代十次即可
+
+## B. Forcefield 
+
+## C. Missing Part [TDJ]
+枚举所有字符对(5*5对)用FFT求出所有旋转位置的匹配字符数，再枚举所有字符集对应关系(5!种)和旋转位置即可找出最大匹配数。复杂度$O(5^2*N*log{N}+5!*N*5)$
+
+## D. Handling a Spaceship 
+
+## E. Cryptographic Argument 
+
+## F. The Jedi Killer 
+
+## G. Youngling Tournament [TDJ]
+从最小的f值开始，下一个可能的winner的f值至少是当前的前缀和（同时也至少是当前f值的两倍（次小的f除外）），于是只需找出所有（$O(log{10^{12}})$个）可能的winner并check即可。实现时可以维护一个离散化的树状数组和一个multiset。
+
+## H. Garland Checking 
+
+## I. Equipment Assembling 
