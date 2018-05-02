@@ -1,86 +1,97 @@
-# Info
+Info
+====
 
 Date: 2017.10.18 17:50-22:50
 
 [Link](http://codeforces.com/gym/101550)
 
-# Solutions
+Solutions
+=========
 
-## A Artwork
+A Artwork
+---------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 倒着做，用并查集维护联通块个数。
 
-## B Bless You Autocorrect!
+B Bless You Autocorrect!
+------------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 对所有串建一棵$Trie$树，那么在每个点处可以花费$1$代价跳到$O(1)$个其他节点，从根出发$BFS$一次即可。
 
-## C Card Hand Sorting
+C Card Hand Sorting
+-------------------
 
 solved by sk, upsolved by none
 
-## D Daydreaming Stockbroker
+D Daydreaming Stockbroker
+-------------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 低进高出。
 
-## E Exponial
+E Exponial
+----------
 
 solved by quailty, upsolved by none
 
 根据降幂公式，要求出$f(n) \mod m$，只需求出$f(n-1) \mod \phi(m)$以及$[f(n-1) \geq \phi(m)]$，递归即可。
 
-## F Fleecing the Raffle
+F Fleecing the Raffle
+---------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 假设加入$x$张卡，那么中奖的概率是$\binom{x}{1}\binom{n}{p-1}/\binom{n+x}{p}$，枚举$x$到充分大即可，取$log$计算概率。
 
-## G Game Rank
+G Game Rank
+-----------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 按题意模拟即可，注意边界。
 
-## H Highest Tower
+H Highest Tower
+---------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 原问题即为从每个$pair$中选一个数，使得这些数互不相同且和最小。对于一个$(s,t)$，在$s$和$t$之间连一条边，那么相当于给每条边指定一个方向，表示选这个数，使得每个点的入度不超过$1$。分别考虑每个连通块，如果点数$n>$边数$m$那么就无解，但是数据保证有解，可以忽略这种情况，如果$n=m$那么所有点都要取，如果$n=m-1$那么可以不选值最大的点，证明是简单的。
 
-## I Interception
+I Interception
+--------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -92,24 +103,27 @@ quailty's solution
 
 现在仍然不能类似链上的问题进行贪心，因为不存在“最左的区间”，但是可以枚举这个区间然后贪心向右跳，跳一圈回来即可，由于每个区间的后继是唯一的，可以倍增优化跳的过程，构造方案只需从最优的起点开始再单步跳一遍。
 
-## J Jumbled Compass
+J Jumbled Compass
+-----------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 签到题。
 
-## K Keeping the Dogs Apart
+K Keeping the Dogs Apart
+------------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 一段一段模拟，然后对于两人分别走的一段路，用三分求最近距离。
 
-# Replay
+Replay
+======
