@@ -1,0 +1,116 @@
+---
+title: 2017 Multi-University Training Contest - Team 6
+---
+
+# A. String [jds]
+
+后缀数组处理前后缀，然后把每个串可以看做一个点，每个询问看做一个矩形，转化为求矩形中有多少点，最后用hash处理一下重叠的情况。
+
+# B. Mindis [wbr]
+
+首先，假如给定点为原点，或在圆周上，则可以直接输出答案。
+
+对于其他的情况，为了方便计算，首先将两个点进行旋转，旋转至$A$点坐标为$(r\cos\theta,r\sin\theta)$，$B$点坐标为$(r\cos\theta,-r\sin\theta)$，设所求$P$点坐标为$(R\cos\varphi,R\sin\varphi)$.
+
+那么有
+
+$$AP^{2}=(r\cos\theta-R\cos\varphi)^{2}+(r\sin\theta-R\sin\varphi)^{2}=R^{2}+r^{2}-2Rr\cos(\varphi-\theta)$$
+
+$$BP^{2}=(r\cos\theta-R\cos\varphi)^{2}+(r\sin\theta+R\sin\varphi)^{2}=R^{2}+r^{2}-2Rr\cos(\varphi+\theta)$$
+
+为了方便表达，记$A=R^{2}+r^{2},B=-2Rr$.
+
+通过观察可知$AP,BP$的长度为关于$\varphi$的函数，故记$f(\varphi)=|AP|+|BP|$.
+
+于是有
+
+$$f(\varphi)=\sqrt{A+B\cos(\varphi-\theta)}+\sqrt{A+B\cos(\varphi+\theta)}$$
+
+求导，极值点处有$f'(\varphi)=-\frac{B\sin(\varphi-\theta)}{2\sqrt{A+B\cos(\varphi-\theta)}}-\frac{B\sin(\varphi+\theta)}{2\sqrt{A+B\cos(\varphi+\theta)}}=0$.
+
+化简，交叉相乘再平方，得到下式：
+
+$$A\sin^{2}(\varphi-\theta)+B\sin^{2}(\varphi-\theta)\cos(\varphi+\theta)=A\sin^{2}(\varphi+\theta)+B\sin^{2}(\varphi+\theta)\cos(\varphi-\theta)$$
+
+将所有三角函数转化成余弦形式，有
+
+$$A-A\cos^{2}(\varphi-\theta)+B\cos(\varphi+\theta)-B\cos^{2}(\varphi-\theta)\cos(\varphi+\theta)=A-A\cos^{2}(\varphi+\theta)+B\cos(\varphi-\theta)-B\cos^{2}(\varphi+\theta)\cos(\varphi-\theta)$$
+
+将$A,B$各挪到一侧，有
+
+$$A(\cos(\varphi+\theta)+\cos(\varphi-\theta))(\cos(\varphi+\theta)-\cos(\varphi-\theta))=-B(\cos(\varphi+\theta)-\cos(\varphi-\theta))-B\cos(\varphi+\theta)\cos(\varphi-\theta)(\cos(\varphi+\theta)-\cos(\varphi-\theta))$$
+
+当$\cos(\varphi+\theta)-\cos(\varphi-\theta)=0$时，有显然的极值点$\varphi_{1}=0$.
+
+约掉此项，得到
+
+$$-A(\cos(\varphi+\theta)+\cos(\varphi-\theta))=B+B\cos(\varphi+\theta)\cos(\varphi-\theta)$$
+
+对等号左边使用和差化积公式，对等号右边使用和角公式展开，得到
+
+$$-2A\cos\varphi \cos\theta=B+B(\cos^{2}\varphi \cos^{2}\theta-\sin^{2}\varphi \sin^{2}\theta)$$
+
+将$\sin^{2}\varphi$换为$1-\cos^{2}\varphi$，化简得
+
+$$-2A\cos\varphi \cos\theta=B+B(\cos^{2}\varphi-\sin^{2}\theta)=B\cos^{2}\varphi+B\cos^{2}\theta$$
+
+于是我们得到了一个关于$\cos\varphi$的二次方程
+
+$$B\cos^{2}\varphi+2A\cos\theta \cos\varphi+B\cos^{2}\theta=0$$
+
+解得至多又两个极值点$\varphi_{2},\varphi_{3}$.
+
+因为极值点个数较少，只需要求出$min(f(\varphi_{1}),f(\varphi_{2}),f(\varphi_{3}))$即为最后的答案。
+
+时间复杂度$O(1)$.
+
+另一种几何做法也可以推导出类似的结论。参见[L老师的高中生操作](https://wiki-three-investigators.icpc-camp.org/2017%20Multi-University%20Training%20Contest%20-%20Team%206#b.-mindis)
+
+
+# C. Inversion [zmy]
+
+考虑不合法的个数一共只有$nlogn$个，所以扔到堆里面就行了。（实际上预先排个序就好了）。
+
+# D. Similarity
+
+# E. WrongStatement
+
+# F. Gumballs&Dungeons
+
+# G. GCDispower [zmy]
+
+固定好右端点，维护每个位置作为$(i,j,k)$三元组中$i$的贡献。考虑右端点向右移动时，增加了一个数$A_r$为三元组中$k$的位置。我们需要更新相应位置的答案。我们从右往左枚举$A_r$的倍数$A_x$，利用质因子容斥的方式，获得在$[x+1,r-1]$这个区间中与$A_x$的最大公约数恰好为$A_r$的数的个数$res$。那么其对左端点在$[1,x]$的询问的答案都增加$res$。我们用树状数组维护这个答案，只需要：
+```cpp
+add(1,res),add(x+1,-res);
+```
+
+# H. Kirinriki [jds]
+
+枚举中间轴，然后用两个指针单调O（n）的处理最长的答案即可。
+
+# I. Influence
+
+# J. Gameia [zmy]
+
+猜测Bob 必须在一开始将整个树分割成若干个大小为2的块。然后dp求下树的最大匹配即可。
+
+# K. Classes [wbr]
+
+容斥原理。可以解方程，但是这样显然很蠢。稍微手推一下就能推出每个位置的个数，判断一下就可以。
+
+# L. Typesetting [zmy]
+
+预处理好$f_{i,j}和g_{i,j}$，表示从第$i$个单词开始，连续$2^j$空行/照片行能放的单词个数。我们可以用二分法去求$f_{i,0},g_{i,0}$，再用倍增去求其他。每次询问时分类讨论，先看前$x-1$能放的单词个数，再看接下来$h$能放的单词个数，最后再看还需要多少行才能放满单词。
+
+
+# 总结反思
+
+###replay
+
+开场看题比较慢，zmy 想到一个03的双 log 的做法，一开始有点犹豫。后来写了一波1A了。然后wbr A了11 。不久jds想到了08的平方的做法。然后写了下，zmy帮忙出了几组简单的数据，结果jds还是WA了。然后zmy出了几个强数据卡掉了jds，jds调试了一会儿然后A了。过了大概半个小时，jds想到了一个01的做法，准备开始写。zmy和wbr开始想10。大约半个小时以后，wbr猜了一个10的结论，zmy推不出反例，觉得比较合理，换下jds，写了一波1A了。jds继续写01，又写了大概半个小时写完了自己的那部分。然后zmy接手写了另一部分。测了下感觉没什么问题就交了。WA了一发。然后jds意识到忘记了前缀后缀不能重合这一限制。zmy和jds继续思考01的做法。一开始想偏了，想通过长度来进行限制，本来已经是排序+树状数组维护二维前缀和，再加一维时间肯定过不去，而且巨难写。后来zmy意识到重复的情况是线性个的，hash一波就可以了。jds继续写01 。调了很久。中途zmy想到了一个07的错误解法。写了一波发现看错题了。jds终于写好了01，交上去由于hash名字重复，CE了一波。改掉之后AC了。然后还剩1个小时。zmy和wbr搞02 。wbr推出来02的一个公式写好后怎么也没过样例，没看出来式子有问题。比赛结束打出GG。
+
+**zmy** 前期还是比较顺的。但是01写的很慢，而且花了很多的时间去想07但是没有结果。从赛后的角度看，应该直接去和wbr搞02或者去做12效果好一些。
+
+**jds** 01一共有280行，写得时候一些细节上考虑得不够清晰，导致写得还是慢了一点。
+
+**wbr** 莽了个结论出来，但是最后的数学题莫名其妙错了。中期浪费了许多时间想07，看了12之后直接选择放弃错过了机会。
