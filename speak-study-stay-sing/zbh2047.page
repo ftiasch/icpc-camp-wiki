@@ -1,7 +1,8 @@
 Some valueable upsolved problems are shown in the following chart:
 
-| Problem    | Source     | Tags |
-|:--------|:-------- |:------- |
-|Diversity and Variance| CCPC Qinhuangdao 2017 K | Prefix suffix; Set |
-|Highway Hassle| BAPC 2014 H | Dijkstra |
+  Problem                  Source                    Tags
+  ------------------------ ------------------------- --------------------
+  Diversity and Variance   CCPC Qinhuangdao 2017 K   Prefix suffix; Set
+  Highway Hassle           BAPC 2014 H               Dijkstra
+
 
