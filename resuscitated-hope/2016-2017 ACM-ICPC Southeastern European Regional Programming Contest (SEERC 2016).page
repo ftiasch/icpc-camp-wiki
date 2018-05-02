@@ -1,0 +1,37 @@
+# A. Three Squares  
+
+# B. Favorite music
+
+# C. Castle
+
+# D. Reading Digits 
+
+# E. Exam  
+
+# F. Letters[Cabinfever]
+Cabinfever:找规律。用$\sum_{i=1}i*26^i$去找是长度为k的串，然后%k，找是第几位，然后每次消去第一个字母，得到一个新的子问题。
+
+# G. Pokemons 
+
+# H. Pub crawl[Cabinfever]
+Cabinfever：显然我们每次都走最外圈，答案肯定为n，然后像凸包一样搞一搞就好
+
+# I. Cubes [ConnorZhong补]
+ConnorZhong：注意到这个 Cube 其实很大啊，深度可能不会特别深啊，所以搜一蛤，多加一点剪枝，好像就过了啊。
+
+好像栽在爆搜加剪枝这种题的次数有点多啊，记得CCPC杭州的E题？
+
+# J. Marathon [ConnorZhong]
+ConnorZhong：链表维护前驱和后继，用优先队列来维护碰撞时间。每次合并更新细节比较多，注意因为时间是浮点，需要考虑同时碰撞的情况（eps），先合并位置靠后的即可。
+
+# K. Cutting
+
+# Summary
+**比赛记录：** 和TAT一起做的一套题，最后罚时雪崩被怒踩。Zjc这个智障上来就冲着J题去了，一去不复返了。jyb和hzh双打比赛。卡题很严重，全程罚时爆表。比赛过程中一度每个人手里捏一个题，还好最后各凭本事都过了，要是在正式比赛中稍不留神很危险的。除zjc外大家都还可以？（hzh中途跑去看DAC直播了好像很不应该啊？
+UPD: ???I好像就是个脑残搜搜搜啊？
+
+**ConnorZhong：** 开场看着J觉得可做，头也不回就冲过去了，这是很不理智的，在没有领榜的位置和水平时还是应该先考虑跟一下榜？还好最后J题过了，要不这波可能就彻底没我了？后来想想J题也不是很复杂，比赛中脑子不太清醒，可能应该多交流一下，多冷静冷静？码力依旧太弱，任重道远啊。
+
+**Cabinfever: ** F题智障了半天。。H测了样例信仰一交，结果GG
+
+**YOULLNEVERWA:**
