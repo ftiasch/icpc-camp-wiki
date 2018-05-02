@@ -1,4 +1,5 @@
-# K短路
+K短路
+=====
 
 先求一颗到终点$t$的最短路径树，定义一条边$e$的权值$\lambda_e=l_e+d_{ed,t}-d_{st,t}$，表示要绕的长度。第一次的绕道距离显然是0。
 
@@ -12,7 +13,7 @@
 
 就是每个点附带的堆合并的时候，我们要保留合并前的两个堆，所以需要用到可持久化。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 150005
 #define M 300005
@@ -20,95 +21,97 @@
 using namespace std;
 int F[N],FF[N];
 namespace Left_Tree{
-	struct P{int l,r,h,v,x,y;}Tr[N*40];
-	int RT[N],num;
-	int New(P o){Tr[++num]=o;return num;}
-	void start(){num=0;Tr[0].l=Tr[0].r=Tr[0].h=0;Tr[0].v=1e9;}
-	int mg(int x,int y){
-		if(!x)return y;
-		if(Tr[x].v>Tr[y].v)swap(x,y);
-		int o=New(Tr[x]);
-		Tr[o].r=mg(Tr[o].r,y);
-		if(Tr[Tr[o].l].h<Tr[Tr[o].r].h)swap(Tr[o].l,Tr[o].r);
-		Tr[o].h=Tr[Tr[o].r].h+1;
-		return o;	
-	}
-	void add(int&k,int v,int x,int y){
-		int o=New(Tr[0]);
-		Tr[o].v=v;Tr[o].x=x;Tr[o].y=y;
-		k=mg(k,o);	
-	}
+    struct P{int l,r,h,v,x,y;}Tr[N*40];
+    int RT[N],num;
+    int New(P o){Tr[++num]=o;return num;}
+    void start(){num=0;Tr[0].l=Tr[0].r=Tr[0].h=0;Tr[0].v=1e9;}
+    int mg(int x,int y){
+        if(!x)return y;
+        if(Tr[x].v>Tr[y].v)swap(x,y);
+        int o=New(Tr[x]);
+        Tr[o].r=mg(Tr[o].r,y);
+        if(Tr[Tr[o].l].h<Tr[Tr[o].r].h)swap(Tr[o].l,Tr[o].r);
+        Tr[o].h=Tr[Tr[o].r].h+1;
+        return o;   
+    }
+    void add(int&k,int v,int x,int y){
+        int o=New(Tr[0]);
+        Tr[o].v=v;Tr[o].x=x;Tr[o].y=y;
+        k=mg(k,o);  
+    }
 }
 using namespace Left_Tree;
 struct SPFA{
-	int h,t,tot,q[N],fir[N],la[M],ne[M],va[M],d[N];bool v[N];
-	void in(){tot=0;CL(fir);}
-	void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
-	void work(int S,int n){
-		int i,x,y;
-		for(int i=1;i<=n;i++)d[i]=1e9,v[i]=0;
-		for(h=d[q[t=1]=S]=0;h^t;)
-			for(i=fir[x=q[h=h%n+1]],v[x]=0;i;i=ne[i])
-				if(d[x]+va[i]<d[y=la[i]])if(d[y]=d[x]+va[i],F[y]=x,FF[y]=i,!v[y])v[q[t=t%n+1]=y]=1;
-	}
+    int h,t,tot,q[N],fir[N],la[M],ne[M],va[M],d[N];bool v[N];
+    void in(){tot=0;CL(fir);}
+    void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
+    void work(int S,int n){
+        int i,x,y;
+        for(int i=1;i<=n;i++)d[i]=1e9,v[i]=0;
+        for(h=d[q[t=1]=S]=0;h^t;)
+            for(i=fir[x=q[h=h%n+1]],v[x]=0;i;i=ne[i])
+                if(d[x]+va[i]<d[y=la[i]])if(d[y]=d[x]+va[i],F[y]=x,FF[y]=i,!v[y])v[q[t=t%n+1]=y]=1;
+    }
 }A;
 struct Kshort{
-	int tot,n,m,S,T,k,fir[N],va[M],la[M],ne[M];bool v[N];
-	struct P{
-		int x,y,z;P(){}
-		P(int x,int y,int z):x(x),y(y),z(z){}
-		bool operator<(P a)const{return a.z<z;}
-	};
-	priority_queue<P>Q;
-	void in(){tot=0;CL(fir);}
-	void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
-	void init(){
-		int i,x,y,z;
-		in();A.in();start();
-		scanf("%d%d",&n,&m);
-		for(i=1;i<=m;i++)scanf("%d%d%d",&x,&y,&z),A.ins(y,x,z),ins(x,y,z);
-		scanf("%d%d%d",&S,&T,&k);if(S==T)k++;
-		A.work(T,n);
-	}
-	void dfs(int x){
-		if(v[x])return;v[x]=1;
-		if(F[x])RT[x]=RT[F[x]];
-		for(int i=fir[x],y;i;i=ne[i])
-			if(y=la[i],A.d[y]!=1e9&&FF[x]!=i)add(RT[x],A.d[y]-A.d[x]+va[i],x,y);
-		for(int i=A.fir[x];i;i=A.ne[i])if(F[A.la[i]]==x)dfs(A.la[i]);
-	}
-	int work(){
-		int i,x;
-		dfs(T);
-		if(!--k)return A.d[S]==1e9?-1:A.d[S]; 
-		P u,w;
-		if(RT[S])Q.push(P(S,RT[S],A.d[S]+Tr[RT[S]].v));
-		for(;k--;){
-			if(Q.empty())return -1;
-			u=Q.top();Q.pop();
-			if(x=mg(Tr[u.y].l,Tr[u.y].r))Q.push(P(u.x,x,Tr[x].v-Tr[u.y].v+u.z));
-			if(RT[x=Tr[u.y].y])Q.push(P(x,RT[x],u.z+Tr[RT[x]].v));
-		}
-		return u.z;
-	}
+    int tot,n,m,S,T,k,fir[N],va[M],la[M],ne[M];bool v[N];
+    struct P{
+        int x,y,z;P(){}
+        P(int x,int y,int z):x(x),y(y),z(z){}
+        bool operator<(P a)const{return a.z<z;}
+    };
+    priority_queue<P>Q;
+    void in(){tot=0;CL(fir);}
+    void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
+    void init(){
+        int i,x,y,z;
+        in();A.in();start();
+        scanf("%d%d",&n,&m);
+        for(i=1;i<=m;i++)scanf("%d%d%d",&x,&y,&z),A.ins(y,x,z),ins(x,y,z);
+        scanf("%d%d%d",&S,&T,&k);if(S==T)k++;
+        A.work(T,n);
+    }
+    void dfs(int x){
+        if(v[x])return;v[x]=1;
+        if(F[x])RT[x]=RT[F[x]];
+        for(int i=fir[x],y;i;i=ne[i])
+            if(y=la[i],A.d[y]!=1e9&&FF[x]!=i)add(RT[x],A.d[y]-A.d[x]+va[i],x,y);
+        for(int i=A.fir[x];i;i=A.ne[i])if(F[A.la[i]]==x)dfs(A.la[i]);
+    }
+    int work(){
+        int i,x;
+        dfs(T);
+        if(!--k)return A.d[S]==1e9?-1:A.d[S]; 
+        P u,w;
+        if(RT[S])Q.push(P(S,RT[S],A.d[S]+Tr[RT[S]].v));
+        for(;k--;){
+            if(Q.empty())return -1;
+            u=Q.top();Q.pop();
+            if(x=mg(Tr[u.y].l,Tr[u.y].r))Q.push(P(u.x,x,Tr[x].v-Tr[u.y].v+u.z));
+            if(RT[x=Tr[u.y].y])Q.push(P(x,RT[x],u.z+Tr[RT[x]].v));
+        }
+        return u.z;
+    }
 }G;
 int main(){
-	G.init();
-	printf("%d\n",G.work());
+    G.init();
+    printf("%d\n",G.work());
 }
-~~~
+```
 
-# 消圈算法
+消圈算法
+========
 
 先求一个最大流，然后不断用DFS找负环消除负费用圈，最后得到最大流
 
-# 最小回文分割次数
+最小回文分割次数
+================
 
 https://arxiv.org/pdf/1403.2431.pdf
 
 http://codeforces.com/blog/entry/19193
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1111111
 #define fr(i,n) for(int i=1;i<=n;i++)
@@ -116,38 +119,39 @@ using namespace std;
 int n,i,p,id,L[N],F[N],c[N][26],df[N],sk[N],f[N],_f[N],pre[N];
 char s[N];
 void add(int z,int n){
-	for(;s[n-L[p]-1]!=s[n];p=F[p]);
-	if(!c[p][z]){
-		int q=++id,k=F[p];
-		L[q]=L[p]+2;
-		for(;s[n-L[k]-1]!=s[n];k=F[k]);
-		F[q]=c[k][z];c[p][z]=q;
-		df[q]=L[q]-L[F[q]];
-		sk[q]=(df[q]==df[F[q]]?sk[F[q]]:F[q]);
-	}
-	p=c[p][z];
+    for(;s[n-L[p]-1]!=s[n];p=F[p]);
+    if(!c[p][z]){
+        int q=++id,k=F[p];
+        L[q]=L[p]+2;
+        for(;s[n-L[k]-1]!=s[n];k=F[k]);
+        F[q]=c[k][z];c[p][z]=q;
+        df[q]=L[q]-L[F[q]];
+        sk[q]=(df[q]==df[F[q]]?sk[F[q]]:F[q]);
+    }
+    p=c[p][z];
 }
 int main(){
-	scanf("%s",s+1);n=strlen(s+1);
-	id=F[0]=1;L[1]=-1;_f[0]=1; 
-	fr(i,n)f[i]=1e9;
-	fr(i,n){
-		add(s[i]-'a',i);
-		for(int x=p;x;x=sk[x]){
-			_f[x]=i-L[sk[x]]-df[x];
-			if(df[F[x]]==df[x]&&f[_f[x]]>f[_f[F[x]]])_f[x]=_f[F[x]];
-			if(f[i]>f[_f[x]]+1)f[i]=f[_f[x]]+1,pre[i]=_f[x];
-		}
-	}
-	printf("%d\n",f[n]==1e9?-1:f[n]);
+    scanf("%s",s+1);n=strlen(s+1);
+    id=F[0]=1;L[1]=-1;_f[0]=1; 
+    fr(i,n)f[i]=1e9;
+    fr(i,n){
+        add(s[i]-'a',i);
+        for(int x=p;x;x=sk[x]){
+            _f[x]=i-L[sk[x]]-df[x];
+            if(df[F[x]]==df[x]&&f[_f[x]]>f[_f[F[x]]])_f[x]=_f[F[x]];
+            if(f[i]>f[_f[x]]+1)f[i]=f[_f[x]]+1,pre[i]=_f[x];
+        }
+    }
+    printf("%d\n",f[n]==1e9?-1:f[n]);
 }
-~~~
+```
 
-# 可持久化平衡树
+可持久化平衡树
+==============
 
 Split和Merge时复制新建的点完成可持久化
 
-~~~{.cpp}
+``` {.cpp}
 // luogu-judger-enable-o2
 #include<bits/stdc++.h>
 #define N 511111
@@ -157,99 +161,99 @@ using namespace std;
 int id,pre,suc,an,T[N],sz[M],L[M],R[M],v[M];
 void ps(int x){sz[x]=sz[L[x]]+sz[R[x]]+1;}
 int Copy(int x){
-	id++;sz[id]=sz[x];L[id]=L[x];R[id]=R[x];
-	v[id]=v[x];return id;
+    id++;sz[id]=sz[x];L[id]=L[x];R[id]=R[x];
+    v[id]=v[x];return id;
 }
 int newv(int z){
-	id++;v[id]=z;sz[id]=1;return id;
+    id++;v[id]=z;sz[id]=1;return id;
 }
 int RD(){
-	return (rand()%32768)*32768+(rand()%32768);
+    return (rand()%32768)*32768+(rand()%32768);
 }
 int merge(int x,int y){
-	if(!x||!y)return x+y;int z;
-	int o=RD()%(sz[x]+sz[y]);
-	if(o<sz[x])z=Copy(y),L[z]=merge(x,L[y]);
-	else z=Copy(x),R[z]=merge(R[x],y);
-	ps(z);return z;
+    if(!x||!y)return x+y;int z;
+    int o=RD()%(sz[x]+sz[y]);
+    if(o<sz[x])z=Copy(y),L[z]=merge(x,L[y]);
+    else z=Copy(x),R[z]=merge(R[x],y);
+    ps(z);return z;
 }
 void split(int x,int&y,int&z,int k){
-	y=z=0;if(!x)return;
-	if(sz[L[x]]>=k)z=Copy(x),split(L[x],y,L[z],k),ps(z);
-	else y=Copy(x),split(R[x],R[y],z,k-sz[L[x]]-1),ps(y);
+    y=z=0;if(!x)return;
+    if(sz[L[x]]>=k)z=Copy(x),split(L[x],y,L[z],k),ps(z);
+    else y=Copy(x),split(R[x],R[y],z,k-sz[L[x]]-1),ps(y);
 }
 void getrk(int x,int z){
-	if(!x)return;
-	if(z<=v[x])getrk(L[x],z);else
-	an+=sz[L[x]]+1,getrk(R[x],z);
+    if(!x)return;
+    if(z<=v[x])getrk(L[x],z);else
+    an+=sz[L[x]]+1,getrk(R[x],z);
 }
 int calrk(int x,int z){
-	an=1;
-	getrk(x,z);
-	return an;
+    an=1;
+    getrk(x,z);
+    return an;
 }
 int kth(int x,int z){
-	if(z==sz[L[x]]+1)return v[x];
-	return z<=sz[L[x]]?kth(L[x],z):kth(R[x],z-sz[L[x]]-1);
+    if(z==sz[L[x]]+1)return v[x];
+    return z<=sz[L[x]]?kth(L[x],z):kth(R[x],z-sz[L[x]]-1);
 }
 
 int ins(int nv,int z){
-	int A,B,rk=calrk(nv,z);
-	split(nv,A,B,rk-1);
-	return merge(merge(A,newv(z)),B);
+    int A,B,rk=calrk(nv,z);
+    split(nv,A,B,rk-1);
+    return merge(merge(A,newv(z)),B);
 }
 int del(int nv,int z){
-	int A,B,C,D,rk=calrk(nv,z);
-	split(nv,A,C,rk-1);
-	split(C,D,B,1);
-	if(v[D]!=z)return nv;
-	return merge(A,B);
+    int A,B,C,D,rk=calrk(nv,z);
+    split(nv,A,C,rk-1);
+    split(C,D,B,1);
+    if(v[D]!=z)return nv;
+    return merge(A,B);
 }
 void fdpre(int x,int z){
-	if(!x)return;
-	if(v[x]<=z){
-		pre=max(pre,v[x]);
-		fdpre(R[x],z);
-	}else fdpre(L[x],z);
+    if(!x)return;
+    if(v[x]<=z){
+        pre=max(pre,v[x]);
+        fdpre(R[x],z);
+    }else fdpre(L[x],z);
 }
 void fdsuc(int x,int z){
-	if(!x)return;
-	if(v[x]>=z){
-		suc=min(suc,v[x]);
-		fdsuc(L[x],z);
-	}else fdsuc(R[x],z);
+    if(!x)return;
+    if(v[x]>=z){
+        suc=min(suc,v[x]);
+        fdsuc(L[x],z);
+    }else fdsuc(R[x],z);
 }
 int main(){
-	srand(23333);
-	int n,la,op,x;
-	rd(n);
-	for(int i=1;i<=n;i++){
-		rd(la);rd(op);rd(x);
-		if(op==1){//add x
-			T[i]=ins(T[la],x);
-		}
-		if(op==2){//del x  meiyougg
-			T[i]=del(T[la],x);
-		}
-		if(op==3){//fd rank
-			T[i]=T[la];
-			printf("%d\n",calrk(T[i],x));
-		}
-		if(op==4){//fd rkx=?
-			T[i]=T[la];
-			printf("%d\n",kth(T[i],x));
-		}
-		if(op==5){//fd pre
-			T[i]=T[la];pre=-2147483647;
-			fdpre(T[i],x-1);
-			printf("%d\n",pre);
-		}
-		if(op==6){//fd suc
-			T[i]=T[la];suc=2147483647;
-			fdsuc(T[i],x+1);
-			printf("%d\n",suc);
-			
-		}
-	}
+    srand(23333);
+    int n,la,op,x;
+    rd(n);
+    for(int i=1;i<=n;i++){
+        rd(la);rd(op);rd(x);
+        if(op==1){//add x
+            T[i]=ins(T[la],x);
+        }
+        if(op==2){//del x  meiyougg
+            T[i]=del(T[la],x);
+        }
+        if(op==3){//fd rank
+            T[i]=T[la];
+            printf("%d\n",calrk(T[i],x));
+        }
+        if(op==4){//fd rkx=?
+            T[i]=T[la];
+            printf("%d\n",kth(T[i],x));
+        }
+        if(op==5){//fd pre
+            T[i]=T[la];pre=-2147483647;
+            fdpre(T[i],x-1);
+            printf("%d\n",pre);
+        }
+        if(op==6){//fd suc
+            T[i]=T[la];suc=2147483647;
+            fdsuc(T[i],x+1);
+            printf("%d\n",suc);
+            
+        }
+    }
 }
-~~~
+```
