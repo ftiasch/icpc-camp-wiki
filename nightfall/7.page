@@ -1,0 +1,469 @@
+# 斯坦那树
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 62
+#define M 2222
+#define inf 1e9
+using namespace std;
+int T,tot,n,m,k,i,j,w,S,h,t,x,y,z,E,an,q[N],f[N][M],fir[N],ne[M],va[M],la[M];
+bool v[N];
+void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
+int main(){
+	scanf("%d%d%d",&n,&m,&k);E=(1<<k)-1;
+	for(i=1;i<=n;i++)for(j=0;j<=E;j++)f[i][j]=inf;
+	for(i=1;i<=m;i++)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
+	for(i=1;i<=k;i++)f[i][1<<(i-1)]=0;//默认1到k为要联通的点
+	for(w=1;w<=E;w++){
+		for(h=t=0,i=1;i<=n;i++)
+			for(S=w&(w-1);S;S=w&(S-1))
+				f[i][w]=min(f[i][w],f[i][S]+f[i][w-S]);
+		for(i=1;i<=n;i++)if(f[i][w]<inf)q[++t]=i,v[i]=1;
+		for(;h^t;)
+			for(v[x=q[h=h%n+1]]=0,i=fir[x];i;i=ne[i])
+				if(f[y=la[i]][w]>f[x][w]+va[i]){
+					f[y][w]=f[x][w]+va[i];
+					if(!v[y])v[q[t=t%n+1]=y]=1;
+				}
+	}
+	for(an=inf,i=1;i<=n;i++)an=min(an,f[i][E]);
+	printf("%d",an);
+}
+~~~
+
+# 稳定婚姻问题
+
+    有n位男士和n位女士，每个人都对每个异性有一个不同的喜欢程度，现在使得每人恰好有一个异性配偶。如果男士u和女士v不是配偶但喜欢对方的程度都大于喜欢各自当前的配偶，则称他们为一个不稳定对。稳定婚姻问题是为了找出一个不含不稳定对的方案。
+
+    稳定婚姻问题的经典算法为求婚-拒绝算法，即男士按自己喜欢程度从高到底依次向每位女士求婚，直到有一个接受他。女士遇到比当前配偶更差的男士时拒绝他，遇到更喜欢的男士时就接受他，并抛弃以前的配偶。被抛弃的男士继续按照列表向剩下的女士依次求婚，直到所有人都有配偶。如果算法一定能得到一个匹配，而且这个匹配一定是稳定的。时间复杂度O(n^2)。
+
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 505
+#define CL(a) memset(a,0,sizeof(a))
+using namespace std;
+int n,i,j,x,a[N][N],b[N][N],la[N],lb[N],V[N];
+bool ff;
+map<string,int>mp,pm;
+int main(){
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)for(j=1;j<=n;j++)scanf("%d",&a[i][j]);//男生对女生喜欢程度的排名
+	for(i=1;i<=n;i++)for(j=1;j<=n;j++)scanf("%d",&x),b[i][x]=n-j;//女生对每个男生的排名转化成喜欢程度
+	for(;;){
+		for(ff=0,i=1;i<=n;i++)if(!la[i]){//未匹配的男生
+			x=a[i][++V[i]];ff=1;
+			if(!lb[x]||b[x][lb[x]]<b[x][i])la[lb[x]]=0,lb[x]=i,la[i]=x;//对女生来说，如果更好，则替换
+		}
+		if(!ff)break;
+	}
+	for(i=1;i<=n;i++)printf("%d %d\n",i,la[i]);
+}
+~~~
+
+# 最小割求割集
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 555
+#define M 44444
+#define inf 1e9
+#define LL long long
+int n,m,i,x,y,z,S,T,t,q[N];
+bool vv[N];
+using namespace std;
+struct MaxFlow{
+	int tot,w,fir[N],cur[N],pre[N],d[N],nb[N],va[M],la[M],ne[M];
+	#define CL(a) memset(a,0,sizeof a)
+	void in(){tot=1;CL(fir);CL(d);CL(nb);CL(pre);}
+	void ins(int x,int y,int z){
+		la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;
+		la[++tot]=x;ne[tot]=fir[y];fir[y]=tot;va[tot]=0;
+	}
+	int flow(int S,int T,int n){
+		int i,u, V,fl=0;
+		for(i=1;i<=n;i++)cur[i]=fir[i];
+		for(u=S,nb[0]=n;d[S]<n;){
+			if(u==T){
+				for(V=1e9,i=S;i!=T;i=la[cur[i]])
+					if(va[cur[i]]<V)V=va[cur[u=i]];
+				for(fl+=V,i=S;i!=T;i=la[cur[i]])
+					va[cur[i]]-=V,va[cur[i]^1]+=V;
+			}
+			for(i=cur[u];i;i=ne[i])
+				if(va[i]&&d[la[i]]+1==d[u])break;
+			if(i)cur[u]=i,pre[la[i]]=u,u=la[i];else{
+				if(!--nb[d[u]])break;
+				for(i=cur[u]=fir[u],w=T;i;i=ne[i])
+					if(d[la[i]]<w&&va[i])w=d[la[i]];
+				++nb[d[u]=w+1];
+				if(u!=S)u=pre[u];
+			}
+		}
+		return fl;
+	}
+	void dfs(int x){
+		if(vv[x])return;vv[x]=1;
+		for(int i=fir[x];i;i=ne[i])if(va[i])dfs(la[i]);
+	}
+}G;
+int main(){
+	scanf("%d%d",&n,&m);
+	G.in();S=1;T=n;
+	for(i=1;i<=m;i++)scanf("%d%d%d",&x,&y,&z),G.ins(x,y,z);
+	printf("%d ",G.flow(S,T,n));
+	G.dfs(S);
+	for(i=1;i<=n;i++)if(vv[i])q[++t]=i;
+	sort(q+1,q+t+1);
+	printf("%d\n",t);
+	for(i=1;i<=t;i++)printf("%d%c",q[i],i==t?'\n':' ');
+}
+~~~
+# 有上下界网络流
+
+## 无源汇有上下界可行流
+
+    进行再构造让每条边的下界为0,来方便处理。每条边有一个上界容量C和下界容量B，我们让下界变为0,上界变为C-B，但这样做流量不守恒。建立超级源点SS和超级汇点TT，开设数组du[]来记录每个节点的流量情况，du[i]=∑B(j,i)-∑B(i,j)，添加一些附加弧。当du[i]>0时，从SS到i连一条流量为du[i]的边;当du[i]<0的时候，从i到TT连一条流量为-du[i]的边。最后对(SS,TT)求一次最大流即可，当所有附加边全部满流时(即maxflow==所有du[]>0之和)时有可行解。
+
+
+## 有源汇有上下界最大可行流
+
+    建立超级源点SS和超级汇点TT，首先判断是否存在可行流，用无源汇有上下界可行流的方法判断。增设一条从T到S没有下界容量为无穷的边，那么原图就变成了一个无源汇有上下界可行流问题。同样地建图后，对(SS,TT)进行一次最大流，判断是否有可行解。如果有可行解，删除超级源点SS和超级汇点TT，并删去T到S的这条边，再对(S,T)进行一次最大流，此时得到的maxflow即为有源汇有上下界最大可行流。
+
+## 有源汇有上下界最小可行流
+
+    建立超级源点SS和超级汇点TT，和无源汇有上下界可行流一样新增一些边，然后从SS到TT跑最大流。接着加上T-->S，容量上限为无穷大的边，再从SS到TT跑一遍最大流。如果所有新增边都是满的，则存在可行流，此时T到S这条边的边权即为最小可行流。
+
+# 半平面交
+
+输入若干个直线，求他们左手方向的交
+
+~~~{.cpp}
+P line_intersect(L a,L b){//直线相交
+	double s1=cj(a.t-a.s,b.s-a.s),s2=cj(a.t-a.s,b.t-a.s);
+	return (b.s*s2-b.t*s1)/(s2-s1);
+}
+bool turn_left(P a,P b,P c){return sgn(cj(b-a,c-a))>=0;}
+bool turn_right(P a,P b,P c){return sgn(cj(b-a,c-a))<=0;}
+bool turn_left(L l,P p){return turn_left(l.s,l.t,p);}
+vector<P> half_plane_intersect(vector<L>p){//半平面交，返回向量左手边的区域
+	int n=(int)p.size(),i;
+	typedef pair<double,L>polar;
+	vector<polar>g;
+	g.resize(n);
+	for(int i=0;i<n;i++){
+		P v=p[i].t-p[i].s;
+		g[i]=make_pair(atan2(v.y,v.x),p[i]);
+	}
+	sort(g.begin(),g.end(),[](polar a,polar b){
+		if(cmp(a.first,b.first)==0)return sgn(cj(a.second.t-a.second.s,b.second.t-a.second.s))<0;		
+		else return cmp(a.first,b.first)<0;
+	});
+	p.resize(unique(g.begin(),g.end(),[](polar a,polar b){return cmp(a.first,b.first)==0;})-g.begin());
+	for(int i=0;i<n;i++)p[i]=g[i].second;
+	int h=0,t=-1;
+	vector<L>q;
+	for(int i=0;i<n;i++){
+		for(;h<t&&!turn_left(p[i],line_intersect(q[t-1],q[t]));)t--,q.pop_back();
+		for(;h<t&&!turn_left(p[i],line_intersect(q[h],q[h+1]));)h++;
+		t++;q.push_back(p[i]);
+	}
+	for(;t-h>1&&!turn_left(q[h],line_intersect(q[t-1],q[t]));t--)q.pop_back();
+	for(;t-h>1&&!turn_left(q[t],line_intersect(q[h],q[h+1]));)h++;
+	if(t-h<2)return vector<P>();
+	vector<P>ans;
+	ans.resize(q.size());
+	for(i=0;i<(int)q.size();i++)
+		ans[i]=line_intersect(q[i],q[(i+1)%q.size()]);
+	return ans;
+}
+~~~
+
+# 无向图最小割
+
+##无向图全局最小割
+
+每次任选两个点做一下最小割，更新一下答案，再把这两个点缩起来，直到只剩下一个点为止，就可以求出全局最小割。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 505
+#define inf 1e9
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+int n,m,d[N],e[N][N];bool v[N],g[N];
+int get(int&s,int&t){
+	CL(d);CL(v);
+	int i,j,k,an,mx;
+	for(i=1;i<=n;i++){
+		k=-1;mx=-1;
+		for(j=1;j<=n;j++)if(!g[j]&&!v[j]&&d[j]>mx)k=j,mx=d[j];
+		if(k==-1)return an;
+		s=t;t=k;an=mx;v[k]=1;
+		for(j=1;j<=n;j++)if(!g[j]&&!v[j])d[j]+=e[k][j];
+	}
+	return an;
+}
+int main(){
+	int ans,i,j,s,t,x,y,z;
+	scanf("%d%d",&n,&m);ans=inf;
+	for(i=1;i<=m;i++)scanf("%d%d%d",&x,&y,&z),e[x][y]=(e[y][x]+=z);
+	for(i=1;i<n;i++){
+		ans=min(ans,get(s,t));g[t]=1;
+		if(!ans)break;
+		for(j=1;j<=n;j++)if(!g[j])e[s][j]=(e[j][s]+=e[j][t]);
+	}
+	printf("%d\n",ans);
+}
+~~~
+
+## 无向图最小割树
+
+不知为何套用结构T了，只好不套用结构
+
+~~~{.cpp}
+int a[N],A[N][N],d[N],fir[N],pre[N],nb[N],la[M],va[M],ne[M],cur[N],q[N];bool v[N];
+void ins(int x,int y,int z){
+    la[++tot]=y;ne[tot]=fir[x];va[tot]=z;fir[x]=tot;
+    la[++tot]=x;ne[tot]=fir[y];va[tot]=0;fir[y]=tot;
+}
+void dfs(int x){v[x]=1;for(int i=fir[x];i;i=ne[i])if(va[i]&&!v[la[i]])dfs(la[i]);}
+void fz(int l,int r){
+    int i,fl=0,p,u,S,T,L,R;
+    if(l==r)return;u=S=a[l];T=a[r];fl=0;
+    for(i=2;i<=tot;i+=4)va[i+2]=va[i]=(va[i]+va[i+1]+va[i+2]+va[i+3])/2,va[i+1]=va[i+3]=0;
+    for(i=1;i<=n;i++)cur[i]=fir[i],nb[i]=0,d[i]=0,pre[i]=0,v[i]=0;
+    for(nb[0]=n;d[S]<n;){
+        if(u==T){
+            for(p=1e9,i=S;i!=T;i=la[cur[i]])if(va[cur[i]]<p)p=va[cur[u=i]];
+            for(fl+=p,i=S;i!=T;i=la[cur[i]])va[cur[i]]-=p,va[cur[i]^1]+=p;
+        }
+        for(i=cur[u];i;i=ne[i])if(va[i]&&d[la[i]]+1==d[u])break;
+        if(i)cur[u]=i,pre[la[i]]=u,u=la[i];else{
+            if(0==--nb[d[u]])break;
+            for(i=cur[u]=fir[u],p=n;i;i=ne[i])if(d[la[i]]<p&&va[i])p=d[la[i]];
+            ++nb[d[u]=p+1];if(u!=S)u=pre[u];
+        }
+    }
+	dfs(S);//找割集合
+	L=l,R=r;
+	//ADD(S,T,fl);//在最小割树中建边
+    for(i=1;i<=n;i++)if(v[i])for(j=1;j<=n;j++)if(!v[j])A[i][j]=A[j][i]=min(A[i][j],fl);//i到j的最小割
+    for(i=l;i<=r;i++)if(v[a[i]])q[L++]=a[i];else q[R--]=a[i];
+    for(i=l;i<=r;i++)a[i]=q[i];
+	fz(l,L-1);fz(R+1,r);
+}
+~~~
+
+# KM算法
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define inf 1e9//不存在的边权开到-n*(|maxv|+1),inf为3n*(|maxv|+1)
+#define N 404
+#define CL(a,b) memset(a,b,sizeof a)
+using namespace std;long long ans;
+int n,py,m,x,y,i,j,d,p,lx[N],ly[N],w[N][N],lk[N],slk[N],pre[N];
+bool vy[N];
+int main(){
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)for(j=1;j<=n;j++)scanf("%d",&w[i][j]),lx[i]=max(lx[i],w[i][j]);
+	for(i=1;i<=n;i++){
+		for(j=1;j<=n;j++)slk[j]=inf,vy[j]=0;
+		for(lk[py=0]=i;lk[py];py=p){
+			vy[py]=1;d=inf;x=lk[py];
+			for(y=1;y<=n;y++)if(!vy[y]){
+				if(lx[x]+ly[y]-w[x][y]<slk[y])slk[y]=lx[x]+ly[y]-w[x][y],pre[y]=py;
+				if(slk[y]<d) d=slk[y],p=y;
+			}
+			for(y=0;y<=n;y++)if(vy[y])lx[lk[y]]-=d,ly[y]+=d;else slk[y]-=d;
+		}
+		for(;py;py=pre[py])lk[py]=lk[pre[py]];
+  	}
+	for(i=1;i<=n;i++)ans+=lx[i]+ly[i];
+    printf("%lld\n",ans);
+	for(i=1;i<=n;i++)printf("%d %d\n",lk[i],i);
+}
+~~~
+
+
+# 带花树
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 505
+#define M 250005
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+struct blossom{//mat[]匹配点，G.solve()返回答案
+	int n,m,h,t,W,tot,fir[N],la[M],ne[M],F[N],mat[N],pre[N],tp[N],q[N],vs[N];
+	void in(int x,int y){n=x;m=y;W=tot=0;CL(fir);}
+	void rd(){
+		int i,x,y;
+		for(i=1;i<=m;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+	}
+	void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
+	int fd(int x){return F[x]?F[x]=fd(F[x]):x;}
+	int lca(int u,int v){
+		for(++W;;u=pre[mat[u]],swap(u,v))
+			if(vs[u=fd(u)]==W)return u;
+			else vs[u]=u?W:0;
+	}
+	void aug(int u,int v){
+		for (int w;u;v=pre[u=w])w=mat[v],mat[mat[u]=v]=u;
+	}
+	void blo(int u,int v,int f){
+		for (int w;fd(u)^f;u=pre[v=w])pre[u]=v,F[u]?0:F[u]=f,F[w=mat[u]]?0:F[w]=f,tp[w]^1?0:tp[q[++t]=w]=-1;
+	}
+	int bfs(int u){
+		int x,E,i;
+		for(i=1;i<=n;i++)tp[i]=F[i]=0;
+		for(--tp[q[h=t=1]=u];h<=t;u=q[++h])
+		for(i=fir[u];i;i=ne[i])if(!tp[E=la[i]]){
+			if(!mat[E])return aug(E,u),1;
+			pre[E]=u,++tp[E],--tp[q[++t]=mat[E]];
+		}else if (tp[E]^1&&fd(u)^fd(E))blo(u,E,x=lca(u,E)),blo(E,u,x);
+		return 0;
+	}
+	int solve(){
+		int i,an=0;
+		for(i=1;i<=n;i++)mat[i]?0:an+=bfs(i);
+		return an;
+	}
+	void out(){
+		for(int i=1;i<=n;i++)printf("%d%c",mat[i],i==n?'\n':' ');	
+	}
+}G;
+int main(){
+	int n,m;
+	scanf("%d%d",&n,&m);
+	G.in(n,m);
+	G.rd();
+	printf("%d\n",G.solve());
+	G.out();
+}
+~~~
+
+# 多重背包
+
+一个一个物品做，对于第i种物品来说，它的体积是V，价值是val，数量是cnt，那么按照枚举的体积j对V的余数把动态规划分为v份
+
+把每一份分开处理，假设余数为d。编号j可以从j-k到j-1中的任意一个编号转移而来（因为相邻的体积正好相差v），这看上去已经和区间最大值有点相似了。但是注意到由于体积不一样，显然体积大的价值也会大于等于体积小的，直接比较是没有意义的，所以还需要把价值修正到同一体积的基础上。比如都退化到d，也就是说用F[j*v+d]-j*val来代替原来的价值进入队列。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define M 111111
+using namespace std;
+struct Complate_Package{
+	int V_sum,a[M],b[M],f[M];//V_sum为体积上限，f[i]为i体积最大价值
+	void add_new(int V,int val,int cnt){//加入一件新物品
+		int d,j,h,t,x,y;
+		for(d=0;d<V;d++){
+			h=1,t=0;
+			for(j=0;j<=(V_sum-d)/V;j++){
+				x=j;y=f[j*V+d]-j*val;
+				for(;h<=t&&b[t]<=y;t--);
+				a[++t]=x;b[t]=y;
+				if(a[h]<j-cnt)h++;
+				f[j*V+d]=b[h]+j*val;
+			}
+		}
+	}
+	void init(){//初始化
+		memset(f,0,sizeof(f));
+		scanf("%d",&V_sum);
+	}
+	int getmax(){//得到最大值
+		int an=0,i;
+		for(i=0;i<=V_sum;i++)an=max(an,f[i]);
+		return an;
+	}
+}F;
+int main(){
+	int T,n,i,x,y,z;
+	scanf("%d",&T);
+	for(;T--;){
+		F.init();
+		scanf("%d",&n);
+		for(i=1;i<=n;i++){
+			scanf("%d%d%d",&x,&y,&z);
+			F.add_new(x,y,z);
+		}
+		printf("%d\n",F.getmax());
+	}
+}
+~~~
+
+# 支配树
+
+        在有向图G上有起点S，对于每个点y，如果去掉点x后起点无法到达y，那么称x支配y，x是y的一个支配点（必经点）。
+	在所有支配y的点中dfn值最大的点x是距离y最近的支配点，称为y的最近支配点（最近必经点）。最近支配点是唯一的，记idom(y)=x。
+	将除了S以外的点x，连上idom(x)->x的边，就能得到一颗树，每个点支配它子树中的所有点，称这颗树为支配树。
+	首先从起点出发DFS得到一颗DFS树T，G中每条边(x,y)必属于以下四类：
+	1、树枝边：边(x,y)在DFS树T中
+	2、前向边：在T中存在一条从x到y的路径
+	3、后向边：在T中存在一条从y到x的路径
+	4、横叉边：在T中既没有x到y的路径，也没有y到x的路径，且dfn[y]<dfn[x]
+	在DFS树T上点y的祖先中，通过非树枝边可以到达y的深度最小的祖先x，称为y的半支配点（半必经点）。半支配点也是唯一的，因此可以记x=semi(y)。
+	然后，我们通过半必经点定理求出按时间戳从大到小的顺序求出semi(y)。对于G中一点y，考虑所有边(x,y)，定义一个临时变量temp=inf。
+	若dfn[x]<dfn[y]，则(x,y)为树枝边或者前向边，此时temp=min(temp,dfn[x])。若dfn[x]>dfn[y])，则(x,y)为横叉边或后向边，此时对于所有x在T中的祖先z，满足dfn[z]>dfn[y]时，有temp=min(temp,dfn[semi[z]])。semi[y]=id[temp]，即在上述所有可能情况中取dfn值最小的一种，就是y的半必经点。
+	先求出半必经点，最后通过必经点定理，按照时间戳从小到大的顺序，可以求出必经点。对于G中的一点x，考虑DFS树T中semi(x)到x的路径上除端点之外的点构成的集合path。设y=id[min(dfn[semi(z)]| z⊆path]，即path中半必经节点的时间戳最小的节点。那么idom={semi(x)(semi(x)=semi(y))  idom(y)  semi(x)不等于semi(y)}。
+	在访问每个节点时，把该节点放入图的一个生成森林中。根据半必经点定理，对于一条边(x,y)，则计算semi[y]时需要考虑x的祖先中比y的时间戳大的节点。由于算法按照时间戳从大到小的顺序计算，此时比y的时间戳小的节点还未加入生成森林，因此直接在生成森林中考虑x的所有祖先即可。使用并查集维护森林，把dfn[semi[z]]作为z到其父节点的边的权值，在路径压缩的过程中对每个节点维护一个变量，很容易计算z到其祖先上所有边权的最小值。这里的并查集不太方便按秩合并，可以路径压缩。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 111111
+using namespace std;
+long long an[N];
+struct Dominator_Tree{//新图中用dfn标号，semi/idom[dfn[x]]即为semi/idom[x]
+	int n,s,cnt;//dom为支配树，标号为原图标号
+	int dfn[N],id[N],pa[N],semi[N],idom[N],p[N],mn[N];
+	vector<int>e[N],dom[N],be[N];
+	void ins(int x,int y){e[x].push_back(y);}
+	void in(){
+		int x,y,i,m;
+		scanf("%d%d%d",&n,&m,&s);
+		for(i=1;i<=n;i++)e[i].clear(),be[i].clear();cnt=0;
+		for(i=1;i<=m;i++)scanf("%d%d",&x,&y),ins(x,y);
+	}
+	void dfs(int x){
+		dfn[x]=++cnt;id[cnt]=x;
+		for(auto i:e[x]){
+			if(!dfn[i])dfs(i),pa[dfn[i]]=dfn[x];
+			be[dfn[i]].push_back(dfn[x]);
+		}
+	}
+	int get(int x){
+		if(p[x]!=p[p[x]]){
+			if(semi[mn[x]]>semi[get(p[x])])mn[x]=get(p[x]);
+			p[x]=p[p[x]];
+		}
+		return mn[x];
+	}
+	void LT(){
+		for(int i=cnt;i>1;i--){
+			for(auto j:be[i])semi[i]=min(semi[i],semi[get(j)]);
+			dom[semi[i]].push_back(i);
+			int x=p[i]=pa[i];
+			for(auto j:dom[x])
+				idom[j]=(semi[get(j)]<x?get(j):x);
+			dom[x].clear();
+		}
+		for(int i=2;i<=cnt;i++){
+			if(idom[i]!=semi[i])idom[i]=idom[idom[i]];
+			dom[id[idom[i]]].push_back(id[i]);
+		}
+	}
+	void build(){
+		for(int i=1;i<=n;i++){
+			dfn[i]=0;dom[i].clear();be[i].clear();
+			p[i]=mn[i]=semi[i]=i;
+		}
+		cnt=0;dfs(s);LT();
+	}
+}G;
+int main(){
+	G.in();
+	G.build();
+}
+~~~
