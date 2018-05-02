@@ -1,0 +1,165 @@
+# Contest Info
+
+date: 2017.08.17 12:00-17:00
+
+[practice link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=766)
+
+# Solutions
+
+## A. Army Formations
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's  solution
+
+显然将所有值从小到大排序罚时最少，那么只需要在 dfs 时启发式合并平衡树即可，为了方便写的带空间回收的线段树。
+
+## B. Battlestation Operational
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+设 $f(n) = \sum_{i = 1}^{n}{\sum_{j = 1}^{i}{\left\lceil\frac{i}{j}\right\rceil [\gcd(i, j) = 1]}}$，则 $f(n) - f(n - 1) = \sum_{j = 1}^{n}{\left\lceil\frac{n}{j}\right\rceil [\gcd(n, j) = 1]} = \sum_{d | n}{\mu(d) \sum_{j d \leq n}{\left\lceil\frac{n}{j d}\right\rceil}} = \sum_{d | n}{\mu(d) \sum_{j d \leq n}{\left(1 + \sum_{(j k + 1) d \leq n}{1}\right)}}$。
+
+枚举 $d$，枚举 $j d$，枚举 $j d k$，对满足 $d | n$ 且 $j d \leq n$ 和 $j d k + d \leq n$ 的 $n$ 产生贡献，贡献的差分可以先在 $j d, j d k + d$ 处产生，然后再枚举满足 $d | n$ 的 $n$ 利用前缀和得出贡献。
+
+最后再利用前缀和得到 $f(n)$，总时间复杂度 $\mathcal{O}(n \log^2 n)$，只涉及加减。
+
+做到 $\mathcal{O}(n \log n)$ 的方法也是很显然的，预处理 $j k$ 的约数个数即可。
+
+## C. Casual Podracing
+
+upsolved by chitanda, skywalkert
+
+---
+
+chitanda's solution
+
+考虑二分一个时间 $t$，如果两个人 $a,b(d_a\lt d_b)$ 在时间 $t$ 内相遇了，那么需要满足 $d_a+v_a\times t\ge d_b+v_b\times t$ 或者 $d_a+v_a\times t\le d_b+v_b\times t-L$ ，对所有人按 $w$ 排序后，维护四个关于 $d$ 的树状数组，扫一遍，就能每次 $O(\log n)$ check 每个人是否被 $w$ 比它大的碰到过，并能求出到底是谁碰到了它。而在知道了每个人碰到的那个 $w$ 比它大的人后，就能算出真正的分数时间。
+
+## D. Death Podracing
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+将所有点按照 $d_i$ 排序，相邻两个点之间计算相遇时间，用优先队列维护剩余的点和剩余的相邻相遇事件，模拟 $n - 1$ 次相遇即可。
+
+## E. Engineering of the Clones
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+由 $\frac{1}{1 - x} = \sum_{i \geq 1}{x^i}$ $(|x| < 1)$ 可知 $\frac{1}{A - 1} = \sum_{i \geq 1}{\frac{1}{A^i}}$。
+
+由 $A = \prod_{i = 1}^{n}{p_i^{r_i}}$ $(|r_i - r_j| \leq 1, 1 \leq i \leq j \leq n)$ 可知 $\frac{P^R}{A}$ 是小于 $P$ 的整数，其中 $P = \prod_{i = 1}^{n}{p_i},$ $R = \max_{i = 1}^{n}{r_i}$，即 $\frac{1}{A}$ 的 $P$ 进制表示中只有小数点后 $R$ 位的末位可能非零，同理 $\frac{1}{A^i}$ 的 $P$ 进制表示中只有小数点后 $R^i$ 位的末 $i$ 位可能非零。
+
+于是不同的 $\frac{1}{A^i}$ $(i \leq R)$ 之间对 $\frac{1}{A - 1}$ 的贡献是互不影响的，又有 $k < R^2$，所求即 $\left(\frac{P^R}{A}\right)^{\left\lceil\frac{k}{R}\right\rceil}$ 的 $P$ 进制表示中第 $\left\lceil\frac{k}{R}\right\rceil R - k$ 位的值，用 FFT 进行高精度快速幂即可，时间复杂度 $\mathcal{O}(R \log^2 R)$。
+
+## F. Fleet of the Eternal Throne 
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+将所有串建立后缀自动机，标记所有是前缀的节点，对于一个询问，先在这两个串的所有 right 记录一下，然后离线 dfs 整个 parent 树，当一个节点被标记了并且包含一个询问两个串的 right 时，去更新答案，复杂度 $O(nm+26n)$。
+
+## G. Galaxy at War
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+题目说了一大堆，实际上那些东西都没用，本质就是一个阶梯博弈，只和奇数阶梯的石子数的异或和有关。
+
+## H. Hybrid Crystals
+
+solved by skywalkert, upsolved by none
+
+---
+
+由于 $a_1 = 1$，故前 $1$ 个数能凑出 $[-1, 1]$ 的所有数，之后由于题目保证的性质，前 $i$ 个数能凑出的数字也是一个完整的区间，维护区间上下界即可。
+
+## I. I am your Father!
+
+upsolved by chitanda, skywalkert
+
+---
+
+chitanda's solution
+
+对于边 $(u,v,w)$ ，令 $w=-1001\times w$ ，如果 $v=n$，则令 $w=-1001\times w+u$ ，然后跑最小树形图，这样就能满足 $n$ 号点的父亲最小了。
+
+## J. Jedi Council
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+考虑用最小割表示需要最小化的式子，用 $S$ 割包含所有 $w_i = +W$ 的变量， $T$ 割包含其他变量，则 $k |x - y|$ 当且仅当 $x$ 和 $y$ 不在同一割集时产生贡献，将其作为割边容量，而 $k (x - y)$ 则相当于 $x$ 和 $y$ 分别产生的贡献，记录一下每个变量产生贡献的系数然后再根据在哪个割分别连边即可，注意到这里对于某个点所连的边可能出现负容量，可以将这 $2 n$ 条边的容量均加上一个常数从而容量非负，在最终求割集时这 $2 n$ 条边恰好只会有 $n$ 条边被割，再将常数减去即可。
+
+## K. Killer Names
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+令 $f_n(i)$ 表示用恰好含有 $i$ 种颜色的长度 $n$ 的序列数量，则 $f_n(i) = \sum_{j = 0}^{i}{(-1)^{i - j} {i \choose j} j^n}$。
+
+所求为 $\sum_{i, j \geq 1, i + j \leq m}{{m \choose i} {m - i \choose j} f_n(i) f_n(j)}$，时间复杂度 $\mathcal{O}((n + m)m)$。
+
+# Replay and Summary
+
+## Replay
+
+这次 T 只迟到了几分钟。
+
+题面都很长，让 H 读得很痛苦，T 发现 K 是水题后马上就切了。
+
+H 感觉其他题都没什么想法，于是 T 上来写 B，wa 了三发，奠定了这场罚时爆炸的基础。期间 H 想了想 F 和 I，觉得 F 很水，I 是个裸最小树形图。
+
+H 在 T 给 B 题查错的间隙写了写 F，在 T 终于过了 B 之后很快写完切了。
+
+然后 H 开始写 I，提交之后 wa 了，于是换 T 上来写 H，T 很快就过了 H。
+
+H 上来写 A，T 开始帮 H 的 I 题查错。
+
+H 一发 re，改了改之后又 wa 了，T 帮 H 查了 I 题几个错之后提交还是 wa。H 开始有点烦躁。
+
+H 终于改对了 A，然后开始上手查 I 的错，T 则开始看别的题。
+
+T 觉得 J 和 D 可以做，于是上手写 J，写了一会后又感觉不太行，于是换 D。
+
+H 放弃了 I，转向 G，想了一会之后发现就是个逗你玩题，于是马上切掉了。
+
+T 最终 D 没能通过（并在赛后马上过了）
+
+## skywalkert
+
+02 在实现细节上出错，原因是公式没推导完整。 08 思考了一会拍脑袋想出了模型，大概是这次动脑最完整的题目了。 09 查代码时间太长，在队员不齐的时候很危险。 04 看完觉得很水没细想，拖到垃圾时间出了细节问题，导致崩盘。 07 感觉是个阶梯博弈但是规则太麻烦没有细想，没有注意到通过的队伍这么多，死于懒癌。 10 一眼最小割模型，莽了个板子上去，结果死于同一割集的贡献。
+
+最近心态比较崩，经常失眠，不能再这样下去了。
+
+## chitanda
+
+主要问题：卡死在 09，一直在错误的做法上挣扎，没有结合以前的经验去思考为什么边权那么小，容易陷入死胡同里出不来。
+
+由于 09 ，01 在比较晚才写且写错了很多次，07 到最后才看，tls 也没来得及写完 04。
