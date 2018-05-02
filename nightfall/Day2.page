@@ -1,135 +1,140 @@
-# 【坑】A
+【坑】A
+=======
 
 不会积分
 
-# E. Enumeration of Tournaments
+E. Enumeration of Tournaments
+=============================
 
-## Aki
+Aki
+---
 
 $n! \mod p^q$，复杂度$O(pq^2\frac{\log^2n}{\log p})$，高爷那个Wilson的板子比赛的时候用不来，超尴尬。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 using Val = unsigned long long;
 // n! mod p^q
 vector<Val> polymul(const vector<Val> &a, const vector<Val> &b) {
-	int n = (int) a.size();
-	vector<Val> c (n, Val(0));
-	for (int i = 0; i < n; ++ i) {
-		for (int j = 0; i + j < n; ++ j) {
-			c[i + j] = c[i + j] + a[i] * b[j];
-		}
-	}
-	return c;
+    int n = (int) a.size();
+    vector<Val> c (n, Val(0));
+    for (int i = 0; i < n; ++ i) {
+        for (int j = 0; i + j < n; ++ j) {
+            c[i + j] = c[i + j] + a[i] * b[j];
+        }
+    }
+    return c;
 }
 Val choose[70][70];
 vector<Val> polyshift(const vector<Val> &a, Val delta) {
-	int n = (int) a.size();
-	vector<Val> res (n, Val(0));
-	for (int i = 0; i < n; ++ i) {
-		Val d = 1;
-		for (int j = 0; j <= i; ++ j) {
-			res[i - j] = res[i - j] + a[i] * choose[i][j] * d;
-			d = d * delta;
-		}
-	}
-	return res;
+    int n = (int) a.size();
+    vector<Val> res (n, Val(0));
+    for (int i = 0; i < n; ++ i) {
+        Val d = 1;
+        for (int j = 0; j <= i; ++ j) {
+            res[i - j] = res[i - j] + a[i] * choose[i][j] * d;
+            d = d * delta;
+        }
+    }
+    return res;
 }
 void prepare(int q) {
-	for (int i = 0; i < q; ++ i) {
-		choose[i][0] = Val(1);
-		for (int j = 1; j <= i; ++ j) choose[i][j] = choose[i - 1][j - 1] + choose[i - 1][j];
-	}
+    for (int i = 0; i < q; ++ i) {
+        choose[i][0] = Val(1);
+        for (int j = 1; j <= i; ++ j) choose[i][j] = choose[i - 1][j - 1] + choose[i - 1][j];
+    }
 }
 pair<Val, LL> fact(LL n, LL p, LL q) {
-	Val ans = 1;
-	for (int r = 1; r < p; ++ r) {
-		vector<Val> x (q, Val(0));
-		vector<Val> res (q, Val(0));
-		res[0] = 1; LL _res = 0;
-		x[0] = r; x[1] = p; LL _x = 1;
-		LL m = (n - r) / p + 1;
-		while (m) {
-			if (m & 1) {
-				res = polymul(res, polyshift(x, _res));
-				_res += _x;
-			}
-			m >>= 1;
-			x = polymul(x, polyshift(x, _x));
-			_x += _x;
-		}
-		ans = ans * res[0];
-	}
-	LL cnt = n / p;
-	if (n >= p) {
-		auto tmp = fact(n / p, p, q);
-		ans = ans * tmp.first;
-		cnt += tmp.second;
-	}
-	return {ans, cnt};
+    Val ans = 1;
+    for (int r = 1; r < p; ++ r) {
+        vector<Val> x (q, Val(0));
+        vector<Val> res (q, Val(0));
+        res[0] = 1; LL _res = 0;
+        x[0] = r; x[1] = p; LL _x = 1;
+        LL m = (n - r) / p + 1;
+        while (m) {
+            if (m & 1) {
+                res = polymul(res, polyshift(x, _res));
+                _res += _x;
+            }
+            m >>= 1;
+            x = polymul(x, polyshift(x, _x));
+            _x += _x;
+        }
+        ans = ans * res[0];
+    }
+    LL cnt = n / p;
+    if (n >= p) {
+        auto tmp = fact(n / p, p, q);
+        ans = ans * tmp.first;
+        cnt += tmp.second;
+    }
+    return {ans, cnt};
 }
 typedef pair<Val, LL> num;
 num operator * (const num &a, const num &b) {
-	return {a.first * b.first, a.second + b.second};
+    return {a.first * b.first, a.second + b.second};
 }
 void euclid (LL a, LL b, LL &x, LL &y) {
-	if (b == 0) x = 1, y = 0;
-	else euclid (b, a % b, y, x), y -= a / b * x;
+    if (b == 0) x = 1, y = 0;
+    else euclid (b, a % b, y, x), y -= a / b * x;
 }
 num getnum(LL x) {
-	LL cnt = 0;
-	while (x % 2 == 0) {
-		cnt ++;
-		x /= 2;
-	}
-	return {x, cnt};
+    LL cnt = 0;
+    while (x % 2 == 0) {
+        cnt ++;
+        x /= 2;
+    }
+    return {x, cnt};
 }
 num fact(LL x) {
-	return fact(x, 2, 64);
+    return fact(x, 2, 64);
 }
 Val fastpo(Val x, Val n) {
-	Val res = Val(1);
-	while (n) {
-		if (n & 1) res = res * x;
-		x = x * x;
-		n >>= 1;
-	}
-	return res;
+    Val res = Val(1);
+    while (n) {
+        if (n & 1) res = res * x;
+        x = x * x;
+        n >>= 1;
+    }
+    return res;
 }
 Val inv (LL a) {
-	return fastpo(a, ((Val) 1 << 63) - Val(1));
+    return fastpo(a, ((Val) 1 << 63) - Val(1));
 }
 num operator / (const num &a, const num &b) {
-	auto tmp = inv(b.first);
-	return {a.first * tmp, a.second - b.second};
+    auto tmp = inv(b.first);
+    return {a.first * tmp, a.second - b.second};
 }
 num calc(LL n) {
-	if (n == 1) return {1, 0};
-	//printf("%lld\n", (long long) n);
-	if (n % 2 == 0) {
-		return calc(n / 2) * fact(n) / fact(n / 2) / (num) {1, n / 2};
-	}
-	else {
-		return calc((n + 1) / 2) * getnum(n) * fact(n - 1) / fact(n / 2) / (num) {1, n / 2};
-	}
+    if (n == 1) return {1, 0};
+    //printf("%lld\n", (long long) n);
+    if (n % 2 == 0) {
+        return calc(n / 2) * fact(n) / fact(n / 2) / (num) {1, n / 2};
+    }
+    else {
+        return calc((n + 1) / 2) * getnum(n) * fact(n - 1) / fact(n / 2) / (num) {1, n / 2};
+    }
 }
 int main() {
-	prepare(64);
-	LL n;
-	cin >> n;
-	num ans = calc(n);
-	while (ans.second --) {
-		ans.first = ans.first * 2;
-	}
-	cout << ans.first << endl;
+    prepare(64);
+    LL n;
+    cin >> n;
+    num ans = calc(n);
+    while (ans.second --) {
+        ans.first = ans.first * 2;
+    }
+    cout << ans.first << endl;
 }
-~~~
+```
 
-# F. Fresh Matrix
+F. Fresh Matrix
+===============
 
-## Aki
+Aki
+---
 
 矩阵乘法优化的dp，对答案序列可以直接使用Berlekamp-Massey把递推公式炸出来，然后再线性递推一下。
 
@@ -137,76 +142,76 @@ int main() {
 
 修正了New Meta的BM板子的错误。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5e3 + 5;
 int MOD;
 typedef long long LL;
 int mpow(int x, int n) {
-	int res = 1;
-	while (n) {
-		if (n & 1) res = 1LL * res * x % MOD;
-		x = 1LL * x * x % MOD;
-		n >>= 1;
-	}
-	return res;
+    int res = 1;
+    while (n) {
+        if (n & 1) res = 1LL * res * x % MOD;
+        x = 1LL * x * x % MOD;
+        n >>= 1;
+    }
+    return res;
 }
 int inverse(int x) {
-	return mpow(x, MOD - 2);
+    return mpow(x, MOD - 2);
 }
 struct Poly {
-	vector<int> a;
-	Poly() { a.clear(); }
-	Poly(vector<int> &a): a(a) {}
-	int length() const { return a.size(); }
-	Poly move(int d) {
-		vector<int> na(d, 0);
-		na.insert(na.end(), a.begin(), a.end());
-		return Poly(na);
-	}
-	int calc(vector<int> &d, int pos) {
-		int ret = 0;
-		for (int i = 0; i < (int)a.size(); ++i) {
-			if ((ret += (LL)d[pos - i] * a[i] % MOD) >= MOD) {
-				ret -= MOD; }}
-		return ret;
-	}
-	Poly operator - (const Poly &b) {
-		vector<int> na(max(this->length(), b.length()));
-		for (int i = 0; i < (int)na.size(); ++i) {
-			int aa = i < this->length() ? this->a[i] : 0,
-				bb = i < b.length() ? b.a[i] : 0;
-			na[i] = (aa + MOD - bb) % MOD;
-		}
-		return Poly(na);
-	}
+    vector<int> a;
+    Poly() { a.clear(); }
+    Poly(vector<int> &a): a(a) {}
+    int length() const { return a.size(); }
+    Poly move(int d) {
+        vector<int> na(d, 0);
+        na.insert(na.end(), a.begin(), a.end());
+        return Poly(na);
+    }
+    int calc(vector<int> &d, int pos) {
+        int ret = 0;
+        for (int i = 0; i < (int)a.size(); ++i) {
+            if ((ret += (LL)d[pos - i] * a[i] % MOD) >= MOD) {
+                ret -= MOD; }}
+        return ret;
+    }
+    Poly operator - (const Poly &b) {
+        vector<int> na(max(this->length(), b.length()));
+        for (int i = 0; i < (int)na.size(); ++i) {
+            int aa = i < this->length() ? this->a[i] : 0,
+                bb = i < b.length() ? b.a[i] : 0;
+            na[i] = (aa + MOD - bb) % MOD;
+        }
+        return Poly(na);
+    }
 };
 Poly operator * (const int &c, const Poly &p) {
-	vector<int> na(p.length());
-	for (int i = 0; i < (int)na.size(); ++i) {
-		na[i] = (LL)c * p.a[i] % MOD;
-	}
-	return na;
+    vector<int> na(p.length());
+    for (int i = 0; i < (int)na.size(); ++i) {
+        na[i] = (LL)c * p.a[i] % MOD;
+    }
+    return na;
 }
 vector<int> solve(vector<int> a) {
-	int n = a.size();
-	Poly s, b;
-	s.a.push_back(1), b.a.push_back(1);
-	for (int i = 0, j = -1, ld = 1; i < n; ++i) {
-		int d = s.calc(a, i);
-		if (d) {
-			if ((s.length() - 1) * 2 <= i) {
-				Poly ob = b; b = s;
-				s = s - (LL)d * inverse(ld) % MOD * ob.move(i - j);
-				j = i; ld = d;
-			} else {
-				s = s - (LL)d * inverse(ld) % MOD * b.move(i - j);
-			}
-		}
-	}
-	//Caution: s.a might be shorter than expected
-	return s.a;
+    int n = a.size();
+    Poly s, b;
+    s.a.push_back(1), b.a.push_back(1);
+    for (int i = 0, j = -1, ld = 1; i < n; ++i) {
+        int d = s.calc(a, i);
+        if (d) {
+            if ((s.length() - 1) * 2 <= i) {
+                Poly ob = b; b = s;
+                s = s - (LL)d * inverse(ld) % MOD * ob.move(i - j);
+                j = i; ld = d;
+            } else {
+                s = s - (LL)d * inverse(ld) % MOD * b.move(i - j);
+            }
+        }
+    }
+    //Caution: s.a might be shorter than expected
+    return s.a;
 }
 
 map<vector<int>, int> mem[N];
@@ -218,73 +223,73 @@ vector<int> out0;
 int pre[N][N], n;
 vector<int> ava;
 void dfs(int x, vector<int> stat, int base) {
-	int old = stat.back();
-	int col = *max_element(stat.begin(), stat.end() - 1);
-	//for (int x : stat) printf("%d ", x); printf("   x=%d mask = ", x); cout << (bitset<4>) old << endl;
-	if (x && outgoing.count(encode[stat])) return;
-	for (int mask : ava) {
-		if (x == 0 || (mask & old) == 0) {
-			vector<int> con(col + 1);
-			vector<int> newcol(n);
-			for (int i = 0; i < n; ++ i) {
-				if (stat[i] && !(mask >> i & 1)) {
-					con[stat[i]] = 1;
-					newcol[i] |= 1 << stat[i];
-				}
-			}
-			bool gg = 0;
-			for (int i = 1; i <= col; ++ i) {
-				if (!con[i]) gg = 1;
-			}
-			if (gg) continue;
-			vector<int> nstat(n + 1);
-			int cnt = 0;
-			for (int i = 0; i < n; ++ i) {
-				if (mask >> i & 1) {
-					nstat[i] = 0;
-				}
-				else {
-					if (i == 0 || (mask >> (i - 1) & 1) == 1) {
-						nstat[i] = ++ cnt;
-					}
-					else {
-						nstat[i] = cnt;
-					}
-				}
-			}
-			for (int i = 0; i < n; ++ i) {
-				for (int j = i + 1; j < n; ++ j) {
-					if ((~mask >> i & 1) && (~mask >> j & 1)) {
-						if (newcol[i] & newcol[j]) {
-							int old = nstat[j];
-							for (int k = 0; k < n; ++ k) {
-								if (nstat[k] == old) {
-									nstat[k] = nstat[i];
-								}
-							}
-						}
-					}
-				}
-			}
-			unordered_map<int, int> s;
-			for (int i = 0; i < n; ++ i) {
-				if (nstat[i]) {
-					if (!s.count(nstat[i])) {
-						int id = s.size() + 1;
-						s[nstat[i]] = id;
-					}
-					nstat[i] = s[nstat[i]];
-				}
-			}
-			nstat[n] = mask;
-			if (!encode.count(nstat)) {
-				encode[nstat] = decode.size();
-				decode.push_back(nstat);
-			}
-			(mem[x + 1][nstat] += base) %= MOD;
-			(x == 0 ? out0 : outgoing[encode[stat]]).push_back(encode[nstat]);
-		}
-	}
+    int old = stat.back();
+    int col = *max_element(stat.begin(), stat.end() - 1);
+    //for (int x : stat) printf("%d ", x); printf("   x=%d mask = ", x); cout << (bitset<4>) old << endl;
+    if (x && outgoing.count(encode[stat])) return;
+    for (int mask : ava) {
+        if (x == 0 || (mask & old) == 0) {
+            vector<int> con(col + 1);
+            vector<int> newcol(n);
+            for (int i = 0; i < n; ++ i) {
+                if (stat[i] && !(mask >> i & 1)) {
+                    con[stat[i]] = 1;
+                    newcol[i] |= 1 << stat[i];
+                }
+            }
+            bool gg = 0;
+            for (int i = 1; i <= col; ++ i) {
+                if (!con[i]) gg = 1;
+            }
+            if (gg) continue;
+            vector<int> nstat(n + 1);
+            int cnt = 0;
+            for (int i = 0; i < n; ++ i) {
+                if (mask >> i & 1) {
+                    nstat[i] = 0;
+                }
+                else {
+                    if (i == 0 || (mask >> (i - 1) & 1) == 1) {
+                        nstat[i] = ++ cnt;
+                    }
+                    else {
+                        nstat[i] = cnt;
+                    }
+                }
+            }
+            for (int i = 0; i < n; ++ i) {
+                for (int j = i + 1; j < n; ++ j) {
+                    if ((~mask >> i & 1) && (~mask >> j & 1)) {
+                        if (newcol[i] & newcol[j]) {
+                            int old = nstat[j];
+                            for (int k = 0; k < n; ++ k) {
+                                if (nstat[k] == old) {
+                                    nstat[k] = nstat[i];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            unordered_map<int, int> s;
+            for (int i = 0; i < n; ++ i) {
+                if (nstat[i]) {
+                    if (!s.count(nstat[i])) {
+                        int id = s.size() + 1;
+                        s[nstat[i]] = id;
+                    }
+                    nstat[i] = s[nstat[i]];
+                }
+            }
+            nstat[n] = mask;
+            if (!encode.count(nstat)) {
+                encode[nstat] = decode.size();
+                decode.push_back(nstat);
+            }
+            (mem[x + 1][nstat] += base) %= MOD;
+            (x == 0 ? out0 : outgoing[encode[stat]]).push_back(encode[nstat]);
+        }
+    }
 }
 const int LOG = 31;
 // Calculating kth term of linear recurrence sequence
@@ -294,126 +299,128 @@ const int LOG = 31;
 //                     vector<int> - transition function
 // Output(calc(k)): int - the kth term mod MOD
 // Example: In: {1, 1} {2, 1} an = 2an-1 + an-2
-//			Out: calc(3) = 3, calc(10007) = 71480733 (MOD 1e9+7)
+//          Out: calc(3) = 3, calc(10007) = 71480733 (MOD 1e9+7)
 struct LinearRec {
-	int n;
-	vector<int> first, trans;
-	vector<vector<int> > bin;
-	vector<int> add(vector<int> &a, vector<int> &b) {
-		vector<int> result(n * 2 + 1, 0);
-		// 不要每次新开 vector, 可以使用矩阵乘法优化
-		for (int i = 0; i <= n; ++i) {
-			for (int j = 0; j <= n; ++j) {
-				result[i + j] += (long long)a[i] * b[j] % MOD;
-				if (result[i + j] >= MOD) {
-					result[i + j] -= MOD;
-				}
-			}
-		}
-		for (int i = 2 * n; i > n; --i) {
-			for (int j = 0; j < n; ++j) {
-				result[i - 1 - j] += (long long)result[i] * trans[j] % MOD;
-				if (result[i - 1 - j] >= MOD)
-					result[i - 1 - j] -= MOD;
-			}
-			result[i] = 0;
-		}
-		result.erase(result.begin() + n + 1, result.end());
-		return result;
-	}
-	LinearRec(vector<int> &first, vector<int> &trans): first(first), trans(trans) {
-		n = first.size();
-		vector<int> a(n + 1, 0);
-		a[1] = 1;
-		bin.push_back(a);
-		for (int i = 1; i < LOG; ++i)
-			bin.push_back(add(bin[i - 1], bin[i - 1]));
-	}
-	int calc(int k) {
-		vector<int> a(n + 1, 0);
-		a[0] = 1;
-		for (int i = 0; i < LOG; ++i)
-			if (k >> i & 1)
-				a = add(a, bin[i]);
-		int ret = 0;
-		for (int i = 0; i < n; ++i)
-			if ((ret += (long long)a[i + 1] * first[i] % MOD) >= MOD)
-				ret -= MOD;
-		return ret;
-	}};
+    int n;
+    vector<int> first, trans;
+    vector<vector<int> > bin;
+    vector<int> add(vector<int> &a, vector<int> &b) {
+        vector<int> result(n * 2 + 1, 0);
+        // 不要每次新开 vector, 可以使用矩阵乘法优化
+        for (int i = 0; i <= n; ++i) {
+            for (int j = 0; j <= n; ++j) {
+                result[i + j] += (long long)a[i] * b[j] % MOD;
+                if (result[i + j] >= MOD) {
+                    result[i + j] -= MOD;
+                }
+            }
+        }
+        for (int i = 2 * n; i > n; --i) {
+            for (int j = 0; j < n; ++j) {
+                result[i - 1 - j] += (long long)result[i] * trans[j] % MOD;
+                if (result[i - 1 - j] >= MOD)
+                    result[i - 1 - j] -= MOD;
+            }
+            result[i] = 0;
+        }
+        result.erase(result.begin() + n + 1, result.end());
+        return result;
+    }
+    LinearRec(vector<int> &first, vector<int> &trans): first(first), trans(trans) {
+        n = first.size();
+        vector<int> a(n + 1, 0);
+        a[1] = 1;
+        bin.push_back(a);
+        for (int i = 1; i < LOG; ++i)
+            bin.push_back(add(bin[i - 1], bin[i - 1]));
+    }
+    int calc(int k) {
+        vector<int> a(n + 1, 0);
+        a[0] = 1;
+        for (int i = 0; i < LOG; ++i)
+            if (k >> i & 1)
+                a = add(a, bin[i]);
+        int ret = 0;
+        for (int i = 0; i < n; ++i)
+            if ((ret += (long long)a[i + 1] * first[i] % MOD) >= MOD)
+                ret -= MOD;
+        return ret;
+    }};
 int main() {
-	int m;
-	scanf("%d%d%d", &n, &m, &MOD);
-	for (int mask = 0; mask < (1 << n) - 1; ++ mask) {
-		bool gg = 0;
-		for (int i = 0; i < n - 1; ++ i) {
-			if ((mask >> i & 1) && (mask >> (i + 1) & 1)) {
-				gg = 1;
-			}
-		}
-		if (!gg) ava.push_back(mask);
-	}
-	vector<int> init(n + 1);
-	init.back() = (1 << n) - 1;
-	mem[0][init] = 1;
-	int i = 0;
-	do {
-		for (auto stat : mem[i]) {
-			dfs(i, stat.first, stat.second);
-		}
-		++ i;
-	} while (i < 10); //while (encode.size() * 2 > i);
-	int N = encode.size();
-	int tr = 0;
-	for (auto x : outgoing) tr += x.second.size();
-	vector<vector<int>> all;
-	vector<int> tmp(N);
-	for (int i : out0) tmp[i] ++;
-	all.push_back(tmp);
-	for (auto p : outgoing) {
-		out[p.first] = p.second;
-	}
-	for (int i = 2; i <= 2 * N; ++ i) {
-		tmp.clear();
-		tmp.resize(N, 0);
-		for (int j = 0; j < N; ++ j) {
-			if (all.back()[j]) {
-				for (int k : out[j]) {
-					(tmp[k] += all.back()[j]) %= MOD;
-				}
-			}
-		}
-		all.push_back(tmp);
-	}
-	vector<int> all2;
-	for (auto p : all) {
-		int tmp = 0;
-		for (int i = 0; i < N; ++ i) {
-			int ma = *max_element(decode[i].begin(), decode[i].end() - 1);
-			if (ma == 1) (tmp += p[i]) %= MOD;
-		}
-		all2.push_back(tmp);
-	}
-	auto trans = solve(all2);
-	for (int i = 0; i < trans.size() - 1; ++ i) trans[i] = (MOD - trans[i + 1]) % MOD;
-	trans.pop_back();
-	N = trans.size();
-	all2.resize(trans.size());
-	LinearRec lr(all2, trans);
-	auto ans = lr.calc(m);
-	printf("%d\n", ans);
+    int m;
+    scanf("%d%d%d", &n, &m, &MOD);
+    for (int mask = 0; mask < (1 << n) - 1; ++ mask) {
+        bool gg = 0;
+        for (int i = 0; i < n - 1; ++ i) {
+            if ((mask >> i & 1) && (mask >> (i + 1) & 1)) {
+                gg = 1;
+            }
+        }
+        if (!gg) ava.push_back(mask);
+    }
+    vector<int> init(n + 1);
+    init.back() = (1 << n) - 1;
+    mem[0][init] = 1;
+    int i = 0;
+    do {
+        for (auto stat : mem[i]) {
+            dfs(i, stat.first, stat.second);
+        }
+        ++ i;
+    } while (i < 10); //while (encode.size() * 2 > i);
+    int N = encode.size();
+    int tr = 0;
+    for (auto x : outgoing) tr += x.second.size();
+    vector<vector<int>> all;
+    vector<int> tmp(N);
+    for (int i : out0) tmp[i] ++;
+    all.push_back(tmp);
+    for (auto p : outgoing) {
+        out[p.first] = p.second;
+    }
+    for (int i = 2; i <= 2 * N; ++ i) {
+        tmp.clear();
+        tmp.resize(N, 0);
+        for (int j = 0; j < N; ++ j) {
+            if (all.back()[j]) {
+                for (int k : out[j]) {
+                    (tmp[k] += all.back()[j]) %= MOD;
+                }
+            }
+        }
+        all.push_back(tmp);
+    }
+    vector<int> all2;
+    for (auto p : all) {
+        int tmp = 0;
+        for (int i = 0; i < N; ++ i) {
+            int ma = *max_element(decode[i].begin(), decode[i].end() - 1);
+            if (ma == 1) (tmp += p[i]) %= MOD;
+        }
+        all2.push_back(tmp);
+    }
+    auto trans = solve(all2);
+    for (int i = 0; i < trans.size() - 1; ++ i) trans[i] = (MOD - trans[i + 1]) % MOD;
+    trans.pop_back();
+    N = trans.size();
+    all2.resize(trans.size());
+    LinearRec lr(all2, trans);
+    auto ans = lr.calc(m);
+    printf("%d\n", ans);
 }
-~~~
+```
 
-# H. Hung Fu
+H. Hung Fu
+==========
 
 如果只需要求答案，那么建立最小树形图，如果$i=j$连边$(rt,i,a[i]\ xor\ b[j])$，否则连边$(i,j,a[i]\ xor\ b[j])$，求最小树形图即可
 
 现在要让字典序最小，那么枚举排列，一位位判断是否和当前答案相等，如果相等则选择，判断的时候将已经固定的排列指定好边即可，时间复杂度$O(n^5)$
 
-## lbn187
+lbn187
+------
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define CL(a) memset(a,0,sizeof a)
 #define fr(i,n) for(int i=1;i<=n;i++)
@@ -421,64 +428,66 @@ using namespace std;
 int n,m,X[2888],Y[2888],Z[2888],low[55],pre[55],id[55],a[55],b[55],p[55],ok[55],v[55],vis[55];
 void ins(int x,int y,int z){X[++m]=x;Y[m]=y;Z[m]=z;}
 int work(int n){
-	int rt,cnt,ans=0,x,y;
-	CL(low);CL(pre);
-	for(rt=n;;rt=id[rt],n=cnt){
-		fr(i,n)low[i]=1e9;
-		fr(i,m)if(X[i]!=Y[i]&&Z[i]<low[Y[i]])low[Y[i]]=Z[i],pre[Y[i]]=X[i];
-		low[rt]=cnt=0;
-		fr(i,n)id[i]=v[i]=0;
-		fr(i,n){
-			for(ans+=low[x=i];v[x]!=i&&!id[x]&&x!=rt;x=pre[x])v[x]=i;
-			if(x!=rt&&!id[x])for(id[x]=++cnt,y=pre[x];x!=y;y=pre[y])id[y]=cnt;
-		}
-		if(!cnt)break;
-		fr(i,n)if(!id[i])id[i]=++cnt;
-		fr(i,m){
-			y=Y[i];X[i]=id[X[i]];Y[i]=id[Y[i]];
-			if(X[i]!=Y[i])Z[i]-=low[y];
-		}
-	}
-	return ans;
+    int rt,cnt,ans=0,x,y;
+    CL(low);CL(pre);
+    for(rt=n;;rt=id[rt],n=cnt){
+        fr(i,n)low[i]=1e9;
+        fr(i,m)if(X[i]!=Y[i]&&Z[i]<low[Y[i]])low[Y[i]]=Z[i],pre[Y[i]]=X[i];
+        low[rt]=cnt=0;
+        fr(i,n)id[i]=v[i]=0;
+        fr(i,n){
+            for(ans+=low[x=i];v[x]!=i&&!id[x]&&x!=rt;x=pre[x])v[x]=i;
+            if(x!=rt&&!id[x])for(id[x]=++cnt,y=pre[x];x!=y;y=pre[y])id[y]=cnt;
+        }
+        if(!cnt)break;
+        fr(i,n)if(!id[i])id[i]=++cnt;
+        fr(i,m){
+            y=Y[i];X[i]=id[X[i]];Y[i]=id[Y[i]];
+            if(X[i]!=Y[i])Z[i]-=low[y];
+        }
+    }
+    return ans;
 } 
 int get(int W){
-	m=0;CL(ok);
-	fr(i,n)ok[p[i]]=1;
-	fr(i,W){
-		int nv=1e9,u;
-		fr(j,i)if((a[p[i]]^b[p[j]])<nv)nv=a[p[i]]^b[p[j]],u=p[j];
-		if(p[i]==u)ins(n+1,u,nv);else ins(u,p[i],nv);
-	}
-	fr(i,n)if(!ok[i])
-		fr(j,n)if(i!=j)ins(j,i,a[i]^b[j]);else ins(n+1,i,a[i]^b[j]);
-	return work(n+1);
+    m=0;CL(ok);
+    fr(i,n)ok[p[i]]=1;
+    fr(i,W){
+        int nv=1e9,u;
+        fr(j,i)if((a[p[i]]^b[p[j]])<nv)nv=a[p[i]]^b[p[j]],u=p[j];
+        if(p[i]==u)ins(n+1,u,nv);else ins(u,p[i],nv);
+    }
+    fr(i,n)if(!ok[i])
+        fr(j,n)if(i!=j)ins(j,i,a[i]^b[j]);else ins(n+1,i,a[i]^b[j]);
+    return work(n+1);
 }
 int main(){
-	scanf("%d",&n);
-	fr(i,n)scanf("%d",&a[i]);
-	fr(i,n)scanf("%d",&b[i]);
-	int an=get(0);
-	printf("%d\n",an);
-	fr(i,n)fr(j,n)if(!vis[j]){
-		p[i]=j;
-		if(get(i)==an){
-			vis[j]=1;
-			break;
-		}
-	}
-	fr(i,n)printf("%d%c",p[i],i==n?'\n':' ');
+    scanf("%d",&n);
+    fr(i,n)scanf("%d",&a[i]);
+    fr(i,n)scanf("%d",&b[i]);
+    int an=get(0);
+    printf("%d\n",an);
+    fr(i,n)fr(j,n)if(!vis[j]){
+        p[i]=j;
+        if(get(i)==an){
+            vis[j]=1;
+            break;
+        }
+    }
+    fr(i,n)printf("%d%c",p[i],i==n?'\n':' ');
 }
-~~~
+```
 
-# I. Is is a p-drome
+I. Is is a p-drome
+==================
 
 一个置换里的字符都要相等，那么对于$p[i]$构造多项式$A$，每次随机取一个数给$x$$A[i]$减$x$，给$A[p[i]]$加$x$，然后将$A$反过来和待匹配串做FFT即可
 
 由于这里精度要求较高，直接FFT好像不能过。。那么做几遍NTT都合法就算合法就好了
 
-## lbn187
+lbn187
+------
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1048576
 #define M 998244353
@@ -491,64 +500,65 @@ LL A[N],B[N],V[N];
 int n,m,k,i,x,z,p[N];
 bool gg[N];
 int RD(){
-	int x=rand()%32768+1;
-	return x;
+    int x=rand()%32768+1;
+    return x;
 }
 LL Pw(LL a,LL b,LL p){LL V=1;for(a%=p;b;a=a*a%p,b>>=1)if(b&1)V=V*a%p;return V;}
 void NTT(LL*a,int f=1){
-	int i,j,k,m;LL u,v,w,wm;
-	for(i=N>>1,j=1;j<N-1;j++){
-		if(i>j)swap(a[i],a[j]);
-		for(k=N>>1;k<=i;k>>=1)i^=k;i^=k; 
-	}
-	for(m=2;m<=N;m<<=1)
-		for(i=0,wm=Pw(3,f==1?(M-1)/m:(M-1)/m*(m-1),M);i<N;i+=m)
-			for(j=i,w=1;j<i+(m>>1);j++){
-				u=a[j],v=1ll*w*a[j+(m>>1)]%M;
-				if((a[j]=u+v)>=M)a[j]-=M;
-				if((a[j+(m>>1)]=u-v)<0)a[j+(m>>1)]+=M;
-				w=w*wm%M;
-			}
-	if(f==-1)for(w=Pw(N,M-2,M),i=0;i<N;i++)a[i]=a[i]*w%M;
+    int i,j,k,m;LL u,v,w,wm;
+    for(i=N>>1,j=1;j<N-1;j++){
+        if(i>j)swap(a[i],a[j]);
+        for(k=N>>1;k<=i;k>>=1)i^=k;i^=k; 
+    }
+    for(m=2;m<=N;m<<=1)
+        for(i=0,wm=Pw(3,f==1?(M-1)/m:(M-1)/m*(m-1),M);i<N;i+=m)
+            for(j=i,w=1;j<i+(m>>1);j++){
+                u=a[j],v=1ll*w*a[j+(m>>1)]%M;
+                if((a[j]=u+v)>=M)a[j]-=M;
+                if((a[j+(m>>1)]=u-v)<0)a[j+(m>>1)]+=M;
+                w=w*wm%M;
+            }
+    if(f==-1)for(w=Pw(N,M-2,M),i=0;i<N;i++)a[i]=a[i]*w%M;
 }
 int main(){
-	srand(time(0));
-	scanf("%d%d%d",&n,&m,&k);
-	fr(i,n)scanf("%d",&p[i]),p[i]--,z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
-	fr(i,N)A[i]=(A[i]%M+M)%M;
-	fr(i,m)scanf("%lld",&B[i]),V[i]=B[i];
-	NTT(A);NTT(B);
-	fr(i,N)A[i]=A[i]*B[i]%M;
-	NTT(A,-1);
-	for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
-	fr(i,N)A[i]=B[i]=0;
-	fr(i,n)z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
-	fr(i,N)A[i]=(A[i]%M+M)%M;
-	fr(i,m)B[i]=V[i];
-	NTT(A,1);NTT(B,1);
-	fr(i,N)A[i]=A[i]*B[i]%M;
-	NTT(A,-1);
-	for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
-	fr(i,N)A[i]=B[i]=0;
-	fr(i,n)z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
-	fr(i,N)A[i]=(A[i]%M+M)%M;
-	fr(i,m)B[i]=V[i];
-	NTT(A,1);NTT(B,1);
-	fr(i,N)A[i]=A[i]*B[i]%M;
-	NTT(A,-1);
-	for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
-	fr(i,N)A[i]=B[i]=0;
-	fr(i,n)z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
-	fr(i,N)A[i]=(A[i]%M+M)%M;
-	fr(i,m)B[i]=V[i];
-	NTT(A,1);NTT(B,1);
-	fr(i,N)A[i]=A[i]*B[i]%M;
-	NTT(A,-1);
-	for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
-	for(int i=n-1;i<=m-1;i++)putchar(gg[i]?'0':'1');
+    srand(time(0));
+    scanf("%d%d%d",&n,&m,&k);
+    fr(i,n)scanf("%d",&p[i]),p[i]--,z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
+    fr(i,N)A[i]=(A[i]%M+M)%M;
+    fr(i,m)scanf("%lld",&B[i]),V[i]=B[i];
+    NTT(A);NTT(B);
+    fr(i,N)A[i]=A[i]*B[i]%M;
+    NTT(A,-1);
+    for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
+    fr(i,N)A[i]=B[i]=0;
+    fr(i,n)z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
+    fr(i,N)A[i]=(A[i]%M+M)%M;
+    fr(i,m)B[i]=V[i];
+    NTT(A,1);NTT(B,1);
+    fr(i,N)A[i]=A[i]*B[i]%M;
+    NTT(A,-1);
+    for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
+    fr(i,N)A[i]=B[i]=0;
+    fr(i,n)z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
+    fr(i,N)A[i]=(A[i]%M+M)%M;
+    fr(i,m)B[i]=V[i];
+    NTT(A,1);NTT(B,1);
+    fr(i,N)A[i]=A[i]*B[i]%M;
+    NTT(A,-1);
+    for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
+    fr(i,N)A[i]=B[i]=0;
+    fr(i,n)z=RD(),A[n-i-1]+=z,A[n-p[i]-1]-=z;
+    fr(i,N)A[i]=(A[i]%M+M)%M;
+    fr(i,m)B[i]=V[i];
+    NTT(A,1);NTT(B,1);
+    fr(i,N)A[i]=A[i]*B[i]%M;
+    NTT(A,-1);
+    for(int i=n-1;i<=m-1;i++)if(A[i])gg[i]=1;
+    for(int i=n-1;i<=m-1;i++)putchar(gg[i]?'0':'1');
 }
-~~~
+```
 
-# 【坑】J
+【坑】J
+=======
 
 弦图树，不懂
