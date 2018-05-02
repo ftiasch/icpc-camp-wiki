@@ -1,0 +1,222 @@
+## 三角剖分
+
+对于二维平面上一个点集 $V$ ，设其凸包为 $CH(V)$ ，构造一个边集 $E$ ，那么点集 $V$ 的三角剖分 $T(V)=G=(V,E)$满足以下条件：
+
+* 是一个平面图，即除了端点，所有边之间没有其他交点。
+* 该平面图的任意一个面都是三角面。
+* $CH(V)$ 的边都在 $E$ 中
+
+##Delaunay 三角剖分
+
+对于一个三角剖分 $T$ ，若对于其中任意一个三角面，其外接圆内部不包含除三角面端点外 $V$ 中其他点，则称之为 Delaunay 三角剖分，简称 $DT$ 。下文中我们所说的三角剖分都指 Delaunay 三角剖分。
+
+## 分治法求 DT
+
+考虑若有两个点集 $V_1$ 和 $V_2$ ，满足 $V_1$ 的凸包 $CH_1$ 和 $V_2$ 的凸包 $CH_2$ 没有交点，设分别在左侧和右侧，若我们已经得到了它们的三角剖分 $DT_1$ 和 $DT_2$ ，我们应该怎样求出点集 $V=V_1\cup V_2$ 的三角剖分 $DT$ ？
+
+首先找到 $CH_1$ 和 $CH_2$ 的下公切线，这显然是 $V$ 的凸包 $CH$ 中的一条边，所以它必然在 $DT$ 中，找的方法很简单，任选一个 $V_1$ 中的点 $P_1$ 和 $V_2$ 中的点 $P_2$ ，枚举 $DT_1$ 中与 $P_1$ 中相连的点，若在 $P_1P_2$ 的右侧则更新 $P_1$ ，$P_2$ 同理。这样复杂度是线性的。
+
+然后我们需要从下往上慢慢加边，设当前的 $Base$ 边所连的左右两个点是 $P_1$ 和 $P_2$ ，$Base$ 边初始是上面求的公切线。我们需要找到 $P_1$ 和 $P_2$ 所连的点中，在 $P_1P_2$ 上方（即向量左侧）且与 $P_1,P_2$ 的外接圆不包含其他点的那个点。
+
+注意到一个事实，固定两个点 $A$ 和 $B$ ，对于任意两个不与 $AB$ 共线且在 $AB$ 同侧的点 $C$ 和 $D$ ，则必有三角形 $ABC$ 外接圆包含 $D$ **或**三角形 $ABD$ 外接圆包含 $C$ 。定义 $C$ 小于等于 $D$ 为 $ABC$ 的外接圆包含 $D$ ，$C$ 等于 $D$ 为 $A,B,C,D$ 四点共圆，那么必然有 $C\le D$ 或 $D\le C$ 。且注意到若 $C\le D$ ，则在 $C,D$ 所在 $AB$ 这一侧，$ABC$ 外接圆包含 $ABD$ 外接圆，故若有 $C\le D,D\le E$ ，必有 $C\le E$ 。那么，这个关系显然是一个全序关系。（注意：这里的包含指在内部或边界上）
+
+所以，我们只需要枚举 $P_1$ 和 $P_2$ 所连的所有边，对于在 $\overrightarrow{P_1P_2}$ 左侧的所有点，找到最大的那个点即可。设这个点为 $Q$ ，若其在左侧，则需要连边 $QP_2$ ，并且更新 $Base$ 边，但这会带来一个问题，新加的这条边可能和原来的边相交，但可能相交的边只可能是原来就与 $P_1$ 相连的边，枚举删除一下即可，若 $Q$ 在右侧同理。这一部分复杂度是均摊线性的。
+
+我们将所有点排序，用分治的思想来不断合并 $DT$ ，总复杂度为 $O(n\log n)$。
+
+## 代码解读
+
+首先要说明一下存边的方式，由于有删边操作，所以最好用链表来维护。
+
+```c++
+struct Edge{
+	int v, id;
+	list<Edge>::iterator mate;
+	Edge(int v = 0) : v(v) { id = -1; };
+};
+list<Edge> E[maxn];
+```
+
+其中 `mate` 指向这条边的另一半。
+
+连边操作为：
+
+```c++
+void addEdge(int u, int v){
+	E[u].push_front(v);
+	E[v].push_front(u);
+	E[u].begin()->mate = E[v].begin();
+	E[v].begin()->mate = E[u].begin();
+}
+```
+
+分治主体：
+
+```c++
+void work(int l, int r){
+	if(l + 1 >= r){
+		if(l + 1 == r) addEdge(l, r);
+		return;
+	}
+	int mid = (l + r) >> 1;
+	work(l, mid);
+	work(mid + 1, r);
+```
+
+找两个凸包的下公切线：
+
+```c++
+	bool flag = 0;
+	int i = l, j = r;
+	while(!flag){
+		flag = 1;
+		for(auto it = E[i].begin(); it != E[i].end(); ++it){
+			int tmp = OnLeft(P[j], P[i], P[it->v]);
+			if(tmp > 0 || (tmp == 0 && (P[i] - P[j]).len() > (P[it->v] - P[j]).len())){
+				flag = 0;
+				i = it->v;
+				break;
+			}
+		}
+		for(auto it = E[j].begin(); it != E[j].end(); ++it){
+			int tmp = OnLeft(P[i], P[j], P[it->v]);
+			if(tmp < 0 || (tmp == 0 && (P[j] - P[i]).len() > (P[it->v] - P[i]).len())){
+				flag = 0;
+				j = it->v;
+				break;
+			}
+		}
+	}
+```
+
+连边和删边：
+
+```c++
+	addEdge(i, j);
+	while(1){
+		int best = -1, dir = 0;
+		for(auto it = E[i].begin(); it != E[i].end(); ++it){
+			if(OnLeft(P[i], P[j], P[it->v]) > 0 && (!dir || InCircle(P[i], P[j], P[best], P[it->v])))
+				best = it->v, dir = -1;			
+		}
+		for(auto it = E[j].begin(); it != E[j].end(); ++it){
+			if(OnLeft(P[i], P[j], P[it->v]) > 0 && (!dir || InCircle(P[i], P[j], P[best], P[it->v])))
+				best = it->v, dir = 1;			
+		}
+		if(!dir) break;
+		if(dir == -1){
+			for(auto it = E[i].begin(); it != E[i].end(); )
+				if(SegmentProperIntersection(P[i], P[it->v], P[j], P[best])){
+					auto _it = it; ++it;
+					E[_it->v].erase(_it->mate);
+					E[i].erase(_it);
+				}else ++it;
+			i = best;
+		}else{
+			for(auto it = E[j].begin(); it != E[j].end(); )
+				if(SegmentProperIntersection(P[i], P[best], P[j], P[it->v])){
+					auto _it = it; ++it;
+					E[_it->v].erase(_it->mate);
+					E[j].erase(_it);
+				}else ++it;
+			j = best;
+		}
+		addEdge(i, j);
+	}
+}
+```
+
+接下来是一些计算几何部分细节的说明。
+
+```c++
+const double eps = 1e-10;
+inline int dcmp(double x){
+	return (x > eps) - (x < -eps);
+}
+
+struct Point{
+	double x, y;
+	Point(double x = 0, double y = 0)	: x(x), y(y) {}
+	bool operator < (const Point& R) const{
+		return dcmp(x - R.x) == 0 ? dcmp(y - R.y) < 0 : dcmp(x - R.x) < 0;
+	}
+	bool operator == (const Point& R) const{
+		return dcmp(x - R.x) == 0 && dcmp(y - R.y) == 0;
+	}
+	Point operator + (const Point& R) const{
+		return Point(x + R.x , y + R.y);
+	}
+	Point operator - (const Point& R) const{
+		return Point(x - R.x , y - R.y);
+	}
+	Point operator * (const double& R) const{
+		return Point(x * R , y * R);
+	}
+	Point operator / (const double& R) const{
+		return Point(x / R , y / R);
+	}
+	double operator ^ (const Point& R) const{
+		return x * R.y - y * R.x;
+	}
+	double operator % (const Point& R) const{
+		return x * R.x + y * R.y;
+	}
+	double len(){
+		return sqrt(*this % *this);
+	}
+	double angle(){
+		return atan2(y, x);
+	}
+	void output() { printf("%.10f %.10f\n", x, y); }
+};
+```
+
+ `OnLeft` 用来判断点 $C$ 在 $AB$ 的哪一侧
+
+```c++
+int OnLeft(Point A, Point B, Point C){
+	return dcmp((B - A) ^ (C - A));
+}
+```
+
+`InCircle` 判断点 $P$ 是否在 $ABC$ 外接圆严格内部
+
+```c++
+double det3(vector<double> p){
+#define p(x, y) p[(x) * 3 + y]
+	return p(0, 0) * p(1, 1) * p(2, 2) + p(0, 1) * p(1, 2) * p(2, 0) + p(0, 2) * p(1, 0) * p(2, 1)
+		- p(0, 2) * p(1, 1) * p(2, 0) - p(0, 1) * p(1, 0) * p(2, 2) - p(0, 0) * p(1, 2) * p(2, 1);
+}
+
+Point GetCircleCenter(Point A, Point B, Point C){
+	auto met1 = vector<double>{A % A, A.y, 1., B % B, B.y, 1., C % C, C.y, 1.};
+	auto met2 = vector<double>{A.x, A % A, 1., B.x, B % B, 1., C.x, C % C, 1.};
+	auto met3 = vector<double>{A.x, A.y, 1., B.x, B.y, 1., C.x, C.y, 1.};
+	double tmp = det3(met3) * 2;
+	return Point(det3(met1) / tmp, det3(met2) / tmp);
+}
+
+bool InCircle(Point A, Point B, Point C, Point P){
+	Point O = GetCircleCenter(A, B, C);
+	return dcmp((A - O).len() - (P - O).len()) > 0;
+}
+```
+
+`SegmentProperIntersection` 判断线段严格相交
+
+```c++
+bool SegmentProperIntersection(Point a1 , Point a2 , Point b1 , Point b2) {
+	double c1 = (a2 - a1) ^ (b1 - a1);
+	double c2 = (a2 - a1) ^ (b2 - a1);
+	if(dcmp(c1) == 0 && dcmp(c2) == 0) return 0;
+	double c3 = (b2 - b1) ^ (a1 - b1);
+	double c4 = (b2 - b1) ^ (a2 - b1);
+	return dcmp(c1) * dcmp(c2) < 0 && dcmp(c3) * dcmp(c4) < 0;
+}
+```
+
+## 结语
+
+想好怎么实现之后，代码写起来其实并不复杂，整个过程也没有太多的细节。
+
+在求出 $DT$ 之后，对偶一下即可得到维诺图（Voronoi Diagram）。若想得到每个三角面，使用最左转线法即可，具体可参考平面图转对偶图，在求维诺图的过程中也需要用到。
