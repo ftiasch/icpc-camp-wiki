@@ -100,7 +100,7 @@ solved by skywalkert, upsolved by none
 skywalkert's solution
 
 根据 [De Moivre's
-formula](https://en.wikipedia.org/wiki/De_Moivre%27s_formula) 可得 $$
+formula](https://en.wikipedia.org/wiki/De_Moivre's_formula) 可得 $$
 f(x) = \sum_{i \geq 0}{(-1)^i \binom{n}{n - 2i} x^{n - 2i} \left(1 - x^2\right)^i}，
 $$ 其中 $x^m$ 的系数为 $$
 \sum_{i \geq \frac{n - m}{2}}{(-1)^i \binom{n}{n - 2i} \binom{i}{i - \frac{n - m}{2}}}。
