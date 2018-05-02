@@ -1,77 +1,78 @@
-# I. Vertex Covers
+I. Vertex Covers
+================
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 260;
 bool vis[N][N][10], dp[N][N][10], C[N][N];
 bool dfs(int n, int k, int level) {
-	if (k < 0) return 0;
-	if (k == 0) return 1;
-	bool &res = dp[n][k][level];
-	bool &v = vis[n][k][level];
-	if (v) return res;
-	v = 1;
-	res = 0;
-	if ((n >> level) <= 1) {
-		if ((n & -n) == k) res ^= 1;
-		return res;
-	}
-	for (int cnt2 = 0; cnt2 <= (n >> (level + 1)); ++ cnt2) {
-		for (int remain : {0, 1}) {
-			if (cnt2 * 2 + remain > (n >> level)) continue;
-			int cnt1 = (n >> level);
-			cnt1 -= cnt2 + remain;
-			int op11 = cnt1 - cnt2;
-			int nn = n - op11 * (1 << level);
-			int kk = k - op11 * (1 << level);
-			assert(nn >= 0);
-			if (C[cnt1 - 1 + remain][cnt2 - 1 + remain]) {
-				res ^= dfs(nn, kk, level + 1);
-			}
-		}
-	}
-	return res;
+    if (k < 0) return 0;
+    if (k == 0) return 1;
+    bool &res = dp[n][k][level];
+    bool &v = vis[n][k][level];
+    if (v) return res;
+    v = 1;
+    res = 0;
+    if ((n >> level) <= 1) {
+        if ((n & -n) == k) res ^= 1;
+        return res;
+    }
+    for (int cnt2 = 0; cnt2 <= (n >> (level + 1)); ++ cnt2) {
+        for (int remain : {0, 1}) {
+            if (cnt2 * 2 + remain > (n >> level)) continue;
+            int cnt1 = (n >> level);
+            cnt1 -= cnt2 + remain;
+            int op11 = cnt1 - cnt2;
+            int nn = n - op11 * (1 << level);
+            int kk = k - op11 * (1 << level);
+            assert(nn >= 0);
+            if (C[cnt1 - 1 + remain][cnt2 - 1 + remain]) {
+                res ^= dfs(nn, kk, level + 1);
+            }
+        }
+    }
+    return res;
 }
 /*map<pair<vector<int>, int>, bool> mem;
 bool dfs(vector<int> S, int k) {
-	if (k < 0) return 0;
-	if (k == 0) return 1;
-	auto p = make_pair(S, k);
-	if (mem.count(p)) return mem[p];
-	bool &res = mem[p];
-	for (int i = 0; i < (int) S.size(); ++ i) {
-		for (int j = i + 1; j < (int) S.size(); ++ j) {
-			if (S[i] == S[j]) {
-				vector<int> T;
-				for (int k = 0; k < (int) S.size(); ++ k) if (k != i) T.push_back(S[k]);
-				res ^= dfs(T, k - S[i]);
-				T.clear();
-				for (int k = 0; k < (int) S.size(); ++ k) if (k != i && k != j) T.push_back(S[k]);
-				T.push_back(S[i] * 2);
-				res ^= dfs(T, k);
-				return res;
-			}
-		}
-	}
-	if (S[0] == k) res = 1;
-	return res;
+    if (k < 0) return 0;
+    if (k == 0) return 1;
+    auto p = make_pair(S, k);
+    if (mem.count(p)) return mem[p];
+    bool &res = mem[p];
+    for (int i = 0; i < (int) S.size(); ++ i) {
+        for (int j = i + 1; j < (int) S.size(); ++ j) {
+            if (S[i] == S[j]) {
+                vector<int> T;
+                for (int k = 0; k < (int) S.size(); ++ k) if (k != i) T.push_back(S[k]);
+                res ^= dfs(T, k - S[i]);
+                T.clear();
+                for (int k = 0; k < (int) S.size(); ++ k) if (k != i && k != j) T.push_back(S[k]);
+                T.push_back(S[i] * 2);
+                res ^= dfs(T, k);
+                return res;
+            }
+        }
+    }
+    if (S[0] == k) res = 1;
+    return res;
 }*/
 int main() {
-	for (int i = 0; i < N; ++ i) {
-		C[i][0] = 1;
-		for (int j = 1; j <= i; ++ j) C[i][j] = C[i - 1][j - 1] ^ C[i - 1][j];
-	}
-	int T;
-	scanf("%d", &T);
-	while (T --) {
-		int n, k;
-		scanf("%d%d", &n, &k);
-		bool ans = dfs(n, k, 0);
-		//vector<int> S;
-		//for (int i = 0; i < n; ++ i) S.push_back(1);
-		//bool ans = dfs(S, k);
-		printf("%d\n", (int) ans);
-	}
+    for (int i = 0; i < N; ++ i) {
+        C[i][0] = 1;
+        for (int j = 1; j <= i; ++ j) C[i][j] = C[i - 1][j - 1] ^ C[i - 1][j];
+    }
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        int n, k;
+        scanf("%d%d", &n, &k);
+        bool ans = dfs(n, k, 0);
+        //vector<int> S;
+        //for (int i = 0; i < n; ++ i) S.push_back(1);
+        //bool ans = dfs(S, k);
+        printf("%d\n", (int) ans);
+    }
 }
-~~~
+```
