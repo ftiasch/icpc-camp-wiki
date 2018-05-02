@@ -1,0 +1,33 @@
+EASY: CEFHI
+
+MID: ABJ
+
+A. 强行DP记录方案，倒序DP，$f[k][i][j][w]$表示做到第$k$位将区间$[i,j]$已经排好序，当前的数是$w$的最小更改数，时间复杂度$O(10n^3m)$
+
+B. 强行DAG上DP+暴力枚举，时间复杂度$O(5!m)$
+
+J. 网络流直接建图，建$n*m$个点并拆点为容量，再加一个拉屎限制就好
+
+MID-HARD：KD
+
+K. 强行每个角都找一个圆，然后枚举两个圆判断合不合法。写起来累
+
+D. 还原$n$个点的树，并在树上搞一搞。
+
+~~~{.cpp}
+int gettree(int n){//给出n个点间相互距离，重构树 
+	int m,i,x,u,mx;st[m=1]=1;
+	for(i=2;i<=n;i++){
+		mx=-1;
+		fr(j,i-1){
+			x=(a[1][i]+a[1][j]-a[j][i])/2;
+			if(x>mx)mx=x,u=st[j];
+		}
+		for(;u>1&&d[F[u]]>=mx;u=F[u]);
+		if(d[u]>mx)F[++m]=F[u],d[m]=mx,F[u]=m,u=m;
+		if(a[1][i]>mx)F[++m]=u,d[u=m]=a[1][i];
+		st[i]=u;
+	}
+	for(i=2;i<=m;i++)ins(F[i],i,d[i]-d[F[i]]);
+}
+~~~
