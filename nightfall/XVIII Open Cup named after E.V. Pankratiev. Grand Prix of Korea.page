@@ -1,0 +1,131 @@
+# B. Circular Arrangement
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 105, MOD = 1e9 + 7;
+int group[N][N], a[N], C[N * 55][N], F[N], dp[N][N * 55], insert[N * 55][N], insert2[N * 55][N], inv[N];
+void upd(int &x, int y) { (x += y) %= MOD; }
+int mpow(int x, int n) {
+	int res = 1;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % MOD;
+		x = 1LL * x * x % MOD;
+		n >>= 1;
+	}
+	return res;
+}
+int main() {
+	for (int i = 0; i < N * 55; ++ i) {
+		C[i][0] = 1;
+		for (int j = 1; j < min(i + 1, N); ++ j) C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+	}
+	for (int i = 1; i < N; ++ i) inv[i] = mpow(i, MOD - 2);
+	// partition i numbers into j segments, sum the costs
+	group[0][0] = 1;
+	for (int i = 1; i < N; ++ i) {
+		for (int j = 1; j <= i; ++ j) {
+			for (int k = 1; k <= i; ++ k) {
+				upd(group[i][j], 1LL * group[i - k][j - 1] * k % MOD);
+			}
+		}
+	}
+	int n;
+	scanf("%d", &n);
+	for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+	dp[0][0] = 1;
+	int sum = 0;
+	for (int num = 1; num < n; ++ num) {
+		int a = ::a[num];
+		static int dp2[N];
+		for (int i = 0; i <= a; ++ i) dp2[i] = 0;
+		for (int j = 1; j <= a; ++ j) {
+			for (int k = 1; k <= j; ++ k) {
+				upd(dp2[k], 1LL * ((j - k) % 2 ? MOD - 1 : 1) * C[j - 1][k - 1] % MOD * group[a][j] % MOD);
+			}
+		}
+		for (int glued_parts = 1; glued_parts <= a; ++ glued_parts) {
+			for (int j = 0; j <= sum; ++ j) {
+				upd(dp[num][j + glued_parts], 1LL * dp2[glued_parts] * dp[num - 1][j] % MOD * C[j + glued_parts][glued_parts] % MOD);
+			}
+		}
+		sum += a;
+	}
+	int a = ::a[n], ans = 0;
+	// nnn 22 111 ... (not)nnn
+	static int dp2[N];
+	for (int i = 0; i <= a; ++ i) dp2[i] = 0;
+	for (int j = 1; j <= a; ++ j) {
+		for (int k = 1; k <= j; ++ k) {
+			upd(dp2[k], 1LL * ((j - k) % 2 ? MOD - 1 : 1) * C[j - 1][k - 1] % MOD * group[a][j] % MOD * inv[j] % MOD);
+		}
+	}
+	for (int glued_parts = 1; glued_parts <= a; ++ glued_parts) {
+		for (int j = 1; j <= sum; ++ j) {
+			upd(ans, 1LL * dp2[glued_parts] * dp[n - 1][j] % MOD * C[j + glued_parts - 2][glued_parts - 1] % MOD);
+		}
+	}
+	sum += a;
+	ans = 1LL * ans * sum % MOD;
+	printf("%d\n", ans);
+}
+~~~
+
+# J. Game of Sorting
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e6 + 5;
+int a[N], go[N][2], g[N];
+map<pair<int, int>, int> mem;
+int ask(int l, int r) {
+	if (g[l] >= r) return -1;
+	if (g[l + 1] >= r) return 1;
+	if (g[l] >= r - 1) return 1;
+	if (g[l + 1] >= r - 1) return -1;
+	if (g[l] >= r - 2 && g[l + 2] >= r) return -1;
+	if (g[l + 2] >= r) {
+		auto p = make_pair(l, r);
+		if (mem.count(p)) return mem[p];
+		return mem[p] = -ask(l, r - 1);
+	}
+	if (g[l] >= r - 2) {
+		auto p = make_pair(l, r);
+		if (mem.count(p)) return mem[p];
+		return mem[p] = -ask(l + 1, r);
+	}
+	return 0;
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+	go[n][0] = go[n][1] = n;
+	for (int i = n - 1; i >= 1; -- i) {
+		go[i][0] = (a[i + 1] >= a[i] ? go[i + 1][0] : i);
+		go[i][1] = (a[i + 1] <= a[i] ? go[i + 1][1] : i);
+	}
+	for (int i = 1; i <= n; ++ i) g[i] = max(go[i][0], go[i][1]);
+	int q;
+	scanf("%d", &q);
+	while (q --) {
+		int l, r;
+		scanf("%d%d", &l, &r);
+		int ans = 0;
+		int L = l, R = (l + r) / 2;
+		while (L <= R) {
+			int mid = (L + R) / 2;
+			if (ask(mid, l + r - mid)) {
+				ans = ask(mid, l + r - mid);
+				R = mid - 1;
+			}
+			else {
+				L = mid + 1;
+			}
+		}
+		assert(ans);
+		puts(ans == 1 ? "Alice" : "Bob");
+	}
+}
+~~~
