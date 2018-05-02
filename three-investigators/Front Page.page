@@ -1,9 +1,5 @@
----
-format: Markdown
-title: Three Investigators
-...
-
-# General
+General
+=======
 
 Team **???.jpg** from Beihang University has finished its own mission.
 
@@ -13,23 +9,26 @@ Team **???.jpg** from Beihang University has finished its own mission.
 
 [Jingzhe Tang](https://icpc.baylor.edu/ICPCID/LN5DH8EZG450)
 
-+ 2017-2018
-    - ICPC Shengyang: Gold (2nd place)
-    - ICPC Xi'an: Gold (8/11/13)
-    - CCPC Hangzhou: Gold (4/4/5)
-    - CCPC Final: Gold (6/10/12)
-    - ICPC ECL-Final: Gold (3/5/6)
-    - ICPC World Final: 14th place (23rd place with penalty)
+-   2017-2018
+    -   ICPC Shengyang: Gold (2nd place)
+    -   ICPC Xi'an: Gold (8/11/13)
+    -   CCPC Hangzhou: Gold (4/4/5)
+    -   CCPC Final: Gold (6/10/12)
+    -   ICPC ECL-Final: Gold (3/5/6)
+    -   ICPC World Final: 14th place (23rd place with penalty)
 
-# Workshop
+Workshop
+========
 
 [tips and tricks]() summarize faults, bugs, write some tips, tricks.
 
-[code library]() build code library in specific categories. a few comments would be delicious.
+[code library]() build code library in specific categories. a few
+comments would be delicious.
 
-collect useful, interesting, thought-provoking problems/approaches/ideas.
+collect useful, interesting, thought-provoking
+problems/approaches/ideas.
 
-+ 2017.07.26 - present [recommendation episode 1]() `pro:6`
+-   2017.07.26 - present [recommendation episode 1]() `pro:6`
 
 [网络流]()
 
@@ -37,159 +36,281 @@ collect useful, interesting, thought-provoking problems/approaches/ideas.
 
 [XXT]()
 
-## skywalkert
+skywalkert
+----------
 
-[self page](skywalkert/Front Page)
+[self page](skywalkert/Front%20Page)
 
-[XVI Open Cup Upsolving](skywalkert/XVI Open Cup named after E.V. Pankratiev)
+[XVI Open Cup
+Upsolving](skywalkert/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev)
 
-## chitanda
+chitanda
+--------
 
-[self page](chitanda/Front Page)
+[self page](chitanda/Front%20Page)
 
-## braveTester
+braveTester
+-----------
 
-[self page](braveTester/Front Page)
+[self page](braveTester/Front%20Page)
 
-## TBA
+TBA
+---
 
-构造: [Puzzle with Tables](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#i.-puzzle-with-tables) 手玩 [Pigeonhole Principle](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#g.-pigeonhole-principle) 决策树 [Hotter-Colder](https://wiki-three-investigators.icpc-camp.org/2017-2018%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest#b.-hotter-colder) ??? [Milkland](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Tatarstan#g.-milkland) 极角序构造
+构造: [Puzzle with
+Tables](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#i.-puzzle-with-tables)
+手玩 [Pigeonhole
+Principle](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#g.-pigeonhole-principle)
+决策树
+[Hotter-Colder](https://wiki-three-investigators.icpc-camp.org/2017-2018%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest#b.-hotter-colder)
+???
+[Milkland](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Tatarstan#g.-milkland)
+极角序构造
 
-动态规划: [Connect the Cells](https://wiki-three-investigators.icpc-camp.org/2014%20ACM-ICPC%20Arab%20Collegiate%20Programming%20Contest#e.-connect-the-cells) 状压 **[Better Productivity](https://wiki-three-investigators.icpc-camp.org/2015%20ACM-ICPC%20Northwestern%20European%20Regional%20Contest#b.-better-productivity) 贪心+DP** [King’s Visit](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online#e.-kings-visit) 八方向插头DP [Naomi with Array](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Xi%E2%80%99an%20Regional%20Contest#c.-naomi-with-array) 序列DP [Vertex Covers](https://wiki-three-investigators.icpc-camp.org/2017-2018%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest#i.-vertex-covers) **[Keys](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#f.-keys) 树DP** [Room Service](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#h.-room-service) 镜面反射+DP [Uncrossed Knight’s Tour](https://wiki-three-investigators.icpc.camp/2018%20ACM-ICPC%20World%20Finals#j.-uncrossed-knights-tour) 插头DP+打表
+动态规划: [Connect the
+Cells](https://wiki-three-investigators.icpc-camp.org/2014%20ACM-ICPC%20Arab%20Collegiate%20Programming%20Contest#e.-connect-the-cells)
+状压 **[Better
+Productivity](https://wiki-three-investigators.icpc-camp.org/2015%20ACM-ICPC%20Northwestern%20European%20Regional%20Contest#b.-better-productivity)
+贪心+DP** [King’s
+Visit](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online#e.-kings-visit)
+八方向插头DP [Naomi with
+Array](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Xi%E2%80%99an%20Regional%20Contest#c.-naomi-with-array)
+序列DP [Vertex
+Covers](https://wiki-three-investigators.icpc-camp.org/2017-2018%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest#i.-vertex-covers)
+**[Keys](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#f.-keys)
+树DP** [Room
+Service](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#h.-room-service)
+镜面反射+DP [Uncrossed Knight’s
+Tour](https://wiki-three-investigators.icpc.camp/2018%20ACM-ICPC%20World%20Finals#j.-uncrossed-knights-tour)
+插头DP+打表
 
-计算几何: [Votter and Paul De Mort](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev,%20Eastern%20Grand%20Prix#j.-votter-and-paul-de-mort) 圆与线段交+扫描线 [Roof Skeleton](https://wiki-three-investigators.icpc-camp.org/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#i.-roof-skeleton) 线段交+模拟 [Flight Plan Evaluation](https://wiki-three-investigators.icpc.camp/2015%20ACM-ICPC%20Northwestern%20European%20Regional%20Contest#f.-flight-plan-evaluation) 球面线段交 [Cross on a Plane](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#e.-cross-on-a-plane) 枚举+扫描线 **[Line Segments Clipped by Windows](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Regional%20Nanning%20Online#k.-line-segments-clipped-by-windows) 模拟** **[White Triangle](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Tatarstan#b.-white-triangle) 圆切线** **[Cleaning the Hallway](https://wiki-three-investigators.icpc-camp.org/2013%20ACM-ICPC%20Southwestern%20Europe%20Regional%20Contest#j.-cleaning-the-hallway) 格林公式** [PLAYERUNKNOWN’S BATTLEGROUNDS](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20East%20Continent%20League%20Final#i.-playerunknowns-battlegrounds) 二分+圆切线 [Shortest Flight Path](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#j.-shortest-flight-path) 球面圆交+最短路
+计算几何: [Votter and Paul De
+Mort](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev,%20Eastern%20Grand%20Prix#j.-votter-and-paul-de-mort)
+圆与线段交+扫描线 [Roof
+Skeleton](https://wiki-three-investigators.icpc-camp.org/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#i.-roof-skeleton)
+线段交+模拟 [Flight Plan
+Evaluation](https://wiki-three-investigators.icpc.camp/2015%20ACM-ICPC%20Northwestern%20European%20Regional%20Contest#f.-flight-plan-evaluation)
+球面线段交 [Cross on a
+Plane](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#e.-cross-on-a-plane)
+枚举+扫描线 **[Line Segments Clipped by
+Windows](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Regional%20Nanning%20Online#k.-line-segments-clipped-by-windows)
+模拟** **[White
+Triangle](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Tatarstan#b.-white-triangle)
+圆切线** **[Cleaning the
+Hallway](https://wiki-three-investigators.icpc-camp.org/2013%20ACM-ICPC%20Southwestern%20Europe%20Regional%20Contest#j.-cleaning-the-hallway)
+格林公式** [PLAYERUNKNOWN’S
+BATTLEGROUNDS](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20East%20Continent%20League%20Final#i.-playerunknowns-battlegrounds)
+二分+圆切线 [Shortest Flight
+Path](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#j.-shortest-flight-path)
+球面圆交+最短路
 
-数据结构: [Yuno And Irotoridori no Sekai](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20China%20Guangxi%20Invitational%20Programming%20Contest#l.-yuno-and-irotoridori-no-sekai) 树链剖分+平衡树 [Ants](https://wiki-three-investigators.icpc-camp.org/2017-2018%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest#f.-ants) 树链剖分+扫描线 **[A Safe Bet](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#i.-a-safe-bet) 模拟+扫描线+树状数组**
+数据结构: [Yuno And Irotoridori no
+Sekai](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20China%20Guangxi%20Invitational%20Programming%20Contest#l.-yuno-and-irotoridori-no-sekai)
+树链剖分+平衡树
+[Ants](https://wiki-three-investigators.icpc-camp.org/2017-2018%20Summer%20Petrozavodsk%20Camp,%20Warsaw%20U%20Contest#f.-ants)
+树链剖分+扫描线 **[A Safe
+Bet](https://wiki-three-investigators.icpc-camp.org/2012%20ACM-ICPC%20World%20Finals#i.-a-safe-bet)
+模拟+扫描线+树状数组**
 
-字符串: [Find the Period](https://wiki-three-investigators.icpc-camp.org/BUAA%20Summer%20Practice%202017%20String%20Theory#m.-find-the-period) 基本子串字典
+字符串: [Find the
+Period](https://wiki-three-investigators.icpc-camp.org/BUAA%20Summer%20Practice%202017%20String%20Theory#m.-find-the-period)
+基本子串字典
 
-数学: [Islands](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Xi%E2%80%99an%20Regional%20Contest#d.-islands) 分治NTT+生成函数 [Circle](https://wiki-three-investigators.icpc.camp/2018%20BUPT%20Collegiate%20Programming%20Contest#l.-circle) 记忆化搜索
+数学:
+[Islands](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20Xi%E2%80%99an%20Regional%20Contest#d.-islands)
+分治NTT+生成函数
+[Circle](https://wiki-three-investigators.icpc.camp/2018%20BUPT%20Collegiate%20Programming%20Contest#l.-circle)
+记忆化搜索
 
-杂项: [Blackjack](https://wiki-three-investigators.icpc-camp.org/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#b.-blackjack) 搜索 [Circuit Design](https://wiki-three-investigators.icpc-camp.org/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#d.-circuit-design) 分类讨论 **[Book Pages](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#b.-book-pages) 模拟** **[Hearthrock](https://wiki-three-investigators.icpc-camp.org/2017%20%e4%b8%ad%e5%9b%bd%e5%a4%a7%e5%ad%a6%e7%94%9f%e7%a8%8b%e5%ba%8f%e8%ae%be%e8%ae%a1%e7%ab%9e%e8%b5%9b%20-%20%e6%9d%ad%e5%b7%9e%e7%ab%99#f.-hearthrock) 搜索** [Snakebird](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20East%20Continent%20League%20Final#e.-snakebird) 搜索
+杂项:
+[Blackjack](https://wiki-three-investigators.icpc-camp.org/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#b.-blackjack)
+搜索 [Circuit
+Design](https://wiki-three-investigators.icpc-camp.org/2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#d.-circuit-design)
+分类讨论 **[Book
+Pages](https://wiki-three-investigators.icpc-camp.org/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals#b.-book-pages)
+模拟**
+**[Hearthrock](https://wiki-three-investigators.icpc-camp.org/2017%20%e4%b8%ad%e5%9b%bd%e5%a4%a7%e5%ad%a6%e7%94%9f%e7%a8%8b%e5%ba%8f%e8%ae%be%e8%ae%a1%e7%ab%9e%e8%b5%9b%20-%20%e6%9d%ad%e5%b7%9e%e7%ab%99#f.-hearthrock)
+搜索**
+[Snakebird](https://wiki-three-investigators.icpc-camp.org/2017%20ACM-ICPC%20Asia%20East%20Continent%20League%20Final#e.-snakebird)
+搜索
 
-# Training 2017 - 2018
+Training 2017 - 2018
+====================
 
 <!-- format: date [contestName]() **DONE** `partners` `pro: solved/total` `rk: rank/total` `sol: hasSolution` `sum: hasSummary` -->
 <!-- order: chronological -->
 <!-- unsolved counter: 38 (last updated: 2018.04.30 01:56:59) -->
-
 **Full Attendance**
 
-2018.04.19 [2018 ACM-ICPC World Finals]() `pro:10/11` `rk:23/138` `sol:10` `sum:0`
+2018.04.19 [2018 ACM-ICPC World Finals]() `pro:10/11` `rk:23/138`
+`sol:10` `sum:0`
 
-2018.04.16 [2018 North American Invitational Programming Contest]() **DONE** `pro:11/11` `rk:10/183` `sol:5` `sum:0`
+2018.04.16 [2018 North American Invitational Programming Contest]()
+**DONE** `pro:11/11` `rk:10/183` `sol:5` `sum:0`
 
-2018.04.15 [2018 BUPT Collegiate Programming Contest]() `pro:11/12` `rk:2/105` `sol:6` `sum:0`
+2018.04.15 [2018 BUPT Collegiate Programming Contest]() `pro:11/12`
+`rk:2/105` `sol:6` `sum:0`
 
-2018.04.06 [2012 ACM-ICPC World Finals]() `pro:8/12` `rk:17/167` `sol:3` `sum:0`
+2018.04.06 [2012 ACM-ICPC World Finals]() `pro:8/12` `rk:17/167` `sol:3`
+`sum:0`
 
-2018.03.29 [2017-2018 Summer Petrozavodsk Camp, Warsaw U Contest]() `pro:8/11` `rk:24/82` `sol:7` `sum:0`
+2018.03.29 [2017-2018 Summer Petrozavodsk Camp, Warsaw U Contest]()
+`pro:8/11` `rk:24/82` `sol:7` `sum:0`
 
-2017.12.17 [2017 ACM-ICPC Asia East Continent League Final]() `pro:11/13` `rk:6/328` `sol:8` `sum:2`
+2017.12.17 [2017 ACM-ICPC Asia East Continent League Final]()
+`pro:11/13` `rk:6/328` `sol:8` `sum:2`
 
-2017.12.03 [2017 中国大学生程序设计竞赛 - 总决赛]() **DONE** `pro:11/11` `rk:12/117` `sol:7` `sum:0`
+2017.12.03 [2017 中国大学生程序设计竞赛 - 总决赛]() **DONE** `pro:11/11`
+`rk:12/117` `sol:7` `sum:0`
 
-2017.11.21 [2017 ACM-ICPC Asia Beijing Regional Contest]() **DONE** `pro:10/10` `rk:5/193` `sol:9` `sum:0`
+2017.11.21 [2017 ACM-ICPC Asia Beijing Regional Contest]() **DONE**
+`pro:10/10` `rk:5/193` `sol:9` `sum:0`
 
-2017.11.15 [2013 ACM-ICPC Southwestern Europe Regional Contest]() `pro:9/10` `rk:15/280` `sol:7` `sum:0`
+2017.11.15 [2013 ACM-ICPC Southwestern Europe Regional Contest]()
+`pro:9/10` `rk:15/280` `sol:7` `sum:0`
 
-2017.11.05 [2017 中国大学生程序设计竞赛 - 杭州站]() `pro:11/12` `rk:5/188` `sol:6` `sum:0`
+2017.11.05 [2017 中国大学生程序设计竞赛 - 杭州站]() `pro:11/12`
+`rk:5/188` `sol:6` `sum:0`
 
-2017.10.29 [2017 ACM-ICPC Asia Xi'an Regional Contest]() `pro:9/11` `rk:13/348` `sol:7` `sum:1`
+2017.10.29 [2017 ACM-ICPC Asia Xi'an Regional Contest]() `pro:9/11`
+`rk:13/348` `sol:7` `sum:1`
 
-2017.10.22 [2017 ACM-ICPC Asia Shenyang Regional Contest]() **DONE** `pro:13/13` `rk:2/185` `sol:13` `sum:3`
+2017.10.22 [2017 ACM-ICPC Asia Shenyang Regional Contest]() **DONE**
+`pro:13/13` `rk:2/185` `sol:13` `sum:3`
 
-2017.10.16 [XVII Open Cup named after E.V. Pankratiev. GP of Tatarstan]() `pro:10/12` `rk:22/161` `sol:10` `sum:3`
+2017.10.16 [XVII Open Cup named after E.V. Pankratiev. GP of
+Tatarstan]() `pro:10/12` `rk:22/161` `sol:10` `sum:3`
 
-2017.09.24 [2017 ACM-ICPC Asia Regional Nanning Online]() `pro:12/13` `rk:68/1176` `sol:0` `sum:0`
+2017.09.24 [2017 ACM-ICPC Asia Regional Nanning Online]() `pro:12/13`
+`rk:68/1176` `sol:0` `sum:0`
 
-2017.09.23 [2017 ACM-ICPC Asia Regional Beijing Online]() **DONE** `pro:10/10` `rk:8/1161` `sol:10` `sum:3`
+2017.09.23 [2017 ACM-ICPC Asia Regional Beijing Online]() **DONE**
+`pro:10/10` `rk:8/1161` `sol:10` `sum:3`
 
-2017.09.17 [2017 ACM-ICPC Asia Regional Qingdao Online]() `pro:10/11` `rk:12/1488` `sol;10` `sum:3`
+2017.09.17 [2017 ACM-ICPC Asia Regional Qingdao Online]() `pro:10/11`
+`rk:12/1488` `sol;10` `sum:3`
 
-2017.09.16 [2017 ACM-ICPC Asia Regional Xi'an Online]() **DONE** `pro:10/10` `rk:37/1159` `sol:10` `sum:3`
+2017.09.16 [2017 ACM-ICPC Asia Regional Xi'an Online]() **DONE**
+`pro:10/10` `rk:37/1159` `sol:10` `sum:3`
 
-2017.09.10 [2017 ACM-ICPC Asia Regional Shenyang Online]() **DONE** `pro:12/12` `rk:15/1289` `sol:12` `sum:3`
+2017.09.10 [2017 ACM-ICPC Asia Regional Shenyang Online]() **DONE**
+`pro:12/12` `rk:15/1289` `sol:12` `sum:3`
 
-2017.09.09 [2017 ACM-ICPC Asia Regional Urumqi Online]() **DONE** `pro:10/10` `rk:28/1349` `sol:10` `sum:3`
+2017.09.09 [2017 ACM-ICPC Asia Regional Urumqi Online]() **DONE**
+`pro:10/10` `rk:28/1349` `sol:10` `sum:3`
 
-2017.08.24 [2017 Multi-University Training Contest - Team 10]() **DONE** `pro:11/11` `rk:81/544` `sol:11` `sum:3`
+2017.08.24 [2017 Multi-University Training Contest - Team 10]() **DONE**
+`pro:11/11` `rk:81/544` `sol:11` `sum:3`
 
-2017.08.22 [2017 Multi-University Training Contest - Team 9]() **DONE** `pro:10/10` `rk:10/626` `sol:10` `sum:3`
+2017.08.22 [2017 Multi-University Training Contest - Team 9]() **DONE**
+`pro:10/10` `rk:10/626` `sol:10` `sum:3`
 
-2017.08.19 [2017 中国大学生程序设计竞赛 - 网络选拔赛]() **DONE** `pro:11/11` `rk:6/1185` `sol:11` `sum:3`
+2017.08.19 [2017 中国大学生程序设计竞赛 - 网络选拔赛]() **DONE**
+`pro:11/11` `rk:6/1185` `sol:11` `sum:3`
 
-2017.08.12 [2013 ACM-ICPC Asia Regional Changchun Online]() **DONE** `pro:11/11` `rk:6/210` `sol:11` `sum:3`
+2017.08.12 [2013 ACM-ICPC Asia Regional Changchun Online]() **DONE**
+`pro:11/11` `rk:6/210` `sol:11` `sum:3`
 
-2017.08.10 [2017 Multi-University Training Contest - Team 6]() **DONE** `pro:12/12` `rk:24/758` `sol:12` `sum:3`
+2017.08.10 [2017 Multi-University Training Contest - Team 6]() **DONE**
+`pro:12/12` `rk:24/758` `sol:12` `sum:3`
 
-2017.08.08 [2017 Multi-University Training Contest - Team 5]() **DONE** `pro:11/11` `rk:26/758` `sol:11` `sum:3`
+2017.08.08 [2017 Multi-University Training Contest - Team 5]() **DONE**
+`pro:11/11` `rk:26/758` `sol:11` `sum:3`
 
-2017.08.05 [2013 ACM-ICPC Asia Regional Nanjing Online]() **DONE** `pro:11/11` `rk:5/253` `sol:11` `sum:3`
+2017.08.05 [2013 ACM-ICPC Asia Regional Nanjing Online]() **DONE**
+`pro:11/11` `rk:5/253` `sol:11` `sum:3`
 
-2017.08.03 [2017 Multi-University Training Contest - Team 4]() **DONE** `pro:13/13` `rk:13/739` `sol:13` `sum:3`
+2017.08.03 [2017 Multi-University Training Contest - Team 4]() **DONE**
+`pro:13/13` `rk:13/739` `sol:13` `sum:3`
 
-2017.08.01 [2017 Multi-University Training Contest - Team 3]() **DONE** `pro:11/11` `rk:6/766` `sol:11` `sum:3`
+2017.08.01 [2017 Multi-University Training Contest - Team 3]() **DONE**
+`pro:11/11` `rk:6/766` `sol:11` `sum:3`
 
-2017.07.29 [2013 Multi-University Training Contest 7]() **DONE** `pro:10/10` `rk:8/391` `sol:10` `sum:3`
+2017.07.29 [2013 Multi-University Training Contest 7]() **DONE**
+`pro:10/10` `rk:8/391` `sol:10` `sum:3`
 
-2017.04.09 [2017 BUPT Collegiate Programming Contest]() **DONE** `pro:12/12` `rk:4/118` `sol:12` `sum:0`
+2017.04.09 [2017 BUPT Collegiate Programming Contest]() **DONE**
+`pro:12/12` `rk:4/118` `sol:12` `sum:0`
 
-2017.04.07 [2016 ACM-ICPC Pacific Northwest Regional Contest]() **DONE** `pro:12/12` `rk:34/143` `sol:12` `sum:0`
+2017.04.07 [2016 ACM-ICPC Pacific Northwest Regional Contest]() **DONE**
+`pro:12/12` `rk:34/143` `sol:12` `sum:0`
 
 **Partial Attendance**
 
-2017.10.14 [XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two Capitals]() `H` `pro:7/11` `rk:72/179` `sol:1` `sum:0`
+2017.10.14 [XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two
+Capitals]() `H` `pro:7/11` `rk:72/179` `sol:1` `sum:0`
 
-2017.10.07 [2015 ACM-ICPC Northwestern European Regional Contest]() `H` `pro:9/11` `rk:22/339` `sol:0` `sum:0`
+2017.10.07 [2015 ACM-ICPC Northwestern European Regional Contest]() `H`
+`pro:9/11` `rk:22/339` `sol:0` `sum:0`
 
-2017.10.05 [2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich Contest 35]() `HL` `pro:7/10` `rk:21/99` `sol:7` `sum:0`
+2017.10.05 [2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich
+Contest 35]() `HL` `pro:7/10` `rk:21/99` `sol:7` `sum:0`
 
-2017.10.03 [2016-2017 ACM-ICPC, Asia Tsukuba Regional Contest]() `HL` **DONE** `pro:11/11` `rk:28/278` `sol:11` `sum:0`
+2017.10.03 [2016-2017 ACM-ICPC, Asia Tsukuba Regional Contest]() `HL`
+**DONE** `pro:11/11` `rk:28/278` `sol:11` `sum:0`
 
-2017.09.30 [2013-2014 ACM-ICPC, NEERC, Eastern Subregional Contest]() `HL` **DONE** `pro:10/10` `rk;22/513` `sol:4` `sum:0`
+2017.09.30 [2013-2014 ACM-ICPC, NEERC, Eastern Subregional Contest]()
+`HL` **DONE** `pro:10/10` `rk;22/513` `sol:4` `sum:0`
 
-2017.09.22 [Bubble Cup X - Finals]() `HL` **DONE** `pro:9/9` `rk:44/339` `sol:7` `sum:0`
+2017.09.22 [Bubble Cup X - Finals]() `HL` **DONE** `pro:9/9` `rk:44/339`
+`sol:7` `sum:0`
 
-2017.09.20 [XVII Open Cup named after E.V. Pankratiev, Eastern Grand Prix]() `HL` `pro:11/12` `rk:47/118` `sol:11` `sum:0`
+2017.09.20 [XVII Open Cup named after E.V. Pankratiev, Eastern Grand
+Prix]() `HL` `pro:11/12` `rk:47/118` `sol:11` `sum:0`
 
-2017.08.31 [2017 ACM-ICPC China Guangxi Invitational Programming Contest]() `H` `pro:11/12` `sol:11`
+2017.08.31 [2017 ACM-ICPC China Guangxi Invitational Programming
+Contest]() `H` `pro:11/12` `sol:11`
 
-2017.08.17 [2017 Multi-University Training Contest - Team 8]() `TH` **DONE** `pro:11/11` `rk:27/491` `sol:11` `sum:2`
+2017.08.17 [2017 Multi-University Training Contest - Team 8]() `TH`
+**DONE** `pro:11/11` `rk:27/491` `sol:11` `sum:2`
 
-2017.08.15 [2017 Multi-University Training Contest - Team 7]() `TH` **DONE** `pro:13/13` `rk:16/735` `sol:13` `sum:2`
+2017.08.15 [2017 Multi-University Training Contest - Team 7]() `TH`
+**DONE** `pro:13/13` `rk:16/735` `sol:13` `sum:2`
 
-2017.08.04 [2014 ACM-ICPC Arab Collegiate Programming Contest]() `H` `pro:9/10` `rk:4/35` `sol:0` `sum:0`
+2017.08.04 [2014 ACM-ICPC Arab Collegiate Programming Contest]() `H`
+`pro:9/10` `rk:4/35` `sol:0` `sum:0`
 
-2017.07.30 [2013 ACM-ICPC Asia Changchun Regional Contest]() `HL` **DONE** `pro:10/10` `rk:16/470` `sol:10` `sum:2`
+2017.07.30 [2013 ACM-ICPC Asia Changchun Regional Contest]() `HL`
+**DONE** `pro:10/10` `rk:16/470` `sol:10` `sum:2`
 
-2017.07.27 [2017 Multi-University Training Contest - Team 2]() `TL` **DONE** `pro:11/11` `rk:32/730` `sol:11` `sum:2`
+2017.07.27 [2017 Multi-University Training Contest - Team 2]() `TL`
+**DONE** `pro:11/11` `rk:32/730` `sol:11` `sum:2`
 
-2017.06.03 [2014-2015 Summer Petrozavodsk Camp, Petr Mitrichev Contest 12]() `HL` **DONE** `pro:9/9` `rk:12/37` `sol:9` `sum:0`
+2017.06.03 [2014-2015 Summer Petrozavodsk Camp, Petr Mitrichev Contest
+12]() `HL` **DONE** `pro:9/9` `rk:12/37` `sol:9` `sum:0`
 
-2017.03.12 [2015 ACM-ICPC Southwestern Europe Regional Contest]() `TL` **DONE** `pro:10/10` `rk:13/90` `sol:10` `sum:0`
+2017.03.12 [2015 ACM-ICPC Southwestern Europe Regional Contest]() `TL`
+**DONE** `pro:10/10` `rk:13/90` `sol:10` `sum:0`
 
 **Non-Standard Practice**
 
 2017.09.10 [Russian Code Cup 2017 - Finals]() **DONE** `pro:6/6` `sol:6`
 
-2017.08.14 [BUAA Summer Practice 2017 Dynamic Programming]() **DONE** `pro:12/12` `sol:12`
+2017.08.14 [BUAA Summer Practice 2017 Dynamic Programming]() **DONE**
+`pro:12/12` `sol:12`
 
-2017.08.07 [BUAA Summer Practice 2017 Graph Theory]() **DONE** `pro:12/12` `sol:12`
+2017.08.07 [BUAA Summer Practice 2017 Graph Theory]() **DONE**
+`pro:12/12` `sol:12`
 
-2017.08.06 [2014 ACM-ICPC Asia Regional Anshan Online]() **DONE** `pro:10/10` `sol:10`
+2017.08.06 [2014 ACM-ICPC Asia Regional Anshan Online]() **DONE**
+`pro:10/10` `sol:10`
 
-2017.08.02 [2013 ACM-ICPC Asia Chengdu Regional Contest]() **DONE** `pro:10/10` `sol:10`
+2017.08.02 [2013 ACM-ICPC Asia Chengdu Regional Contest]() **DONE**
+`pro:10/10` `sol:10`
 
-2017.07.30 [BUAA Summer Practice 2017 Data Structure]() **DONE** `pro:12/12` `sol:12`
+2017.07.30 [BUAA Summer Practice 2017 Data Structure]() **DONE**
+`pro:12/12` `sol:12`
 
-2017.07.24 [BUAA Summer Practice 2017 String Theory]() `pro:12/13` `sol:12`
+2017.07.24 [BUAA Summer Practice 2017 String Theory]() `pro:12/13`
+`sol:12`
 
 2017.05.24 [2017 ACM-ICPC World Finals]() **DONE** `pro:12/12` `sol:12`
 
-2016.08.13 [2015-2016 Petrozavodsk Winter Training Camp, Saratov SU Contest]() **DONE** `pro:11/11` `sol:8`
+2016.08.13 [2015-2016 Petrozavodsk Winter Training Camp, Saratov SU
+Contest]() **DONE** `pro:11/11` `sol:8`
 
-# Strategy
+Strategy
+========
 
 TBD
 
@@ -203,6 +324,7 @@ TBD
 
 next meeting: TBD
 
-# Others
+Others
+======
 
 [临时/翻新计划]()
