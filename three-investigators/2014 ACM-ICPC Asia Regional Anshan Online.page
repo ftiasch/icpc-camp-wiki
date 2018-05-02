@@ -1,0 +1,144 @@
+# Contest Info
+
+date: 2017.08.06 10:00-15:00
+
+[practice link](https://vjudge.net/contest/176803)
+
+# Solutions
+
+## A. Biconnected
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+双连通图的数量 = 连通图的数量 - 连通图中非双连通图的数量
+
+连通图的数量 = 图的总数 - 非连通图的数量
+
+设 $ed[S]$ 表示 $S$ 点集的点两两之间能连的边数，$ed[S][T]$ 表示两个不相交的点集 $S$ 和 $T$ 之间能连的边数。
+
+$f[S]$ 表示点集 $S$ 不同的连通图数，$g[S]$ 表示点集 $S$ 不同的非连通图数量，设 $p_S$ 表示点集 $S$ 中最小的点。
+
+对于 $g[S]$ 的计算，枚举 $p_S$ 所在的连通块 $S'$：
+
+$$
+g[S]=\sum_{p_S\in S',S'\subset S}f[S']\times 2^{ed[S-S']}\\
+f[S]=2^{ed[S]}-g[S]
+$$
+
+再设 $t[S]$ 为点集 $S$ 不同的双连通图数，$h[S]$ 为点集 $S$ 不同的非双连通的连通图数。
+
+对于 $h[S]$ 的计算，枚举 $p_S$ 所在的双连通分量 $S'$ ：
+
+$$
+h[S]=\sum_{p_S\in S',S'\subset S}t[S']\times Merge(S',S-S')\\
+t[S]=f[S]-h[S]
+$$
+
+$Merge(S,S')$ 即将 $S$ 这个双连通分量和点集 $S'$ 连接成一个连通图的方案数。
+
+$$
+Merge(S,0)=1\\
+Merge(S,S')=\sum_{p_{S'}\in S'',S''\subseteq S'}Merge(S,S'-S'')\times f[S'']\times eds[S][S'']
+$$
+
+## B. Rotate
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+若初始点向量为 $T$，绕点 $B$ 逆时针旋转角度 $p$ ，即将坐标轴逆时针旋转 $-p$ ，设坐标轴旋转矩阵为 $A$ ，那么新坐标为 $A(T-B)+B=AT+(I-A)B$ ，$n$ 次变换可以得到最终的答案为 $PT+Q$ ，那么设答案的点为 $ANS$ ，有 $P(T-ANS)+ANS=PT+Q$ ，所以 $ANS=(I-P)^{-1}\times Q$ ，然后用 $atan2$ 可以计算出旋转的角度。
+
+## C. Overt
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+-= 可以看做 +=，相邻的 += 可以合并，合并完后就只剩最多 $20$ 个 +=，设 $f[i][S]$ 表示做完二进制低 $i$ 位，有进位的 += 的集合为 $S$ 时答案的最大值，然后枚举 $i+1$ 位是 0 还是 1，计算出新的进位集合 $S'$，来更新 $f[i+1][S']$
+
+## D. Clone
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+即对于这么一个偏序关系，求最大反链，那么即各维之和为 $\frac{\sum_{i=1}^{n}T_i}{2}$ 的所有向量。
+
+## E. Walk
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+枚举哪个点走不到，然后修改转移矩阵，通过递推可以算出第 $i$ 步在点 $j$ 的概率，用矩阵乘法优化这个递推。
+
+## F. Tree
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+LCT, 维护最大值次大值以及相应的个数。
+
+## G. Osu!
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+模拟
+
+## H. KAMI
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+将连通的相同颜色位置缩成一个点，每次操作相当于将一个点染成其他颜色，然后合并同色相邻点。
+
+在多数情况下，每次染同一个点很容易得到最优解，然而反例也很好找，比如颜色和连通性为 `1-4-1-3-2-3-4-2-4-3-1-3-2`，最优步数是 $7$ 而不是更多。
+
+数据比较弱，只考虑多数情况就可以暴力枚举通过了。如果要考虑全部情况，可能需要写一个估价函数较好的启发式搜索。
+
+## I. Compromise
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+对于第一问，直接 DFS，每个点让当前决策的人最优即可。
+
+对于第二问，二分答案，DFS 每个点，对于 AMB，像上面一样决策，对于 Xiaoqiang，如果让自己最优的决策无法达到答案，那么选择让 AMB 最差的决策。
+
+## J. Resistance
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+对于 $c=0$ 的边，相当于将两个点合并，由于数据随机，在 $M=4N$ 条随机边之后，剩下的点肯定不多。
+
+合并完点之后，只剩电阻大于 $0$ 的边，这时可以通过 $R=\frac{U}{I}$ 来计算电阻，设一个电流 $I$ ，并且设 $T$ 的电势为 $0$ ，构造矩阵，高斯消元算出 $S$ 的电势，然后就能得到答案了。
