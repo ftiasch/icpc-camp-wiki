@@ -1,0 +1,25 @@
+## SRM686 Easy
+
+> 给一个由$()$ 和$[]$ 构成的括号序列,问有多少个它的子序列是合法的括号序列.
+
+$dp[i][j]$ 表示区间$[i,j]$ 的答案,$dps[i][j]$ 表示区间$[i,j]$上形如$(A)$ 或$[A]$ 的合法的子序列的个数
+那么：
+$$
+dp[i][j]=dps[i][j]+\sum_{k=i+1}^{j}(dps[i][k]-dps[i][k-1])*dp[k+1][j]
+$$
+$$
+dps[i][j]=\sum_{a=i}^{j-1} \sum_{b=a+1}^{j} [a,b是一对括号]\cdot (dp[i+1][j-1]+1)
+$$
+
+## SRM686 Medium
+
+> 求$\sum_{i=1}^{n}\begin{bmatrix} n \\i\end{bmatrix}\cdot i^m$
+
+答案即
+$$
+\sum_{i=1}^{n}\begin{bmatrix} n \\i\end{bmatrix}\cdot i^m
+=\sum_{i=1}^{n}\begin{bmatrix} n \\i\end{bmatrix}\cdot \sum_{j=0}^{m}\begin{Bmatrix}m\\ j\end{Bmatrix}\cdot j!\cdot \begin{pmatrix} i \\j\end{pmatrix}
+=\sum_{j=0}^{m}\begin{Bmatrix}m\\ j\end{Bmatrix}\cdot j!\cdot \sum_{i=1}^{n}\begin{bmatrix} n \\i\end{bmatrix}\cdot \begin{pmatrix} i \\j\end{pmatrix}
+=\sum_{j=0}^{m}\begin{Bmatrix}m\\ j\end{Bmatrix}\cdot j!\cdot \begin{bmatrix} n+1 \\j+1\end{bmatrix}
+$$
+至于为什么$\sum_{i=1}^{n}\begin{bmatrix} n \\i\end{bmatrix}\cdot \begin{pmatrix} i \\j\end{pmatrix}=\begin{bmatrix} n+1 \\j+1\end{bmatrix}$,我只能说我不会
