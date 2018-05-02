@@ -1,97 +1,113 @@
-# Info
+Info
+====
 
 Date: 2017.11.14 18:00-23:00
 
 [Link](http://codeforces.com/gym/101608)
 
-# Solutions
+Solutions
+=========
 
-## A Chrome Tabs
-
-solved by sk, upsolved by none
-
-## B OverCode
+A Chrome Tabs
+-------------
 
 solved by sk, upsolved by none
 
-## C A message for you!
+B OverCode
+----------
 
 solved by sk, upsolved by none
 
-## D Test Cases
+C A message for you!
+--------------------
+
+solved by sk, upsolved by none
+
+D Test Cases
+------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 枚举左端点，扩展右端点，维护每种数字出现次数以及当前出现奇数次的数字种类数，复杂度$O(n^2)$。
 
-## E Robot I - Instruction Reduction
+E Robot I - Instruction Reduction
+---------------------------------
 
 solved by Jove, upsolved by none
 
-## F Robot II - Colorful Grid
+F Robot II - Colorful Grid
+--------------------------
 
 unsolved
 
-## G WiFi Password
+G WiFi Password
+---------------
 
 solved by sk, upsolved by none
 
-## H Gas Stations
+H Gas Stations
+--------------
 
 solved by sk, upsolved by none
 
-## I Counting Votes
+I Counting Votes
+----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 选取图形的重心进行观察，发现$H$的重心离图形最近、$Y$次之、$M$最远，于是考察重心到点集的最小距离和最大距离之比，需要仔细选取阈值。
 
-## J Efficiency Test
+J Efficiency Test
+-----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 三倍长原序列，对每个步长求出从每个位置出发沿着这个步长最远可以跳到哪，对于每组查询，实际上就是要从$i$跳到$i+n$左侧第一个墙右侧，利用预处理的信息往右跳，如果跳到不能跳，那么累加步数之后减小步长继续跳，如果跳过了目标点，那么求出目标点右侧第一个落脚点然后累加步长，复杂度$O(nk)$。
 
-## K Running Threads
+K Running Threads
+-----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 实际上就是要选出$\leq k$个上升子序列，使得每个数恰好属于一个子序列，选出一条子序列的代价是序列最大的元素，现在要分别最小化和最大化代价，带下界最小费用流。
 
-## L Knights
+L Knights
+---------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 只需要记录前$4$行骑士的跳法，去除一些不会影响当前行的跳法，只需要记录$525$种状态，适当剪枝和卡常数就可以通过。
 
-## M Winning Cells
+M Winning Cells
+---------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 容易证明先手必败当且仅当$k+1$整除$x-y$，推公式直接枚举对角线求和。
 
-# Replay
+Replay
+======
