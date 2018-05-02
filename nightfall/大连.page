@@ -16,7 +16,7 @@ G：一个$n$个节点的树，每个节点是$k$种颜色之一。问树上有�
 
 树分治一下，将$k$种颜色状压，也就是求树上或运算为$2^k-1$的路径条数，那么树分治下去时直接暴力做的复杂度是$O(nlgn2^k)$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 55555
 #define LL long long
@@ -27,48 +27,48 @@ LL an;
 bool vis[N];
 void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
 void dsz(int x,int fa){
-	sz[x]=1;mv[x]=0;
-	for(int i=fir[x],y;i;i=ne[i])
-		if(!vis[y=la[i]]&&y!=fa)
-			dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
+    sz[x]=1;mv[x]=0;
+    for(int i=fir[x],y;i;i=ne[i])
+        if(!vis[y=la[i]]&&y!=fa)
+            dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
 }
 void drt(int zs,int x,int fa,int&rt){
-	mv[x]=max(mv[x],sz[zs]-sz[x]);
-	if(mv[x]<mv[rt]||!rt)rt=x;
-	for(int i=fir[x],y;i;i=ne[i])
-		if(!vis[y=la[i]]&&y!=fa)drt(zs,y,x,rt);
+    mv[x]=max(mv[x],sz[zs]-sz[x]);
+    if(mv[x]<mv[rt]||!rt)rt=x;
+    for(int i=fir[x],y;i;i=ne[i])
+        if(!vis[y=la[i]]&&y!=fa)drt(zs,y,x,rt);
 }
 void add(int x,int fa,int z){
-	z|=(1<<c[x]);V[z]++;
-	for(int i=fir[x],y;i;i=ne[i])if(!vis[y=la[i]]&&y!=fa)add(y,x,z);
+    z|=(1<<c[x]);V[z]++;
+    for(int i=fir[x],y;i;i=ne[i])if(!vis[y=la[i]]&&y!=fa)add(y,x,z);
 }
 void count(int j){
-	for(int i=j;i;i=(i-1)&j)an+=V[(1<<k)-1-i];
-	an+=V[(1<<k)-1];
+    for(int i=j;i;i=(i-1)&j)an+=V[(1<<k)-1-i];
+    an+=V[(1<<k)-1];
 }
 void calc(int x,int fa,int z){
-	z|=(1<<c[x]);
-	count(z);
-	for(int i=fir[x],y;i;i=ne[i])if(!vis[y=la[i]]&&y!=fa)calc(y,x,z);
+    z|=(1<<c[x]);
+    count(z);
+    for(int i=fir[x],y;i;i=ne[i])if(!vis[y=la[i]]&&y!=fa)calc(y,x,z);
 }
 void fz(int x){
-	int i,p,y,rt=0;
-	dsz(x,0);drt(x,x,0,rt);
-	vis[rt]=1;CL(V);V[0]=1;
-	for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]])calc(y,rt,1<<c[rt]),add(y,rt,0);
-	for(i=fir[rt];i;i=ne[i])if(!vis[la[i]])fz(la[i]);
+    int i,p,y,rt=0;
+    dsz(x,0);drt(x,x,0,rt);
+    vis[rt]=1;CL(V);V[0]=1;
+    for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]])calc(y,rt,1<<c[rt]),add(y,rt,0);
+    for(i=fir[rt];i;i=ne[i])if(!vis[la[i]])fz(la[i]);
 }
 int main(){
-	for(;~scanf("%d%d",&n,&k);){
-		tot=an=0;CL(fir);CL(vis);
-		for(i=1;i<=n;i++)scanf("%d",&c[i]),c[i]--;
-		for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
-		fz(1);an*=2;
-		if(k==1)an+=n;
-		printf("%lld\n",an);
-	}
+    for(;~scanf("%d%d",&n,&k);){
+        tot=an=0;CL(fir);CL(vis);
+        for(i=1;i<=n;i++)scanf("%d",&c[i]),c[i]--;
+        for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+        fz(1);an*=2;
+        if(k==1)an+=n;
+        printf("%lld\n",an);
+    }
 }
-~~~
+```
 
 不可做：BC
 
