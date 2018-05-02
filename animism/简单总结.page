@@ -1,10 +1,14 @@
-# 贪心
+贪心
+====
 
-# 网络流
+网络流
+======
 
-# dp
+dp
+==
 
-# 数学
+数学
+====
 
 求一类函数的前缀和
 
@@ -40,17 +44,21 @@ $F(n)=(\frac{n(n+1)}{2})^2+\sum_{p=2}^{n}p^2\times F(\left \lfloor \frac{n}{p} \
 
 $F(n)=n-1 - \sum_{p=2}^{n}F(\left \lfloor \frac{n}{p} \right \rfloor)​$
 
-# 构造
+构造
+====
 
-# 常用思想(套路)
+常用思想(套路)
+==============
 
-## 平方、三方之类的计数\统计问题
+平方、三方之类的计数\统计问题
+-----------------------------
 
 变成"几个独立的问题同时做"的模型
 
 examples:
 
-[AtCoder 011 C](http://agc011.contest.atcoder.jp/tasks/agc011_c)
-Qingdao regional 2016 某题
+[AtCoder 011 C](http://agc011.contest.atcoder.jp/tasks/agc011_c) Qingdao
+regional 2016 某题
 
-## 根号复杂度的分析
+根号复杂度的分析
+----------------
