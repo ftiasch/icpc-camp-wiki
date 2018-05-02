@@ -1,6 +1,8 @@
-# 区域赛
+区域赛
+======
 
-## 2016
+2016
+----
 
 ### [北京(7/11)](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=728)
 
@@ -12,7 +14,7 @@ I：给定$s[i]$，求$f[i]=\sum (\sum_j^i s[j])^k$，$n\leq50000,k\leq100$。
 
 令$S[i]=\sum_j^i s[j]$，将公式拆开得$f[i]=\sum (S[i]-S[j-1])^k=C(k,0)*S[i]^k-C(k,1)*S[i]^{k-1}*S[j-1]+...+(-1)^k*C(k,k)*S[j-1]^k$，再记一次幂次前缀和就行了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 55555
 #define W 111
@@ -21,28 +23,28 @@ using namespace std;
 int T,i,j,n,k,o,V,an,S[N][W],SS[N][W],c[W][W];
 char s[N];
 int main(){
-	for(i=0;i<=100;i++)for(c[i][0]=j=1;j<=i;j++)c[i][j]=(c[i-1][j-1]+c[i-1][j])%M;
-	for(scanf("%d",&T);T--;){
-		scanf("%d%d%s",&n,&k,s+1);an=0;SS[0][0]=1;
-		for(i=1;i<=n;i++)S[i][0]=1,S[i][1]=S[i-1][1]+s[i]-'0';
-		for(i=1;i<=n;i++)for(j=2;j<=k;j++)S[i][j]=1ll*S[i][j-1]*S[i][1]%M;
-		for(i=1;i<=n;i++)for(j=0;j<=k;j++)SS[i][j]=(SS[i-1][j]+S[i][j])%M;
-		for(i=1;i<=n;i++){
-			for(an=j=0;j<=k;j++){
-				V=1ll*S[i][k-j]*SS[i-1][j]%M*c[k][j]%M;
-				if(j&1)an=(an+M-V)%M;else an=(an+V)%M;
-			}
-			printf("%d%c",an,i==n?'\n':' ');
-		}
-	}
+    for(i=0;i<=100;i++)for(c[i][0]=j=1;j<=i;j++)c[i][j]=(c[i-1][j-1]+c[i-1][j])%M;
+    for(scanf("%d",&T);T--;){
+        scanf("%d%d%s",&n,&k,s+1);an=0;SS[0][0]=1;
+        for(i=1;i<=n;i++)S[i][0]=1,S[i][1]=S[i-1][1]+s[i]-'0';
+        for(i=1;i<=n;i++)for(j=2;j<=k;j++)S[i][j]=1ll*S[i][j-1]*S[i][1]%M;
+        for(i=1;i<=n;i++)for(j=0;j<=k;j++)SS[i][j]=(SS[i-1][j]+S[i][j])%M;
+        for(i=1;i<=n;i++){
+            for(an=j=0;j<=k;j++){
+                V=1ll*S[i][k-j]*SS[i-1][j]%M*c[k][j]%M;
+                if(j&1)an=(an+M-V)%M;else an=(an+V)%M;
+            }
+            printf("%d%c",an,i==n?'\n':' ');
+        }
+    }
 }
-~~~
+```
 
 C：一个$n*n$的棋盘上每个格子是黑或白，要求第$i$行的黑棋数在$[Li_i,Ri_i]$之间，第$j$行的黑棋数在$[Lj_j,Rj_j]$之间。现在有$\frac{n*n}{2}$对交换$(X1,Y1)(X2,Y2)$，表示可以交换$(X1,Y1)(X2,Y2)$的棋子，满足$X1=X2$或$Y1=Y2$，问是否满足所有限制以及满足所有限制的最小交换数。
 
 网络流建图，将行和列拆成点，源向行、列连本来的黑棋数，行、列向汇连限制范围，行、列之间交换棋子加费用，跑有源汇最小费用最大流。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111
 #define M 22222
@@ -51,80 +53,80 @@ C：一个$n*n$的棋盘上每个格子是黑或白，要求第$i$行的黑棋�
 using namespace std;
 int n,S,T,SS,TT,a[N][N],Vi[N],Vj[N],Li[N],Ri[N],Lj[N],Rj[N];
 struct CostFlow{
-	int m,h,t,tot,an,fl,SUM,du[N],fir[N],va[M],la[M],ne[M],q[N],d[N],fa[N],pre[N],co[M];bool v[N];
-	void in(){CL(fir);CL(pre);CL(fa);CL(du);tot=1;SUM=0;}
-	void ins(int x,int y,int fl,int z){
-		la[++tot]=y;ne[tot]=fir[x];va[tot]=fl;co[tot]=z;fir[x]=tot;
-		la[++tot]=x;ne[tot]=fir[y];va[tot]=0;co[tot]=-z;fir[y]=tot;
-	}
-	void add(int x,int y,int L,int R,int c){
-		du[x]-=L;du[y]+=L;
-		ins(x,y,R-L,c);
-	}
-	void prepare(){
-		for(int i=1;i<=n;i++){
-			if(du[i]>0)ins(SS,i,du[i],0),SUM+=du[i];
-			if(du[i]<0)ins(i,TT,-du[i],0);
-		}
-		ins(T,S,inf,0);
-	}
-	bool spfa(int S,int T,int n){
-		int i,x,y;
-		for(i=1;i<=n;i++)d[i]=inf;
-		for(CL(v),d[S]=h=0,v[q[t=1]=S]=1;h^t;)
-			for(i=fir[x=q[h=h%n+1]],v[x]=0;i;i=ne[i])
-				if(d[x]+co[i]<d[y=la[i]]&&va[i]){
-					d[y]=d[fa[y]=x]+co[pre[y]=i];
-					if(!v[y])v[q[t=t%n+1]=y]=1;
-				}
-		return d[T]<inf;
-	}
-	void end(int S,int T){
-		int i,p=inf;
-		for(i=T;i!=S;i=fa[i])p=min(p,va[pre[i]]);fl+=p;
-		for(i=T;i!=S;i=fa[i])va[pre[i]]-=p,va[pre[i]^1]+=p,an+=p*co[pre[i]];
-	}
-	int cal(int S,int T,int n){
-		for(an=fl=0;spfa(S,T,n);end(S,T));
-		return an;
-	}
-	int work(){
-		cal(SS,TT,n+2);
-		if(fl!=SUM)return -1;else return an;
-	}
+    int m,h,t,tot,an,fl,SUM,du[N],fir[N],va[M],la[M],ne[M],q[N],d[N],fa[N],pre[N],co[M];bool v[N];
+    void in(){CL(fir);CL(pre);CL(fa);CL(du);tot=1;SUM=0;}
+    void ins(int x,int y,int fl,int z){
+        la[++tot]=y;ne[tot]=fir[x];va[tot]=fl;co[tot]=z;fir[x]=tot;
+        la[++tot]=x;ne[tot]=fir[y];va[tot]=0;co[tot]=-z;fir[y]=tot;
+    }
+    void add(int x,int y,int L,int R,int c){
+        du[x]-=L;du[y]+=L;
+        ins(x,y,R-L,c);
+    }
+    void prepare(){
+        for(int i=1;i<=n;i++){
+            if(du[i]>0)ins(SS,i,du[i],0),SUM+=du[i];
+            if(du[i]<0)ins(i,TT,-du[i],0);
+        }
+        ins(T,S,inf,0);
+    }
+    bool spfa(int S,int T,int n){
+        int i,x,y;
+        for(i=1;i<=n;i++)d[i]=inf;
+        for(CL(v),d[S]=h=0,v[q[t=1]=S]=1;h^t;)
+            for(i=fir[x=q[h=h%n+1]],v[x]=0;i;i=ne[i])
+                if(d[x]+co[i]<d[y=la[i]]&&va[i]){
+                    d[y]=d[fa[y]=x]+co[pre[y]=i];
+                    if(!v[y])v[q[t=t%n+1]=y]=1;
+                }
+        return d[T]<inf;
+    }
+    void end(int S,int T){
+        int i,p=inf;
+        for(i=T;i!=S;i=fa[i])p=min(p,va[pre[i]]);fl+=p;
+        for(i=T;i!=S;i=fa[i])va[pre[i]]-=p,va[pre[i]^1]+=p,an+=p*co[pre[i]];
+    }
+    int cal(int S,int T,int n){
+        for(an=fl=0;spfa(S,T,n);end(S,T));
+        return an;
+    }
+    int work(){
+        cal(SS,TT,n+2);
+        if(fl!=SUM)return -1;else return an;
+    }
 }G;
 int main(){
-	int i,j,X1,Y1,X2,Y2;
-	for(;~scanf("%d",&n);){
-		CL(Vi);CL(Vj);G.in();S=n+n+1;T=S+1;SS=T+1;TT=T+2;
-		for(i=1;i<=n;i++)for(j=1;j<=n;j++)if(scanf("%d",&a[i][j]),a[i][j])Vi[i]++,Vj[j]++;
-		for(i=1;i<=n;i++){
-			scanf("%d%d",&Li[i],&Ri[i]);
-			G.add(S,i,Vi[i],Vi[i],0);
-			G.add(i,T,Li[i],Ri[i],0);
-		}
-		for(j=1;j<=n;j++){
-			scanf("%d%d",&Lj[j],&Rj[j]);
-			G.add(S,n+j,Vj[j],Vj[j],0);
-			G.add(n+j,T,Lj[j],Rj[j],0);
-		}
-		for(i=1;i<=n*n/2;i++){
-			scanf("%d%d%d%d",&X1,&Y1,&X2,&Y2);
-			if(a[X1][Y1]!=a[X2][Y2]){
-				if(!a[X1][Y1])swap(X1,X2),swap(Y1,Y2);
-				if(X1==X2)G.add(Y1+n,Y2+n,0,1,1);
-				if(Y1==Y2)G.add(X1,X2,0,1,1);
-			}
-		}
-		n=T;G.prepare();
-		printf("%d\n",G.work());
-	}
+    int i,j,X1,Y1,X2,Y2;
+    for(;~scanf("%d",&n);){
+        CL(Vi);CL(Vj);G.in();S=n+n+1;T=S+1;SS=T+1;TT=T+2;
+        for(i=1;i<=n;i++)for(j=1;j<=n;j++)if(scanf("%d",&a[i][j]),a[i][j])Vi[i]++,Vj[j]++;
+        for(i=1;i<=n;i++){
+            scanf("%d%d",&Li[i],&Ri[i]);
+            G.add(S,i,Vi[i],Vi[i],0);
+            G.add(i,T,Li[i],Ri[i],0);
+        }
+        for(j=1;j<=n;j++){
+            scanf("%d%d",&Lj[j],&Rj[j]);
+            G.add(S,n+j,Vj[j],Vj[j],0);
+            G.add(n+j,T,Lj[j],Rj[j],0);
+        }
+        for(i=1;i<=n*n/2;i++){
+            scanf("%d%d%d%d",&X1,&Y1,&X2,&Y2);
+            if(a[X1][Y1]!=a[X2][Y2]){
+                if(!a[X1][Y1])swap(X1,X2),swap(Y1,Y2);
+                if(X1==X2)G.add(Y1+n,Y2+n,0,1,1);
+                if(Y1==Y2)G.add(X1,X2,0,1,1);
+            }
+        }
+        n=T;G.prepare();
+        printf("%d\n",G.work());
+    }
 }
-~~~
+```
 
 H：二分答案，K次圆并裸题
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1111
 #define CL(a) memset(a,0,sizeof a)
@@ -135,18 +137,18 @@ int sgn(double x){return x<-eps?-1:x>eps;}//x>0-->1 x=0-->0 x<0-->-1
 int cmp(double x,double y){return sgn(x-y);}//x>y-->1 x=0-->0 x<y-->-1
 double sqr(double x){return x*x;}
 struct P{//一个点或者一个向量
-	double x,y;
-	P(double x=0,double y=0):x(x),y(y){}
-	void in(){scanf("%lf%lf",&x,&y);}
-	void out(){printf("%.7f %.7f\n",x,y);}
-	double norm(){return sqrt(x*x+y*y);}//模长 
-	double norm2(){return x*x+y*y;}
-	P unit(){//单位向量
-		double l=norm();
-		return P(x/l,y/l);
-	}
-	P rot90(){return P(-y,x);}
-	double angle(){return atan2(y,x);}//角度 
+    double x,y;
+    P(double x=0,double y=0):x(x),y(y){}
+    void in(){scanf("%lf%lf",&x,&y);}
+    void out(){printf("%.7f %.7f\n",x,y);}
+    double norm(){return sqrt(x*x+y*y);}//模长 
+    double norm2(){return x*x+y*y;}
+    P unit(){//单位向量
+        double l=norm();
+        return P(x/l,y/l);
+    }
+    P rot90(){return P(-y,x);}
+    double angle(){return atan2(y,x);}//角度 
 };
 bool operator==(P a,P b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
 bool operator!=(P a,P b){return !(a==b);}
@@ -158,83 +160,83 @@ P operator*(P a,double b){return P(a.x*b,a.y*b);}
 P operator/(P a,double b){return P(a.x/b,a.y/b);}
 double dis(P a,P b){return (a-b).norm();}//距离
 struct C{//圆类
-	P c;double r;
-	explicit C(P c=P(),double r=0):c(c),r(r){}
-	void in(){c.in();scanf("%lf",&r);}
+    P c;double r;
+    explicit C(P c=P(),double r=0):c(c),r(r){}
+    void in(){c.in();scanf("%lf",&r);}
 };
 bool operator==(C a,C b){
-	return a.c==b.c&&cmp(a.r,b.r)==0;
+    return a.c==b.c&&cmp(a.r,b.r)==0;
 }
 bool operator!=(C a,C b){return !(a==b);}
 bool in_circle(P a,C b){//点是否再圆内
-	return cmp(dis(a,b.c),b.r)<=0;
+    return cmp(dis(a,b.c),b.r)<=0;
 }
 int circle_relationship(C a,C b){//两圆关系
-	if(a==b)return 0;//相同
-	double d=dis(a.c,b.c),r1=a.r+b.r,r2=fabs(a.r-b.r);
-	if(sgn(d-r1)==1)return 5;//相离
-	if(sgn(d-r1)==0)return 4;//外切
-	if(sgn(d-r2)==1)return 3;//相交
-	if(sgn(d-r2)==0)return 2;//内切
-	return 1;//相含
+    if(a==b)return 0;//相同
+    double d=dis(a.c,b.c),r1=a.r+b.r,r2=fabs(a.r-b.r);
+    if(sgn(d-r1)==1)return 5;//相离
+    if(sgn(d-r1)==0)return 4;//外切
+    if(sgn(d-r2)==1)return 3;//相交
+    if(sgn(d-r2)==0)return 2;//内切
+    return 1;//相含
 }
 C make_circle(P a,P b){//以两点为直径做圆
-	return C((a+b)/2,dis(a,b)/2);
+    return C((a+b)/2,dis(a,b)/2);
 }
 P __circle_intersect(C a,C b){
-	P r=(b.c-a.c).unit();
-	double d=dis(a.c,b.c);
-	double x=0.5*((sqr(a.r)-sqr(b.r))/d+d);
-	double h=sqrt(sqr(a.r)-sqr(x));
-	return a.c+r*x+r.rot90()*h;
+    P r=(b.c-a.c).unit();
+    double d=dis(a.c,b.c);
+    double x=0.5*((sqr(a.r)-sqr(b.r))/d+d);
+    double h=sqrt(sqr(a.r)-sqr(x));
+    return a.c+r*x+r.rot90()*h;
 }
 void circle_intersect(C a,C b,P&p1,P&p2){//两圆的交点 
-	p1=__circle_intersect(b,a);
-	p2=__circle_intersect(a,b);
+    p1=__circle_intersect(b,a);
+    p2=__circle_intersect(a,b);
 }
 double an[N];bool vs[N];
 pair<double,int>q[N];
 double cal(C o,double l,double r){
-	return o.r*.5*(o.r*(r-l)+(o.c.x*(sin(r)-sin(l))-o.c.y*(cos(r)-cos(l))));
+    return o.r*.5*(o.r*(r-l)+(o.c.x*(sin(r)-sin(l))-o.c.y*(cos(r)-cos(l))));
 }
 int n,K;double W,S;double X[N],Y[N],Z[N];
 bool ok(double H){
-	int V,i,j,k,t,cnt;C p[N];P p1,p2;double v1,v2,Rv;
-	for(i=1;i<=n;i++)p[i-1]=C(P(X[i],Y[i]),W/sqrt(sqr(X[i])+sqr(Y[i])+H*H)/Z[i]),an[i]=0;
-	for(i=0;i<n;i++)vs[i]=0;
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)if(i!=j&&sgn(p[j].r-p[i].r)>=0&&!vs[j])
-			if(circle_relationship(p[i],p[j])==0)vs[i]=1;
-	for(i=0;i<n;i++)if(!vs[i]){
-		for(k=j=0;j<n;j++)if(sgn(p[j].r-p[i].r)>=0&&circle_relationship(p[i],p[j])<=2)k++;
-		for(t=j=0;j<n;j++)if(!vs[j]&&i!=j&&circle_relationship(p[i],p[j])==3){
-			circle_intersect(p[i],p[j],p1,p2);
-			v1=(p1-p[i].c).angle(),v2=(p2-p[i].c).angle();
-			if(sgn(v1)<0)v1+=pi*2;if(sgn(v2)<0)v2+=pi*2;
-			if(sgn(v2-v1)>=0)q[++t]=make_pair(v1,1),q[++t]=make_pair(v2,-1);
-			else q[++t]=make_pair(0,1),q[++t]=make_pair(v2,-1),q[++t]=make_pair(v1,1),q[++t]=make_pair(pi*2,-1);
-		}
-		sort(q+1,q+t+1);Rv=0;
-		for(j=1;j<=t;j++){
-			an[V+k]+=cal(p[i],q[j-1].first,q[j].first);
-			V+=q[j].second;Rv=q[j].first;
-		}
-		an[V+k]+=cal(p[i],Rv,pi*2);
-	}
-	return sgn(an[K]-S)>=0;
+    int V,i,j,k,t,cnt;C p[N];P p1,p2;double v1,v2,Rv;
+    for(i=1;i<=n;i++)p[i-1]=C(P(X[i],Y[i]),W/sqrt(sqr(X[i])+sqr(Y[i])+H*H)/Z[i]),an[i]=0;
+    for(i=0;i<n;i++)vs[i]=0;
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)if(i!=j&&sgn(p[j].r-p[i].r)>=0&&!vs[j])
+            if(circle_relationship(p[i],p[j])==0)vs[i]=1;
+    for(i=0;i<n;i++)if(!vs[i]){
+        for(k=j=0;j<n;j++)if(sgn(p[j].r-p[i].r)>=0&&circle_relationship(p[i],p[j])<=2)k++;
+        for(t=j=0;j<n;j++)if(!vs[j]&&i!=j&&circle_relationship(p[i],p[j])==3){
+            circle_intersect(p[i],p[j],p1,p2);
+            v1=(p1-p[i].c).angle(),v2=(p2-p[i].c).angle();
+            if(sgn(v1)<0)v1+=pi*2;if(sgn(v2)<0)v2+=pi*2;
+            if(sgn(v2-v1)>=0)q[++t]=make_pair(v1,1),q[++t]=make_pair(v2,-1);
+            else q[++t]=make_pair(0,1),q[++t]=make_pair(v2,-1),q[++t]=make_pair(v1,1),q[++t]=make_pair(pi*2,-1);
+        }
+        sort(q+1,q+t+1);Rv=0;
+        for(j=1;j<=t;j++){
+            an[V+k]+=cal(p[i],q[j-1].first,q[j].first);
+            V+=q[j].second;Rv=q[j].first;
+        }
+        an[V+k]+=cal(p[i],Rv,pi*2);
+    }
+    return sgn(an[K]-S)>=0;
 }
 int main(){
-	int T,i;double L,R,MD;
-	for(scanf("%d",&T);T--;){
-		scanf("%d%lf%d%lf",&n,&W,&K,&S);
-		for(i=1;i<=n;i++)scanf("%lf%lf%lf",&X[i],&Y[i],&Z[i]);
-		if(ok(500)||!K){puts("Oops!");continue;}
-		if(!ok(0)){puts("No solution!");continue;}
-		for(L=0,R=500;R-L>eps;)if(ok(MD=(L+R)*.5))L=MD;else R=MD;
-		printf("%.4lf\n",L);
-	}
+    int T,i;double L,R,MD;
+    for(scanf("%d",&T);T--;){
+        scanf("%d%lf%d%lf",&n,&W,&K,&S);
+        for(i=1;i<=n;i++)scanf("%lf%lf%lf",&X[i],&Y[i],&Z[i]);
+        if(ok(500)||!K){puts("Oops!");continue;}
+        if(!ok(0)){puts("No solution!");continue;}
+        for(L=0,R=500;R-L>eps;)if(ok(MD=(L+R)*.5))L=MD;else R=MD;
+        printf("%.4lf\n",L);
+    }
 }
-~~~
+```
 
 HARD：
 
@@ -246,9 +248,10 @@ A：一个01矩阵是合法的要满足对于所有的$1\leq i\leq N,1\leq j\leq
 
 Easy：ADEL
 
-E：赌博水题，让$\sum \frac{1}{p}<1$即可，$p$为赌$1$元实际所得。坑点是要开long double，坑了好久。。
+E：赌博水题，让$\sum \frac{1}{p}<1$即可，$p$为赌$1$元实际所得。坑点是要开long
+double，坑了好久。。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111
 #define CL(a) memset(a,0,sizeof a)
@@ -256,58 +259,58 @@ using namespace std;
 int T,ca,n,an,i;char c;
 long double V,x,y,pl[N];
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&n);an=0;V=0;
-		for(i=1;i<=n;i++)cin>>x>>c>>y,pl[i]=x/(x+y);
-		sort(pl+1,pl+n+1);
-		for(i=1;i<=n;i++){
-			V+=pl[i];
-			if(V<1)an=i;
-		}
-		printf("Case #%d: %d\n",ca,an);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&n);an=0;V=0;
+        for(i=1;i<=n;i++)cin>>x>>c>>y,pl[i]=x/(x+y);
+        sort(pl+1,pl+n+1);
+        for(i=1;i<=n;i++){
+            V+=pl[i];
+            if(V<1)an=i;
+        }
+        printf("Case #%d: %d\n",ca,an);
+    }
 }
-~~~
+```
 
 MID：CFH
 
 C：因为常数较小，$O(n^3)$暴枚即可通过，不用加任何优化
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1111
 #define CL(a) memset(a,0,sizeof a)
 using namespace std;
 int T,n,i,j,ca,an,L,R,cnt,c[N],a[N],v[N];
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&n);an=0;
-		for(i=1;i<=n;i++)scanf("%d",&a[i]),v[i]=a[i];
-		sort(v+1,v+n+1);cnt=unique(v+1,v+n+1)-v-1;
-		for(i=1;i<=n;i++)a[i]=lower_bound(v+1,v+cnt+1,a[i])-v;
-		for(i=1;i<=n;i++){
-			for(j=i;j<=n&&!c[a[j]];j++){
-				c[a[j]]++;
-				an=max(an,j-i+1);
-				for(L=j+2,R=0;L<=n;L++){
-					if(R<L)R=L;
-					for(;R<=n&&!c[a[R]];)c[a[R++]]=1;
-					an=max(an,j-i+1+R-L);
-					if(R>L)c[a[L]]=0;
-				}
-			}
-			for(;j>=i;j--)c[a[j]]=0;
-		}
-		printf("Case #%d: %d\n",ca,an);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&n);an=0;
+        for(i=1;i<=n;i++)scanf("%d",&a[i]),v[i]=a[i];
+        sort(v+1,v+n+1);cnt=unique(v+1,v+n+1)-v-1;
+        for(i=1;i<=n;i++)a[i]=lower_bound(v+1,v+cnt+1,a[i])-v;
+        for(i=1;i<=n;i++){
+            for(j=i;j<=n&&!c[a[j]];j++){
+                c[a[j]]++;
+                an=max(an,j-i+1);
+                for(L=j+2,R=0;L<=n;L++){
+                    if(R<L)R=L;
+                    for(;R<=n&&!c[a[R]];)c[a[R++]]=1;
+                    an=max(an,j-i+1+R-L);
+                    if(R>L)c[a[L]]=0;
+                }
+            }
+            for(;j>=i;j--)c[a[j]]=0;
+        }
+        printf("Case #%d: %d\n",ca,an);
+    }
 }
-~~~
+```
 
 H：每个格子分别考虑各自的贡献，从$[1,k]$枚举该格子的值$i$，那么它是超级格子的概率为$\frac{(i-1)^{n+m-2}}{k^{n+m-2}}$，总方案数为$k^{n*m}$，那么答案即为$k^{n*m}+n*m*k^{n*m-n-m+1}*\sum_i^k (i-1)^{n+m-2}$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define M 1000000007
 #define LL long long
@@ -315,24 +318,24 @@ using namespace std;
 int T,ca,n,m,k,i;
 LL V,an;
 LL Pw(LL a,LL b,LL p){
-	LL v=1;
-	for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
-	return v;
+    LL v=1;
+    for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
+    return v;
 }
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d%d%d",&n,&m,&k);V=0;
-		for(i=k;i;i--)V=(V+Pw(i-1,n+m-2,M))%M;
-		V=V*n%M*m%M*Pw(k,n*m-n-m+1,M)%M;;
-		printf("Case #%d: %I64d\n",ca,(V+Pw(k,n*m,M))%M);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d%d%d",&n,&m,&k);V=0;
+        for(i=k;i;i--)V=(V+Pw(i-1,n+m-2,M))%M;
+        V=V*n%M*m%M*Pw(k,n*m-n-m+1,M)%M;;
+        printf("Case #%d: %I64d\n",ca,(V+Pw(k,n*m,M))%M);
+    }
 }
-~~~
+```
 
 F：将第$2-n$个串建广义后缀自动机，第$1$个串在上面跑最短不公共子串即可。将m达成n调了好久。。。
 
-~~~{.cpp}
+``` {.cpp}
 using namespace std;
 #include<bits/stdc++.h>
 #define N 666666
@@ -340,44 +343,44 @@ using namespace std;
 char s[N],A[N];
 int T,ca,al,ar,n,m,i,j,x,p,np,q,nq,cnt,L,st[N],c[N][27],F[N];
 void add(int x){
-	p=np;st[np=++cnt]=st[p]+1;
-	for(;p&&!c[p][x];p=F[p])c[p][x]=np;
-	if(!p)F[np]=1;else 
-	if(st[p]+1==st[q=c[p][x]])F[np]=q;else{
-		st[nq=++cnt]=st[p]+1;memcpy(c[nq],c[q],sizeof c[q]);
-		F[nq]=F[q];F[q]=F[np]=nq;
-		for(;p&&c[p][x]==q;p=F[p])c[p][x]=nq;
-	}
+    p=np;st[np=++cnt]=st[p]+1;
+    for(;p&&!c[p][x];p=F[p])c[p][x]=np;
+    if(!p)F[np]=1;else 
+    if(st[p]+1==st[q=c[p][x]])F[np]=q;else{
+        st[nq=++cnt]=st[p]+1;memcpy(c[nq],c[q],sizeof c[q]);
+        F[nq]=F[q];F[q]=F[np]=nq;
+        for(;p&&c[p][x]==q;p=F[p])c[p][x]=nq;
+    }
 }
 void up(int ul,int ur){
-	if(ur-ul<ar-al)al=ul,ar=ur;else if(ur-ul==ar-al){
-		for(int j=0;j<=ar-al;j++)if(A[al+j]!=A[ul+j]){
-			if(A[ul+j]<A[al+j])al=ul,ar=ur;
-			return;
-		}
-	}
+    if(ur-ul<ar-al)al=ul,ar=ur;else if(ur-ul==ar-al){
+        for(int j=0;j<=ar-al;j++)if(A[al+j]!=A[ul+j]){
+            if(A[ul+j]<A[al+j])al=ul,ar=ur;
+            return;
+        }
+    }
 }
 int main(){
-	scanf("%d",&T); 
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&n);al=0;ar=1e9;
-		np=cnt=1;scanf("%s",A);
-		for(i=2;i<=n;i++){
-			scanf("%s",s);m=strlen(s);
-			for(j=0;j<m;j++)add(s[j]-'a');
-			add(26);
-		}
-		m=strlen(A);
-		for(p=1,L=i=0;i<m;i++)
-			if(c[p][x=A[i]-'a'])p=c[p][x],L=st[F[p]]+1;else{
-				for(;!c[p][x]&&p;p=F[p],L=st[F[p]]+1)up(i-L,i);
-				if(!p)p=1,L=0;else p=c[p][x],L=st[F[p]]+1;
-			}
-		printf("Case #%d: ",ca);
-		if(ar-al>m)puts("Impossible");else{
-			for(i=al;i<=ar;i++)printf("%c",A[i]);puts("");
-		}
-		for(i=1;i<=cnt;i++)for(F[i]=st[i]=0,j=0;j<27;j++)c[i][j]=0; 
-	}
+    scanf("%d",&T); 
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&n);al=0;ar=1e9;
+        np=cnt=1;scanf("%s",A);
+        for(i=2;i<=n;i++){
+            scanf("%s",s);m=strlen(s);
+            for(j=0;j<m;j++)add(s[j]-'a');
+            add(26);
+        }
+        m=strlen(A);
+        for(p=1,L=i=0;i<m;i++)
+            if(c[p][x=A[i]-'a'])p=c[p][x],L=st[F[p]]+1;else{
+                for(;!c[p][x]&&p;p=F[p],L=st[F[p]]+1)up(i-L,i);
+                if(!p)p=1,L=0;else p=c[p][x],L=st[F[p]]+1;
+            }
+        printf("Case #%d: ",ca);
+        if(ar-al>m)puts("Impossible");else{
+            for(i=al;i<=ar;i++)printf("%c",A[i]);puts("");
+        }
+        for(i=1;i<=cnt;i++)for(F[i]=st[i]=0,j=0;j<27;j++)c[i][j]=0; 
+    }
 }
-~~~
+```
