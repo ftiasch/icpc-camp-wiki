@@ -1,26 +1,30 @@
-# Info
+Info
+====
 
 Date: 2017.10.13 12:30-17:30
 
 [Link](http://codeforces.com/gym/100851)
 
-# Solutions
+Solutions
+=========
 
-## A Adjustment Office
+A Adjustment Office
+-------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 记选了哪些行，哪些列，以及行与列选过的个数，还有和，计算的时候行与列的拆开算，减去之前选过的数就行了。
 
-## B Binary vs Decimal
+B Binary vs Decimal
+-------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -30,11 +34,12 @@ quailty's solution
 
 考虑从空串开始扩展，每次在末尾添加一个$0$或者$1$，根据必要条件，如果当前不满足$f(s,10) \equiv f(s,2) \mod 2^{|s|}$，再继续扩展也不会出解，可以进行剪枝，否则如果$s_{|s|-1}$那么把$f(s,10)$加进答案集合，长度上限卡到$161$即可搜出最小的$10000$个解，由于涉及大数，随手写个$Python$即可。
 
-## C Cactus Jubilee
+C Cactus Jubilee
+----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -46,53 +51,60 @@ quailty's solution
 
 那么只需要求出每个子仙人掌的大小以及每个点所在的只由树边构成的连通块的大小，在仙人掌上大力$dp$即可，复杂度$O(n)$。
 
-## D Distance on Triangulation
+D Distance on Triangulation
+---------------------------
 
 unsolved
 
-## E Easy Problemset
+E Easy Problemset
+-----------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 签到题，按照题意做一遍即可，注意数组开到合适大小，不要越界。
 
-## F Froggy Ford
+F Froggy Ford
+-------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 先二分答案$mid$，所有距离小于等于$mid$的点连边，将左边界看成起点，右边界看成终点，从起点和终点分别$bfs$，如果起点和终点不连通，找一对距离不超过$2*mid$的且可以使起点终点连通的点，在两点中间放一个石子就可以使答案在$mid$内。注意起点和终点本身也要加入判断，只是点到直线的距离计算方式有所不同。
 
-## G Generators
+G Generators
+------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 每个生成器先生成出所有的数，一共$O(nc)$个，分别存进$vector$里然后排序，每个生成器贪心的取最大的数，加起来，如果和是$k$的倍数，那么考虑在某生成器里找个数替换最大值，使最后的和不是$k$的倍数且尽可能大，扫一遍即可，注意判断无解情况。
 
-## H Hypercube
+H Hypercube
+-----------
 
 unsolved
 
-## I Iceberg Orders
+I Iceberg Orders
+----------------
 
 unsolved
 
-## J Jump
+J Jump
+------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -102,11 +114,12 @@ quailty's solution
 
 需要注意的是，如果某时刻不小心得到了$n$，就不能再继续查询了。
 
-## K King's Inspection
+K King's Inspection
+-------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -114,14 +127,16 @@ quailty's solution
 
 如果缩点后的图中有$k$个点，那么有$\sum deg^+(v) \leq k+20$，简单放缩可以得到$\prod deg^+(v) \leq (\frac{\sum deg^+(v)}{k})^k < 2 \times 10^7$，这个放缩比较松，考虑到度数都是整数，上界可以进一步缩小，枚举量是完全可以承受的。
 
-## L Landscape Improved
+L Landscape Improved
+--------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 显然只会堆出一个山峰，于是二分高度$m$，考察是否存在某个位置$k$往上一直堆能堆到高度$m$，那么左侧山脚会被满足$h_i-i \geq m-k$的最大$i$所在岩石堆挡住，右侧山脚会被满足$h_j+j \geq m+k$的最小$j$所在岩石堆挡住，用单调栈来回扫两次可以求出每个$k$对应的$i$和$j$（如果$i$或者$j$不存在就不能放），现在就是在$[i+1,j-1]$这些位置往上堆石头，需要堆$m^2-\frac{(m-k+i+1)(m-k+i)}{2}-\frac{(m+k-j+1)(m+k-j)}{2}-\sum_{t=i+1}^{j-1}h_t$这么多的石头，这个值不能超过$n$。
 
-# Replay
+Replay
+======
