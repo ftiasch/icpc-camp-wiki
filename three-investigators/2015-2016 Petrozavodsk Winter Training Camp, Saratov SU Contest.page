@@ -1,0 +1,167 @@
+# Contest Info
+
+date: 2016.08.13 13:00-18:00
+
+[practice link](https://vjudge.net/contest/127813)
+
+# Solutions
+
+## A. Three Servers
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+$f[i][j][k]$ 表示前 $i$ 个，第一堆的和为 $j$，第二堆的和为 $k$，是否可行，可知 $j$ 和 $k$ 的范围是 $[0,4000]$，将第三维压位，并且通过一些手段优化一下空间即可。
+
+## B. Game on Bipartite Graph
+
+upsolved by chitanda
+
+## C. Black and White Board
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+一个暴力的想法是 $f(x, y, S, w, b)$ 表示当前处理到 $(x, y)$ 这个格子，之前 $m$ 个格子的连通性状态为 $S$，目前所有选择的格子里有 $w$ 个白的和 $b$ 个黑的是否可行，在转移时要求 $S$ 中的每个已有状态都不能直接消失，只能通过合并不同连通块的方式消失。
+
+看上去空间都快炸掉了，但由于 $m \leq 10$，实际 $S$ 中至多有 $5$ 个连通块，$S$ 的最小表示数量还可以。
+
+在**无解**的情况下，每个连通块的点数也不会太多，配合可行性剪枝，搜起来会比较快，搜的方式也比较好构造解。
+
+## D. Catenary
+
+upsolved by braveTester
+
+---
+
+braveTester's solution
+
+设杆 $i$ 与 $x$ 轴有向夹角为 $\theta_i$，则问题等价于：
+$$
+\begin{align}
+\text{minimize $\sum_i \left(\sum_{j < i} L_j \sin \theta_j + \frac{1}{2} L_i \sin \theta_i\right) L_i$}\\
+\text{subject to $\sum_i L_i \cos \theta_i = L, \sum_i L_i \sin \theta_i = 0$}
+\end{align}
+$$
+由 $L_i < L$ 及物理意义可得 $\theta_i \in (-\pi / 2, \pi / 2), \cos \theta_i > 0$，且 $\{\theta_i\}$ 单调不减。
+
+稍加化简得最小函数为
+$$
+\sum_i \frac{1}{2} L_i^2 \sin \theta_i + \sum_i L_i \sin \theta_i \sum_{i < j} L_j
+$$
+采用拉格朗日不定乘子法令
+$$
+F = \sum_i \frac{1}{2} L_i^2 \sin \theta_i + \sum_i L_i \sin \theta_i \sum_{i < j} L_j + \lambda_1 \sum_i L_i \cos \theta_i + \lambda_2 \sum_i L_i \sin \theta_i，
+$$
+求导有
+$$
+\frac{\partial F}{\partial \theta_i} = \frac{1}{2} L_i^2 \cos \theta_i + L_i \cos \theta_i \sum_{i < j} L_j - \lambda_1 L_i \sin \theta_i + \lambda_2 L_i \cos \theta_i。
+$$
+
+故由拉格朗日不定乘子法有
+$$
+\begin{equation}
+\frac{1}{2} L_i \cos \theta_i + \cos \theta_i \sum_{i < j} L_j - \lambda_1 \sin \theta_i + \lambda_2 \cos \theta_i = 0\\
+\sum_i L_i \cos \theta_i = L\\
+\sum_i L_i \sin \theta_i = 0
+\end{equation}
+$$
+
+当 $\lambda_1 = 0$ 时，由前述条件有 $L_i / 2 + \sum_{i < j}L_j + \lambda_2 = 0$，由于 $n \ge 3$ 和 $L_i \ge 100$，故 $\lambda_2$ 不存在。
+
+所以 $\lambda_1 \neq 0$，于是条件可写成
+$$
+\tan \theta_i = \frac{1}{\lambda_1} \left(\frac{1}{2} L_i + \sum_{i < j} L_j + \lambda_2\right)。
+$$
+因为 $\{\theta_i\}$ 单调不减，故 $\{\tan \theta_i\}$ 单调不减，又括号内因子单调减，故必有 $\lambda_1 < 0$。
+
+若 $\lambda_2 \ge 0$，则所有 $\sin \theta_i < 0$，不可能有 $\sum_i L_i \sin \theta_i = 0$，故必有 $\lambda_2 < 0$。
+
+由物理意义可得，$\theta_1 \le 0$，故 $\lambda_2 \ge -L_1 / 2 - \sum_{1 < j} L_j$。所以 $\lambda_2 \in [-L_1 / 2 - \sum_{1 < j} L_j, 0)$。
+
+因为 $L_i \in [100, 199], L \in [200, 299], n \ge 3$，故必有 $\min \cos \theta_i \le 299 / 300$。结合 $\{\theta_i\}$ 单调不减及其取值范围，以及 $\lambda_2$ 的取值范围，可以得到 $\lambda_1 \in (-50000, 0)$。
+
+在上述取值范围内有
+
+1. 固定 $\lambda_1$ 时，$\sin \theta_i$ 关于 $\lambda_2$ 递减，
+2. 固定 $\lambda_2$ 时，$\cos \theta_i$ 关于 $\lambda_1$ 递减。
+
+设 $\lambda_2$ 初值为 $-L_1 / 2 - \sum_{1 < j} L_j$，然后通过 $\sum_i L_i \cos \theta_i = L$ 和 $\sum_i L_i \sin \theta_i = 0$ 关于 $\lambda_1$ 和 $\lambda_2$ 的单调性二分交替更新 $\lambda_1$ 和 $\lambda_2$。
+
+未经测试采取迭代 $500$ 次，每次二分次数为 $500$ 次可以通过此题。
+
+## E. Evacuation Plan
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+~~被 twsf 标的树分治 tag 和 dn 的简要题解骗了一年~~
+
+先考虑答案在一个点上的情况，以这个点为根的不同子树之间互不影响，而对于一棵子树，先到达根的人一定来自距离根更近的点，后到达的人可能被先到达的人给阻塞住，阻塞之后大家可以视为从同一个点（这批人出发点离根最近的那个）向根进发，因此可以对所有人按距离排序，枚举一个可能的出发点，算出不比它离根更近的所有人如果合并那么走到根的最晚时间是多少，这样算出的时间只会比实际到达的最晚时间更短，不会更长。
+
+如果答案在一条边 $(u, v)$ 上，可以先算出以 $u$ 为根时 $v$ 所在子树走到 $u$ 的最晚时间和以 $v$ 为根时 $u$ 所在子树走到 $v$ 的最晚时间，解个一次方程就能算出最优的位置。答案在一条边上的情况可以看作是答案在两个端点上的结果进行加权。
+
+综上所述，我们知道选一个点的结果，还可以知道对于这个点来说最晚时间来自哪棵子树，那么最优解要么是这个点，要么会存在于最晚时间所在子树内。
+
+这实际上满足二分的性质，于是我们可以假设解所存在的连通块，每次检查连通块的重心，$\mathcal{O}(n)$ 遍历整棵树算出最晚时间所在子树，从而缩小解的范围，解只会在重心和这棵子树组成的连通块内，每次检查可以使得解所存在的连通块点数至少减半，所以总的复杂度是 $\mathcal{O}(n \log^2 n)$。
+
+## F. Empty Vessels
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+注意到总能用最大的容器保留所需要凑的体积，只需要在只有一个容器有水的状态之间建立转移，然后 BFS。
+
+除了增加 $a_i$ 和减少 $a_i$ 之外，还可以做到的是增加 $a_{\mathrm{cur}} - a_j$。
+
+## G. Maximum Product
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+简单数位 DP
+
+## H. Biathlon 2.0
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+按照跑道的极角序对着步枪的下凸壳扫，取最小点积即可。
+
+## I. Archaeological Research
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+第 $i$ 行存在标号 $c_i$，说明下标在 $[i + 1, c_i]$ 的数字都两两不同，这个限制已经包含了第 $i$ 行任意两个下标的数字两两不同。
+
+线段树维护每种数字的最晚出现位置，每次相当于选出最小的数字使得该数字的最晚出现位置不在禁位区间之中。
+
+## J. Sockets
+
+solved by braveTester
+
+## K. Toll Roads
+
+upsolved by chitanda
