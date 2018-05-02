@@ -6,7 +6,7 @@ MID：IEGH
 
 I：二分答案，记个前缀和
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 55555
 #define LL long long
@@ -14,36 +14,36 @@ using namespace std;
 int W,n,i,L,R,MD,AN,a[N],f[N],S[N];
 LL C[N],D[N]; 
 bool ok(int x){
-	int i,lv,rv,V=0;
-	S[0]=f[0]=1;
-	for(i=1;i<=n;i++)D[i]=D[i-1]+a[i]+x;
-	for(int i=1;i<=n;i++){
-		lv=lower_bound(C,C+n+1,C[i]-1-W)-C;
-		rv=upper_bound(D,D+n+1,D[i]-x-W)-D-1;
-		if(rv>=i)rv=i-1;
-		if(lv>rv)f[i]=0;else if(lv==0)f[i]=1;else if(S[rv]-S[lv-1])f[i]=1;else f[i]=0;
-		S[i]=S[i-1]+f[i];
-	}
-	for(i=n;V<=W&&i>=0;V++,i--){
-		if(f[i])return 1;
-		V+=a[i];
-	}
-	return 0;
+    int i,lv,rv,V=0;
+    S[0]=f[0]=1;
+    for(i=1;i<=n;i++)D[i]=D[i-1]+a[i]+x;
+    for(int i=1;i<=n;i++){
+        lv=lower_bound(C,C+n+1,C[i]-1-W)-C;
+        rv=upper_bound(D,D+n+1,D[i]-x-W)-D-1;
+        if(rv>=i)rv=i-1;
+        if(lv>rv)f[i]=0;else if(lv==0)f[i]=1;else if(S[rv]-S[lv-1])f[i]=1;else f[i]=0;
+        S[i]=S[i-1]+f[i];
+    }
+    for(i=n;V<=W&&i>=0;V++,i--){
+        if(f[i])return 1;
+        V+=a[i];
+    }
+    return 0;
 }
 int main(){
-	for(;scanf("%d%d",&W,&n),W+n;){
-		for(i=1;i<=n;i++)scanf("%d",&a[i]),C[i]=C[i-1]+a[i]+1;
-		for(L=1,R=W;L<=R;)if(ok(MD=L+R>>1))AN=MD,R=MD-1;else L=MD+1;
-		printf("%d\n",AN);
-	}
+    for(;scanf("%d%d",&W,&n),W+n;){
+        for(i=1;i<=n;i++)scanf("%d",&a[i]),C[i]=C[i-1]+a[i]+1;
+        for(L=1,R=W;L<=R;)if(ok(MD=L+R>>1))AN=MD,R=MD-1;else L=MD+1;
+        printf("%d\n",AN);
+    }
 }
-~~~
+```
 
 E：给定$n*m$的网格图，一些格点有障碍，有两个$1*1$的空格，一个$2*2$的木块，其他都是$1*1$的木块，要将$2*2$的木块移动到指定位置，求最少步数。$n,m\leq50$
 
 令$(i,j,k)$表示$2*2$木块的左上角在$(i,j)$，两个空格在上/下/左/右时的最小步数，那么要不然移动空格，要不然移动大木块，类似华容道建出图跑最短路即可。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 55
 #define M 44444
@@ -59,63 +59,63 @@ bool ok(int x,int y){return x>=1&&x<=n&&y>=1&&y<=m&&e[x][y];}
 bool ok(int x,int y,int z){return ok(x+ex[z*2],y+ey[z*2])&&ok(x+ex[z*2+1],y+ey[z*2+1])&&ok(x,y)&&ok(x,y-1)&&ok(x-1,y)&&ok(x-1,y-1);}
 void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
 int BFS(P S,P T,int gx,int gy){
-	fr(i,n)fr(j,m)ee[i][j]=e[i][j],dis[i][j]=1e9;
-	ee[gx][gy]=ee[gx-1][gy]=ee[gx][gy-1]=ee[gx-1][gy-1]=0;
-	int h=0,t=1,x,y,xx,yy;
-	qx[1]=S.x;qy[1]=S.y;dis[S.x][S.y]=0;ee[S.x][S.y]=0;
-	for(;h^t;){
-		x=qx[++h];y=qy[h];
-		fr0(i,4){
-			xx=x+dx[i];yy=y+dy[i];
-			if(ee[xx][yy])ee[xx][yy]=0,dis[xx][yy]=dis[x][y]+1,qx[++t]=xx,qy[t]=yy;
-		}
-	}
-	return dis[T.x][T.y];
+    fr(i,n)fr(j,m)ee[i][j]=e[i][j],dis[i][j]=1e9;
+    ee[gx][gy]=ee[gx-1][gy]=ee[gx][gy-1]=ee[gx-1][gy-1]=0;
+    int h=0,t=1,x,y,xx,yy;
+    qx[1]=S.x;qy[1]=S.y;dis[S.x][S.y]=0;ee[S.x][S.y]=0;
+    for(;h^t;){
+        x=qx[++h];y=qy[h];
+        fr0(i,4){
+            xx=x+dx[i];yy=y+dy[i];
+            if(ee[xx][yy])ee[xx][yy]=0,dis[xx][yy]=dis[x][y]+1,qx[++t]=xx,qy[t]=yy;
+        }
+    }
+    return dis[T.x][T.y];
 }
 int main(){
-	for(;scanf("%d%d",&n,&m),n+m;){
-		CL(e);CL(v);CL(fir);w=h=t=tot=0;SS=n*m*4+1;
-		fr(i,n){
-			scanf("%s",s+1);
-			fr(j,m){
-				if(s[j]!='*')e[i][j]=1;
-				if(s[j]=='X')sx=i,sy=j;
-				if(s[j]=='.')S[w++]=P{i,j};
-			}
-		}
-		if(sx==2&&sy==2){puts("0");continue;}
-		fr0(i,4)if(ok(sx,sy,i)){
-			T[0]=P{sx+ex[i*2],sy+ey[i*2]};T[1]=P{sx+ex[i*2+1],sy+ey[i*2+1]};
-			ins(SS,G(sx,sy,i),min(BFS(S[0],T[0],sx,sy)+BFS(S[1],T[1],sx,sy),BFS(S[0],T[1],sx,sy)+BFS(S[1],T[0],sx,sy)));
-		}
-		fr(i,n)fr(j,m){
-			fr0(k,4)if(ok(i,j,k)){
-				fr0(l,4)if(ok(i,j,l)&&k!=l){
-					S[0]=P{i+ex[k*2],j+ey[k*2]};S[1]=P{i+ex[k*2+1],j+ey[k*2+1]};
-					T[0]=P{i+ex[l*2],j+ey[l*2]};T[1]=P{i+ex[l*2+1],j+ey[l*2+1]};
-					ins(G(i,j,k),G(i,j,l),min(BFS(S[0],T[0],i,j)+BFS(S[1],T[1],i,j),BFS(S[0],T[1],i,j)+BFS(S[1],T[0],i,j)));
-				}
-				if(k==0)ins(G(i,j,k),G(i-1,j,3),1);
-				if(k==1)ins(G(i,j,k),G(i,j-1,2),1);
-				if(k==2)ins(G(i,j,k),G(i,j+1,1),1);
-				if(k==3)ins(G(i,j,k),G(i+1,j,0),1);
-			}
-		}
-		for(i=1;i<=SS;i++)d[i]=1e9;
-		for(d[q[t=1]=SS]=0;h^t;)
-			for(i=fir[x=q[h=h%SS+1]],v[x]=0;i;i=ne[i])
-				if(d[x]+va[i]<d[y=la[i]])
-					if(d[y]=d[x]+va[i],!v[y])
-						v[q[t=t%SS+1]=y]=1;
-		an=min(d[G(2,2,2)],d[G(2,2,3)]);
-		printf("%d\n",an==1e9?-1:an);
-	}
+    for(;scanf("%d%d",&n,&m),n+m;){
+        CL(e);CL(v);CL(fir);w=h=t=tot=0;SS=n*m*4+1;
+        fr(i,n){
+            scanf("%s",s+1);
+            fr(j,m){
+                if(s[j]!='*')e[i][j]=1;
+                if(s[j]=='X')sx=i,sy=j;
+                if(s[j]=='.')S[w++]=P{i,j};
+            }
+        }
+        if(sx==2&&sy==2){puts("0");continue;}
+        fr0(i,4)if(ok(sx,sy,i)){
+            T[0]=P{sx+ex[i*2],sy+ey[i*2]};T[1]=P{sx+ex[i*2+1],sy+ey[i*2+1]};
+            ins(SS,G(sx,sy,i),min(BFS(S[0],T[0],sx,sy)+BFS(S[1],T[1],sx,sy),BFS(S[0],T[1],sx,sy)+BFS(S[1],T[0],sx,sy)));
+        }
+        fr(i,n)fr(j,m){
+            fr0(k,4)if(ok(i,j,k)){
+                fr0(l,4)if(ok(i,j,l)&&k!=l){
+                    S[0]=P{i+ex[k*2],j+ey[k*2]};S[1]=P{i+ex[k*2+1],j+ey[k*2+1]};
+                    T[0]=P{i+ex[l*2],j+ey[l*2]};T[1]=P{i+ex[l*2+1],j+ey[l*2+1]};
+                    ins(G(i,j,k),G(i,j,l),min(BFS(S[0],T[0],i,j)+BFS(S[1],T[1],i,j),BFS(S[0],T[1],i,j)+BFS(S[1],T[0],i,j)));
+                }
+                if(k==0)ins(G(i,j,k),G(i-1,j,3),1);
+                if(k==1)ins(G(i,j,k),G(i,j-1,2),1);
+                if(k==2)ins(G(i,j,k),G(i,j+1,1),1);
+                if(k==3)ins(G(i,j,k),G(i+1,j,0),1);
+            }
+        }
+        for(i=1;i<=SS;i++)d[i]=1e9;
+        for(d[q[t=1]=SS]=0;h^t;)
+            for(i=fir[x=q[h=h%SS+1]],v[x]=0;i;i=ne[i])
+                if(d[x]+va[i]<d[y=la[i]])
+                    if(d[y]=d[x]+va[i],!v[y])
+                        v[q[t=t%SS+1]=y]=1;
+        an=min(d[G(2,2,2)],d[G(2,2,3)]);
+        printf("%d\n",an==1e9?-1:an);
+    }
 }
-~~~
+```
 
 G：傻吊三维几何
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define D double
 #define N 2222
@@ -125,50 +125,50 @@ int n,m,L,i,j,k,V,f[N];bool ok[N][19];
 D S,an,R[N],A[19];
 int sgn(D x){return x<-eps?-1:x>eps;}
 struct P3{
-	D x,y,z;
-	P3(D x=0,D y=0,D z=0):x(x),y(y),z(z){}
-	void in(){scanf("%lf%lf%lf",&x,&y,&z);}
-	D norm(){return sqrt(x*x+y*y+z*z);}
+    D x,y,z;
+    P3(D x=0,D y=0,D z=0):x(x),y(y),z(z){}
+    void in(){scanf("%lf%lf%lf",&x,&y,&z);}
+    D norm(){return sqrt(x*x+y*y+z*z);}
 }p[N],q[19],o;
 P3 operator-(P3 a,P3 b){return P3(a.x-b.x,a.y-b.y,a.z-b.z);}
 P3 cj(P3 a,P3 b){return P3(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z,a.x*b.y-a.y*b.x);}
 D dj(P3 a,P3 b){return a.x*b.x+a.y*b.y+a.z*b.z;}
 D dis(P3 a,P3 b){return (a-b).norm();}
 struct L3{
-	P3 s,t;
-	L3(P3 s=P3(),P3 t=P3()):s(s),t(t){}
+    P3 s,t;
+    L3(P3 s=P3(),P3 t=P3()):s(s),t(t){}
 };
 D point_to_line(P3 a,L3 b){
-	return cj(b.t-b.s,a-b.s).norm()/dis(b.s,b.t);
+    return cj(b.t-b.s,a-b.s).norm()/dis(b.s,b.t);
 }
 D point_to_segment(P3 a,L3 b){
-	if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
-	return min(dis(a,b.s),dis(a,b.t));
+    if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
+    return min(dis(a,b.s),dis(a,b.t));
 }
 int main(){
-	for(;scanf("%d%d%d",&n,&m,&L),n+m+L;){
-		for(i=1;i<=n;i++)p[i].in(),scanf("%lf",&R[i]);
-		for(i=1;i<=m;i++)q[i].in(),scanf("%lf",&A[i]);
-		o.in();an=0;
-		for(i=1;i<=m;i++)A[i]/=dis(q[i],o)*dis(q[i],o);
-		for(i=1;i<=n;i++)for(j=1;j<=m;j++)
-			if(dis(q[j],p[i])<R[i]&&dis(o,p[i])<R[i]||R[i]<point_to_segment(p[i],L3(q[j],o)))ok[i][j]=0;else ok[i][j]=1;
-		for(i=0;i<1<<m;i++){
-			for(V=S=0,j=1;j<=m;j++)if(i>>(j-1)&1)S+=A[j];
-			if(S<an)continue;
-			for(j=1;j<=m;j++)if(i>>(j-1)&1)for(k=1;k<=n;k++)if(ok[k][j])f[k]=1;
-			for(j=1;j<=n;j++)V+=f[j],f[j]=0;
-			if(V>L)continue;
-			an=max(an,S);
-		}
-		printf("%.8f\n",an);
-	}
+    for(;scanf("%d%d%d",&n,&m,&L),n+m+L;){
+        for(i=1;i<=n;i++)p[i].in(),scanf("%lf",&R[i]);
+        for(i=1;i<=m;i++)q[i].in(),scanf("%lf",&A[i]);
+        o.in();an=0;
+        for(i=1;i<=m;i++)A[i]/=dis(q[i],o)*dis(q[i],o);
+        for(i=1;i<=n;i++)for(j=1;j<=m;j++)
+            if(dis(q[j],p[i])<R[i]&&dis(o,p[i])<R[i]||R[i]<point_to_segment(p[i],L3(q[j],o)))ok[i][j]=0;else ok[i][j]=1;
+        for(i=0;i<1<<m;i++){
+            for(V=S=0,j=1;j<=m;j++)if(i>>(j-1)&1)S+=A[j];
+            if(S<an)continue;
+            for(j=1;j<=m;j++)if(i>>(j-1)&1)for(k=1;k<=n;k++)if(ok[k][j])f[k]=1;
+            for(j=1;j<=n;j++)V+=f[j],f[j]=0;
+            if(V>L)continue;
+            an=max(an,S);
+        }
+        printf("%.8f\n",an);
+    }
 }
-~~~
+```
 
 H：讨论几种关系，随便处理下
 
-~~~{,cpp}
+``` {.{,cpp}}
 #include<bits/stdc++.h>
 #define N 102
 #define M 10101
@@ -179,21 +179,21 @@ using namespace std;
 bitset<N>f[N],g[N];
 int n,m,i,L,R,MD,AN,e[M],X[M],Y[M];
 bool ok(int m){
-	fr(i,n)f[i].reset(),f[i][i]=1,g[i].reset();
-	fr(i,m)if(e[i]<=2)if(f[x][y]=1,e[i]==2)f[y][x]=1;
-	fr(i,n)fr(j,n)if(f[j][i])f[j]|=f[i];
-	fr(i,m)if(e[i]==4)fr(j,n)g[j][y]=g[j][y]|f[j][x],g[j][x]=g[j][x]|f[j][y];
-	fr(i,m){
-		if(e[i]==3)if(f[x][y]&&f[y][x]||(f[x]&g[x]).any()&&(f[y]&g[y]).any())return 0;
-		if(e[i]==5)if(((f[x]|f[y])&(g[x]|g[y])).any())return 0;
-	}
-	return 1;
+    fr(i,n)f[i].reset(),f[i][i]=1,g[i].reset();
+    fr(i,m)if(e[i]<=2)if(f[x][y]=1,e[i]==2)f[y][x]=1;
+    fr(i,n)fr(j,n)if(f[j][i])f[j]|=f[i];
+    fr(i,m)if(e[i]==4)fr(j,n)g[j][y]=g[j][y]|f[j][x],g[j][x]=g[j][x]|f[j][y];
+    fr(i,m){
+        if(e[i]==3)if(f[x][y]&&f[y][x]||(f[x]&g[x]).any()&&(f[y]&g[y]).any())return 0;
+        if(e[i]==5)if(((f[x]|f[y])&(g[x]|g[y])).any())return 0;
+    }
+    return 1;
 }
 int main(){
-	for(;scanf("%d%d",&n,&m),n+m;){
-		fr(i,m)scanf("%d%d%d",&e[i],&X[i],&Y[i]);
-		for(L=1,R=m;L<=R;)if(ok(MD=L+R>>1))AN=MD,L=MD+1;else R=MD-1;
-		printf("%d\n",AN);
-	}
+    for(;scanf("%d%d",&n,&m),n+m;){
+        fr(i,m)scanf("%d%d%d",&e[i],&X[i],&Y[i]);
+        for(L=1,R=m;L<=R;)if(ok(MD=L+R>>1))AN=MD,L=MD+1;else R=MD-1;
+        printf("%d\n",AN);
+    }
 }
-~~~
+```
