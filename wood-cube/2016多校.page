@@ -1,18 +1,21 @@
-## 2016 Multi-University Training Contest 2 `: -----------L-`
+2016 Multi-University Training Contest 2 `: -----------L-`
+----------------------------------------------------------
 
-- `F: 点双联通分量。`
-- `G: 费用流或KM+拓扑序生成方案（细节比较多，建议实现）。`
-- `M: 排序后建链表，枚举行区间左端，倒着枚举行区间右端，不断删节点。`
-- `B: 性质题：OR，XOR取整条链，AND在每条链中取最近的高位为1的。`
-- `H: 枚举两个起始和结尾点之后可扩展两个run构成一个矩形，相当于判断一些点是否在矩形内扫描线即可。`
-- `J: `
-- `C: `
-- [`SOLUTION`](http://bestcoder.hdu.edu.cn/blog/2016-multi-university-training-contest-2-solutions-by-zimpha/)
-- `L: `
+-   `F: 点双联通分量。`
+-   `G: 费用流或KM+拓扑序生成方案（细节比较多，建议实现）。`
+-   `M: 排序后建链表，枚举行区间左端，倒着枚举行区间右端，不断删节点。`
+-   `B: 性质题：OR，XOR取整条链，AND在每条链中取最近的高位为1的。`
+-   `H: 枚举两个起始和结尾点之后可扩展两个run构成一个矩形，相当于判断一些点是否在矩形内扫描线即可。`
+-   `J:`
+-   `C:`
+-   [`SOLUTION`](http://bestcoder.hdu.edu.cn/blog/2016-multi-university-training-contest-2-solutions-by-zimpha/)
+-   `L:`
 
-## 2016 Multi-University Training Contest 1 `: --C---G-I--`
+2016 Multi-University Training Contest 1 `: --C---G-I--`
+--------------------------------------------------------
 
-- [`SOLUTION`](http://bestcoder.hdu.edu.cn/blog/2016-multi-university-training-contest-1-solutions-by-hit/?plg_nld=1&plg_uin=1&plg_nld=1&plg_usr=1&plg_vkey=1&plg_dev=1)
-- `C: 枚举格子，分上下左右四块不可直接走到的区域计算（旋转一下就只剩一种情况了），然后每一行的格子一起处理即可。`
-- `G: 蜜汁结论，不过知道结论之后DP很简单。`
-- `I: 懂了...`
+-   [`SOLUTION`](http://bestcoder.hdu.edu.cn/blog/2016-multi-university-training-contest-1-solutions-by-hit/?plg_nld=1&plg_uin=1&plg_nld=1&plg_usr=1&plg_vkey=1&plg_dev=1)
+-   `C: 枚举格子，分上下左右四块不可直接走到的区域计算（旋转一下就只剩一种情况了），然后每一行的格子一起处理即可。`
+-   `G: 蜜汁结论，不过知道结论之后DP很简单。`
+-   `I: 懂了...`
+
