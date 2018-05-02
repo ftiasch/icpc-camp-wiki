@@ -20,28 +20,40 @@
 │I₃[-:--]│                       ₀                                    │
 │B₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Apple [GX]
+A. Apple \[GX\]
+---------------
 
-## B. Clock
+B. Clock
+--------
 
-## C. Equality [GX]
+C. Equality \[GX\]
+------------------
 
-## D. Training [TDJ]
+D. Training \[TDJ\]
+-------------------
 
-## E. Factorial [MZH]
+E. Factorial \[MZH\]
+--------------------
 
-## F. Greedy [TDJ]
+F. Greedy \[TDJ\]
+-----------------
 
-## G. Matching [TDJ]
+G. Matching \[TDJ\]
+-------------------
 
 每次删掉割边，用两边的点数奇偶性判这条边是否为匹配边。无割边则无解或多解。
 
-## H. Matrix [GX]
+H. Matrix \[GX\]
+----------------
 
-## I. Scheduling
+I. Scheduling
+-------------
 
-## J. Pie Eating Tournament [MZH]
+J. Pie Eating Tournament \[MZH\]
+--------------------------------
 
-## K. Tree [TDJ]
+K. Tree \[TDJ\]
+---------------
