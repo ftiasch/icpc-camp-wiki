@@ -1,16 +1,19 @@
-# Info
+Info
+====
 
 Date: 2017.09.10 12:00-17:00
 
 [Link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=780)
 
-# Solutions
+Solutions
+=========
 
-## A string string string
+A string string string
+----------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
@@ -20,101 +23,111 @@ quailty's comment
 
 赛中并不是用$SAM$做的，而是用$SA$求出$height$数组之后，对于$k=1$的情况，在每个后缀中减去在排名一前一后两个后缀中出现过的前缀得到恰好出现$1$次的后缀的前缀（就是子串），对于$k>1$的情况，在$height$数组上滑一个$k-1$的窗口，其最小值为在对应$k$个后缀中均出现过的前缀个数，减去这些前缀中在窗口外的后缀中也出现过的前缀即可得到恰好出现$k$次的子串。
 
-## B cable cable cable
+B cable cable cable
+-------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 猜结论$ans=(N-K+1)K$。
 
-## C happy happy happy
+C happy happy happy
+-------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 考虑折半搜索，先爆搜出后$k$步的所有可能结果，然后爆搜前$n/2-k$步，到最后$k$步时利用之前预处理出的信息二分查询。但是由于空间限制，$k$不能取的太大，考虑区间$dp$求出所有偶数长度区间的最大和最小分差，用于在爆搜前一半时进行可行性剪枝。实测$k$取$17$结合可行性剪枝可以通过。
 
-## D array array array
+D array array array
+-------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 分别求出最长非降/非增子序列，即可知道最少要删多少个数才能使序列符合条件，复杂度$O(n\log{n})$。
 
-## E number number number
+E number number number
+----------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 猜结论$ans=Fib_{2k+3}-1$。
 
-## F gems gems gems
+F gems gems gems
+----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 $dp[i][j]$表示从第$i$个宝石开始游戏且先手要取$j$或$j+1$个宝石时先手最多能领先后手的分数，可以发现$j$最多是$O(\sqrt{n})$，复杂度$O(n\sqrt{n})$。
 
-## G mustedge mustedge mustedge
+G mustedge mustedge mustedge
+----------------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 BCC缩点得到一棵树，所有树边初始边权为1，每次加边相当于将一条路径边权赋值为0，每次查询相当于查询一条路径上的权值和，考虑用并查集缩掉权值为0的边，修改只需从路径的两个端点暴力向上跳，沿途把1边置0，直到跳过LCA，每次修改会导致一个子树内的点到根的距离减1，DFS序拉成链之后用树状数组维护即可。
 
-## H transaction transaction transaction
+H transaction transaction transaction
+-------------------------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 树dp求出从u内每个点出发走到u以及从u走到u内每个点的最大收益，在合并子树的时候更新答案，复杂度$O(n)$。
 
-## I cube cube cube
+I cube cube cube
+----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 开一个face结构体记录面内每个块的颜色，写一个面内部旋转操作，开一个cube结构体记录每个面，写两个魔方整体旋转操作，以及两个面转动操作，通过整体旋转和面转动来生成所有可能的操作，爆搜三步。
 
-## J ping ping ping
+J ping ping ping
+----------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 考虑贪心，答案一定是由某些链的LCA构成的，自底向上考虑，维护子树内仍未满足的限制条件的编号集合，如果某个编号出现两次，说明现在已经位于这个编号对应的链的LCA上，但是这条链的限制还没被满足，因此这个LCA要选上，然后清空集合，否则向上传递限制条件，启发式合并即可。
 
-## K triangulation triangulation triangulation
+K triangulation triangulation triangulation
+-------------------------------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -124,19 +137,22 @@ quailty's solution
 
 总的复杂度是$O(n^4)$，蕴含一个很小的常数，但是仍然需要大力卡常数。
 
-## L card card card
+L card card card
+----------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 由于$\sum a=\sum b$，可以证明一定存在某个位置，从这个位置开始能依次取完所有牌，单调队列维护滑动窗口最值来判断可行性，复杂度$O(n)$。
 
-# Replay
+Replay
+======
 
-## quailty
+quailty
+-------
 
 前期全场题过不了在一定程度上影响了队伍士气，必要时放一放，尝试去做后面的题来调整思路和状态。
 
