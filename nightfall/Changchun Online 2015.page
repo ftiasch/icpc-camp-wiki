@@ -1,0 +1,76 @@
+# [Clock Adjusting](http://acm.hdu.edu.cn/showproblem.php?pid=5440)
+
+# [Food Problem](http://acm.hdu.edu.cn/showproblem.php?pid=5445)
+
+## Aki
+
+~~~{.cpp}
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+const int N = 205, M = 50101, INF = 0x3f3f3f3f;
+int t[N], u[N], v[N];
+int x[N], y[N], z[N];
+int dp1[M], dp2[M], tmp[M];
+int que[2 * M];
+void make_min(int &a, const int &b) {
+	a = min(a, b);
+}
+
+void work(int n, int val[N], int cost[N], int cnt[N], int dp[M]) {
+	for (int i = 0; i < M; ++ i) tmp[i] = dp[i] = INF;
+	dp[0] = 0;
+	int mmm = 0;
+	for (int o = 1; o <= n; ++ o) {
+		int v = val[o], c = cost[o], num = cnt[o];
+		for (int i = 0; i < M; ++ i) tmp[i] = INF;
+		for (int i = 0; i < v; ++ i) {
+			int h = 0, t = 0;
+			for (int j = i; j < M; j += v) {
+				int tp = j / v;
+				while (h < t && tp - que[h] / v > num) h ++;
+				if (h < t) {
+					int k = que[h];
+					make_min (tmp[j], tp * c + dp[k] - k / v * c);
+				}
+				while (h < t && dp[que[t - 1]] - que[t - 1] / v * c >= dp[j] - tp * c) t --;
+				if (dp[j] < INF) que[t ++] = j;
+			}
+		}
+		for (int i = 0; i < M; ++ i) make_min (dp[i], tmp[i]);
+	}
+}
+
+int main() {
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, m, p;
+		scanf("%d%d%d", &n, &m, &p);
+		for (int i = 1; i <= n; ++ i) scanf("%d%d%d", &t[i], &u[i], &v[i]);
+		for (int i = 1; i <= m; ++ i) {
+			scanf("%d%d%d", &x[i], &y[i], &z[i]);
+			x[i] = -x[i];
+		}
+		work(n, t, u, v, dp1);
+		work(m, y, x, z, dp2);
+		int nsp = INF;
+		for (int i = p; i < M; ++ i) nsp = min(nsp, dp1[i]);
+		//printf("nsp=%d\n", nsp);
+		int ans = -1;
+		for (int i = 0; i <= 50000; ++ i) {
+			if (dp2[i] < INF && -dp2[i] >= nsp) {
+				ans = i;
+				break;
+			}
+		}
+		if (ans == -1) {
+			puts("TAT");
+			continue;
+		}
+		printf("%d\n", ans);
+	}
+}
+~~~
