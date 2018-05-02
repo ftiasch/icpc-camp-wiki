@@ -1,95 +1,125 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.09.22 19:15-00:15
 
 [practice link](http://codeforces.com/contest/852)
 
-# Solutions
+Solutions
+=========
 
-## A. Digits
+A. Digits
+---------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 最开始三步划分都直接分成每个数位，尝试只调整第一次划分，每次随机取一些相邻的两个数位合并。解很多，随机到一组解的可能性很大。
 
-## B. Neural Network country
+B. Neural Network country
+-------------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 矩乘+快速幂
 
-## C. Property
+C. Property
+-----------
 
 solved by braveTester, upsolved by none
 
-## D. Exploration plan
+D. Exploration plan
+-------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 二分答案，得到每个球队能到达的城市，然后跑匈牙利。
 
-## E. Casinos and travel
+E. Casinos and travel
+---------------------
 
 solved by braveTester, upsolved by none
 
-## F. Product transformation
+F. Product transformation
+-------------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 打表找规律，可以发现最后一排从右到左幂次依次增加 $\binom{M}{i}$
 
-## G. Bathroom terminal
+G. Bathroom terminal
+--------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 建立 trie，对每个询问，暴力枚举 ? 的字母
 
-## H. Bob and stages
+H. Bob and stages
+-----------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-枚举空凸包的左下角点，保留在它右方或正上方的点尝试按极角序扫一圈 DP。很容易写成 $\mathcal{O}(n (n^3 + n^2 k))$ 的，可以做到 $\mathcal{O}(n (n^2 \log n + n^2 k))$。
+枚举空凸包的左下角点，保留在它右方或正上方的点尝试按极角序扫一圈
+DP。很容易写成 $\mathcal{O}(n (n^3 + n^2 k))$ 的，可以做到
+$\mathcal{O}(n (n^2 \log n + n^2 k))$。
 
-首先是 DP 的定义。不能定义成 $f(i, j, k)$ 表示最后扫到的那条边是 $i \to j$ 且边数为 $k$，这样会增加枚举量。注意到 DP 过程中扫到的所有边的极角序也是严格递增的，所以定义 $f(i, j, k)$ 表示目前已经考虑了极角序最小的 $i$ 条边，最后扫到的点是 $j$ 且边数为 $k$，总边数不会超过 $\mathcal{O}(n^2)$，只要滚动掉 $i$ 那一维就可以做到每次 $\mathcal{O}(n^2 k)$ 了。
+首先是 DP 的定义。不能定义成 $f(i, j, k)$ 表示最后扫到的那条边是
+$i \to j$ 且边数为 $k$，这样会增加枚举量。注意到 DP
+过程中扫到的所有边的极角序也是严格递增的，所以定义 $f(i, j, k)$
+表示目前已经考虑了极角序最小的 $i$ 条边，最后扫到的点是 $j$ 且边数为
+$k$，总边数不会超过 $\mathcal{O}(n^2)$，只要滚动掉 $i$
+那一维就可以做到每次 $\mathcal{O}(n^2 k)$ 了。
 
-然后是找出所有合法转移（边）。直接枚举一条边检查是否存在其他点在这条边与原点组成的三角形内是 $\mathcal{O}(n^3)$ 的，需要优化。注意到需要检查的其他点一定是极角序在这条边两个端点之间的，不妨按照极角序检查。固定这条边极角序较小的端点 $u$，尝试检查另一个端点是 $v$ 时是否合法。由于极角序的性质，检查是否有点在三角形内且极角序在 $[u, v]$ 内，相当于检查是否存在点 $w$ 在 $u \to v$ 这条有向直线的左边。如果存在这样的 $w$，则这条边不合法，否则可以认为 $u \to v$ 在所有 $u \to w$ 的左边，那么之后检查线段 $u \to v'$ ($v' \geq v$) 时，只需要检查 $v$ 是否在 $u \to v'$ 的左边，因为它如果不在左边，则其他的 $w$ 也不会在左边。这样检查就是 $\mathcal{O}(n^2)$ 的了。
+然后是找出所有合法转移（边）。直接枚举一条边检查是否存在其他点在这条边与原点组成的三角形内是
+$\mathcal{O}(n^3)$
+的，需要优化。注意到需要检查的其他点一定是极角序在这条边两个端点之间的，不妨按照极角序检查。固定这条边极角序较小的端点
+$u$，尝试检查另一个端点是 $v$
+时是否合法。由于极角序的性质，检查是否有点在三角形内且极角序在 $[u, v]$
+内，相当于检查是否存在点 $w$ 在 $u \to v$
+这条有向直线的左边。如果存在这样的 $w$，则这条边不合法，否则可以认为
+$u \to v$ 在所有 $u \to w$ 的左边，那么之后检查线段 $u \to v'$
+($v' \geq v$) 时，只需要检查 $v$ 是否在 $u \to v'$
+的左边，因为它如果不在左边，则其他的 $w$ 也不会在左边。这样检查就是
+$\mathcal{O}(n^2)$ 的了。
 
-时间复杂度 $\mathcal{O}(n^3 \log n + n^3 k)$，常数可能是 1/8 左右，运行起来比较快。
+时间复杂度 $\mathcal{O}(n^3 \log n + n^3 k)$，常数可能是 1/8
+左右，运行起来比较快。
 
-## I. Dating
+I. Dating
+---------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 树上莫队
 
-# Replay and Summary
+Replay and Summary
+==================
 
 None is available.
