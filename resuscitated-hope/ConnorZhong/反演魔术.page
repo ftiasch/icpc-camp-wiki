@@ -1,0 +1,102 @@
+# 基本套路
+
+算法竞赛中常见的反演套路，主要是围绕两个函数展开。
+
+- 莫比乌斯函数 $\mu(x)$.
+- 欧拉函数 $\varphi(x)$.
+
+以及两个函数的两个性质。
+
+- $\sum_{d|n} \mu(d) =[n=1]$ 
+- $\sum_{d|n} \varphi(d) = n$
+
+常见套路
+
+- $[gcd(i,j)=k]$
+- $gcd(i,j)$
+- $f(n)=\sum_{d|n}g(d)   \leftrightarrow g(n)=\sum_{d|n}\mu(\frac{n}{d})f(d)$
+
+核心代码
+
+- 线性筛
+- 分块加速 $[n/i,n/(n/i)]$
+
+
+# 练习题
+
+[题目链接](https://vjudge.net/contest/180934#overview)
+
+## A. Visible Lattice Points (SPOJ VLATTICE)
+
+>给出一个三维立方网格，坐标范围均为 $0$ 到 $N$。求从 $(0,0,0)$ 位置能够没有阻挡地看到的格点数目，$T$ 组数据。$N\leq 10^6, T\leq 50$。  
+
+考虑点 $(x,y,z)$ 与 $(0,0,0)$ 之间的格点个数为 $gcd(x,y,z)-1$，因此题目转化为求 $gcd(x,y,z) =1$ 的三元组数。
+$$
+ans=\sum_{x=0}^{n}\sum_{y=0}^{n}\sum_{z=0}^{n}[gcd(x,y,z)=1]\\=\sum_{x=0}^{n}\sum_{y=0}^{n}\sum_{z=0}^{n}\sum_{d|gcd(x,y,z)} \mu(d)\\=\sum_{x=0}^{n}\sum_{y=0}^{n}\sum_{z=0}^{n}\sum_{d|x,d|y,d|z} \mu(d)\\
+=\sum_{d=1}^{n}\mu(d)\sum_{id\leq n}\sum_{jd\leq n}\sum_{kd \leq n} 1\\
+=\sum_{d=1}^{n}\mu(d)\left \lfloor \frac{n}{d} \right \rfloor \left \lfloor \frac{n}{d} \right \rfloor \left \lfloor \frac{n}{d} \right \rfloor
+$$
+由于 $\left \lfloor \frac{n}{d} \right \rfloor$ 最多只有 $\sqrt(n)$ 个取值，因此可以处理出 $\mu(d)$ 的前缀和，分块加速 $[n/i,n/(n/i)]$，总复杂度 $O(n+T\sqrt(n))$. 需要注意的是格点是从 $0$ 开始，答案还有些细节。
+
+## B. GCD (HDU 1695)
+
+> 给定两个区间，$x\in[1,n],y\in[1,m]$ 求 $gcd(x,y)=k$ 的有序对 $(x,y)$ 数，要求 $x\leq y$。数据组数  $T\leq 3000,1 \leq n,m,k\leq10^5$. 
+
+不妨设 $n\leq m$.
+$$
+ans=\sum_{x=1}^{n}\sum_{y=x}^{m}[gcd(x,y)=k] \\=\sum_{x=1}^{n/k}\sum_{y=x}^{m/k}[gcd(x,y)=1]\\
+=\sum_{d=1}^{n/k}\mu(d)\sum_{0<id\leq n/k}\sum_{id \leq jd \leq m/k}1\\
+=\sum_{d=1}^{n/k}\mu(d)\sum_{0<id\leq n/k}\sum_{id \leq jd \leq m/k}1\\
+=\sum_{d=1}^{n/k}\mu(d) (\left \lfloor \frac{m}{kd} \right \rfloor +  \left \lfloor \frac{m}{kd} \right \rfloor -\left \lfloor \frac{n}{kd} \right \rfloor)(\left \lfloor \frac{n}{kd} \right \rfloor)/2
+$$
+最后一步和式变换是注意到后面的平凡和式实际上相当于等差数列求和。同样可以对 $\left \lfloor \frac{m}{d} \right \rfloor$ 和 $\left \lfloor \frac{n}{d} \right \rfloor$ 进行分块加速。$O(n+T(\sqrt n+\sqrt m))$.
+
+## C. Mophues (HDU 4746)
+
+> 给 $n,m,p,Q$。 $Q$ 组询问，每组询问 $n,m,p$ 表示 $x\in[1,n],y\in[1,m]$，$gcd(x,y)$ 的分解质因数后的项数小于 $p$ 的有序数对个数. $n,m,p \leq 10^5,Q\leq 5000$. 
+
+考虑子问题求 $gcd(x,y)=k$ 的对数 $\sum_{d=1}^{n/k}\mu(d)\left \lfloor \frac{n}{kd} \right \rfloor \left \lfloor \frac{m}{kd} \right \rfloor$. 
+
+注意到我们对于任意一个 $k$， 考虑相当于枚举了 $n/k$ 个 $kd$ 计算 $\left \lfloor \frac{n}{kd} \right \rfloor \left \lfloor \frac{m}{kd} \right \rfloor$，乘上一个系数 $\mu(d)$。于是我们考虑求 $gcd(x,y) \in K$，可以枚举每一个元素 $k\in K$。求得一个新的系数 $f(x)=\sum_{d=x/k,k|x,k\in K} \mu(d)$.  $\sum_{d=1}^{n}f(d)\left \lfloor \frac{n}{d} \right \rfloor \left \lfloor \frac{m}{d} \right \rfloor$ 即是所求的值。
+
+于是我们可以筛出 $\mu(d)$，处理出每一个数的质因子数，然后在枚举每一个数 $k\in[1,n]$ 处理出所有的 $f(x)$，并做一个二维前缀和，这部分复杂度是 $O(n\log n)$。 后面就跟常规的处理方式一样了，分块加速$O(\sqrt(n)+\sqrt(m))$。
+
+复杂度 $O(n\log n+Q(\sqrt n+\sqrt m))$
+
+## D. GCD of Sequence (HDU 4675)
+
+> 给 $N,M,K$ 和长度为 $N$ 序列 $a_i$. 求有多少个长度为$N$ 的序列 $b_i$, $gcd(b_1,b_2,\cdots,b_n)=d$，$d \leq M$，且恰好有 $K$ 个位置 $a_i\neq b_i$。输出每个 $d$ 对应的答案。$1 \leq N,M\leq 3\times 10^5, K \leq N$
+
+这道题实际上跟反演扯不上什么关系，本质上就是推公式容斥，不过比较便利的一点是我们更容易求出 $gcd(b_1,b_2,\cdots,b_n) = kd，k=1,2,\cdots$  这种形式的答案。然后我们对其进行容斥就可以了。容斥的系数其实就是莫比乌斯函数。所以搞就行了。
+
+$gcd(b_1,b_2,\cdots,b_n) = kd，k=1,2,\cdots $ 的方案数我们定义为 $g(d)$，  通过预处理倍数的数量关系，$g(d)$ 可以用组合数算出来，于是答案 $ans_d=\sum_{i=kd} \mu(i/d)g(i)$.
+
+复杂度$O(n\log n)$
+
+## E. Gcd (BZOJ 2812)
+
+> 给正整数 $N$，求 $1\leq x,y \leq N$ 中 $gcd(x,y)$ 为质数的对数。$N \leq 10^7$
+
+很容易想到用直接枚举所有的质数，做莫比乌斯反演，分块加速，很显然这样复杂度不会很高。如果是多组数据的话还可以用前面 `C` 题的做法直接处理 $f(x)$。
+
+这个题好像很多网上的做法都是这样的，枚举一个质数 $p$，那么 $p$ 的贡献就是 $1$ 到 $n/p$ 的有序互质对数。当然要除去重复计算的 $(1,1)$。 $ans = \sum_{p\in prime}2\sum_{1\leq i\leq n/p}\varphi(i)-1$ 。复杂度 $O(n)$
+
+因为两个做法的主要复杂度都在线性筛和处理前缀和上。实际上运行时间差不多。（BZOJ 日常抽风，本来相对快一点的第二个做法反复随机式返回 TLE）
+
+## F. 能量采集 (BZOJ 2005)
+
+> 给 $N\times M$ 的矩阵，$a_{ij} = 2gcd(i,j)-1$， 求 $\sum a_{ij}$，$1\leq N,M\leq10^6$ 
+
+把 $gcd(i,j)$ 替换为 $\sum_{d|i,d|j}\varphi(d)$. 于是就很套路了，分块加速。
+
+## H. Problem b (BZOJ 2301)
+
+> $N$ 组数据，每组数据求 $a\leq x\leq b,c\leq y\leq d$ 中 $gcd(x,y)=k$ 的对数。$1 \leq N,a,b,c,d,k \leq 5\times10^4$
+
+典型的分块加速莫比乌斯反演。
+
+## G. YY的GCD (BZOJ 2820)
+
+> $T$ 组数据，求$1\leq x \leq N, 1 \leq y \leq M$ 中 $gcd(x,y)$ 是质数的对数。 $T \leq 10^ 4，1 \leq N,M\leq 10^7$
+
+利用前面 `C` 题中的思想，构造一个类莫比乌斯函数的系数函数 $f(x)$。构造的复杂度大概是 $\sum_{p\in prime} n/p$. 然后就可以分块加速反演了。
