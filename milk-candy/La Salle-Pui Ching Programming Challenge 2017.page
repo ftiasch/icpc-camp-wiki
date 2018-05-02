@@ -1,111 +1,126 @@
-# Info
+Info
+====
 
 Date: 2017.09.27 13:15-17:15
 
 [Link](http://codeforces.com/gym/101522)
 
-# Solutions
+Solutions
+=========
 
-## A Ambiguous Dates
+A Ambiguous Dates
+-----------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
-猜结论，把$D$数组从小到大排序后ambiguous date个数最少，计算的话从1到m枚举月份$i$，会被混淆的日期最大是$min(m,D[i])$，最小日期记为$j$，那么要满足$D[j] \geq i$（因为交换一下也需要是合法日期），维护一下$j$即可。这样算出来可能会包含$i$月$i$日，因为题目中已经给出这样的日期不是ambiguous的，最后再减去就好了。
+猜结论，把$D$数组从小到大排序后ambiguous
+date个数最少，计算的话从1到m枚举月份$i$，会被混淆的日期最大是$min(m,D[i])$，最小日期记为$j$，那么要满足$D[j] \geq i$（因为交换一下也需要是合法日期），维护一下$j$即可。这样算出来可能会包含$i$月$i$日，因为题目中已经给出这样的日期不是ambiguous的，最后再减去就好了。
 
 题解中给出了证明。思考：如果对于固定的$D$数组，怎么计算最小混淆天数？很简单嘛，留给读者思考。
 
-
-## B Bacteria Experiment
+B Bacteria Experiment
+---------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 题意其实是做了一个类似倍增的过程。做法是求出树的直径长度$m$，$ans=\lceil log_2 {m}\rceil$。
 
-## C Cheering
+C Cheering
+----------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
-
-## D Distribution of Days
+D Distribution of Days
+----------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 显然蔡勒公式，暴力算出一个循环节然后加倍，再加上结尾不够一循环的部分。循环节可以选400年，即400年后的今天和今天的星期数相同，这个根据公式可以验证得出。
 
-## E Expected Score
+E Expected Score
+----------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
-## F Frustrating Game
+F Frustrating Game
+------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
-## G Gravitational Tetris
+G Gravitational Tetris
+----------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
-## H Hit!
+H Hit!
+------
 
 solved by quailty, sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 求两圆心连线与某一圆的交点。
 
-有两个trick，一个是保证公共部分有positive area，没有想到内含的情况，第二个是两圆圆心重合时连线退化成点。
+有两个trick，一个是保证公共部分有positive
+area，没有想到内含的情况，第二个是两圆圆心重合时连线退化成点。
 
-## I Inverted Signs
+I Inverted Signs
+----------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 选一段区间改变正负号，显然内部相邻两个数同时变号，差的绝对值不变，只有选择的区间的两端会影响答案。做法是算出每个间隔位置变号前与变号后的差值，答案为原$ans$减去这个差值数组的最大值与次大值后的结果。比较好的一个处理是在两端分别插入一个$0$，即求最大与次大前初始化为$(0,0)$。
 
-## J Juicy Candies
+J Juicy Candies
+---------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
-## K Knights
+K Knights
+---------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 直接考虑棋盘的四个角有没有骑士。注意$n=1$或$m=1$的情况。
 
-## L Let Me Count The Ways
+L Let Me Count The Ways
+-----------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
-# Replay
+Replay
+======
