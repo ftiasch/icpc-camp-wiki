@@ -18,34 +18,46 @@
 ├────────┼════════════────────────════════════────────────════════════┤
 │+ [4:18]│  oo·oooo···o·o·oooooo······o·oooooo·ooo··oooo···oo· ·oooooo│
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Substrings and Subsequences [MZH]
+A. Substrings and Subsequences \[MZH\]
+--------------------------------------
 
-## B. Bus Stop [MZH]
+B. Bus Stop \[MZH\]
+-------------------
 
-## C. Collection of sets [TDJ]
+C. Collection of sets \[TDJ\]
+-----------------------------
 
-k=7时相邻两个一组分成7组做笛卡尔积，k=6时分成4x2+2x3六组，k>=9时在前k+1个元素中取k个，其他情况对14-k的方案的每一个子集取补即可。
+k=7时相邻两个一组分成7组做笛卡尔积，k=6时分成4x2+2x3六组，k&gt;=9时在前k+1个元素中取k个，其他情况对14-k的方案的每一个子集取补即可。
 
-## D. Decomposition [TDJ]
+D. Decomposition \[TDJ\]
+------------------------
 
 最后一分钟写完，没跑样例交了两发WA。两个代码错误：迭代一层后忘了`++K;`以及清空颜色写在了枚举第一条匹配边外层。
 
-## E. Easy Everest [TDJ]
+E. Easy Everest \[TDJ\]
+-----------------------
 
 签到题。
 
-## F. Sum of Divisors [TDJ, MZH]
+F. Sum of Divisors \[TDJ, MZH\]
+-------------------------------
 
 打表发现能拆成7个约数和的数只有15种，进一步观察发现这些数的lcm只有12个质因子，再容斥一下发现的不同的子集lcm最多只有800多个(贡献非0的其实只有600多个)，于是$O(N*600)$即可。
 
-## G. Guess Sinus [GX]
+G. Guess Sinus \[GX\]
+---------------------
 
-## H. Matrices dot product [GX]
+H. Matrices dot product \[GX\]
+------------------------------
 
-## I. I18n [MZH]
+I. I18n \[MZH\]
+---------------
 
-## J. Segment Sort [MZH]
+J. Segment Sort \[MZH\]
+-----------------------
 
-## K. Tree Generation [MZH]
+K. Tree Generation \[MZH\]
+--------------------------
