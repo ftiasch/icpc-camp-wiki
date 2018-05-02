@@ -1,0 +1,35 @@
+# A. Fried Fish  
+
+# B. Hanoi tower [ConnorZhong]
+ConnorZhong: 高精度，打表找规律过。还不太清楚正解。规律结论$n=n/3$,$n$为奇数时$ans = 2^{2n-1}+2^{n}-2$,$n$为偶数时$ans = 2^{2n-1}+2^{n-1}-1$。
+
+# C. Desktop[Cabinfever]
+Cabinfever:给出h*w的矩形，现要铺2*2的图标，可以覆盖，但至少要漏两个格子出来，求一个合法的铺的顺序。 构造题，然后最后看到的情况肯定是1个2*2，(h*w-4)/2个 1*2的。我的方法是：在最左边两列顺着密铺（但要放在最后），如果h是奇数，在最后两行2*2+2*2地放，然后上面的每两行从右到左密铺，这样最后两行不密铺的漏出来的就是1*2了，h如果是偶数就直接每两行密铺好了。
+
+# D. Weather Station 
+
+# E. Cupcakes  
+
+# F. Vitamins 
+
+# G. Sphenic numbers[Cabinfever]
+Cabinfever:题意问一个数是否能表示成三个不同质数的积。枚举一下 
+
+# H. Non-random numbers [ConnorZhong]
+ConnorZhong: 签到题，大概，随便搞搞？末尾都是0，当然不用高精度。
+
+# I. Land Division 
+
+# J. Architect of Your Own Fortune[Cabinfever]
+Cabinfever：没读题，zjc直接给我说了做法，我敲的。枚举建边，跑二分图匹配。
+
+# K. Polymorphic code 
+
+# Summary
+**比赛记录：** 好像开了一场很简单的比赛啊？不知道怎么的就过了一大堆傻逼题啊？zjc 食屎专场？jyb多做题啊！大家监督hzh少打点dota啊？实力不济，不过没能ak还是很遗憾啊？ 
+
+**ConnorZhong：** 在一边看jyb和hzh表演，好像稀里糊涂就过了一大堆？在他俩表演的时候看了眼J，感觉是个二分图又不是很拿的准，想了想自己的网络流水平技能点只点了一级，有点怂，甩锅给队友，jyb上去搞了搞怎么好像很顺利的就过了？...占据了几乎一半的的机时去搞B..高精度板子也抄不对，题目也稀里糊涂看错，做了半天得出结论好像不太会做？最后狼狈的打了个表好像也莫名其妙就过了？zjc还是太菜了啊，学学java和py应对一下高精，另外多点点技能点啊？哦对了高精度的复杂度也很鬼畜啊？
+
+**Cabinfever: ** G题明明读到了不同，还是忘了，wa了两发。J题存匹配的点的逻辑关系弄反，m打成n，又wa了两发。c题傻逼题，但看了榜不敢写，幸好最后1A，这说明：不要怂，就是干
+
+**YOULLNEVERWA:**
