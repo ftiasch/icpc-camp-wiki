@@ -1,0 +1,126 @@
+---
+format: Markdown
+title: skywalkert
+...
+
+# Team Task at Current Stage (2017.09.09 - 2017.09.29)
+
++ Team Training (UTF +8)
+    * ~~[2017 Multi-University Training Contest - Team 10 (Replay)](../2017%20Multi-University%20Training%20Contest%20-%20Team%2010#replay)~~
+    * ~~[2017 ACM-ICPC Asia Regional Urumqi Online](../2017%20ACM-ICPC%20Asia%20Regional%20Urumqi%20Online)~~
+    * ~~[2017 ACM-ICPC Asia Regional Shenyang Online](../2017%20ACM-ICPC%20Asia%20Regional%20Shenyang%20Online)~~
+    * ~~[Russian Code Cup 2017 - Finals](../Russian%20Code%20Cup%202017%20-%20Finals)~~
+    * ~~[2017 ACM-ICPC Asia Regional Xi'an Online](../2017%20ACM-ICPC%20Asia%20Regional%20Xi%e2%80%99an%20Online)~~
+    * [2017 ACM-ICPC Asia Regional Qingdao Online](../2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online)
+    * ~~[2017 ACM-ICPC Asia Regional Beijing Online](https://hihocoder.com/contests)~~
+    * [2017 ACM-ICPC Asia Regional Naning Online](https://www.jisuanke.com/contest/877)
++ Upsolving
+    * ~~[Satellites](../Russian%20Code%20Cup%202017%20-%20Finals#e.-satellites)~~ (geometry + segment tree)
+    * ~~[Random Domino Placements](../2014-2015%20Summer%20Petrozavodsk%20Camp,%20Petr%20Mitrichev%20Contest%2012#b.-random-domino-placements)~~ (markov chain monte carlo method)
+    * ~~[Recognize Power of Two](../2014-2015%20Summer%20Petrozavodsk%20Camp,%20Petr%20Mitrichev%20Contest%2012#f.-recognize-power-of-two)~~ (taylor series + extended euclidean algorithm)
+    * ~~[Bomberman](../2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online#b-bomberman)~~ (interval dynamic programming)
+    * ~~[To Play or not to Play](../Russian%20Code%20Cup%202017%20-%20Finals#f.-to-play-or-not-to-play)~~ (treap)
+    * ~~[KAMI](../2014%20ACM-ICPC%20Asia%20Regional%20Anshan%20Online#h.-kami)~~ (prune and search)
+    * [Yuno And Irotoridori no Sekai](../2017%20ACM-ICPC%20China%20Guangxi%20Invitational%20Programming%20Contest#l.-yuno-and-irotoridori-no-sekai) (heavy-light decomposition + link-cut tree)
+    * [King’s Visit](../2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online#e.-kings-visit) (plug-in dynamic programming)
++ Organization of the next meeting
+
+# 计划的计划
+
++ 做计划
+    * 减少 acm 耗费时间
+    * 规律作息
++ 从以前的训练里找点不会的题做
+    * 重拾区域赛思路题泛做 [UVALive 爆 OJ 记录](http://blog.csdn.net/skywalkert/article/details/51761235) 49/50 (+123) (补下 2016 大连和 China-Final)
+    * 网络流 24 题 [推倒重写](https://loj.ac/problems/search?keyword=%E7%BD%91%E7%BB%9C%E6%B5%81) 0/24
+    * 多校补题 2017:63/115 重点学习不会/忘记/没做过的套路
+    * 几何好题
++ 学习常用的算法
+    * 动态数据结构
+    * 非常规数据结构
+    * 总结分治技巧
+    * 字符串常规算法
+    * 图连通性理论
+    * paper idea
+
+<!--
+team
+http://codeforces.com/gym/100203
+http://codeforces.com/gym/100253
+http://codeforces.com/gym/100269
+http://codeforces.com/gym/100443
+http://codeforces.com/gym/100513
+http://codeforces.com/gym/100531
+http://codeforces.com/gym/100783
+http://codeforces.com/gym/100792
+
+solo
+http://codeforces.com/gym/100291
+
+practice
+http://codeforces.com/gym/100548
+http://codeforces.com/gym/100570
+-->
+
+# 解题备忘录
+
+待补：已补题目中的套路
+
+# 鸽鸽鸽存档
+
+[ProjectEuler 483 Repeated permutation](https://projecteuler.net/problem=483)
+
+[HDU 5856 Math is Fun](http://acm.hdu.edu.cn/showproblem.php?pid=5856)
+
+[HDU 5848 Easy Homework](http://acm.hdu.edu.cn/showproblem.php?pid=5848)
+
+[Codeforces 853E Lada Malina](http://codeforces.com/contest/853/problem/E)
+
+[51nod 1576 Tree and Permutation](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1576) 树链剖分
+
+[51nod 1816 小C的二分图](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1816) Splay Tree
+
+[51nod 1297 管理二叉树](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1297) 点分治 + 线段树
+
+[51nod 1075 约瑟夫环 V3](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1075) Meet in the Middle
+
+---
+
+[51nod 1825 小C的字符串](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1825) All substring LCS problem，论文大概浏览了一遍但是没读具体的证明，搁置。
+
+[Topcoder SRM 599 Div.1 950 SimilarNames](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1300) 状压 DP，预处理合法的转移将枚举子集转移做到 $\mathcal{O}(5^m)$，准备写但暂时搁置。
+
+[2016 Astar Contest Round 2B 1002 Factory](http://acm.hdu.edu.cn/showproblem.php?pid=6115) 离线分情况处理，涉及大公司的合在一起 bfs，否则归并建虚树枚举 lca 算答案，目前写一半搁置。
+
+[SPOJ JZPSTR](http://www.lydsy.com/JudgeOnline/problem.php?id=2628) 写了个 bitset TLE，貌似写大常数了，搁置。
+
+---
+
+<!-- individual-solved(team-solved) | tried unsolved(unavailable) -->
+
+[2012 ACM-ICPC North America Greater New York Regional Contest](https://vjudge.net/contest/185492) ABCDEFGHJ | I
+
+[XVI Open Cup named after E.V. Pankratiev. GP of Peterhof](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010318) AFGH(DE) | BI ~~C: 正十二面体/正二十面体旋转群~~
+
+[ZOJ Monthly, June 2014](https://vjudge.net/contest/73213) EFH(BCDG) | I ~~A: 多项式取模 + lucas 定理~~ ~~J: DP~~
+
+[2014 ACM-ICPC Asia Mudanjiang Regional Contest](http://codeforces.com/gym/100554) F(ADIK) | HB EGJC
+
+[PKU Campus 2015](http://poj.openjudge.cn/campus2015) J(AEI) | BH FCDG
+
+[2016 ACM-ICPC Asia China-Final Regional Contest](http://codeforces.com/gym/101194) (ABCDEFHL) | K ~~G: 启发式合并~~ ~~I: 最短路 + 生成函数 + FFT~~ ~~J: 二分图最大权匹配~~
+
+~~[2015 BUPT Collegiate Programming Contest](http://code.bupt.edu.cn/contest/358) ABCDEFGHIJKL~~ ~~J: 德州扑克~~ ~~L: 最小割(数据有误)~~
+
+~~[2015 ACM-ICPC Asia EC-Final Regional Contest](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=719) ABCDEFGHIJKLM~~ ~~H: 中国扑克~~
+
+~~[2015 ACM-ICPC Asia Amritapuri Regional Contest](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=679) ABCDEFGHIJ~~ ~~A: 树
+ DP~~ ~~E: 二分 + 二分图最大独立集~~ ~~D: 分治 + 归并~~
+
+~~[2016 ACM-ICPC Asia Qingdao Regional Contest](http://acm.hdu.edu.cn/search.php?field=problem&key=2016ACM%2FICPC%D1%C7%D6%DE%C7%F8%C7%E0%B5%BA%D5%BE-%D6%D8%CF%D6%C8%FC%A3%A8%B8%D0%D0%BB%D6%D0%B9%FA%CA%AF%D3%CD%B4%F3%D1%A7%A3%A9) DEIJLM(ABCFGHK)~~ ~~M: K-D Tree~~
+
+~~[XVI Open Cup named after E.V. Pankratiev. GP of Siberia](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010316) ACDFGK(BEHJ)~~ ~~I: 离线模拟 + 可合并 Treap~~ ~~L: 扩展欧几里得 + 数位 DP~~
+
+~~[2016 China Collegiate Programming Contest Finals](http://codeforces.com/gym/101206) B(AEFHIJL)~~ ~~C: 容斥 + DFS + 高维前缀和~~ ~~D: 贪心~~ ~~G: 最短路~~ ~~K: 模拟 + BFS~~
+
+~~[2015 ACM-ICPC China Shanghai Metropolitan Programming Contest](http://acm.hdu.edu.cn/search.php?field=problem&key=The+2015+ACM-ICPC+China+Shanghai+Metropolitan+Programming+Contest&source=1&searchmode=source) ACDI(BEFGJ)~~ ~~H: 扫描线 + 半平面交~~
