@@ -1,32 +1,38 @@
----
-title: Codeforces Round #435 (Div. 2)
----
-
-# A. Mahmoud and Ehab and the MEX
+A. Mahmoud and Ehab and the MEX
+===============================
 
 模拟
 
-# B. Mahmoud and Ehab and the bipartiteness
+B. Mahmoud and Ehab and the bipartiteness
+=========================================
 
 模拟
 
-# C. Mahmoud and Ehab and the xor
+C. Mahmoud and Ehab and the xor
+===============================
 
-构造，首先输出 NO 当且仅当 $n=2$ 并且 $x=0$ ， 排除掉这种情况。我们先让前 $n-1$ 数为 $1$ 到 $n-1$ ，然后再让第 $n$ 数为其应有的值。这个时候有可能会出现重复，我们在前 $n-1$ 个数中选一个与第 $n$ 数不同的数，都异或上 $2^{17}$ 即可。
+构造，首先输出 NO 当且仅当 $n=2$ 并且 $x=0$ ，
+排除掉这种情况。我们先让前 $n-1$ 数为 $1$ 到 $n-1$ ，然后再让第 $n$
+数为其应有的值。这个时候有可能会出现重复，我们在前 $n-1$
+个数中选一个与第 $n$ 数不同的数，都异或上 $2^{17}$ 即可。
 
-# D. Mahmoud and Ehab and the binary string
+D. Mahmoud and Ehab and the binary string
+=========================================
 
-二分序列。每次我们将询问的区间的右半部都填成 $1$ ，其他部分均为 $0$。我们可以将其与全是 $0$ 的海明距离做对比。可以判断右边的区间属于以下三种情况：
+二分序列。每次我们将询问的区间的右半部都填成 $1$ ，其他部分均为
+$0$。我们可以将其与全是 $0$
+的海明距离做对比。可以判断右边的区间属于以下三种情况：
 
-- 全是 $1$
-- 全是 $0$
-- 有 $0$ 有 $1$
+-   全是 $1$
+-   全是 $0$
+-   有 $0$ 有 $1$
 
 递归处理即可。
 
-# E. Mahmoud and Ehab and the function
+E. Mahmoud and Ehab and the function
+====================================
 
-预处理下，扔到 set 里，每次询问的时候 lower_bound 下即可。
+预处理下，扔到 set 里，每次询问的时候 lower\_bound 下即可。
 
-# F. Mahmoud and Ehab and the final stage
-
+F. Mahmoud and Ehab and the final stage
+=======================================
