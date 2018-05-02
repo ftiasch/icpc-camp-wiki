@@ -1,0 +1,29 @@
+## C. Cleaning Pipes
+
+solved by cabinfever
+
+---
+
+cabinfever's solution:
+
+线段两两判相交（起点相交不算），相交则连边，最后判断是否是二分图
+
+## E. Elementary Math
+
+solved by cabinfever
+
+---
+
+cabinfever's solution
+
+枚举符号，得到所有结果，离散化后建边，做二分图匹配即可
+
+## I.  Identifying Map Tiles
+
+solved by cabinfever
+
+---
+
+cabinfever's solution
+
+对于每个level，右上，右下，左下，左上都是子问题，for每一和level即可
