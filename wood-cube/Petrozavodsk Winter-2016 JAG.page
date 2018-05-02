@@ -20,36 +20,48 @@
 ┌────────┬────────────────────────────────────────────────────────────┐
 │I₂[-:--]│                                                          ₀ │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Merges and Acquisitions [TDJ]
-
-签到题。
-
-## B. Change a Password [TDJ]
+A. Merges and Acquisitions \[TDJ\]
+----------------------------------
 
 签到题。
 
-## C. Delete Files [MZH]
-
-## D. Linear Gimmick [TDJ]
+B. Change a Password \[TDJ\]
+----------------------------
 
 签到题。
 
-## E. Shifting a Matrix [TDJ]
+C. Delete Files \[MZH\]
+-----------------------
+
+D. Linear Gimmick \[TDJ\]
+-------------------------
+
+签到题。
+
+E. Shifting a Matrix \[TDJ\]
+----------------------------
 
 表达式计算。
 
-## F. Modern Announce Network [MZH]
+F. Modern Announce Network \[MZH\]
+----------------------------------
 
-## G. Cube Dividing [TDJ]
+G. Cube Dividing \[TDJ\]
+------------------------
 
 首先把每个障碍格的周围8联通的一圈都设为关键点，相邻点之间先合并集合，然后合并每个点正下方的点，并对最后的俯视图再做一遍二维的问题，然后类似的再继续做一维和〇维的问题。
 
-## H. Donut Decoration [MZH]
+H. Donut Decoration \[MZH\]
+---------------------------
 
-## I. Shortest Bridge
+I. Shortest Bridge
+------------------
 
-## J. Longest Shortest Path [MZH]
+J. Longest Shortest Path \[MZH\]
+--------------------------------
 
-## K. Optimal Tournament [MZH]
+K. Optimal Tournament \[MZH\]
+-----------------------------
