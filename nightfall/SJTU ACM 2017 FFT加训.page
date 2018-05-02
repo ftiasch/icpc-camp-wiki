@@ -1,8 +1,10 @@
-# [3-idiots](http://acm.hdu.edu.cn/showproblem.php?pid=4609)
+[3-idiots](http://acm.hdu.edu.cn/showproblem.php?pid=4609)
+==========================================================
 
-## Aki
+Aki
+---
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -13,95 +15,97 @@ typedef complex<DB> Complex;
 const DB PI = acos(-1);
 const int N = 262144;
 void FFT(Complex number[], int length, int type) {
-	for (int i = 1, j = 0; i < length - 1; ++ i) {
-		for (int k = length; j ^= k >>= 1, ~j & k; );
-		if (i < j) {
-			swap(number[i], number[j]);
-		}
-	}
-	Complex unit_p0;
-	for (int turn = 0; (1 << turn) < length; ++ turn) {
-		int step = 1 << turn, step2 = step << 1;
-		DB p0 = PI / step * type;
-		unit_p0 = Complex(cos(p0), sin(p0));
-		for (int i = 0; i < length; i += step2) {
-			Complex unit = 1;
-			for (int j = 0; j < step; ++ j) {
-				Complex &number1 = number[i + j + step];
-				Complex &number2 = number[i + j];
-				Complex delta = unit * number1;
-				number1 = number2 - delta;
-				number2 = number2 + delta;
-				unit = unit * unit_p0;
-			}
-		}
-	}
+    for (int i = 1, j = 0; i < length - 1; ++ i) {
+        for (int k = length; j ^= k >>= 1, ~j & k; );
+        if (i < j) {
+            swap(number[i], number[j]);
+        }
+    }
+    Complex unit_p0;
+    for (int turn = 0; (1 << turn) < length; ++ turn) {
+        int step = 1 << turn, step2 = step << 1;
+        DB p0 = PI / step * type;
+        unit_p0 = Complex(cos(p0), sin(p0));
+        for (int i = 0; i < length; i += step2) {
+            Complex unit = 1;
+            for (int j = 0; j < step; ++ j) {
+                Complex &number1 = number[i + j + step];
+                Complex &number2 = number[i + j];
+                Complex delta = unit * number1;
+                number1 = number2 - delta;
+                number2 = number2 + delta;
+                unit = unit * unit_p0;
+            }
+        }
+    }
 }
 Complex A[N], B[N], C[N];
 void mul(LL a[N], LL b[N], int len) {
-	while ((len & -len) != len) len ++;
-	for (int i = 0; i < len; ++ i) A[i] = Complex(a[i], 0);
-	for (int i = 0; i < len; ++ i) B[i] = Complex(b[i], 0);
-	FFT(A, len, 1);
-	FFT(B, len, 1);
-	for (int i = 0; i < len; ++ i) C[i] = A[i] * B[i];
-	FFT(C, len, -1);
-	for (int i = 0; i < len; ++ i) {
-		a[i] = (LL) (C[i].real() / len + 0.5);
-	}
+    while ((len & -len) != len) len ++;
+    for (int i = 0; i < len; ++ i) A[i] = Complex(a[i], 0);
+    for (int i = 0; i < len; ++ i) B[i] = Complex(b[i], 0);
+    FFT(A, len, 1);
+    FFT(B, len, 1);
+    for (int i = 0; i < len; ++ i) C[i] = A[i] * B[i];
+    FFT(C, len, -1);
+    for (int i = 0; i < len; ++ i) {
+        a[i] = (LL) (C[i].real() / len + 0.5);
+    }
 }
 
 LL a[N], b[N];
 bool debug = 0;
 int main() {
-	int T;
-	scanf("%d", &T);
-	while (T --) {
-		int n, len = 0;
-		if (debug) n = 100; else
-		scanf("%d", &n);
-		vector<int> all;
-		for (int i = 0; i < n; ++ i) {
-			int x;
-			if (debug) x = rand() % 200 + 1; else
-			scanf("%d", &x);
-			len = max(len, x + 1);
-			a[x] ++;
-			b[x] ++;
-			all.push_back(x);
-		}
-		len *= 2;
-		mul(a, b, len);
-		LL sum = 1LL * n * (n - 1) * (n - 2) / 6;
-		LL ans = sum;
-		for (int i : all) a[i + i] --;
-		for (int i = 1; i < len; ++ i) a[i] += a[i - 1];
-		for (int i : all) {
-			ans -= a[i] / 2;
-		}
-		if (debug) {
-			LL duipai = sum;
-			for (int i = 0; i < n; ++ i) {
-				for (int j = i + 1; j < n; ++ j) {
-					for (int k = j + 1; k < n; ++ k) {
-						int a = all[i], b = all[j], c = all[k];
-						if (a + b <= c || a + c <= b || b + c <= a) duipai --;
-					}
-				}
-			}
-			assert(duipai == ans);
-		}
-		printf("%.7f\n", 1.0 * ans / sum);
-		for (int i = 0; i <= len; ++ i) b[i] = a[i] = 0;
-	}
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        int n, len = 0;
+        if (debug) n = 100; else
+        scanf("%d", &n);
+        vector<int> all;
+        for (int i = 0; i < n; ++ i) {
+            int x;
+            if (debug) x = rand() % 200 + 1; else
+            scanf("%d", &x);
+            len = max(len, x + 1);
+            a[x] ++;
+            b[x] ++;
+            all.push_back(x);
+        }
+        len *= 2;
+        mul(a, b, len);
+        LL sum = 1LL * n * (n - 1) * (n - 2) / 6;
+        LL ans = sum;
+        for (int i : all) a[i + i] --;
+        for (int i = 1; i < len; ++ i) a[i] += a[i - 1];
+        for (int i : all) {
+            ans -= a[i] / 2;
+        }
+        if (debug) {
+            LL duipai = sum;
+            for (int i = 0; i < n; ++ i) {
+                for (int j = i + 1; j < n; ++ j) {
+                    for (int k = j + 1; k < n; ++ k) {
+                        int a = all[i], b = all[j], c = all[k];
+                        if (a + b <= c || a + c <= b || b + c <= a) duipai --;
+                    }
+                }
+            }
+            assert(duipai == ans);
+        }
+        printf("%.7f\n", 1.0 * ans / sum);
+        for (int i = 0; i <= len; ++ i) b[i] = a[i] = 0;
+    }
 }
-~~~
+```
 
-# [Best Position](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4820)
+[Best Position](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4820)
+============================================================================================================================
 
-## Aki
+Aki
+---
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -109,99 +113,101 @@ typedef complex<double> Complex;
 const double PI = acos(-1);
 const int N = 1048576;
 void FFT(Complex number[], int length, int type) {
-	for (int i = 1, j = 0; i < length - 1; ++ i) {
-		for (int k = length; j ^= k >>= 1, ~j & k; );
-		if (i < j) {
-			swap(number[i], number[j]);
-		}
-	}
-	Complex unit_p0;
-	for (int turn = 0; (1 << turn) < length; ++ turn) {
-		int step = 1 << turn, step2 = step << 1;
-		double p0 = PI / step * type;
-		unit_p0 = Complex(cos(p0), sin(p0));
-		for (int i = 0; i < length; i += step2) {
-			Complex unit = 1;
-			for (int j = 0; j < step; ++ j) {
-				Complex &number1 = number[i + j + step];
-				Complex &number2 = number[i + j];
-				Complex delta = unit * number1;
-				number1 = number2 - delta;
-				number2 = number2 + delta;
-				unit = unit * unit_p0;
-			}
-		}
-	}
+    for (int i = 1, j = 0; i < length - 1; ++ i) {
+        for (int k = length; j ^= k >>= 1, ~j & k; );
+        if (i < j) {
+            swap(number[i], number[j]);
+        }
+    }
+    Complex unit_p0;
+    for (int turn = 0; (1 << turn) < length; ++ turn) {
+        int step = 1 << turn, step2 = step << 1;
+        double p0 = PI / step * type;
+        unit_p0 = Complex(cos(p0), sin(p0));
+        for (int i = 0; i < length; i += step2) {
+            Complex unit = 1;
+            for (int j = 0; j < step; ++ j) {
+                Complex &number1 = number[i + j + step];
+                Complex &number2 = number[i + j];
+                Complex delta = unit * number1;
+                number1 = number2 - delta;
+                number2 = number2 + delta;
+                unit = unit * unit_p0;
+            }
+        }
+    }
 }
 Complex A[N], B[N], C[N];
 void mul(int a[N], int b[N]) {
-	for (int i = 0; i < N; ++ i) A[i] = Complex(a[i], 0);
-	for (int i = 0; i < N; ++ i) B[i] = Complex(b[i], 0);
-	FFT(A, N, 1);
-	FFT(B, N, 1);
-	for (int i = 0; i < N; ++ i) C[i] = A[i] * B[i];
-	FFT(C, N, -1);
-	for (int i = 0; i < N; ++ i) {
-		a[i] = (int) (C[i].real() / N + 0.5);
-	}
+    for (int i = 0; i < N; ++ i) A[i] = Complex(a[i], 0);
+    for (int i = 0; i < N; ++ i) B[i] = Complex(b[i], 0);
+    FFT(A, N, 1);
+    FFT(B, N, 1);
+    for (int i = 0; i < N; ++ i) C[i] = A[i] * B[i];
+    FFT(C, N, -1);
+    for (int i = 0; i < N; ++ i) {
+        a[i] = (int) (C[i].real() / N + 0.5);
+    }
 }
 
 const int M = 505;
 char s[505][505], t[505][505];
 int aa[2][M][M], a[N], b[N];
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 0; i < n; ++ i) scanf("%s", s[i]);
-	int T, zzz = 0;
-	scanf("%d", &T);
-	while (T --) {
-		int r, c;
-		scanf("%d%d", &r, &c);
-		for (int i = 0; i < n; ++ i) {
-			for (int j = 0; j < m; ++ j) aa[0][i][j] = aa[1][i][j] = 0;
-		}
-		for (int i = 0; i < r; ++ i) scanf("%s", t[i]);
-		for (char ch : "GL") {
-			for (int i = 0; i < r; ++ i) {
-				for (int j = 0; j < c; ++ j) {
-					b[2 * i * m + j] = t[r - i - 1][c - j - 1] == ch;
-				}
-			}
-			for (int i = 0; i < n; ++ i) {
-				for (int j = 0; j < m; ++ j) {
-					a[2 * i * m + j] = s[i][j] == ch;
-				}
-			}
-			//for (int i = 0; i < N; ++ i) if (a[i]) printf("a[%d]=%d\n", i, a[i]);
-			//for (int i = 0; i < N; ++ i) if (b[i]) printf("b[%d]=%d\n", i, b[i]);
-			mul(a, b);
-			//for (int i = 0; i < N; ++ i) if (a[i]) printf("a[%d]=%d\n", i, a[i]);
-			for (int i = 0; i + r <= n; ++ i) {
-				for (int j = 0; j + c <= m; ++ j) {
-					//printf("%d %d === %d\n", i, j, 2 * i * m + j + 2 * (r - 1) * m + (c - 1));
-					aa[ch == 'L'][i][j] += a[2 * i * m + j + 2 * (r - 1) * m + (c - 1)];
-				}
-			}
-			for (int i = 0; i < N; ++ i) a[i] = b[i] = 0;
-		}
-		int ans_c = 0, ax = 0, ay = 0, a_a = 0, a_b = 0;
-		for (int i = 0; i < n; ++ i) {
-			for (int j = 0; j < m; ++ j) {
-				//printf("%d %d = %d %d\n", i + 1, j + 1, aa[0][i][j], aa[1][i][j]);
-				if (aa[0][i][j] + aa[1][i][j] > ans_c) {
-					ans_c = aa[0][i][j] + aa[1][i][j];
-					ax = i;
-					ay = j;
-					a_a = aa[0][i][j];
-					a_b = aa[1][i][j];
-				}
-			}
-		}
-		printf("Case #%d: %d %d %d %d\n", ++ zzz, ax + 1, ay + 1, a_a, a_b);
-	}
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; ++ i) scanf("%s", s[i]);
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --) {
+        int r, c;
+        scanf("%d%d", &r, &c);
+        for (int i = 0; i < n; ++ i) {
+            for (int j = 0; j < m; ++ j) aa[0][i][j] = aa[1][i][j] = 0;
+        }
+        for (int i = 0; i < r; ++ i) scanf("%s", t[i]);
+        for (char ch : "GL") {
+            for (int i = 0; i < r; ++ i) {
+                for (int j = 0; j < c; ++ j) {
+                    b[2 * i * m + j] = t[r - i - 1][c - j - 1] == ch;
+                }
+            }
+            for (int i = 0; i < n; ++ i) {
+                for (int j = 0; j < m; ++ j) {
+                    a[2 * i * m + j] = s[i][j] == ch;
+                }
+            }
+            //for (int i = 0; i < N; ++ i) if (a[i]) printf("a[%d]=%d\n", i, a[i]);
+            //for (int i = 0; i < N; ++ i) if (b[i]) printf("b[%d]=%d\n", i, b[i]);
+            mul(a, b);
+            //for (int i = 0; i < N; ++ i) if (a[i]) printf("a[%d]=%d\n", i, a[i]);
+            for (int i = 0; i + r <= n; ++ i) {
+                for (int j = 0; j + c <= m; ++ j) {
+                    //printf("%d %d === %d\n", i, j, 2 * i * m + j + 2 * (r - 1) * m + (c - 1));
+                    aa[ch == 'L'][i][j] += a[2 * i * m + j + 2 * (r - 1) * m + (c - 1)];
+                }
+            }
+            for (int i = 0; i < N; ++ i) a[i] = b[i] = 0;
+        }
+        int ans_c = 0, ax = 0, ay = 0, a_a = 0, a_b = 0;
+        for (int i = 0; i < n; ++ i) {
+            for (int j = 0; j < m; ++ j) {
+                //printf("%d %d = %d %d\n", i + 1, j + 1, aa[0][i][j], aa[1][i][j]);
+                if (aa[0][i][j] + aa[1][i][j] > ans_c) {
+                    ans_c = aa[0][i][j] + aa[1][i][j];
+                    ax = i;
+                    ay = j;
+                    a_a = aa[0][i][j];
+                    a_b = aa[1][i][j];
+                }
+            }
+        }
+        printf("Case #%d: %d %d %d %d\n", ++ zzz, ax + 1, ay + 1, a_a, a_b);
+    }
 }
-~~~
+```
 
-# [Rikka with Subset II](http://acm.hdu.edu.cn/showproblem.php?pid=5830)
+[Rikka with Subset II](http://acm.hdu.edu.cn/showproblem.php?pid=5830)
+======================================================================
+
 这道题不是FFT。
