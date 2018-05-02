@@ -1,0 +1,157 @@
+# Contest Info
+
+date: 2017.07.30 - 2017.08.27
+
+[practice link](https://vjudge.net/contest/175000)
+
+# Solutions
+
+## A. Unique Party
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+枚举上下边界转化为一维问题，设前缀和数组为 $s$ ，需要找到满足 $i < j, s[i] \leq s[j]$ 的 $\max(j - i)$ 。
+
+不难发现，对于 $i' < i, s[i'] \leq s[i]$ ， $i'$ 永远比 $i$ 更优，同理适用于 $j < j', s[j] \leq s[j']$ 的情况。
+
+剔除不优点后可以得到两个单调减的序列，在其上使用 two pointer 即可 $\mathcal{O}(n^2 m)$ 。
+
+## B. Por Costel and the Alien Invasion
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+可持久化线段树，区间取 min ，只有单点询问所以标记不用下传。
+
+## C. Clockwork Bomb
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+两棵树共有边可以不动，利用它们能连通的点缩成一个块得到两棵树。
+
+每次从原树里取一个叶子节点，把它往上连的边去掉，去新树里找这个节点，把它往上连的边加上即可。
+
+不难证明不会重复加一条边，且每次加的边不会产生环。至于证明每次都是棵树，剩下的只是证明连通性而已。
+
+## D. K-th Number
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+对权值维护可持久化线段树，查询第 $k$ 大元素只需同时在两棵树上二分。
+
+## E. Almost Union-Find
+
+solved by braveTester, skywalkert
+
+---
+
+skywalkert's solution
+
+对于操作 2 ，不真的移除某个点，而是将其贡献取消，创建一个新点代替即可。其他操作直接做。
+
+## F. An STL-like Problem
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+用可持久化线段树维护并查集数组即可，虽然看上去不能用势能来分析操作次数，但只要按秩合并就可以 $\mathcal{O}(m \log^2 n)$ 。
+
+想象一下出题人让你的并查集爬了 $\log n$ 步之后撤销这次操作……
+
+## G. Geometer's Sketchpad
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+线段树每个节点维护变换矩阵与区间相邻两点距离之和，注意每次操作完强行修改两个地方的距离， eps 也要设好。
+
+## H. Power Tree
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+考虑每个点对祖先的贡献，可以表示成自身权值乘以到祖先的 $\prod{\deg}$ ，也可以拆成到两个到根的系数相除。
+
+每个点加一个叶子时对其子树内原有的点会产生新的乘积贡献，合理安排 dfs 序后就可以用线段树进行区间乘、区间求和了。
+
+## I. Roads in Yusland
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+这是一个有整数最优解的线性规划，它的对偶问题可以自底向上贪心处理，具体处理时需要一个可合并堆和一个标记，标记的取值可能达到所有工人代价之和，边权可以定义在较深的节点上。
+
+原问题可以把 DP 转移信息转化到子树里某个点的贡献上，用线段树维护 DP 值即可。
+
+## J. ACM Rank
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+一个队最多 60 个有效提交，最多在最后 50 分钟狂过 10 题，总罚时 3775 分钟。
+
+拿 10 个树状数组、 10 个 set 维护一下每一种 (过题数, 罚时) 的人数和最优 (最后一次通过提交, 编号) 的队伍。
+
+## K. Coins
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+转化到权值上算个数，从而路径的贡献可以拆成子树的贡献，询问的天数区间也可以拆成前缀区间，毕竟可以 offline 。
+
+正常来说拿个线段树套可持久化权值线段树维护贡献就可以了，$\mathcal{O}(n \log^2 n)$ ，但是这题 $n$ 比较大，直接做大概需要 1GB 的内存，不妨考虑下 cache 的效率……
+
+将操作与询问整体二分后可以去掉一个权值线段树，时间还是 $\mathcal{O}(n \log^2 n)$ 但是空间 $\mathcal{O}(n)$ 。
+
+但有一句 xxx 不得不说…… UVALive 爆栈是怎么个事？ RE 许久后手写栈通过了。
+
+## L. Sunlight on a Tree
+
+solved by skywalkert
+
+---
+
+skywalkert's solution
+
+求路径上向量点积最大值比较尴尬，没法拆成子树的贡献，先来个树链剖分冷静一下。经过上面那个题的教训，这次我写的是 bfs 版本的树链剖分，利用 bfs 序得到了 dfs 序。
+
+不难证明点积最大值一定会在点集对应的凸包上取到，因此只需要在相应的凸壳上二分查找最优解即可。例如按 $(x, y)$ 排序后的点集求出的下凸壳可以处理在 $x$ 轴之上或 $x$ 负半轴的询问向量。
+
+由于要在区间点集对应的凸壳上询问，所以这里可以 $\mathcal{O}(n \log^2 n)$ 实现一个线段树套凸壳，合并凸壳相对不好写，每一个线段树节点重新拿点集生成凸壳即可，这里采用归并排序可以做到 $\mathcal{O}(n \log n)$ ，但不是必要的。
+
+考虑询问，树链剖分会产生 $\log n$ 个询问，每个询问在 dfs 序线段树上会变成 $\log^2 n$ 个节点的询问，每个询问再在凸包上二分一下，这样单个询问的复杂度是 $\mathcal{O}(\log^3 n)$ 。
+
+offline 则可以做到 $\mathcal{O}(n \log n + q \log^2 n)$ 。将询问按照极角序排序，则询问的答案在每个凸壳上单调不降，维护许多个 pointer 即可。
