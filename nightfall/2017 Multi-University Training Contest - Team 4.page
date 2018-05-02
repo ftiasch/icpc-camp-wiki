@@ -1,0 +1,278 @@
+Aki这场不会做被打包了。
+
+# [Big Integer](http://acm.hdu.edu.cn/showproblem.php?pid=6067)
+
+# [Classic Quotation](http://acm.hdu.edu.cn/showproblem.php?pid=6068)
+
+# [Logical Chain](http://acm.hdu.edu.cn/showproblem.php?pid=6072)
+
+## Aki
+
+bitset优化的Kosaraju求强连通分量。
+
+bitset的lowbit：xxx._Find_first()
+
+bitset的下一个bit：xxx._Find_next(i)
+
+long long的popcount据说比自己打表慢一点：
+
+countbit：__builtin_popcountll
+
+以下两个据说很快：
+
+long long lowbit(count trailing zero)：__builtin_ctzll
+
+long long highbit(count leading zero)：__builtin_clzll
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 250;
+typedef bitset<N> adj;
+adj G[N], rG[N];
+adj vis;
+vector<int> lis;
+int n;
+void dfs(int x) {
+	vis[x] = 0;
+	adj remain = G[x] & vis;
+	for (int i = remain._Find_first(); i < N; remain &= vis, i = remain._Find_next(i)) dfs(i);
+	lis.push_back(x);
+}
+int A;
+void rdfs(int x) {
+	A ++;
+	vis[x] = 0;
+	adj remain = rG[x] & vis;
+	for (int i = remain._Find_first(); i < N; remain &= vis, i = remain._Find_next(i)) rdfs(i);
+}
+int SCC(int n) {
+	vis.set();
+	lis.clear();
+	for (int i = 0; i < n; ++ i) {
+		if (!vis[i]) continue;
+		dfs(i);
+	}
+	reverse(lis.begin(), lis.end());
+	vis.set();
+	int res = 0;
+	for (int i : lis) {
+		if (!vis[i]) continue;
+		A = 0;
+		rdfs(i);
+		res += A * (A - 1) / 2;
+	}
+	return res;
+}
+int main() {
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, m;
+		scanf("%d%d", &n, &m);
+		for (int i = 0; i < n; ++ i) {
+			G[i].reset();
+			rG[i].reset();
+		}
+		for (int i = 0; i < n; ++ i) {
+			static char ss[N + 5];
+			scanf("%s", ss);
+			for (int j = 0; j < n; ++ j) {
+				rG[j][i] = G[i][j] = ss[j] == '1';
+			}
+		}
+		while (m --) {
+			int x;
+			scanf("%d", &x);
+			while (x --) {
+				int u, v;
+				scanf("%d%d", &u, &v);
+				-- u, -- v;
+				G[u][v] = !G[u][v];
+				rG[v][u] = !rG[v][u];
+			}
+			int ans = SCC(n);
+			printf("%d\n", ans);
+		}
+	}
+}
+~~~
+
+# [Phone Call](http://acm.hdu.edu.cn/showproblem.php?pid=6074)
+
+## Aki
+
+两条路径只需要更新路径上权值，再加两边任意点之间的一条边，跑一遍最小生成树就行了。
+
+更新可以排序后并查集。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5, B = 20, INF = 0x3f3f3f3f;
+vector<int> G[N];
+struct phone {
+	int a, b, c, d, w;
+};
+bool operator < (const phone &a, const phone &b) {
+	return a.w < b.w;
+}
+int par[N][B], f[N], deep[N], top[N], sz[N];
+long long cost[N];
+void dfs(int x, int p = 1) {
+	par[x][0] = p;
+	f[x] = x;
+	top[x] = INF;
+	for (int u : G[x]) if (u != p) {
+		deep[u] = deep[x] + 1;
+		dfs(u, x);
+	}
+}
+int lca(int u, int v) {
+	if (deep[v] < deep[u]) swap(u, v);
+	int del = deep[v] - deep[u];
+	for (int i = 0; i < B; ++ i) if (del >> i & 1) v = par[v][i];
+	if (u == v) return u;
+	for (int i = B - 1; i >= 0; -- i) if (par[u][i] != par[v][i]) {
+		u = par[u][i];
+		v = par[v][i];
+	}
+	return par[u][0];
+}
+int fat(int x) {
+	if (f[x] == x) return x;
+	return f[x] = fat(f[x]);
+}
+void join(int u, int v, int w) {
+	u = fat(u), v = fat(v);
+	if (u != v) {
+		sz[u] += sz[v]; sz[v] = 0;
+		cost[u] += cost[v]; cost[v] = 0;
+		f[v] = u;
+		cost[u] += w;
+	}
+}
+void work(int u, int v, int w) {
+	while (fat(u) != fat(v)) {
+		u = fat(u);
+		top[u] = w;
+		f[u] = par[u][0];
+		u = par[u][0];
+	}
+}
+int main() {
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, m;
+		scanf("%d%d", &n, &m);
+		for (int i = 1; i <= n; ++ i) G[i].clear();
+		for (int i = 1; i < n; ++ i) {
+			int u, v;
+			scanf("%d%d", &u, &v);
+			G[u].push_back(v);
+			G[v].push_back(u);
+		}
+		dfs(1);
+		for (int j = 1; j < B; ++ j) {
+			for (int i = 1; i <= n; ++ i) par[i][j] = par[par[i][j - 1]][j - 1];
+		}
+		vector<phone> all;
+		while (m --) {
+			int a, b, c, d, w;
+			scanf("%d%d%d%d%d", &a, &b, &c, &d, &w);
+			all.push_back((phone) {a, b, c, d, w});
+		}
+		sort(all.begin(), all.end());
+		vector<pair<int, pair<int, int>>> e;
+		for (phone p : all) {
+			int a = p.a, b = p.b, c = p.c, d = p.d, w = p.w;
+			int ab = lca(a, b);
+			int cd = lca(c, d);
+			work(a, ab, w);
+			work(b, ab, w);
+			work(c, cd, w);
+			work(d, cd, w);
+			e.push_back(make_pair(w, make_pair(ab, cd)));
+		}
+		for (int i = 2; i <= n; ++ i) {
+			int w = top[i];
+			if (w != INF) {
+				e.push_back(make_pair(w, make_pair(i, par[i][0])));
+			}
+		}
+		for (int i = 1; i <= n; ++ i) {
+			f[i] = i;
+			cost[i] = 0;
+			sz[i] = 1;
+		}
+		sort(e.begin(), e.end());
+		for (auto edge : e) {
+			int w = edge.first;
+			int u = edge.second.first;
+			int v = edge.second.second;
+			join(u, v, w);
+		}
+		printf("%d %lld\n", sz[fat(1)], cost[fat(1)]);
+	}
+}
+~~~
+
+# [Security Check](http://acm.hdu.edu.cn/showproblem.php?pid=6076)
+
+## Aki
+
+转化成$(n+1)*(n+1)$网格，大部分格子可以往下，往右，往斜右下走，某些格子（$nk$个）只能往右，往下走。
+
+可以发现，dp转移时能斜着走一定从斜着的地方转移过来。所以可以把关键点抠出来，按照自然顺序（先行再列）dp这些点，转移直接从斜线上最早遇到的点转移过来。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 6e4 + 5, K = 10, INF = 1e9;
+int a[N], b[N], DP[N + N], las[N + N], pa[N], pb[N];
+int main() {
+	int T, *dp = DP + N;
+	scanf("%d", &T);
+	while (T --) {
+		int n, k;
+		scanf("%d%d", &n, &k);
+		for (int i = 0; i < n; ++ i) {
+			scanf("%d", &a[i]);
+			pa[a[i]] = i;
+		}
+		for (int i = 0; i < n; ++ i) {
+			scanf("%d", &b[i]);
+			pb[b[i]] = i;
+		}
+		vector<pair<int, int>> key;
+		for (int i = 1; i <= n; ++ i) {
+			for (int j = max(1, i - k); j <= min(n, i + k); ++ j) {
+				if (pa[i] && pb[j]) key.push_back({pa[i], pb[j]});
+				key.push_back({pa[i] + 1, pb[j] + 1});
+			}
+		}
+		key.push_back({n, n});
+		sort(key.begin(), key.end());
+		key.erase(unique(key.begin(), key.end()), key.end());
+		for (int i = -n; i <= n; ++ i) {
+			dp[i] = abs(i);
+			las[i] = max(-i, 0);
+		}
+		for (auto p : key) {
+			int x = p.first, y = p.second;
+			int res = INF;
+			if (x) res = min(res, dp[(x - 1) - y] + y - las[(x - 1) - y] + 1);
+			if (y) res = min(res, dp[x - (y - 1)] + (y - 1) - las[x - (y - 1)] + 1);
+			if (abs(a[x - 1] - b[y - 1]) > k) {
+				res = min(res, dp[(x - 1) - (y - 1)] + (y - 1) - las[(x - 1) - (y - 1)] + 1);
+			}
+			dp[x - y] = res;
+			las[x - y] = y;
+		}
+		printf("%d\n", dp[0]);
+	}
+}
+~~~
+
+# [Yuno And Claris](http://acm.hdu.edu.cn/showproblem.php?pid=6079)
