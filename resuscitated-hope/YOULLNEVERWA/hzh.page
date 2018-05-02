@@ -1,0 +1,91 @@
+# Todo List
+* 不瞎玩
+* 多思考，多做题
+
+# Self-Training
+
+# Contest Record
+- 2017-7-25：多校第一场：北航出的题，之前做了3题（BCF），今天写了最简单的题（k）和一道恶心题(L)，恶心题没过，主要原因在于读入的方式过于新颖，还有没有考虑到不存在的情况，导致一直莫名TLE，赛后补题稍微改了改一遍过，另有补题：H
+
+# Daily Practice
+- 2017-2-17 CF778C 爆搜+减枝
+- 2017-3-15 CF780ABCD 刷刷水，注意理清思路
+- 2017-3-16 CF780EF bitset运用还是不熟练啊
+
+# 暑期日常
+- Week1(ASC 1)
+- A题：数学题，n%2==1 : k=n/2;n%4==0 : k=n/2-1 ; n%4==2 : k=n/2-2
+- B题：有上下界的网络流
+- C题：树形dp
+- D题：矩阵乘法,差点忘了AT就是A的转置。。
+- E题：矩阵快速幂加速状压dp
+- G题：线段树乱搞
+- Week2(ASC 2)
+- A题：dfa，处理掉空边再dp
+- B题：汉诺塔n个盘子m个柱子版，用记忆化搜索搞搞
+- C题：哈夫曼编码的应用
+- E题：dp一下
+- G题：随便搞搞
+- Week3(ASC 3)
+- B题：二分图匹配
+- E题：最短路的变形
+- F题：dp并找方案
+- H题：构造题，瞎比dfs，瞎比染色，瞎比搞
+- I题：simpson积分
+
+# Weekly Practice
+- Week8
+- Mon CF785E 分块二分乱搞
+- Tue CF786B 线段树+最短路搞一搞
+- Wed CF786C n+n/2+n/3.....其实不大
+- Thu CF797D 链表搞搞
+- Fri CF797E 分治
+- Sat CF766E 树上dp
+- Sun CF798D 构造
+- Week9
+- Mon CF793D dp
+- Tue CF793C 简单题乱搞一下
+- Wed CF771D 又是dp
+- Thu CF768F 组合数
+- Fri CF767E 贪心
+- Sat CF765E 找重心随便搞搞
+- Sun CF762D 看似插头dp，其实推推发现能往回走的只有第二排，而且只用记录第二排往回走一步，更多的可以用其他的组合
+- Week10-11
+- Mon CF803D 二分
+- Tue CF903E dp
+- Wed CF803F 容斥
+- Thu CF804D 树dp+二分搞搞
+- Fri CF757E 积性函数
+- Sat CF757D 状压dp，状态卡的紧
+- Sun CF756C 线段树维护
+- Week12
+- Mon CF808E dp，重量为1，2的拿出来dp，剩下的都是3
+- Tue CF756D dp，dp[i][j]代表到了第i个字符，当前是第j个字符的状态数,*并且当前状态是最靠前的
+- Wed CF755F 最大的很好算，最小的其实也是dp，多重背包用bitset优化一下即可
+- Thu CF755E 构造题，可以证明k>3时无解，想不到吧 
+- Week13
+- Mon CF809B 基于二分的交互题
+- Tue CF754C dp，读入部分有点恶心，被specialjudge坑了，specialjudge报的错误出错了
+- Wed CF753B 随机交互简单题
+- Thu CF753C 随机交互恶心题，为什么你们随机数都一样啊
+- Fri CF811D 乱搞交互题
+- Sat CF799E 细节很多的题。。。巨多，开始看起来很简单，发现我太单纯了
+- Sun CF746G 构造题
+- Week14
+- Mon CF758F 简单数论
+- Tue CF750E 矩阵建模
+- Wed CF731E 博弈dp
+- Thu CF743E 二分+dp[n][1<<8],预处理从i，对于数字j，第x个j在哪
+- Fri CF744C 状压dp，dp[s][j]表示在s这个状态下，a节省了j的情况下b最多节省了多少
+- Sat CF739C 线段树维护差值，和每个区间从左开始最长，从右开始最长，和本区间最长
+- Sun CF734F a&b+a|b=a+b
+- Week15
+- Mon CF812E nim游戏
+- Tue CF792E 枚举
+- Wed CF802J 水题
+- Thu CF802K 树上dp
+- Fri CF802A 贪心
+- Sat CF802B 数据结构+贪心
+- Sun CF733F 最小生成树+lca
+
+# Other Link
