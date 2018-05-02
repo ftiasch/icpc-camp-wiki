@@ -1,0 +1,113 @@
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 5e5 + 5;
+vector<int> dag[N];
+int in[N], out[N];
+vector<int> G[N * 2];
+int n, k, que[N * 2], dx[N * 2], dy[N * 2], matx[N * 2], maty[N * 2];
+void ae(int u, int v) {
+	G[u].push_back(v);
+}
+int BFS() {
+	int flag = 0, qt = 0, qh = 0;
+	for (int i = 1; i <= k; ++ i) dy[i] = 0;
+	for (int i = 1; i <= n; ++ i) {
+		dx[i] = 0;
+		if (!matx[i]) que[qt ++] = i;
+	}
+	while (qh < qt) {
+		int u = que[qh ++];
+		for (int t : G[u]) {
+			if (!dy[t]) {
+				dy[t] = dx[u] + 1;
+				if (!maty[t]) flag = true;
+				else {
+					dx[maty[t]] = dx[u] + 2;
+					que[qt ++] = maty[t];
+				}
+			}
+		}
+	}
+	return flag;
+}
+bool DFS(int u) {
+	for (int t : G[u]) {
+		if (dy[t] == dx[u] + 1) {
+			dy[t] = 0;
+			if (!maty[t] || DFS(maty[t])) {
+				matx[u] = t;
+				maty[t] = u;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+int Hopcroft() {
+	int ans = 0;
+	while (BFS()) for (int i = 1; i <= n; ++ i) if (!matx[i]) {
+		if (DFS(i)) ans ++;
+	}
+	return ans;
+}
+int main() {
+	int a, b, n, m;
+	while (scanf("%d%d%d%d", &n, &m, &a, &b) == 4) {
+		vector<pair<int, int>> edges;
+		for (int i = 0; i < m; ++ i) {
+			int u, v;
+			scanf("%d%d", &u, &v);
+			edges.push_back({u, v});
+			dag[u].push_back(v);
+			in[v] ++;
+			out[u] ++;
+		}
+		bool check = 1;
+		check &= (in[a] == 0);
+		check &= (out[b] == 0);
+		for (int i = 1; i <= n; ++ i) {
+			if (i != a) check &= (in[i] >= 1);
+			if (i != b) check &= (out[i] >= 1);
+		}
+		int ans;
+		if (!check) {
+			puts("NO");
+			goto eee;
+		}
+		for (int i = 1; i <= m; ++ i) {
+			matx[i] = 0;
+			int u, v; tie(u, v) = edges[i - 1];
+			ae(i, v); // EA
+			ae(i, n + u); // EB
+		}
+		for (int i = 1; i <= 2 * n; ++ i) maty[i] = 0;
+		::n = m, ::k = 2 * n;
+		ans = Hopcroft();
+		if (ans == (n - 1) * 2) {
+			vector<int> EA, EB;
+			for (int i = 1; i <= m; ++ i) {
+				if (matx[i]) {
+					(matx[i] > n ? EB : EA).push_back(i);
+				}
+			}
+			puts("YES");
+			assert((int) EA.size() == n - 1);
+			assert((int) EB.size() == n - 1);
+			for (int u : EA) printf("%d ", u); puts("");
+			for (int u : EB) printf("%d ", u); puts("");
+		}
+		else puts("NO");
+eee:
+		for (int i = 1; i <= m; ++ i) {
+			vector<int> e;
+			G[i].swap(e);
+		}
+		for (int i = 1; i <= n; ++ i) {
+			vector<int> e;
+			dag[i].swap(e);
+			in[i] = out[i] = 0;
+		}
+	}
+}
+~~~
