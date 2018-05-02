@@ -1,14 +1,18 @@
-# ABDE
+ABDE
+====
 
-# [C Segments](https://cn.vjudge.net/contest/172978#problem/C)
+[C Segments](https://cn.vjudge.net/contest/172978#problem/C)
+============================================================
 
-# [F Most Distant Point from the Sea ](https://cn.vjudge.net/contest/172978#problem/F)
+[F Most Distant Point from the Sea](https://cn.vjudge.net/contest/172978#problem/F)
+===================================================================================
 
-## lbn187
+lbn187
+------
 
 二分答案，转90度，然后直接套用半平面交
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define eps 1e-8
 #define pi acos(-1)
@@ -17,17 +21,17 @@ int sgn(double x){return x<-eps?-1:x>eps;}//x>0-->1 x=0-->0 x<0-->-1
 int cmp(double x,double y){return sgn(x-y);}//x>y-->1 x=0-->0 x<y-->-1
 double sqr(double x){return x*x;}
 struct P{//一个点或者一个向量
-	double x,y;
-	P(double x=0,double y=0):x(x),y(y){}
-	void in(){scanf("%lf%lf",&x,&y);}
-	void out(){printf("%.7lf %.7lf\n",x,y);}
-	double norm(){return sqrt(x*x+y*y);}
-	double norm2(){return x*x+y*y;}
-	P unit(){//单位向量
-		double l=norm();
-		return P(x/l,y/l);
-	}
-	P rot90(){return P(-y,x);}
+    double x,y;
+    P(double x=0,double y=0):x(x),y(y){}
+    void in(){scanf("%lf%lf",&x,&y);}
+    void out(){printf("%.7lf %.7lf\n",x,y);}
+    double norm(){return sqrt(x*x+y*y);}
+    double norm2(){return x*x+y*y;}
+    P unit(){//单位向量
+        double l=norm();
+        return P(x/l,y/l);
+    }
+    P rot90(){return P(-y,x);}
 };
 bool operator==(P a,P b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
 bool operator!=(P a,P b){return !(a==b);}
@@ -42,84 +46,89 @@ double cj(P a,P b){return a.x*b.y-a.y*b.x;}
 double dis(P a,P b){return sqrt(sqr(a.x-b.x)+sqr(a.y-b.y));}
 
 struct L{//一个线段或者直线
-	P s,t;
-	L(P s=P(),P t=P()):s(s),t(t){}
-	void in(){scanf("%lf%lf%lf%lf",&s.x,&s.y,&t.x,&t.y);}
-	void out(){printf("%.5lf %.5lf --> %.5lf %.5lf\n",s.x,s.y,t.x,t.y);}
-	double length()const{return dis(s,t);}
+    P s,t;
+    L(P s=P(),P t=P()):s(s),t(t){}
+    void in(){scanf("%lf%lf%lf%lf",&s.x,&s.y,&t.x,&t.y);}
+    void out(){printf("%.5lf %.5lf --> %.5lf %.5lf\n",s.x,s.y,t.x,t.y);}
+    double length()const{return dis(s,t);}
 };
 P line_intersect(L a,L b){//直线相交
-	double s1=cj(a.t-a.s,b.s-a.s),s2=cj(a.t-a.s,b.t-a.s);
-	return (b.s*s2-b.t*s1)/(s2-s1);
+    double s1=cj(a.t-a.s,b.s-a.s),s2=cj(a.t-a.s,b.t-a.s);
+    return (b.s*s2-b.t*s1)/(s2-s1);
 }
 
 bool turn_left(P a,P b,P c){return sgn(cj(b-a,c-a))>=0;}
 bool turn_right(P a,P b,P c){return sgn(cj(b-a,c-a))<=0;}
 bool turn_left(L l,P p){return turn_left(l.s,l.t,p);}
 bool half_plane_intersect(vector<L>p){//半平面交，返回向量左手边的区域
-	int n=(int)p.size(),i;
-	typedef pair<double,L>polar;
-	vector<polar>g;
-	g.resize(n);
-	for(int i=0;i<n;i++){
-		P v=p[i].t-p[i].s;
-		g[i]=make_pair(atan2(v.y,v.x),p[i]);
-	}
-	sort(g.begin(),g.end(),[](polar a,polar b){
-		if(cmp(a.first,b.first)==0)return sgn(cj(a.second.t-a.second.s,b.second.t-a.second.s))<0;		
-		else return cmp(a.first,b.first)<0;
-	});
-	p.resize(unique(g.begin(),g.end(),[](polar a,polar b){return cmp(a.first,b.first)==0;})-g.begin());
-	for(int i=0;i<n;i++)p[i]=g[i].second;
-	int h=0,t=-1;
-	vector<L>q;
-	for(int i=0;i<n;i++){
-		for(;h<t&&!turn_left(p[i],line_intersect(q[t-1],q[t]));)t--,q.pop_back();
-		for(;h<t&&!turn_left(p[i],line_intersect(q[h],q[h+1]));)h++;
-		t++;q.push_back(p[i]);
-	}
-	for(;t-h>1&&!turn_left(q[h],line_intersect(q[t-1],q[t]));t--)q.pop_back();
-	for(;t-h>1&&!turn_left(q[t],line_intersect(q[h],q[h+1]));)h++;
-	if(t-h<2)return 0;
-	return 1;
+    int n=(int)p.size(),i;
+    typedef pair<double,L>polar;
+    vector<polar>g;
+    g.resize(n);
+    for(int i=0;i<n;i++){
+        P v=p[i].t-p[i].s;
+        g[i]=make_pair(atan2(v.y,v.x),p[i]);
+    }
+    sort(g.begin(),g.end(),[](polar a,polar b){
+        if(cmp(a.first,b.first)==0)return sgn(cj(a.second.t-a.second.s,b.second.t-a.second.s))<0;       
+        else return cmp(a.first,b.first)<0;
+    });
+    p.resize(unique(g.begin(),g.end(),[](polar a,polar b){return cmp(a.first,b.first)==0;})-g.begin());
+    for(int i=0;i<n;i++)p[i]=g[i].second;
+    int h=0,t=-1;
+    vector<L>q;
+    for(int i=0;i<n;i++){
+        for(;h<t&&!turn_left(p[i],line_intersect(q[t-1],q[t]));)t--,q.pop_back();
+        for(;h<t&&!turn_left(p[i],line_intersect(q[h],q[h+1]));)h++;
+        t++;q.push_back(p[i]);
+    }
+    for(;t-h>1&&!turn_left(q[h],line_intersect(q[t-1],q[t]));t--)q.pop_back();
+    for(;t-h>1&&!turn_left(q[t],line_intersect(q[h],q[h+1]));)h++;
+    if(t-h<2)return 0;
+    return 1;
 }
 int n;P p[111];
 bool ok(double V){
-	vector<L>A;A.clear();
-	for(int i=1;i<=n;i++){
-		L a=L(p[i],p[i+1]);
-		P del=(a.t-a.s).unit().rot90()*V;
-		A.push_back(L(a.s+del,a.t+del));
-	}
-	return half_plane_intersect(A);
+    vector<L>A;A.clear();
+    for(int i=1;i<=n;i++){
+        L a=L(p[i],p[i+1]);
+        P del=(a.t-a.s).unit().rot90()*V;
+        A.push_back(L(a.s+del,a.t+del));
+    }
+    return half_plane_intersect(A);
 }
 int main(){
-	double L,R,MD;
-	int T,i;
-	for(;scanf("%d",&n),n;){
-		for(i=1;i<=n;i++)p[i].in();p[n+1]=p[1];
-		for(L=0,R=1e5,i=1;i<=100;i++){
-			MD=(L+R)*0.5;
-			if(ok(MD))L=MD;else R=MD;
-		}
-		printf("%.6lf\n",L);
-	}
+    double L,R,MD;
+    int T,i;
+    for(;scanf("%d",&n),n;){
+        for(i=1;i<=n;i++)p[i].in();p[n+1]=p[1];
+        for(L=0,R=1e5,i=1;i<=100;i++){
+            MD=(L+R)*0.5;
+            if(ok(MD))L=MD;else R=MD;
+        }
+        printf("%.6lf\n",L);
+    }
 }
-~~~
+```
 
-# [G Cornering at Poles](https://cn.vjudge.net/contest/172978#problem/G)
+[G Cornering at Poles](https://cn.vjudge.net/contest/172978#problem/G)
+======================================================================
 
-# [H Alice and Bomb](https://cn.vjudge.net/contest/172978#problem/H)
+[H Alice and Bomb](https://cn.vjudge.net/contest/172978#problem/H)
+==================================================================
 
-# [I Bouldering](https://cn.vjudge.net/contest/172978#problem/I)
+[I Bouldering](https://cn.vjudge.net/contest/172978#problem/I)
+==============================================================
 
-# [J Largest Circle](https://cn.vjudge.net/contest/172978#problem/J)
+[J Largest Circle](https://cn.vjudge.net/contest/172978#problem/J)
+==================================================================
 
-##lbn187
+lbn187
+------
 
 同E题，注意卡时间和精度
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define eps 1e-8
 #define pi acos(-1)
@@ -128,17 +137,17 @@ int sgn(double x){return x<-eps?-1:x>eps;}//x>0-->1 x=0-->0 x<0-->-1
 int cmp(double x,double y){return sgn(x-y);}//x>y-->1 x=0-->0 x<y-->-1
 double sqr(double x){return x*x;}
 struct P{//一个点或者一个向量
-	double x,y;
-	P(double x=0,double y=0):x(x),y(y){}
-	void in(){scanf("%lf%lf",&x,&y);}
-	void out(){printf("%.7lf %.7lf\n",x,y);}
-	double norm(){return sqrt(x*x+y*y);}
-	double norm2(){return x*x+y*y;}
-	P unit(){//单位向量
-		double l=norm();
-		return P(x/l,y/l);
-	}
-	P rot90(){return P(-y,x);}
+    double x,y;
+    P(double x=0,double y=0):x(x),y(y){}
+    void in(){scanf("%lf%lf",&x,&y);}
+    void out(){printf("%.7lf %.7lf\n",x,y);}
+    double norm(){return sqrt(x*x+y*y);}
+    double norm2(){return x*x+y*y;}
+    P unit(){//单位向量
+        double l=norm();
+        return P(x/l,y/l);
+    }
+    P rot90(){return P(-y,x);}
 };
 bool operator==(P a,P b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
 bool operator!=(P a,P b){return !(a==b);}
@@ -153,66 +162,66 @@ double cj(P a,P b){return a.x*b.y-a.y*b.x;}
 double dis(P a,P b){return sqrt(sqr(a.x-b.x)+sqr(a.y-b.y));}
 
 struct L{//一个线段或者直线
-	P s,t;
-	L(P s=P(),P t=P()):s(s),t(t){}
-	void in(){scanf("%lf%lf%lf%lf",&s.x,&s.y,&t.x,&t.y);}
-	void out(){printf("%.5lf %.5lf --> %.5lf %.5lf\n",s.x,s.y,t.x,t.y);}
-	double length()const{return dis(s,t);}
+    P s,t;
+    L(P s=P(),P t=P()):s(s),t(t){}
+    void in(){scanf("%lf%lf%lf%lf",&s.x,&s.y,&t.x,&t.y);}
+    void out(){printf("%.5lf %.5lf --> %.5lf %.5lf\n",s.x,s.y,t.x,t.y);}
+    double length()const{return dis(s,t);}
 };
 P line_intersect(L a,L b){//直线相交
-	double s1=cj(a.t-a.s,b.s-a.s),s2=cj(a.t-a.s,b.t-a.s);
-	return (b.s*s2-b.t*s1)/(s2-s1);
+    double s1=cj(a.t-a.s,b.s-a.s),s2=cj(a.t-a.s,b.t-a.s);
+    return (b.s*s2-b.t*s1)/(s2-s1);
 }
 
 bool turn_left(P a,P b,P c){return sgn(cj(b-a,c-a))>=0;}
 bool turn_right(P a,P b,P c){return sgn(cj(b-a,c-a))<=0;}
 bool turn_left(L l,P p){return turn_left(l.s,l.t,p);}
 bool half_plane_intersect(vector<L>p){//半平面交，返回向量左手边的区域
-	int n=(int)p.size(),i;
-	typedef pair<double,L>polar;
-	vector<polar>g;
-	g.resize(n);
-	for(int i=0;i<n;i++){
-		P v=p[i].t-p[i].s;
-		g[i]=make_pair(atan2(v.y,v.x),p[i]);
-	}
-	sort(g.begin(),g.end(),[](polar a,polar b){
-		if(cmp(a.first,b.first)==0)return sgn(cj(a.second.t-a.second.s,b.second.t-a.second.s))<0;		
-		else return cmp(a.first,b.first)<0;
-	});
-	p.resize(unique(g.begin(),g.end(),[](polar a,polar b){return cmp(a.first,b.first)==0;})-g.begin());
-	for(int i=0;i<n;i++)p[i]=g[i].second;
-	int h=0,t=-1;
-	vector<L>q;
-	for(int i=0;i<n;i++){
-		for(;h<t&&!turn_left(p[i],line_intersect(q[t-1],q[t]));)t--,q.pop_back();
-		for(;h<t&&!turn_left(p[i],line_intersect(q[h],q[h+1]));)h++;
-		t++;q.push_back(p[i]);
-	}
-	for(;t-h>1&&!turn_left(q[h],line_intersect(q[t-1],q[t]));t--)q.pop_back();
-	for(;t-h>1&&!turn_left(q[t],line_intersect(q[h],q[h+1]));)h++;
-	if(t-h<2)return 0;
-	return 1;
+    int n=(int)p.size(),i;
+    typedef pair<double,L>polar;
+    vector<polar>g;
+    g.resize(n);
+    for(int i=0;i<n;i++){
+        P v=p[i].t-p[i].s;
+        g[i]=make_pair(atan2(v.y,v.x),p[i]);
+    }
+    sort(g.begin(),g.end(),[](polar a,polar b){
+        if(cmp(a.first,b.first)==0)return sgn(cj(a.second.t-a.second.s,b.second.t-a.second.s))<0;       
+        else return cmp(a.first,b.first)<0;
+    });
+    p.resize(unique(g.begin(),g.end(),[](polar a,polar b){return cmp(a.first,b.first)==0;})-g.begin());
+    for(int i=0;i<n;i++)p[i]=g[i].second;
+    int h=0,t=-1;
+    vector<L>q;
+    for(int i=0;i<n;i++){
+        for(;h<t&&!turn_left(p[i],line_intersect(q[t-1],q[t]));)t--,q.pop_back();
+        for(;h<t&&!turn_left(p[i],line_intersect(q[h],q[h+1]));)h++;
+        t++;q.push_back(p[i]);
+    }
+    for(;t-h>1&&!turn_left(q[h],line_intersect(q[t-1],q[t]));t--)q.pop_back();
+    for(;t-h>1&&!turn_left(q[t],line_intersect(q[h],q[h+1]));)h++;
+    if(t-h<2)return 0;
+    return 1;
 }
 int n;P p[11111];
 bool ok(double V){
-	vector<L>A;A.clear();
-	for(int i=1;i<=n;i++){
-		L a=L(p[i],p[i+1]);
-		P del=(a.t-a.s).unit().rot90()*V;
-		A.push_back(L(a.s+del,a.t+del));
-	}
-	return half_plane_intersect(A);
+    vector<L>A;A.clear();
+    for(int i=1;i<=n;i++){
+        L a=L(p[i],p[i+1]);
+        P del=(a.t-a.s).unit().rot90()*V;
+        A.push_back(L(a.s+del,a.t+del));
+    }
+    return half_plane_intersect(A);
 }
 int main(){
-	double L,R,MD;
-	int T,i;
-	scanf("%d",&n);
-	for(i=1;i<=n;i++)p[i].in();p[n+1]=p[1];
-	for(L=0,R=3e7,i=1;i<=1000;i++){
-		MD=(L+R)*0.5;
-		if(ok(MD))L=MD;else R=MD;
-	}
-	printf("%.4lf\n",L);
+    double L,R,MD;
+    int T,i;
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)p[i].in();p[n+1]=p[1];
+    for(L=0,R=3e7,i=1;i<=1000;i++){
+        MD=(L+R)*0.5;
+        if(ok(MD))L=MD;else R=MD;
+    }
+    printf("%.4lf\n",L);
 }
-~~~
+```
