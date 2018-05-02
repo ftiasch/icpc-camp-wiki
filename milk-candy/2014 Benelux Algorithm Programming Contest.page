@@ -1,0 +1,156 @@
+# Info
+
+Date: 2017.10.03 12:00-17:00
+
+[Link](http://www.bnuoj.com/v3/contest_show.php?cid=9249)
+
+# Solutions
+
+## A Avoiding the Apocalypse
+
+solved by Jove, sk, upsolved by none
+
+---
+
+sk's solution
+
+对时间拆点，建图跑网络流。点数$n(t+1)$，大概$10w$个，丝毫不虚。
+
+## B Button Bashing
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+直接$BFS$。
+
+## C Citadel Construction
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+求出凸包后，如果凸包上只有三个点，答案即为这三个点围成的面积，三个点以上用旋转卡壳求最大四边形面积。
+
+
+## D Dropping Directions
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+在不加任何标志的情况下，这些道路被分为很多个环，每加一个标志，相当于把一个环上的边全都导进另一个环中，可以理解为把两个环接起来，那么原问题就是通过尽可能少的操作，使得每条边都至少和一个与终点相连的边在同一个环内，并查集维护连通块个数即可。
+
+## E Excellent Engineers
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+按照一维排序后，第二维当下标，第三维当权值，从前往后扫，用一个线段树做插入和查询最小值的操作。
+
+## F Floating Formation
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+先$BCC$缩点，由于题目保证图连通且至少一艘船不沉，于是至少有一个大小至少是$2$的$BCC$，将这个$BCC$定为根，那么每个$\geq 2$的$BCC$到根的路径上的点都不会沉。
+
+现在问题转化成给一棵树，有若干个子树内的点是白点，其余是黑点，可以选$k$个点把它到根的路径染黑，最大化黑点个数。
+
+贪心是显然的，但是需要维护染黑每个点的收益，然后每次染黑一个点，相当于让子树内的点收益$-1$，$DFS$序拉链后线段树维护即可。
+
+## G Growling Gears
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+一眼看出这是个签到水题。
+
+## H Highway Hassle
+
+upsolved by quailty, sk
+
+---
+
+quailty's solution
+
+起点、加油站、终点标记为关键点，先从每个关键点出发跑一遍最短路，可以得到关键点之间两两最短路。
+
+接下来的一个暴力做法是$dp_{i,j}$表示当前位于$i$点且油量为$j$的最小代价，转移枚举在当前点加油，或者走到另一个关键点，最短路转移，但是第二维范围太大，难以通过。
+
+一个观察是一个关键点出发到达另一个关键点时，要么出发时油箱是满的，要么到达时油箱是空的，否则总可以调整使得解不变差，于是不论当前位于哪个点上，第二维都只需要考虑大约关键点数个档次。
+
+## I Interesting Integers
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+设前两项为$x,y$，根据$G_i = G_{i-1} + G_{i-2}$，可以推出$G_i = xF_{i-2}+yF_{i-1}$。枚举相邻两项菲波那切数作为系数$A,B$，用扩展$gcd$求解$Ax + By = n$。
+
+## J Jury Jeopardy
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+给出走迷宫的路径，要求构造迷宫。那么只要照着路径走一遍，走到的位置都是走廊，注意朝向和转弯的处理。
+
+## K Key to Knowledge
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+折半暴力。
+
+# Replay
+
+`Q` 虽然日常迟到，但是不会缺席！
+
+题目还是很难读，`J` 顺着读题，`Q` 还没来，`K` 凭感觉读题，
+
+很快 `K` 读过的题就有人过了，于是跟榜切了，`Q` 过来并接手 B 题，确认了题意之后也切了。
+
+然后榜上又开出一些新的题，发现也是 `K` 读过的题，非常优秀。
+
+于是 `Q` 拿走 K 题开始思考，很快想出折半搜索，`J` 发现 J 题大概模拟一下就好，然后 `K` 拿走了 I 题。
+
+I 题因为手滑两次之后过了，但是 K 题还卡着，`K` 从 `Q` 手中接过去 E 题，搞了搞就过了。
+
+很快 J 题也过了，`K` 过来帮 `Q` 看 K 题，发现有想错的地方，改了改也过了。
+
+这时 `J` 发现 C 题是个几何，讲了题意之后 `K` 表示旋转卡壳直接做，很快写完但是没过样例，怀疑题读错了，`Q` 提出先写个暴力对拍，发现题意没错，是 `K` 写错了，改了改也过了。
+
+期间 `J` 沉迷读题无法自拔，`Q` 上来帮忙读了读题，搞清楚 F 题意后认为可做，和 `J` 讨论了一下就开始写了，手滑一次之后过了。
+
+这时 `J` 和 `K` 已经讨论出 A 题可以网络流，但是点数边数太多不是很敢上，`Q` 认为没有其他做法，建议先冲一发。
+
+A 题在经过比较长时间的查错之后也过了，期间 `Q` 读懂了 D 题并利用零碎时间上机切了。
+
+最后剩下 H 题，三人一起讨论之后决定先冲一个暴力，当 `K` 写完预处理之后 `Q` 想出了优化方法，遂交由 `Q` 来 rush，可惜赛后一分钟才调过样例并 AC。
+
+## quailty
+
+早睡早起精神好……
