@@ -1,278 +1,280 @@
-# G. Origami
+G. Origami
+==========
 
 横竖可以分开，然后把答案乘起来。
 
 压成一个数组。考虑边界往里面折，就是存在一个回文中心，最长扩展长度可以抵达边界。所以就是求边界不停地往里面跳，可以跳到哪些位置。manacher一遍，再dp一遍就好了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 const int N = 2e6 + 5;
 int l[N];
 vector<int> manacher(LL s[], int n) {
-	l[0] = 1;
-	for (int i = 1, j = 0; i < (n << 1) - 1; ++ i) {
-		int p = i >> 1, q = i - p, r = (j + 1 >> 1) + l[j] - 1;
-		l[i] = r < q ? 0 : min(r - q + 1, l[(j << 1) - i]);
-		while (p - l[i] >= 0 && q + l[i] < n && s[p - l[i]] == s[q + l[i]]) l[i] ++;
-		if (q + l[i] - 1 > r) j = i;
-	}
-	vector<int> ans = {0};
-	for (int i = 0; i < n - 1; ++ i) ans.push_back(l[i * 2 + 1]);
-	ans.push_back(0);
-	return ans;
+    l[0] = 1;
+    for (int i = 1, j = 0; i < (n << 1) - 1; ++ i) {
+        int p = i >> 1, q = i - p, r = (j + 1 >> 1) + l[j] - 1;
+        l[i] = r < q ? 0 : min(r - q + 1, l[(j << 1) - i]);
+        while (p - l[i] >= 0 && q + l[i] < n && s[p - l[i]] == s[q + l[i]]) l[i] ++;
+        if (q + l[i] - 1 > r) j = i;
+    }
+    vector<int> ans = {0};
+    for (int i = 0; i < n - 1; ++ i) ans.push_back(l[i * 2 + 1]);
+    ans.push_back(0);
+    return ans;
 }
 bool L[N], R[N];
 int sL[N], sR[N];
 LL work(LL s[], int n) {
-	vector<int> l = manacher(s, n);
-	sL[0] = L[0] = 1;
-	for (int i = 1; i <= n; ++ i) {
-		int tmp = sL[i - 1];
-		if (i - l[i] >= 1) tmp -= sL[i - l[i] - 1];
-		L[i] = tmp > 0;
-		sL[i] = sL[i - 1] + L[i];
-	}
-	sR[n] = R[n] = 1;
-	for (int i = n - 1; i >= 0; -- i) {
-		int tmp = sR[i + 1];
-		if (i + l[i] <= n - 1) tmp -= sR[i + l[i] + 1];
-		R[i] = tmp > 0;
-		sR[i] = sR[i + 1] + R[i];
-	}
-	LL ans = 0;
-	for (int i = 0; i < n; ++ i) if (L[i]) ans += sR[i + 1];
-	return ans;
+    vector<int> l = manacher(s, n);
+    sL[0] = L[0] = 1;
+    for (int i = 1; i <= n; ++ i) {
+        int tmp = sL[i - 1];
+        if (i - l[i] >= 1) tmp -= sL[i - l[i] - 1];
+        L[i] = tmp > 0;
+        sL[i] = sL[i - 1] + L[i];
+    }
+    sR[n] = R[n] = 1;
+    for (int i = n - 1; i >= 0; -- i) {
+        int tmp = sR[i + 1];
+        if (i + l[i] <= n - 1) tmp -= sR[i + l[i] + 1];
+        R[i] = tmp > 0;
+        sR[i] = sR[i + 1] + R[i];
+    }
+    LL ans = 0;
+    for (int i = 0; i < n; ++ i) if (L[i]) ans += sR[i + 1];
+    return ans;
 }
 LL a[N];
 char s[N];
 int main() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	for (int i = 0; i < n; ++ i) scanf("%s", s + (i * m));
-	for (int i = 0; i < n; ++ i) {
-		a[i] = 0;
-		for (int j = 0; j < m; ++ j) a[i] = a[i] * 31 + (s[i * m + j] - 'a' + 1);
-	}
-	LL ans1 = work(a, n);
-	for (int i = 0; i < m; ++ i) {
-		a[i] = 0;
-		for (int j = 0; j < n; ++ j) a[i] = a[i] * 31 + (s[j * m + i] - 'a' + 1);
-	}
-	LL ans2 = work(a, m);
-	printf("%lld\n", ans1 * ans2);
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; ++ i) scanf("%s", s + (i * m));
+    for (int i = 0; i < n; ++ i) {
+        a[i] = 0;
+        for (int j = 0; j < m; ++ j) a[i] = a[i] * 31 + (s[i * m + j] - 'a' + 1);
+    }
+    LL ans1 = work(a, n);
+    for (int i = 0; i < m; ++ i) {
+        a[i] = 0;
+        for (int j = 0; j < n; ++ j) a[i] = a[i] * 31 + (s[j * m + i] - 'a' + 1);
+    }
+    LL ans2 = work(a, m);
+    printf("%lld\n", ans1 * ans2);
 }
-~~~
+```
 
-# K. Tris
+K. Tris
+=======
 
 大致思路是构造一个长条，上下可以对称地放，四角是L字形，然后讨论模2余数的各种情况。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 805, n = 800;
 int canvas[N][N];
 int main() {
-	int a, b, c, d;
-	scanf("%d%d%d%d", &a, &b, &c, &d);
-	assert((a + b * 2 + c * 3 + d) % 2 == 0);
-	int x = n / 2;
-	canvas[    x][0] = 1; canvas[x    ][1] = 1;
-	canvas[x + 1][0] = 1;
-	canvas[x + 2][0] = 2;
-	canvas[x + 3][0] = 2; canvas[x + 3][1] = 2;
-	d -= 2;
-	int cnt = 2;
-	int y = 1;
-	int type1 = 0, type2 = 0;
-	if (d == 0) {
-		type1 = 1;
-		a --, b --;
-	}
-	else d --;
-	if (d == 0) {
-		type2 = 1;
-		a --, b --;
-	}
-	else d --;
-	if (a % 2 == 0 && b % 2 == 1 && c % 2 == 0 && d % 2 == 0) a -= 2;
-	if (a % 2 == 1 && b % 2 == 0 && c % 2 == 0 && d % 2 == 1) a -= 2;
-	if (a % 2 == 1 && b % 2 == 0 && c % 2 == 1 && d % 2 == 0) a -= 2;
-	while (d >= 2) {
-		++ cnt;
-		canvas[x - 1][y + 1] = cnt; canvas[x - 1][y + 2] = cnt;
-		canvas[    x][y + 1] = cnt;
-		++ cnt;
-									canvas[x + 2][y + 2] = cnt;
-		canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
-		x --;
-		y += 2;
-		d -= 2;
-	}
-	while (a >= 2) {
-		++ cnt;
-		canvas[    x][y + 1] = cnt;
-		++ cnt;
-		canvas[x + 3][y + 1] = cnt;
-		y ++;
-		a -= 2;
-	}
-	while (b >= 2) {
-		++ cnt;
-		canvas[    x][y + 1] = cnt;
-		canvas[    x][y + 2] = cnt;
-		++ cnt;
-		canvas[x + 3][y + 1] = cnt;
-		canvas[x + 3][y + 2] = cnt;
-		y += 2;
-		b -= 2;
-	}
-	while (c >= 2) {
-		++ cnt;
-		canvas[    x][y + 1] = cnt;
-		canvas[    x][y + 2] = cnt;
-		canvas[    x][y + 3] = cnt;
-		++ cnt;
-		canvas[x + 3][y + 1] = cnt;
-		canvas[x + 3][y + 2] = cnt;
-		canvas[x + 3][y + 3] = cnt;
-		y += 3;
-		c -= 2;
-	}
+    int a, b, c, d;
+    scanf("%d%d%d%d", &a, &b, &c, &d);
+    assert((a + b * 2 + c * 3 + d) % 2 == 0);
+    int x = n / 2;
+    canvas[    x][0] = 1; canvas[x    ][1] = 1;
+    canvas[x + 1][0] = 1;
+    canvas[x + 2][0] = 2;
+    canvas[x + 3][0] = 2; canvas[x + 3][1] = 2;
+    d -= 2;
+    int cnt = 2;
+    int y = 1;
+    int type1 = 0, type2 = 0;
+    if (d == 0) {
+        type1 = 1;
+        a --, b --;
+    }
+    else d --;
+    if (d == 0) {
+        type2 = 1;
+        a --, b --;
+    }
+    else d --;
+    if (a % 2 == 0 && b % 2 == 1 && c % 2 == 0 && d % 2 == 0) a -= 2;
+    if (a % 2 == 1 && b % 2 == 0 && c % 2 == 0 && d % 2 == 1) a -= 2;
+    if (a % 2 == 1 && b % 2 == 0 && c % 2 == 1 && d % 2 == 0) a -= 2;
+    while (d >= 2) {
+        ++ cnt;
+        canvas[x - 1][y + 1] = cnt; canvas[x - 1][y + 2] = cnt;
+        canvas[    x][y + 1] = cnt;
+        ++ cnt;
+                                    canvas[x + 2][y + 2] = cnt;
+        canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
+        x --;
+        y += 2;
+        d -= 2;
+    }
+    while (a >= 2) {
+        ++ cnt;
+        canvas[    x][y + 1] = cnt;
+        ++ cnt;
+        canvas[x + 3][y + 1] = cnt;
+        y ++;
+        a -= 2;
+    }
+    while (b >= 2) {
+        ++ cnt;
+        canvas[    x][y + 1] = cnt;
+        canvas[    x][y + 2] = cnt;
+        ++ cnt;
+        canvas[x + 3][y + 1] = cnt;
+        canvas[x + 3][y + 2] = cnt;
+        y += 2;
+        b -= 2;
+    }
+    while (c >= 2) {
+        ++ cnt;
+        canvas[    x][y + 1] = cnt;
+        canvas[    x][y + 2] = cnt;
+        canvas[    x][y + 3] = cnt;
+        ++ cnt;
+        canvas[x + 3][y + 1] = cnt;
+        canvas[x + 3][y + 2] = cnt;
+        canvas[x + 3][y + 3] = cnt;
+        y += 3;
+        c -= 2;
+    }
 retry:
-	if (a == 0 && b == 0 && c == 0 && d == 0) {
-		++ cnt;
-		canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt + type1;
-									canvas[x + 1][y + 2] = cnt + type1;
-		cnt += type1;
-		++ cnt;
-									canvas[x + 2][y + 2] = cnt + type2;
-		canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt + type2;
-		cnt += type2;
-	}
-	else if (a == 0 && b == 0 && c == 1 && d == 1) {
-		++ cnt;
-		canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt; canvas[    x][y + 3] = cnt;
-		++ cnt;
-																canvas[x + 1][y + 3] = cnt; canvas[x + 1][y + 4] = cnt + type1;
-																							canvas[x + 2][y + 4] = cnt + type1;
-		++ cnt; cnt += type1;
-																							canvas[x + 3][y + 4] = cnt + type2;
-																canvas[x + 4][y + 3] = cnt; canvas[x + 4][y + 4] = cnt + type2;
-		++ cnt; cnt += type2;
-		canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
-									canvas[x + 4][y + 2] = cnt;
-	}
-	else if (a % 2 == 0 && b == 1 && c == 0 && d == 0) {
-		if (a == -2) {
-			assert(type1 && type2);
-			++ cnt;
-			canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt; cnt ++; canvas[    x][y + 3] = cnt;
-			++ cnt;
-			canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt; cnt ++; canvas[x + 3][y + 3] = cnt;
-			++ cnt;
-																			canvas[x + 1][y + 3] = cnt;
-																			canvas[x + 2][y + 3] = cnt;
-		}
-		else {
-			assert(a == 0);
-			++ cnt;
-			canvas[    x][y + 1] = cnt;
-			canvas[    x][y + 2] = cnt;
-			++ cnt;
-			canvas[x + 3][y + 1] = cnt;
-			++ cnt;
-			canvas[x + 3][y + 2] = cnt;
-			y += 2;
-			b --;
-			goto retry;
-		}
-	}
-	else if (a == 0 && b == 1 && c == 1 && d == 1) {
-		cnt ++;
-									canvas[x - 1][y + 2] = cnt;
-		canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt;
-		cnt ++;
-																canvas[x - 1][y + 3] = cnt; canvas[x - 1][y + 4] = cnt + type1;
-																							canvas[    x][y + 4] = cnt + type1;
-		cnt += type1; cnt ++;
-																							canvas[x + 1][y + 4] = cnt + type2;
-																canvas[x + 2][y + 3] = cnt; canvas[x + 2][y + 4] = cnt + type2;
-		cnt ++;
-									canvas[x + 3][y + 2] = cnt; canvas[x + 3][y + 3] = cnt;
-		cnt ++;
-		canvas[x + 4][y] = cnt; canvas[x + 4][y + 1] = cnt; canvas[x + 4][y + 2] = cnt;
-	}
-	else if (a == 1 && b == 0 && c == 0 && d == 1) {
-		++ cnt;
-		canvas[x - 1][y + 1] = cnt; canvas[x - 1][y + 2] = cnt + 1;
-		canvas[    x][y + 1] = cnt + 2;
-		cnt += 2;
-		++ cnt;
-									canvas[x + 2][y + 2] = cnt;
-		canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
-		x --;
-		y += 2;
-		d --;
-		a --;
-		goto retry;
-	}
-	else if (a == 1 && b == 0 && c == 1 && d == 0) {
-		++ cnt;
-		canvas[x][y + 1] = cnt;
-		canvas[x][y + 2] = cnt;
-		canvas[x][y + 3] = cnt;
-		++ cnt;
-		canvas[x + 3][y + 1] = cnt;
-		canvas[x + 3][y + 2] = cnt + 1;
-		canvas[x + 3][y + 3] = cnt + 2;
-		cnt += 2;
-		y += 3;
-		c --;
-		a --;
-		goto retry;
-	}
-	else if (a == 1 && b == 1 && c == 0 && d == 1) {
-		++ cnt;
-		canvas[x - 1][y + 1] = cnt; canvas[x - 1][y + 2] = cnt + 1;
-		canvas[    x][y + 1] = cnt;
-		cnt += 1;
-		++ cnt;
-									canvas[x + 2][y + 2] = cnt;
-		canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
-		x --;
-		y += 2;
-		d --;
-		a --;
-		b --;
-		goto retry;
-	}
-	else if (a == 1 && b == 1 && c == 1 && d == 0) {
-		++ cnt;
-		canvas[x][y + 1] = cnt;
-		canvas[x][y + 2] = cnt;
-		canvas[x][y + 3] = cnt;
-		++ cnt;
-		canvas[x + 3][y + 1] = cnt;
-		canvas[x + 3][y + 2] = cnt + 1;
-		canvas[x + 3][y + 3] = cnt + 1;
-		cnt += 1;
-		y += 3;
-		b --;
-		c --;
-		a --;
-		goto retry;
-	}
-	else assert(0);
-	printf("%d %d\n", n, n);
-	for (int i = 0; i < n; ++ i) {
-		for (int j = 0; j < n; ++ j) {
-			//if (canvas[i][j] == 0) printf("   "); else
-			printf("%d ", canvas[i][j]);
-		}
-		puts("");
-	}
+    if (a == 0 && b == 0 && c == 0 && d == 0) {
+        ++ cnt;
+        canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt + type1;
+                                    canvas[x + 1][y + 2] = cnt + type1;
+        cnt += type1;
+        ++ cnt;
+                                    canvas[x + 2][y + 2] = cnt + type2;
+        canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt + type2;
+        cnt += type2;
+    }
+    else if (a == 0 && b == 0 && c == 1 && d == 1) {
+        ++ cnt;
+        canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt; canvas[    x][y + 3] = cnt;
+        ++ cnt;
+                                                                canvas[x + 1][y + 3] = cnt; canvas[x + 1][y + 4] = cnt + type1;
+                                                                                            canvas[x + 2][y + 4] = cnt + type1;
+        ++ cnt; cnt += type1;
+                                                                                            canvas[x + 3][y + 4] = cnt + type2;
+                                                                canvas[x + 4][y + 3] = cnt; canvas[x + 4][y + 4] = cnt + type2;
+        ++ cnt; cnt += type2;
+        canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
+                                    canvas[x + 4][y + 2] = cnt;
+    }
+    else if (a % 2 == 0 && b == 1 && c == 0 && d == 0) {
+        if (a == -2) {
+            assert(type1 && type2);
+            ++ cnt;
+            canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt; cnt ++; canvas[    x][y + 3] = cnt;
+            ++ cnt;
+            canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt; cnt ++; canvas[x + 3][y + 3] = cnt;
+            ++ cnt;
+                                                                            canvas[x + 1][y + 3] = cnt;
+                                                                            canvas[x + 2][y + 3] = cnt;
+        }
+        else {
+            assert(a == 0);
+            ++ cnt;
+            canvas[    x][y + 1] = cnt;
+            canvas[    x][y + 2] = cnt;
+            ++ cnt;
+            canvas[x + 3][y + 1] = cnt;
+            ++ cnt;
+            canvas[x + 3][y + 2] = cnt;
+            y += 2;
+            b --;
+            goto retry;
+        }
+    }
+    else if (a == 0 && b == 1 && c == 1 && d == 1) {
+        cnt ++;
+                                    canvas[x - 1][y + 2] = cnt;
+        canvas[    x][y + 1] = cnt; canvas[    x][y + 2] = cnt;
+        cnt ++;
+                                                                canvas[x - 1][y + 3] = cnt; canvas[x - 1][y + 4] = cnt + type1;
+                                                                                            canvas[    x][y + 4] = cnt + type1;
+        cnt += type1; cnt ++;
+                                                                                            canvas[x + 1][y + 4] = cnt + type2;
+                                                                canvas[x + 2][y + 3] = cnt; canvas[x + 2][y + 4] = cnt + type2;
+        cnt ++;
+                                    canvas[x + 3][y + 2] = cnt; canvas[x + 3][y + 3] = cnt;
+        cnt ++;
+        canvas[x + 4][y] = cnt; canvas[x + 4][y + 1] = cnt; canvas[x + 4][y + 2] = cnt;
+    }
+    else if (a == 1 && b == 0 && c == 0 && d == 1) {
+        ++ cnt;
+        canvas[x - 1][y + 1] = cnt; canvas[x - 1][y + 2] = cnt + 1;
+        canvas[    x][y + 1] = cnt + 2;
+        cnt += 2;
+        ++ cnt;
+                                    canvas[x + 2][y + 2] = cnt;
+        canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
+        x --;
+        y += 2;
+        d --;
+        a --;
+        goto retry;
+    }
+    else if (a == 1 && b == 0 && c == 1 && d == 0) {
+        ++ cnt;
+        canvas[x][y + 1] = cnt;
+        canvas[x][y + 2] = cnt;
+        canvas[x][y + 3] = cnt;
+        ++ cnt;
+        canvas[x + 3][y + 1] = cnt;
+        canvas[x + 3][y + 2] = cnt + 1;
+        canvas[x + 3][y + 3] = cnt + 2;
+        cnt += 2;
+        y += 3;
+        c --;
+        a --;
+        goto retry;
+    }
+    else if (a == 1 && b == 1 && c == 0 && d == 1) {
+        ++ cnt;
+        canvas[x - 1][y + 1] = cnt; canvas[x - 1][y + 2] = cnt + 1;
+        canvas[    x][y + 1] = cnt;
+        cnt += 1;
+        ++ cnt;
+                                    canvas[x + 2][y + 2] = cnt;
+        canvas[x + 3][y + 1] = cnt; canvas[x + 3][y + 2] = cnt;
+        x --;
+        y += 2;
+        d --;
+        a --;
+        b --;
+        goto retry;
+    }
+    else if (a == 1 && b == 1 && c == 1 && d == 0) {
+        ++ cnt;
+        canvas[x][y + 1] = cnt;
+        canvas[x][y + 2] = cnt;
+        canvas[x][y + 3] = cnt;
+        ++ cnt;
+        canvas[x + 3][y + 1] = cnt;
+        canvas[x + 3][y + 2] = cnt + 1;
+        canvas[x + 3][y + 3] = cnt + 1;
+        cnt += 1;
+        y += 3;
+        b --;
+        c --;
+        a --;
+        goto retry;
+    }
+    else assert(0);
+    printf("%d %d\n", n, n);
+    for (int i = 0; i < n; ++ i) {
+        for (int j = 0; j < n; ++ j) {
+            //if (canvas[i][j] == 0) printf("   "); else
+            printf("%d ", canvas[i][j]);
+        }
+        puts("");
+    }
 }
-~~~
+```
