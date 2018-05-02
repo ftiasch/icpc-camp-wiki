@@ -1,38 +1,45 @@
-# Info
+Info
+====
 
 Date: 2017.10.11 17:40-22:40
 
 [Link](http://www.bnuoj.com/v3/contest_show.php?cid=9268)
 
-# Solutions
+Solutions
+=========
 
-## A Chip Installation
+A Chip Installation
+-------------------
 
 solved by sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 2-sat签到题。
 
-## B Divisible Substrings
+B Divisible Substrings
+----------------------
 
 unsolved
 
-## C Preparing Documents
+C Preparing Documents
+---------------------
 
 unsolved
 
-## D GridBagLayout
+D GridBagLayout
+---------------
 
 unsolved
 
-## E Hot Potato Routing
+E Hot Potato Routing
+--------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -40,15 +47,17 @@ quailty's solution
 
 考虑剩下的包，整个过程可以在$T+1000$时间之内完成，考虑对时间分层建图，实际上是一棵树，每个包对应树上一条从深往浅走的路径，将这些路径的终点按照深度排序，贪心取即可。
 
-## F Knapsack Problem
+F Knapsack Problem
+------------------
 
 unsolved
 
-## G Magic Potions
+G Magic Potions
+---------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -56,11 +65,12 @@ quailty's solution
 
 现在要考虑字典序，先尽可能多地让$1$和$2$配对，要么取完其中一种，相当于得到了规模为$n-1$的子问题，要么满足$sum \leq 2max \leq sum+1$，之后只能是$max$种类和其他种类进行配对。
 
-## H Restoring Permutation
+H Restoring Permutation
+-----------------------
 
 solved by Jove, sk, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
@@ -70,15 +80,17 @@ Jove's solution
 
 然后根据大小关系进行$2i-1$和$2i$两个位置的调整，如果无法调整则不合法。
 
-## I Roads
+I Roads
+-------
 
 unsolved
 
-## J Squary Set
+J Squary Set
+------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -86,4 +98,5 @@ quailty's solution
 
 考虑每计算$n^{1/4}$层$dp$值就做一个$checkpoint$，那么构造方案的时候，每次只需要从最近的$checkpoint$开始重新$dp$出往后$n^{1/4}$层的$dp$值，空间降为$O(n^{5/4}k/w)$，可以通过。
 
-# Replay
+Replay
+======
