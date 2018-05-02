@@ -1,0 +1,218 @@
+# Contest Info
+
+date: 2017.09.17 12:00-17:00
+
+[practice link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=778)
+
+# Solutions
+
+## A. Apple
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+设三角形 $A(x_1, y_1), B(x_2, y_2), C(x_3, y_3)$ 的外接圆圆心为 $O(x_o, y_o)$，半径为 $r$，对于外接圆上的一点 $P(x, y)$，有 $|\mathbf{A} - \mathbf{O}|^2 = |\mathbf{B} - \mathbf{O}|^2 = |\mathbf{C} - \mathbf{O}|^2 = |\mathbf{P} - \mathbf{O}|^2 = r^2$，故这四部分内容线性相关，则 $P(x, y)$ 的轨迹方程可以用等式
+
+$$\begin{vmatrix}
+\mathbf{P}^2 & x & y & 1 \\
+\mathbf{A}^2 & x_1 & y_1 & 1 \\
+\mathbf{B}^2 & x_2 & y_2 & 1 \\
+\mathbf{C}^2 & x_3 & y_3 & 1 \\
+\end{vmatrix} = 0$$
+
+表示，由于它总能表示成 $|\mathbf{P} - \mathbf{O}|^2 = r^2$ 的形式，所以不难得到
+
+$$O = \left(\frac{\begin{vmatrix}
+\mathbf{A}^2 & y_1 & 1 \\
+\mathbf{B}^2 & y_2 & 1 \\
+\mathbf{C}^2 & y_3 & 1 \\
+\end{vmatrix}}{2\begin{vmatrix}
+x_1 & y_1 & 1 \\
+x_2 & y_2 & 1 \\
+x_3 & y_3 & 1 \\
+\end{vmatrix}},\frac{\begin{vmatrix}
+\mathbf{A}^2 & x_1 & 1 \\
+\mathbf{B}^2 & x_2 & 1 \\
+\mathbf{C}^2 & x_3 & 1 \\
+\end{vmatrix}}{2\begin{vmatrix}
+x_1 & y_1 & 1 \\
+x_2 & y_2 & 1 \\
+x_3 & y_3 & 1 \\
+\end{vmatrix}}\right)$$
+
+然后根据点到圆心距离判断即可，需要支持 $10^{72} \approx 2^{240}$ 以内的整数运算。
+
+实际上，如果知道了 $P(x, y)$ 轨迹方程中 $\mathbf{P}^2$ 系数的正负性（通过第一行第一列的余子式），也可以直接带入行列式检验定点是否在三角形外接圆内，需要支持 $10^{48} \approx 2^{160}$ 以内的整数运算，使用 float128 勉强可以近似计算。
+
+## B, Bomberman
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+题目给出的 $8H$ 个点构成一个环，每次炸掉的是某个点至多向左右延伸 $2$ 步能到达的点集，但是存在 $8$ 个特殊点使得如果选择引爆特殊点则不能炸掉在可以炸到的范围内的其他特殊点，这些特殊点之间的距离依次是 $2, 2H - 2, 2, 2H - 2, 2, 2H - 2, 2, 2H - 2$ 。
+
+枚举第一个炸掉的点，环问题转化为序列问题，可以在本地区间 DP 后打表提交，对于一个 $H$ 进行区间 DP 的复杂度是 $\mathcal{O}((8 H)^3)$ 的，~~打表即可通过，~~但是据说提交代码长度有限制。
+
+令 $f(L, R)$ 表示剩下一段连续的点是 $[L, R]$ 时还需要引爆的期望次数，枚举引爆点 $k$，设其引爆后左边还剩下的点是 $[L, R'_k]$，右边还剩下的点是 $[L'_k, R]$，则有 $\displaystyle f(L, R) = \frac{\sum_{L \leq k \leq R}{f(L, R'_k) + f(L'_k, R)}}{R - L + 1} + 1$，其中 $L'_k$ 和 $R'_k$ 在一段连续的非特殊点 $k$ 处也是连续的一段整数，不妨定义 $g(L, R) = \sum_{L \leq x \leq R}{f(L, x)},$ $h(L, R) = \sum_{L \leq x \leq R}{f(x, R)}$，则计算 $f(L, R)$ 时可以根据特殊点分段，非特殊点用 $g$ 和 $h$ 求解，时间复杂度 $\mathcal{O}(T (8 H)^2)$。
+
+## C. The Dominator of Strings
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+对最长的串建立后缀自动机，然后判断能不能接受其他所有串。
+
+## D. The Intersection
+
+solved by skywalkert, upsolved by braveTester
+
+---
+
+所求即距离 $k^{\frac{2}{3}}$ $(1 \leq k \leq 10^5)$ 最近的分母不超过 $10^5$ 的最简分数。
+
+利用 Stern-Brocot tree 的两个性质来枚举答案：它是由最简分数构成的二叉搜索树（也不会有相同权值的节点），每个节点的分母都不大于其孩子节点的分母。
+
+由于数据范围不大，按照二叉搜索树的性质直接向下暴力寻找即可。
+
+实际上，如果将连续向左/右子树移动的操作合并，移动到最优解的过程只会结果 $\mathcal{O}\left(\log 10^5\right)$ 次操作，而每次操作是可以 $\mathcal{O}\left(\log 10^5\right)$ 二分出到达位置的，对于分母允许更大的情况，更需要用二分来合并同方向的移动操作。
+
+---
+
+braveTester's comment
+
+比赛的时候直接以 $[0/1, 1/0]$ 为起点枚举的，结果就是会每次 $+1$ 爬到 $k^{\frac{2}{3}}$ 的整数部分然后再 $O\left(\log 10^5\right)$...比赛的时候 2000+ ms 居然还过了...
+
+先估计一下整数部分可以跑到 500ms。
+
+## E. King's Visit
+
+unsolved
+
+## F. Pythagoras
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+多组数据是逗你玩的，所求即满足 $x^2 + y^2 = z^2, 1 \leq x < y < z \leq 10^9,$ $\gcd(x, y, z) = 1$ 的三元组 $(x, y, z)$ 中 $y \bmod 2^{17} = k$ 的数量 $c_k$，其中 $k = 0, 1, \cdots, 2^{17} - 1$。
+
+这种三元组叫做 primitive Pythagorean triple，满足 $\gcd(x, y) = \gcd(y, z) = \gcd(x, z) = 1$，且存在唯一的 $n$ 和 $m$ 满足 $\gcd(n, m) = 1$ 使得 $x = \min\{n^2 - m^2, 2 n m\}$，$y = \max\{n^2 - m^2, 2 n m\}$ 和 $z = n^2 + m^2$。但不是所有满足 $1 \leq m < n, \gcd(n, m) = 1$ 的 $n, m$ 都能对应一组 $(x, y, z)$，只有 $n$ 和 $m$ 奇偶性不同时才能生成 $(x, y, z)$。
+
+更直观来看，令 $A = n + m, B = n - m$，则有 $\gcd(A, B) = 1,$ $x = \min\left\{A B, \frac{A^2 - B^2}{2}\right\}$，$y = \max\left\{A B, \frac{A^2 - B^2}{2}\right\}$ 和 $z = \frac{A^2 + B^2}{2}$，所以必然有 $A, B$ 都是奇数的限制。
+
+样例给出了这样的三元组数量为 159154994 组，而且时限较大，考虑到只要能期望 $\mathcal{O}(1)$ 地枚举到每个解即可，一种方法是利用 Stern-Brocot tree 枚举满足 $0 < \frac{m}{n} < 1, n^2 + m^2 \leq 10^9$ 的所有最简分数，将其中满足 $2 \not \mid n - m$ 的分数取出来构造三元组即可，期望每个三元组只需要枚举两个分数即可找到。
+
+上面这种方法可能需要每次重新计算 $\max\{n^2 - m^2, 2 n m\}$ 的值，涉及到解的数量次乘法，计算时可能较慢。实际上，忽略不互质但不忽略奇偶性不同的情况后 $(n, m)$ 的数量约为 $1.96 \times 10^8$ 级别，也是可以承受的，在枚举 $n$ 的同时顺序枚举 $m$ 即可将计算 $\max\{n^2 - m^2, 2 n m\}$ 的乘法变成加法，而对于固定的 $n$， $\gcd(n, m)$ 是关于 $m$ 的积性函数， $[\gcd(n, m) = 1]$ 是关于 $m$ 的完全积性函数，都是可用欧拉筛法均摊 $\mathcal{O}(1)$ 计算的，预处理后甚至不涉及乘法，运算速度大大加快。
+
+## G. Zuma
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+$f[l][r][S]$ 表示消从 $l$ 到 $r$ 这个区间，还剩下未消的状态是 $S$，$S$ 只可能是空，或者一个 0，两个 0，一个 1，两个 1。
+
+转移的时候，枚举区间内最后消的是谁，然后枚举下分割开的左右两个区间还剩什么（只能剩和最后消的相同的），这样复杂度是 $O(Tn^3)$ ，并且常数很大，需要超超超大力抠常数才能过。
+
+贴一个更好的做法：[poj2915 题解](http://www.docin.com/p-685411874.html)
+
+## H. Chinese Zodiac
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+签到题，随便搞...
+
+## I. Smallest Minimum Cut
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+每条边的权值 $w$ 变为 $w (m + 1) + 1$ 后计算最小割即可满足边数最小，输出最小割对 $(m + 1)$ 取模的值即可。
+
+## J. Brute Force Sorting
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+维护一个链表，每一轮，扫描需要扫描的点，找出此轮应该被删的，其左右两边的点为下一轮需要被扫描的，由于每删一个点最多会让两个点下一轮被扫描，因此复杂度 $O(n)$。
+
+## K. A Cubic number and A Cubic Number
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+不妨 $x > y$，由高中知识有 $x^3 - y^3 = (x - y)(x^2 + xy + y^2)$，由题意有 $x, y > 1$，所以 $x^2 + xy + y^2 > 1$，又 $p$ 为质数，所以必有 $x - y = 1$，然后用 $y$ 和 $p$ 的方程开根猜一下 $y$ 的值最后验证即可。
+
+复杂度 $O(1)$。
+
+# Replay and Summary
+
+## Replay
+
+`T` 日常迟到，这次迟到半小时以上。
+
+`H` 和 `L` 开始读题。`H` 没看到 K 输入为质数的条件，苦思冥想了很久，`L` 发现 H 是签到题，于是马上切了。
+
+之后 `L` 告诉 `H` C 的题意，`H` 想了个假算法后开始敲 AC 自动机，敲完发现过不了样例，于是和 `L` 争论了很久，期间 `T` 终于过来了。
+
+一小时过去了，还只过了个签到题。
+
+`T` 很快发现 D 是个原题，并马上抢了个一血，期间 `L` 发现 K 题输入为质数，在过了 D 后马上就写了 K。
+
+`L` 让 `H` C 题写后缀自动机，`H` 很快抄了个板子过了。
+
+然后 `T` 马上上来写 I，TLE 一发之后过了，然后 `H` 上来写 J，wa 了两发之后过了。
+
+期间 `T` 和 `L` 讨论了下 A，然后 `T` 用 Java 高精度切了。
+
+然后 `T` 和 `L` 开始研究 F 如何爆艹，`H` 想 G 的 DP。
+
+`H` 终于想出来了个很麻烦的 DP，和 `T` 轮流上机修改，然后双双 TLE。
+
+`T` 加了很多诡异优化之后终于过了 F，`H` 则陷入了是常数太大还是有更好的做法的疑惑。
+
+`T` 帮 `H` 加了些常数优化之后还是 TLE，只能弃疗（`H` 在赛后得知假算法都能 AC ，不禁暗骂出题人。
+
+## braveTester
+
+吃瓜群众本场过了两个签到题，辅助一个半...
+
+后半场贡献为 $0$...
+
+自己好菜啊...
+
+## skywalkert
+
+这场做得很不舒服，题目要么很经典（甚至可能要求很高的精度），要么存在卡常可以通过的做法，感觉在区域赛出这种题目的可能性不大，这套题当作收集套路就行了，训练效果真的不怎么好
+
+## chitanda
+
+一开始签到题因为没看到一个条件而不会做，然后又想了个 C 的假算法就上去敲，导致前一个小时只过了另一个签到题，罚时爆炸。
+
+最后 D 题看着过题人数不断飙升，而自己一直 TLE，开始怀疑是不是自己智商不够想不到更优的算法，结果赛后知道过的大部分是假算法，垃圾比赛。
