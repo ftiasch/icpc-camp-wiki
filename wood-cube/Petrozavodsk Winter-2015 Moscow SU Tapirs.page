@@ -1,25 +1,36 @@
-## A. Aho [TDJ]
+A. Aho \[TDJ\]
+--------------
 
 KMP即可。
 
-## B. Banach
+B. Banach
+---------
 
-## C. Conway
+C. Conway
+---------
 
-## D. Dirichlet
+D. Dirichlet
+------------
 
-## E. Euclid
+E. Euclid
+---------
 
-## F. Fulkerson
+F. Fulkerson
+------------
 
-## G. Galois
+G. Galois
+---------
 
-## H. Harary
+H. Harary
+---------
 
-## I. Ito
+I. Ito
+------
 
-## J. Jordan [MZH, TDJ]
+J. Jordan \[MZH, TDJ\]
+----------------------
 
 查分约束系统，a到b的最短距离即表示$W_b-W_a$的最大值。
 
-## K. Kolmogorov
+K. Kolmogorov
+-------------
