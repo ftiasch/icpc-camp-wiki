@@ -1,99 +1,126 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.11.15 17:35-22:35
 
 [practice link](http://codeforces.com/gym/100443)
 
-# Solutions
+Solutions
+=========
 
-## A. Mixing Colours
+A. Mixing Colours
+-----------------
 
 upsolved by chitanda
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-暴力区间 DP，$f[i][j][k]$ 表示从 $i$ 到 $j$ 最终颜色为 $k$ 的最高 $cer$ 值，转移时，枚举 $t$ 计算 $f[i][t][k]\times f[t+1][j][k]$ 的值来更新，由于只有乘法，为了避免精度误差，应取 $log$ 变加法。
+暴力区间 DP，$f[i][j][k]$ 表示从 $i$ 到 $j$ 最终颜色为 $k$ 的最高 $cer$
+值，转移时，枚举 $t$ 计算 $f[i][t][k]\times f[t+1][j][k]$
+的值来更新，由于只有乘法，为了避免精度误差，应取 $log$ 变加法。
 
-## B. It Can Be Arranged
+B. It Can Be Arranged
+---------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 点有流量下界限制的有向无环图最小权链覆盖，拆点，计算有源汇的可行流，然后在可行流的基础上求汇到源的最大流，将可行流变成可行最小流即可。
 
-## C. Shopping Malls
+C. Shopping Malls
+-----------------
 
 solved by braveTester, upsolved by none
 
-## D. Decoding the Hallway
+D. Decoding the Hallway
+-----------------------
 
 solved by braveTester, upsolved by none
 
-## E. Joe is learning to speak
+E. Joe is learning to speak
+---------------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 装作是随机数据，暴力上就是了。
 
-## F. Odd and Even Zeroes
+F. Odd and Even Zeroes
+----------------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-一个数的阶乘的末尾 0 的个数即阶乘分解质因数之后 5 的幂次，那么 $n!$ 质因数分解后 5 的幂次为 $\sum_{k=1}\big \lfloor \frac{n}{5^k} \big \rfloor$，幂次的奇偶即将 $n$ 按 5 进制分解之后，奇数位（从 0 位开始）上的数的和的奇偶性，那么求 $1!$ 到 $n!$ 末尾偶数 0 的个数可以用数位 DP 解决。
+一个数的阶乘的末尾 0 的个数即阶乘分解质因数之后 5 的幂次，那么 $n!$
+质因数分解后 5 的幂次为
+$\sum_{k=1}\big \lfloor \frac{n}{5^k} \big \rfloor$，幂次的奇偶即将 $n$
+按 5 进制分解之后，奇数位（从 0 位开始）上的数的和的奇偶性，那么求 $1!$
+到 $n!$ 末尾偶数 0 的个数可以用数位 DP 解决。
 
-## G. VivoParc
+G. VivoParc
+-----------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 由于题目给出的是平面图，所以保证有解，优先确定度数大的点的颜色，可以很快搜出来。
 
-## H. Binary Tree
+H. Binary Tree
+--------------
 
 solved by chitanda, upsolved by none
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
-先模拟 $S$ 的操作，存下从根到最终位置的路径（用栈实现），设此时最终位置为 $x$。
+先模拟 $S$
+的操作，存下从根到最终位置的路径（用栈实现），设此时最终位置为 $x$。
 
-枚举最终到达的点和 $x$ 的 lca，设从 $x$ 向上走了 $t$ 步，找到 $T$ 中第 $t$ 个 $U$，再向后找到第一个使得点走到另一个儿子的 $L$ 或 $R$ ，接下来就只需要考虑后面的 $L$ 和 $R$ 的序列能够到达多少点，这个可以通过递推解决。
+枚举最终到达的点和 $x$ 的 lca，设从 $x$ 向上走了 $t$ 步，找到 $T$ 中第
+$t$ 个 $U$，再向后找到第一个使得点走到另一个儿子的 $L$ 或 $R$
+，接下来就只需要考虑后面的 $L$ 和 $R$
+的序列能够到达多少点，这个可以通过递推解决。
 
-对于一个 $L$ 和 $R$ 的序列，考虑能够到达的点，构成一棵二叉树，再考虑倒推，设 $L[i]$ 为当前树结构的根左端点的点数，$R[i]$ 同理，那么如果第 $i-1$ 个是个 $L$，$L[i-1]=L[i]+R[i]+1,R[i-1]=R[i]$
+对于一个 $L$ 和 $R$
+的序列，考虑能够到达的点，构成一棵二叉树，再考虑倒推，设 $L[i]$
+为当前树结构的根左端点的点数，$R[i]$ 同理，那么如果第 $i-1$ 个是个
+$L$，$L[i-1]=L[i]+R[i]+1,R[i-1]=R[i]$
 
-## I. Trending Topic
+I. Trending Topic
+-----------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 装作是随机数据，暴力上就是了。
 
-## J. Cleaning the Hallway
+J. Cleaning the Hallway
+-----------------------
 
 unsolved
 
-# Replay and Summary
+Replay and Summary
+==================
 
-## Replay
+Replay
+------
 
 None is available.
