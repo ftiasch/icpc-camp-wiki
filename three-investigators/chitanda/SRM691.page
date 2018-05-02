@@ -1,0 +1,18 @@
+## SRM691 Medium
+
+> $n(n\le 50)$个project,每个project有个$a_i$和$b_i$,每完成一个project,可以获得$a_i$经验,并且获得当前已获得经验$\times b_i$的money,在完成一半的project后,会额外获得$X$经验.project的完成顺序任意,问最多获得多少money.
+
+考虑如果$X=0$,最优顺序为$p_0,p_1,\dots ,p_{n-1}$,对于任意$i\lt j$,都有$a_{p_i}\cdot b_{p_j}\ge a_{p_j}\cdot b_{p_i}$,否则交换$p_i,p_j$会使得答案更优.
+那么对于$X\gt 0$,分别考虑前一半和后一半project,其$\frac{a_{p_i}}{b_{p_i}}$递减.
+**我们倒着考虑.**
+这时候相当于每一半的$\frac{a_{p_i}}{b_{p_i}}$递增,前一半有额外的$X$经验.
+首先将$a_i,b_i$按$\frac{a_i}{b_i}$升序排序.
+如果后一半$b_i$的和$B$,那么前一半的每一项都会多贡献$a_i\cdot B$.
+**枚举$B$**,然后DP.
+用$f(i,j,k)$表示当前前一半分配了$i$个,后一半分配了$j$个,当前前一半的$b_i$的和为$k$的最大money.
+而后一半的$b_i$的和可以通过计算得到,设为$l$
+转移方程:
+$$
+f(i,j,k)=max(f(i-1,j,k-b_{i+j})+a_{i+j}\cdot k,f(i,j-1,k)+a_{i+j}\cdot (l+B))
+$$
+对于每个$B$,用$f(\frac{n}{2},\frac{n}{2},B)+X\cdot B$更新答案.
