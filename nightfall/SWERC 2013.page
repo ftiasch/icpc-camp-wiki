@@ -1,0 +1,130 @@
+# [Cleaning the Hallway](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4590)
+
+
+## Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef double D;
+const D pi = acos(-1.), eps = 1E-8;
+D sqr(D x) {return x * x;}
+int sign(D x) {
+	if (x < -eps) return -1;
+	return x > eps;
+}
+struct Point {
+	D x, y;
+	Point() {}
+	Point(D x, D y) : x(x), y(y) {}
+	D len() {return sqrt(x * x + y * y);}
+	D sqrlen() {return x * x + y * y;}
+	Point rot(double r) {
+		D c = cos(r);
+		D s = sin(r);
+		return Point (c * x - s * y, s * x + c * y);
+	}
+	D ang() {return atan2(y, x);}
+};
+typedef Point P;
+P operator - (const P &a, const P &b) {
+	return P(a.x - b.x, a.y - b.y);
+}
+P operator + (const P &a, const P &b) {
+	return P(a.x + b.x, a.y + b.y);
+}
+P operator * (const P &a, D b) {
+	return P(a.x * b, a.y * b);
+}
+D det(P a, P b) {
+	return a.x * b.y - a.y * b.x;
+}
+struct Circle {
+	P o;
+	D r;
+	int type;
+	Circle() {}
+	Circle(P o, D r, int type) : o(o), r(r), type(type) {}
+};
+struct Event {
+	P p; D ang; int delta;
+	Event(P p = Point(0, 0), D ang = 0, int delta = 0) : p(p), ang(ang), delta(delta) {}
+};
+bool operator < (const Event &a, const Event &b) {
+	return a.ang < b.ang;
+}
+void addEvent(const Circle &a, const Circle &b, vector<Event> &evt, int &cnt) {
+	D d2 = (a.o - b.o).sqrlen(), dRatio = ((a.r - b.r) * (a.r + b.r) / d2 + 1 ) / 2;
+	D pRatio = sqrt(max((D)0., -(d2 - sqr(a.r - b.r)) * (d2 - sqr(a.r + b.r)) / (d2 * d2 * 4)));
+	P d = b.o - a.o, p = d.rot(pi / 2);
+	P q0 = a.o + d * dRatio + p * pRatio;
+	P q1 = a.o + d * dRatio - p * pRatio;
+	D ang0 = (q0 - a.o).ang(), ang1 = (q1 - a.o).ang();
+	evt.push_back(Event(q1, ang1, b.type));
+	evt.push_back(Event(q0, ang0, -b.type));
+	cnt += ang1 > ang0 ? b.type : 0;
+}
+bool issame(const Circle &a, const Circle &b) {
+	return sign((a.o - b.o).len()) == 0 && sign(a.r - b.r) == 0;
+}
+bool overlap(const Circle &a, const Circle &b) {
+	return sign(a.r - b.r - (a.o - b.o).len()) >= 0;
+}
+bool intersect(const Circle &a, const Circle &b) {
+	return sign((a.o - b.o).len() - a.r - b.r) < 0;
+}
+int C;
+const int N = 555;
+Circle c[N * 2];
+D area[N * 2];
+double solve() {
+	memset(area, 0, sizeof(D) * (C + 1));
+	for (int i = 0; i < C; ++ i) {
+		int cnt = c[i].type > 0 ? 1 : 0;
+		vector<Event> evt;
+		for (int j = 0; j < i; ++ j) if (issame(c[i], c[j])) cnt += c[j].type;
+		for (int j = 0; j < C; ++ j) {
+			if (j != i && !issame(c[i], c[j]) && overlap(c[j], c[i])) cnt += c[j].type;
+		}
+		for (int j = 0; j < C; ++ j) {
+			if (j != i && !overlap(c[j], c[i]) && !overlap(c[i], c[j]) && intersect(c[i], c[j])) {
+				addEvent(c[i], c[j], evt, cnt);
+			}
+		}
+		if (evt.empty()) {
+			area[cnt] += c[i].type * pi * c[i].r * c[i].r;
+		}
+		else {
+			sort(evt.begin(), evt.end());
+			evt.push_back(evt.front());
+			for (int j = 0; j + 1 < (int) evt.size(); ++ j) {
+				cnt += evt[j].delta;
+				area[cnt] += c[i].type * det(evt[j].p, evt[j + 1].p) / 2;
+				D ang = evt[j + 1].ang - evt[j].ang;
+				if (ang < 0) ang += pi * 2;
+				area[cnt] += c[i].type * (ang * c[i].r * c[i].r / 2 - sin(ang) * c[i].r * c[i].r / 2);
+			}
+		}
+	}
+	return area[1];
+}
+int main() {
+	int T, zzz = 0;
+	scanf("%d", &T);
+	while (T --) {
+		int n;
+		scanf("%d", &n);
+		C = 0;
+		for (int i = 1; i <= n; ++ i) {
+			int x, y, d1, d2;
+			scanf("%d%d%d%d", &x, &y, &d1, &d2);
+			int D = d1 + d2;
+			int d = max(0, d1 - d2);
+			c[C ++] = Circle(P(x, y), D, 1);
+			c[C ++] = Circle(P(x, y), d, -1);
+		}
+		double ans = solve();
+		printf("Case %d: %.6f\n", ++ zzz, ans);
+	}
+}
+~~~
