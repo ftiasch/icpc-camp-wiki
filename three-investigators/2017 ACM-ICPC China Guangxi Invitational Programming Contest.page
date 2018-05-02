@@ -1,0 +1,135 @@
+# Contest Info
+
+date: 2017.08.31
+
+[practice link](http://acm.hdu.edu.cn/contests/contest_show.php?cid=781)
+
+# Solutions
+
+## A. A Math Problem
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+枚举 $k$
+
+## B. Color it
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+对每种颜色建立一个线段树，以 $y$ 坐标作为区间，维护区间内 $x$ 坐标的最小值。
+
+## C. Counting Stars
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+相当于一个正方形加一个斜边，枚举斜边，枚举这条边连接的两个点中度数较小的那个点所连接的点，判断是否与另一个点也相连。
+
+判断相连需要用到 bitset，为了不 MLE 需要将点分成若干块，每次处理一块的点。
+
+update：
+
+实际上，不枚举斜边，而是枚举斜边中度数较小的那个点方便好写又跑得快。
+
+## D. Covering
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+用 $2^4\times 2^4$ 的矩阵做矩阵快速幂，由于数据组数过大，需要预处理，然后每次询问复杂度 $O(16^2 \log n)$
+
+## E. CS Course
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+预处理前缀和后缀
+
+## F. Destroy Walls
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+对偶图的最小生成森林 = 原图的边权和 - 原图的最大生成森林
+
+## G. Duizi and Shunzi
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+相同的顺子只会有一个，因此 $dp[i][j][k]$ 表示做完前 $i$ ，为 $i$ 的剩 $j$ 个，为 $i-1$ 的剩 $k$ 个时的最大值，那么 $0\le j\le 2$ ，$0\le k\le 1$。
+
+## H. Law of Commutation
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+猜结论，当 $a$ 为奇数时 $b=a$ 才行。
+
+而当 $a$ 是偶数时，显然 $b$ 也必须是偶数，并且当 $a$ 和 $b$ 足够大时，$a^b$ 和 $b^a$ 在二进制下的末尾都是若干个 $0$ ，因此随便算一下就行。
+
+## I. Matching in a Tree
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+实际上是个伪在线题，可以离线做。
+
+设 $b[c][i]$ 表示字母 $c$ 是否可以在 $S$ 的第 $i$ 位出现，设 $f[u][i]$ 表示字母树走到节点 $u$ 是否能匹配 $S$ 长为 $i$ 的前缀，那么有 $f[u][i] = f[fa[u]][i-1] \& b[ch[u]][i]$ ，可以用 bitset 优化这些步骤。
+
+之后再进行一些简单处理就能求出答案。
+
+## J. Query on A Tree
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+dfs 的时候用线段树合并的方法合并 trie 树，直接查询即可。
+
+## K. Removing Mountains
+
+solved by chitanda
+
+---
+
+chitanda's solution
+
+用蛤习来检查两个串是否相等。
+
+枚举周期 $p$，之后我们需要检查 $n-p$ 是否一个 border，如果不是，二分出第一个不同的位置，枚举两种更换，重新计算哈希值，再看哈希值是否相等。
+
+## L. Yuno And Irotoridori no Sekai
+
+unsolved
