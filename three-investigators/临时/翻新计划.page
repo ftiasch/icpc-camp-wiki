@@ -1,0 +1,57 @@
+# General
+
+~~增加 ICPCID~~
+
+# Workshop
+
+## [tips and tricks](../tips and tricks)
+
+~~去翻最近写的 Bug~~
+
+## [code library](../code library)
+
+~~整理已有模板，**填写模板的测试报告（WF 前需要完成）**~~
+
+## topics
+
+例题按 topic 分类，补全相关 paper 链接。
+
+可新增 topic：DP about graph connectivity, suffix and repetition, palindrome, game theory, dynamic graph, probability, sqrt decomposition
+
+## personal
+
+`skywalkert`: 更新 OpenCup, Blog，重写 self page（整理 trivial matters，记录 cf tutorial）
+
+`chitanda`: 更新 tc 和 cf 记录
+
+`braveTester`: 更新 cf 记录
+
+## to be accepted
+
+在整理完 training 后按(难度,分类)更新
+
+# training
+
+~~同步 github，记录缺少的内容，尽量翻修已有 page~~
+
+**主要是做总结，降低会做题想不出来的机会**
+
+# strategy
+
+~~在最近进行冲刺会议，暂定 4.1 晚~~
+
+# others
+
+边整理上面的东西边写命名规则
+
+**向 active wiki 们 [Check it out](https://wiki-check-it-out.icpc-camp.org/_activity) [Wood Cube](https://wiki-wood-cube.icpc-camp.org/_activity) [Nightfall](https://wiki-nightfall.icpc-camp.org/_activity) [Heinihao](http://clatisus.com/_activity) 学习姿势**
+
+一般图匹配
+
+~~k 短路、k 小割~~
+
+~~线性代数、BM~~
+
+~~单纯形~~
+
+~~补 WF~~
