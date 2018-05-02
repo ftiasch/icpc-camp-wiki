@@ -21,33 +21,44 @@
 │J₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
 (H、I记录有误)
-</span></pre><br>
+</span></pre>
+<br>
 
+A. Harmonic Matrix Counter \[MZH\]
+----------------------------------
 
-## A. Harmonic Matrix Counter [MZH]
-
-## B. Binary Tree
+B. Binary Tree
+--------------
 
 Splay 维护子树
 
-## C. Asa's Chess Problem [GX]
+C. Asa's Chess Problem \[GX\]
+-----------------------------
 
-## D. What a Beautiful Lake [GX]
+D. What a Beautiful Lake \[GX\]
+-------------------------------
 
-## E. What a Ridiculous Election [TDJ]
+E. What a Ridiculous Election \[TDJ\]
+-------------------------------------
 
 BFS签到题。
 
-## F. What a Simple Research [GX]
+F. What a Simple Research \[GX\]
+--------------------------------
 
-## G. A Triangle Puzzle [TDJ]
+G. A Triangle Puzzle \[TDJ\]
+----------------------------
 
 大模拟级构造题，思路的关键点在于操作不改变逆序对奇偶性。
 
-## H. A New Ground Heating Device [MZH]
+H. A New Ground Heating Device \[MZH\]
+--------------------------------------
 
-## I. A Boring Problem [MZH]
+I. A Boring Problem \[MZH\]
+---------------------------
 
-## J. Parrot
+J. Parrot
+---------
 
-## K. JiLi Number [MZH]
+K. JiLi Number \[MZH\]
+----------------------
