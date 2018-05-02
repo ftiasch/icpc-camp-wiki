@@ -1,0 +1,419 @@
+# 【CF463E】Team Work
+
+【题目大意】求$\sum_{i=1}^n C(n,i)i^k,n\leq10^9,k\leq5000$
+
+【解题报告】$\sum_{i=0}^nC(n,i)i^k=\sum_{i=0}^nC(n,i)\sum_{j=0}^kS(k,j)i(i-1)\cdots (i-j+1)=\sum_{i=0}^nC(n,i)\sum_{j=0}^kS(k,j)j!C(i,j)=\sum_{i=0}^n\frac{n!}{(n-i)!}\sum_{j=0}^k\frac{S(k,j)}{(i-j)!}=n!\sum_{i=0}^n\sum_{j=0}^k\frac{S(k,j)}{(n-i)!(i-j)!}=n!\sum_{i=0}^n\sum_{j=0}^k\frac{S(k,j)C(n-j,n-i)}{(n-j)!}=n!\sum_{j=0}^k\frac{S(k,j)}{(n-j)!}\sum_{i=0}^nC(n-j,n-i)=\sum_{j=0}^kS(k,j)*n*(n-1)\cdots *(n-j+1)*2^{n-j}$
+
+# 【CF463G】Palindrome Partition
+
+【题目大意】给定一个字符串，求其分割方式，使得分割后的哈希串为回文串。$n\leq10^6$
+
+【解题报告】先将字符串按照$s_1s_ns_2s_{n-1}\cdots s_{n/2}s_{n/2+1}$的顺序写好，现在问有多少种方法把字符串分成若干段，每一段都是偶数回文
+
+那么套用最小回文分割次数的回文自动机方法，新维护一个不知道是什么的东西，每次再跳那个东西DP，时间复杂度$O(n\log n)$
+
+~~~{.cpp}
+void add(int z,int n){
+	for(;s[n-L[p]-1]!=s[n];p=F[p]);
+	if(!c[p][z]){
+		int q=++id,k=F[p];
+		L[q]=L[p]+2;
+		for(;s[n-L[k]-1]!=s[n];k=F[k]);
+		F[q]=c[k][z];c[p][z]=q;
+		df[q]=L[q]-L[F[q]];
+		sk[q]=(df[q]==df[F[q]]?sk[F[q]]:F[q]);
+	}
+	p=c[p][z];
+}
+int main(){
+	scanf("%s",ss+1);R=strlen(ss+1);
+	for(i=1,j=R;i<=j;i++,j--)s[++n]=ss[i],s[++n]=ss[j];
+	id=F[0]=1;L[1]=-1;_f[0]=1;f[0]=1;
+	for(i=1;i<=n;i++){
+		add(s[i]-'a',i);
+		for(int x=p;x;x=sk[x]){
+			_f[x]=f[i-L[sk[x]]-df[x]];
+			if(df[F[x]]==df[x])_f[x]=(_f[x]+_f[F[x]])%M;
+			f[i]=(f[i]+_f[x])%M;
+		}
+		if(i&1)f[i]=0;
+	}
+	printf("%d\n",f[n]);
+}
+~~~
+
+# 【AIM Tech Round4D】Dynamic Shortest Path
+
+【题目大意】$n$个点$m$条边的有向图，$q$次操作，询问$1$到$x$的最短路或者给$c$条边边权加$1$。$n,m\leq100000,q\leq2000,\sum c\leq 1000000$
+
+【解题报告】先求一遍最短路，然后令$w(x,y,z)=d[x]-d[y]+z$，动态维护$dis$。对于修改操作，只会使答案增加不超过$c$，将最短路的堆改为桶，时间复杂度$O(mq+\sum c)$
+
+~~~{.cpp}
+int n,m,QQ,k,x,y,z,tot,op,fir[N],ne[N],la[N],va[N];bool v[N];
+LL d[N],f[N];queue<int>E[N];priority_queue<pair<LL,int> >Q;
+int main(){
+	rd(n);rd(m);rd(QQ);
+	fr(i,m)rd(x),rd(y),rd(z),la[++tot]=y,ne[tot]=fir[x],fir[x]=tot,va[tot]=z;
+	fr(i,n)d[i]=inf;
+	Q.push(MP(0,1));d[1]=0;
+	for(;!Q.empty();){
+		x=Q.top().Y;Q.pop();
+		if(!v[x])for(int i=fir[x];i;i=ne[i])
+			if(d[x]+va[i]<d[y=la[i]])d[y]=d[x]+va[i],Q.push(MP(-d[y],y));
+		v[x]=1;
+	}
+	for(;QQ--;){
+		rd(op);rd(k);
+		if(op==1)printf("%lld\n",d[k]<inf?d[k]:-1);else{
+			fr(i,k)rd(x),va[x]++;
+			fr(i,n)f[i]=inf;f[1]=0;E[0].push(1);
+			for(int j=0;j<=k;j++){
+				for(;!E[j].empty();){
+					x=E[j].front();E[j].pop();
+					if(f[x]<j)continue;
+					for(int i=fir[x];i;i=ne[i]){
+						LL z=f[x]+va[i]+d[x]-d[y=la[i]];
+						if(z<f[y]){
+							f[y]=z;
+							if(z<=k)E[z].push(y);
+						}
+					}
+				}
+			}
+			fr(i,n){
+				d[i]+=f[i];
+				if(d[i]>inf)d[i]=inf;
+			}
+		}
+	}
+}
+~~~
+
+# 【CF467D】World of Tank
+
+【题目大意】2*m的网格图上有$n$个障碍，你从左向右走，每T秒可以用一个子弹炸掉当前向右第一个障碍，你不能撞到障碍上，你每秒都必须向右移动一格，你可以在一秒内瞬时向上或向下走一格，构出这样的方案。$m\leq2000000,n\leq10^9$
+
+【解题报告】考虑贪心DP，先不考虑离散化，令$f[i][0/1]$表示当前走到第$i$列第$0/1$行时最早的开跑时间，那么有
+
+如果当前格子被占领，$f[i][j]=f[i-1][j]+T(f[i-1][j]<i),f[i][j]=INF(else)$；如果当前格子没有被占领，$f[i][j]=f[i-1][j]$。
+
+然后可以上下移动，$f[i][j]=min(f[i][j],max(f[i][j^1],i))$。
+
+考虑离散化，把每一个有障碍的列离散化出来，把每一段没有障碍的列离散化出来，照着上面做就好了。
+
+~~~{.cpp}
+int n,L,m1,m2,T,t,_t,x,y,v1[N],v2[N],v[N],V[N],f[N][2],e[N][2];
+int main(){
+	rd(L);rd(m1);rd(m2);rd(T);
+	fr(i,m1)rd(v1[i]),v[++t]=v1[i];
+	fr(i,m2)rd(v2[i]),v[++t]=v2[i];
+	v[++t]=L+1;sort(v+1,v+t+1);
+	_t=t;fr(i,t)if(v[i-1]+1<v[i])v[++_t]=v[i-1]+1;
+	t=_t;sort(v+1,v+t+1);
+	n=unique(v+1,v+t+1)-v-1;
+	fr(i,m1)V[lower_bound(v+1,v+n+1,v1[i])-v]|=1;
+	fr(i,m2)V[lower_bound(v+1,v+n+1,v2[i])-v]|=2;
+	f[0][0]=f[0][1]=T;e[0][1]=2;
+	fr(i,n){
+		f[i][0]=f[i][1]=INF;
+		if(V[i]&1){
+			if(f[i-1][0]<v[i])f[i][0]=f[i-1][0]+T,e[i][0]=1;
+		}else f[i][0]=f[i-1][0];
+		if(V[i]&2){
+			if(f[i-1][1]<v[i])f[i][1]=f[i-1][1]+T,e[i][1]=1;
+		}else f[i][1]=f[i-1][1];
+		x=max(f[i][1],v[i]);
+		if(!(V[i]&1)&&f[i][0]>x)f[i][0]=x,e[i][0]=2;
+		x=max(f[i][0],v[i]);
+		if(!(V[i]&2)&&f[i][1]>x)f[i][1]=x,e[i][1]=2;
+	}
+	if(f[n][0]==INF&&f[n][1]==INF)return puts("No"),0;
+	puts("Yes");x=n;y=(f[n][0]<INF?0:1);
+	for(;x||y;){
+		if(e[x][y]==1){
+			P.PB(MP(f[x][y]-T,y+1));
+		}
+		if(e[x][y]==2){
+			y^=1;
+			Q.PB(v[x]);
+			continue;
+		}
+		x--;
+	}
+	printf("%d\n",Q.size());
+	for(int i=Q.size()-1;~i;i--)printf("%d%c",Q[i],i==0?'\n':' ');
+	printf("%d\n",P.size());
+	for(int i=P.size()-1;~i;i--)printf("%d %d\n",P[i].X,P[i].Y);
+}
+~~~
+
+# 【CF467E】Iqea
+
+【题目大意】一个网格联通图，在一个联通块中，且联通块里不会包含空块，现在在某个地方加点，并询问离某个地方最近的点的距离。$n\leq300000$
+
+【解题报告】把每一列连续的块看成一个点，相邻行之间连边，图变成一颗树。在树上如果是简单的问题直接动态树分治即可。这个问题稍微复杂一点，对于每个重心暴力BFS其他点，记录一下最短的距离$D$和接到的位置$Y$。那么每个点要求$max(D_i+D_j+|Y_i-Y_j|)$，拆成两个式子，即求$max(D_i+D_j+Y_i-Y_j)(Y_i\geq Y_j) max(D_i+D_j-Y_i+Y_j)(Y_i\leq Y_j)$，用两个set，一个维护$D+Y$，一个维护$D-Y$，询问时要满足关键值$Y$大于或小于某数，set更新时弹一下栈就好了。
+
+~~~{.cpp}
+int dx[]={-1,1,0,0},dy[]={0,0,-1,1};
+int n,m,i,j,id,op,u,x,y,z,di,TM,an,sz[N],mv[N],X[N],L[N],R[N],vv[N],F[N];
+PII p[N],d[N];VI V[N];bool vs[N];
+unordered_map<int,int>bl[N],to[N];
+unordered_map<int,PII>bg[N];
+void ins(int x,int y){V[x].PB(y);V[y].PB(x);}
+set<PII>S[N][2];set<PII>::iterator it;
+void add(set<PII>&S,int x,int z){
+	it=S.upper_bound(MP(x,1e9));
+	if(it!=S.begin())if((*--it).Y<=z)return;
+	for(;;){
+		it=S.lower_bound(MP(x,-1e9));
+		if(it==S.end())break;
+		if((*it).Y<z)break;
+		S.erase(it);
+	}
+	S.insert(MP(x,z));
+}
+int qu(set<PII>&S,int x){
+	it=S.upper_bound(MP(x,1e9));
+	if(it==S.begin())return 1e9;
+	return (*--it).Y;
+}
+void add(int u,PII o){
+	int x=o.X,z=o.Y;
+	add(S[u][0],-z,x+z);add(S[u][1],z,x-z);
+}
+int qu(int u,PII o){
+	int x=o.X,z=o.Y;
+	return min(qu(S[u][1],z)+x+z,qu(S[u][0],-z)+x-z);
+}
+
+void dsz(int x,int fa){
+	sz[x]=1;mv[x]=0;
+	for(int y:V[x])if(!vs[y]&&y!=fa)dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
+}
+void drt(int zs,int x,int fa,int&rt){
+	mv[x]=max(mv[x],sz[zs]-sz[x]);
+	if(mv[x]<mv[rt]||!rt)rt=x;
+	for(int y:V[x])if(!vs[y]&&y!=fa)drt(zs,y,x,rt);
+}
+int fz(int u){
+	int i,x,y,z,xx,yy,rt=0;queue<PII>Q;
+	dsz(u,0);drt(u,u,0,rt);vs[rt]=1;TM++;
+	for(i=L[rt];i<=R[rt];i++)Q.push(MP(X[rt],i)),d[to[X[rt]][i]]=MP(0,i),vv[to[X[rt]][i]]=TM;
+	for(;!Q.empty();){
+		x=Q.front().X;y=Q.front().Y;z=to[x][y];
+		bg[rt][z]=MP(d[z].X,d[z].Y);
+		Q.pop();
+		for(int i=0;i<4;i++){
+			if(to[xx=x+dx[i]][yy=y+dy[i]])if(!vs[bl[xx][yy]]&&vv[to[xx][yy]]!=TM){
+				d[to[xx][yy]]=MP(d[z].X+1,d[z].Y);vv[to[xx][yy]]=TM;
+				Q.push(MP(xx,yy));
+			}
+		}
+	}
+	for(int y:V[rt])if(!vs[y])F[fz(y)]=rt;
+	return rt;
+}
+int main(){
+	rd(n);
+	fr(i,n)rd(p[i].X),rd(p[i].Y),to[p[i].X][p[i].Y]=++di;
+	sort(p+1,p+n+1);
+	for(i=j=1;i<=n;i=j+1){
+		for(++id,j=i;j<n&&p[i].X==p[j].X&&p[j].Y+1==p[j+1].Y;j++)bl[p[j].X][p[j].Y]=id;
+		bl[p[j].X][p[j].Y]=id;
+		L[id]=p[i].Y;R[id]=p[j].Y;X[id]=p[i].X;
+	}
+	fr(i,n){
+		x=p[i].X,y=p[i].Y;
+		if(bl[x-1][y])ins(bl[x][y],bl[x-1][y]);
+	}
+	fr(i,n)sort(V[i].begin(),V[i].end()),V[i].erase(unique(V[i].begin(),V[i].end()),V[i].end());
+	fz(1);
+	rd(m);
+	for(;m--;){
+		rd(op);rd(x);rd(y);
+		if(op==1){
+			u=bl[x][y];z=to[x][y];
+			for(;u;u=F[u])add(u,bg[u][z]);
+		}else{
+			u=bl[x][y];z=to[x][y];an=1e9;
+			for(;u;u=F[u])an=min(an,qu(u,bg[u][z]));
+			printf("%d\n",an>n?-1:an);
+		}
+	}
+}
+~~~
+
+# 【CF469E】Binary Cards
+
+【题目大意】给你$n$个要凑出的数$a_i$，让你找出最少个数的形如$2^t$或$-2^t$的数，使得这些数中选择若干相加能凑出所有数。$n\leq 100000,-100000\leq a_i\leq 100000$。
+
+【解题报告】直接暴搜就好了，暴搜的时候每次把模当前数不为$0$的数加一个$2^t$或减一个$2^t$，或不变，最后所有数都为$0$时代表能凑出所有数，搜出最少个数就好了，时间复杂度$O(n\log n)$。
+
+~~~{.cpp}
+int n,an=100,x,V[22];VI Q;bool v1[19][N],v2[19][N];
+void dfs(int x,int mv,int nv){
+	if(nv>=an)return;
+	int ff=0;
+	fr(i,mv)if(v1[x-1][i]||v2[x-1][i])ff=1;
+	if(!ff){
+		if(nv<an){
+			Q.clear();
+			for(int i=0;i<x;i++)if(V[i]){
+				if(V[i]==-1)Q.PB(1<<i-1);
+				else Q.PB(-(1<<i-1));
+			}
+			an=SZ(Q);
+		}
+	}else{
+		ff=0;
+		fr(i,mv)if((i&1)&&(v1[x-1][i]||v2[x-1][i]))ff=1;
+		V[x]=0;
+		if(!ff){
+			fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
+			dfs(x+1,mv/2,nv);
+		}
+		V[x]=1;
+		fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
+		fr(i,mv/2){
+			if(v1[x-1][i*2-1])v1[x][i]=1;
+			if(v2[x-1][i*2+1])v2[x][i]=1;
+		}
+		dfs(x+1,mv/2,nv+1);
+		V[x]=-1;
+		fr(i,mv/2)v1[x][i]=v1[x-1][i*2],v2[x][i]=v2[x-1][i*2];
+		fr(i,mv/2){
+			if(v2[x-1][i*2-1])v2[x][i]=1;
+			if(v1[x-1][i*2+1])v1[x][i]=1;
+		}
+		dfs(x+1,mv/2,nv+1);
+	}
+}
+int main(){
+	rd(n);
+	fr(i,n){
+		rd(x);
+		if(x>0)v1[0][x]=1;else v2[0][-x]=1;
+	}
+	dfs(1,262144,0);
+	printf("%d\n",an);
+	for(int y:Q)printf("%d ",y);
+}
+~~~
+
+
+# 【BZOJ2965】保护古迹
+
+【题目大意】给出一个$N$个点的平面图，每条边有一个代价，有$p$个点要被保护（与外区域断绝关系），请求出保护$1\cdots p$个点的最小代价。$N\leq100,p\leq10$
+
+【解题报告】先平面图转对偶图，然后判断每个点在哪一个区域里。判断的方法是射线法，如果射出一条线经过奇数条边就在区域里，否则在区域外。然后暴力枚举保护了哪p个点，然后就是最小割建图。(S\to 保护的点,inf) ，区域间连代价，汇为外区域。
+
+# 【SDOI2015】道路修建
+
+【题目大意】一个$N$列$2$行的网格图，每次修改一条边权，或询问两列间的最小生成树。$N\leq60000$
+
+【解题报告】使用线段树来维护连通性，记录下面五种情况。A：左端联通，右端联通；B：左端联通，右端不连通；C：左端不连通，右端不连通；D：左端不连通，右端不连通，联通块为2；E：左端不连通，右端不连通，联通块为3。然后大力转移就可以了
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 2222222
+using namespace std;char s[9];struct P{int A,B,C,D,E;}T[N];int n,m,i,j,X,Y,X2,Y2,z,f[N][2],g[N];
+void up(int&x,int y){x=min(x,y);}
+P ps(P a,P b,int x){
+	P c;c.A=c.B=c.C=c.D=c.E=1e9;int y=min(f[x][0],f[x][1]),z=f[x][0]+f[x][1];
+up(c.A,a.A+b.A+y);up(c.B,a.A+b.B+y);up(c.A,a.A+b.C+z);up(c.A,a.A+b.D+z);
+up(c.B,a.A+b.D+y);up(c.B,a.A+b.E+z);up(c.A,a.B+b.A+z);up(c.B,a.B+b.B+z);
+up(c.B,a.B+b.D+z);up(c.C,a.C+b.A+y);up(c.E,a.C+b.B+y);up(c.C,a.C+b.C+z);
+up(c.E,a.C+b.D+y);up(c.C,a.C+b.D+z);up(c.E,a.C+b.E+z);up(c.C,a.D+b.A+y);
+up(c.A,a.D+b.A+z);up(c.E,a.D+b.B+y);up(c.B,a.D+b.B+z);up(c.C,a.D+b.C+z);
+	up(c.E,a.D+b.D+y);up(c.D,a.D+b.D+z);up(c.E,a.D+b.E+z);up(c.C,a.E+b.A+z);
+up(c.E,a.E+b.B+z);up(c.E,a.E+b.D+z);return c;
+}
+void bt(int k,int l,int r){
+	if(l==r){T[k].A=g[l];T[k].D=0;T[k].B=T[k].C=T[k].E=1e9;return;}int M=l+r>>1;
+	bt(k<<1,l,M);bt(k<<1|1,M+1,r);T[k]=ps(T[k<<1],T[k<<1|1],M);
+}
+void cha(int k,int l,int r,int x){
+	if(l==r){T[k].A=g[l];T[k].D=0;T[k].B=T[k].C=T[k].E=1e9;return;}int M=l+r>>1;
+	if(x<=M)cha(k<<1,l,M,x);else cha(k<<1|1,M+1,r,x);T[k]=ps(T[k<<1],T[k<<1|1],M);
+}
+P qu(int k,int l,int r,int x,int y){
+	if(x<=l&&r<=y)return T[k];int M=l+r>>1;
+	if(y<=M)return qu(k<<1,l,M,x,y);if(x>M)return qu(k<<1|1,M+1,r,x,y);
+	return ps(qu(k<<1,l,M,x,y),qu(k<<1|1,M+1,r,x,y),M);
+}
+int main(){
+	for(scanf("%d%d",&n,&m),i=0;i<2;i++)for(j=1;j<n;j++)scanf("%d",&f[j][i]);
+	for(i=1;i<=n;i++)scanf("%d",&g[i]);
+	for(bt(1,1,n);m--;)if(scanf("%s",s),s[0]=='C'){
+		scanf("%d%d%d%d%d",&Y,&X,&Y2,&X2,&z);
+		if(X==X2)g[X]=z;else f[min(X,X2)][Y-1]=z;
+		cha(1,1,n,X);cha(1,1,n,X2);
+	}else scanf("%d%d",&X,&Y),printf("%d\n",qu(1,1,n,X,Y).A);
+}
+~~~
+
+# 【Tsinsen1309】黑白染色
+
+【题目大意】你有一个$n*m$的矩形，一开始所有格子都是白色，然后给出一个目标状态的矩形，有的地方是白色，有的地方是黑色，你每次可以选择一个连通块（四连通块，且不要求颜色一样）进行染色操作（染成白色或者黑色）。问最少操作次数。$n\leq50,m\leq50$。
+
+【解题报告】不同颜色连1边否则连0边，每个点为起点跑最短路，找到一个点使距离最远的黑点最小。
+
+# 【Tsinsen1310】矩形计算
+
+【题目大意】输入一个$n*m$的矩阵，矩阵的每一个元素都是一个整数，然后有$q$个询问，每次询问一个子矩阵的权值。矩阵的权值是这样定义的，对于一个整数$x$，如果它在该矩阵中出现了$p$次，那么它给该矩阵的权值就贡献$p^2$(矩形上做小Z的袜子)。$1\leq n,m\leq 200,q\leq100000$，|矩阵元素大小|$\leq 2*10^9$。
+
+【解题报告】对于出现次数比较多的点，预处理出答案。对于出现次数比较少的点，枚举点对做矩形，这样每次询问相当于询问一个矩形里有多少个矩形。把一维排序后变成三维数点，树状数组解决。设这个出现次数的分界线为$p$，则时间复杂度为$O(\frac{n^2m^2}{p}+Q(\frac{nm}{p}+\log ^3n)+\frac{nm}{p}\log^3n))$。
+
+# 【XIV Open Cup named after E.V. Pankratiev. GP of Europe】Bytehattan
+
+【题目大意】$n*n$的網格圖，一開始所有邊都存在，每次刪除一條邊，同時問刪除前這條後兩端是否聯通。$n\leq1500,m\leq3000$。
+
+【解题报告】轉成對偶圖，刪除一條邊就將對偶圖的對應點間連邊，如果在同一個聯通塊中，說明這條邊讓兩個點被分割開來不聯通，那麼將其中小的一塊重標號，可以兩塊一起BFS，一塊BFS完結束。時間復雜度$O(n^2\log n)$
+
+# 【Petrozavodsk Summer-2013. Petr Mitrtchev Contest 11D】Range Estimate
+
+【题目大意】在$[0,1000]$中随机一个实数$r$，然后在$[0,r]$中随机$n$个实数$a_i$，给你$a_i$，让你求$r$，让你的$r$与实际的$r$差尽量小
+
+【解题报告】找出$a_i$中最大值$rv$，枚举$r$，每个$r$都有$(\frac{rv}{r})^{n-1}$的概率满足条件，然后积分一下，二分找出中位数所在位置即可。可以出毒瘤题
+
+# JZPLCM
+
+【解题报告】对每个数，拆分成$p_i^{a_i}$的形式，对质数的每个幂记录一个状态表示，贡献为$p_i$。每个询问就是询问一段区间有多少种不同的状态，把贡献乘起来，离线后BIT维护
+
+# 【WF2012I】A Safe Bet
+
+【题目大意】一张$R*C$的网格图上有$M$个”/”形镜子和N个”\”形镜子。现在从$(1,1)$向右侧射出一道光线，问光线是否能到达$(R,C)$。如果能输出$0$，否则询问在几个格子上放一面镜子后光线可以到达$(R,C)$，输出方案数和字典序最小的一个解，没有输出impossible。$R,C\leq 1000000,N,M\leq 200000$。
+
+【解题报告】首先询问光线是否到达可以直接模拟，排序后可以很方便地找到前驱和后继。考虑方案数。先从$(1,1)$开始模拟一遍，得到入射的所有光线。再从(R,C)开始逆向模拟一遍，得到出射的逆光线。入射光线和出射逆光线的所有的交点就是合法答案。于是把所有线段求出后，离线树状数组扫一遍就可以得到答案了。时间复杂度$O(N\log N)$。
+
+# 【WF2013H】Matryoshka
+
+【题目大意】$n$个排成一排的玩偶，要把它们合成若干个套娃，一个套娃包含一组$1,2,\cdots,m$的玩偶各一个。每次可以合并相邻的两组套娃，代价为要打开的套娃数。求最少代价或输出无解。$n\leq 500,a_i\leq500$。
+
+【解题报告】DP，$g[i]$表示合到$i$组成若干完整套娃的最小代价，$f[i][j]$表示把$[i,j]$合为一个套娃的最小代价。有转移方程$g[i]=min(g[j]+f[j+1][i])$($[j+1,i]$可以合成一个套娃)，$f[i][j]=min(f[i][k]+f[k+1][j]+cal([i,k],[k+1,j]))$。如果暴力计算代价，即$[k+1,j]$中大于$[i,k]$最小值的个数加上$[i,k]$中大于$[k+1,j]$最小值的个数，时间复杂度为$O(n^4)$。考虑优化。可以预处理出比每个数大的前缀和和所有区间的最小值，就可以直接计算代价，时间复杂度$O(n^3)$。
+
+# 【WF2013I】Pirate Chest
+
+【题目大意】有一块$n*m$的水域，每一格深度为$d(i,j)$。往里面放一个长宽不超过$a$和$b$且长宽高都是整数的箱子，贴着网格把箱子沉下去。箱子沉下去的时候会排开等体积的水使水面上升，箱子的高度必须小于水面高度，求箱子的最大体积。$n,m\leq 500$。
+
+【解题报告】设箱子的底面积为$S$，当前位置最浅深度为$w$，箱子能到达的高度为$h$，那么$Sh+nmw>nmh$，得$h<\frac{nmw}{nm-S}$。只需求出$Sh$的最大值就可以得解。如果直接暴力计算时间复杂度$O(n^4)$。考虑枚举两行，箱子长固定为两行间的距离，然后得到一个长为$m$的数组，用单调队列找出每个数左边后右边比它小的第一个数，得到这个数作为最小深度的最大宽度，然后再进行判断就可以了。时间复杂度$O(n^3)$。
+
+# 【WF2016F】Longest Rivers
+
+【题目大意】有$n$条河流的发源地，有$m$个汇合点，每个汇合点都有若干条河流汇合，最后所有的河流汇合到一个点。给每个河流定义一个长度，即从汇合终点开始，遇到分叉即只保留一条主干，剩下的都是支流。现在对于每条河流询问在最好的定义长度情况下河流的最好排名。$n,m\leq 500000$。
+
+【解题报告】先DFS一遍得到所有河流源点的长度，很明显每个单独求而不管原路对答案没有影响。有一个显然的$n^2$的做法，对于每个长度$L$，对树进行DFS。如果子树内都没有超过长度L，选择一个最小的伸上去，否则就直接在这个点标记，这个点的父亲全不用考虑。但由于各个长度独立，于是可以离线处理。按L从小到大处理，点有三种状态。1、子树中肯定有长度$>L$的河流（到子树之根）；2、子树中没有长度>L的河流，但是加上和其父亲连边长度$>L$ ；3、子树中没有长度>L的河流，而且加上和其父亲连边长度仍不会$>L$。一开始所有叶子是2状态，所有交汇点是1状态。$L$逐渐增加，2状态可以变为3状态，从而导致1状态可以变为2状态，2状态的数量即为目前的答案。用优先队列维护2状态即能在$O(nlgn)$的时间内出解。
+
+# 【WF2016K】String Theory
+
+【题目大意】给出一个长度为$n$的数列$a_i$。表示$a_i$个引号一个字母，求最多有几层引号表示。$N\leq 100,a_i\leq 100$。
+
+【解题报告】用$f[i][j][k]$表示到第$i$堆引号，目前用了第$i$堆引号的前$j$个，在第$k$层，目前是左引号是否合法，$g[i][j][k]$表示到第$i$堆引号，目前用了第$i$堆引号的前$j$个，在第$k$层，目前是右引号是否合法。那么枚举$i$，有$f[i][j][k-1]=f[i][j-k][k]\or g[i][j-k][k]$，$g[i][j][k]=g[i][j-k][k-1]$，$g[i][j][0]=f[i][j][0]$，$f[i][a[j]][k]\to f[i+1][0][k]$，$g[i][a[j]][k]\to g[i+1][0][k]$。直接转移，时间复杂度$O(n^4)$。
+
+# 发现的问题
+
+平面图板子不能有重复点，不能有重复边，边的两点不能相同，都可以用map处理。
+
+分块度数注意重边
+
+替罪羊树注意整棵树的重构
