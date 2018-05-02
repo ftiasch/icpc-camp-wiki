@@ -1,75 +1,75 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 long long ans, r[3];
 const int MOD = 1e9 + 7;
 const int N = 1e6 + 5, B = 3;
 struct set_hash {
-	int sum[B];
-	set_hash() { memset(sum, 0, sizeof(sum)); }
-	void add(int x) {
-		int res = 1;
-		for (int i = 0; i < B; ++ i) {
-			res = 1LL * res * x % MOD;
-			(sum[i] += res) %= MOD;
-		}
-	}
-	long long get_value() {
-		long long res = 0;
-		for (int i = 0; i < B; ++ i) {
-			res = res * MOD + sum[i];
-		}
-		return res;
-	}
+    int sum[B];
+    set_hash() { memset(sum, 0, sizeof(sum)); }
+    void add(int x) {
+        int res = 1;
+        for (int i = 0; i < B; ++ i) {
+            res = 1LL * res * x % MOD;
+            (sum[i] += res) %= MOD;
+        }
+    }
+    long long get_value() {
+        long long res = 0;
+        for (int i = 0; i < B; ++ i) {
+            res = res * MOD + sum[i];
+        }
+        return res;
+    }
 };
 set_hash operator - (const set_hash &a, const set_hash &b) {
-	set_hash c;
-	for (int i = 0; i < B; ++ i) c.sum[i] = (MOD + a.sum[i] - b.sum[i]) % MOD;
-	return c;
+    set_hash c;
+    for (int i = 0; i < B; ++ i) c.sum[i] = (MOD + a.sum[i] - b.sum[i]) % MOD;
+    return c;
 }
 int a[N];
 set_hash pre[N];
 void solve(const vector<int> &L, const vector<int> &R) {
-	set_hash H = set_hash(); H.add(1);
-	unordered_map<long long, int> cnt;
-	cnt[H.get_value()] ++;
-	for (int i = 0; i < (int) L.size(); ++ i) {
-		H.add(L[i]);
-		cnt[H.get_value()] ++;
-	}
-	int _max = 0;
-	set_hash has;
-	for (int i = 0; i < (int) R.size(); ++ i) {
-		_max = max(_max, R[i]);
-		has.add(R[i]);
-		set_hash tmp = pre[_max] - has;
-		long long tv = tmp.get_value();
-		if (cnt.count(tv)) ans += cnt[tv];
-	}
+    set_hash H = set_hash(); H.add(1);
+    unordered_map<long long, int> cnt;
+    cnt[H.get_value()] ++;
+    for (int i = 0; i < (int) L.size(); ++ i) {
+        H.add(L[i]);
+        cnt[H.get_value()] ++;
+    }
+    int _max = 0;
+    set_hash has;
+    for (int i = 0; i < (int) R.size(); ++ i) {
+        _max = max(_max, R[i]);
+        has.add(R[i]);
+        set_hash tmp = pre[_max] - has;
+        long long tv = tmp.get_value();
+        if (cnt.count(tv)) ans += cnt[tv];
+    }
 }
 int main() {
-	pre[0] = set_hash();
-	for (int i = 1; i < N; ++ i) {
-		pre[i] = pre[i - 1];
-		pre[i].add(i);
-	}
-	int n;
-	scanf("%d", &n);
-	vector<int> one = {-1};
-	for (int i = 0; i < n; ++ i) {
-		scanf("%d", &a[i]);
-		if (a[i] == 1) one.push_back(i);
-	}
-	one.push_back(n);
-	for (int i = 1; i < (int) one.size() - 1; ++ i) {
-		vector<int> L, R;
-		int x = one[i - 1], y = one[i], z = one[i + 1];
-		for (int j = y - 1; j > x; -- j) L.push_back(a[j]);
-		for (int j = y + 1; j < z; ++ j) R.push_back(a[j]);
-		solve(L, R);
-		solve(R, L);
-		ans ++;
-	}
-	printf("%lld\n", ans);
+    pre[0] = set_hash();
+    for (int i = 1; i < N; ++ i) {
+        pre[i] = pre[i - 1];
+        pre[i].add(i);
+    }
+    int n;
+    scanf("%d", &n);
+    vector<int> one = {-1};
+    for (int i = 0; i < n; ++ i) {
+        scanf("%d", &a[i]);
+        if (a[i] == 1) one.push_back(i);
+    }
+    one.push_back(n);
+    for (int i = 1; i < (int) one.size() - 1; ++ i) {
+        vector<int> L, R;
+        int x = one[i - 1], y = one[i], z = one[i + 1];
+        for (int j = y - 1; j > x; -- j) L.push_back(a[j]);
+        for (int j = y + 1; j < z; ++ j) R.push_back(a[j]);
+        solve(L, R);
+        solve(R, L);
+        ans ++;
+    }
+    printf("%lld\n", ans);
 }
-~~~
+```
