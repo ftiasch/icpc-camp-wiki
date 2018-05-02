@@ -20,38 +20,49 @@
 │E₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
 在梦里...
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Sequence [GX]
+A. Sequence \[GX\]
+------------------
 
 贪心题
 
-## B. Colored Graphs [GX]
+B. Colored Graphs \[GX\]
+------------------------
 
 树哈希再随便搞搞即可
 
-## C. Graph Coloring 2 [TDJ]
+C. Graph Coloring 2 \[TDJ\]
+---------------------------
 
 枚举子集DP, $O(3^{18})$
 
-## D. Simple Graph
+D. Simple Graph
+---------------
 
-## E. Reachable Sequences
+E. Reachable Sequences
+----------------------
 
-## F. Physics [MZH]
+F. Physics \[MZH\]
+------------------
 
 物理题
 
-## G. Parentheses [MZH]
+G. Parentheses \[MZH\]
+----------------------
 
 找规律
 
-## H. Array and Operations
+H. Array and Operations
+-----------------------
 
-## I. Value of the Array [MZH]
+I. Value of the Array \[MZH\]
+-----------------------------
 
 卷积
 
-## J. Values on a Tree [TDJ]
+J. Values on a Tree \[TDJ\]
+---------------------------
 
 树DP，枚举直径中点，求逆元会TLE，改成同时维护乘积和逆元即可。
