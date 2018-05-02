@@ -20,26 +20,38 @@
 │A₀[-:--]│                                                            │
 │F₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Square Function
+A. Square Function
+------------------
 
-## B. Guess By Remainder
+B. Guess By Remainder
+---------------------
 
-## C. Subtract If Greater
+C. Subtract If Greater
+----------------------
 
-## D. Eastern Subregional [TDJ]
+D. Eastern Subregional \[TDJ\]
+------------------------------
 
-## E. K-transform
+E. K-transform
+--------------
 
-## F. Suffix Array for Thue-Morse
+F. Suffix Array for Thue-Morse
+------------------------------
 
-## G. XOR tree [GX]
+G. XOR tree \[GX\]
+------------------
 
-## H. Fence [MZH]
+H. Fence \[MZH\]
+----------------
 
-## I. Friends and Berries - 2 [MZH]
+I. Friends and Berries - 2 \[MZH\]
+----------------------------------
 
-## J. Oleg and Cola [GX]
+J. Oleg and Cola \[GX\]
+-----------------------
 
-## K. Process with Constant Sum
+K. Process with Constant Sum
+----------------------------
