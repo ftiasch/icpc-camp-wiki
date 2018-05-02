@@ -1,6 +1,8 @@
-# [A - Kingdom and its Cities ](https://cn.vjudge.net/contest/181006#problem/A)
+[A - Kingdom and its Cities](https://cn.vjudge.net/contest/181006#problem/A)
+============================================================================
 
-## lbn187
+lbn187
+------
 
 在虚树上统计答案，建出虚树后有两种点，一种已有点，一种新建点。
 
@@ -10,7 +12,7 @@ DFS，如果当前点是已有点，那么该点和所有下面的有已有点�
 
 如果当前点不是已有点，如果该点下面有已有点的数量超过1，那么选取这个点，答案+1；如果该点下面已有点数量为1，将该点变为已有点，答案不变。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 200100
 using namespace std;
@@ -19,68 +21,70 @@ bool ff;
 bool cmp(int x,int y){return st[x]<st[y];}
 void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
 void check(int x,int y,int ca){
-	if(x==y)return;
-	if(d[x]>d[y])swap(x,y);
-	ins(x,y);
-	if(v[x]==ca&&v[y]==ca)if(d[x]+1==d[y])ff=1;
+    if(x==y)return;
+    if(d[x]>d[y])swap(x,y);
+    ins(x,y);
+    if(v[x]==ca&&v[y]==ca)if(d[x]+1==d[y])ff=1;
 }
 void dfs(int x,int fa){
-	st[x]=++id;
-	int i,y;
-	for(i=1;i<=17;i++)F[x][i]=F[F[x][i-1]][i-1];
-	for(i=fir[x];i;i=ne[i]){
-		y=la[i];
-		if(y!=fa){
-			d[y]=d[x]+1;
-			F[y][0]=x;
-			dfs(y,x);
-		}
-	}
-	ed[x]=id;
+    st[x]=++id;
+    int i,y;
+    for(i=1;i<=17;i++)F[x][i]=F[F[x][i-1]][i-1];
+    for(i=fir[x];i;i=ne[i]){
+        y=la[i];
+        if(y!=fa){
+            d[y]=d[x]+1;
+            F[y][0]=x;
+            dfs(y,x);
+        }
+    }
+    ed[x]=id;
 }
 int lca(int x,int y){
-	if(d[x]<d[y])swap(x,y);int t=d[x]-d[y],i;
-	for(i=0;i<=17;i++)if(t>>i&1)x=F[x][i];
-	for(i=17;~i;i--)if(F[x][i]!=F[y][i])x=F[x][i],y=F[y][i];
-	return x==y?x:F[x][0];
+    if(d[x]<d[y])swap(x,y);int t=d[x]-d[y],i;
+    for(i=0;i<=17;i++)if(t>>i&1)x=F[x][i];
+    for(i=17;~i;i--)if(F[x][i]!=F[y][i])x=F[x][i],y=F[y][i];
+    return x==y?x:F[x][0];
 }
 int getv(int x){
-	int V=0,o=0,i,y;
-	for(i=fir[x];i;i=ne[i]){
-		V+=getv(y=la[i]);
-		if(v[y]==ca)o++;
-	}
-	if(v[x]==ca)return V+o;
-	if(o>1)return V+1;
-	if(o)v[x]=ca;
-	return V;
+    int V=0,o=0,i,y;
+    for(i=fir[x];i;i=ne[i]){
+        V+=getv(y=la[i]);
+        if(v[y]==ca)o++;
+    }
+    if(v[x]==ca)return V+o;
+    if(o>1)return V+1;
+    if(o)v[x]=ca;
+    return V;
 }
 int main(){
-	scanf("%d",&n);
-	for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
-	dfs(1,0);
-	memset(fir,0,sizeof fir);
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%d",&m);ff=0;tot=0;
-		a[1]=1;t=++m;
-		for(i=2;i<=m;i++)scanf("%d",&a[i]),v[a[i]]=ca;
-		for(sort(a+1,a+m+1,cmp),i=1;i<m;i++)if(v[x=lca(a[i],a[i+1])]!=ca)a[++t]=x;
-		for(m=t,sort(a+1,a+m+1,cmp),q[t=1]=1,i=2;i<=m;check(q[t],a[i],ca),q[++t]=a[i++])
-			for(;st[a[i]]<st[q[t]]||ed[a[i]]>ed[q[t]];t--);
-		if(ff)puts("-1");else printf("%d\n",getv(1));
-		for(i=1;i<=m;i++)fir[a[i]]=0;
-	}
+    scanf("%d",&n);
+    for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+    dfs(1,0);
+    memset(fir,0,sizeof fir);
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%d",&m);ff=0;tot=0;
+        a[1]=1;t=++m;
+        for(i=2;i<=m;i++)scanf("%d",&a[i]),v[a[i]]=ca;
+        for(sort(a+1,a+m+1,cmp),i=1;i<m;i++)if(v[x=lca(a[i],a[i+1])]!=ca)a[++t]=x;
+        for(m=t,sort(a+1,a+m+1,cmp),q[t=1]=1,i=2;i<=m;check(q[t],a[i],ca),q[++t]=a[i++])
+            for(;st[a[i]]<st[q[t]]||ed[a[i]]>ed[q[t]];t--);
+        if(ff)puts("-1");else printf("%d\n",getv(1));
+        for(i=1;i<=m;i++)fir[a[i]]=0;
+    }
 }
-~~~
+```
 
-# [B - Fire](https://cn.vjudge.net/contest/181006#problem/B) 
+[B - Fire](https://cn.vjudge.net/contest/181006#problem/B)
+==========================================================
 
-## lbn187
+lbn187
+------
 
 写了个单纯形，本地1S多，交上去T了。
 
-~~~{.cpp}
+``` {.cpp}
 #include<cstdio>
 #include<cmath>
 #include<cstring>
@@ -92,9 +96,9 @@ double V,v,p,a[N*2][N],b[N*2],c[N],an[N*2];
 int T,n,m,i,j,e,l,x,y,z,cnt,tot,d[N],fir[N],ne[N*2],la[N*2],va[N*2];
 void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
 void dfs(int x,int fa,int dis,int rt){
-	if(dis<0)return;
-	a[rt][x]=1.;cnt++;
-	for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)dfs(la[i],x,dis-va[i],rt);
+    if(dis<0)return;
+    a[rt][x]=1.;cnt++;
+    for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)dfs(la[i],x,dis-va[i],rt);
 }
 void pivot(int l,int e){
     int i,j;
@@ -112,113 +116,120 @@ void pivot(int l,int e){
     c[e]*=-a[l][e];
 }
 int main(){
-	scanf("%d",&T);
-	for(;T--;){
-		tot=e=l=0;v=V=0;cnt=0;
-		scanf("%d",&n);
-		for(i=1;i<=n;i++)scanf("%lf",&c[i]),V+=c[i];
-		for(i=1;i<=n;i++)scanf("%d",&d[i]),fir[i]=0;
-		for(i=1;i<n;i++)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
-		m=2*n;
-		for(i=1;i<=n;i++)a[i][i]=1.,b[i]=1.;
-		for(i=1;i<=n;i++)cnt=0,dfs(i,0,d[i],i+n),b[i+n]=cnt-1;
-		for(;;){
-			for(i=n;i;i--)if(c[i]>eps)break;
-			if(!i)break;
-			for(p=inf,e=i,i=1;i<=m;i++)
-				if(a[i][e]>eps&&p>b[i]/a[i][e])
-					p=b[i]/a[i][e],l=i;
-			pivot(l,e);
-		}
-		printf("%d\n",(int)(V-v+0.5));
-		for(i=1;i<=m;i++)for(b[i]=0.,j=1;j<=n;j++)a[i][j]=0.;
-	}
+    scanf("%d",&T);
+    for(;T--;){
+        tot=e=l=0;v=V=0;cnt=0;
+        scanf("%d",&n);
+        for(i=1;i<=n;i++)scanf("%lf",&c[i]),V+=c[i];
+        for(i=1;i<=n;i++)scanf("%d",&d[i]),fir[i]=0;
+        for(i=1;i<n;i++)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
+        m=2*n;
+        for(i=1;i<=n;i++)a[i][i]=1.,b[i]=1.;
+        for(i=1;i<=n;i++)cnt=0,dfs(i,0,d[i],i+n),b[i+n]=cnt-1;
+        for(;;){
+            for(i=n;i;i--)if(c[i]>eps)break;
+            if(!i)break;
+            for(p=inf,e=i,i=1;i<=m;i++)
+                if(a[i][e]>eps&&p>b[i]/a[i][e])
+                    p=b[i]/a[i][e],l=i;
+            pivot(l,e);
+        }
+        printf("%d\n",(int)(V-v+0.5));
+        for(i=1;i<=m;i++)for(b[i]=0.,j=1;j<=n;j++)a[i][j]=0.;
+    }
 }
-~~~
+```
 
-# [C - Black Widow](https://cn.vjudge.net/contest/181006#problem/C)
+[C - Black Widow](https://cn.vjudge.net/contest/181006#problem/C)
+=================================================================
 
-# [D - Double Ended Queue](https://cn.vjudge.net/contest/181006#problem/D)
+[D - Double Ended Queue](https://cn.vjudge.net/contest/181006#problem/D)
+========================================================================
 
-## lbn187
+lbn187
+------
 
 水题
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
 int T,ca,n,m,x;
 deque<int>Q;
 char s[29];
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		printf("Case %d:\n",ca);
-		Q.clear();
-		scanf("%d%d",&n,&m);
-		for(;m--;){
-			scanf("%s",s);
-			if(s[1]=='u'){
-				scanf("%d",&x);
-				if(Q.size()<n){
-					if(s[4]=='L'){
-						Q.push_front(x);
-						printf("Pushed in left: %d\n",x);
-					}else{
-						Q.push_back(x);
-						printf("Pushed in right: %d\n",x);
-					}
-				}else puts("The queue is full");
-			}else{
-				if(!Q.size())puts("The queue is empty");else{
-					if(s[3]=='L'){
-						printf("Popped from left: %d\n",Q.front());
-						Q.pop_front();
-					}else{
-						printf("Popped from right: %d\n",Q.back());
-						Q.pop_back();
-					}
-				}
-			}
-		}
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        printf("Case %d:\n",ca);
+        Q.clear();
+        scanf("%d%d",&n,&m);
+        for(;m--;){
+            scanf("%s",s);
+            if(s[1]=='u'){
+                scanf("%d",&x);
+                if(Q.size()<n){
+                    if(s[4]=='L'){
+                        Q.push_front(x);
+                        printf("Pushed in left: %d\n",x);
+                    }else{
+                        Q.push_back(x);
+                        printf("Pushed in right: %d\n",x);
+                    }
+                }else puts("The queue is full");
+            }else{
+                if(!Q.size())puts("The queue is empty");else{
+                    if(s[3]=='L'){
+                        printf("Popped from left: %d\n",Q.front());
+                        Q.pop_front();
+                    }else{
+                        printf("Popped from right: %d\n",Q.back());
+                        Q.pop_back();
+                    }
+                }
+            }
+        }
+    }
 }
-~~~
+```
 
-# [E - Expanding Rods](https://cn.vjudge.net/contest/181006#problem/E)
+[E - Expanding Rods](https://cn.vjudge.net/contest/181006#problem/E)
+====================================================================
 
-## lbn187
+lbn187
+------
 
 水题，二分答案判断即可
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define eps 1e-8
 int T,ca;
 double L,n,C,L2,l,r,md,D;
 int main(){
-	scanf("%d",&T);
-	for(ca=1;ca<=T;ca++){
-		scanf("%lf%lf%lf",&L,&n,&C);
-		L2=L*(n*C+1.);
-		l=0;r=L*.5;
-		for(;r-l>eps;){
-			md=(l+r)*.5;
-			D=(md*md+L*L*.25)/md;
-			if(D*asin(L/D)<L2)l=md;else r=md;
-		}
-		printf("Case %d: %.7f\n",ca,md);
-	}
+    scanf("%d",&T);
+    for(ca=1;ca<=T;ca++){
+        scanf("%lf%lf%lf",&L,&n,&C);
+        L2=L*(n*C+1.);
+        l=0;r=L*.5;
+        for(;r-l>eps;){
+            md=(l+r)*.5;
+            D=(md*md+L*L*.25)/md;
+            if(D*asin(L/D)<L2)l=md;else r=md;
+        }
+        printf("Case %d: %.7f\n",ca,md);
+    }
 }
-~~~
+```
 
-# [F - 压力](https://cn.vjudge.net/contest/181006#problem/F)
+[F - 压力](https://cn.vjudge.net/contest/181006#problem/F)
+==========================================================
 
-## lbn187
+lbn187
+------
 
 水题，tarjan缩点后差分一下就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 200200
 #define M 400400
@@ -228,63 +239,65 @@ vector<int>V[N];
 void ins(int x,int y){V[x].push_back(y);}
 void ins_new(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
 void tj(int x,int fa){
-	dfn[x]=low[x]=++id;q[++t]=x;int i,y,o;
-	for(i=0;i<V[x].size();i++)if(!dfn[y=V[x][i]]){
-		tj(y,x);low[x]=min(low[x],low[y]);
-		if(low[y]>=dfn[x])
-		for(ins_new(x,++scc),o=0;y!=o;)to[o=q[t--]]=scc,ins_new(scc,o);
-	}else if(y!=fa)low[x]=min(low[x],dfn[y]);
+    dfn[x]=low[x]=++id;q[++t]=x;int i,y,o;
+    for(i=0;i<V[x].size();i++)if(!dfn[y=V[x][i]]){
+        tj(y,x);low[x]=min(low[x],low[y]);
+        if(low[y]>=dfn[x])
+        for(ins_new(x,++scc),o=0;y!=o;)to[o=q[t--]]=scc,ins_new(scc,o);
+    }else if(y!=fa)low[x]=min(low[x],dfn[y]);
 }
 void dfs(int x,int fa){
-	int i,y;
-	for(i=1;i<=17;i++)F[x][i]=F[F[x][i-1]][i-1];
-	for(i=fir[x];i;i=ne[i]){
-		y=la[i];
-		if(y!=fa){
-			d[y]=d[x]+1;
-			F[y][0]=x;
-			dfs(y,x);
-		}
-	}
+    int i,y;
+    for(i=1;i<=17;i++)F[x][i]=F[F[x][i-1]][i-1];
+    for(i=fir[x];i;i=ne[i]){
+        y=la[i];
+        if(y!=fa){
+            d[y]=d[x]+1;
+            F[y][0]=x;
+            dfs(y,x);
+        }
+    }
 }
 int lca(int x,int y){
-	if(d[x]<d[y])swap(x,y);int t=d[x]-d[y],i;
-	for(i=0;i<=17;i++)if(t>>i&1)x=F[x][i];
-	for(i=17;~i;i--)if(F[x][i]!=F[y][i])x=F[x][i],y=F[y][i];
-	return x==y?x:F[x][0];
+    if(d[x]<d[y])swap(x,y);int t=d[x]-d[y],i;
+    for(i=0;i<=17;i++)if(t>>i&1)x=F[x][i];
+    for(i=17;~i;i--)if(F[x][i]!=F[y][i])x=F[x][i],y=F[y][i];
+    return x==y?x:F[x][0];
 }
 void getv(int x,int fa){
-	int i,y;
-	for(i=fir[x];i;i=ne[i]){
-		y=la[i];
-		if(y!=fa){
-			getv(y,x);
-			an[x]+=an[y];
-		}
-	}
+    int i,y;
+    for(i=fir[x];i;i=ne[i]){
+        y=la[i];
+        if(y!=fa){
+            getv(y,x);
+            an[x]+=an[y];
+        }
+    }
 }
 int main(){
-	scanf("%d%d%d",&n,&m,&Q);scc=n;
-	for(i=1;i<=m;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
-	for(i=1;i<=n;i++)if(!dfn[i])tj(i,0);
-	for(dfs(1,0);Q--;){
-		scanf("%d%d",&x,&y);
-		an[x]++,an[y]++;
-		z=lca(x,y);
-		an[z]--;an[F[z][0]]--;
-	}
-	getv(1,0);
-	for(i=1;i<=n;i++)printf("%d\n",an[i]);
+    scanf("%d%d%d",&n,&m,&Q);scc=n;
+    for(i=1;i<=m;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+    for(i=1;i<=n;i++)if(!dfn[i])tj(i,0);
+    for(dfs(1,0);Q--;){
+        scanf("%d%d",&x,&y);
+        an[x]++,an[y]++;
+        z=lca(x,y);
+        an[z]--;an[F[z][0]]--;
+    }
+    getv(1,0);
+    for(i=1;i<=n;i++)printf("%d\n",an[i]);
 }
-~~~
+```
 
-# [G - Dynamic len(set(a[L:R])) ](https://cn.vjudge.net/contest/181006#problem/G)
+[G - Dynamic len(set(a\[L:R\]))](https://cn.vjudge.net/contest/181006#problem/G)
+================================================================================
 
-## lbn187
+lbn187
+------
 
 裸带修莫队
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define S 777
 #define N 50050
@@ -296,42 +309,43 @@ struct Q{int l,r,cur,id;}q[N];
 struct P{int x,pre,now;}p[N];
 bool cmp(Q a,Q b){return E[a.l]<E[b.l]||E[a.l]==E[b.l]&&E[a.r]<E[b.r]||E[a.l]==E[b.l]&&E[a.r]==E[b.r]&&a.cur<b.cur;}
 void go(int x){
-	if(v[x]){
-		if(!--cnt[c[x]])sum--;
-	}else{
-		if(!cnt[c[x]]++)sum++;
-	}
-	v[x]^=1;
+    if(v[x]){
+        if(!--cnt[c[x]])sum--;
+    }else{
+        if(!cnt[c[x]]++)sum++;
+    }
+    v[x]^=1;
 }
 void cg(int x,int y){if(v[x])go(x),c[x]=y,go(x);else c[x]=y;}
 int main(){
-	scanf("%d%d",&n,&m);cnt[0]=1e9;
-	for(i=1;i<=n;i++)scanf("%d",&c[i]),las[i]=c[i],E[i]=(i-1)/S;
-	for(i=1;i<=m;i++){
-		scanf("%s%d%d",s,&x,&y);x++;
-		if(s[0]=='Q')q[++l1].l=x,q[l1].r=y,q[l1].id=l1,q[l1].cur=l2;
-		else p[++l2].x=x,p[l2].pre=las[x],p[l2].now=las[x]=y;
-	}
-	sort(q+1,q+l1+1,cmp);
-	for(L=1,i=1;i<=l1;i++){
-		for(;T<=q[i].cur;T++)cg(p[T].x,p[T].now);
-		for(;T>q[i].cur;T--)cg(p[T].x,p[T].pre);
-		for(;L>q[i].l;go(--L));for(;L<q[i].l;go(L++));
-		for(;R>q[i].r;go(R--));for(;R<q[i].r;go(++R));
-		an[q[i].id]=sum;
-	}
-	for(i=1;i<=l1;i++)printf("%d\n",an[i]);
+    scanf("%d%d",&n,&m);cnt[0]=1e9;
+    for(i=1;i<=n;i++)scanf("%d",&c[i]),las[i]=c[i],E[i]=(i-1)/S;
+    for(i=1;i<=m;i++){
+        scanf("%s%d%d",s,&x,&y);x++;
+        if(s[0]=='Q')q[++l1].l=x,q[l1].r=y,q[l1].id=l1,q[l1].cur=l2;
+        else p[++l2].x=x,p[l2].pre=las[x],p[l2].now=las[x]=y;
+    }
+    sort(q+1,q+l1+1,cmp);
+    for(L=1,i=1;i<=l1;i++){
+        for(;T<=q[i].cur;T++)cg(p[T].x,p[T].now);
+        for(;T>q[i].cur;T--)cg(p[T].x,p[T].pre);
+        for(;L>q[i].l;go(--L));for(;L<q[i].l;go(L++));
+        for(;R>q[i].r;go(R--));for(;R<q[i].r;go(++R));
+        an[q[i].id]=sum;
+    }
+    for(i=1;i<=l1;i++)printf("%d\n",an[i]);
 }
+```
 
-~~~
+[H - \`\`Dynamic'' Inversion](https://cn.vjudge.net/contest/181006#problem/H)
+=============================================================================
 
-# [H - ``Dynamic'' Inversion ](https://cn.vjudge.net/contest/181006#problem/H)
-
-## lbn187
+lbn187
+------
 
 分块，里面我比较懒用了BIT维护，时间复杂度$O(n\sqrt{nlgn}$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define LL long long
 using namespace std;
@@ -342,32 +356,34 @@ void cg(int w,int x,int z){for(;x<=n;x+=x&-x)c[w][x]+=z;}
 LL qu(int w,int x){LL p=0;for(;x;x-=x&-x)p+=c[w][x];return p;}
 int main(){
     for(;~scanf("%d%d",&n,&m);ans=0){
-    	for(i=1;i<=n;i++){
-    		for(j=0;j<=100;j++)c[j][i]=0;
-    		use[i]=0;to[i]=0;
-		}
-    	for(i=1;i<=n;i++)scanf("%lld",&a[i]),to[a[i]]=i,ans+=qu(0,n)-qu(0,a[i]),cg(0,a[i],1);
-		for(i=1;i<=n;i++)cg((i-1)/BS+1,a[i],1);
-    	while(m--){
-    	    printf("%lld\n",ans);scanf("%d",&x);
-    	    x=to[x];b=(x-1)/BS+1;
-    	    for(i=1;i<b;i++)ans-=qu(i,n)-qu(i,a[x]);
-    	    for(i=b+1;i<=BN;i++)ans-=qu(i,a[x]-1);
-    	    for(i=(b-1)*BS+1;i<x;i++)if(a[i]>a[x]&&!use[i])ans--;
-    	    for(i=min(b*BS,n);i>x;i--)if(a[i]<a[x]&&!use[i])ans--;
-    	    cg(b,a[x],-1);use[x]=1;
-    	}
-	}
+        for(i=1;i<=n;i++){
+            for(j=0;j<=100;j++)c[j][i]=0;
+            use[i]=0;to[i]=0;
+        }
+        for(i=1;i<=n;i++)scanf("%lld",&a[i]),to[a[i]]=i,ans+=qu(0,n)-qu(0,a[i]),cg(0,a[i],1);
+        for(i=1;i<=n;i++)cg((i-1)/BS+1,a[i],1);
+        while(m--){
+            printf("%lld\n",ans);scanf("%d",&x);
+            x=to[x];b=(x-1)/BS+1;
+            for(i=1;i<b;i++)ans-=qu(i,n)-qu(i,a[x]);
+            for(i=b+1;i<=BN;i++)ans-=qu(i,a[x]-1);
+            for(i=(b-1)*BS+1;i<x;i++)if(a[i]>a[x]&&!use[i])ans--;
+            for(i=min(b*BS,n);i>x;i--)if(a[i]<a[x]&&!use[i])ans--;
+            cg(b,a[x],-1);use[x]=1;
+        }
+    }
 }
-~~~
+```
 
-# [I - Signal Interference ](https://cn.vjudge.net/contest/181006#problem/I)
+[I - Signal Interference](https://cn.vjudge.net/contest/181006#problem/I)
+=========================================================================
 
-## lbn187
+lbn187
+------
 
 明显符合条件的区域是一个阿波罗尼斯圆，即求圆与多边形交，第一次写，写了好久，终于有了模板
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define eps 1e-8
 #define pi acos(-1)
@@ -377,12 +393,12 @@ int sgn(D x){return x<-eps?-1:x>eps;}
 int cmp(D x,D y){return sgn(x-y);}
 D sqr(D x){return x*x;}
 struct P{
-	D x,y;
-	P(D x=0,D y=0):x(x),y(y){}
-	void in(){scanf("%lf%lf",&x,&y);}
-	D norm(){return sqrt(x*x+y*y);}
-	D norm2(){return x*x+y*y;}
-	P unit(){D l=norm();return P(x/l,y/l);}
+    D x,y;
+    P(D x=0,D y=0):x(x),y(y){}
+    void in(){scanf("%lf%lf",&x,&y);}
+    D norm(){return sqrt(x*x+y*y);}
+    D norm2(){return x*x+y*y;}
+    P unit(){D l=norm();return P(x/l,y/l);}
 }A,B;
 int n,i,ca;D k,x,y;vector<P>V;
 bool operator==(P a,P b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
@@ -398,69 +414,70 @@ struct L{P s,t;L(P s=P(),P t=P()):s(s),t(t){}};
 bool point_on_segment(P a,L b){return !sgn(cj(a-b.s,b.t-b.s))&&sgn(dj(b.s-a,b.t-a))<=0;}
 D point_to_line(P a,L b){return fabs(cj(b.t-b.s,a-b.s))/dis(b.s,b.t);}
 D point_to_segment(P a,L b){
-	if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
-	return min(dis(a,b.s),dis(a,b.t));
+    if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
+    return min(dis(a,b.s),dis(a,b.t));
 }
 P project_to_line(P a,L b){return b.s+(b.t-b.s)*(dj(a-b.s,b.t-b.s)/(b.t-b.s).norm2());}
 struct C{
-	P c;D r;
-	explicit C(P c=P(),D r=0):c(c),r(r){}
+    P c;D r;
+    explicit C(P c=P(),D r=0):c(c),r(r){}
 };
 bool in_circle(P a,C b){return cmp(dis(a,b.c),b.r)<=0;}
 C make_circle(P a,P b){return C((a+b)/2,dis(a,b)/2);}
 D twopoint_circle_intersect(L a,C b,P&p1,P&p2){//直线与两点交及距离 
-	D y=point_to_line(b.c,a);
-	D x=sqrt(sqr(b.r)-sqr(y));
-	p1=project_to_line(b.c,a)+(a.s-a.t).unit()*x;
-	p2=project_to_line(b.c,a)-(a.s-a.t).unit()*x;
-	return point_to_segment(b.c,a);
+    D y=point_to_line(b.c,a);
+    D x=sqrt(sqr(b.r)-sqr(y));
+    p1=project_to_line(b.c,a)+(a.s-a.t).unit()*x;
+    p2=project_to_line(b.c,a)-(a.s-a.t).unit()*x;
+    return point_to_segment(b.c,a);
 }
 P point_to_circle(P b,C a){//点和圆心连线和圆的交点 
-	P c=(b-a.c).unit();
-	return a.c+c*a.r;
+    P c=(b-a.c).unit();
+    return a.c+c*a.r;
 }
 D SectorArea(C c,P a,P b){//不大于180度的扇形面积 
-	D u=(c.c-a).norm2(),v=(c.c-b).norm2(),w=(a-b).norm2();
-	return sqr(c.r)*acos((u+v-w)*.5/sqrt(u)/sqrt(v))*.5;
+    D u=(c.c-a).norm2(),v=(c.c-b).norm2(),w=(a-b).norm2();
+    return sqr(c.r)*acos((u+v-w)*.5/sqrt(u)/sqrt(v))*.5;
 }
 C appollo(P a,P b,D k){//dis (a,o)*k=dis(b,o)
-	C o;P A,B,p;
-	D d=dis(a,b);
-	p=(a-b).unit();
-	B=b+p*d*k/(k+1.);
-	A=b-p*d/(1.0/k-1.);
-	return make_circle(A,B);
+    C o;P A,B,p;
+    D d=dis(a,b);
+    p=(a-b).unit();
+    B=b+p*d*k/(k+1.);
+    A=b-p*d/(1.0/k-1.);
+    return make_circle(A,B);
 }
 D circle_and_triangle(C c,P a,P b){//圆与一点在圆心的三角形交 
-	if(sgn(cj(a-c.c,b-c.c))==0)return 0;
-	bool f1=in_circle(a,c),f2=in_circle(b,c);
-	P pa,pb; 
-	L l=L(a,b);
-	if(f1&&f2)return Area(a,b,c.c);
-	D d=twopoint_circle_intersect(l,c,pa,pb);
-	if(d>c.r-eps)return SectorArea(c,a,b);
-	if(f1)return Area(a,pb,c.c)+SectorArea(c,pb,b);
-	if(f2)return Area(pa,b,c.c)+SectorArea(c,a,pa);
-	return Area(pa,pb,c.c)+SectorArea(c,a,pa)+SectorArea(c,pb,b);
+    if(sgn(cj(a-c.c,b-c.c))==0)return 0;
+    bool f1=in_circle(a,c),f2=in_circle(b,c);
+    P pa,pb; 
+    L l=L(a,b);
+    if(f1&&f2)return Area(a,b,c.c);
+    D d=twopoint_circle_intersect(l,c,pa,pb);
+    if(d>c.r-eps)return SectorArea(c,a,b);
+    if(f1)return Area(a,pb,c.c)+SectorArea(c,pb,b);
+    if(f2)return Area(pa,b,c.c)+SectorArea(c,a,pa);
+    return Area(pa,pb,c.c)+SectorArea(c,a,pa)+SectorArea(c,pb,b);
 }
 D circle_and_polygon(C c,vector<P>a){
-	int n=a.size(),i;D an=0;
-	a.push_back(a[0]);
-	for(i=0;i<n;i++){
-		D d=circle_and_triangle(c,a[i],a[i+1]);
-		if(cj(a[i]-c.c,a[i+1]-c.c)>0)an+=d;else an-=d;
-	}
-	return fabs(an);
+    int n=a.size(),i;D an=0;
+    a.push_back(a[0]);
+    for(i=0;i<n;i++){
+        D d=circle_and_triangle(c,a[i],a[i+1]);
+        if(cj(a[i]-c.c,a[i+1]-c.c)>0)an+=d;else an-=d;
+    }
+    return fabs(an);
 }
 int main(){
-	for(;~scanf("%d%lf",&n,&k);V.clear()){
-		for(i=1;i<=n;i++)scanf("%lf%lf",&x,&y),V.push_back(P(x,y));
-		A.in();B.in();
-		printf("Case %d: %.10f\n",++ca,circle_and_polygon(appollo(A,B,k),V));
-	}
+    for(;~scanf("%d%lf",&n,&k);V.clear()){
+        for(i=1;i<=n;i++)scanf("%lf%lf",&x,&y),V.push_back(P(x,y));
+        A.in();B.in();
+        printf("Case %d: %.10f\n",++ca,circle_and_polygon(appollo(A,B,k),V));
+    }
 }
-~~~
+```
 
-# [J - Old School Days ](https://cn.vjudge.net/contest/181006#problem/J)
+[J - Old School Days](https://cn.vjudge.net/contest/181006#problem/J)
+=====================================================================
 
 草稿 []()
