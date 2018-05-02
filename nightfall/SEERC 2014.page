@@ -1,9 +1,12 @@
-# [Grammar](http://codeforces.com/gym/101470/problem/G)
+[Grammar](http://codeforces.com/gym/101470/problem/G)
+=====================================================
 
-## Aki
+Aki
+---
+
 Aki这场状态很差。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1005;
@@ -15,46 +18,46 @@ bool vis[26][N];
 typedef bitset<N> Res;
 Res dp[26][N];
 void dfs(int c, int len) {
-	if (vis[c][len]) return;
-	vis[c][len] = 1;
-	Res &res = dp[c][len];
-	//printf("dfs %c %d\n", c + 'A', len);
-	if (len == 1) {
-		for (int ch : G2[c]) {
-			for (int i = 0; i <= n; ++ i) if (s[i] == ch + 'a') res[i] = 1;
-		}
-	}
-	for (auto p : G1[c]) {
-		for (int len1 = 1; len1 < len; ++ len1) {
-			int len2 = len - len1;
-			int c1 = p.first;
-			int c2 = p.second;
-			if (!(len1 == len && c1 == c) && !(len2 == len && c2 == c)) {
-				//printf("c1=%c len1=%d  c2=%c len2=%d\n", c1 + 'A', len1, c2 + 'A', len2);
-				dfs(c1, len1);
-				dfs(c2, len2);
-				res |= dp[c1][len1] & (dp[c2][len2] >> len1);
-			}
-		}
-	}
+    if (vis[c][len]) return;
+    vis[c][len] = 1;
+    Res &res = dp[c][len];
+    //printf("dfs %c %d\n", c + 'A', len);
+    if (len == 1) {
+        for (int ch : G2[c]) {
+            for (int i = 0; i <= n; ++ i) if (s[i] == ch + 'a') res[i] = 1;
+        }
+    }
+    for (auto p : G1[c]) {
+        for (int len1 = 1; len1 < len; ++ len1) {
+            int len2 = len - len1;
+            int c1 = p.first;
+            int c2 = p.second;
+            if (!(len1 == len && c1 == c) && !(len2 == len && c2 == c)) {
+                //printf("c1=%c len1=%d  c2=%c len2=%d\n", c1 + 'A', len1, c2 + 'A', len2);
+                dfs(c1, len1);
+                dfs(c2, len2);
+                res |= dp[c1][len1] & (dp[c2][len2] >> len1);
+            }
+        }
+    }
 }
 int main() {
-	freopen("G.in", "r", stdin);
-	scanf("%s", s);
-	n = strlen(s);
-	while (scanf("%s", op) == 1) {
-		int n = (int) strlen(op);
-		if (n == 3) {
-			G1[op[0] - 'A'].push_back(make_pair(op[1] - 'A', op[2] - 'A'));
-		}
-		else {
-			G2[op[0] - 'A'].push_back(op[1] - 'a');
-		}
-	}
-	dfs('S' - 'A', n);
-	printf("%d\n", (int) dp['S' - 'A'][n][0]);
+    freopen("G.in", "r", stdin);
+    scanf("%s", s);
+    n = strlen(s);
+    while (scanf("%s", op) == 1) {
+        int n = (int) strlen(op);
+        if (n == 3) {
+            G1[op[0] - 'A'].push_back(make_pair(op[1] - 'A', op[2] - 'A'));
+        }
+        else {
+            G2[op[0] - 'A'].push_back(op[1] - 'a');
+        }
+    }
+    dfs('S' - 'A', n);
+    printf("%d\n", (int) dp['S' - 'A'][n][0]);
 }
-~~~
+```
 
-# [Multi-Machine Scheduling of Two Applications](http://codeforces.com/gym/101470/problem/I)
-
+[Multi-Machine Scheduling of Two Applications](http://codeforces.com/gym/101470/problem/I)
+==========================================================================================
