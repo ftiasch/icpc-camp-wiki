@@ -1,0 +1,77 @@
+EASY：ADEFHIJK
+
+D：$T$次询问$a,b$，求$X,Y$使得$X+Y=a,lcm(X,Y)=b$。$T\leq120000,a\leq20000,b\leq10^9$。
+
+枚举$b$的约数，暴力判断即可。时间复杂度$O(T\frac{\sqrt{b}}{lnb})$。可能不太科学，提供个优秀点的方法，$b$较大时可行的$X$不多，直接枚举。
+
+F：$T$次给出$x$，将$x$拆成若干不同的数，使它们乘积最大。$T\leq100000,x\leq10^9$。
+
+贪心地先拆成$2,3,4,...$，多余的先给后面的数加。特殊地，如果加完还正好多$1$，再给最后一个数加一遍。由于数据组数较多，不能直接模拟，直接推公式求出最大的数即可。
+
+K：很明显的DP，而如果只求答案直接正着扫一遍就好了。要求方案数双指针扫一下范围区间，再利用一个前缀和就能求方案了。
+
+MID：G
+
+G：一个$n$个节点的树，每个节点是$k$种颜色之一。问树上有多少条包含所有颜色的路径。$n\leq50000,k\leq10$。
+
+树分治一下，将$k$种颜色状压，也就是求树上或运算为$2^k-1$的路径条数，那么树分治下去时直接暴力做的复杂度是$O(nlgn2^k)$。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 55555
+#define LL long long
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+int n,k,i,x,y,tot,fir[N],ne[N*2],la[N*2],c[N],sz[N],mv[N],V[1024];
+LL an;
+bool vis[N];
+void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
+void dsz(int x,int fa){
+	sz[x]=1;mv[x]=0;
+	for(int i=fir[x],y;i;i=ne[i])
+		if(!vis[y=la[i]]&&y!=fa)
+			dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
+}
+void drt(int zs,int x,int fa,int&rt){
+	mv[x]=max(mv[x],sz[zs]-sz[x]);
+	if(mv[x]<mv[rt]||!rt)rt=x;
+	for(int i=fir[x],y;i;i=ne[i])
+		if(!vis[y=la[i]]&&y!=fa)drt(zs,y,x,rt);
+}
+void add(int x,int fa,int z){
+	z|=(1<<c[x]);V[z]++;
+	for(int i=fir[x],y;i;i=ne[i])if(!vis[y=la[i]]&&y!=fa)add(y,x,z);
+}
+void count(int j){
+	for(int i=j;i;i=(i-1)&j)an+=V[(1<<k)-1-i];
+	an+=V[(1<<k)-1];
+}
+void calc(int x,int fa,int z){
+	z|=(1<<c[x]);
+	count(z);
+	for(int i=fir[x],y;i;i=ne[i])if(!vis[y=la[i]]&&y!=fa)calc(y,x,z);
+}
+void fz(int x){
+	int i,p,y,rt=0;
+	dsz(x,0);drt(x,x,0,rt);
+	vis[rt]=1;CL(V);V[0]=1;
+	for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]])calc(y,rt,1<<c[rt]),add(y,rt,0);
+	for(i=fir[rt];i;i=ne[i])if(!vis[la[i]])fz(la[i]);
+}
+int main(){
+	for(;~scanf("%d%d",&n,&k);){
+		tot=an=0;CL(fir);CL(vis);
+		for(i=1;i<=n;i++)scanf("%d",&c[i]),c[i]--;
+		for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+		fz(1);an*=2;
+		if(k==1)an+=n;
+		printf("%lld\n",an);
+	}
+}
+~~~
+
+不可做：BC
+
+B：对每个数字bitset一下，暴力判断时间复杂度$O(\frac{nm}{64})$。但输入输出爆炸
+
+C：威佐夫博弈，要实数高精度，不会写JAVA
