@@ -277,7 +277,7 @@ J. Farm Village
 
 唯一的问题是：正负的全局累加不一样，插入$p_i$以后，会改变个别几个值的正负号。可以使用两个堆：正的用小根堆，负的用大根堆，然后拿堆顶丢来丢去。
 
-好吧以上其实是我对着代码yy的，可以参考日问题解[J.pdf](http://acm-icpc.aitea.net/index.php?plugin=attach&refer=2017%2FPractice%2F模擬地区予選%2F講評&openfile=J.pdf)。
+好吧以上其实是我对着代码yy的，可以参考日问题解[J.pdf](http://acm-icpc.aitea.net/index.php?plugin=attach&refer=2017/Practice/模擬地区予選/講評&openfile=J.pdf)。
 
 ``` {.cpp}
 #include <bits/stdc++.h>
