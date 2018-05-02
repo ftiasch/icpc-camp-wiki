@@ -1,92 +1,111 @@
-# Contest Info
+Contest Info
+============
 
 date: 2018.04.15
 
 practice link: **onsite**
 
-username: buptcpc2018_buaa001
+username: buptcpc2018\_buaa001
 
-# Solutions
+Solutions
+=========
 
-## A. K Multiple Longest Common Subsequence
+A. K Multiple Longest Common Subsequence
+----------------------------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-$f(i, j)$ 表示 $A$ 前 $i$ 个和 $B$ 前 $j$ 的匹配结果，当 $A[i] = B[j]$ 时，往前找 $k$ 个相同值即可，否则可以用 $f(i - 1, j)$ 或 $f(i, j - 1)$ 表示。
+$f(i, j)$ 表示 $A$ 前 $i$ 个和 $B$ 前 $j$ 的匹配结果，当 $A[i] = B[j]$
+时，往前找 $k$ 个相同值即可，否则可以用 $f(i - 1, j)$ 或 $f(i, j - 1)$
+表示。
 
-## B. Maximum Query
+B. Maximum Query
+----------------
 
 solved by braveTester, upsolved by none
 
-## C. Attack
+C. Attack
+---------
 
 solved by chitanda, upsolved by none
 
-## D. Dangerous Ranges
+D. Dangerous Ranges
+-------------------
 
 solved by chitanda, upsolved by none
 
-## E. Count Points
+E. Count Points
+---------------
 
 solved by chitanda, upsolved by none
 
-## F. Card
+F. Card
+-------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 只能开一个 $10^7$ 大小的数组。
 
-考虑二分猜答案的过程，可以发现每次只需要处理区间内的信息，这样复杂度就是 $\mathcal{O}(\sum_{k \geq 0}{\frac{n}{2^k}}) = \mathcal{O}(n)$ 了。
+考虑二分猜答案的过程，可以发现每次只需要处理区间内的信息，这样复杂度就是
+$\mathcal{O}(\sum_{k \geq 0}{\frac{n}{2^k}}) = \mathcal{O}(n)$ 了。
 
-## G. Value
+G. Value
+--------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-由于 $b$ 互不相同，可以找出这 $n k$ 个可行的 $(i, j)$，变成询问合法子区间信息。
+由于 $b$ 互不相同，可以找出这 $n k$ 个可行的
+$(i, j)$，变成询问合法子区间信息。
 
 离线枚举右端点，将合法子区间信息统计到左端点上，询问时直接算即可，需要一个树状数组。
 
-## H. Logo II
+H. Logo II
+----------
 
 solved by chitanda, upsolved by none
 
-## I. String and Numbers
+I. String and Numbers
+---------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
 把非数字替换成空格顺便统计下有多少段，同时去掉前导零和多余空格即可。
 
-## J. Hash
+J. Hash
+-------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-相当于统计 $(x + 1) (y + 1) = H + 1$ 的解数，由于 $x, y$ 要求非负（题面没写），所以答案是 $\left \lceil \sigma(H + 1) / 2 \right \rceil$。
+相当于统计 $(x + 1) (y + 1) = H + 1$ 的解数，由于 $x, y$
+要求非负（题面没写），所以答案是
+$\left \lceil \sigma(H + 1) / 2 \right \rceil$。
 
-## K. Maximum Power Flow
+K. Maximum Power Flow
+---------------------
 
 solved by skywalkert, upsolved by none
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
@@ -94,10 +113,12 @@ skywalkert's solution
 
 考虑单位电压下各点的电势，结合流量平衡等式可以解方程求出。
 
-## L. Circle
+L. Circle
+---------
 
 unsolved
 
-# Relay and Summary
+Relay and Summary
+=================
 
 None is available.
