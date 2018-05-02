@@ -168,7 +168,7 @@ int main(){
 
 H：讨论几种关系，随便处理下
 
-``` {.{,cpp}}
+``` {.{.{,cpp}}}
 #include<bits/stdc++.h>
 #define N 102
 #define M 10101
