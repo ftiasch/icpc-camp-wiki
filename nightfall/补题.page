@@ -1,10 +1,11 @@
-# [1109训练A]query on array(当场过)
+\[1109训练A\]query on array(当场过)
+===================================
 
 区间求和，区间加/减$i*(i+1)*(i+2)$
 
 用转移矩阵矩阵$A$维护，记录前缀$A^i$以及前缀之和$S_i$，然后就可以用线段树维护答案了，线段树上的值和懒惰标记都是一个列向量
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define f0(i,n) for(int i=0;i<n;i++)
 #define N 111111
@@ -12,79 +13,80 @@
 using namespace std;
 int n,m,lx,x,y,i;
 struct JZ{
-	int n,m,a[4][4];
-	void cl(){memset(a,0,sizeof a);}
-	void mat(){for(int i=0;i<n;i++)a[i][i]=1;}
-	JZ operator+(JZ b)const{
-		JZ c;c.n=n;c.m=m;
-		f0(i,n)f0(j,m)c.a[i][j]=(a[i][j]+b.a[i][j])%M;
-		return c;
-	}
-	JZ operator*(JZ b)const{
-		JZ c;c.cl();c.n=n;c.m=b.m;
-		f0(i,n)f0(j,b.m)f0(k,m)c.a[i][j]=(1ll*a[i][k]*b.a[k][j]%M+c.a[i][j])%M;
-		return c;
-	}
+    int n,m,a[4][4];
+    void cl(){memset(a,0,sizeof a);}
+    void mat(){for(int i=0;i<n;i++)a[i][i]=1;}
+    JZ operator+(JZ b)const{
+        JZ c;c.n=n;c.m=m;
+        f0(i,n)f0(j,m)c.a[i][j]=(a[i][j]+b.a[i][j])%M;
+        return c;
+    }
+    JZ operator*(JZ b)const{
+        JZ c;c.cl();c.n=n;c.m=b.m;
+        f0(i,n)f0(j,b.m)f0(k,m)c.a[i][j]=(1ll*a[i][k]*b.a[k][j]%M+c.a[i][j])%M;
+        return c;
+    }
 }A[N],S[N],T[N*3],lz[N*3],E,B,IB;
 void ADD(int k,int sz,JZ o){
-	lz[k]=lz[k]+o;
-	T[k]=T[k]+(S[sz]*o);
+    lz[k]=lz[k]+o;
+    T[k]=T[k]+(S[sz]*o);
 }
 void pd(int k,int ls,int rs){
-	ADD(k<<1,ls,lz[k]);
-	ADD(k<<1|1,rs,A[ls]*lz[k]);
-	lz[k].cl();
+    ADD(k<<1,ls,lz[k]);
+    ADD(k<<1|1,rs,A[ls]*lz[k]);
+    lz[k].cl();
 }
 void bd(int k,int l,int r){
-	T[k].n=lz[k].n=4;T[k].m=lz[k].m=1;
-	if(l==r)return;int md=l+r>>1;
-	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+    T[k].n=lz[k].n=4;T[k].m=lz[k].m=1;
+    if(l==r)return;int md=l+r>>1;
+    bd(k<<1,l,md);bd(k<<1|1,md+1,r);
 }
 void add(int k,int l,int r,int x,int y,JZ o){
-	if(x<=l&&r<=y){ADD(k,r-l+1,o);return;}
-	int md=l+r>>1,w=max(min(md-l+1,md-x+1),0);
-	pd(k,md-l+1,r-md);
-	if(x<=md)add(k<<1,l,md,x,y,o);
-	if(y>md)add(k<<1|1,md+1,r,x,y,A[w]*o);
-	T[k]=T[k<<1]+T[k<<1|1];
+    if(x<=l&&r<=y){ADD(k,r-l+1,o);return;}
+    int md=l+r>>1,w=max(min(md-l+1,md-x+1),0);
+    pd(k,md-l+1,r-md);
+    if(x<=md)add(k<<1,l,md,x,y,o);
+    if(y>md)add(k<<1|1,md+1,r,x,y,A[w]*o);
+    T[k]=T[k<<1]+T[k<<1|1];
 }
 JZ qu(int k,int l,int r,int x,int y){
-	if(x<=l&&r<=y)return T[k];
-	int md=l+r>>1;pd(k,md-l+1,r-md);
-	if(x>md)return qu(k<<1|1,md+1,r,x,y);
-	if(y<=md)return qu(k<<1,l,md,x,y);
-	return qu(k<<1,l,md,x,y)+qu(k<<1|1,md+1,r,x,y);
+    if(x<=l&&r<=y)return T[k];
+    int md=l+r>>1;pd(k,md-l+1,r-md);
+    if(x>md)return qu(k<<1|1,md+1,r,x,y);
+    if(y<=md)return qu(k<<1,l,md,x,y);
+    return qu(k<<1,l,md,x,y)+qu(k<<1|1,md+1,r,x,y);
 }
 int main(){
-	A[0].n=A[0].m=4;A[0].mat();A[1].n=A[1].m=4;S[0].n=S[0].m=4;
-	A[1].a[0][0]=A[1].a[0][3]=A[1].a[1][1]=A[1].a[1][3]=A[1].a[2][2]=A[1].a[2][3]=A[1].a[3][3]=1;
-	A[1].a[0][1]=A[1].a[0][2]=3;A[1].a[1][2]=2;
-	for(i=2;i<N;i++)A[i]=A[i-1]*A[1];
-	for(i=1;i<N;i++)S[i]=S[i-1]+A[i-1];
-	scanf("%d%d",&n,&m);
-	bd(1,1,n);
-	B.n=IB.n=4;B.m=IB.m=1;
-	B.a[0][0]=B.a[1][0]=B.a[2][0]=B.a[3][0]=1;
-	IB.a[0][0]=IB.a[1][0]=IB.a[2][0]=IB.a[3][0]=M-1;
-	for(;m--;){
-		scanf("%d%d%d",&lx,&x,&y);
-		if(!lx){
-			E=qu(1,1,n,x,y);
-			printf("%lld\n",(1ll*E.a[0][0]+3ll*E.a[1][0]+2ll*E.a[2][0])%M);
-		}
-		if(lx==1)add(1,1,n,x,y,B);
-		if(lx==2)add(1,1,n,x,y,IB);
-	}
+    A[0].n=A[0].m=4;A[0].mat();A[1].n=A[1].m=4;S[0].n=S[0].m=4;
+    A[1].a[0][0]=A[1].a[0][3]=A[1].a[1][1]=A[1].a[1][3]=A[1].a[2][2]=A[1].a[2][3]=A[1].a[3][3]=1;
+    A[1].a[0][1]=A[1].a[0][2]=3;A[1].a[1][2]=2;
+    for(i=2;i<N;i++)A[i]=A[i-1]*A[1];
+    for(i=1;i<N;i++)S[i]=S[i-1]+A[i-1];
+    scanf("%d%d",&n,&m);
+    bd(1,1,n);
+    B.n=IB.n=4;B.m=IB.m=1;
+    B.a[0][0]=B.a[1][0]=B.a[2][0]=B.a[3][0]=1;
+    IB.a[0][0]=IB.a[1][0]=IB.a[2][0]=IB.a[3][0]=M-1;
+    for(;m--;){
+        scanf("%d%d%d",&lx,&x,&y);
+        if(!lx){
+            E=qu(1,1,n,x,y);
+            printf("%lld\n",(1ll*E.a[0][0]+3ll*E.a[1][0]+2ll*E.a[2][0])%M);
+        }
+        if(lx==1)add(1,1,n,x,y,B);
+        if(lx==2)add(1,1,n,x,y,IB);
+    }
 }
-~~~
+```
 
-# [1110训练H]Archipelago Tour(当场过)
+\[1110训练H\]Archipelago Tour(当场过)
+=====================================
 
 给你一颗环套树，每个点有点权，每个边有边权$+1$或$-1$，找一条边权在$[L,R]$的路径，使得点权的中位数最大
 
 先把一条环边取出，考虑在树上做，就是先二分答案然后树分治里面套线段树。然后考虑经过环边的情况，从两边分别走预处理一下一边加到线段树中一边判断就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 22222
 #define CL(a) memset(a,0,sizeof a)
@@ -94,145 +96,151 @@ int n,L,R,tot,i,x,y,z,an,Tm,l,r,md,AN,X,Y,Z,t,a[N],e[N],fir[N],ne[N*2],la[N*2],v
 int gf(int x){return F[x]==x?x:F[x]=gf(F[x]);}
 void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
 void dsz(int x,int fa){
-	sz[x]=1;mv[x]=0;
-	for(int i=fir[x],y;i;i=ne[i])
-		if(!vis[y=la[i]]&&y!=fa)
-			dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
+    sz[x]=1;mv[x]=0;
+    for(int i=fir[x],y;i;i=ne[i])
+        if(!vis[y=la[i]]&&y!=fa)
+            dsz(y,x),sz[x]+=sz[y],mv[x]=max(mv[x],sz[y]);
 }
 void drt(int zs,int x,int fa,int&rt){
-	mv[x]=max(mv[x],sz[zs]-sz[x]);
-	if(mv[x]<mv[rt]||!rt)rt=x;
-	for(int i=fir[x],y;i;i=ne[i])
-		if(!vis[y=la[i]]&&y!=fa)drt(zs,y,x,rt);
+    mv[x]=max(mv[x],sz[zs]-sz[x]);
+    if(mv[x]<mv[rt]||!rt)rt=x;
+    for(int i=fir[x],y;i;i=ne[i])
+        if(!vis[y=la[i]]&&y!=fa)drt(zs,y,x,rt);
 }
 void add(int k,int l,int r,int x,int z,int tm){
-	if(l==r){
-		if(T[k]!=tm)V[k]=z;else V[k]=max(V[k],z);
-		T[k]=tm;
-		return;
-	}
-	int md=l+r>>1,o=-1e9;T[k]=tm;
-	if(x<=md)add(k<<1,l,md,x,z,tm);else add(k<<1|1,md+1,r,x,z,tm);
-	if(T[k<<1]==tm)o=max(o,V[k<<1]);
-	if(T[k<<1|1]==tm)o=max(o,V[k<<1|1]);
-	V[k]=o;
+    if(l==r){
+        if(T[k]!=tm)V[k]=z;else V[k]=max(V[k],z);
+        T[k]=tm;
+        return;
+    }
+    int md=l+r>>1,o=-1e9;T[k]=tm;
+    if(x<=md)add(k<<1,l,md,x,z,tm);else add(k<<1|1,md+1,r,x,z,tm);
+    if(T[k<<1]==tm)o=max(o,V[k<<1]);
+    if(T[k<<1|1]==tm)o=max(o,V[k<<1|1]);
+    V[k]=o;
 }
 int qu(int k,int l,int r,int x,int y,int tm){
-	if(x>y)return -1e9;
-	if(x<=l&&r<=y)return T[k]==tm?V[k]:-1e9;
-	int md=l+r>>1,o=-1e9;
-	if(x<=md)o=max(o,qu(k<<1,l,md,x,y,tm));
-	if(y>md)o=max(o,qu(k<<1|1,md+1,r,x,y,tm));
-	return o;
+    if(x>y)return -1e9;
+    if(x<=l&&r<=y)return T[k]==tm?V[k]:-1e9;
+    int md=l+r>>1,o=-1e9;
+    if(x<=md)o=max(o,qu(k<<1,l,md,x,y,tm));
+    if(y>md)o=max(o,qu(k<<1|1,md+1,r,x,y,tm));
+    return o;
 }
 void add_new(int Tm,int v,int s){//时间戳 白-黑 权
-	add(1,1,n*2+1,v+n+1,s,Tm);
+    add(1,1,n*2+1,v+n+1,s,Tm);
 }
 int get_ans(int Tm,int v){//时间戳 白-黑
-	return qu(1,1,n*2+1,L-v+n+1,min(R-v+n+1,n*2+1),Tm);
+    return qu(1,1,n*2+1,L-v+n+1,min(R-v+n+1,n*2+1),Tm);
 }
 void fd(int x,int fa,int sum,int nowv){//权 白-黑
-	an=max(an,get_ans(Tm,nowv)+sum);
-	for(int i=fir[x],y;i;i=ne[i])
-		if(!vis[y=la[i]]&&y!=fa)fd(y,x,sum+e[y],nowv+va[i]);
+    an=max(an,get_ans(Tm,nowv)+sum);
+    for(int i=fir[x],y;i;i=ne[i])
+        if(!vis[y=la[i]]&&y!=fa)fd(y,x,sum+e[y],nowv+va[i]);
 }
 void add(int x,int fa,int sum,int nowv){
-	add_new(Tm,nowv,sum);
-	for(int i=fir[x],y;i;i=ne[i])
-		if(!vis[y=la[i]]&&y!=fa)add(y,x,sum+e[y],nowv+va[i]);
+    add_new(Tm,nowv,sum);
+    for(int i=fir[x],y;i;i=ne[i])
+        if(!vis[y=la[i]]&&y!=fa)add(y,x,sum+e[y],nowv+va[i]);
 }
 void fz(int x){
-	int i,p,rt=0;dsz(x,0);drt(x,x,0,rt);vis[rt]=1;
-	Tm++;add_new(Tm,0,e[rt]);
-	for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]]){
-		fd(y,rt,e[y],va[i]);
-		add(y,rt,e[rt]+e[y],va[i]);
-	}
-	for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]])fz(y);
+    int i,p,rt=0;dsz(x,0);drt(x,x,0,rt);vis[rt]=1;
+    Tm++;add_new(Tm,0,e[rt]);
+    for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]]){
+        fd(y,rt,e[y],va[i]);
+        add(y,rt,e[rt]+e[y],va[i]);
+    }
+    for(i=fir[rt];i;i=ne[i])if(!vis[y=la[i]])fz(y);
 }
 void dfs(int x,int fa){
-	for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)pre[la[i]]=x,prv[la[i]]=va[i],dfs(la[i],x);
+    for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)pre[la[i]]=x,prv[la[i]]=va[i],dfs(la[i],x);
 }
 void getcur(int x,int fa,int bl){
-	to[x]=bl;
-	for(int i=fir[x];i;i=ne[i])if(la[i]!=fa&&!cur[la[i]])getcur(la[i],x,bl);
+    to[x]=bl;
+    for(int i=fir[x];i;i=ne[i])if(la[i]!=fa&&!cur[la[i]])getcur(la[i],x,bl);
 }
 void dfs(int x,int fa,int sum,int nowv){
-	Q[to[x]].push_back(make_pair(sum,nowv));
-	for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)dfs(la[i],x,sum+e[la[i]],nowv+va[i]);
+    Q[to[x]].push_back(make_pair(sum,nowv));
+    for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)dfs(la[i],x,sum+e[la[i]],nowv+va[i]);
 }
 void addcur(int x,int fa,int sum,int nowv){
-	add_new(Tm,nowv,sum);
-	for(int i=fir[x];i;i=ne[i])if(la[i]!=fa&&!cur[la[i]])addcur(la[i],x,sum+e[la[i]],nowv+va[i]);
+    add_new(Tm,nowv,sum);
+    for(int i=fir[x];i;i=ne[i])if(la[i]!=fa&&!cur[la[i]])addcur(la[i],x,sum+e[la[i]],nowv+va[i]);
 }
 bool ok(int x){
-	CL(vis);CL(cur);CL(pre);
-	an=-1e9;
-	for(int i=1;i<=n;i++)if(a[i]>=x)e[i]=1;else e[i]=-1;
-	fz(1);
-	Tm++;
-	dfs(X,0);
-	t=0;
-	for(int i=Y;i;i=pre[i])q[++t]=i,cur[i]=1;
-	for(int i=1;i<=t;i++)getcur(q[i],0,q[i]),Q[q[i]].clear();
-	dfs(X,0,e[X],Z);
-	int nv=0,sm=0;
-	for(int i=1;i<=t;nv+=prv[q[i]],i++){
-		int u=q[i];
-		if(i!=1){
-			for(int j=0;j<Q[u].size();j++){
-				an=max(an,get_ans(Tm,Q[u][j].second)+Q[u][j].first);
-			}
-		}
-		sm+=e[u];
-		addcur(u,0,sm,nv);
-	}
-	return an>=0;
+    CL(vis);CL(cur);CL(pre);
+    an=-1e9;
+    for(int i=1;i<=n;i++)if(a[i]>=x)e[i]=1;else e[i]=-1;
+    fz(1);
+    Tm++;
+    dfs(X,0);
+    t=0;
+    for(int i=Y;i;i=pre[i])q[++t]=i,cur[i]=1;
+    for(int i=1;i<=t;i++)getcur(q[i],0,q[i]),Q[q[i]].clear();
+    dfs(X,0,e[X],Z);
+    int nv=0,sm=0;
+    for(int i=1;i<=t;nv+=prv[q[i]],i++){
+        int u=q[i];
+        if(i!=1){
+            for(int j=0;j<Q[u].size();j++){
+                an=max(an,get_ans(Tm,Q[u][j].second)+Q[u][j].first);
+            }
+        }
+        sm+=e[u];
+        addcur(u,0,sm,nv);
+    }
+    return an>=0;
 }
 int main(){
-	for(;scanf("%d",&n),n;){
-		scanf("%d%d",&L,&R);
-		tot=0;CL(fir);
-		for(i=1;i<=n;i++)scanf("%d",&a[i]),F[i]=i;
-		for(i=1;i<=n;i++){
-			scanf("%d%d%d",&x,&y,&z);if(z==0)z=1;else z=-1;
-			if(gf(x)!=gf(y))F[gf(x)]=gf(y),ins(x,y,z),ins(y,x,z);else X=x,Y=y,Z=z;
-		}
-		for(l=1,r=32768;l<=r;)if(ok(md=l+r>>1))AN=md,l=md+1;else r=md-1;
-		printf("%d\n",AN);
-	}
+    for(;scanf("%d",&n),n;){
+        scanf("%d%d",&L,&R);
+        tot=0;CL(fir);
+        for(i=1;i<=n;i++)scanf("%d",&a[i]),F[i]=i;
+        for(i=1;i<=n;i++){
+            scanf("%d%d%d",&x,&y,&z);if(z==0)z=1;else z=-1;
+            if(gf(x)!=gf(y))F[gf(x)]=gf(y),ins(x,y,z),ins(y,x,z);else X=x,Y=y,Z=z;
+        }
+        for(l=1,r=32768;l<=r;)if(ok(md=l+r>>1))AN=md,l=md+1;else r=md-1;
+        printf("%d\n",AN);
+    }
 }
-~~~
+```
 
-# [1115训练J]Joker(当场不会)
+\[1115训练J\]Joker(当场不会)
+============================
 
 给一个长度为$n$的数列，数列里面的数$a_i$可正可负，设正数之和为$V1$，负数之和的绝对值为$V2$，如果$a_i$为正数，则$b_i=\frac{a_i}{V1}$，否则$b_i=\frac{a_i}{V2}$。$m$次操作，每次修改一个数，并求出$b_i$前缀和最大的位置。$n,m\leq50000$。
 
 按$\sqrt{n}$分块，块内维护凸包，修改操作暴力重建凸包，询问操作在凸包上三分，时间复杂度$O(n\sqrt{n}lgn)$
 
-# [1122训练E]Enter the Word
+\[1122训练E\]Enter the Word
+===========================
 
 求打印一个字符串的最小步数。一步要不然打印一个字符，要不然打印之间有的一段字符。
 
 令$f_i$表示打印前$i$个字符的最小步数，那么$f_i$一定会由最前面的$j$转移过来。对每个$j$求一下从$j+1$开始最多弄多少个，用SAM求，最后更新一下
 
-# [1127训练B]Variety
+\[1127训练B\]Variety
+====================
 
 一个$n*n$的矩阵，$k$种颜色，每个格子有颜色$a_{i,j}$，随机选一个子矩阵，求期望颜色数。$n\leq1000,k\leq n*n$，颜色随机。
 
-# [1127训练F]Cactus
+\[1127训练F\]Cactus
+===================
 
 给定一个仙人掌，求把它分为若干边数不超过$2$的联通块的方案数。$n\leq100000,m\leq200000$。
 
-# [1127训练J]Cherry orchard
+\[1127训练J\]Cherry orchard
+===========================
 
 在大小为$1*1$的方格中给出$n$个点，现在随机在方格中选出两个点（不一定在$n$个点中），将他们连线，将所有点分成两个部分，求较少一部分点的期望个数。$n\leq50$。
 
-# [1124训练H]Gorgeous Sequence
+\[1124训练H\]Gorgeous Sequence
+==============================
 
 吉如一线段树，学了下
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define L k<<1
 #define R k<<1|1
@@ -241,58 +249,59 @@ int main(){
 using namespace std;//mx[]最大值 mx2[]次大值 num[]最大值个数 S[]和
 LL S[N];int T,n,m,i,lx,x,y,z,mx[N],mx2[N],num[N],a[N/2];
 void ps(int k){
-	S[k]=S[L]+S[R];num[k]=0;
-	mx[k]=max(mx[L],mx[R]);mx2[k]=max(mx2[L],mx2[R]);
-	if(mx[L]!=mx[R])mx2[k]=max(mx2[k],min(mx[L],mx[R]));
-	if(mx[k]==mx[L])num[k]+=num[L];
-	if(mx[k]==mx[R])num[k]+=num[R];
+    S[k]=S[L]+S[R];num[k]=0;
+    mx[k]=max(mx[L],mx[R]);mx2[k]=max(mx2[L],mx2[R]);
+    if(mx[L]!=mx[R])mx2[k]=max(mx2[k],min(mx[L],mx[R]));
+    if(mx[k]==mx[L])num[k]+=num[L];
+    if(mx[k]==mx[R])num[k]+=num[R];
 }
 void bd(int k,int l,int r){
-	if(l==r){S[k]=mx[k]=a[l];num[k]=1;mx2[k]=-1e9;return;}
-	int md=l+r>>1;bd(L,l,md);bd(R,md+1,r);ps(k);
+    if(l==r){S[k]=mx[k]=a[l];num[k]=1;mx2[k]=-1e9;return;}
+    int md=l+r>>1;bd(L,l,md);bd(R,md+1,r);ps(k);
 }
 void CG(int k,int z){
-	if(z>=mx[k])return;
-	S[k]+=1ll*(z-mx[k])*num[k];
-	mx[k]=z;
+    if(z>=mx[k])return;
+    S[k]+=1ll*(z-mx[k])*num[k];
+    mx[k]=z;
 }
 void pd(int k){CG(L,mx[k]);CG(R,mx[k]);}
 void cg(int k,int l,int r,int x,int y,int z){//区间对z取min
-	if(x<=l&&r<=y&&z>mx2[k]){CG(k,z);return;}
-	int md=l+r>>1;pd(k);
-	if(x<=md)cg(L,l,md,x,y,z);
-	if(y>md)cg(R,md+1,r,x,y,z);
-	ps(k);
+    if(x<=l&&r<=y&&z>mx2[k]){CG(k,z);return;}
+    int md=l+r>>1;pd(k);
+    if(x<=md)cg(L,l,md,x,y,z);
+    if(y>md)cg(R,md+1,r,x,y,z);
+    ps(k);
 }
 int qumx(int k,int l,int r,int x,int y){//区间取max
-	if(x<=l&&r<=y)return mx[k];
-	int md=l+r>>1,V=0;pd(k);
-	if(x<=md)V=max(V,qumx(L,l,md,x,y));
-	if(y>md)V=max(V,qumx(R,md+1,r,x,y));
-	return V;
+    if(x<=l&&r<=y)return mx[k];
+    int md=l+r>>1,V=0;pd(k);
+    if(x<=md)V=max(V,qumx(L,l,md,x,y));
+    if(y>md)V=max(V,qumx(R,md+1,r,x,y));
+    return V;
 }
 LL qus(int k,int l,int r,int x,int y){//区间求和
-	if(x<=l&&r<=y)return S[k];
-	int md=l+r>>1;LL V=0;pd(k);
-	if(x<=md)V+=qus(L,l,md,x,y);
-	if(y>md)V+=qus(R,md+1,r,x,y);
-	return V;
+    if(x<=l&&r<=y)return S[k];
+    int md=l+r>>1;LL V=0;pd(k);
+    if(x<=md)V+=qus(L,l,md,x,y);
+    if(y>md)V+=qus(R,md+1,r,x,y);
+    return V;
 }
 int main(){
-	for(scanf("%d",&T);T--;){
-		scanf("%d%d",&n,&m);
-		for(i=1;i<=n;i++)scanf("%d",&a[i]);
-		for(bd(1,1,n);m--;){
-			scanf("%d%d%d",&lx,&x,&y);
-			if(!lx)scanf("%d",&z),cg(1,1,n,x,y,z);
-			if(lx==1)printf("%d\n",qumx(1,1,n,x,y));
-			if(lx==2)printf("%lld\n",qus(1,1,n,x,y));
-		}
-	}
+    for(scanf("%d",&T);T--;){
+        scanf("%d%d",&n,&m);
+        for(i=1;i<=n;i++)scanf("%d",&a[i]);
+        for(bd(1,1,n);m--;){
+            scanf("%d%d%d",&lx,&x,&y);
+            if(!lx)scanf("%d",&z),cg(1,1,n,x,y,z);
+            if(lx==1)printf("%d\n",qumx(1,1,n,x,y));
+            if(lx==2)printf("%lld\n",qus(1,1,n,x,y));
+        }
+    }
 }
-~~~
+```
 
-# [1129训练B]Almost Average
+\[1129训练B\]Almost Average
+===========================
 
 一列$n$个数$a_i$，在线进行$Q$个询问$[L,R]$，每次找出$L\leq l\leq r\leq R$，使得$[l,r]$的几乎平均数最大。$[l,r]$的几乎平均数为$\frac{\sum_{i=l}^rv_i}{r-l}$。
 
