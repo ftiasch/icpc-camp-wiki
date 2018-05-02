@@ -1,60 +1,63 @@
-# 9
+9
+=
 
-## 圆并
+圆并
+----
 
-~~~{.cpp}
+``` {.cpp}
 vector<C>V;
 double cal(C o,double l,double r){
-	return o.r*.5*(o.r*(r-l)+(o.c.x*(sin(r)-sin(l))-o.c.y*(cos(r)-cos(l))));
+    return o.r*.5*(o.r*(r-l)+(o.c.x*(sin(r)-sin(l))-o.c.y*(cos(r)-cos(l))));
 }
 double circle_union_area(vector<C>p){//返回圆并面积 
-	int n=p.size(),i,j,t;P p1,p2;
-	pair<double,double>q[N];
-	bool vs[N];double v1,v2,Rv,an=0;
-	for(i=0;i<n;i++)vs[i]=0;
-	for(i=0;i<n;i++)
-		for(j=0;j<n;j++)if(i!=j&&sgn(p[j].r-p[i].r)>=0&&!vs[j])
-			if(circle_relationship(p[i],p[j])<=2)vs[i]=1;
-	for(i=0;i<n;i++)if(!vs[i]){
-		for(t=j=0;j<n;j++)if(!vs[j]&&i!=j&&circle_relationship(p[i],p[j])==3){
-			circle_intersect(p[i],p[j],p1,p2);
-			v1=(p1-p[i].c).angle(),v2=(p2-p[i].c).angle();
-			if(sgn(v1)<0)v1+=pi*2;if(sgn(v2)<0)v2+=pi*2;
-			if(sgn(v2-v1)>=0)q[++t]=make_pair(v1,v2);
-			else q[++t]=make_pair(0,v2),q[++t]=make_pair(v1,pi*2);
-		}
-		sort(q+1,q+t+1);Rv=0;
-		for(j=1;j<=t;j++){
-			if(q[j].first>Rv)an+=cal(p[i],Rv,q[j].first);
-			Rv=max(Rv,q[j].second);
-		}
-		an+=cal(p[i],Rv,pi*2);
-	}
-	return an;
+    int n=p.size(),i,j,t;P p1,p2;
+    pair<double,double>q[N];
+    bool vs[N];double v1,v2,Rv,an=0;
+    for(i=0;i<n;i++)vs[i]=0;
+    for(i=0;i<n;i++)
+        for(j=0;j<n;j++)if(i!=j&&sgn(p[j].r-p[i].r)>=0&&!vs[j])
+            if(circle_relationship(p[i],p[j])<=2)vs[i]=1;
+    for(i=0;i<n;i++)if(!vs[i]){
+        for(t=j=0;j<n;j++)if(!vs[j]&&i!=j&&circle_relationship(p[i],p[j])==3){
+            circle_intersect(p[i],p[j],p1,p2);
+            v1=(p1-p[i].c).angle(),v2=(p2-p[i].c).angle();
+            if(sgn(v1)<0)v1+=pi*2;if(sgn(v2)<0)v2+=pi*2;
+            if(sgn(v2-v1)>=0)q[++t]=make_pair(v1,v2);
+            else q[++t]=make_pair(0,v2),q[++t]=make_pair(v1,pi*2);
+        }
+        sort(q+1,q+t+1);Rv=0;
+        for(j=1;j<=t;j++){
+            if(q[j].first>Rv)an+=cal(p[i],Rv,q[j].first);
+            Rv=max(Rv,q[j].second);
+        }
+        an+=cal(p[i],Rv,pi*2);
+    }
+    return an;
 }
-~~~
+```
 
-## 三维几何
+三维几何
+--------
 
-~~~{.cpp}
+``` {.cpp}
 struct P3{
-	double x,y,z;
-	P3(double x=0,double y=0,double z=0):x(x),y(y),z(z){}
-	void in(){scanf("%lf%lf%lf",&x,&y,&z);}
-	void out(){printf("%.7f %.7f %.7f\n",x,y,z);}
-	double norm(){return sqrt(x*x+y*y+z*z);}
-	double norm2(){return x*x+y*y+z*z;}
-	P3 unit(){
-		double l=norm();
-		return P3(x/l,y/l,z/l);
-	}
+    double x,y,z;
+    P3(double x=0,double y=0,double z=0):x(x),y(y),z(z){}
+    void in(){scanf("%lf%lf%lf",&x,&y,&z);}
+    void out(){printf("%.7f %.7f %.7f\n",x,y,z);}
+    double norm(){return sqrt(x*x+y*y+z*z);}
+    double norm2(){return x*x+y*y+z*z;}
+    P3 unit(){
+        double l=norm();
+        return P3(x/l,y/l,z/l);
+    }
 };
 bool operator==(P3 a,P3 b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
 bool operator!=(P3 a,P3 b){return !(a==b);}
 bool operator<(P3 a,P3 b){
-	if(cmp(a.x,b.x))return cmp(a.x,b.x)<0;
-	if(cmp(a.y,b.y))return cmp(a.y,b.y)<0;
-	return cmp(a.z,b.z)<0;
+    if(cmp(a.x,b.x))return cmp(a.x,b.x)<0;
+    if(cmp(a.y,b.y))return cmp(a.y,b.y)<0;
+    return cmp(a.z,b.z)<0;
 }
 P3 operator-(P3 a){return P3(-a.x,-a.y,-a.z);}
 P3 operator+(P3 a,P3 b){return P3(a.x+b.x,a.y+b.y,a.z+b.z);}
@@ -67,170 +70,180 @@ double hhj(P3 a,P3 b,P3 c){return dj(a,cj(b,c));}//混合积，混合积/6即为
 double dis(P3 a,P3 b){return (a-b).norm();}//距离 
 double area(P3 a,P3 b,P3 c){return cj(b-a,c-a).norm()*.5;}//空间三角形面积
 struct L3{
-	P3 s,t;
-	L3(P3 s=P3(),P3 t=P3()):s(s),t(t){}
-	void in(){s.in();t.in();}
-	double length()const{return dis(s,t);}
+    P3 s,t;
+    L3(P3 s=P3(),P3 t=P3()):s(s),t(t){}
+    void in(){s.in();t.in();}
+    double length()const{return dis(s,t);}
 };
 P3 line_intersect(L3 a,L3 b){//两直线交点，必须保证共面且不平行 
-	P3 p=a.s;
-	double t=((a.s.x-b.s.x)*(b.s.y-b.t.y)-(a.s.y-b.s.y)*(b.s.x-b.t.x))/(a.s.x-a.t.x)*(b.s.y-b.t.y)-(a.s.y-a.t.y)*(b.s.x-b.t.x);
-	return a.s+(a.t-a.s)*t;
+    P3 p=a.s;
+    double t=((a.s.x-b.s.x)*(b.s.y-b.t.y)-(a.s.y-b.s.y)*(b.s.x-b.t.x))/(a.s.x-a.t.x)*(b.s.y-b.t.y)-(a.s.y-a.t.y)*(b.s.x-b.t.x);
+    return a.s+(a.t-a.s)*t;
 }
 double point_to_line(P3 a,L3 b){//点到直线距离
-	return cj(b.t-b.s,a-b.s).norm()/dis(b.s,b.t);
+    return cj(b.t-b.s,a-b.s).norm()/dis(b.s,b.t);
 }
 P3 project_to_line(P3 a,L3 b){//点在直线上投影
-	return b.s+(b.t-b.s)*(dj(a-b.s,b.t-b.s)/(b.t-b.s).norm2());
+    return b.s+(b.t-b.s)*(dj(a-b.s,b.t-b.s)/(b.t-b.s).norm2());
 }
 P3 duichen(P3 a,L3 b){//点A关于直线B对称点
-	P3 c=project_to_line(a,b);
-	return c*2-a;
+    P3 c=project_to_line(a,b);
+    return c*2-a;
 }
 double point_to_segment(P3 a,L3 b){//点到线段距离
-	if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
-	return min(dis(a,b.s),dis(a,b.t));
+    if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
+    return min(dis(a,b.s),dis(a,b.t));
 }
 double line_angle_cos(L3 a,L3 b){//两直线夹角的cos 
-	return dj(a.t-a.s,b.t-b.s)/a.length()/b.length();
+    return dj(a.t-a.s,b.t-b.s)/a.length()/b.length();
 }
 struct S3{//可以表示一个平面或者空间里一个三角形 
-	P3 a,b,c;
-	S3(P3 a=P3(),P3 b=P3(),P3 c=P3()):a(a),b(b),c(c){}
-	void in(){a.in();b.in();c.in();}
-	P3 base(){return cj(a-b,b-c);}//法向量
+    P3 a,b,c;
+    S3(P3 a=P3(),P3 b=P3(),P3 c=P3()):a(a),b(b),c(c){}
+    void in(){a.in();b.in();c.in();}
+    P3 base(){return cj(a-b,b-c);}//法向量
 };
 P3 line_plane_intersect(L3 a,S3 b){//直线与平面交点 
-	P3 p=b.base();
-	double t=dj(p,b.a-a.s)/dj(p,a.t-a.s);
-	return a.s+(a.t-a.s)*t;
+    P3 p=b.base();
+    double t=dj(p,b.a-a.s)/dj(p,a.t-a.s);
+    return a.s+(a.t-a.s)*t;
 }
 L3 plane_intersect(S3 a,S3 b){//两平面交线，要保证不平行
-	return L3(line_plane_intersect(line_plane_parallel(L3(a.a,a.b),b)?L3(a.b,a.c):L3(a.a,a.b),b),
-	line_plane_intersect(line_plane_parallel(L3(a.c,a.a),b)?L3(a.b,a.c):L3(a.c,a.a),b));
+    return L3(line_plane_intersect(line_plane_parallel(L3(a.a,a.b),b)?L3(a.b,a.c):L3(a.a,a.b),b),
+    line_plane_intersect(line_plane_parallel(L3(a.c,a.a),b)?L3(a.b,a.c):L3(a.c,a.a),b));
 }
 double point_to_plane(P3 a,S3 b){//点到平面距离
-	return fabs(dj(b.base(),a-b.a)/b.base().norm()); 
+    return fabs(dj(b.base(),a-b.a)/b.base().norm()); 
 }
 double plane_angle_cos(S3 a,S3 b){//面面角 
-	P3 A=a.base(),B=b.base();
-	return dj(A,B)/A.norm()/B.norm();
+    P3 A=a.base(),B=b.base();
+    return dj(A,B)/A.norm()/B.norm();
 }
 double line_plane_angle_sin(L3 a,S3 b){//线面角 
-	P3 A=a.t-a.s,B=b.base(); 
-	return dj(A,B)/A.norm()/B.norm();
+    P3 A=a.t-a.s,B=b.base(); 
+    return dj(A,B)/A.norm()/B.norm();
 }
 double volume4(double l,double n,double a,double m,double b,double c){//已知六边长求体积 
-	double x,y;
-	l*=l;n*=n;a*=a;m*=m;b*=b;c*=c;
-	x=4*a*b*c-a*(b+c-m)*(b+c-m)-b*(c+a-n)*(c+a-n);
-	y=c*(a+b-l)*(a+b-l)-(a+b-l)*(b+c-m)*(c+a-n);
-	return (sqrt(x-y)/12);
+    double x,y;
+    l*=l;n*=n;a*=a;m*=m;b*=b;c*=c;
+    x=4*a*b*c-a*(b+c-m)*(b+c-m)-b*(c+a-n)*(c+a-n);
+    y=c*(a+b-l)*(a+b-l)-(a+b-l)*(b+c-m)*(c+a-n);
+    return (sqrt(x-y)/12);
 }
 P3 neixin(P3 a,P3 b,P3 c,P3 d){//四面体内心 
-	double sa=area(b,c,d),sb=area(a,c,d),sc=area(a,b,d),sd=area(a,b,c);
-	return P3(sa*a.x+sb*b.x+sc*c.x+sd*d.x,sa*a.y+sb*b.y+sc*c.y+sd*d.y,sa*a.z+sb*b.z+sc*c.z+sd*d.z)/(sa+sb+sc+sd);
+    double sa=area(b,c,d),sb=area(a,c,d),sc=area(a,b,d),sd=area(a,b,c);
+    return P3(sa*a.x+sb*b.x+sc*c.x+sd*d.x,sa*a.y+sb*b.y+sc*c.y+sd*d.y,sa*a.z+sb*b.z+sc*c.z+sd*d.z)/(sa+sb+sc+sd);
 }
-~~~
+```
 
-# 10
+10
+==
 
-## 多项式开根
+多项式开根
+----------
 
-~~~{.cpp}
+``` {.cpp}
 int D[N],IB[N];
 void Sqrt(int*A,int*B,int n){//将多项式A开根，结果在B中
-	B[0]=1;B[1]=0;//n=1时根据题意或二次剩余求解
-	int I2=Pw(2,M-2,M),m,i;
-	for(m=2;m<=n;m<<=1){//递归转递推
-		for(i=0;i<m;i++)D[i]=A[i];
-		for(i=m;i<2*m;i++)D[i]=B[i]=0;
-		NTT(D,m*2);Inv(B,IB,m);NTT(IB,m*2);NTT(B,m*2);
-		for(i=0;i<m*2;i++)B[i]=(1ll*B[i]*I2+1ll*I2*D[i]%M*IB[i])%M;
-		NTT(B,m*2,-1);for(i=m;i<m*2;i++)B[i]=0;
-	}
+    B[0]=1;B[1]=0;//n=1时根据题意或二次剩余求解
+    int I2=Pw(2,M-2,M),m,i;
+    for(m=2;m<=n;m<<=1){//递归转递推
+        for(i=0;i<m;i++)D[i]=A[i];
+        for(i=m;i<2*m;i++)D[i]=B[i]=0;
+        NTT(D,m*2);Inv(B,IB,m);NTT(IB,m*2);NTT(B,m*2);
+        for(i=0;i<m*2;i++)B[i]=(1ll*B[i]*I2+1ll*I2*D[i]%M*IB[i])%M;
+        NTT(B,m*2,-1);for(i=m;i<m*2;i++)B[i]=0;
+    }
 }
-~~~
+```
 
-## 圆的反演
+圆的反演
+--------
 
-~~~{.cpp}
+``` {.cpp}
 P Inv(P a,C b){//求a关于圆b的反演
-	D d=b.r*b.r/(a-b.c).norm();
-	return b.c+(a-b.c).unit()*d;
+    D d=b.r*b.r/(a-b.c).norm();
+    return b.c+(a-b.c).unit()*d;
 }
 C Inv(L a,C b){//求不过o的直线a关于圆b的反演
-	return make_circle(b.c,Inv(project_to_line(b.c,a),b));
+    return make_circle(b.c,Inv(project_to_line(b.c,a),b));
 }
 C Inv(C a,C b){//求不过o的圆a关于圆b的反演
-	P p1=a.c+(b.c-a.c).unit()*a.r,p2=a.c*2-p1;
-	return make_circle(Inv(p1,b),Inv(p2,b));
+    P p1=a.c+(b.c-a.c).unit()*a.r,p2=a.c*2-p1;
+    return make_circle(Inv(p1,b),Inv(p2,b));
 }
 L Inv2(C a,C b){//求过o的圆a关于圆b的反演
-	P c;
-	if(!sgn(a.c.x-b.c.x))c=P(a.r,0);else c=P(0,a.r);
-	return L(Inv(a.c+c,b),Inv(a.c-c,b));
+    P c;
+    if(!sgn(a.c.x-b.c.x))c=P(a.r,0);else c=P(0,a.r);
+    return L(Inv(a.c+c,b),Inv(a.c-c,b));
 }
-~~~
+```
 
-## 分治FFT
+分治FFT
+-------
 
 DP方程$f[i]=\sum f[i-j]*a[j]$，那么类似CDQ分治用左边更新右边答案，用FFT实现即可
 
-## 一元三次方程
+一元三次方程
+------------
 
-# 11
+11
+==
 
-## 后缀平衡树
+后缀平衡树
+----------
 
-## KMP
+KMP
+---
 
-~~~{.cpp}
+``` {.cpp}
 string mini(string A){//最小表示法，返回最小表示 
-	string AN;AN.clear();
-	int i=0,j=1,k=0,x,n=A.length();
-	for(;j<n&&k<n;){
-		x=A[(i+k)%n]-A[(j+k)%n];
-		x?x>0?i=max(j,i+k+1),j=i+1:j=j+k+1,k=0:k++;
-	}
-	for(j=0;j<n;j++)AN=AN+A[(i+j)%n];
-	return AN;
+    string AN;AN.clear();
+    int i=0,j=1,k=0,x,n=A.length();
+    for(;j<n&&k<n;){
+        x=A[(i+k)%n]-A[(j+k)%n];
+        x?x>0?i=max(j,i+k+1),j=i+1:j=j+k+1,k=0:k++;
+    }
+    for(j=0;j<n;j++)AN=AN+A[(i+j)%n];
+    return AN;
 }
 void kmp(string A,int*p){//A为模式串，p为失配数组 
-	int n=A.length(),i=1,j=0;
-	for(CL(p);i<n;i++){
-		for(;j&&A[j]^A[i];j=p[j-1]);
-		if(A[i]==A[j])j++;
-		p[i]=j;
-	}
+    int n=A.length(),i=1,j=0;
+    for(CL(p);i<n;i++){
+        for(;j&&A[j]^A[i];j=p[j-1]);
+        if(A[i]==A[j])j++;
+        p[i]=j;
+    }
 }
 int gans(string A,string B,int*p){//B为标准串，A为待匹配串，p为失配数组 
-	int n=B.length(),m=A.length(),i=1,j=0;
-	for(i=0;i<m;i++){
-		for(;j&&B[j]^A[i];j=p[j-1]);
-		if(B[j]==A[i])j++;
-		if(j==n)an++,j=p[j-1];
-	}
-	return an;
+    int n=B.length(),m=A.length(),i=1,j=0;
+    for(i=0;i<m;i++){
+        for(;j&&B[j]^A[i];j=p[j-1]);
+        if(B[j]==A[i])j++;
+        if(j==n)an++,j=p[j-1];
+    }
+    return an;
 }
 void exkmp(string A,string B,int*ex){//B为标准串，A为待匹配串，ex为extend数组 
-	int i,j=0,o=0,x,L,la=A.length(),lb=B.length();
-	for(kmp(B,p);j<la&&j<lb&&A[j]==B[j];j++);
-	for(ex[0]=j,i=1;i<la;i++){
-		x=o+ex[o];L=p[i-o];
-		if(i+L<x)ex[i]=L;else{
-			for(L=max(x-i,0);i+L<la&&L<lb&&A[i+L]==B[L];)L++;
-			ex[i]=L;o=i;
-		}
-	}
+    int i,j=0,o=0,x,L,la=A.length(),lb=B.length();
+    for(kmp(B,p);j<la&&j<lb&&A[j]==B[j];j++);
+    for(ex[0]=j,i=1;i<la;i++){
+        x=o+ex[o];L=p[i-o];
+        if(i+L<x)ex[i]=L;else{
+            for(L=max(x-i,0);i+L<la&&L<lb&&A[i+L]==B[L];)L++;
+            ex[i]=L;o=i;
+        }
+    }
 }
-~~~
+```
 
-## Hall定理
+Hall定理
+--------
 
 二分图$G=(X,Y,E)$有完备匹配的充要条件是：对于$X$的任意一个子集$S$都满足$|S|leq |A(S)|$，$A(S)$是$Y$的子集，是$S$的邻集。邻集的定义是与$S$有边的点集。
 
-## RSA
+RSA
+---
 
 在RSA密码系统中，每个人都用加密公钥$(n,e)$，其中$n=pq$，$p$和$q$是两个大质数，$e$是与$(p-1)(q-1)$互素的2个质数。
 
@@ -240,43 +253,44 @@ void exkmp(string A,string B,int*ex){//B为标准串，A为待匹配串，ex为e
 
 如果你只知道$n$而不知道$p$和$q$，很难求得$d$，所以大家都能加密，而只有收到密码的人能解密
 
+SB树
+----
 
-## SB树
-
-~~~{.cpp}
+``` {.cpp}
 void bd(int m1,int n1,int m2,int n2){//依靠m1/n1,(m1+m2)/(n1+n2),m2/n2的法则递归构造
-	if(m1+m2>n||n1+n2>n)return;
-	bd(m1,n1,m1+m2,n1+n2);
-	q[++t].a=m1+m2;
-	q[++t].b=n1+n2;
-	bd(m1+m2,n1+n2,m2,n2);
+    if(m1+m2>n||n1+n2>n)return;
+    bd(m1,n1,m1+m2,n1+n2);
+    q[++t].a=m1+m2;
+    q[++t].b=n1+n2;
+    bd(m1+m2,n1+n2,m2,n2);
 }
 void fd(int a1,int b1,int a2,int b2){
-	int a3=a1+a2,b3=b1+b2;
-	if(ok(a1,b1))return;if(ok(a2,b2))return;if(ok(a3,b3))return;
-	if(cmp(a3,b3,anrfz,anrfm)>=0){//往左
-		int l=1,r=(1000000000-b2)/b1,md,an;
-		for(;l<=r;){
-			md=l+r>>1;
-			if(cmp(a1*md+a2,b1*md+b2,anrfz,anrfm)>=0)an=md,l=md+1;else r=md-1;
-		}
-		fd(a1,b1,a1*an+a2,b1*an+b2);
-	}else{//往右
-		int l=1,r=(1000000000-b1)/b2,md,an;
-		for(;l<=r;){
-			md=l+r>>1;
-			if(cmp(a1+a2*md,b1+b2*md,anlfz,anlfm)<0)an=md,l=md+1;else r=md-1;
-		}
-		fd(a1+a2*an,b1+b2*an,a2,b2);
-	}
+    int a3=a1+a2,b3=b1+b2;
+    if(ok(a1,b1))return;if(ok(a2,b2))return;if(ok(a3,b3))return;
+    if(cmp(a3,b3,anrfz,anrfm)>=0){//往左
+        int l=1,r=(1000000000-b2)/b1,md,an;
+        for(;l<=r;){
+            md=l+r>>1;
+            if(cmp(a1*md+a2,b1*md+b2,anrfz,anrfm)>=0)an=md,l=md+1;else r=md-1;
+        }
+        fd(a1,b1,a1*an+a2,b1*an+b2);
+    }else{//往右
+        int l=1,r=(1000000000-b1)/b2,md,an;
+        for(;l<=r;){
+            md=l+r>>1;
+            if(cmp(a1+a2*md,b1+b2*md,anlfz,anlfm)<0)an=md,l=md+1;else r=md-1;
+        }
+        fd(a1+a2*an,b1+b2*an,a2,b2);
+    }
 }
-~~~
+```
 
-## 吉如一线段树
+吉如一线段树
+------------
 
 吉如一线段树能解决一类区间和某个数取最大或最小，区间求和的问题。以区间取最小值为例，在线段树的每一个节点额外维护区间中的最大值$ma$，严格次大值$se$以及最大值个数$t$。现在假设我们要让区间$[L,R]$对$x$取min，先在线段树中定位若干个节点，对于每个节点分三种情况讨论：1、当$ma\leq x$时，显然这一次修改不会对这个节点产生影响，直接退出；2、当$se<x<ma$时，显然这一次修改只会影响到所有最大值，所以把$num$加上$t*(x-ma)$，把$ma$更新为$x$，打上标记退出；3、当$se\geq x$时，无法直接更新着一个节点的信息，对当前节点的左儿子和右儿子递归处理。单次操作均谈复杂度$O(lg^2n)$。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define L k<<1
 #define R k<<1|1
@@ -285,53 +299,53 @@ void fd(int a1,int b1,int a2,int b2){
 using namespace std;//mx[]最大值 mx2[]次大值 num[]最大值个数 S[]和
 LL S[N];int T,n,m,i,lx,x,y,z,mx[N],mx2[N],num[N],a[N/2];
 void ps(int k){
-	S[k]=S[L]+S[R];num[k]=0;
-	mx[k]=max(mx[L],mx[R]);mx2[k]=max(mx2[L],mx2[R]);
-	if(mx[L]!=mx[R])mx2[k]=max(mx2[k],min(mx[L],mx[R]));
-	if(mx[k]==mx[L])num[k]+=num[L];
-	if(mx[k]==mx[R])num[k]+=num[R];
+    S[k]=S[L]+S[R];num[k]=0;
+    mx[k]=max(mx[L],mx[R]);mx2[k]=max(mx2[L],mx2[R]);
+    if(mx[L]!=mx[R])mx2[k]=max(mx2[k],min(mx[L],mx[R]));
+    if(mx[k]==mx[L])num[k]+=num[L];
+    if(mx[k]==mx[R])num[k]+=num[R];
 }
 void bd(int k,int l,int r){
-	if(l==r){S[k]=mx[k]=a[l];num[k]=1;mx2[k]=-1e9;return;}
-	int md=l+r>>1;bd(L,l,md);bd(R,md+1,r);ps(k);
+    if(l==r){S[k]=mx[k]=a[l];num[k]=1;mx2[k]=-1e9;return;}
+    int md=l+r>>1;bd(L,l,md);bd(R,md+1,r);ps(k);
 }
 void CG(int k,int z){
-	if(z>=mx[k])return;
-	S[k]+=1ll*(z-mx[k])*num[k];
-	mx[k]=z;
+    if(z>=mx[k])return;
+    S[k]+=1ll*(z-mx[k])*num[k];
+    mx[k]=z;
 }
 void pd(int k){CG(L,mx[k]);CG(R,mx[k]);}
 void cg(int k,int l,int r,int x,int y,int z){//区间对z取min
-	if(x<=l&&r<=y&&z>mx2[k]){CG(k,z);return;}
-	int md=l+r>>1;pd(k);
-	if(x<=md)cg(L,l,md,x,y,z);
-	if(y>md)cg(R,md+1,r,x,y,z);
-	ps(k);
+    if(x<=l&&r<=y&&z>mx2[k]){CG(k,z);return;}
+    int md=l+r>>1;pd(k);
+    if(x<=md)cg(L,l,md,x,y,z);
+    if(y>md)cg(R,md+1,r,x,y,z);
+    ps(k);
 }
 int qumx(int k,int l,int r,int x,int y){//区间取max
-	if(x<=l&&r<=y)return mx[k];
-	int md=l+r>>1,V=0;pd(k);
-	if(x<=md)V=max(V,qumx(L,l,md,x,y));
-	if(y>md)V=max(V,qumx(R,md+1,r,x,y));
-	return V;
+    if(x<=l&&r<=y)return mx[k];
+    int md=l+r>>1,V=0;pd(k);
+    if(x<=md)V=max(V,qumx(L,l,md,x,y));
+    if(y>md)V=max(V,qumx(R,md+1,r,x,y));
+    return V;
 }
 LL qus(int k,int l,int r,int x,int y){//区间求和
-	if(x<=l&&r<=y)return S[k];
-	int md=l+r>>1;LL V=0;pd(k);
-	if(x<=md)V+=qus(L,l,md,x,y);
-	if(y>md)V+=qus(R,md+1,r,x,y);
-	return V;
+    if(x<=l&&r<=y)return S[k];
+    int md=l+r>>1;LL V=0;pd(k);
+    if(x<=md)V+=qus(L,l,md,x,y);
+    if(y>md)V+=qus(R,md+1,r,x,y);
+    return V;
 }
 int main(){
-	for(scanf("%d",&T);T--;){
-		scanf("%d%d",&n,&m);
-		for(i=1;i<=n;i++)scanf("%d",&a[i]);
-		for(bd(1,1,n);m--;){
-			scanf("%d%d%d",&lx,&x,&y);
-			if(!lx)scanf("%d",&z),cg(1,1,n,x,y,z);
-			if(lx==1)printf("%d\n",qumx(1,1,n,x,y));
-			if(lx==2)printf("%lld\n",qus(1,1,n,x,y));
-		}
-	}
+    for(scanf("%d",&T);T--;){
+        scanf("%d%d",&n,&m);
+        for(i=1;i<=n;i++)scanf("%d",&a[i]);
+        for(bd(1,1,n);m--;){
+            scanf("%d%d%d",&lx,&x,&y);
+            if(!lx)scanf("%d",&z),cg(1,1,n,x,y,z);
+            if(lx==1)printf("%d\n",qumx(1,1,n,x,y));
+            if(lx==2)printf("%lld\n",qus(1,1,n,x,y));
+        }
+    }
 }
-~~~
+```
