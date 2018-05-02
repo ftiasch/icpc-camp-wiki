@@ -15,30 +15,39 @@
 ├────────┼════════════────────────════════════────────────════════════┤
 │+ [3:23]│     ooooooo·ooo·oooo··oooo·oo·oo··o·ooooo······o        ·  │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Senseless and Merciless [TDJ]
+A. Senseless and Merciless \[TDJ\]
+----------------------------------
 
 LCA+一堆值加加减减。
 
-## B. Multithreading [MZH]
+B. Multithreading \[MZH\]
+-------------------------
 
-## C. Polynomial [GX]
+C. Polynomial \[GX\]
+--------------------
 
-对式子求导一次那么如果一个式子有平方还会是式子导数的约数，同理一直求导求gcd即可求得答案，因为gcd过程中次数下降次数等于效率所以最多进行n^2次试商。
+对式子求导一次那么如果一个式子有平方还会是式子导数的约数，同理一直求导求gcd即可求得答案，因为gcd过程中次数下降次数等于效率所以最多进行n\^2次试商。
 
-## D. Openspaces [MZH]
+D. Openspaces \[MZH\]
+---------------------
 
-## E. Game [MZH]
+E. Game \[MZH\]
+---------------
 
-## F. Password [TDJ]
+F. Password \[TDJ\]
+-------------------
 
 在$N^2$后缀树（后缀AC自动机）上DP，用后缀树fail指针的性质可以省掉一维转移。
 
-## G. Random Shuffle Ranking [TDJ]
+G. Random Shuffle Ranking \[TDJ\]
+---------------------------------
 
 后缀数组改。
 
-## H. Query Matching [TDJ]
+H. Query Matching \[TDJ\]
+-------------------------
 
 裸SAM题。
