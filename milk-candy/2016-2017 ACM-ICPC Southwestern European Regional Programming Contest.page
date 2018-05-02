@@ -1,0 +1,128 @@
+# Info
+
+Date: 2017.10.08 12:00-17:00
+
+[Link](http://www.bnuoj.com/v3/contest_show.php?cid=9254)
+
+# Solutions
+
+## A Within Arm's Reach
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+$n=1$特判，否则先考虑$n$步能否到达目标点，可以发现可行域是一个圆环，求出内外径即可，如果目标点不在可行域内，先将其挪到可行域内的最近点上，这样能保证有解。
+
+现在考虑第$n-1$步的可行点，首先要在以目标点为圆心，以$L_n$为半径的圆上，其次要在走$n-1$步之后能到的可行域内，如果圆和外环或者内环有交，那么取交点即可，否则由于保证有解，整个圆会在圆环区域内，在圆上任取一点即可，然后将该点作为目标点递归做下去。
+
+## B Bribing Eve
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+不妨设$w_1+w_2=1$，那么每种物品的价值都是关于$w_2$的一次函数，求出每种物品和第一种物品在$w_2 \in [0,1]$内的交点，排序后扫描线，分别维护当前价值小于以及等于第一种物品的种类，为了避免一开始价值相同，考虑以$w_2=-10^{-6}$作为起点。
+
+## C Candle Box
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+项数不多，直接暴力。
+
+## D Dinner Bet
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+首先一个朴素的想法就是状压$dp$，但是这样状态很多，复杂度是不可行的。于是我们观察发现，其实数字到底是多少并不重要，数字只有三种，只有第一个人有的、只有第二个人有的、两个人都有的。
+这样我们就可以定义状态$dp[x][y][z]$表示：第一种剩$x$、第二种剩$y$、第三种剩$z$，到游戏结束的期望游戏次数。那么可以通过枚举一次摇出了三种数字各$A$、$B$、$C$种，从$dp[x-A][y-B][z-C]$转移而来，用记忆化搜索可以很容易的完成转移，需要预处理一个组合数表用于计算概率。
+
+## E Passwords
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+对黑词们建一个$AC$自动机，沿着$fail$树将不合法状态向下传，然后$dp_{i,j,s}$表示长为$i$的密码匹配到自动机上的$j$状态且是否已经有小写字母、大写字母、数字的方案数，转移枚举下一个字符即可。
+
+## F Performance Review
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+线段树合并。
+
+## G Cairo Corridor
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+可以发现至多有一个贯穿上下左右的十字走廊，$BFS$求出这个走廊之后，枚举走廊内的每个点放置障碍，检查是否还能存在十字走廊，分治+带撤销并查集。
+
+通过冷静分析，可以发现由于图的性质特殊，如果存在$>4$个$1$度点或者$>6$个$\geq 3$度点就直接炸了，否则只需要枚举这些点放置障碍。
+
+## H Pascal's Hyper-Pyramids
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+$d$维帕斯卡三角的第$n$层中某个数的组合意义是，给定$n-1$个不同的球和$d$种不同的颜色，并且已知每种颜色的出现次数（和为$n-1$），对这些球染色的方案数。
+
+对于原问题，由于交换两种颜色的出现次数不会改变方案数，只需要爆搜出所有$n-1$的整数划分作为每种颜色出现的次数，然后计算组合数，去重排序后输出。
+
+## I The White Rabbit Pocket Watch
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+对每条线路列出一个关于每条边长度的线性方程，在$Z_{13}$意义下求解这个线性方程组，最后跑个$Floyd$即可。
+
+故事里有一句"Rabbit: Alice, no matter where you are, or where you want to go, or the track you choose, you'll be able to and how long it takes you."，于是可以认为解是唯一的。
+
+## J Risky Lottery
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+混合策略纳什均衡，也就是需要求出一个决策的概率分布使得无论最后做出何种决策，期望收益（在这里就是获胜概率）都是相同的，使劲迭代。
+
+## K Balls and Needles
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+$dfs$判是否有环，注意投影之后要去重
+
+# Replay
