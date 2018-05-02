@@ -1,47 +1,48 @@
-# F. Oddosort
+F. Oddosort
+===========
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 string ans = "";
 int n = 17;
 string var(int x) {
-	if (x >= 10) {
-		string s;
-		s += x - 10 + 'A';
-		return s;
-	}
-	stringstream ss;
-	ss << x;
-	string s;
-	ss >> s;
-	return s;
+    if (x >= 10) {
+        string s;
+        s += x - 10 + 'A';
+        return s;
+    }
+    stringstream ss;
+    ss << x;
+    string s;
+    ss >> s;
+    return s;
 }
 string merge2(string x, string y) {
-	string res;
-	res += "if " + y + " #value < " + x + " #value { z = " + y + " " + y + " = " + y + " #next } else { z = " + x + " " + x + " = " + x + " #next } ";
-	res += "o = z ";
-	res += "loop { ";
-	res += "if " + x + " == nil { if " + y + " == nil { break } else { z #next = " + y + " z = " + y + " " + y + " = " + y + " #next } } else { if " + y + " == nil { z #next = " + x + " z = " + x + " " + x + " = " + x + " #next } else { ";
-	res += "if " + y + " #value < " + x + " #value { z #next = " + y + " z = " + y + " " + y + " = " + y + " #next } else { z #next = " + x + " z = " + x + " " + x + " = " + x + " #next } ";
-	res += "} } ";
-	res += "} z #next = nil " + x + " = nil " + y + " = o";
-	return res;
+    string res;
+    res += "if " + y + " #value < " + x + " #value { z = " + y + " " + y + " = " + y + " #next } else { z = " + x + " " + x + " = " + x + " #next } ";
+    res += "o = z ";
+    res += "loop { ";
+    res += "if " + x + " == nil { if " + y + " == nil { break } else { z #next = " + y + " z = " + y + " " + y + " = " + y + " #next } } else { if " + y + " == nil { z #next = " + x + " z = " + x + " " + x + " = " + x + " #next } else { ";
+    res += "if " + y + " #value < " + x + " #value { z #next = " + y + " z = " + y + " " + y + " = " + y + " #next } else { z #next = " + x + " z = " + x + " " + x + " = " + x + " #next } ";
+    res += "} } ";
+    res += "} z #next = nil " + x + " = nil " + y + " = o";
+    return res;
 }
 int main() {
-	ans += "c = head loop { if c == nil { break } else { } n = c #next c #next = nil ";
-	for (int i = 0; i < n; ++ i) {
-		ans += "if c == nil { } else { ";
-		ans += "if " + var(i) + " == nil { " + var(i) + " = c c = nil } else { " + merge2(var(i), "c") + " " + var(i) + " = nil ";
-		ans += "} } ";
-	}
-	ans += "c = n } ";
-	for (int i = 0; i < n - 1; ++ i) {
-		ans += "if " + var(i) + " == nil { } else { ";
-		ans += "if " + var(i + 1) + " == nil { " + var(i + 1) + " = " + var(i) + " } else { " + merge2(var(i + 1), var(i)) + " " + var(i + 1) + " = " + var(i) + " } } ";
-	}
-	ans += "head = " + var(n - 1) + " ";
-	cout << ans << endl;
-	//cout << ans.length() << endl;
+    ans += "c = head loop { if c == nil { break } else { } n = c #next c #next = nil ";
+    for (int i = 0; i < n; ++ i) {
+        ans += "if c == nil { } else { ";
+        ans += "if " + var(i) + " == nil { " + var(i) + " = c c = nil } else { " + merge2(var(i), "c") + " " + var(i) + " = nil ";
+        ans += "} } ";
+    }
+    ans += "c = n } ";
+    for (int i = 0; i < n - 1; ++ i) {
+        ans += "if " + var(i) + " == nil { } else { ";
+        ans += "if " + var(i + 1) + " == nil { " + var(i + 1) + " = " + var(i) + " } else { " + merge2(var(i + 1), var(i)) + " " + var(i + 1) + " = " + var(i) + " } } ";
+    }
+    ans += "head = " + var(n - 1) + " ";
+    cout << ans << endl;
+    //cout << ans.length() << endl;
 }
-~~~
+```
