@@ -1,6 +1,7 @@
-## [Bee Tower](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4053)
+[Bee Tower](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4053)
+------------------------------------------------------------------------------------------------------------------------
 
-# Aki
+Aki
+===
 
 两个人re代码同时下了不同的毒，怀疑dp错了查到结束。最后是dp越界了。
-
