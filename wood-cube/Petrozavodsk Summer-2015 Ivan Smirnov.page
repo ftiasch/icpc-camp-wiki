@@ -1,31 +1,42 @@
-## A. Arnold [TDJ]
+A. Arnold \[TDJ\]
+-----------------
 
 换根，线段树上按dfs序维护断言最大、最小值即可。
 
-## B. Bloom
+B. Bloom
+--------
 
-## C. Collatz
+C. Collatz
+----------
 
-## D. Dirichlet
+D. Dirichlet
+------------
 
-## E. Einstein
+E. Einstein
+-----------
 
-## F. Fourier
+F. Fourier
+----------
 
-## G. Galilei [TDJ]
+G. Galilei \[TDJ\]
+------------------
 
 LCT，一个节点表示一段下标区间，选中某个数字时拆点，下标区间对应节点与相邻节点再用一个map维护。
 
-## H. Hadamard
+H. Hadamard
+-----------
 
-## I. Iwatani [TDJ]
+I. Iwatani \[TDJ\]
+------------------
 
 Prim跑一棵最小生成树，欧拉序中前半段与后半段较小者即为答案。
 
-## J. Jordan [TDJ]
+J. Jordan \[TDJ\]
+-----------------
 
 二分图最大独立集+大模拟
 
-## K. Kuratowski [TDJ]
+K. Kuratowski \[TDJ\]
+---------------------
 
 首先判K33的情况：枚举三个点压位and即可；K5则需要用到K33的性质，枚举（互相有边的）三个点，这时因为不存在K33，所以and起来的bitset最多只有两个点，手写bitset找到这两个点判有无连边即可（或上Java）。
