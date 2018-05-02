@@ -1,13 +1,7 @@
----
-format: Latex
-...
-
-\section{XVII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia}
-\subsection{SkyDec}
+\section{XVII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia}\subsection{SkyDec}
 $10^9$有10位，不是9位。
 
-做的时候连数据范围都能看错，可能是没睡醒。
-\subsection{TakanashiRikka}
+做的时候连数据范围都能看错，可能是没睡醒。 \subsection{TakanashiRikka}
 感受了一下这队伍能有多菜..
 
 感觉已经差不多表现到极限了..
@@ -15,7 +9,6 @@ $10^9$有10位，不是9位。
 感觉自己智熄到了一种新高度
 
 \subsection{shanquan2}
-
 其中还有某匿名shanquan2没有a一道题...
 
 \subsection{补题}
