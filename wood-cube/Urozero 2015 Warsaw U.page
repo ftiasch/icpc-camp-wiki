@@ -1,23 +1,35 @@
-## A. Salad Bar
+A. Salad Bar
+------------
 
-## B. Hotels
+B. Hotels
+---------
 
-## C. Bricks
+C. Bricks
+---------
 
-## D. Couriers
+D. Couriers
+-----------
 
-## E. Solar Lamps
+E. Solar Lamps
+--------------
 
-## F. Solar Panels
+F. Solar Panels
+---------------
 
-## G. Criminals
+G. Criminals
+------------
 
-## H. Rally [TDJ]
+H. Rally \[TDJ\]
+----------------
 
-按twsf题解：考虑删除某点后的最长路径长度，那么一条路径的长度可以更新给所有不在这条路径上的点，即路径上每条边的两个点的拓扑序之间的点；于是对于一条边而言就是将其所在的最长路径的长度更新给这条边对应的拓扑序区间；具体做法先DAG DP求最大距离然后枚举边再离线用堆维护即可，MLE28，不改了…
+按twsf题解：考虑删除某点后的最长路径长度，那么一条路径的长度可以更新给所有不在这条路径上的点，即路径上每条边的两个点的拓扑序之间的点；于是对于一条边而言就是将其所在的最长路径的长度更新给这条边对应的拓扑序区间；具体做法先DAG
+DP求最大距离然后枚举边再离线用堆维护即可，MLE28，不改了…
 
-## I. Supercomputer
+I. Supercomputer
+----------------
 
-## J. Tourism
+J. Tourism
+----------
 
-## K. Freight
+K. Freight
+----------
