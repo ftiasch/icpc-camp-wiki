@@ -6,7 +6,7 @@ C：令$f(1)=a,f(2)=b,f(i)=2f(i-2)+f(i-1)+i^4$，$T$次给定$N,a,b$，求$f(N)$
 
 列出列矩阵$(f_n,f_{n-1},n^4,n^3,n^2,n,1)$，由$(n+1)^4=n^4+4n^3+6n^2+4n+1$即可得出转移矩阵。
 
-~~~{.cpp}
+``` {.cpp}
 //(n+1)^4=n^4+4n^3+6n^2+4n+1
 /*
 f(n)         1 2 1 4 6 4 1
@@ -29,85 +29,85 @@ int V[7][7]={
 {0,0,0,0,0,0,1}
 };
 struct JZ{
-	int n,m;LL a[7][7];
-	void cl(){n=m=0;memset(a,0,sizeof a);}
-	JZ operator*(JZ b)const{
-		JZ c;c.cl();c.n=n;c.m=b.m;
-		for(int i=0;i<n;i++)
-			for(int j=0;j<b.m;j++)
-				for(int k=0;k<m;k++)
-					c.a[i][j]=(a[i][k]*b.a[k][j]+c.a[i][j])%M;
-		return c;
-	}
+    int n,m;LL a[7][7];
+    void cl(){n=m=0;memset(a,0,sizeof a);}
+    JZ operator*(JZ b)const{
+        JZ c;c.cl();c.n=n;c.m=b.m;
+        for(int i=0;i<n;i++)
+            for(int j=0;j<b.m;j++)
+                for(int k=0;k<m;k++)
+                    c.a[i][j]=(a[i][k]*b.a[k][j]+c.a[i][j])%M;
+        return c;
+    }
 }B,F;
 int main(){
-	int T,i,j;LL n,a,b;
-	B.n=B.m=7;
-	for(scanf("%d",&T);T--;){
-		for(i=0;i<7;i++)for(j=0;j<7;j++)B.a[i][j]=V[i][j]; 
-		scanf("%lld%lld%lld",&n,&a,&b);
-		if(n==1){printf("%lld\n",a);continue;}
-		if(n==2){printf("%lld\n",b);continue;}
-		F.n=7;F.m=1;
-		F.a[0][0]=b;F.a[1][0]=a;F.a[2][0]=16;F.a[3][0]=8;F.a[4][0]=4;F.a[5][0]=2;F.a[6][0]=1;
-		for(n-=2;n;B=B*B,n>>=1)if(n&1)F=B*F;
-		printf("%lld\n",F.a[0][0]);
-	}
+    int T,i,j;LL n,a,b;
+    B.n=B.m=7;
+    for(scanf("%d",&T);T--;){
+        for(i=0;i<7;i++)for(j=0;j<7;j++)B.a[i][j]=V[i][j]; 
+        scanf("%lld%lld%lld",&n,&a,&b);
+        if(n==1){printf("%lld\n",a);continue;}
+        if(n==2){printf("%lld\n",b);continue;}
+        F.n=7;F.m=1;
+        F.a[0][0]=b;F.a[1][0]=a;F.a[2][0]=16;F.a[3][0]=8;F.a[4][0]=4;F.a[5][0]=2;F.a[6][0]=1;
+        for(n-=2;n;B=B*B,n>>=1)if(n&1)F=B*F;
+        printf("%lld\n",F.a[0][0]);
+    }
 }
-~~~
+```
 
 H：$N$个人，每个人有一个目标串$L$，每次随机发出一个字符，第一个产生目标串的人获胜，求每个人获胜概率，$N,L\leq10$。在AC自动机上得到转移方程，然后高斯消元得到每个人的答案即可。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 111
 #define CL(a) memset(a,0,sizeof a)
 int T,n,L,h,t,i,j,k,u,x,y,id,F[N],to[N],q[N],c[N][7];
 double w,a[N][N];bool dg[N];
 int main(){
-	scanf("%d",&T);
-	for(;T--;){
-		CL(c);CL(to);CL(dg);CL(a);CL(F);h=t=0;id=1;
-		scanf("%d%d",&n,&L);
-		for(i=1;i<=n;i++){
-			for(u=1,j=1;j<=L;j++){
-				scanf("%d",&x);
-				if(!c[u][x])c[u][x]=++id;
-				u=c[u][x];
-			}
-			to[i]=u;dg[u]=1;
-		}
-		for(i=1;i<=6;i++)c[0][i]=1;
-		for(q[t=1]=1;h<t;)
-			for(x=q[++h],i=1;i<=6;i++){
-				y=c[x][i];
-				if(!y){c[x][i]=c[F[x]][i];continue;}
-				for(k=F[x];!c[k][i];k=F[k]);
-				F[y]=c[k][i];
-				q[++t]=y;
-			}
-		a[1][id+1]=1.;
-		for(i=1;i<=id;i++){
-			a[i][i]=1.;
-			if(!dg[i]){
-				for(j=1;j<=6;j++){
-					for(x=i;!c[x][j];x=F[x]);
-					x=c[x][j];
-					a[x][i]-=1./6;
-				}
-			};
-		}
-		for(i=1;i<=id;i++){
-			w=a[i][i];
-			for(j=1;j<=id+1;j++)a[i][j]/=w;
-			for(j=1;j<=id;j++)if(i!=j)
-				for(w=a[j][i],k=1;k<=id+1;k++)
-					a[j][k]-=w*a[i][k];
-		}
-		for(i=1;i<=n;i++)printf("%.6f%c",a[to[i]][id+1],i==n?'\n':' ');
-	}
+    scanf("%d",&T);
+    for(;T--;){
+        CL(c);CL(to);CL(dg);CL(a);CL(F);h=t=0;id=1;
+        scanf("%d%d",&n,&L);
+        for(i=1;i<=n;i++){
+            for(u=1,j=1;j<=L;j++){
+                scanf("%d",&x);
+                if(!c[u][x])c[u][x]=++id;
+                u=c[u][x];
+            }
+            to[i]=u;dg[u]=1;
+        }
+        for(i=1;i<=6;i++)c[0][i]=1;
+        for(q[t=1]=1;h<t;)
+            for(x=q[++h],i=1;i<=6;i++){
+                y=c[x][i];
+                if(!y){c[x][i]=c[F[x]][i];continue;}
+                for(k=F[x];!c[k][i];k=F[k]);
+                F[y]=c[k][i];
+                q[++t]=y;
+            }
+        a[1][id+1]=1.;
+        for(i=1;i<=id;i++){
+            a[i][i]=1.;
+            if(!dg[i]){
+                for(j=1;j<=6;j++){
+                    for(x=i;!c[x][j];x=F[x]);
+                    x=c[x][j];
+                    a[x][i]-=1./6;
+                }
+            };
+        }
+        for(i=1;i<=id;i++){
+            w=a[i][i];
+            for(j=1;j<=id+1;j++)a[i][j]/=w;
+            for(j=1;j<=id;j++)if(i!=j)
+                for(w=a[j][i],k=1;k<=id+1;k++)
+                    a[j][k]-=w*a[i][k];
+        }
+        for(i=1;i<=n;i++)printf("%.6f%c",a[to[i]][id+1],i==n?'\n':' ');
+    }
 }
-~~~
+```
 
 G:一个直径为$2$高为$2$的圆柱，在里面装$h$高度的水使水恰好没溢出来，求水表面积。几何菜鸡，不会做
 
@@ -117,7 +117,7 @@ I：一颗带权有根树上每颗树上有一个记着，每个记者要跳到�
 
 在树上也一样地，求解并还原一下单调队列就好了。
 
-~~~{.cpp}
+``` {.cpp}
 //f[i]=min(f[j]+(d[i]-d[j])^2+p)
 //对i来说j比k优 2d[i](-d[j]+d[k])<f[k]+d[k]^2-f[j]-f[j]^2
 #include<bits/stdc++.h>
@@ -132,33 +132,33 @@ LL DP(int i,int j){return f[j]+P+(L[i]-L[j])*(L[i]-L[j]);}
 LL Y(int j,int k){return f[j]+L[j]*L[j]-f[k]-L[k]*L[k];}
 LL X(int j,int k){return 2*(L[j]-L[k]);}
 void dfs(int x,int fa,int h,int t){//记录队首和队尾
-	int i,p;
-	f[x]=L[x]*L[x];
-	for(;h<t&&Y(q[h],q[h+1])>=L[x]*X(q[h],q[h+1]);h++);
-	if(x!=1)f[x]=min(f[x],DP(x,q[h]));
-	an=max(an,f[x]);
-	for(;h<t&&Y(q[t-1],q[t])*X(q[t],x)>=X(q[t-1],q[t])*Y(q[t],x);t--);
-	t++;p=q[t];q[t]=x;//将队尾更改的值记录
-	for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)
-		L[la[i]]=L[x]+va[i],dfs(la[i],x,h,t);
-	q[t]=p;
+    int i,p;
+    f[x]=L[x]*L[x];
+    for(;h<t&&Y(q[h],q[h+1])>=L[x]*X(q[h],q[h+1]);h++);
+    if(x!=1)f[x]=min(f[x],DP(x,q[h]));
+    an=max(an,f[x]);
+    for(;h<t&&Y(q[t-1],q[t])*X(q[t],x)>=X(q[t-1],q[t])*Y(q[t],x);t--);
+    t++;p=q[t];q[t]=x;//将队尾更改的值记录
+    for(int i=fir[x];i;i=ne[i])if(la[i]!=fa)
+        L[la[i]]=L[x]+va[i],dfs(la[i],x,h,t);
+    q[t]=p;
 }
 int main(){
-	for(scanf("%d",&T);T--;){
-		tot=0;an=-1;CL(fir);CL(f);CL(L);
-		scanf("%d%lld",&n,&P);
-		for(i=1;i<n;i++)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
-		dfs(1,0,1,1);
-		printf("%lld\n",an);
-	}
+    for(scanf("%d",&T);T--;){
+        tot=0;an=-1;CL(fir);CL(f);CL(L);
+        scanf("%d%lld",&n,&P);
+        for(i=1;i<n;i++)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z);
+        dfs(1,0,1,1);
+        printf("%lld\n",an);
+    }
 }
-~~~
+```
 
 J：给你一个$N$个点的环套树，$Q$次操作：1、将距离一个点$k(k\leq2)$以内的点的值都加上$d$；2、询问距离一个点$k(k\leq2)$以内的点权和。$N,Q\leq100000$
 
 在树上维护一下BFS序就可以线段树维护，强行加个环套树讨论一下就好了。。一直WA调不出来。。。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 266666
 #define CL(a) memset(a,0,sizeof a)
@@ -168,122 +168,122 @@ int T,n,i,tot,Q,x,y,z,h,t,o,id,num,lv,rv,llv,rrv,fir[N],ne[N],la[N],v[N],bfn[N],
 LL an,V[N];bool c[N],qv[N];char s[9];
 void ins(int x,int y){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;}
 int G(int x,int z){
-	x+=z;
-	if(x>num)x-=num;
-	if(x<=0)x+=num;
-	return x;
+    x+=z;
+    if(x>num)x-=num;
+    if(x<=0)x+=num;
+    return x;
 }
 void fcur(int x){
-	v[x]=++id;
-	for(int i=fir[x],y;i;i=ne[i]){
-		y=la[i];
-		if(y==F[x])continue;
-		if(!v[y])F[y]=x,fcur(y);
-		else if(v[y]>=v[x]){
-			for(c[x]=1;x!=y;y=F[y])cir[++num]=y,c[y]=1;
-			cir[++num]=x;
-		}
-	}
+    v[x]=++id;
+    for(int i=fir[x],y;i;i=ne[i]){
+        y=la[i];
+        if(y==F[x])continue;
+        if(!v[y])F[y]=x,fcur(y);
+        else if(v[y]>=v[x]){
+            for(c[x]=1;x!=y;y=F[y])cir[++num]=y,c[y]=1;
+            cir[++num]=x;
+        }
+    }
 }
 void bfs(int S){
-	int o,i,x,y;
-	for(t++,bfn[q[t]=S]=t;h^t;R[x]=o)
-		for(i=fir[x=q[++h]],o=x;i;i=ne[i])if(y=la[i],!c[y]&&!bfn[y])t++,F[y]=x,bfn[q[t]=o=y]=t;
+    int o,i,x,y;
+    for(t++,bfn[q[t]=S]=t;h^t;R[x]=o)
+        for(i=fir[x=q[++h]],o=x;i;i=ne[i])if(y=la[i],!c[y]&&!bfn[y])t++,F[y]=x,bfn[q[t]=o=y]=t;
 }
 void ADD(int k,int z){
-	V[k]+=1ll*z*sz[k];
-	lz[k]+=z;
+    V[k]+=1ll*z*sz[k];
+    lz[k]+=z;
 }
 void pd(int k){
-	if(lz[k]){
-		ADD(k<<1,lz[k]);
-		ADD(k<<1|1,lz[k]);
-		lz[k]=0;
-	}
+    if(lz[k]){
+        ADD(k<<1,lz[k]);
+        ADD(k<<1|1,lz[k]);
+        lz[k]=0;
+    }
 }
 void ps(int k){V[k]=V[k<<1]+V[k<<1|1];}
 void bd(int k,int l,int r){
-	sz[k]=r-l+1;V[k]=lz[k]=0;
-	if(l==r)return;int md=l+r>>1;
-	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+    sz[k]=r-l+1;V[k]=lz[k]=0;
+    if(l==r)return;int md=l+r>>1;
+    bd(k<<1,l,md);bd(k<<1|1,md+1,r);
 }
 void add(int k,int l,int r,int x,int y,int z){
-	if(x<=l&&r<=y){ADD(k,z);return;}
-	int md=l+r>>1;pd(k);
-	if(x<=md)add(k<<1,l,md,x,y,z);
-	if(y>md)add(k<<1|1,md+1,r,x,y,z);
-	ps(k);
+    if(x<=l&&r<=y){ADD(k,z);return;}
+    int md=l+r>>1;pd(k);
+    if(x<=md)add(k<<1,l,md,x,y,z);
+    if(y>md)add(k<<1|1,md+1,r,x,y,z);
+    ps(k);
 }
 LL qu(int k,int l,int r,int x,int y){
-	if(x<=l&&r<=y)return V[k];
-	int md=l+r>>1;LL an=0;pd(k);
-	if(x<=md)an+=qu(k<<1,l,md,x,y);
-	if(y>md)an+=qu(k<<1|1,md+1,r,x,y);
-	return an;
+    if(x<=l&&r<=y)return V[k];
+    int md=l+r>>1;LL an=0;pd(k);
+    if(x<=md)an+=qu(k<<1,l,md,x,y);
+    if(y>md)an+=qu(k<<1|1,md+1,r,x,y);
+    return an;
 }
 int main(){
-	for(scanf("%d",&T);T--;){
-		tot=num=h=t=id=0;CL(v);CL(fir);CL(to);CL(F);CL(bfn);CL(c);
-		scanf("%d",&n);
-		for(i=1;i<=n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
-		fcur(1);CL(F);
-		bd(1,1,n);
-		for(i=1;i<=num;i++)bfs(cir[i]),to[cir[i]]=i;
-		for(scanf("%d",&Q);Q--;){
-			scanf("%s%d%d",s,&x,&y);t=0;
-			if(y==0)ql[++t]=x,qr[t]=x;
-			if(y==1){
-				ql[++t]=x;qr[t]=R[x];
-				if(F[x])ql[++t]=F[x],qr[t]=F[x];else{
-					o=to[x];	
-					lv=cir[G(o,1)];
-					rv=cir[G(o,-1)];
-					ql[++t]=lv;qr[t]=lv;
-					if(num>2)ql[++t]=rv,qr[t]=rv;
-				}
-			}
-			if(y==2){
-				ql[++t]=x;qr[t]=R[R[x]];
-				if(F[x]){
-					ql[++t]=F[x];qr[t]=R[F[x]];
-					ql[++t]=x;qr[t]=x;qv[t]=1;
-					if(F[F[x]])ql[++t]=F[F[x]],qr[t]=F[F[x]];else{
-						o=to[F[x]];
-						if(!o)for(;;);
-						lv=cir[G(o,1)];
-						rv=cir[G(o,-1)];
-						ql[++t]=lv;qr[t]=lv;
-						if(num>2)ql[++t]=rv,qr[t]=rv;
-					}
-				}else{
-					o=to[x];
-					lv=cir[G(o,1)];
-					rv=cir[G(o,-1)];
-					llv=cir[G(o,2)];
-					rrv=cir[G(o,-2)];
-					ql[++t]=lv;qr[t]=R[lv];
-					if(num>2){
-						ql[++t]=rv;qr[t]=R[rv];
-						if(num>3){
-							ql[++t]=llv,qr[t]=llv;
-							if(num>4)ql[++t]=rrv,qr[t]==rv;
-						}
-					}
-				}
-			}
-			if(s[0]=='M'){
-				scanf("%d",&z);
-				for(i=1;i<=t;i++)add(1,1,n,bfn[ql[i]],bfn[qr[i]],qv[i]?-z:z);
-			}else{
-				an=0;
-				for(i=1;i<=t;i++){
-					LL E=qu(1,1,n,bfn[ql[i]],bfn[qr[i]]);
-					qv[i]?an-=E:an+=E;
-				}
-				printf("%lld\n",an);
-			}
-			for(;t;)qv[t--]=0;
-		}
-	}
+    for(scanf("%d",&T);T--;){
+        tot=num=h=t=id=0;CL(v);CL(fir);CL(to);CL(F);CL(bfn);CL(c);
+        scanf("%d",&n);
+        for(i=1;i<=n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+        fcur(1);CL(F);
+        bd(1,1,n);
+        for(i=1;i<=num;i++)bfs(cir[i]),to[cir[i]]=i;
+        for(scanf("%d",&Q);Q--;){
+            scanf("%s%d%d",s,&x,&y);t=0;
+            if(y==0)ql[++t]=x,qr[t]=x;
+            if(y==1){
+                ql[++t]=x;qr[t]=R[x];
+                if(F[x])ql[++t]=F[x],qr[t]=F[x];else{
+                    o=to[x];    
+                    lv=cir[G(o,1)];
+                    rv=cir[G(o,-1)];
+                    ql[++t]=lv;qr[t]=lv;
+                    if(num>2)ql[++t]=rv,qr[t]=rv;
+                }
+            }
+            if(y==2){
+                ql[++t]=x;qr[t]=R[R[x]];
+                if(F[x]){
+                    ql[++t]=F[x];qr[t]=R[F[x]];
+                    ql[++t]=x;qr[t]=x;qv[t]=1;
+                    if(F[F[x]])ql[++t]=F[F[x]],qr[t]=F[F[x]];else{
+                        o=to[F[x]];
+                        if(!o)for(;;);
+                        lv=cir[G(o,1)];
+                        rv=cir[G(o,-1)];
+                        ql[++t]=lv;qr[t]=lv;
+                        if(num>2)ql[++t]=rv,qr[t]=rv;
+                    }
+                }else{
+                    o=to[x];
+                    lv=cir[G(o,1)];
+                    rv=cir[G(o,-1)];
+                    llv=cir[G(o,2)];
+                    rrv=cir[G(o,-2)];
+                    ql[++t]=lv;qr[t]=R[lv];
+                    if(num>2){
+                        ql[++t]=rv;qr[t]=R[rv];
+                        if(num>3){
+                            ql[++t]=llv,qr[t]=llv;
+                            if(num>4)ql[++t]=rrv,qr[t]==rv;
+                        }
+                    }
+                }
+            }
+            if(s[0]=='M'){
+                scanf("%d",&z);
+                for(i=1;i<=t;i++)add(1,1,n,bfn[ql[i]],bfn[qr[i]],qv[i]?-z:z);
+            }else{
+                an=0;
+                for(i=1;i<=t;i++){
+                    LL E=qu(1,1,n,bfn[ql[i]],bfn[qr[i]]);
+                    qv[i]?an-=E:an+=E;
+                }
+                printf("%lld\n",an);
+            }
+            for(;t;)qv[t--]=0;
+        }
+    }
 }
-~~~
+```
