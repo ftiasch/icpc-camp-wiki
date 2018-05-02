@@ -1,0 +1,201 @@
+这里维护了最小值次小值，为了避免同一颗子树上来的值更新这个子树，其实这样一定不优，所以直接维护最小值就好了。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 3e5 + 5, INF = 1e9;
+vector<int> tu[N];
+map<pair<int, int>, int> belong;
+struct two {
+	int from1, val1, from2, val2;
+	two() {
+		from1 = -1, val1 = INF;
+		from2 = -1, val2 = INF;
+	}
+	two(int f, int v) {
+		from1 = f, val1 = v;
+		from2 = -1, val2 = INF;
+	}
+	void add(int x) {
+		if (from1 != -1) val1 += x;
+		if (from2 != -1) val2 += x;
+	}
+};
+void cmp(int &f1, int &v1, int &f2, int &v2) {
+	if (v2 < v1) {
+		swap(f1, f2);
+		swap(v1, v2);
+	}
+}
+two operator + (two a, two b) {
+	cmp(a.from1, a.val1, b.from1, b.val1);
+	if (b.from1 != a.from1) {
+		cmp(a.from2, a.val2, b.from1, b.val1);
+	}
+	if (b.from2 != a.from1) {
+		cmp(a.from2, a.val2, b.from2, b.val2);
+	}
+	return a;
+}
+struct node {
+	int x0, y0, n;
+	vector<two> suf, pre;
+	vector<int> id;
+	node(int x0 = 0, int y0 = 0, int n = 0) : x0(x0), y0(y0), n(n) {
+		suf.resize(n + 1);
+		pre.resize(n + 1);
+		id.resize(n + 1);
+	}
+	void _add(int x, vector<two> &tree, int from, int val) {
+		while (x <= n) {
+			tree[x] = tree[x] + two(from, val);
+			x += x & -x;
+		}
+	}
+	two _query(int x, vector<two> &tree) {
+		two res = two();
+		while (x) {
+			res = res + tree[x];
+			x -= x & -x;
+		}
+		return res;
+	}
+	void upd(int i, int from, int d) {
+		//printf("upd y = %d, from = %d d = %d\n", i, from, d);
+		_add(i, pre, from, d - i);
+		_add(n - i + 1, suf, from, d + i);
+	}
+	int query(int i, int from) {
+		//printf("%d %d\n", i, from);
+		two A = _query(i, pre); A.add(i);
+		two B = _query(n - i + 1, suf); B.add(-i);
+		two C = A + B;
+		if (C.from1 == from && from != 0) return C.val2;
+		return C.val1;
+	}
+};
+int tot, sz[N], tot2;
+vector<int> G[N];
+node f[N];
+bool ban[N];
+typedef int arri [20];
+arri d[N], dy[N], cent[N], fr[N];
+int vsz[N];
+int size(int x, int f = 0) {
+	sz[x] = 1;
+	for (int u : G[x]) if (u != f) sz[x] += size(u, x);
+	return sz[x];
+}
+pair<int, int> centroid(int x, vector<int> &path, int sx, int p = 0) {
+	path.push_back(x);
+	for (int u : G[x]) if (!ban[u] && u != p) {
+		if (sz[u] * 2 > sx) return centroid(u, path, sx, x);
+	}
+	return {x, p};
+}
+void dfs(int x, int p, int cen, int from) {
+	for (int i = 1; i <= f[x].n; ++ i) {
+		int u = f[x].id[i], y = i + f[x].y0 - f[p].y0, v;
+		int &s = vsz[u];
+		cent[u][s] = cen;
+		fr[u][s] = from;
+		if (y < 1) {
+			v = f[p].id[1];
+			d[u][s] = d[v][vsz[v] - 1] + 1 - y;
+		}
+		else if (y > f[p].n) {
+			v = f[p].id[f[p].n];
+			d[u][s] = d[v][vsz[v] - 1] + y - f[p].n;
+		}
+		else {
+			v = f[p].id[y];
+			d[u][s] = d[v][vsz[v] - 1];
+		}
+		d[u][s] ++;
+		dy[u][s] = dy[v][vsz[v] - 1];
+		s ++;
+	}
+	for (int u : G[x]) if (!ban[u] && u != p) {
+		dfs(u, x, cen, from);
+	}
+}
+void divide(int y, int deep = 0) {
+	vector<int> path;
+	int x, yi; tie(x, yi) = centroid(y, path, sz[y]);
+	path.pop_back();
+	for (int u : path) sz[u] -= sz[x];
+	ban[x] = 1;
+	for (int i = 1; i <= f[x].n; ++ i) {
+		int u = f[x].id[i], &s = vsz[u];
+		d[u][s] = 0;
+		dy[u][s] = i;
+		cent[u][s] = x;
+		fr[u][s] = 0;
+		s ++;
+	}
+	for (int u : G[x]) if (!ban[u]) {
+		dfs(u, x, x, u);
+	}
+	assert(deep <= 20);
+	//printf("divide %d  %d\n", y, x);
+	for (int u : G[x]) if (!ban[u]) divide(u == yi ? y : u, deep + 1);
+	ban[x] = 0;
+}
+int main() {
+	int n;
+	scanf("%d", &n);
+	for (int i = 0; i < n; ++ i) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		tu[x].push_back(y);
+	}
+	for (int i = 1; i < N; ++ i) {
+		sort(tu[i].begin(), tu[i].end());
+		for (int j = 0, k; j < (int) tu[i].size(); j = k) {
+			++ tot;
+			vector<int> &link = G[tot];
+			for (k = j; k < (int) tu[i].size() && tu[i][k] - tu[i][j] == k - j; ++ k) {
+				belong[make_pair(i, tu[i][k])] = tot;
+				if (belong.count(make_pair(i - 1, tu[i][k]))) {
+					link.push_back(belong[make_pair(i - 1, tu[i][k])]);
+				}
+			}
+			sort(link.begin(), link.end());
+			link.erase(unique(link.begin(), link.end()), link.end());
+			for (int u : link) G[u].push_back(tot);
+			f[tot] = node(i, tu[i][j], k - j);
+			for (int i = 1; i <= k - j; ++ i) f[tot].id[i] = ++ tot2;
+		}
+	}
+	size(1, 0);
+	divide(1);
+	int q;
+	scanf("%d", &q);
+	while (q --) {
+		int type, x, y;
+		scanf("%d%d%d", &type, &x, &y);
+		if (type == 1) {
+			int tmp = belong[make_pair(x, y)];
+			int u = f[tmp].id[y - f[tmp].y0 + 1];
+			for (int i = 0; i < vsz[u]; ++ i) {
+				int x = cent[u][i];
+				//printf("upd %d\n", x);
+				f[x].upd(dy[u][i], fr[u][i], d[u][i]);
+			}
+		}
+		else {
+			int ans = INF;
+			int tmp = belong[make_pair(x, y)];
+			int u = f[tmp].id[y - f[tmp].y0 + 1];
+			for (int i = 0; i < vsz[u]; ++ i) {
+				int x = cent[u][i];
+				//printf("query %d\n", x);
+				int res = f[x].query(dy[u][i], fr[u][i]) + d[u][i];
+				ans = min(ans, res);
+			}
+			if (ans > N) ans = -1;
+			printf("%d\n", ans);
+		}
+	}
+}
+~~~
