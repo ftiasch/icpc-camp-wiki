@@ -1,0 +1,68 @@
+# D. Lights at a Crossing
+
+首先数据一定是是对的（由某种system生成），-1是指有多解。
+
+考虑snapshot的时间顺序，对于某一个灯，一定是红灯由大到小，依次经过所有数值的红灯，然后后面都是X（模T循环意义下）。
+
+所以把某个灯非X的snapshot挑出来排好序，相邻的连一条边，长度是红灯数值差。
+
+因为数据是对的，所以最后整张图应该天然是一个环（唯一解），或者是一堆链（多解）。答案就是环长。
+
+思路一开始就不对，主要是一直在纠结怎么判不合法，比较灯的横向offset，没有发觉数据一定对时固定一个灯的性质。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 25;
+int a[N * N][N], n, go[N * N][N * N];
+int main() {
+	int m;
+	scanf("%d%d", &n, &m);
+	memset(go, -1, sizeof(go));
+	for (int i = 0; i < m; ++ i) {
+		for (int j = 0; j < n; ++ j) {
+			static char s[20];
+			scanf("%s", s);
+			if (s[0] == 'X') {
+				a[i][j] = -1;
+			}
+			else {
+				sscanf(s, "%d", &a[i][j]);
+			}
+		}
+	}
+	int ans = 0;
+	for (int k = 0; k < n; ++ k) {
+		vector<pair<int, int>> all;
+		for (int i = 0; i < m; ++ i) if (a[i][k] != -1) all.push_back({a[i][k], i});
+		sort(all.begin(), all.end(), greater<pair<int, int>>());
+		for (int i = 0; i < (int) all.size() - 1; ++ i) {
+			go[all[i].second][all[i + 1].second] = all[i].first - all[i + 1].first;
+		}
+	}
+	int at = 0;
+	do {
+		bool flag = 0;
+		for (int i = 0; i < m; ++ i) if (go[at][i] != -1) {
+			ans += go[at][i];
+			at = i;
+			flag = 1;
+			break;
+		}
+		if (!flag) at = 0, ans = -1;
+	} while (at);
+	printf("%d\n", ans);
+}
+~~~
+
+# F. Martian Maze
+
+看了标程：先随机游走delay步。然后开始可以逐步确定一些墙或者路。
+
+每次假设延迟槽里的指令都不会撞墙，会走到一个位置。然后从终点往外最短路，确定的路算10分，确定的墙不能走，不确定的算10000分，每次往外走一个最短路上的方线，如果有多个就随机。
+
+不是很想写。
+
+# Comments
+
+前期略卡，后期不会做打出gg。
