@@ -1,0 +1,49 @@
+太菜了，签到速度慢，还卡在一道SB树状数组上调不出来。。
+
+未通过：DJL
+
+D：对每个要求的时间$a_i$都减去$i$变成相对值，用一个堆来维护可以被选的点就好了。当时写了个BIT调了半天调不出，最后爆OJ爆出了题意但来不及了。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+int n,T,i,x,an,cnt;
+priority_queue<int>Q;
+int main(){
+	scanf("%d%d",&n,&T);
+	for(i=1;i<=min(n,T-1);i++){
+		for(;!Q.empty()&&Q.top()>=T-i;Q.pop())cnt--;
+		scanf("%d",&x);
+		if(x<T)Q.push(x-i),cnt++;
+		an=max(an,cnt);
+	}
+	printf("%d",an);
+}
+~~~
+
+J：每条边依次加入，类似匈牙利地给每个点分配出度，如果找不到增广路就给答案+1，时间复杂度$O(nm)$
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 5050
+using namespace std;
+int n,m,x,y,id,an,i,v[N];
+vector<int>V[N];
+bool ok(int x,int y){
+	v[x]=id;
+	if(V[x].size()<an)return V[x].push_back(y),1;
+	for(int i=0,z;i<V[x].size();i++)if(v[z=V[x][i]]!=id&&ok(z,x))return V[x][i]=y,1;
+	return 0;
+}
+int main(){
+	scanf("%d%d",&n,&m);
+	for(;m--;){
+		scanf("%d%d",&x,&y);
+		if(++id,!ok(x,y))if(++id,!ok(y,x))an++,V[x].push_back(y);
+	}
+	printf("%d\n",an);
+	for(x=1;x<=n;x++)for(i=0;i<V[x].size();i++)printf("%d %d\n",x,V[x][i]);
+}
+~~~
+
+K：当场没看过
