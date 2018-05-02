@@ -1,0 +1,89 @@
+# Info
+
+Date: 2017.10.11 17:40-22:40
+
+[Link](http://www.bnuoj.com/v3/contest_show.php?cid=9268)
+
+# Solutions
+
+## A Chip Installation
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+2-sat签到题。
+
+## B Divisible Substrings
+
+unsolved
+
+## C Preparing Documents
+
+unsolved
+
+## D GridBagLayout
+
+unsolved
+
+## E Hot Potato Routing
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+可以发现周期不超过$T=n \times lcm(1,2,\dots,8)$，如果一个包发出$T$时间之后仍未到达目标，那么这个包永远不会到达目标，也就没有发的必要。
+
+考虑剩下的包，整个过程可以在$T+1000$时间之内完成，考虑对时间分层建图，实际上是一棵树，每个包对应树上一条从深往浅走的路径，将这些路径的终点按照深度排序，贪心取即可。
+
+## F Knapsack Problem
+
+unsolved
+
+## G Magic Potions
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+如果$2max>sum+1$，要保证取的最多，只能是$max$种类和其他种类进行配对，否则总能取到$\lfloor sum/2 \rfloor$这么多对。
+
+现在要考虑字典序，先尽可能多地让$1$和$2$配对，要么取完其中一种，相当于得到了规模为$n-1$的子问题，要么满足$sum \leq 2max \leq sum+1$，之后只能是$max$种类和其他种类进行配对。
+
+## H Restoring Permutation
+
+solved by Jove, sk, upsolved by none
+
+---
+
+Jove's solution
+
+通过分析可以发现，满足条件的序列在$2i-1$和$2i$两个位置必然有一个定点。则另一个即为离散化以后的点。
+
+那么我们先假设所有的定点都在$2i-1$位置上，离散化后的点都在$2i$位置，那么需要把离散化后的值乘$2$。
+
+然后根据大小关系进行$2i-1$和$2i$两个位置的调整，如果无法调整则不合法。
+
+## I Roads
+
+unsolved
+
+## J Squary Set
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+问题相当于从$\{ n-i^2 | 0< i < \lceil \sqrt{n} \rceil\}$种选出恰好$k$个元素使得和为$n$，$bitset$优化背包是显然的，但是需要输出方案，直接做需要$O(n^{3/2}k/w)$的空间，无法承受。
+
+考虑每计算$n^{1/4}$层$dp$值就做一个$checkpoint$，那么构造方案的时候，每次只需要从最近的$checkpoint$开始重新$dp$出往后$n^{1/4}$层的$dp$值，空间降为$O(n^{5/4}k/w)$，可以通过。
+
+# Replay
