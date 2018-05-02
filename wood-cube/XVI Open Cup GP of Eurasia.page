@@ -21,48 +21,61 @@
 │J [-:--]│                ₀                           ₁        ₂      │
 │G₄[-:--]│                                               ₀            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Nanoassembly [MZH]
+A. Nanoassembly \[MZH\]
+-----------------------
 
 求点关于直线的对称点。注意题目要求绝对精度。
 
-## B. Playoff [TDJ]
+B. Playoff \[TDJ\]
+------------------
 
 签到题。
 
-## C. Inequalities [TDJ]
+C. Inequalities \[TDJ\]
+-----------------------
 
 查分约束建图，SPFA会TLE，因为边权只有-1或0，先把0边的环缩点，再用拓扑序贪心（有环即无解）。
 
-## D. How to measure the Ocean? [MZH]
+D. How to measure the Ocean? \[MZH\]
+------------------------------------
 
 二分答案后电缆按照$s_ip_i$贪心尽可能长地使用。
 
-## E. Navigation [GX]
+E. Navigation \[GX\]
+--------------------
 
-A*躶题
+A\*躶题
 
-## F. Bets [GX]
+F. Bets \[GX\]
+--------------
 
-求1/a+1/b+1/c<1是否成立，但这题卡精度，要换成整数运算
+求1/a+1/b+1/c&lt;1是否成立，但这题卡精度，要换成整数运算
 
-## G. Ant on the road
+G. Ant on the road
+------------------
 
-## H. Bouquet [GX]
+H. Bouquet \[GX\]
+-----------------
 
 签到题。
 
-## I. Hash Function [GX]
+I. Hash Function \[GX\]
+-----------------------
 
 签到题。
 
-## J. Civilization
+J. Civilization
+---------------
 
-## K. Master Gambs Chairs [MZH]
+K. Master Gambs Chairs \[MZH\]
+------------------------------
 
 对每个集合按最小值排序贪心取。
 
-## L. Scrabble [MZH]
+L. Scrabble \[MZH\]
+-------------------
 
 模拟题。
