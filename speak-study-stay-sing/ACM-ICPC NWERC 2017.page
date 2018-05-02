@@ -1,0 +1,46 @@
+# **General**
+
+栗子由于太辣鸡不会写01背包，背了一口大锅。
+
+# **Solution**
+
+## A(Unsolved)
+
+## B(Solved by nike0good & lizi)
+
+太水略过
+
+## C(Solved by nike0good)
+预处理所有的射线，以（画到第几个点，射线方向）为状态暴力最短路。
+[nike0good's blog](http://blog.csdn.net/nike0good/article/details/78793352)
+
+## D(Solved by lizi)
+
+直接存下方案数，乘一乘就好
+
+## E(Solved by nike0good)
+把桌子排序
+期望dp，每次考虑连续一段区间的桌子被坐时的期望与方案数
+[nike0good's blog](http://blog.csdn.net/nike0good/article/details/78794380)
+
+## F(Solved by zbh)
+
+每次找一个区间内，和整个区间互质的数作为区间的根，左右子树递归下去，需要玄学操作保证复杂度。
+
+## G(Solved by nike0good & lizi & zbh)
+
+二分边长即可，有一点点卡精度？
+
+## H(Solved by zbh & lizi)
+
+均分，小的两个均分，全给大的，etc. 几种情况讨论一下取个max
+
+## I(Solved by nike0good & lizi)
+
+按s[i]-d[i]排序，作01背包即可。**背包要写对啊qwq**
+
+## J(Solved by zbh & lizi)
+
+## K(Solved by nike0good)
+
+听说贪心分配一下暴力算一算就过了？(雾)
