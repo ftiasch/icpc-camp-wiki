@@ -22,33 +22,45 @@
 │L [-:--]│                                                            │
 │M [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Decorating the Tree
+A. Decorating the Tree
+----------------------
 
-## B. Double Towers of Hanoi [GX]
+B. Double Towers of Hanoi \[GX\]
+--------------------------------
 
-## C. Drawing with CSS [MZH]
+C. Drawing with CSS \[MZH\]
+---------------------------
 
-## D. Olympic Games in Berland
+D. Olympic Games in Berland
+---------------------------
 
-## E. Polycarpia insolitus [TDJ]
+E. Polycarpia insolitus \[TDJ\]
+-------------------------------
 
 签到题。
 
-## F. Berland-Strike [TDJ]
+F. Berland-Strike \[TDJ\]
+-------------------------
 
 xjb写个了2-SAT上去又MLE了……其实用O(n)条边的无向图跑并查集就可以了
 
-## G. Palette [TDJ]
+G. Palette \[TDJ\]
+------------------
 
 迷之构造题。标程用4x8、4x4、4x2三种模式和卍、卐结构构出所有方案。
 鬼知道出题人的4x8模式(三种字母)是怎么搜出来的…
 
-## H. Polycarpus VS Dequeue
+H. Polycarpus VS Dequeue
+------------------------
 
-## I. Presents [GX]
+I. Presents \[GX\]
+------------------
 
-## J. Gennady and Problems [MZH]
+J. Gennady and Problems \[MZH\]
+-------------------------------
 
-## K. TopoCM++ [GX]
+K. TopoCM++ \[GX\]
+------------------
