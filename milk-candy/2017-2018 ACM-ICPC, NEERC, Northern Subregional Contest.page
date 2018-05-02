@@ -1,0 +1,121 @@
+# Info
+
+Date: 2017.11.12 13:15-18:15
+
+[Link](http://codeforces.com/gym/101612)
+
+# Solutions
+
+## A Auxiliary Project
+
+solved by sk, upsolved by none
+
+## B Boolean Satisfability
+
+solved by Jove, upsolved by none
+
+## C Consonant Fencity
+
+solved by Jove, upsolved by none
+
+## D Dividing Marbles
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+时光倒流，将分堆的过程反过来看，就是求最短的[Addition chain](https://en.wikipedia.org/wiki/Addition_chain)，特殊限制是$n$的二进制表示下$1$的个数$\leq 4$。
+
+记$n$的二进制位数为$s$，二进制表示下$1$的个数为$t$，显然长度不大于$s+t-1$，同时不难证明当$t \leq 3$时，长度不小于$s+t-1$，当$t=4$时，长度不小于$s+2$。只需求出所有满足$t=4$且最短长度为$s+2$的$n$的解，对于剩下的$n$直接使用平凡方法进行求解。考虑爆搜预处理，一个剪枝是长度不超过$s+2$要求至多出现$2$次新加入的数字不比原来的最大值多一位，另一个剪枝是不需要使用二进制表示下$1$个数$>4$的数。
+
+## E Equal Numbers
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+记初始有$t$种数字，只需对每个$i=1,2,\dots,t$求出剩下$i$种数字，也就是消灭掉$t-i$种数字的最少操作次数。
+
+现在将数字分为两类，一类是满足存在$v>u$且$v$是$u$的倍数的$u$，另一类就是剩下的数字。要消灭第一类数字，只需要把它变成某种它在第二类中的倍数；要消灭第二类数字，需要选至少两种数字，让这些数字同时变成它们的最小公倍数。
+
+## F Fygon 2.0
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+每条$for$循环语句相当于给出了一些变量之间大小关系的限制，建图之后相当于给每个点赋予一个$1,2,\dots,n$内的整值使得满足有向关系的限制，$SCC$缩点得到的$DAG$的点数$m$即为方案数的阶数，也就是说方案数是关于$n$的一个$m$次多项式，记为$f(n)=\sum_{i=0}^{m}a_in^i$。
+
+现在要求出$n^m$次项的系数$a_m$，考虑将$n=0,1,2,\dots,m$代入，求出$f(0),f(1),f(2),\dots,f(m)$，那么$m$阶差分的结果$\sum_{i=0}^{m}(-1)^{m-i}\binom{m}{m-i}f(i)$即为$m!a_m$，遗憾的是并没有快速计算$f(i)$的方法。
+
+观察这个差分式，不难联想到容斥原理。记条件$p_i(i=1,2,3,\dots,m)$为真，如果存在某个点赋值为$i$，那么根据容斥原理，要求出所有条件均为真的方案数，需要枚举为假的条件集合并且其余条件无论真假，由于所有条件的地位是相同的，只需要考察为假的条件的个数。假设有$m-i$个为假的条件，方案数是$\binom{m}{m-i}$，那么剩下$i$个可能为真的条件，可以认为是用这$i$种数字对点进行赋值，方案数是$f(i)$，再乘上容斥系数$(-1)^{m-i}$，对$i$求和之后即为差分式。
+
+这说明$m!a_m$就是$m$个条件均为真的方案数，也就是$m$个点的赋值恰好是$1$到$m$的排列，也就是拓扑序的方案数，状压$dp$即可。
+
+## G Grand Test
+
+upsolved by sk
+
+---
+
+sk's solution
+
+考察每个点双连通分量，任取一个$deg \geq 3$的点$u$，随便抓一个包含$u$的环$C$，再从$u$出发找一条路径走到$C$上某个点$v$，那么$u$到$v$之间就有三条不相交路径。
+
+## H Hidden Supervisors
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+熟知树上的最大匹配可以自底向上贪心求出，且选根的匹配数至多比不选根的多$1$。
+
+现在先对每棵树分别求出选根和不选根的最大匹配，如果某棵根不是$1$号点的树选根比不选根多$1$，那么可以直接把这棵树挂到$1$号点上，否则先把这棵树的根留空，再将其挂到某个未被匹配的空点上（如果有，此时这个根可以贡献一个额外的匹配）。
+
+需要注意构造方案的时候不能出现环，可以考虑按照子树内空点数从大到小往上挂。
+
+## I Intelligence in Perpendicularia
+
+solved by sk, upsolvef by none
+
+## J Joker
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+记$x_i=\sum_{j \leq i \wedge a_j>0}a_j,y_i=\sum_{j \leq i \wedge a_j<0}a_j$，那么相当于查询使得$s_i=\frac{x_i}{P}+\frac{y_i}{|N|}$也就是$|N|x_i+Py_i=(x_i,y_i)\cdot(|N|,P)$最大的最小$i$，每次修改相当于对一个后缀的$(x_i,y_i)$同时平移。
+
+考虑分块维护，每块维护一个$(x_i,y_i)$的上凸壳，整块修改不会影响这个凸壳，打标记即可，部分修改可以直接重构整个凸壳，查询时在每块的凸壳上三分。注意到$x_i$关于$i$是非降的，不需要特殊处理即可求出最小$i$，重构凸壳也不需要重新排序，选取合适块大小可以做到复杂度$O(n\sqrt{n\log{n}})$。
+
+## K Kotlin Island
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+纵横相间。
+
+## L Little Difference
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+如果$n$是$2$的幂那么无穷多解，否则枚举分解成多少个数，求出较小的数字$t$之后枚举使用了多少个$t$和$t+1$。
+
+# Replay
