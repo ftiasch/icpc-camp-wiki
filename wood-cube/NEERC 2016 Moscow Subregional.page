@@ -21,40 +21,53 @@
 │C [-:--]│                                                            │
 │J [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Altitude [TDJ]
-
-签到题。
-
-## B. Blocking Buffer [GX]
+A. Altitude \[TDJ\]
+-------------------
 
 签到题。
 
-## C. Catch Me If You Can
+B. Blocking Buffer \[GX\]
+-------------------------
 
-## D. Demolition Time [TDJ]
+签到题。
+
+C. Catch Me If You Can
+----------------------
+
+D. Demolition Time \[TDJ\]
+--------------------------
 
 正反两棵KMP树上做离线"Couple Trees"。
 
-## E. Economy Printing [TDJ]
+E. Economy Printing \[TDJ\]
+---------------------------
 
 DP，记上两个页码的打印状态（单张、奇偶、连续）。
 
-## F. Format [MZH]
+F. Format \[MZH\]
+-----------------
 
-## G. Great Guest Gathering [GX]
+G. Great Guest Gathering \[GX\]
+-------------------------------
 
 签到题。
 
-## H. Hockey Cup [MZH]
+H. Hockey Cup \[MZH\]
+---------------------
 
-## I. Interesting Interactive Idea [GX]
+I. Interesting Interactive Idea \[GX\]
+--------------------------------------
 
 通过两次+1+1+2+4先得到比较接近的上下界，然后每次跳l-step之后step/=2然后不断跳step更新l直到绕圈即可。
 
-## J. Juice Degustation
+J. Juice Degustation
+--------------------
 
-## K. Knights of the Old Republic [MZH]
+K. Knights of the Old Republic \[MZH\]
+--------------------------------------
 
-## L. Lazy Coordinator [MZH]
+L. Lazy Coordinator \[MZH\]
+---------------------------
