@@ -1,0 +1,81 @@
+# G. The Great Wall
+
+二分答案，然后求出有多少种不超过$MID$的方案
+
+分两种情况，一种是两段不相交的，一种是两段相交的。
+
+两段不相交的好处理，求一下前缀和，记一下位置，树状数组求和
+
+两段相交的记录一下两段并的开始和终止，用两个数组分别记录两个起始点的贡献，再同样树状数组扫一遍
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 33333
+#define MP make_pair
+#define LL long long
+#define X first
+#define Y second
+#define CL(a) memset(a,0,sizeof a)
+#define fr(i,n) for(int i=1;i<=n;i++)
+using namespace std;
+int n,r,m,v[N];
+LL k,L,R,MD,AN,a[N],b[N],c[N];
+pair<LL,int> A[N],B[N];
+void add(int x){for(;x<=n;x+=x&-x)v[x]++;}
+int qu(int x){int w=0;for(;x;x-=x&-x)w+=v[x];return w;}
+int qu(int l,int r){return qu(min(r,n))-qu(max(l,1)-1);}
+LL get(LL z){
+	int i,j;LL an=0;
+	fr(i,m)A[i]=MP(a[i-1]-b[i-1]+b[i+r-1]-a[i+r-1],i);
+	sort(A+1,A+m+1);CL(v);
+	for(i=m,j=1;i;an+=qu(A[i--].Y+r,m))
+		for(;j<=m&&A[i].X+A[j].X+a[n]<=z;)add(A[j++].Y);
+	fr(i,m)A[i]=MP(a[i-1]-b[i-1]+c[i+r-1]-b[i+r-1],i),B[i]=MP(b[i-1]-c[i-1]+b[i+r-1]-a[i+r-1],i);
+	sort(A+1,A+m+1);sort(B+1,B+m+1);CL(v);j=m;
+	for(i=m,j=1;i;an+=qu(A[i].Y+1,A[i].Y+r-1),i--)
+		for(;j<=m&&A[i].X+B[j].X+a[n]<=z;)add(B[j++].Y);
+	return an;
+}
+int main(){
+	scanf("%d%d%lld",&n,&r,&k);m=n-r+1;
+	fr(i,n)scanf("%lld",&a[i]),a[i]+=a[i-1];
+	fr(i,n)scanf("%lld",&b[i]),b[i]+=b[i-1];
+	fr(i,n)scanf("%lld",&c[i]),c[i]+=c[i-1];
+	for(L=a[n],R=c[n];L<=R;)if(get(MD=L+R>>1)>=k)AN=MD,R=MD-1;else L=MD+1;
+	printf("%lld",AN);
+}
+~~~
+# J. Journey
+
+枚举无用边$x$，然后所有边权先减去$x$和$0$取大，跑$n$遍最短路，最后加上$n*k$，取最小的答案即可。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 3030
+#define LL long long
+using namespace std;
+LL an,d[N];bool v[N];
+int n,m,k,i,x,y,z,tot,V[N],fir[N],ne[N*2],la[N*2],va[N*2],q[N];
+void ins(int x,int y,int z){la[++tot]=y;ne[tot]=fir[x];fir[x]=tot;va[tot]=z;}
+LL spfa(int z){
+	int h=0,t=1,i,x,y;
+	for(i=1;i<=n;i++)d[i]=1e18,v[i]=0;
+	d[1]=0;q[1]=1;v[1]=1;
+	for(;h^t;){
+		x=q[h=h%n+1];v[x]=0;
+		if(d[x]+1ll*k*z>an)continue;
+		for(i=fir[x];i;i=ne[i])
+			if(d[x]+max(0,va[i]-z)<d[y=la[i]]){
+				d[y]=d[x]+max(0,va[i]-z);
+				if(!v[y])v[q[t=t%n+1]=y]=1;
+			}
+	}
+	return d[n]+1ll*k*z;
+}
+int main(){
+	scanf("%d%d%d",&n,&m,&k);
+	for(i=1;i<=m;i++)scanf("%d%d%d",&x,&y,&z),ins(x,y,z),ins(y,x,z),V[i]=z;
+	for(an=1e18,i=0;i<=m;i++)an=min(an,spfa(V[i]));
+	printf("%lld",an);
+}
+~~~
