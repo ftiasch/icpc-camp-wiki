@@ -1,0 +1,138 @@
+# Contest Info
+
+date: 2017.08.02 10:00-15:00
+
+[practice link](https://vjudge.net/contest/175533)
+
+# Solutions
+
+## A. Assignment For Princess
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+先构造出一个大环，边权分别为 $1\sim n$，然后调整最后一条边的边权使得大环被 $3$ 整除，然后枚举 $i + 1 < j$，插入一条从 $j$ 到 $i$ 的边，使得这个环也能被 $3$ 整除。
+
+## B. Beautiful Soup
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+属于 LR1 文法，直接处理字符串即可解析，便于输出可以记下最后一个 token。
+
+## C. Clumsy Algorithm
+
+upsolved by braveTester
+
+---
+
+braveTester's solution
+
+考虑从一个 $\{1, \dots, n - 1\}$ 的排列 $P$ 插入 $n$ 变成一个 $\{1, \dots, n\}$ 的排列 $P'$，设插入位置为从右往左数第 $i$ 个位置，从 $0$ 开始编号，总共 $n$ 个插入位置。
+
+可以发现，逆序对的增量 $f(P') - f(P)$ 为 $i$，而 $g$ 的增量 $g(P') - g(P)$ 为 $P'$ 中在 $n$ 右边的 $i$ 个数中在 $P$ 中对 $g(P)$ 的贡献大于等于零的个数（指 $j - P_j \ge 0$ 的个数）。考虑初始条件 $f = g = 0$，故对每一步变换必有 $f \ge g$，并且为达到等号，必须每步均为等号，也即 **$n$ 右边的所有数在 $P$ 中对 $g(P)$ 的贡献必须大于等于 $0$**。
+
+令 $h[i][j]$ 表示当前排列由 $i$ 个数组成，且从末尾向前数，对 $g$ 的贡献大于等于 $0$ 的连续段的最大长度。假设没有前缀限制时，$h[i][j]$ 会对 
+
+1. $h[i + 1][k]$，当 $k > 0$ 时；
+2. $h[i + 1][j + 1]$，当 $k = 0$ 时
+
+产生贡献，其中 $k \le j \le i$。
+
+现在考虑前缀限制，首先对于给定前缀里的数 $i$，你可以知道对于一个 $\{1, \dots, i - 1\}$ 的排列，它必须被插入的位置。其次，对于不在前缀里的数 $i$，你可以知道它在 $\{1, \dots, i - 1\}$ 的符合前缀限制的排列中的最左插入位置。依据这两个条件在转移的时候判断一下即可。
+
+复杂度 $O(n^3)$。
+
+## D. Dinner Coming Soon
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+将不同 universe 里的 house 视为不同点，相应 house 之间建立耗时 1 花费 0 的边，最多 $NK$ 个点， $(N + M)K$ 条边。
+
+注意到每条边的耗时为正，可以根据耗时进行 DP ，令 $f(i, j, k)$ 表示已经耗费 $i$ 单位时间，带有 $j$ 包盐，现在在点 $k$ 的最大持有货币数，转移时枚举下一个到达点和在那个点的决策即可，时间复杂度 $\mathcal{O}((N + M) B K T)$。
+
+坑点是走到终点后必须立即停止旅途。
+
+## E. Exhausted Robot
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+考虑一个凸多边形障碍物所扫过的区域为 $S = \{(x, y)\}$，再考虑机器人所能扫到的区域关于其第一个点的偏移 $T = \{(x, y)\}$，则机器人第一个点不能扫到的区域为 $\{(x, y) | x = x_1 - x_2, y = y_1 - y_2, (x_1, y_1) \in S, (x_2, y_2) \in T\}$。这个区域可以暴力枚举所有可能的边界点，然后求一遍凸包得到，也可以用 Minkowski sum 直接求。
+
+这里踩了个小坑，Minkowski sum 常用的方法是找到两个凸集的最左下方点（$x$ 最小的情况下 $y$ 最小），然后顺着极角序选择两个凸集的边界去构造新的边界（同时使用相同角度的边可以使得新凸集的边上没有点）。这里的极角序是从第四象限（不含 $y$ 负半轴）依次扫过一、二、三象限（直到 $y$ 负半轴），**极角序的比较最好不要写象限排序**。
+
+得到所有凸多边形障碍后还需考虑外围一圈障碍，可以先拿一个更大的矩形框住所有的凸多边形障碍（原来的矩形可能框不住），再在四个方向加一些矩阵障碍，使得所有障碍的并集是所求即可。
+
+剩下的内容是凸多边形面积并，有两种 $\mathcal{O}(n^2 \log n)$ 的写法（$n$ 指总边数）。
+
+第一种是将并集的边界分配给每个凸多边形，对于每个凸多边形，算出它上面的每段属于边界的有向线段，然后求有向面积之和（相当于用格林公式将曲面积分转化为边界积分）。
+
+第二种是将凸多边形梯形剖分，也是计算每条有向线段与 $x$ 轴所围梯形有向面积，但问题可以转化为计算直线上被至少一条有向线段覆盖且不严格在任何一个多边形内的部分与 $x$ 轴所围面积，转化成直线与多边形求交问题。
+
+两种写法本质相同，都不难写。
+
+## F. Fibonacci Tree
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+实际上只需要求出白边数量的范围即可。
+
+首先判断图是否连通，然后只用黑边计算出至少需要的白边数量，只用白边计算出至少需要的黑边数量，然后就能算出白边的数量范围。
+
+## G. GRE Words Revenge
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+注意到 word 长度的取值只可能有根号种，那么对于一个 paragraph，暴力判它的根号种长度的子串的哈希值即可。
+
+## H. Hard Disk Drive
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+签到题
+
+## I. ICPC Ranking
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+仔细读题，每个队伍维护通过题数、罚时、最后通过时间、未处理提交，用 set 查询后继来实现揭榜的过程即可。
+
+## J. Just Random
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+经过一番处理后，只需要解决 $[0,c], [0,d], c < p, d < p$ 的答案，那么只有 $x + y = m$ 和 $x + y = p + m$ 两种可能，随便算一下就行了。
