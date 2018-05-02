@@ -1,0 +1,334 @@
+# C. Cutting Tree
+
+dfs写成for有巨大的常数优势？
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 2e5 + 5;
+vector<int> G[N];
+int dfn[N], tot, par[N], dp[N], remain[N];
+void dfs(int x, int p = 0) {
+	dfn[x] = ++ tot;
+	par[tot] = dfn[p];
+	for (int u : G[x]) if (u != p) dfs(u, x);
+}
+int n;
+int work(int k) {
+	for (int i = 1; i <= n; ++ i) remain[i] = 1;
+	int res = 0;
+	for (int i = n; i >= 1; -- i) {
+		if (remain[i] >= k) {
+			res ++;
+		}
+		else {
+			remain[par[i]] += remain[i];
+		}
+	}
+	return res;
+}
+int ans[N];
+void solve(int l, int vl, int r, int vr) {
+	if (l + 1 >= r) {
+		ans[l] = vl;
+		ans[r] = vr;
+		return;
+	}
+	if (vl == vr) {
+		for (int i = l; i <= r; ++ i) ans[i] = vl;
+		return;
+	}
+	int mid = (l + r) / 2;
+	int v = work(mid);
+	solve(l, vl, mid, v);
+	solve(mid, v, r, vr);
+}
+int main() {
+	scanf("%d", &n);
+	for (int i = 1; i < n; ++ i) {
+		int u, v;
+		scanf("%d%d", &u, &v);
+		G[u].push_back(v);
+		G[v].push_back(u);
+	}
+	dfs(1);
+	solve(1, n, n, 1);
+	for (int i = 1; i <= n; ++ i) printf("%d\n", ans[i]);
+}
+~~~
+
+# G. Grid with Mirrors
+
+有障碍物的1e5*1e5的棋盘，一束光从左上角左边射进来，问到达每个格子，最少需要几面镜子的和。
+
+考虑把所有行和列，按障碍物隔开重新标号，如果某行和某列相交，那么他们有一条双向边。那么我们可以从左上第一行bfs出去，得到每行每列的距离。
+
+考虑每个格子恰好在某一行和某一列内，而所有行的距离是偶数，所有列的距离是奇数，又由于bfs的性质，所以每个格子所在行和列的距离恰好差1，所以对每个格子，行距离列距离求和之后加加减减就能得到答案了。
+
+现在的问题是边数太多了：使用线段树优化。但我们又不能每行开一颗线段树：可持久化一下就行了：每次新进来一个区间，就复制他所在的到根的路径，然后把他挂在叶子上，删除同理。
+
+1G内存好像刚刚好的样子，反正开爆就行了。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 5, NN = 202 * N;
+vector<int> b1[N], b2[N];
+struct event { int x, id; };
+vector<event> add[N], del[N];
+struct seg { int l, r, id; };
+vector<seg> id1[N], id2[N];
+int tot = 0, l[NN], r[NN], d[NN];
+vector<pair<int, int>> G[NN];
+int newnode() {
+	tot ++;
+	assert(tot < NN);
+	l[tot] = r[tot] = 0;
+	G[tot].clear();
+	return tot;
+}
+void relink(int x) {
+	G[x].clear();
+	if (l[x]) G[x].push_back({l[x], 0});
+	if (r[x]) G[x].push_back({r[x], 0});
+	//if (l[x]) printf("%d -0> %d\n", x, l[x]);
+	//if (r[x]) printf("%d -0> %d\n", x, r[x]);
+}
+int copynode(int x) {
+	tot ++;
+	assert(tot < NN);
+	l[tot] = l[x];
+	r[tot] = r[x];
+	G[tot] = G[x];
+	return tot;
+}
+void build(int &x, int l, int r) {
+	x = newnode();
+	if (l == r) return;
+	int mid = (l + r) / 2;
+	build(::l[x], l, mid);
+	build(::r[x], mid + 1, r);
+	relink(x);
+}
+int locate(int &x, int l, int r, int p) {
+	if (p < l || p > r) return 0;
+	x = copynode(x);
+	if (l == r) return x;
+	int mid = (l + r) / 2;
+	int tmp = max(locate(::l[x], l, mid, p), locate(::r[x], mid + 1, r, p));
+	relink(x);
+	return tmp;
+}
+void query(int x, int l, int r, int ql, int qr, int from) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr) {
+		//printf("%d -%d> %d\n", from, 0, x);
+		G[from].push_back({x, 0});
+		return;
+	}
+	int mid = (l + r) / 2;
+	query(::l[x], l, mid, ql, qr, from);
+	query(::r[x], mid + 1, r, ql, qr, from);
+}
+int main() {
+	int n, m;
+	scanf("%d%d", &n, &m);
+	for (int i = 0; i < m; ++ i) {
+		int x, y;
+		scanf("%d%d", &x, &y);
+		swap(x, y);
+		b1[x].push_back(y);
+		b2[y].push_back(x);
+	}
+	for (int i = 1; i <= n; ++ i) {
+		sort(b1[i].begin(), b1[i].end());
+		int las = 1;
+		for (int x : b1[i]) {
+			if (las <= x - 1) {
+				id1[i].push_back({las, x - 1, ++ tot});
+				add[las].push_back({i, tot});
+				del[x].push_back({i, tot});
+			}
+			las = x + 1;
+		}
+		if (las <= n) {
+			id1[i].push_back({las, n, ++ tot});
+			add[las].push_back({i, tot});
+			del[n + 1].push_back({i, tot});
+		}
+	}
+	int root;
+	build(root, 1, n);
+	for (int i = 1; i <= n; ++ i) {
+		for (auto e : add[i]) {
+			int u = locate(root, 1, n, e.x);
+			G[u].push_back({e.id, 1});
+			//printf("%d -1> %d\n", u, e.id);
+		}
+		for (auto e : del[i]) {
+			int u = locate(root, 1, n, e.x);
+			G[u].clear();
+		}
+		add[i].clear();
+		del[i].clear();
+		sort(b2[i].begin(), b2[i].end());
+		int las = 1;
+		for (int x : b2[i]) {
+			if (las <= x - 1) {
+				// [las, x)
+				id2[i].push_back({las, x - 1, ++ tot});
+				query(root, 1, n, las, x - 1, tot);
+			}
+			las = x + 1;
+		}
+		if (las <= n) {
+			// [las, n]
+			id2[i].push_back({las, n, ++ tot});
+			query(root, 1, n, las, n, tot);
+		}
+	}
+	for (int i = 1; i <= n; ++ i) {
+		for (seg s : id2[i]) {
+			add[s.l].push_back({i, s.id});
+			del[s.r + 1].push_back({i, s.id});
+		}
+	}
+	build(root, 1, n);
+	for (int i = 1; i <= n; ++ i) {
+		for (auto e : add[i]) {
+			int u = locate(root, 1, n, e.x);
+			G[u].push_back({e.id, 1});
+			//printf("%d -1> %d\n", u, e.id);
+		}
+		for (auto e : del[i]) {
+			int u = locate(root, 1, n, e.x);
+			G[u].clear();
+		}
+		add[i].clear();
+		del[i].clear();
+		for (seg s : id1[i]) {
+			query(root, 1, n, s.l, s.r, s.id);
+		}
+	}
+	int st = id1[1][0].id;
+	d[st] = 1;
+	deque<int> q;
+	q.push_front(st);
+	while (!q.empty()) {
+		int p = q.front(); q.pop_front();
+		for (auto u : G[p]) {
+			if (!d[u.first] || d[u.first] > d[p] + u.second) {
+				d[u.first] = d[p] + u.second;
+				//printf("%d goto %d\n", p, u.first);
+				if (d[u.first] == d[p]) q.push_front(u.first); else q.push_back(u.first);
+			}
+		}
+	}
+	long long ans = 0, grid = 0;
+	for (int i = 1; i <= n; ++ i) {
+		for (seg s : id1[i]) {
+			int len = s.r - s.l + 1;
+			int d = ::d[s.id] - 1;
+			//printf("%d  %d - %d %d  d = %d\n", i, s.l, s.r, s.id, d);
+			if (d < 0) continue;
+			grid += len;
+			ans += 1LL * len * d;
+		}
+		for (seg s : id2[i]) {
+			int len = s.r - s.l + 1;
+			int d = ::d[s.id] - 1;
+			//printf("%d  %d - %d %d   d=%d\n", i, s.l, s.r, s.id, d);
+			if (d < 0) continue;
+			ans += 1LL * len * d;
+		}
+	}
+	printf("%lld\n", (ans - grid) / 2);
+}
+~~~
+
+# I. Isomorphic Matrices
+
+Burnside。对于一个长度$x$的行环和长度$y$的列环，不动点方案数是$k^{gcd(x,y)}$ 。假设列<行（列<45）。枚举列置换的环长组合，即列数的partition，行上dp前i行做完，枚举最后一行所在的环长，$n^2$dp。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> partition1;
+vector<int> cnttmp;
+vector<int> st;
+const int MOD = 1e9 + 7;
+const int N = 2005;
+int C[N][N], F[N], dp[N], PK[N], gcd[N][N];
+int mpow(int x, int n) {
+	int res = 1;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % MOD;
+		n >>= 1;
+		x = 1LL * x * x % MOD;
+	}
+	return res;
+}
+void dfs(int x, int _min) {
+	if (x == 0) {
+		partition1.push_back(st);
+		int tmp = 1;
+		for (int i = 0, j; i < (int) st.size(); i = j) {
+			for (j = i; j < (int) st.size() && st[i] == st[j]; ++ j);
+			tmp = 1LL * tmp * F[j - i] % MOD;
+		}
+		cnttmp.push_back(mpow(tmp, MOD - 2));
+		return;
+	}
+	for (int i = _min; i <= x; ++ i) {
+		st.push_back(i);
+		dfs(x - i, i);
+		st.pop_back();
+	}
+}
+int main() {
+	for (int i = 1; i < N; ++ i) {
+		for (int j = 1; j < N; ++ j) gcd[i][j] = __gcd(i, j);
+	}
+	F[0] = 1;
+	for (int i = 1; i < N; ++ i) F[i] = 1LL * F[i - 1] * i % MOD;
+	for (int i = 0; i < N; ++ i) {
+		C[i][0] = 1;
+		for (int j = 1; j <= i; ++ j) C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % MOD;
+	}
+	int n, m, k;
+	scanf("%d%d%d", &n, &m, &k);
+	if (n > m) swap(n, m);
+	PK[0] = 1;
+	for (int i = 1; i < N; ++ i) PK[i] = 1LL * PK[i - 1] * k % MOD;
+	assert(n < 45);
+	dfs(n, 1);
+	int ans = 0, id = 0;
+	for (auto p : partition1) {
+		int base = 1, remain = n;
+		for (int x : p) {
+			base = 1LL * base * C[remain][x] % MOD;
+			base = 1LL * base * F[x - 1] % MOD;
+			remain -= x;
+		}
+		base = 1LL * base * cnttmp[id ++] % MOD;
+		static int pre[N];
+		for (int y = 1; y <= m; ++ y) {
+			int &base2 = pre[y] = 1;
+			for (int x : p) {
+				(base2 = 1LL * PK[gcd[x][y]] * base2 % MOD) %= MOD;
+			}
+		}
+		dp[0] = 1;
+		for (int i = 1; i <= m; ++ i) {
+			dp[i] = 0;
+			for (int y = 1; y <= i; ++ y) {
+				int base2 = 1LL * C[i - 1][y - 1] * F[y - 1] % MOD * dp[i - y] % MOD;
+				(dp[i] += 1LL * base2 * pre[y] % MOD) %= MOD;
+			}
+		}
+		(ans += 1LL * dp[m] * base % MOD) %= MOD;
+	}
+	ans = 1LL * ans * mpow(F[n], MOD - 2) % MOD * mpow(F[m], MOD - 2) % MOD;
+	printf("%d\n", ans);
+}
+~~~
