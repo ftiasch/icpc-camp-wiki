@@ -1,14 +1,18 @@
-# [WrongStatement](http://acm.hdu.edu.cn/showproblem.php?pid=6100)
+[WrongStatement](http://acm.hdu.edu.cn/showproblem.php?pid=6100)
+================================================================
 
-# [Gumballs&Dungeons](http://acm.hdu.edu.cn/showproblem.php?pid=6101)
+[Gumballs&Dungeons](http://acm.hdu.edu.cn/showproblem.php?pid=6101)
+===================================================================
 
-# [GCDispower](http://acm.hdu.edu.cn/showproblem.php?pid=6102)
+[GCDispower](http://acm.hdu.edu.cn/showproblem.php?pid=6102)
+============================================================
 
-## Aki
+Aki
+---
 
 完全不知道复杂度为什么是对的，总感觉是$O(n\log n\cdot \mu 不为0的约数个数)$的复杂度，本地极限6s，交上去反而没T（笑）。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
@@ -16,121 +20,121 @@ vector<pair<int, int>> ask[N];
 long long ans[N], tree[N];
 int pos[N], xxx, tick[N], CNT[N], factor[N], n, a[N];
 long long query(int x) {
-	x = n - x + 1;
-	long long res = 0;
-	while (x) {
-		res += tree[x];
-		x -= x & -x;
-	}
-	return res;
+    x = n - x + 1;
+    long long res = 0;
+    while (x) {
+        res += tree[x];
+        x -= x & -x;
+    }
+    return res;
 }
 void add(int x, long long c) {
-	x = n - x + 1;
-	while (x <= n) {
-		tree[x] += c;
-		x += x & -x;
-	}
+    x = n - x + 1;
+    while (x <= n) {
+        tree[x] += c;
+        x += x & -x;
+    }
 }
 int &cnt(int x) {
-	if (tick[x] < xxx) {
-		tick[x] = xxx;
-		CNT[x] = 0;
-	}
-	return CNT[x];
+    if (tick[x] < xxx) {
+        tick[x] = xxx;
+        CNT[x] = 0;
+    }
+    return CNT[x];
 }
 vector<int> fact(int x) {
-	vector<int> all;
-	while (factor[x]) {
-		all.push_back(factor[x]);
-		x /= factor[x];
-	}
-	if (x > 1) all.push_back(x);
-	return all;
+    vector<int> all;
+    while (factor[x]) {
+        all.push_back(factor[x]);
+        x /= factor[x];
+    }
+    if (x > 1) all.push_back(x);
+    return all;
 }
 bool debug = 0;
 int main() {
-	for (int i = 2; i < N; ++ i) {
-		if (!factor[i]) {
-			for (int j = 2 * i; j < N; j += i) {
-				if (!factor[j]) factor[j] = i;
-			}
-		}
-	}
-	int T;
-	if (debug) T = 5; else
-	scanf("%d", &T);
-	while (T --) {
-		int m;
-		if (debug) n = m = 100; else
-		scanf("%d%d", &n, &m);
-		if (debug) {
-			for (int i = 1; i <= n; ++ i) a[i] = i;
-			random_shuffle(a + 1, a + 1 + n);
-		}
-		for (int i = 1; i <= n; ++ i) {
-			if (!debug)
-			scanf("%d", &a[i]);
-			pos[a[i]] = i;
-			ask[i].clear();
-			tree[i] = 0;
-		}
-		for (int i = 1; i <= m; ++ i) {
-			int l, r;
-			if (debug) {
-				l = rand() % n + 1;
-				r = rand() % n + 1;
-			} else
-			scanf("%d%d", &l, &r);
-			if (l > r) swap(l, r);
-			ask[r].push_back({l, i});
-		}
-		for (int i = 1; i <= n; ++ i) {
-			vector<int> p;
-			for (int j = a[i] + a[i]; j <= n; j += a[i]) if (pos[j] < i) p.push_back(pos[j]);
-			sort(p.begin(), p.end(), greater<int>());
-			xxx ++;
-			for (int j : p) {
-				auto all = fact(a[j] / a[i]);
-				all.erase(unique(all.begin(), all.end()), all.end());
-				int res = 0;
-				for (int mask = 0; mask < (1 << all.size()); ++ mask) {
-					int x = mask, y = 1, u = 1;
-					while (x) {
-						int t = __builtin_ctz(x);
-						y *= all[t];
-						u *= -1;
-						x ^= 1 << t;
-					}
-					res += cnt(y) * u;
-					cnt(y) ++;
-				}
-				add(j, 1LL * res * a[i]);
-			}
-			for (auto q : ask[i]) {
-				ans[q.second] = query(q.first);
-				if (debug) {
-					int l = q.first, r = i, duipai = 0;
-					for (int i = l; i <= r; ++ i) {
-						for (int j = i + 1; j <= r; ++ j) {
-							for (int k = j + 1; k <= r; ++ k) {
-								if (__gcd(a[i], a[j]) == a[k]) {
-									duipai += a[k];
-								}
-							}
-						}
-					}
-					if (duipai != ans[q.second]) {
-						printf("query %d %d\nduipai = %d ans = %lld\n", l, r, duipai, ans[q.second]);
-					}
-					assert(duipai == ans[q.second]);
-				}
-			}
-		}
-		if (!debug)
-		for (int i = 1; i <= m; ++ i) printf("%lld\n", ans[i]);
-	}
+    for (int i = 2; i < N; ++ i) {
+        if (!factor[i]) {
+            for (int j = 2 * i; j < N; j += i) {
+                if (!factor[j]) factor[j] = i;
+            }
+        }
+    }
+    int T;
+    if (debug) T = 5; else
+    scanf("%d", &T);
+    while (T --) {
+        int m;
+        if (debug) n = m = 100; else
+        scanf("%d%d", &n, &m);
+        if (debug) {
+            for (int i = 1; i <= n; ++ i) a[i] = i;
+            random_shuffle(a + 1, a + 1 + n);
+        }
+        for (int i = 1; i <= n; ++ i) {
+            if (!debug)
+            scanf("%d", &a[i]);
+            pos[a[i]] = i;
+            ask[i].clear();
+            tree[i] = 0;
+        }
+        for (int i = 1; i <= m; ++ i) {
+            int l, r;
+            if (debug) {
+                l = rand() % n + 1;
+                r = rand() % n + 1;
+            } else
+            scanf("%d%d", &l, &r);
+            if (l > r) swap(l, r);
+            ask[r].push_back({l, i});
+        }
+        for (int i = 1; i <= n; ++ i) {
+            vector<int> p;
+            for (int j = a[i] + a[i]; j <= n; j += a[i]) if (pos[j] < i) p.push_back(pos[j]);
+            sort(p.begin(), p.end(), greater<int>());
+            xxx ++;
+            for (int j : p) {
+                auto all = fact(a[j] / a[i]);
+                all.erase(unique(all.begin(), all.end()), all.end());
+                int res = 0;
+                for (int mask = 0; mask < (1 << all.size()); ++ mask) {
+                    int x = mask, y = 1, u = 1;
+                    while (x) {
+                        int t = __builtin_ctz(x);
+                        y *= all[t];
+                        u *= -1;
+                        x ^= 1 << t;
+                    }
+                    res += cnt(y) * u;
+                    cnt(y) ++;
+                }
+                add(j, 1LL * res * a[i]);
+            }
+            for (auto q : ask[i]) {
+                ans[q.second] = query(q.first);
+                if (debug) {
+                    int l = q.first, r = i, duipai = 0;
+                    for (int i = l; i <= r; ++ i) {
+                        for (int j = i + 1; j <= r; ++ j) {
+                            for (int k = j + 1; k <= r; ++ k) {
+                                if (__gcd(a[i], a[j]) == a[k]) {
+                                    duipai += a[k];
+                                }
+                            }
+                        }
+                    }
+                    if (duipai != ans[q.second]) {
+                        printf("query %d %d\nduipai = %d ans = %lld\n", l, r, duipai, ans[q.second]);
+                    }
+                    assert(duipai == ans[q.second]);
+                }
+            }
+        }
+        if (!debug)
+        for (int i = 1; i <= m; ++ i) printf("%lld\n", ans[i]);
+    }
 }
-~~~
+```
 
-# [Influence](http://acm.hdu.edu.cn/showproblem.php?pid=6104)
-
+[Influence](http://acm.hdu.edu.cn/showproblem.php?pid=6104)
+===========================================================
