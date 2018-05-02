@@ -1,8 +1,6 @@
----
-title: Fudan U Animism
-...
+General
+=======
 
-# General
 [codes](https://github.com/AnimismFudan/Animism)
 
 [补(Tian)题(Keng)行动]()
@@ -15,43 +13,42 @@ title: Fudan U Animism
 
 [Bugs]()
 
-# Training
+Training
+========
 
 <!-- `2016-00-00` [`---`]()                                         ` -/ --`  `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` -->
-
-`Date`       `Contest`                                               ` Place ` `A` `B` `C` `D` `E` `F` `G` `H` `I` `J` `K` `L` `M`
------------- ------------------------------------------------------- --------- --- --- --- --- --- --- --- --- --- --- --- --- ---
-`2017-08-07` [`XV Open Cup GP of SPb`]()                             `52/189`  `O` `O` `Ø` `O` `.` `O` `.` `O` `O` `Ø`
-`2017-08-04` [`XVII Open Cup GP of Siberia`]()                       `13/150`  `O` `O` `.` `O` `O` `O` `O` `O` `O` `.` `O`
-`2017-08-03` [`2017 Multi-University Training Contest - Team 4`]()   `11/XX`   `.` `O` `O` `O` `O` `Ø` `O` `O` `O` `O` `O` `O` `.`
-`2017-08-02` [`XVII Open Cup GP of Eurasia`]()                       `33/294`  `O` `O` `O` `.` `O` `O` `O` `Ø` `O` `O` `O` `.`
-`2017-08-01` [`2017 Multi-University Training Contest - Team 3`]()   `23/XX`   `.` `Ø` `O` `O` `O` `O` `Ø` `O` `Ø` `O` `O`
-`2017-05-30` [`AIM Fund Contest (MIPT Workshop Open 4)`]()           `48/78`   `O` `.` `.` `.` `O` `.` `.` `O` `O` `O` `.`
-`2017-05-13` [`Petrozavodsk Summer-2015. Yandex Cup Stage 2.`]()     `37/77`   `O` `O` `O` `.` `.` `.` `O` `.` `.` `O`
-`2017-05-02` [`XVI Open Cup named after E.V. Pankratiev. GP`]()      `46/134`  `O` `.` `.` `.` `O` `O` `O` `O` `.`
-`2017-04-30` [`2012-2013 ACM-ICPC, NEERC, Moscow Subregional`]()     `10/51`   `O` `.` `O` `.` `O` `O` `O` `.` `O` `O` `O`
-`2017-04-29` [`2016-2017 ACM-ICPC PNRC`]()                           `12/202`  `O` `O` `O` `O` `.` `O` `O` `O` `O` `O` `O` `.`
-`2017-04-25` [`XVI Open Cup named after E.V. Pankratiev`]()          `49/168`  `O` `O` `.` `O` `O` `.` `O` `O` `.` `O` `O`
-`2017-04-23` [`Petrozavodsk Summer-2015. Warsaw U Tasks`]()          `22/75`   `.` `O` `O` `O` `O` `.` `.` `O` `O` `.` `.`
-`2017-04-16` [`Petrozavodsk Summer-2015. Ivan Smirnov Contest 1.`]() `35/53`   `O` `.` `.` `.` `.` `.` `.` `O` `.` `.` `O`
-`2017-04-11` [`Petrozavodsk Summer-2015. Moscow IPT Contest`]()      `15/71`   `.` `O` `O` `O` `O` `.` `O` `.` `.` `O`
-`2017-04-09` [`XVII Open Cup Grand Prix of Japan`]()                 `27/150`  `.` `O` `.` `O` `.` `.` `O` `O` `.` `O`
-`2017-03-28` [`Kent Nikaido Contest 1.`]()                           `20/30`   `O` `.` `O` `O` `.` `.` `.` `O` `.` `O` `O`
-`2017-03-21` [`Petrozavodsk Summer-2016. Warsaw U Contest`]()
-`2017-03-19` [`Open Cup of Ekaterinburg.`]()                         `36/182`  `.` `O` `O` `O` `O` `O` `O` `.` `O` `O` `.`
-`2017-03-14` [`Petrozavodsk Summer-2016. Ural FU Dandelion`]()       `38/59`   `.` `.` `.` `.` `.` `.` `.` `.` `O` `O` `.`
-`2017-03-12` [`CEPC 2015`]()                                         `37/205`  `O` `O` `.` `.` `O` `O` `.` `O` `.` `.` `O` `.`
-`2017-03-07` [`Petrozavodsk Winter-2014. Warsaw U Contest.`]()       `34/91`   `O` `O` `.` `.` `O` `.` `.` `O` `O` `.`
-`2017-02-26` [`NEERC-2016`]()                                         `9/`     `O` `.` `.` `.` `O` `O` `O` `O` `.` `O` `.` `O` `.`
-`2016-12-11` **`ONSITE|`[`ICPC China-Finals 2016`]()**               `11/293`  `O` `O` `O` `O` `O` `O` `.` `O` `.` `.` `.` `O`
-`2016-12-07` [`Petrozavodsk Summer-2016. Moscow IPT Contest`]()      `28/76`   `O` `.` `.` `O` `.` `.` `.` `.` `.` `.` `O`
-`2016-12-04` [`Petrozavodsk Summer-2016. Pavel Khaustov Contest 2`]()`36/74`   `.` `.` `.` `O` `.` `.` `.` `.` `O`
-`2016-11-30` [`Petrozavodsk Winter-2016. JAG Contest`]()             `14/97`   `O` `O` `O` `O` `O` `O` `O` `O` `.` `.` `O`
-`2016-11-27` **`ONSITE|`[`CCPC Finals 2016`]()**                     `14/122`  `O` `O` `.` `.` `O` `O` `.` `O` `O` `O` `.` `O` 
-`2016-11-23` [`Asia Qingdao Regional 2016`]()                         `4/????` `O` `O` `O` `O` `.` `.` `O` `O` `.` `Ø` `O` `Ø` `.`
-`2016-11-19` [`XVII Open Cup EV Pankratiev GP of SPb`]()             `45/160+` `O` `O` `.` `O` `O` `O` `O` `O` `.` `O` `O`
-`2016-11-13` **`ONSITE|`[`Asia Beijing Regional 2016`]()**           `15/198`  `.` `.` `O` `O` `O` `O` `.` `Ø` `O` `.` `O`
----
+  `Date`         `Contest`                                                  ` Place `   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------- ---------------------------------------------------------- ----------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  `2017-08-07`   [`XV Open Cup GP of SPb`]()                                `52/189`    `O`   `O`   `Ø`   `O`   `.`   `O`   `.`   `O`   `O`   `Ø`               
+  `2017-08-04`   [`XVII Open Cup GP of Siberia`]()                          `13/150`    `O`   `O`   `.`   `O`   `O`   `O`   `O`   `O`   `O`   `.`   `O`         
+  `2017-08-03`   [`2017 Multi-University Training Contest - Team 4`]()      `11/XX`     `.`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `.`
+  `2017-08-02`   [`XVII Open Cup GP of Eurasia`]()                          `33/294`    `O`   `O`   `O`   `.`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `.`   
+  `2017-08-01`   [`2017 Multi-University Training Contest - Team 3`]()      `23/XX`     `.`   `Ø`   `O`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `O`   `O`         
+  `2017-05-30`   [`AIM Fund Contest (MIPT Workshop Open 4)`]()              `48/78`     `O`   `.`   `.`   `.`   `O`   `.`   `.`   `O`   `O`   `O`   `.`         
+  `2017-05-13`   [`Petrozavodsk Summer-2015. Yandex Cup Stage 2.`]()        `37/77`     `O`   `O`   `O`   `.`   `.`   `.`   `O`   `.`   `.`   `O`               
+  `2017-05-02`   [`XVI Open Cup named after E.V. Pankratiev. GP`]()         `46/134`    `O`   `.`   `.`   `.`   `O`   `O`   `O`   `O`   `.`                     
+  `2017-04-30`   [`2012-2013 ACM-ICPC, NEERC, Moscow Subregional`]()        `10/51`     `O`   `.`   `O`   `.`   `O`   `O`   `O`   `.`   `O`   `O`   `O`         
+  `2017-04-29`   [`2016-2017 ACM-ICPC PNRC`]()                              `12/202`    `O`   `O`   `O`   `O`   `.`   `O`   `O`   `O`   `O`   `O`   `O`   `.`   
+  `2017-04-25`   [`XVI Open Cup named after E.V. Pankratiev`]()             `49/168`    `O`   `O`   `.`   `O`   `O`   `.`   `O`   `O`   `.`   `O`   `O`         
+  `2017-04-23`   [`Petrozavodsk Summer-2015. Warsaw U Tasks`]()             `22/75`     `.`   `O`   `O`   `O`   `O`   `.`   `.`   `O`   `O`   `.`   `.`         
+  `2017-04-16`   [`Petrozavodsk Summer-2015. Ivan Smirnov Contest 1.`]()    `35/53`     `O`   `.`   `.`   `.`   `.`   `.`   `.`   `O`   `.`   `.`   `O`         
+  `2017-04-11`   [`Petrozavodsk Summer-2015. Moscow IPT Contest`]()         `15/71`     `.`   `O`   `O`   `O`   `O`   `.`   `O`   `.`   `.`   `O`               
+  `2017-04-09`   [`XVII Open Cup Grand Prix of Japan`]()                    `27/150`    `.`   `O`   `.`   `O`   `.`   `.`   `O`   `O`   `.`   `O`               
+  `2017-03-28`   [`Kent Nikaido Contest 1.`]()                              `20/30`     `O`   `.`   `O`   `O`   `.`   `.`   `.`   `O`   `.`   `O`   `O`         
+  `2017-03-21`   [`Petrozavodsk Summer-2016. Warsaw U Contest`]()                                                                                               
+  `2017-03-19`   [`Open Cup of Ekaterinburg.`]()                            `36/182`    `.`   `O`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `O`   `.`         
+  `2017-03-14`   [`Petrozavodsk Summer-2016. Ural FU Dandelion`]()          `38/59`     `.`   `.`   `.`   `.`   `.`   `.`   `.`   `.`   `O`   `O`   `.`         
+  `2017-03-12`   [`CEPC 2015`]()                                            `37/205`    `O`   `O`   `.`   `.`   `O`   `O`   `.`   `O`   `.`   `.`   `O`   `.`   
+  `2017-03-07`   [`Petrozavodsk Winter-2014. Warsaw U Contest.`]()          `34/91`     `O`   `O`   `.`   `.`   `O`   `.`   `.`   `O`   `O`   `.`               
+  `2017-02-26`   [`NEERC-2016`]()                                           `9/`        `O`   `.`   `.`   `.`   `O`   `O`   `O`   `O`   `.`   `O`   `.`   `O`   `.`
+  `2016-12-11`   **`ONSITE|`[`ICPC China-Finals 2016`]()**                  `11/293`    `O`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `.`   `.`   `.`   `O`   
+  `2016-12-07`   [`Petrozavodsk Summer-2016. Moscow IPT Contest`]()         `28/76`     `O`   `.`   `.`   `O`   `.`   `.`   `.`   `.`   `.`   `.`   `O`         
+  `2016-12-04`   [`Petrozavodsk Summer-2016. Pavel Khaustov Contest 2`]()   `36/74`     `.`   `.`   `.`   `O`   `.`   `.`   `.`   `.`   `O`                     
+  `2016-11-30`   [`Petrozavodsk Winter-2016. JAG Contest`]()                `14/97`     `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `.`   `.`   `O`         
+  `2016-11-27`   **`ONSITE|`[`CCPC Finals 2016`]()**                        `14/122`    `O`   `O`   `.`   `.`   `O`   `O`   `.`   `O`   `O`   `O`   `.`   `O`   
+  `2016-11-23`   [`Asia Qingdao Regional 2016`]()                           `4/????`    `O`   `O`   `O`   `O`   `.`   `.`   `O`   `O`   `.`   `Ø`   `O`   `Ø`   `.`
+  `2016-11-19`   [`XVII Open Cup EV Pankratiev GP of SPb`]()                `45/160+`   `O`   `O`   `.`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `O`         
+  `2016-11-13`   **`ONSITE|`[`Asia Beijing Regional 2016`]()**              `15/198`    `.`   `.`   `O`   `O`   `O`   `O`   `.`   `Ø`   `O`   `.`   `O`         
 
 ` · 尚未通过  O 当场通过  [X:Y] 非标准组队赛：X个人使用Y台电脑`
 ` ! 口头通过  Ø 赛后通过  [IND] 个人赛`
