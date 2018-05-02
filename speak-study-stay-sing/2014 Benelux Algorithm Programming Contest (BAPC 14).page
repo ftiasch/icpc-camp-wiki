@@ -1,88 +1,100 @@
-# Info
+Info
+====
 
 Date: 2017.11.02 13:15-18:15
 
 [Link](http://codeforces.com/gym/101512)
 
-# Solutions
+Solutions
+=========
 
-## A Avoiding the Apocalypse
+A Avoiding the Apocalypse
+-------------------------
 
 solved by zbh2047, upsolved by none
 
----
+------------------------------------------------------------------------
 
 zbh's solution
 
 对时间拆点，建图跑网络流。
 
-## B Button Bashing
+B Button Bashing
+----------------
 
-solved by lizi_lzy, upsolved by none
+solved by lizi\_lzy, upsolved by none
 
----
+------------------------------------------------------------------------
 
 lizi's solution
 
 建图最短路，Dijk or BFS。
 
-## C Citadel Construction
+C Citadel Construction
+----------------------
 
 solved by zbh2047, upsolved by none
 
----
+------------------------------------------------------------------------
 
 zbh's solution
 
 旋转卡壳求四边形最大面积。
 
-## D Dropping Directions
+D Dropping Directions
+---------------------
 
 solved by all, upsolved by none
 
----
+------------------------------------------------------------------------
 
 lizi's solution
 
-拆点，每个点拆成四个方向，相对的方向必属于一个连通块。floodfill or 并查集之后计算连通块个数，每个路标可以合并两个连通块，减一减就好。
+拆点，每个点拆成四个方向，相对的方向必属于一个连通块。floodfill or
+并查集之后计算连通块个数，每个路标可以合并两个连通块，减一减就好。
 
-## E Excellent Engineers
+E Excellent Engineers
+---------------------
 
-solved by lizi_lzy, upsolved by none
+solved by lizi\_lzy, upsolved by none
 
----
+------------------------------------------------------------------------
 
 lizi's solution
 
 暴力三维偏序小改= =不过似乎有一个log的做法，orz
 
-## F Floating Formation
+F Floating Formation
+--------------------
 
-solved by lizi_lzy , nike0good , upsolved by none
+solved by lizi\_lzy , nike0good , upsolved by none
 
----
+------------------------------------------------------------------------
 
 lizi's solution
 
 考虑挂在BCC外面的树，长链剖分后贪心，然后分组背包
 
-P.S. [quailty's solution](https://wiki-milk-candy.icpc-camp.org/2014%20Benelux%20Algorithm%20Programming%20Contest)简单很多
+P.S. [quailty's
+solution](https://wiki-milk-candy.icpc-camp.org/2014%20Benelux%20Algorithm%20Programming%20Contest)简单很多
 
-## G Growling Gears
+G Growling Gears
+----------------
 
-solved by lizi_lzy , zbh2047 , upsolved by none
+solved by lizi\_lzy , zbh2047 , upsolved by none
 
----
+------------------------------------------------------------------------
 
 zbh's solution
 
 签到
 
-## H Highway Hassle
+H Highway Hassle
+----------------
 
-upsolved by zbh2047 , followed by quailty's solution 
+upsolved by zbh2047 , followed by quailty's solution
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -99,7 +111,7 @@ zbh's solution
 将原图对这些点每个点跑dijkstra后重建新图，新图是一个完全图，每条边都是从加油站到加油站，边权为距离。这一步时间复杂度$smlogm$
 
 接下来不难发现一个性质：到一个加油站加油后，或者油箱加满，或者到下一次加油时油箱为空。
-这是因为，若相邻两次油价p1>p2，显然到后面加油站时油应用完；若p1<=p2，则要么不经过第二个加油站，要么第一个加油站加满。该结论证毕。
+这是因为，若相邻两次油价p1&gt;p2，显然到后面加油站时油应用完；若p1&lt;=p2，则要么不经过第二个加油站，要么第一个加油站加满。该结论证毕。
 
 于是到达一个加油站的油量最多有2s种情况。将每个点拆成这2s个点表示不同油量，然后这2s个点间顺次建边，边权表示加油的花费；两加油站间按拆点后的点建边，边权为0。
 
@@ -107,37 +119,41 @@ zbh's solution
 
 总时间复杂度$sm \log m+s^2\log s$
 
-## I Interesting Integers
+I Interesting Integers
+----------------------
 
 solved by zbh2047, upsolved by none
 
----
+------------------------------------------------------------------------
 
 zbh's solution
 
 当前一个数取输入的$\frac {\sqrt{5}-1} 2$倍时答案最优。时间复杂度$\log n$
 
-## J Jury Jeopardy
+J Jury Jeopardy
+---------------
 
-solved by lizi_lzy, upsolved by none
+solved by lizi\_lzy, upsolved by none
 
----
+------------------------------------------------------------------------
 
 lizi's solution
 
-按照要求走一下，外面包一层#，里面抠一抠
+按照要求走一下，外面包一层\#，里面抠一抠
 
-## K Key to Knowledge
+K Key to Knowledge
+------------------
 
-solved by lizi_lzy, upsolved by none
+solved by lizi\_lzy, upsolved by none
 
----
+------------------------------------------------------------------------
 
 lizi's solution
 
 比较裸的折半。
 
-# Replay
+Replay
+======
 
 上来lizi思考了$B$，然后脑子抽风暂时不会，其后观察到$G$被秒切，由zbh2047读题并告知lizi，lizi由于手贱打错变量WA1，然后AC。
 
@@ -169,6 +185,7 @@ lizi终于调过了$F$的样例，WA了两发之后发现某个数组没有清�
 
 时间还有几分钟，大家在欢声笑语中打出GG。
 
-## lizi
+lizi
+----
 
 开场WA一发签到有益身心健康！！！
