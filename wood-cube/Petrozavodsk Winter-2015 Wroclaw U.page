@@ -1,0 +1,25 @@
+## A. Azrael
+
+## B. Brainy
+
+## C. Calendar
+
+## D. Denominations
+
+## E. Euclid
+
+## F. Flowers
+
+## G. Garden
+
+## H. Hamilton
+
+## I. Invigilation
+
+## J. Joke
+
+## K. Klothes
+
+## L. (Smurf)Land protection [TDJ]
+
+给出一个有向图，问有哪些点删去了会让SCC数量变多，对每个SCC随便找一个点为源跑Dominator Tree，割点一定是答案，再在反图里跑一遍，最后删掉这个源再做一遍tarjan来判断源是不是答案。
