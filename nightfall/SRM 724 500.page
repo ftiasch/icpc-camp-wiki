@@ -1,4 +1,4 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef vector<string> board;
@@ -6,61 +6,61 @@ const int MOD = 1e9 + 7;
 const int N = 55;
 int C[N][N];
 class GravityPuzzle {
-	public:
-	int count(board a) {
-		for (int i = 0; i < N; ++ i) {
-			C[i][0] = 1;
-			for (int j = 1; j <= i; ++ j) C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
-		}
-		bool L, R, U, D;
-		L = R = U = D = 0;
-		int n = a.size(), m = a[0].length();
-		for (int i = 0; i < n; ++ i) {
-			for (int j = 0; j < m; ++ j) if (a[i][j] == '#') {
-				if (i && a[i - 1][j] == '.') U = 1;
-				if (j && a[i][j - 1] == '.') L = 1;
-				if (i < n - 1 && a[i + 1][j] == '.') D = 1;
-				if (j < m - 1 && a[i][j + 1] == '.') R = 1;
-			}
-		}
-		if (L && R && U && D) return 1;
-		vector<int> A, B;
-		for (int i = 0; i < n; ++ i) {
-			int cnt = 0;
-			for (int j = 0; j < m; ++ j) cnt += a[i][j] == '#';
-			A.push_back(cnt);
-		}
-		for (int j = 0; j < m; ++ j) {
-			int cnt = 0;
-			for (int i = 0; i < n; ++ i) cnt += a[i][j] == '#';
-			B.push_back(cnt);
-		}
-		if (L && R) {
-			int ans = 1;
-			for (int cnt : B) ans = 1LL * ans * C[n][cnt] % MOD;
-			return ans;
-		}
-		if (U && D) {
-			int ans = 1;
-			for (int cnt : A) ans = 1LL * ans * C[m][cnt] % MOD;
-			return ans;
-		}
-		sort(A.rbegin(), A.rend());
-		sort(B.rbegin(), B.rend());
-		int x1 = 1, x2 = 1, y1 = 1, y2 = 1, las = m;
-		for (int i : A) {
-			x1 = 1LL * x1 * C[las][i] % MOD;
-			y2 = 1LL * y2 * C[m][i] % MOD;
-			las = i;
-		}
-		las = n;
-		for (int i : B) {
-			y1 = 1LL * y1 * C[las][i] % MOD;
-			x2 = 1LL * x2 * C[n][i] % MOD;
-			las = i;
-		}
-		int ans = (1LL * x1 * x2 + 1LL * y1 * y2 - 1LL * x1 * y1 % MOD + MOD) % MOD;
-		return ans;
-	}
+    public:
+    int count(board a) {
+        for (int i = 0; i < N; ++ i) {
+            C[i][0] = 1;
+            for (int j = 1; j <= i; ++ j) C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+        }
+        bool L, R, U, D;
+        L = R = U = D = 0;
+        int n = a.size(), m = a[0].length();
+        for (int i = 0; i < n; ++ i) {
+            for (int j = 0; j < m; ++ j) if (a[i][j] == '#') {
+                if (i && a[i - 1][j] == '.') U = 1;
+                if (j && a[i][j - 1] == '.') L = 1;
+                if (i < n - 1 && a[i + 1][j] == '.') D = 1;
+                if (j < m - 1 && a[i][j + 1] == '.') R = 1;
+            }
+        }
+        if (L && R && U && D) return 1;
+        vector<int> A, B;
+        for (int i = 0; i < n; ++ i) {
+            int cnt = 0;
+            for (int j = 0; j < m; ++ j) cnt += a[i][j] == '#';
+            A.push_back(cnt);
+        }
+        for (int j = 0; j < m; ++ j) {
+            int cnt = 0;
+            for (int i = 0; i < n; ++ i) cnt += a[i][j] == '#';
+            B.push_back(cnt);
+        }
+        if (L && R) {
+            int ans = 1;
+            for (int cnt : B) ans = 1LL * ans * C[n][cnt] % MOD;
+            return ans;
+        }
+        if (U && D) {
+            int ans = 1;
+            for (int cnt : A) ans = 1LL * ans * C[m][cnt] % MOD;
+            return ans;
+        }
+        sort(A.rbegin(), A.rend());
+        sort(B.rbegin(), B.rend());
+        int x1 = 1, x2 = 1, y1 = 1, y2 = 1, las = m;
+        for (int i : A) {
+            x1 = 1LL * x1 * C[las][i] % MOD;
+            y2 = 1LL * y2 * C[m][i] % MOD;
+            las = i;
+        }
+        las = n;
+        for (int i : B) {
+            y1 = 1LL * y1 * C[las][i] % MOD;
+            x2 = 1LL * x2 * C[n][i] % MOD;
+            las = i;
+        }
+        int ans = (1LL * x1 * x2 + 1LL * y1 * y2 - 1LL * x1 * y1 % MOD + MOD) % MOD;
+        return ans;
+    }
 };
-~~~
+```
