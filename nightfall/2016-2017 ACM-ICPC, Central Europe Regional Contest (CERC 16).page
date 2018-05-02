@@ -1,0 +1,130 @@
+EASY： ACFK
+
+MID： BEHJL
+
+B. 一个左边$n$个点，右边$m$个点的二分图，每个点有一个权值，问能选出多少个权值和大于$W$的点集，使得存在一个匹配$M$包含所有点集。$n,m\leq20$
+
+首先先分别枚举左边和右边的点集，两边是独立的。如果每次暴力求匹配太慢了，考虑优化。用HALL定理，先判断和当前选的点集相连的点数是否大于等于当前点数，如果小于那么$f_i=0$，再和$i$所有的子集取一个交，这样时间复杂度$O(n2^n)$
+
+最后再把两遍的结果扫一遍合并就好了
+
+E. 给出$k$和$n$，找到$n$组不同的$a,b,c$，使得$a^2+b^2+c^2=k(ab+bc+ca)+1,n,k\leq1000$
+
+首先$(1,k,k^2+k)$是一组解，对于一组解$(a,b,c)$，可以扩展出下一组解$(bk+ck-a,b,c)$，做一遍模拟BFS即可
+
+H. 一个$n*n$的网格图上有若干障碍，现在问一个正方形能否从一个地方移动到另一个地方
+
+对于每个点求一遍最大半径，然后Kruskal重构树即可
+
+J. 有若干张机票，单程票或双程票，双程票可以只去不回，但必须先去再回。现在有一个TOUR序列，求解按这个序列走的最小票价。
+
+首先只要考虑两对点间的情况。那么分几种情况
+
+一是全用单程票，二是用一种单程票，三是用两种单程票
+
+那么先括号序列消一下，最后肯定剩下)))((((的形式，判断一下就好了
+
+L. 有$n$个变量和$3$个这些变量的取值，要你找一个2-SAT关系恰好满足所有这些取值，而其他的关系都不能满足这个取值。$n\leq50$
+
+首先恒为$1$的可以表示为$!x_i\to x_i$，恒为$0$的可以表示为$x_i\to !x_i$
+
+然后如果$x_i=x_j$可以表示为$x_i\to x_j,x_j\to x_i$
+
+如果$x_i\neq x_j$可以表示为$x_i\to !x_j,!x_j\to x_i$
+
+如果此时剩下多于$2$个式子，一定不合法
+
+如果恰好剩下两个式子，那么还有一个关系，把这个关系找出来就好了
+
+~~~{.cpp}
+bool gg[N];
+int n,m,i,t,a[N],b[N],c[N],F[N],q[N];
+vector<pair<int,int> >Q;
+int gf(int x){return F[x]==x?x:F[x]=gf(F[x]);}
+void print(int x){
+	if(x<0)putchar('!');
+	putchar('x');
+	printf("%d",abs(x));
+}
+int main(){
+	rd(n);
+	fr(i,n)rd(a[i]);
+	fr(i,n)rd(b[i]);
+	fr(i,n)rd(c[i]),F[i]=i;
+	fr(i,n)if(a[i]==b[i]&&b[i]==c[i])
+		if(gg[i]=1,a[i])Q.PB(MP(-i,i));else Q.PB(MP(i,-i));
+	fr(i,n)if(!gg[i])fr(j,n)if(!gg[j])if(gf(i)!=gf(j)){
+		if(a[i]==a[j]&&b[i]==b[j]&&c[i]==c[j]){
+			Q.PB(MP(i,j));Q.PB(MP(j,i));
+			F[gf(i)]=gf(j);
+		}
+		if(a[i]!=a[j]&&b[i]!=b[j]&&c[i]!=c[j]){
+			Q.PB(MP(i,-j));Q.PB(MP(-j,i));
+			F[gf(i)]=gf(j);
+		}
+	}
+	fr(i,n)if(!gg[i]&&gf(i)==i)q[++t]=i;
+	if(t>=3)return puts("-1"),0;
+	if(t==2)Q.PB(MP(a[q[1]]+b[q[1]]+c[q[1]]==2?-q[1]:q[1],a[q[2]]+b[q[2]]+c[q[2]]==2?q[2]:-q[2]));
+	printf("%d\n",Q.size());
+	for(int i=0;i<Q.size();i++)print(Q[i].X),printf(" -> "),print(Q[i].Y),puts("");
+}
+~~~
+
+MID-HARD: D
+
+D. 一个$n$的汉诺塔放在$(1,1)$上，现在你要将它们移动到$(6,6)$使得他们按顺序排好。每次可以选择一个点上最上面的一段塔往下或往右移动一格，$n\leq40000$。
+
+每次一格依次往右和往下排，能放多少放多少，变成若干子问题。$f(i,j)=\sum f(x,y)$，求出$f(6,6)\approx 42000$
+
+那么每次在一个点上的都是一段数$[l,r]$，他的右下角没有数，把他在右下角依次排开，继续做子问题即可
+
+~~~{.cpp}
+int n,f[7][7];VI V[7][7];
+void cal(int x,int y,int n,int m){
+	for(;x<n;x++)printf("%d %d D 1\n",x,y);
+	for(;y<m;y++)printf("%d %d R 1\n",x,y);
+} 
+void work(int x,int y){
+	if(!V[x][y].size())return;
+	if(x==6&&y==6)return;
+	if(x+y==11){
+		char ch=x==5?'D':'R';
+		if(V[x][y].size()==1)printf("%d %d %c 1\n",x,y,ch);else{
+			if(V[x][y][0]>V[x][y][1])printf("%d %d %c 2\n",x,y,ch);else
+			printf("%d %d %c 1\n%d %d %c 1\n",x,y,ch,x,y,ch);
+		}
+		V[x][y].clear();
+		return;
+	}
+	int i,j,t,mx=0;
+	for(t=0;t<V[x][y].size();t++)mx=max(mx,V[x][y][t]);
+	for(t=V[x][y].size()-1;~t;t--){
+		int o=mx-V[x][y][t]+1,tmp=0,ff=0;
+		for(i=6;i>=x;i--){
+			for(j=6;j>=y;j--){
+				tmp+=f[i][j];
+				if(tmp>=o){
+					cal(x,y,i,j);V[i][j].PB(V[x][y][t]);
+					ff=1;break;
+				}
+			}
+			if(ff)break;
+		}
+	}
+	V[x][y].clear();
+	for(i=6;i>=x;i--)for(j=6;j>=y;j--)if(i!=x||j!=y)work(i,j);
+}
+int main(){
+	int i,j,x,y;
+	f[6][6]=1;f[5][6]=2;f[6][5]=2;
+	for(i=6;i;i--)for(j=6;j;j--)if(!f[i][j])
+		for(x=i;x<=6;x++)for(y=j;y<=6;y++)
+			f[i][j]+=f[x][y];
+	rd(n);
+	fr(i,n)rd(x),V[1][1].PB(x);
+	work(1,1);
+}
+~~~
+
+HARD: GI（没看）
