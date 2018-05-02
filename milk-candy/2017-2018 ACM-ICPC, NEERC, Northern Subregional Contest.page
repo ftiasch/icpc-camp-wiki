@@ -1,40 +1,48 @@
-# Info
+Info
+====
 
 Date: 2017.11.12 13:15-18:15
 
 [Link](http://codeforces.com/gym/101612)
 
-# Solutions
+Solutions
+=========
 
-## A Auxiliary Project
+A Auxiliary Project
+-------------------
 
 solved by sk, upsolved by none
 
-## B Boolean Satisfability
+B Boolean Satisfability
+-----------------------
 
 solved by Jove, upsolved by none
 
-## C Consonant Fencity
+C Consonant Fencity
+-------------------
 
 solved by Jove, upsolved by none
 
-## D Dividing Marbles
+D Dividing Marbles
+------------------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
-时光倒流，将分堆的过程反过来看，就是求最短的[Addition chain](https://en.wikipedia.org/wiki/Addition_chain)，特殊限制是$n$的二进制表示下$1$的个数$\leq 4$。
+时光倒流，将分堆的过程反过来看，就是求最短的[Addition
+chain](https://en.wikipedia.org/wiki/Addition_chain)，特殊限制是$n$的二进制表示下$1$的个数$\leq 4$。
 
 记$n$的二进制位数为$s$，二进制表示下$1$的个数为$t$，显然长度不大于$s+t-1$，同时不难证明当$t \leq 3$时，长度不小于$s+t-1$，当$t=4$时，长度不小于$s+2$。只需求出所有满足$t=4$且最短长度为$s+2$的$n$的解，对于剩下的$n$直接使用平凡方法进行求解。考虑爆搜预处理，一个剪枝是长度不超过$s+2$要求至多出现$2$次新加入的数字不比原来的最大值多一位，另一个剪枝是不需要使用二进制表示下$1$个数$>4$的数。
 
-## E Equal Numbers
+E Equal Numbers
+---------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
@@ -42,11 +50,12 @@ Jove's solution
 
 现在将数字分为两类，一类是满足存在$v>u$且$v$是$u$的倍数的$u$，另一类就是剩下的数字。要消灭第一类数字，只需要把它变成某种它在第二类中的倍数；要消灭第二类数字，需要选至少两种数字，让这些数字同时变成它们的最小公倍数。
 
-## F Fygon 2.0
+F Fygon 2.0
+-----------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -58,21 +67,23 @@ quailty's solution
 
 这说明$m!a_m$就是$m$个条件均为真的方案数，也就是$m$个点的赋值恰好是$1$到$m$的排列，也就是拓扑序的方案数，状压$dp$即可。
 
-## G Grand Test
+G Grand Test
+------------
 
 upsolved by sk
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 考察每个点双连通分量，任取一个$deg \geq 3$的点$u$，随便抓一个包含$u$的环$C$，再从$u$出发找一条路径走到$C$上某个点$v$，那么$u$到$v$之间就有三条不相交路径。
 
-## H Hidden Supervisors
+H Hidden Supervisors
+--------------------
 
 solved by Jove, upsolved by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
@@ -82,15 +93,17 @@ Jove's solution
 
 需要注意构造方案的时候不能出现环，可以考虑按照子树内空点数从大到小往上挂。
 
-## I Intelligence in Perpendicularia
+I Intelligence in Perpendicularia
+---------------------------------
 
 solved by sk, upsolvef by none
 
-## J Joker
+J Joker
+-------
 
 upsolved by quailty
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
@@ -98,24 +111,27 @@ quailty's solution
 
 考虑分块维护，每块维护一个$(x_i,y_i)$的上凸壳，整块修改不会影响这个凸壳，打标记即可，部分修改可以直接重构整个凸壳，查询时在每块的凸壳上三分。注意到$x_i$关于$i$是非降的，不需要特殊处理即可求出最小$i$，重构凸壳也不需要重新排序，选取合适块大小可以做到复杂度$O(n\sqrt{n\log{n}})$。
 
-## K Kotlin Island
+K Kotlin Island
+---------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 纵横相间。
 
-## L Little Difference
+L Little Difference
+-------------------
 
 solved by quailty, upsolved by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 如果$n$是$2$的幂那么无穷多解，否则枚举分解成多少个数，求出较小的数字$t$之后枚举使用了多少个$t$和$t+1$。
 
-# Replay
+Replay
+======
