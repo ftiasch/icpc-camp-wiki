@@ -20,30 +20,42 @@
 ┌────────┬────────────────────────────────────────────────────────────┐
 │J [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Analogous Sets [TDJ]
+A. Analogous Sets \[TDJ\]
+-------------------------
 
-## B. Bayes' Law [MZH]
+B. Bayes' Law \[MZH\]
+---------------------
 
-## C. Catalian Sequences [GX]
+C. Catalian Sequences \[GX\]
+----------------------------
 
-## D. Drunkard's Walk [GX]
+D. Drunkard's Walk \[GX\]
+-------------------------
 
-## E. Elegant Scheduling [GX]
+E. Elegant Scheduling \[GX\]
+----------------------------
 
-## F. Flights [GX]
+F. Flights \[GX\]
+-----------------
 
-## G. Genome of English Literature [TDJ]
+G. Genome of English Literature \[TDJ\]
+---------------------------------------
 
-## H. Hide-and-Seek [MZH]
+H. Hide-and-Seek \[MZH\]
+------------------------
 
-## I. Informatics Final Project [TDJ]
+I. Informatics Final Project \[TDJ\]
+------------------------------------
 
 稳定婚姻问题魔改版。
 
-## J. Japanese Origami [TDJ]
+J. Japanese Origami \[TDJ\]
+---------------------------
 
 贪心的思路非常好想，之后代码实现比较麻烦，复杂度O(N)。
 
-## K. Kabbalah for Two [MZH]
+K. Kabbalah for Two \[MZH\]
+---------------------------
