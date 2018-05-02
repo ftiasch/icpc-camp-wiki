@@ -22,34 +22,47 @@
 │E₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
  全队梦游状态
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Album of Numbers [TDJ]
+A. Album of Numbers \[TDJ\]
+---------------------------
 
 将分母的`-1`去掉后离线用线段树维护，再通过积算出原值。
 
-## B. Well Off [MZH]
+B. Well Off \[MZH\]
+-------------------
 
-## C. Accurate Shots (8M ML!)
+C. Accurate Shots (8M ML!)
+--------------------------
 
-## D. Prom [TDJ]
+D. Prom \[TDJ\]
+---------------
 
 签到题。
 
-## E. Impressive Graphs
+E. Impressive Graphs
+--------------------
 
-## F. Pen [GX]
+F. Pen \[GX\]
+-------------
 
-## G. Board Game
+G. Board Game
+-------------
 
-## H. Scouts [MZH]
+H. Scouts \[MZH\]
+-----------------
 
-## I. Insects [GX]
+I. Insects \[GX\]
+-----------------
 
-## J. Caves
+J. Caves
+--------
 
-## K. Blocks [GX]
+K. Blocks \[GX\]
+----------------
 
-## L. Postman [TDJ]
+L. Postman \[TDJ\]
+------------------
 
 树DP，答案跟遍历顺序无关。
