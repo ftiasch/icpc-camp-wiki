@@ -19,36 +19,49 @@
 ├────────┼════════════────────────════════════────────────════════════┤
 │+ [4:14]│ooooooooo·o·o·oo··ooooooooo·oo·  ·o·oooo·····oooooooooo····o│
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-- D的正解是奇怪的搜索或者包含一种非常复杂情况的构造，但不少简单的错误(?)搜索能过。
+-   D的正解是奇怪的搜索或者包含一种非常复杂情况的构造，但不少简单的错误(?)搜索能过。
 
-- J是一道简单的分块，训练的时候MZH想成了块链就没有优先去写…
+-   J是一道简单的分块，训练的时候MZH想成了块链就没有优先去写…
 
-## A. Auxiliary Project [TDJ]
+A. Auxiliary Project \[TDJ\]
+----------------------------
 
-## B. Boolean Satisfability [GX]
+B. Boolean Satisfability \[GX\]
+-------------------------------
 
-## C. Consonant Fencity [TDJ]
+C. Consonant Fencity \[TDJ\]
+----------------------------
 
-## D. Dividing Marbles [GX]
+D. Dividing Marbles \[GX\]
+--------------------------
 
-## E. Equal Numbers [GX]
+E. Equal Numbers \[GX\]
+-----------------------
 
-## F. Fygon 2.0 [TDJ]
+F. Fygon 2.0 \[TDJ\]
+--------------------
 
 强连通分量一开始以为是0就没仔细想…
 
-## G. Grand Test [TDJ]
+G. Grand Test \[TDJ\]
+---------------------
 
 可能…只有…我们队…是用…仙人掌…做的吧…
 
-## H. Hidden Supervisors [GX]
+H. Hidden Supervisors \[GX\]
+----------------------------
 
-## I. Intelligence in Perpendicularia [MZH]
+I. Intelligence in Perpendicularia \[MZH\]
+------------------------------------------
 
-## J. Joker1 [MZH]
+J. Joker1 \[MZH\]
+-----------------
 
-## K. Kotlin Island [MZH]
+K. Kotlin Island \[MZH\]
+------------------------
 
-## L. Little Difference [MZH]
+L. Little Difference \[MZH\]
+----------------------------
