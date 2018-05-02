@@ -1,0 +1,71 @@
+# Info
+
+Date: 2017.10.30 18:00-23:00
+
+[Link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006298)
+
+# Solutions
+
+## A Tree Orientation
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+考虑$dp_{u,j,0/1}$表示以$u$为根的子树中除$u$以外恰好有$i$个汇点且$i$是否向子树内连过边，转移枚举$u$的一个儿子$v$挂上来，枚举两棵子树内汇点数以及$u-v$这条边的方向，可以确定$v$是否为汇点，复杂度$O(n^2)$。
+
+## B A Masterpiece
+
+solved by Jove, upsolved by none
+
+## C Auction
+
+solved by sk, upsolved by none
+
+## D Deck Building
+
+unsolved
+
+## E The Secret of Betting
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+对每个$i$连一条$i \rightarrow A_i$的边，可以得到若干个有向环，并且每条边跨度不超过$k$，现在就是要求出有多少种不同的图。
+
+$k=0$特判，否则考虑记录前$k$个点是否有入边和出边，枚举当前点是否有入边以及从哪个点连入、是否有出边以及连向哪个点、是否连一个自环。对于$k$比较大的情况可以直接$dp$，复杂度是$O(k^24^kn)$，对于$k$比较小的情况，矩阵优化转移，复杂度$O(4^{3n}\log{n})$。
+
+对于上述方法，极限数据是$n=10^6,k=4$，直接$dp$卡常数并没有成功，考虑优化矩阵的状态数，从初始状态出发$BFS$一遍，发现此时只有$70$个有效状态，就可以通过了。
+
+## F Financial Reports
+
+solved by sk, upsolved by none
+
+## G Moore's Law
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+对于$n-1$的答案$x$，如果$x/2^{n-1}$是奇数，那么给$x$加一个$10^n$得到$n$的答案，否则加一个$2 \times 10^n$，$Python$打表。
+
+## H Plagiarism
+
+unsolved
+
+## I Number Builder
+
+solved by Jove, upsolved by none
+
+## J Find a Triangle
+
+unsolved
+
+# Replay
