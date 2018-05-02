@@ -21,32 +21,44 @@
 │A₀[-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
  开始4小时左右学校断网
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Binary Duel
+A. Binary Duel
+--------------
 
-## B. Breeding Sharks [TDJ]
+B. Breeding Sharks \[TDJ\]
+--------------------------
 
 有向值manacher。
 
-## C. Game [GX]
+C. Game \[GX\]
+--------------
 
-## D. Glass [MZH]
+D. Glass \[MZH\]
+----------------
 
-## E. Hunt [MZH]
+E. Hunt \[MZH\]
+---------------
 
-## F. Knights [MZH]
+F. Knights \[MZH\]
+------------------
 
-## G. Necklace [TDJ]
+G. Necklace \[TDJ\]
+-------------------
 
 签到题。
 
-## H. Of Sharks and Men [GX]
+H. Of Sharks and Men \[GX\]
+---------------------------
 
-## I. Scaring [TDJ]
+I. Scaring \[TDJ\]
+------------------
 
 贪心按权值顺序放，再改进单次$O(N*log{N})$的用堆维护的做法使总复杂度达到$O(N^2)$即可。
 
-## J. Segmentworm [GX]
+J. Segmentworm \[GX\]
+---------------------
 
-## K. Watchshark
+K. Watchshark
+-------------
