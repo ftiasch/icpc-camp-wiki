@@ -84,8 +84,8 @@ solved by quailty, upsolved by none
 quailty's solution
 
 假设已经求出$R_1,R_2,...,R_{k-1}$，根据[Descartes'
-theorem](https://en.wikipedia.org/wiki/Descartes%27_theorem)，可以得到一个关于$1/R_k$的二次方程，并且这个二次方程的另一个解是$1/R_{k-2}$，由[Vieta's
-formulas](https://en.wikipedia.org/wiki/Vieta%27s_formulas)可以得到一个线性递推，手算出$R_1$之后依次递推即可。
+theorem](https://en.wikipedia.org/wiki/Descartes'_theorem)，可以得到一个关于$1/R_k$的二次方程，并且这个二次方程的另一个解是$1/R_{k-2}$，由[Vieta's
+formulas](https://en.wikipedia.org/wiki/Vieta's_formulas)可以得到一个线性递推，手算出$R_1$之后依次递推即可。
 
 H A Cache Simulator
 -------------------
