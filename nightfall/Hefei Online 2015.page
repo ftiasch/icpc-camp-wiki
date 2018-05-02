@@ -1,10 +1,12 @@
-# [Monitor the Alpacas](http://acm.hdu.edu.cn/showproblem.php?pid=5484)
+[Monitor the Alpacas](http://acm.hdu.edu.cn/showproblem.php?pid=5484)
+=====================================================================
 
-## Aki
+Aki
+---
 
 直线和凸包求交板子，然后简单bfs。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
@@ -12,133 +14,135 @@ typedef long long LL;
 int sign(LL x) { return (x > 0) - (x < 0); }
 
 struct P {
-	int x, y;
-	P() {x = y = 0;}
-	P(int x, int y) : x(x), y(y) {}
+    int x, y;
+    P() {x = y = 0;}
+    P(int x, int y) : x(x), y(y) {}
 };
 P operator - (const P &a, const P &b) { return P(a.x - b.x, a.y - b.y); }
 LL operator % (const P & a, const P & b) { return 1LL * a.x * b.x + 1LL * a.y * b.y; }
 LL operator * (const P & a, const P & b) { return 1LL * a.x * b.y - 1LL * a.y * b.x; }
 bool operator < (const P &a, const P &b) {
-	if (a.x != b.x) return a.x < b.x;
-	return a.y < b.y;
+    if (a.x != b.x) return a.x < b.x;
+    return a.y < b.y;
 }
 
 const int N = 2e5 + 5, M = 505;
 P a[N], b[M];
 int lowerBound(int le, int ri, const P & dir) {
-	while (le < ri) {
-		int mid = (le + ri) / 2;
-		if (sign((a[mid + 1] - a[mid]) * dir) <= 0) {
-			le = mid + 1;
-		}
-		else {
-			ri = mid;
-		}
-	}
-	return le;
+    while (le < ri) {
+        int mid = (le + ri) / 2;
+        if (sign((a[mid + 1] - a[mid]) * dir) <= 0) {
+            le = mid + 1;
+        }
+        else {
+            ri = mid;
+        }
+    }
+    return le;
 }
 int boundLower(int le, int ri, const P & s, const P & t) {
-	while (le < ri) {
-		int mid = (le + ri + 1) / 2;
-		if (sign((a[mid] - s) * (t - s)) <= 0) {
-			le = mid;
-		}
-		else {
-			ri = mid - 1;
-		}
-	}
-	return le;
+    while (le < ri) {
+        int mid = (le + ri + 1) / 2;
+        if (sign((a[mid] - s) * (t - s)) <= 0) {
+            le = mid;
+        }
+        else {
+            ri = mid - 1;
+        }
+    }
+    return le;
 }
 #define j1 asfjh
 int n, i1, j1, d[M];
 bool reach[M][M];
 
 bool check(int x, P s, P t) {
-	if (s.x == t.x && s.y == t.y) {
-		for (int i = -2; i <= 2; ++ i) {
-			P q = a[(n + i + x) % n];
-			if (q.x != s.x || q.y != s.y) return 0;
-		}
-		return 1;
-	}
-	for (int i = -2; i <= 2; ++ i) {
-		if ((a[(n + i + x) % n] - s) * (t - s) < 0) return 0;
-	}
-	return 1;
+    if (s.x == t.x && s.y == t.y) {
+        for (int i = -2; i <= 2; ++ i) {
+            P q = a[(n + i + x) % n];
+            if (q.x != s.x || q.y != s.y) return 0;
+        }
+        return 1;
+    }
+    for (int i = -2; i <= 2; ++ i) {
+        if ((a[(n + i + x) % n] - s) * (t - s) < 0) return 0;
+    }
+    return 1;
 }
 bool all_on_right(P s, P t) {
-	P S = s, T = t;
-	if (t < s) swap(t, s);
-	int i3 = lowerBound(i1, j1, t - s);
-	int j3 = lowerBound(j1, i1 + n, s - t);
-	int i4 = boundLower(i3, j3, s, t);
-	int j4 = boundLower(j3, i3 + n, t, s);
-	if (!check(i3, S, T)) return 0;
-	if (!check(j3, S, T)) return 0;
-	if (!check(i4, S, T)) return 0;
-	if (!check(j4, S, T)) return 0;
-	return 1;
+    P S = s, T = t;
+    if (t < s) swap(t, s);
+    int i3 = lowerBound(i1, j1, t - s);
+    int j3 = lowerBound(j1, i1 + n, s - t);
+    int i4 = boundLower(i3, j3, s, t);
+    int j4 = boundLower(j3, i3 + n, t, s);
+    if (!check(i3, S, T)) return 0;
+    if (!check(j3, S, T)) return 0;
+    if (!check(i4, S, T)) return 0;
+    if (!check(j4, S, T)) return 0;
+    return 1;
 }
 
 int main() {
-	int T, zzz = 0;
-	scanf("%d", &T);
-	while (T --) {
-		int m;
-		scanf("%d%d", &n, &m);
-		for (int i = 0; i < n; ++ i) {
-			int x, y;
-			scanf("%d%d", &x, &y);
-			a[i] = P(x, y);
-		}
-		sort(a, a + n);
-		vector<P> q;
-		i1 = 0;
-		for (int i = 0; i < n; ++ i) {
-			while (q.size() >= 2 && (q.back() - q[q.size() - 2]) * (a[i] - q[q.size() - 2]) >= 0) q.pop_back();
-			q.push_back(a[i]);
-		}
-		int tmp = q.size();
-		j1 = q.size() - 1;
-		for (int i = n - 1; i >= 0; -- i) {
-			while (q.size() - tmp >= 2 && (q.back() - q[q.size() - 2]) * (a[i] - q[q.size() - 2]) >= 0) q.pop_back();
-			q.push_back(a[i]);
-		}
-		n = q.size();
-		for (int i = 0; i < n; ++ i) a[i] = q[i];
-		for (int i = 0; i < m; ++ i) {
-			int x, y;
-			scanf("%d%d", &x, &y);
-			b[i] = P(x, y);
-		}
-		for (int i = 0; i < m; ++ i) {
-			for (int j = 0; j < m; ++ j) reach[i][j] = all_on_right(b[i], b[j]);
-		}
-		int ans = -1;
-		for (int st = 0; st < m; ++ st) {
-			for (int i = 0; i < m; ++ i) d[i] = -1;
-			queue<int> q;
-			q.push(st);
-			while (!q.empty()) {
-				int p = q.front(); q.pop();
-				int D = p == st ? 0 : d[p];
-				for (int j = 0; j < m; ++ j) if (reach[p][j] && d[j] == -1) {
-					d[j] = D + 1;
-					if (j == st) break;
-					q.push(j);
-				}
-			}
-			if (d[st] != -1) ans = ans == -1 ? d[st] : min(ans, d[st]);
-		}
-		printf("Case #%d: %d\n", ++ zzz, ans);
-	}
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --) {
+        int m;
+        scanf("%d%d", &n, &m);
+        for (int i = 0; i < n; ++ i) {
+            int x, y;
+            scanf("%d%d", &x, &y);
+            a[i] = P(x, y);
+        }
+        sort(a, a + n);
+        vector<P> q;
+        i1 = 0;
+        for (int i = 0; i < n; ++ i) {
+            while (q.size() >= 2 && (q.back() - q[q.size() - 2]) * (a[i] - q[q.size() - 2]) >= 0) q.pop_back();
+            q.push_back(a[i]);
+        }
+        int tmp = q.size();
+        j1 = q.size() - 1;
+        for (int i = n - 1; i >= 0; -- i) {
+            while (q.size() - tmp >= 2 && (q.back() - q[q.size() - 2]) * (a[i] - q[q.size() - 2]) >= 0) q.pop_back();
+            q.push_back(a[i]);
+        }
+        n = q.size();
+        for (int i = 0; i < n; ++ i) a[i] = q[i];
+        for (int i = 0; i < m; ++ i) {
+            int x, y;
+            scanf("%d%d", &x, &y);
+            b[i] = P(x, y);
+        }
+        for (int i = 0; i < m; ++ i) {
+            for (int j = 0; j < m; ++ j) reach[i][j] = all_on_right(b[i], b[j]);
+        }
+        int ans = -1;
+        for (int st = 0; st < m; ++ st) {
+            for (int i = 0; i < m; ++ i) d[i] = -1;
+            queue<int> q;
+            q.push(st);
+            while (!q.empty()) {
+                int p = q.front(); q.pop();
+                int D = p == st ? 0 : d[p];
+                for (int j = 0; j < m; ++ j) if (reach[p][j] && d[j] == -1) {
+                    d[j] = D + 1;
+                    if (j == st) break;
+                    q.push(j);
+                }
+            }
+            if (d[st] != -1) ans = ans == -1 ? d[st] : min(ans, d[st]);
+        }
+        printf("Case #%d: %d\n", ++ zzz, ans);
+    }
 }
-~~~
+```
 
-# [The Relationship in Club](http://acm.hdu.edu.cn/showproblem.php?pid=5485)
+[The Relationship in Club](http://acm.hdu.edu.cn/showproblem.php?pid=5485)
+==========================================================================
 
-## lbn187
+lbn187
+------
 
 记$H[i]$表示二分图的个数，其中有$n$个联通块的二分图算$2^n$个。
 
@@ -146,7 +150,7 @@ int main() {
 
 用$F[i]$表示二分图的个数，用$G[i]$去推乘组合数即可。
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 1001
 #define M 105225319
@@ -154,98 +158,101 @@ int main() {
 int T,n,m,i,j,ca;
 LL c[N][N],pw[N*N],H[N],G[N],F[N];
 int main(){
-	scanf("%d",&T);
-	for(i=0;i<N;i++)
-		for(c[i][0]=j=1;j<=i;j++)c[i][j]=(c[i-1][j]+c[i-1][j-1])%M;
-	for(ca=1;ca<=T;ca++){
-		scanf("%d%d",&n,&m);
-		for(pw[0]=i=1;i<=n*n;i++)pw[i]=pw[i-1]*(m+1)%M;
-		for(i=0;i<=n;i++)F[i]=G[i]=H[i]=0;
-		for(i=1;i<=n;i++)
-			for(j=1;j<=i;j++)
-				H[i]=(H[i]+c[i-1][j-1]*pw[j*(i-j)])%M;
-		for(i=1;i<=n;i++)
-			for(G[i]=H[i],j=1;j<i;j++)	
-				G[i]=(G[i]-G[j]*H[i-j]%M*2%M*c[i-1][j-1]%M+M)%M;
-		for(F[0]=i=1;i<=n;i++)
-			for(j=1;j<=i;j++)
-				F[i]=(F[i]+F[i-j]*G[j]%M*c[i-1][j-1])%M;
-		if(n==1)F[n]=0;
-		printf("Case #%d: %lld\n",ca,F[n]);
-	}
+    scanf("%d",&T);
+    for(i=0;i<N;i++)
+        for(c[i][0]=j=1;j<=i;j++)c[i][j]=(c[i-1][j]+c[i-1][j-1])%M;
+    for(ca=1;ca<=T;ca++){
+        scanf("%d%d",&n,&m);
+        for(pw[0]=i=1;i<=n*n;i++)pw[i]=pw[i-1]*(m+1)%M;
+        for(i=0;i<=n;i++)F[i]=G[i]=H[i]=0;
+        for(i=1;i<=n;i++)
+            for(j=1;j<=i;j++)
+                H[i]=(H[i]+c[i-1][j-1]*pw[j*(i-j)])%M;
+        for(i=1;i<=n;i++)
+            for(G[i]=H[i],j=1;j<i;j++)  
+                G[i]=(G[i]-G[j]*H[i-j]%M*2%M*c[i-1][j-1]%M+M)%M;
+        for(F[0]=i=1;i<=n;i++)
+            for(j=1;j<=i;j++)
+                F[i]=(F[i]+F[i-j]*G[j]%M*c[i-1][j-1])%M;
+        if(n==1)F[n]=0;
+        printf("Case #%d: %lld\n",ca,F[n]);
+    }
 }
-~~~
-# [Shape](http://acm.hdu.edu.cn/showproblem.php?pid=5488)
+```
 
-## Aki
+[Shape](http://acm.hdu.edu.cn/showproblem.php?pid=5488)
+=======================================================
+
+Aki
+---
 
 结论就是按照gcd拆边之后，整个图形一定能拆成6段，第$i$段和第$i+3$段对应（贴在一起），暴枚check一下就可以了。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 struct P {
-	int x, y;
-	P() {}
-	P(int x, int y) : x(x), y(y) {}
+    int x, y;
+    P() {}
+    P(int x, int y) : x(x), y(y) {}
 };
 P operator - (const P &a, const P &b) {return P (a.x - b.x, a.y - b.y);}
 bool operator == (const P &a, const P &b) {return a.x == b.x && a.y == b.y;}
 int n;
 vector<P> b;
 bool same(P a, P b, P x, P y) {
-	return (b - a) == (x - y);
+    return (b - a) == (x - y);
 }
 bool same(int l, int r, int x, int y) {
-	int len = (r - l + n) % n;
-	assert((y - x + n) % n == len);
-	for (int i = 0; i < len; ++ i) {
-		P u1 = b[(l + i) % n], v1 = b[(l + i + 1) % n];
-		P u2 = b[(x + len - i - 1) % n], v2 = b[(x + len - i) % n];
-		if (!same(u1, v1, u2, v2)) return 0;
-	}
-	return 1;
+    int len = (r - l + n) % n;
+    assert((y - x + n) % n == len);
+    for (int i = 0; i < len; ++ i) {
+        P u1 = b[(l + i) % n], v1 = b[(l + i + 1) % n];
+        P u2 = b[(x + len - i - 1) % n], v2 = b[(x + len - i) % n];
+        if (!same(u1, v1, u2, v2)) return 0;
+    }
+    return 1;
 }
 int main() {
-	int T, zzz = 0;
-	scanf("%d", &T);
-	while (T --) {
-		scanf("%d", &n);
-		vector<P> a;
-		for (int i = 0; i < n; ++ i) {
-			int x, y;
-			scanf("%d%d", &x, &y);
-			a.push_back(P(x, y));
-		}
-		b.clear();
-		for (int i = 0; i < n; ++ i) {
-			P u = a[i], v = a[(i + 1) % n], d = v - u;
-			int g = abs(__gcd(d.x, d.y));
-			for (P w = u; !(w == v); w.x += d.x / g, w.y += d.y / g) b.push_back(w);
-		}
-		bool pos = 0;
-		n = b.size();
-		if (n & 1) {
-			printf("Case #%d: No\n", ++ zzz);
-			continue;
-		}
-		//for (auto x: b) printf("(%d %d) ", x.x, x.y); puts("");
-		for (int i = 0; i < n; ++ i) {
-			for (int j = i; j < n; ++ j) {
-				for (int k = j; k < n; ++ k) {
-					int a = (i + n / 2) % n;
-					int b = (j + n / 2) % n;
-					int c = (k + n / 2) % n;
-					if (same(i, j, a, b) && same(j, k, b, c) && same(k, a, c, i)) {
-						pos = 1;
-						goto eee;
-					}
-				}
-			}
-		}
+    int T, zzz = 0;
+    scanf("%d", &T);
+    while (T --) {
+        scanf("%d", &n);
+        vector<P> a;
+        for (int i = 0; i < n; ++ i) {
+            int x, y;
+            scanf("%d%d", &x, &y);
+            a.push_back(P(x, y));
+        }
+        b.clear();
+        for (int i = 0; i < n; ++ i) {
+            P u = a[i], v = a[(i + 1) % n], d = v - u;
+            int g = abs(__gcd(d.x, d.y));
+            for (P w = u; !(w == v); w.x += d.x / g, w.y += d.y / g) b.push_back(w);
+        }
+        bool pos = 0;
+        n = b.size();
+        if (n & 1) {
+            printf("Case #%d: No\n", ++ zzz);
+            continue;
+        }
+        //for (auto x: b) printf("(%d %d) ", x.x, x.y); puts("");
+        for (int i = 0; i < n; ++ i) {
+            for (int j = i; j < n; ++ j) {
+                for (int k = j; k < n; ++ k) {
+                    int a = (i + n / 2) % n;
+                    int b = (j + n / 2) % n;
+                    int c = (k + n / 2) % n;
+                    if (same(i, j, a, b) && same(j, k, b, c) && same(k, a, c, i)) {
+                        pos = 1;
+                        goto eee;
+                    }
+                }
+            }
+        }
 eee:
-		printf("Case #%d: ", ++ zzz);
-		puts(pos ? "Yes" : "No");
-	}
+        printf("Case #%d: ", ++ zzz);
+        puts(pos ? "Yes" : "No");
+    }
 }
-~~~
+```
