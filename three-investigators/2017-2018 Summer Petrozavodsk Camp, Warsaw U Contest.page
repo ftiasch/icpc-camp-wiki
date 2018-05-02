@@ -1,0 +1,117 @@
+# Contest Info
+
+date: 2018.03.29 08:30-13:30
+
+[practice link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001506)
+
+# Solutions
+
+## A. Connectivity
+
+solved by braveTester, upsolved by none
+
+## B. Hotter-Colder
+
+unsolved
+
+## C. Painting
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+每种颜色会恰好染一次，如果最终序列中某种颜色存在至少两次出现，那么相邻两次同色限制了其区间内部的染色时间。
+
+而对于只出现了一次的颜色，从两端染色不会使解变差。
+
+定义 $f(u, v)$ 表示现在要将从颜色 $u$ 的第一次出现位置到颜色 $v$ 的最后一次出现位置形成的区间进行染色能得到的最大染色次数，枚举先染左端点还是右端点即可，时间复杂度 $\mathcal{O}(n m + m^2)$。
+
+## D. Ones
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+将 $k$ 分解成二进制，这样最多需要几十个 $1$
+
+## E. Seats
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+这个题很容易让人失了智直接拿拉格朗日乘数法强行解，至少队友和我都是这么掉坑里去的……
+
+注意到每个人的期望收益相等，大家的总收益来源于那些被至少一个人选择的奖项，因此可以建立如下条件极值模型：
+
+- $\displaystyle \max{\frac{1}{n}\sum_{i = 1}^{n}{(1 - (1 - p_i)^n) a_i}}$
+- $\displaystyle \mathrm{s.t.} \sum_{i = 1}^{n}{p_i} = 1$
+- $\displaystyle \forall_{1 \leq i \leq n}{0 \leq p_i \leq 1}$
+
+构建拉格朗日函数 $\displaystyle F(p_1, p_2, \cdots, p_n, \lambda) = \frac{1}{n}\sum_{i = 1}^{n}{\left(1 - (1 - p_i)^n\right) a_i} - \lambda \left(\sum_{i = 1}^{n}{p_i} - 1\right)$。
+
+强行求二阶导可以知道这个函数存在极大值，因此可以尝试求解上述条件极值。
+
+根据一阶导可以知道 $\mathbb{R}^{n}$ 上的最优解满足 $\displaystyle (1 - p_i) : (1 - p_j) = \frac{1}{\sqrt[n - 1]{a_i}} : \frac{1}{\sqrt[n - 1]{a_j}}$，但是这不适用于 $0 \leq p_i \leq 1$，例如 $n = 3$, $a = [2, 9, 10]$。
+
+同样地，由一阶导也可以知道存在调整的方法使得 $0 \leq p_i \leq 1$，除了那些被强制 $p_i = 0$ 的，其他的 $p_i$ 一定满足上述比例关系，因此可以二分一个总权重 $w$，然后按照比例将权重分配给各个 $p_i$，尝试调整使得 $\displaystyle \sum_{i = 1}^{n}{p_i} = 1$ 即可。
+
+~~从精度的角度来看，二分非常适合这个题目~~ 完全不卡精度 = =
+
+## F. Ants
+
+unsolved
+
+## G. Permutation
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+设 $f[i]$ 表示将前 $i$ 个数分类，以第 $i$ 个数作为下降序列的最后一个时上升序列的最后一个数的最小值，$g[i]$ 则相反，DP 即可。
+
+## H. Primes
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+转化成两个积性函数的组合，分别求解即可，时间复杂度 $\mathcal{O}(n + q \sqrt{n})$。
+
+## I. Vertex Covers
+
+unsolved
+
+## J. Scheduling
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+将时间片段拆成点，每个点向汇点连容量为时间段长 $\times m$ 的边，源点向每个 task 连容量为 $c_i$ 的边，每个 $task$ 向对应的那些时间片段连容量为段长的边，若满流则说明能分配。
+
+## K. Shuffle
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+至多 shuffle 一遍，shuffle 两遍等价于没 shuffle。
+
+# Replay and Summary
+
+None is available.
