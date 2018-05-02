@@ -1,0 +1,101 @@
+# Contest Info
+
+date: 2017.11.05 09:00-14:00
+
+practice link: **onsite**
+
+# Solutions
+
+## A. Super-palindrome
+
+solved by chitanda, upsolved by none
+
+## B. Master of Phi
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+积性函数的性质使得我们只需要知道 $f(p^k)$ 是多少就可以乘起来得到答案了，而 $f(p^k) = (k + 1) p^k - k p^{k - 1}$。
+
+## C. Hakase and Nano
+
+solved by chitanda, upsolved by none
+
+## D. Master of Random
+
+solved by braveTester, upsolved by none
+
+## E. Master of Subgraph
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+通过树分治避免卷积，转化为有根树的依赖背包问题，压位加速背包即可，时间复杂度 $\mathcal{O}\left(n \log n \frac{m}{64}\right)$。
+
+## F. Hearthrock
+
+unsolved
+
+## G. Marriage
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+考虑不合法情况，设 $m$ 为所需关系的数量，$f(i)$ 表示恰好有 $i$ 组近亲关系的方案数，$g(i)$ 表示只选出 $i$ 组近亲关系、其他关系待定的方案数，则有 $(m - i)! g(i) = \sum_{i \leq j}{{j \choose i} f(j)}$，因此可以尝试通过 $g$ 得到 $f(0)$，事实上有 $f(i) = \sum_{i \leq j}{(-1)^{j - i} {j \choose i} (m - j)! g(j)}$，于是只要算出 $g$ 就做完了。
+
+考虑 $g$ 的选法，各组之间独立，每组选出 $k$ 个的方案数是 ${a_i \choose k} {b_i \choose k} k!$。每组可以得到一个生成函数，各组生成函数之积就是 $g$，由于 $g$ 的度数不超过 $m$，所以可以分治计算生成函数之积，也可以每次选择度数最小的两个生成函数合并，复杂度都是 $\mathcal{O}(m \log^2 m)$。
+
+## H. Master of Connected Component
+
+upsolved by chitanda
+
+## I. Master of Matrix
+
+solved by chitanda, upsolved by none
+
+## J. Master of GCD
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+对每个质因数维护幂次的差分序列，得到最终序列后取最小值即可知道答案是多少。
+
+## K. Master of Sequence
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+$S(t)$ 单调不降，可以二分答案，每次计算答案时，相同的 $a_i$ 可以一起处理。
+
+对于 $a_i = k$ 的情况，需要预处理 $b_i \bmod k$ 对 $t \bmod k$ 产生的影响，预处理时需要一起计算，之后每次修改时可以 $\mathcal{O}(k)$ 修改。
+
+## L. Mod, Xor and Everything
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+设定阈值 $T$ $(T \geq \sqrt{n})$，对于 $x < T$ 的情况，枚举 $x$ 计算 $n \bmod x$，对于 $x \geq T$ 的情况，可知 $n \bmod x = n - x \left \lfloor n / x \right \rfloor$ 是 $\left \lfloor n / T \right \rfloor$ 个等差数列，计算每个等差数列的异或和可以做到 $\mathcal{O}(\log^2 n)$。为了均衡复杂度，取 $T = \mathcal{O}(\sqrt{n} \log n)$，可以做到整体复杂度 $\mathcal{O}(\sqrt{n} \log n)$，可以通过此题。
+
+对于每个等差数列 $a + b k$ $(k = 0, 1, \cdots, m - 1)$，计算它们的异或和相当于计算 $$\sum_{i \geq 0}{\left(\left(\sum_{k = 0}^{m - 1}{\left \lfloor \frac{a + b k}{2^i} \right \rfloor}\right) \bmod 2\right) 2^i}$$，可以转化为 $\mathcal{O}(\log n)$ 次直线下整点个数的计算，每次计算可以做到 $\mathcal{O}(\log n)$。
+
+# Replay and Summary
+
+None is available.
