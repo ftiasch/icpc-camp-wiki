@@ -21,28 +21,41 @@
 ┌────────┬────────────────────────────────────────────────────────────┐
 │H [-:--]│            ₀                                            ₁  │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Three Arrays [TDJ]
+A. Three Arrays \[TDJ\]
+-----------------------
 
-## B. Expected Shopping [MZH]
+B. Expected Shopping \[MZH\]
+----------------------------
 
-## C. Cover the Paths [MZH]
+C. Cover the Paths \[MZH\]
+--------------------------
 
-## D. Elevator [GX]
+D. Elevator \[GX\]
+------------------
 
-## E. Code-Cola Plants [TDJ]
+E. Code-Cola Plants \[TDJ\]
+---------------------------
 
-## F. GCD [GX]
+F. GCD \[GX\]
+-------------
 
-## G. Berland Post [MZH]
+G. Berland Post \[MZH\]
+-----------------------
 
-## H. Compressed Spanning Subtrees
+H. Compressed Spanning Subtrees
+-------------------------------
 
-## I. Prefix-free quieries [TDJ]
+I. Prefix-free quieries \[TDJ\]
+-------------------------------
 
-## J. Subsequence Sum Queries [MZH]
+J. Subsequence Sum Queries \[MZH\]
+----------------------------------
 
-## K. Consistent Occurrences [TDJ]
+K. Consistent Occurrences \[TDJ\]
+---------------------------------
 
-## L. Increasing Costs [TDJ]
+L. Increasing Costs \[TDJ\]
+---------------------------
