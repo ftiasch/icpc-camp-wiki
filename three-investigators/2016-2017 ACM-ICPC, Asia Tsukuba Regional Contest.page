@@ -1,0 +1,129 @@
+# Contest Info
+
+date: 2017.10.03 12:00-17:00
+
+[practice link](http://codeforces.com/gym/101158)
+
+# Solutions
+
+## A. Rearranging a Sequence
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+签到题
+
+## B. Quality of Check Digits
+
+solved by braveTester, upsolved by none
+
+---
+
+braveTester's solution
+
+签到题
+
+## C. Distribution Center
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+可以发现每个生产线能转移到的仓库必然是一个区间，将所有机器人按 $x_i$ 逆序排序后，维护 $\text{UP}[i]$ 表示第 $i$ 个生产线能从 $i$ 个仓库向上走几个仓库，$\text{DOWN}[i]$ 为向下走几个仓库，然后再扫描一遍就能得到答案。
+
+## D. Hidden Anagrams
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+枚举所有子串，计算出哈希值即可。
+
+## E. Infallibly Crack Perplexing Cryptarithm
+
+upsolved by braveTester
+
+---
+
+braveTester's solution
+
+手写简单的表达式编译器...还因为编译没学到被坑了好几发...
+
+有把 parse 工作交给 Python `eval` 加上字符串拼接直接轻松加愉快过的...
+
+## F. Three Kingdoms of Bourdelot
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+最开始图只有一条边，即为 $p$ 到 $q$ ，若当前图中 $s$ 能够到达 $t$ ，并且 $(s,t)$ 出现在一个组里，那么这个组的边都要加入图中，最后检查下是否有环即可。
+
+## G. Placing Medals on a Binary Tree
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+设 $r[i]$ 为还能放深度为 $i$ 的数量，一开始只有 $r[1]=2$，并且维护一个最大的 cur 表示从 $1$ 到 $cur$ 都有 $r[i]=0$ ，若对于一个输入的 $x$，若 $x\le cur$，那么必然为 No，若 $x\gt 5\times 10^5$ ，那么必然返回 Yes，否则也返回 Yes，并且向前找到第一个 $y$ 使得 $r[y]>0$，让 $r[y]$ 减 $1$ ，然后将 $y+1$ 到 $x$ 都加 $1$。
+
+## H. Animal Companion in Maze
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+显然图不能有环，那么最终的结构必然是一个 DAG，DAG 的每个点实际是一棵树，那么 DAG 上 DP，套个树 DP 即可。
+
+## I. Skinny Polygon
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+设 $\gcd(x,y)=d$
+
+考虑三个点，其中两个点在对角线的顶点，另一点为 $(q,p)$，那么三角形面积经化简后为 $x\times p-y\times q$，其最小值显然为 $\frac{d}{2}$ 。
+
+再考虑四个点，分别为 $(0,0),(x-1,y),(x/d,y/d),(x,y-1)$ ，经计算后面积为 $\frac{x/d+y/d}{2}$
+
+取其中的较小值，很容易证明最大只有 $\frac{\sqrt{2\times 10^9}}{2}$。
+
+## J. Cover the Polygon with Your Disk
+
+upsolved by chitanda
+
+---
+
+chitanda's solution
+
+三分套三分~
+
+## K. Black and White Boxes
+
+solved by chitanda, upsolved by none
+
+---
+
+chitanda's solution
+
+当 surreal number 为 $0$ 时，谁后手谁胜，那么可以折半枚举（cf 的 unordered_map 比 map 慢！）。
+
+# Replay and Summary
+
+None is available.
