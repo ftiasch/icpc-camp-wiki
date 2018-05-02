@@ -1,61 +1,77 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.10.14 12:00-17:00
 
-[practice link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010375)
+[practice
+link](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010375)
 
-# Solutions
+Solutions
+=========
 
-## A. Artifact Guarding
+A. Artifact Guarding
+--------------------
 
 solved by chitanda, upsolved by none
 
-## B. Book Pages
+B. Book Pages
+-------------
 
 unsolved
 
-## C. Regular Bracket Sequence
+C. Regular Bracket Sequence
+---------------------------
 
 solved by chitanda, upsolved by none
 
-## D. Brick Counting
+D. Brick Counting
+-----------------
 
 solved by chitanda, upsolved by none
 
-## E. Cross on a Plane
+E. Cross on a Plane
+-------------------
 
 unsolved
 
-## F. Lights
+F. Lights
+---------
 
 solved by chitanda, upsolved by none
 
-## G. Pigeonhole Principle
+G. Pigeonhole Principle
+-----------------------
 
 unsolved
 
-## H. Sophie’s Sets
+H. Sophie’s Sets
+----------------
 
 solved by chitanda, upsolved by none
 
-## I. Puzzle with Tables
+I. Puzzle with Tables
+---------------------
 
 unsolved
 
-## J. Travelling to Random Cities
+J. Travelling to Random Cities
+------------------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-每个点的邻边期望有 $\frac{2 m}{n} = 6$ 条，最短路期望在 $\log$ 级别，双向广搜即可。
+每个点的邻边期望有 $\frac{2 m}{n} = 6$ 条，最短路期望在 $\log$
+级别，双向广搜即可。
 
-## K. Cypher
+K. Cypher
+---------
 
 solved by chitanda, upsolved by none
 
-# Replay and Summary
+Replay and Summary
+==================
 
 None is available.
