@@ -1,0 +1,197 @@
+# [Gorgeous Sequence](http://acm.hdu.edu.cn/showproblem.php?pid=5306)
+
+听说这个叫吉利树。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 3e6 + 5, INF = 2147483647;
+typedef long long LL;
+struct node {
+	int mx, cnt_mx, mx2, lazy;
+	LL sum;
+	node() {lazy = INF;}
+	void minto(int x) {
+		lazy = min(lazy, x);
+		if (x >= mx) return;
+		assert(mx2 < x);
+		sum -= 1LL * (mx - x) * cnt_mx;
+		mx = x;
+	}
+};
+node operator + (const node &a, const node &b) {
+	node c = node();
+	c.mx = max(a.mx, b.mx);
+	c.cnt_mx = (c.mx == a.mx) * a.cnt_mx + (c.mx == b.mx) * b.cnt_mx;
+	c.mx2 = max(c.mx == a.mx ? a.mx2 : a.mx, c.mx == b.mx ? b.mx2 : b.mx);
+	c.sum = a.sum + b.sum;
+	return c;
+}
+int a[N];
+node tree[N];
+void build(int x, int l, int r) {
+	if (l == r) {
+		node &c = tree[x] = node();
+		c.mx = a[l]; c.cnt_mx = 1;
+		c.mx2 = -1; c.sum = a[l];
+		return;
+	}
+	int mid = (l + r) / 2;
+	build(x + x, l, mid);
+	build(x + x + 1, mid + 1, r);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+void pd(int x) {
+	tree[x + x].minto(tree[x].lazy);
+	tree[x + x + 1].minto(tree[x].lazy);
+}
+node ask(int x, int l, int r, int ql, int qr) {
+	if (l >= ql && r <= qr) return tree[x];
+	pd(x);
+	int mid = (l + r) / 2;
+	if (qr <= mid) return ask(x + x, l, mid, ql, qr);
+	if (ql > mid) return ask(x + x + 1, mid + 1, r, ql, qr);
+	return ask(x + x, l, mid, ql, qr) + ask(x + x + 1, mid + 1, r, ql, qr);
+}
+void minto(int x, int l, int r, int ql, int qr, int y) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr && y > tree[x].mx2) {
+		tree[x].minto(y);
+		return;
+	}
+	pd(x);
+	int mid = (l + r) / 2;
+	minto(x + x, l, mid, ql, qr, y);
+	minto(x + x + 1, mid + 1, r, ql, qr, y);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+int main() {
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, m;
+		scanf("%d%d", &n, &m);
+		for (int i = 1; i <= n; ++ i) scanf("%d", &a[i]);
+		build(1, 1, n);
+		for (int i = 1; i <= m; ++ i) {
+			int type;
+			scanf("%d", &type);
+			if (type == 0) {
+				int x, y, z;
+				scanf("%d%d%d", &x, &y, &z);
+				minto(1, 1, n, x, y, z);
+			}
+			else if (type == 2) {
+				int x, y;
+				scanf("%d%d", &x, &y);
+				node res = ask(1, 1, n, x, y);
+				printf("%lld\n", res.sum);
+			}
+			else {
+				int x, y;
+				scanf("%d%d", &x, &y);
+				node res = ask(1, 1, n, x, y);
+				printf("%d\n", res.mx);
+			}
+		}
+	}
+}
+~~~
+
+# [He is Flying](http://acm.hdu.edu.cn/showproblem.php?pid=5307)
+
+任意数取模FFT或者NTT用CRT合并。sb错没查出来，尴尬。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 262144
+#define pi acos(-1)
+#define LL long long
+#define fr(i,n) for(int i=0;i<n;i++)
+using namespace std;
+typedef complex<double>CP;
+void FFT(CP*a,int n){
+	int i,j,k,o;static CP w[N];
+	for(i=n>>1,j=1;j<n-1;j++){
+		if(i>j)swap(a[i],a[j]);
+		for(k=n>>1;k<=i;k>>=1)i^=k;i^=k;
+	}
+	fr(i,n)w[i]=CP(cos(2*pi*i/n),sin(2*pi*i/n));
+	for(i=2,o=n>>1;i<=n;i<<=1,o>>=1)
+		for(j=0;j<n;j+=i){
+			CP *l=a+j,*r=a+j+(i>>1),*p=w;
+			for(k=0;k<i>>1;k++){
+				CP tmp=*r * *p;
+				*r=*l-tmp;*l=*l+tmp;
+				l++;r++;p+=o;
+			}
+		}
+}
+void mul(LL*x,LL*y,LL*z,int n){
+	static CP a[N],b[N],A[N],B[N],C[N],D[N];
+	while ((n & -n) != n) {
+		x[n] = y[n] = 0;
+		n ++;
+	}
+	fr(i,n){
+		a[i]=CP(x[i]&262143,x[i]>>18);
+		b[i]=CP(y[i]&262143,y[i]>>18);
+	}
+	FFT(a,n);FFT(b,n);
+	fr(i,n){
+		int j=(n-i)&(n-1);
+		static CP da,db,dc,dd;
+		da=(a[i]+conj(a[j]))*CP(0.5,0);db=(a[i]-conj(a[j]))*CP(0,-0.5);
+		dc=(b[i]+conj(b[j]))*CP(0.5,0);dd=(b[i]-conj(b[j]))*CP(0,-0.5);
+		A[j]=da*dc;B[j]=da*dd;C[j]=db*dc;D[j]=db*dd;
+	}
+	fr(i,n)a[i]=A[i]+B[i]*CP(0,1),b[i]=C[i]+D[i]*CP(0,1);
+	FFT(a,n);FFT(b,n);
+	fr(i,n){
+		LL da=(a[i].real()/n+0.5),db=(a[i].imag()/n+0.5),dc=(b[i].real()/n+0.5),dd=(b[i].imag()/n+0.5);
+		z[i]=(da+((db+dc)<<18)+(dd<<36));
+	}
+}
+int s[N];
+LL cnt[N], sum[N], A[N], B[N], a[N], b[N];
+int main(){
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n;
+		scanf("%d", &n);
+		for (int i = 1; i <= n; ++ i) {
+			int a;
+			scanf("%d", &a);
+			s[i] = s[i - 1] + a;
+		}
+		int S = s[n];
+		for (int i = 0; i < 2 * (S + 1); ++ i) cnt[i] = sum[i] = 0;
+		for (int i = 0; i <= n; ++ i) {
+			cnt[s[i]] ++;
+			sum[s[i]] += i;
+		}
+		for (int i = 0; i < 2 * (S + 1); ++ i) A[i] = a[i] = b[i] = 0;
+		for (int i = 0; i <= S; ++ i) {
+			a[i] = sum[i];
+			b[i] = cnt[S - i];
+		}
+		mul(a, b, A, 2 * (S + 1));
+		for (int i = 0; i < 2 * (S + 1); ++ i) B[i] = a[i] = b[i] = 0;
+		for (int i = 0; i <= S; ++ i) {
+			a[i] = cnt[i];
+			b[i] = sum[S - i];
+		}
+		mul(a, b, B, 2 * (S + 1));
+		LL ans0 = 0;
+		for (int i = 0, j; i <= n; i = j) {
+			for (j = i; j <= n && s[j] == s[i]; ++ j);
+			LL len = (j - i);
+			LL res = len * (1 + len) * len / 2 - len * (len + 1) * (2 * len + 1) / 6;
+			ans0 += res;
+		}
+		printf("%lld\n", ans0);
+		for (int i = 1; i <= S; ++ i) printf("%lld\n", A[i + S] - B[i + S]);
+	}
+}
+~~~
