@@ -19,26 +19,43 @@
 ┌────────┬────────────────────────────────────────────────────────────┐
 │J [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Digits [GX]
+A. Digits \[GX\]
+----------------
 
-## B. Neural Network country [MZH]
+B. Neural Network country \[MZH\]
+---------------------------------
 
-## C. Property [TDJ]
+C. Property \[TDJ\]
+-------------------
 
-## D. Exploration plan [MZH]
+D. Exploration plan \[MZH\]
+---------------------------
 
-## E. Casinos and travel [GX]
+E. Casinos and travel \[GX\]
+----------------------------
 
-## F. Product transformation [GX]
+F. Product transformation \[GX\]
+--------------------------------
 
-## G. Bathroom terminal [MZH]
+G. Bathroom terminal \[MZH\]
+----------------------------
 
-## H. Bob and stages [GX]
+H. Bob and stages \[GX\]
+------------------------
 
-## I. Dating [TDJ]
+I. Dating \[TDJ\]
+-----------------
 
-## J. Aquarium
+J. Aquarium
+-----------
 
-官方声明： Thank you for your comments. While our official and ainta's solution matched on the test cases provided we found out from the comments here that there are some edge cases we didn't handle correctly and don't know how to handle properly given the constraints. Because of that we decided to remove the problem from the set and reset all penalties people received from the incorrect submissions. Sincere apologies to everyone affected by this.
+官方声明： Thank you for your comments. While our official and ainta's
+solution matched on the test cases provided we found out from the
+comments here that there are some edge cases we didn't handle correctly
+and don't know how to handle properly given the constraints. Because of
+that we decided to remove the problem from the set and reset all
+penalties people received from the incorrect submissions. Sincere
+apologies to everyone affected by this.
