@@ -1,0 +1,174 @@
+# Info
+
+Date: 2017.11.02 13:15-18:15
+
+[Link](http://codeforces.com/gym/101512)
+
+# Solutions
+
+## A Avoiding the Apocalypse
+
+solved by zbh2047, upsolved by none
+
+---
+
+zbh's solution
+
+对时间拆点，建图跑网络流。
+
+## B Button Bashing
+
+solved by lizi_lzy, upsolved by none
+
+---
+
+lizi's solution
+
+建图最短路，Dijk or BFS。
+
+## C Citadel Construction
+
+solved by zbh2047, upsolved by none
+
+---
+
+zbh's solution
+
+旋转卡壳求四边形最大面积。
+
+## D Dropping Directions
+
+solved by all, upsolved by none
+
+---
+
+lizi's solution
+
+拆点，每个点拆成四个方向，相对的方向必属于一个连通块。floodfill or 并查集之后计算连通块个数，每个路标可以合并两个连通块，减一减就好。
+
+## E Excellent Engineers
+
+solved by lizi_lzy, upsolved by none
+
+---
+
+lizi's solution
+
+暴力三维偏序小改= =不过似乎有一个log的做法，orz
+
+## F Floating Formation
+
+solved by lizi_lzy , nike0good , upsolved by none
+
+---
+
+lizi's solution
+
+考虑挂在BCC外面的树，长链剖分后贪心，然后分组背包
+
+P.S. [quailty's solution](https://wiki-milk-candy.icpc-camp.org/2014%20Benelux%20Algorithm%20Programming%20Contest)简单很多
+
+## G Growling Gears
+
+solved by lizi_lzy , zbh2047 , upsolved by none
+
+---
+
+zbh's solution
+
+签到
+
+## H Highway Hassle
+
+upsolved by zbh2047 , followed by quailty's solution 
+
+---
+
+quailty's solution
+
+起点、加油站、终点标记为关键点，先从每个关键点出发跑一遍最短路，可以得到关键点之间两两最短路。
+
+接下来的一个暴力做法是$dp_{i,j}$表示当前位于$i$点且油量为$j$的最小代价，转移枚举在当前点加油，或者走到另一个关键点，最短路转移，但是第二维范围太大，难以通过。
+
+一个观察是一个关键点出发到达另一个关键点时，要么出发时油箱是满的，要么到达时油箱是空的，否则总可以调整使得解不变差，于是不论当前位于哪个点上，第二维都只需要考虑大约关键点数个档次。
+
+zbh's solution
+
+首先我们只需要考虑加油站以及终点即可（将终点也视为一个加油站）。
+
+将原图对这些点每个点跑dijkstra后重建新图，新图是一个完全图，每条边都是从加油站到加油站，边权为距离。这一步时间复杂度$smlogm$
+
+接下来不难发现一个性质：到一个加油站加油后，或者油箱加满，或者到下一次加油时油箱为空。
+这是因为，若相邻两次油价p1>p2，显然到后面加油站时油应用完；若p1<=p2，则要么不经过第二个加油站，要么第一个加油站加满。该结论证毕。
+
+于是到达一个加油站的油量最多有2s种情况。将每个点拆成这2s个点表示不同油量，然后这2s个点间顺次建边，边权表示加油的花费；两加油站间按拆点后的点建边，边权为0。
+
+从src油量为0的点到dst油量为0的点的最短路长度即为答案。这里点数规模$2s^2$，边数规模$4s^2$，时间复杂度$s^2 \log s$。
+
+总时间复杂度$sm \log m+s^2\log s$
+
+## I Interesting Integers
+
+solved by zbh2047, upsolved by none
+
+---
+
+zbh's solution
+
+当前一个数取输入的$\frac {\sqrt{5}-1} 2$倍时答案最优。时间复杂度$\log n$
+
+## J Jury Jeopardy
+
+solved by lizi_lzy, upsolved by none
+
+---
+
+lizi's solution
+
+按照要求走一下，外面包一层#，里面抠一抠
+
+## K Key to Knowledge
+
+solved by lizi_lzy, upsolved by none
+
+---
+
+lizi's solution
+
+比较裸的折半。
+
+# Replay
+
+上来lizi思考了$B$，然后脑子抽风暂时不会，其后观察到$G$被秒切，由zbh2047读题并告知lizi，lizi由于手贱打错变量WA1，然后AC。
+
+接下来经由nike0good提醒，lizi会了$B$，于是AC。
+
+zbh2047倒着读题，读完了$K$，lizi觉得很傻逼，于是上机，由于很困没过样例，遂下机肉眼debug。这段时间zbh2047读完并想好了$I$，敲完，AC。
+
+之后lizi终于不困了，上机改了改$K$，然后过了。
+
+nike0good告诉lizi$E$是个裸的三维偏序，然后提供了假题意，并对lizi的思考和debug造成了干扰，最后终于1A了$E$。
+
+在这期间zbh2047利用零碎时间想好了$A$，并敲完板子和建图，然后AC。
+
+lizi看到$J$过的人很多，思考了一下，写了个模拟，过了。
+
+时间刚刚过去两个小时，大家觉得节奏很好签到完成，于是开始嘴$F$。
+
+经过很久的思考嘴炮，以及吃零食接水摸鱼，lizi决定不畏艰险，开$F$。
+
+此时zbh2047对$C$有了初步思路，开始进行构思。
+
+之后lizi和zbh2047轮流上机占用机时，zbh2047被输出折磨的不能自已，lizi撸起袖子写好了output，然后$C$题2A。
+
+lizi终于调过了$F$的样例，WA了两发之后发现某个数组没有清零(吐血)，于是3A。
+
+此时时间所剩不多，大家准备摸鱼，lizi看到$D$过了很多队，遂提出开$D$。
+
+经过三人的一番口胡以及lizi的代码实现，奇迹般的$D$题1A。
+
+时间还有几分钟，大家在欢声笑语中打出GG。
+
+## lizi
+
+开场WA一发签到有益身心健康！！！
