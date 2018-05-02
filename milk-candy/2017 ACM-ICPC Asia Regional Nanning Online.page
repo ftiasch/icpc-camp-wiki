@@ -1,0 +1,174 @@
+# Info
+
+Date: 2017.09.24 12:00-17:00
+
+[Link](https://www.jisuanke.com/contest/877)
+
+# Solutions
+
+## A Weather Patterns
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+对于前两问，$ans=\prod_{i=1}^{k-1}a[s_i][s_{i+1}]$，对于后两问，$ans=\frac{1}{1-a[k][k]}$。
+
+## B Train Seats Reservation
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+直接用数组记录每个站的人数和，取max即可，注意区间左闭右开。
+
+## C Auction Bidding
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+按题意规则排序并计算成交价即可。
+
+## D Path Search with Constraints
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+按照给出的转移公式$dp$，倒推输出方案。
+
+## E Visible Surface
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+判断视点是否能看见凸几何体的一个面，只要判断该平面是否将凸体和视点分在了空间两侧。
+
+
+## F Overlapping Rectangles
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+离散化后二维前缀和，复杂度$O(n^2)$。
+
+## G Finding the Radius for an Inserted Circle
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+假设已经求出$R_1,R_2,...,R_{k-1}$，根据[Descartes' theorem](https://en.wikipedia.org/wiki/Descartes%27_theorem)，可以得到一个关于$1/R_k$的二次方程，并且这个二次方程的另一个解是$1/R_{k-2}$，由[Vieta's formulas](https://en.wikipedia.org/wiki/Vieta%27s_formulas)可以得到一个线性递推，手算出$R_1$之后依次递推即可。
+
+## H A Cache Simulator
+
+solved by quailty, upsolved by none
+
+---
+
+直接模拟。
+
+## I GSM Base Station Identification
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+找出蜂窝网络坐标系的两个基向量，线性表示出$400$个基站位置，每个查询暴力找最近点即可。
+
+## J Minimum Distance in a Star Graph
+
+solved by Jove, upsolved by none
+
+---
+
+Jove's solution
+
+建图跑bfs即可。
+
+## K Line Segments Clipped by Windows
+
+unsolved
+
+## L The Heaviest Non-decreasing Subsequence Problem
+
+solved by Jove, sk, upsolved by none
+
+---
+
+Jove's solution
+
+求数字带权的、最大权值非递减子序列，直接按照权值最大dp也可。考虑到权值只有0、1、5三种，所以权值为0的可以直接删掉，权值为5的拆成5个相同的数字，跑一遍最长非递减子序列即可。
+
+## M Frequent Subsets Problem
+
+solved by quailty
+
+---
+
+quailty's solution
+
+直接枚举所有子集判断是否满足条件，随手压位，复杂度$O(m2^n)$。
+
+# Replay
+
+`Q` 饿着肚子赶了过来，`J` 和 `K` 开始读题。榜上瞬间开始有题目被过掉，遂跟榜读题。
+
+`J` 读了 B 是个签到，于是就先上去写了，不说明的数据范围和不清楚的题意（也许是常识？）开局就 wa 了两发。
+
+`K` 读了 M 题是个简单题，因为 `K` 不熟输入流读入，`Q` 接过来上机敲了。
+
+期间 `K` 读了 L 和 J 题，和 `J` 讨论了一下，都马上得出了做法，一人接了一道。
+
+`J` 读了 F 题，是个经典的矩形面积并，秉着不贴代码的良好作风，`Q` 表示他来写一种应用于小数据范围的写法，结果 debug 了很久。
+
+debug 时轮流上机，`K` 的 L 题和 `J` 的 J 题都顺利 1Y，`Q` 的 F 也终于 +6 通过。
+
+`J` 之前读了 A 题马尔可夫过程没大看懂，扔给了 `Q`，然后 `J` 和 `K` 开始复习 H 题计组的 cache 问题。
+
+`Q` 搞定 A 题以后，嫌弃 `J` 和 `K` 计组太差，把 H 题接了过去，并很快通过。
+
+然后 `J` 就陷入了英语阅读时间，真的好难读啊 QAQ。`Q` 在搞 G 题，结果有错误，`K` 帮忙一起 debug。
+
+`J` 读了 C 题发现是个读懂就会做的题，在另两人 debug 时敲过了。因为神奇的题目的神奇的问题，G 题终于也 +6 通过。
+
+`J` 读了 D 题发现也是个读懂就会做的题目，`K` 接过去敲了。
+
+`J` 读了 I 题发现又是个读懂就会做的题目，`Q` 接过去敲了。
+
+然后就 E 和 K 剩两个几何题了，`K` 主动接锅要写几何，`Q` 去麦当劳买汉堡填填肚子。
+
+因为 `J` 不会几何就开始神游（自我反省= =），`K` 很快敲完 E 题但是 wa 了，赛后发现是数据有问题。
+
+`K` 和 `Q` 一起乱搞了一个半小时终于试过去了，然后没时间做 K 题了。
+
+## quailty
+
+赛中被出题人傻逼的事实冲昏了头脑，失去了理智。在题目不靠谱的情况下，更应该冷静下来，仔细分析可能存在的 trick。吉利爷 13 个 1Y 实在是让人非常服气。
+
+## Jove
+
+读题技巧要继续提升。感觉写题状态慢慢恢复，前中期题目要主动接锅，给 `Q` 留出更多后期题的时间。后期找准自己的位置，集中注意力，有必要可以一人敲，两个人同时盯着。
+
+## sk
+
+还是要提升自己切中档题的能力，这场读一行太久没用不会写了，F 题也不会了。E 题赛中用的方法稍微有些复杂。
