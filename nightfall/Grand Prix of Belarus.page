@@ -8,4 +8,4 @@ I. Permutations again
 然后使用unordered\_map，集合hash用了1次方和，2次方和，3次方和，模1e9+7，然后揉成一个long
 long。
 
-[code](Belarus%20I)
+[code](Belarus I)
