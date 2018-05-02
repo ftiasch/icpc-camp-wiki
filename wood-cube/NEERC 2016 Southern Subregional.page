@@ -22,30 +22,43 @@
 │L [-:--]│                                                            │
 │M [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-- K题：一个小的逻辑错误（没判删了一个点后树的连通性）没找出来，虽然做法比其他队伍复杂得多但也写完了，有点可惜。
+-   K题：一个小的逻辑错误（没判删了一个点后树的连通性）没找出来，虽然做法比其他队伍复杂得多但也写完了，有点可惜。
 
-## A. Toda 2 [TDJ]
+A. Toda 2 \[TDJ\]
+-----------------
 
-## B. Minimum and Maximum [GX]
+B. Minimum and Maximum \[GX\]
+-----------------------------
 
-## C. Bulmart [TDJ]
+C. Bulmart \[TDJ\]
+------------------
 
-## D. Running Over The Bridges [GX]
+D. Running Over The Bridges \[GX\]
+----------------------------------
 
-## E. Award Ceremony [GX]
+E. Award Ceremony \[GX\]
+------------------------
 
-## F. Ber Patio [GX]
+F. Ber Patio \[GX\]
+-------------------
 
-## G. Car Repair Shop [GX]
+G. Car Repair Shop \[GX\]
+-------------------------
 
-## H. Delete Them [GX]
+H. Delete Them \[GX\]
+---------------------
 
-## I. Olympiad in Programming and Sports [GX]
+I. Olympiad in Programming and Sports \[GX\]
+--------------------------------------------
 
-## J. Bottles [MZH]
+J. Bottles \[MZH\]
+------------------
 
-## K. Roads Orientation Problem [TDJ]
+K. Roads Orientation Problem \[TDJ\]
+------------------------------------
 
-## L. Expression Queries
+L. Expression Queries
+---------------------
