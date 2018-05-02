@@ -1,248 +1,241 @@
----
-title: Fudan U Wood Cube
-...
-
-# Nichijou
+Nichijou
+========
 
 [第7话](http://www.bilibili.com/video/av382866/index_8.html)
 [第18话](http://www.bilibili.com/video/av382866/index_19.html)
 [第21话](http://www.bilibili.com/video/av382866/index_22.html)
 
-# General
+General
+=======
 
-[MZH个人]()
-[TDJ个人]()
-[GX个人]()
-[Bug收集整理]()
-[训练环境]()
-|
+[MZH个人]() [TDJ个人]() [GX个人]() [Bug收集整理]() [训练环境]() |
 [2016多校]()
 
-# Training
+Training
+========
 
 <!-- `2017-09-00` [`---`]()                                         ` -/ --`  `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` -->
+  `Date`         `Contest`                                               ` Place `   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------- ------------------------------------------------------- ----------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  `2018-04-11`   [`MIPT Workshop 2018 NAIPC`]()                          ` 8/ 58`    `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   `!`   `O`         
+  `2018-04-10`   [`MosCode Fest 2018`]()                                 ` 4/100`    `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   `O`         
+  `2018-04-08`   **[`XVIII Open Cup GP of Poland`]()**                   `11/ 83`    `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `Ø`   `!`   `O`         
+  `2018-04-07`   [`Petrozavodsk Summer-2017 JOI TST 2012 Selection`]()   ` 3/ 61`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`               
+  `2018-04-03`   [`Petrozavodsk Winter-2018 CMU`]()` [2:1]`              `13/ 85`    `O`   `O`   `O`   `O`   `!`   `O`   `O`   `O`   `O`   `O`   `·`         
+  `2018-04-01`   [`ECNA 2017`]()` [2:1]`                                 ` -/ --`    `Ø`   `!`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2018-03-31`   [`XVII Open Cup GP of Gomel`]()` [2:1]`                 ` -/ --`    `·`   `O`   `X`   `O`   `!`   `O`   `O`   `O`   `·`   `O`   `O`         
+  `2018-03-28`   [`XVI Open Cup GP of Southern Caucasus`]()` [2:1]`      ` -/ --`    `O`   `·`   `!`   `O`   `!`   `O`   `Ø`   `O`   `!`   `O`               
+  `2018-03-25`   [`MIPT Workshop 2018 Moscow SU`]()                      ` 3/ 36`    `·`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `O`   `O`   `Ø`   `O`   `O`
+  `2018-03-24`   [`MIPT Workshop 2018 JAG 2017`]()                       ` 5/ 57`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `Ø`   `O`
+  `2018-03-23`   [`MIPT Workshop 2018 Taiwan NTU`]()                     ` 4/ 54`    `O`   `O`   `O`   `!`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   `!`   
+  `2018-03-22`   [`XVIII Open Cup GP of Saratov`]()                      `11/ 96`    `O`   `!`   `O`   `O`   `O`   `O`   `O`   `!`   `Ø`   `O`   `O`   `O`   
+  `2018-03-18`   **[`XVIII Open Cup GP of Belarus`]()**                  `12/103`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2018-03-17`   [`XVIII Open Cup GP of Korea`]()                        `22/ 91`    `O`   `·`   `O`   `O`   `!`   `O`   `O`   `!`   `!`   `·`   `!`   `O`   
+  `2018-03-15`   [`XVII Open Cup GP of Wroclaw`]()                       ` 7/ 82`    `O`   `Ø`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `·`         
+  `2018-03-11`   **[`XVIII Open Cup GP of Baltic Sea`]()**               `14/113`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`                     
+  `2018-03-10`   [`World Finals 2010`]()                                 `21/148`    `·`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `·`   `O`   `·`         
+  `2018-03-06`   [`BSUIR Open 2015 Championship`]()` [IND]`              ` -/ --`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2018-03-04`   [`Petrozavodsk Summer-2017 Ruyi Li 2`]()                ` 7/ 72`    `O`   `O`   `O`   `!`   `Ø`   `O`   `O`   `O`   `O`   `!`   `O`         
+  `2018-03-03`   [`Asia Tsukuba Regional 2017`]()                        ` 4/ 73`    `O`   `O`   `O`   `!`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2018-02-27`   [`Petrozavodsk Winter-2013 SPb SU`]()                   `10/ 66`    `O`   `·`   `O`   `O`   `O`   `O`   `!`   `O`   `!`   `O`   `O`         
+  ` `                                                                                                                                                        
+  `2018-02-04`   **[`Chinese Bootcamp 2018 GP of Khamovniki`]()**        ` 9/ 85`    `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `·`   `O`         
+  `2018-02-03`   **[`Chinese Bootcamp 2018 GP of Gomel`]()**             ` 4/ 25`    `O`   `O`   `·`   `·`   `O`   `O`   `·`   `·`   `·`   `·`   `O`         
+  `2018-02-02`   **[`Chinese Bootcamp 2018 AtCoder`]()**                 ` 7/ 83`    `O`   `·`   `·`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`         
+  `2018-02-01`   **[`Chinese Bootcamp 2018 Polish 2`]()**                ` 8/ 81`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2018-01-31`   **[`Chinese Bootcamp 2018 ITMO U`]()**                  ` 8/ 24`    `·`   `·`   `O`   `O`   `·`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   
+  `2018-01-30`   **[`Chinese Bootcamp 2018 Polish 1`]()**                ` 4/ 23`    `·`   `·`   `·`   `O`   `·`   `·`   `O`   `O`   `O`   `·`   `O`         
+  `2018-01-26`   [`Petrozavodsk Summer-2017 UESTC Selection`]()          ` 4/ 46`    `O`   `O`   `O`   `·`   `·`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   
+  `2018-01-24`   [`XVIII Open Cup GP of Ukraine`]()                      ` 4/ 92`    `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   
+  `2018-01-23`   [`CERC 2017`]()                                         ` 3/ 98`    `O`   `!`   `!`   `!`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2018-01-19`   [`Petrozavodsk Summer-2017 Moscow IPT`]()               ` 5/ 62`    `Ø`   `O`   `!`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`         
+  `2018-01-17`   [`Petrozavodsk Summer-2017 Warsaw U`]()                 `10/ 67`    `O`   `Ø`   `O`   `O`   `O`   `!`   `O`   `O`   `·`   `O`   `O`         
+  `2018-01-16`   [`JAG Spring 2014`]()                                   ` 6/ 39`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`               
+  ` `                                                                                                                                                        
+  `2017-12-18`   [`NEERC 2017`]()                                        ` 2/339`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   
+  `2017-12-10`   [`XVIII Open Cup GP of SPb`]()                          `19/228`    `O`   `O`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`   
+  `2017-12-09`   [`Petrozavodsk Summer-2011 Warsaw U`]()` [IND]`         ` -/ --`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `Ø`               
+  `2017-12-03`   **`ONSITE|`[`CCPC Final 2017`]()**                      ` 5/117`    `O`   `!`   `O`   `!`   `O`   `O`   `O`   `!`   `O`   `O`   `O`         
+  `2017-11-26`   **`ONSITE|`[`Asia Nanning Regional 2017`]()**           ` 3/227`    `O`   `·`   `·`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   `O`
+  `2017-11-23`   [`PNRC 2017`]()                                         ` 1/157`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`
+  `2017-11-20`   [`NEERC 2017 Northern Subregional`]()                   ` 4/186`    `O`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   
+  `2017-11-10`   [`Petrozavodsk Summer-2013 Gennady Korotkevich`]()      ` 7/107`    `O`   `O`   `O`   `·`   `O`   `Ø`   `O`   `O`   `·`   `O`               
+  `2017-11-09`   [`XVIII Open Cup GP of Romania`]()                      `10/ 91`    `O`   `!`   `O`   `O`   `·`   `·`   `O`   `·`   `O`   `O`   `O`   `·`   
+  `2017-11-07`   [`Osipovsky Cup 2014`]()                                ` 1/ 75`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2017-10-29`   **`ONSITE|`[`Asia Xi'an Regional 2017`]()**             ` 2/348`    `O`   `O`   `·`   `!`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-10-24`   [`Petrozavodsk Summer-2014 Xiaoxu Guo 2`]()             ` 1/ 57`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`         
+  `2017-10-21`   **[`NEERC 2017 Southern Subregional`]()**               ` 3/1K⁺`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`
+  `2017-10-20`   [`NEERC 2016 Southern Subregional`]()                   ` 8/904`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `·`   
+  `2017-10-15`   [`XVII Open Cup GP of Siberia`]()                       `13/154`    `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`         
+  `2017-10-14`   [`Petrozavodsk Summer-2016 DPRK`]()                     `10/ 43`    `·`   `O`   `O`   `·`   `·`   `·`   `·`   `·`   `·`   `O`   `O`   `O`   `·`
+  `2017-10-07`   [`Petrozavodsk Summer-2017 Songyang Chen 1`]()          ` 3/ 51`    `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   `O`   `O`   `O`   `O`   `·`
+  `2017-10-06`   [`Petrozavodsk Winter-2014 Chinese`]()                  ` 3/ 85`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-10-05`   [`Petrozavodsk Winter-2015 Chinese Camp 2`]()           ` 5/108`    `O`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`   `O`               
+  `2017-10-03`   [`ASC 45`]()                                            ` 4/154`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `Ø`   `O`         
+  `2017-10-01`   **[`XVIII Open Cup GP of Eurasia`]()**                  `13/350`    `O`   `O`   `·`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`   `O`   
+  `2017-09-24`   **[`XVIII Open Cup GP of Ural`]()**                     `14/ 99`    `O`   `O`   `O`   `!`   `O`   `O`   `·`   `X`   `!`   `·`   `O`         
+  `2017-09-23`   **[`Asia Beijing Regional 2017 Online`]()**             `12/1K⁺`    `O`   `O`   `O`   `!`   `O`   `·`   `O`   `O`   `O`   `O`               
+  `2017-09-16`   **[`Asia Xi'an Regional 2017 Online`]()**               `13/1K⁺`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `!`   `O`   `!`               
+  ` `                                                                                                                                                        
+  `2017-09-07`   [`JAG 2013`]()                                          ` 7/ 59`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `·`   `O`   `O`   
+  `2017-09-03`   [`Bubble Cup X Finals`]()                               `11/314`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `X`               
+  `2017-09-02`   [`2017 NTU WF Team Selection`]()                        ` 1/ 54`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2017-08-30`   [`Asia Qingdao Regional 2016`]()                        ` 2/327`    `O`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `·`
+  `2017-08-29`   [`Petrozavodsk Summer-2014 Petr Mitrichev 12`]()        ` 3/ 53`    `·`   `·`   `O`   `O`   `O`   `·`   `O`   `O`   `O`                     
+  `2017-08-27`   [`XVII Open Cup GP of Eurasia`]()                       ` 8/295`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   
+  `2017-08-23`   [`0x12 Ural Championship`]()                            ` 5/ 62`    `O`   `O`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`   `O`   `X`   
+  `2017-08-21`   [`XVII Open Cup GP of Dolgoprudny`]()                   ` 9/113`    `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   `O`   `O`         
+  `2017-08-16`   [`Petrozavodsk Summer-2014 Moscow SU SG`]()             ` 3/ 43`    `·`   `O`   `O`   `Ø`   `O`   `O`   `·`   `·`   `O`   `O`               
+  `2017-08-15`   [`Petrozavodsk Summer-2014 Yandex`]()                   ` 3/ 69`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2017-07-07`   [`Codeforces 750 - Good Bye 2016`]()` [IND]`            ` -/ --`    `O`   `O`   `O`   `O`   `O`   `Ø`   `Ø`   `·`                           
+  `2017-07-06`   [`Bubble Cup 9 Finals`]()` [IND]`                       ` -/ --`    `Ø`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `!`                     
+  `2017-07-05`   [`BSUIR Open 2016 Semifinal`]()` [IND]`                 ` -/ --`    `O`   `Ø`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`         
+  ` `                                                                                                                                                        
+  `2017-05-24`   **`ONSITE|`[`World Finals 2017`]()**                    ` 8/128`    `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `·`   `Ø`   `O`   
+  `2017-05-22`   [`XIV Open Cup GP of Azov Sea`]()                       ` 7/ 88`    `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`         
+  `2017-05-19`   [`Asia Bangkok Regional 2016`]()                        `15/143`    `!`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `Ø`   `O`   
+  `2017-05-18`   [`Rocky Mountain Regional 2015`]()                      ` -/ --`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-05-16`   [`Petrozavodsk Winter-2013 Jagiellonian U`]()           `16/ 72`    `O`   `O`   `!`   `!`   `O`   `O`   `O`   `!`   `?`   `O`   `O`   `O`   
+  `2017-05-12`   [`MIPT Workshop 2016 Japanese OI Selection`]()          ` 4/ 33`    `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   `O`                     
+  `2017-05-10`   [`BSUIR Open 2016 Finals`]()                            ` 6/ 97`    `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`               
+  `2017-05-09`   [`XVII Open Cup GP of Two Capitals`]()                  `18/140`    `O`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`         
+  `2017-05-07`   [`World Finals 2016`]()                                 ` 6/130`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `Ø`   `O`   `O`   `O`   `·`
+  `2017-05-06`   [`SPRC 2016`]()` [IND]`                                 ` -/ --`    `O`   `O`   `·`   `O`   `O`   `O`   `·`   `·`   `O`   `O`   `O`         
+  `2017-05-04`   [`Grodno 2015`]()                                       ` 4/ 75`    `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-05-03`   [`Petrozavodsk Summer-2015 Xudyh`]()                    ` 8/ 53`    `O`   `·`   `O`   `O`   `O`   `Ø`   `O`   `·`   `·`   `O`               
+  `2017-05-02`   [`UKIEPC 2016`]()` [IND]`                               ` -/ --`    `!`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `!`   `·`   `O`   
+  `2017-04-30`   **[`XVII Open Cup GP of Ural`]()**                      `13/ 50`    `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `O`
+  `2017-04-29`   [`PNRC 2016`]()` [IND]`                                 ` -/ --`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2017-04-26`   [`Asia Singapore Regional 2015`]()` [IND]`              ` -/ --`    `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`         
+  `2017-04-23`   [`World Finals 2015`]()                                 `21/145`    `O`   `·`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `Ø`   `O`   `Ø`
+  `2017-04-17`   **[`MIPT Workshop 2017 GP of Moscow Workshop`]()**      ` 5/ 35`    `O`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-04-16`   **[`MIPT Workshop 2017 NAIPC-2017`]()**                 ` 4/ 53`    `O`   `O`   `O`   `O`   `Ø`   `·`   `O`   `O`   `·`   `O`   `O`         
+  `2017-04-15`   **[`MIPT Workshop 2017 Worldwide Selection`]()**        `12/ 39`    `·`   `O`   `·`   `O`   `O`   `Ø`   `Ø`   `·`   `·`   `·`   `O`   `O`   
+  `2017-04-13`   **[`MIPT Workshop 2017 Latin America Selection`]()**    `14/ 38`    `Ø`   `O`   `O`   `·`   `·`   `·`   `O`   `O`   `·`   `O`   `O`   `·`   `O`
+  `2017-04-12`   **[`MIPT Workshop 2017 Korean Selection 1`]()**         ` 7/ 39`    `O`   `·`   `O`   `Ø`   `O`   `Ø`   `·`   `O`   `O`   `O`   `Ø`   `O`   `·`
+  `2017-04-11`   **[`MIPT Workshop 2017 Zagreb U Selection 2`]()**       ` 3/ 58`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`
+  `2017-04-10`   **[`MIPT Workshop 2017 Zagreb U Selection 1`]()**       `12/ 53`    `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   
+  `2017-04-04`   [`AIM Fund Contest`]()                                  ` 3/ 72`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-04-03`   [`Petrozavodsk Summer-2016 Zhejiang U 2`]()             `16/ 82`    `O`   `O`   `·`   `Ø`   `O`   `O`   `O`   `!`   `O`   `·`   `O`   `!`   `!`
+  `2017-04-02`   **[`XVII Open Cup GP of Tatarstan`]()**                 ` 9/ 76`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   
+  `2017-03-28`   [`Petrozavodsk Summer-2016 Ce Jin and Jiry Ru`]()       ` 7/ 68`    `O`   `O`   `O`   `·`   `·`   `O`   `O`   `!`   `O`   `O`               
+  `2017-03-26`   **[`XVII Open Cup GP of Poland`]()**                    `13/ 79`    `Ø`   `!`   `O`   `!`   `O`   `O`   `·`   `Ø`   `O`   `O`   `O`         
+  `2017-03-22`   [`Petrozavodsk Summer-2014 Warsaw U`]()                 ` 4/ 56`    `O`   `O`   `O`   `!`   `O`   `O`   `O`   `O`   `O`   `O`   `·`         
+  `2017-03-19`   [`World Finals 2014`]()                                 `15/131`    `·`   `·`   `O`   `O`   `O`   `·`   `O`   `·`   `Ø`   `·`   `O`   `·`   
+  `2017-03-15`   [`Petrozavodsk Winter-2015 Xiaoxu Guo 3`]()             `21/101`    `·`   `O`   `O`   `·`   `O`   `Ø`   `O`   `·`   `O`   `O`               
+  `2017-03-12`   [`World Finals 2013`]()                                 ` 8/145`    `O`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `Ø`         
+  `2017-03-08`   [`Asia Tsukuba Regional 2016`]()                        ` 7/ 71`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`         
+  `2017-03-05`   [`World Finals 2012`]()                                 `14/158`    `·`   `O`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `·`   `O`   `O`   
+  `2017-03-01`   [`Petrozavodsk Winter-2014 Saratov SU`]()               `29/133`    `·`   `O`   `O`   `·`   `O`   `Ø`   `!`   `·`   `·`   `O`   `O`         
+  `2017-02-26`   [`NEERC 2016`]()                                        ` 7/285`    `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `·`   `·`   `·`
+  ` `                                                                                                                                                        
+  `2017-02-18`   **[`ICPCCamp 2017 U of Tokyo Selection 1`]()**          ` 7/124`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `O`   
+  `2017-02-17`   **[`ICPCCamp 2017 Yandex Cup 2017`]()**                 `24/123`    `O`   `·`   `O`   `O`   `O`   `O`   `·`   `·`   `O`   `·`               
+  `2017-02-16`   **[`ICPCCamp 2017 Jagiellonian U`]()**                  `25/121`    `O`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`   `·`   `·`   `O`   
+  `2017-02-14`   **[`ICPCCamp 2017 THU DDF`]()**                         ` 7/124`    `O`   `·`   `·`   `·`   `·`   `O`   `O`   `O`   `O`                     
+  `2017-02-13`   **[`ICPCCamp 2017 zimpha`]()**                          ` 4/121`    `O`   `O`   `·`   `·`   `O`   `O`   `O`   `·`   `O`   `O`               
+  `2017-02-12`   **[`ICPCCamp 2017 ftiasch`]()**                         `27/121`    `·`   `·`   `·`   `·`   `O`   `·`   `O`   `·`   `·`   `·`   `O`         
+  `2017-01-20`   [`AMPPZ-2015`]()                                        `19/ 69`    `O`   `O`   `·`   `O`   `·`   `O`   `·`   `·`   `O`   `·`   `·`   `O`   
+  `2017-01-19`   [`Asia Beijing Regional 2016`]()                        ` 1/199`    `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`         
+  `2017-01-18`   [`National Taiwan U Selection`]()                       ` 8/ 51`    `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   `O`   `O`               
+  `2017-01-16`   [`Kent Nikaido 1`]()                                    ` 5/ 22`    `O`   `O`   `O`   `O`   `!`   `·`   `O`   `O`   `·`   `O`   `O`         
+  `2017-01-13`   [`Makoto Soejima 3`]()                                  `11/ 69`    `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `Ø`   `Ø`         
+  `2017-01-12`   [`Petrozavodsk Winter-2013 JAG 1`]()                    `12/ 63`    `·`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   `O`               
+  `2017-01-10`   [`Petrozavodsk Winter-2012 Tokyo Kroliki`]()            ` 4/ 62`    `!`   `O`   `O`   `O`   `?`   `O`   `O`   `O`   `Ø`   `O`               
+  `2017-01-09`   [`Petrozavodsk Summer-2013 Japanese`]()                 ` 6/ 46`    `!`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`                     
+  `2017-01-06`   [`Petrozavodsk Winter-2013 JAG 2`]()                    `42/ 50`    `X`   `O`   `!`   `?`   `Ø`   `Ø`   `·`   `Ø`   `Ø`   `O`               
+  ` `                                                                                                                                                        
+  `2016-12-11`   **`ONSITE|`[`Asia CHINA-Final 2016`]()**                ` 5/314`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `·`   `O`   
+  `2016-12-09`   [`CERC 2016`]()                                         ` 8/145`    `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   
+  `2016-12-03`   [`Petrozavodsk Summer-2016 Ural FU Dandelion`]()        `19/ 51`    `·`   `O`   `·`   `O`   `·`   `·`   `O`   `·`   `O`   `·`   `·`         
+  `2016-11-28`   **`ONSITE|`[`CCPC Final 2016`]()**                      ` 4/122`    `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   
+  `2016-11-22`   [`Petrozavodsk Summer-2014 Moscow IPT`]()               ` 6/ 43`    `O`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `!`   `·`         
+  `2016-11-19`   [`XVII Open Cup GP of SPb`]()                           `47/171`    `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`         
+  `2016-11-06`   **`ONSITE|`[`Asia Hong Kong Regional 2016`]()**         ` 1/ 57`    `O`   `O`   `O`   `O`   `Ø`   `Ø`   `·`   `O`   `O`   `O`   `O`         
+  `2016-10-29`   [`Petrozavodsk Summer-2016 Warsaw U`]()                 ` 8/ 55`    `O`   `O`   `Ø`   `O`   `O`   `·`   `O`   `O`   `·`   `O`               
+  `2016-10-28`   [`NEERC 2016 Moscow Subregional`]()                     ` 1/256`    `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   
+  `2016-10-23`   **`ONSITE|`[`Asia Shenyang Regional 2016`]()**          `11/194`    `O`   `O`   `O`   `Ø`   `O`   `·`   `O`   `O`   `O`   `Ø`   `·`   `Ø`   `Ø`
+  `2016-10-19`   **`ONSITE|`[`CCPC Hangzhou 2016`]()**                   ` 2/179`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `O`   `·`   `O`         
+  `2016-10-15`   [`Asia Beijing Regional 2015`]()                        ` 5/199`    `O`   `·`   `O`   `O`   `·`   `·`   `O`   `·`   `O`   `O`   `O`         
+  `2016-10-06`   [`Petrozavodsk Summer-2016 Pavel Khaustov 2`]()         ` 9/ 73`    `·`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`   `O`                     
+  `2016-10-05`   [`Petrozavodsk Summer-2016 Moscow IPT`]()               `12/ 74`    `O`   `·`   `O`   `O`   `O`   `O`   `·`   `·`   `Ø`   `Ø`   `O`         
+  `2016-10-04`   **[`CCPC Changchun 2016`]()**                           ` 5/610`    `·`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2016-10-02`   [`XVII Open Cup GP of Japan`]()                         ` 4/123`    `·`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `O`               
+  `2016-09-25`   [`Petrozavodsk Summer-2015 Yandex Cup Stage 1`]()       ` 6/ 75`    `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`                           
+  `2016-09-24`   [`Asia Shenyang Regional 2015`]()                       ` 4/173`    `·`   `O`   `·`   `O`   `Ø`   `O`   `O`   `O`   `O`   `·`   `Ø`   `·`   `O`
+  `2016-09-23`   [`Petrozavodsk Winter-2016 JAG`]()                      `11/ 87`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`   `·`   `O`         
+  `2016-09-18`   [`Petrozavodsk Summer-2014 Ivan Kazmenko`]()            ` 7/ 46`    `O`   `O`   `Ø`   `O`   `Ø`   `·`   `O`   `O`   `O`                     
+  `2016-09-17`   **[`Asia Qingdao Regional 2016 Online`]()**             `77/1K⁺`    `O`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `·`
+  `2016-09-10`   **[`Asia Hong Kong Regional 2016 Online`]()**           ` 2/ 82`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2016-09-09`   [`Petrozavodsk Winter-2015 Saratov SU`]()               `11/123`    `O`   `O`   `!`   `·`   `·`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2016-09-04`   [`XIV Open Cup GP of Tatarstan`]()                      `16/160`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `·`   `O`   `Ø`   `O`   `O`   
+  `2016-09-03`   [`CCPC 2016 Online`]()` [3:0]`                          ` -/ --`    `O`   `O`   `O`   `O`   `·`   `·`   `·`   `·`   `·`   `·`   `O`         
+  `2016-09-01`   [`NAIPC 2016`]()                                        ` 2/ 48`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `·`         
+  ` `                                                                                                                                                        
+  `2016-08-04`   [`Petrozavodsk Winter-2014 U of Latvia`]()              ` 4/ 89`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2016-08-03`   [`Petrozavodsk Winter-2014 Ukrainian`]()                `13/ 77`    `O`   `O`   `O`   `·`   `O`   `·`   `·`   `Ø`   `·`   `·`               
+  `2016-08-02`   [`Petrozavodsk Winter-2014 Moscow SU Tapir`]()          ` 4/ 84`    `Ø`   `·`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`               
+  `2016-08-01`   [`Petrozavodsk Winter-2014 Warsaw U`]()                 `15/ 88`    `O`   `O`   `·`   `·`   `O`   `O`   `·`   `O`   `O`   `O`               
+  `2016-07-30`   [`Petrozavodsk Winter-2014 Jagiellonian U`]()` [3:0]`   ` -/ --`    `·`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `Ø`   `O`   `·`         
+  `2016-07-29`   [`Asia Tsukuba Regional 2015`]()                        ` 2/ 43`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`   `O`         
+  `2016-07-27`   [`Petrozavodsk Winter-2014 Moscow SU Trinity`]()        `11/ 90`    `O`   `·`   `O`   `O`   `O`   `O`   `·`   `·`   `·`   `Ø`   `Ø`         
+  `2016-07-25`   [`NEERC 2015`]()                                        `15/233`    `O`   `O`   `Ø`   `Ø`   `O`   `O`   `O`   `·`   `·`   `O`   `O`   `O`   
+  `2016-07-22`   [`XV Open Cup GP of Central Europe`]()                  `12/240`    `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `·`   `O`   `O`   `O`         
+  `2016-07-21`   [`XVI Open Cup GP of Eurasia`]()                        `48/409`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `·`   `O`   `O`   
+  `2016-07-19`   [`XV Open Cup GP of Peterhof`]()                        ` 8/118`    `O`   `O`   `O`   `O`   `·`   `·`   `Ø`   `O`   `·`   `O`   `O`         
+  `2016-07-18`   [`JAG Autumn 2014`]()                                   ` 2/ 83`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `!`   `O`   `O`         
+  `2016-07-16`   [`XV Open Cup GP of Udmurtia`]()                        `14/105`    `O`   `O`   `O`   `!`   `O`   `·`   `Ø`   `O`   `·`   `·`               
+  `2016-07-14`   [`XV Open Cup GP of Karelia`]()                         `12/137`    `O`   `O`   `Ø`   `O`   `O`   `Ø`   `O`   `O`                           
+  `2016-07-12`   [`XV Open Cup GP of SPb`]()                             `14/200`    `O`   `O`   `O`   `O`   `!`   `O`   `!`   `O`   `O`   `O`               
+  `2016-07-11`   [`XV Open Cup GP of Three Capitals`]()                  `17/200`    `O`   `·`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `Ø`   `O`         
+  `2016-07-08`   [`XV Open Cup GP of America`]()                         `14/ 83`    `·`   `!`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2016-07-06`   [`XV Open Cup GP of Tatarstan`]()                       `21/120`    `·`   `O`   `·`   `O`   `Ø`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   
+  `2016-07-05`   [`XV Open Cup GP of Japan`]()                           `53/146`    `O`   `O`   `O`   `Ø`   `·`   `Ø`   `·`   `Ø`   `·`   `Ø`               
+  `2016-07-03`   [`0x13 Ural Championship`]()` [2:1]`                    `21/150`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `Ø`   `·`   `Ø`   `O`         
+  `2016-07-01`   [`NEERC 2009 Northern Subregional`]()` [2:1]`           ` 7/142`    `O`   `O`   `O`   `O`   `O`   `Ø`   `!`   `O`   `O`   `O`   `O`         
+  ` `                                                                                                                                                        
+  `2016-05-24`   [`Urozero 2015 Warsaw U`]()                             ` 5/ 23`    `O`   `·`   `O`   `O`   `·`   `O`   `O`   `Ø`   `O`   `!`   `O`         
+  `2016-05-22`   [`Petrozavodsk Winter-2015 Moscow SU Tapirs`]()         `12/ 83`    `O`   `·`   `·`   `·`   `·`   `·`   `O`   `O`   `·`   `O`   `O`         
+  `2016-05-21`   [`XVI Open Cup GP of Siberia`]()                        `25/155`    `O`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `!`   `O`   `O`   `·`   
+  `2016-05-17`   [`Petrozavodsk Winter-2015 Wroclaw U`]()                ` 5/ 89`    `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   
+  `2016-05-15`   [`Petrozavodsk Winter-2015 Michael Tikhomirov`]()       ` 8/ 94`    `O`   `·`   `·`   `·`   `O`   `O`   `O`   `·`   `·`   `O`               
+  `2016-05-13`   [`Petrozavodsk Winter-2015 Jagiellonian U`]()` [3:0]`   ` -/ --`    `O`   `O`   `!`   `O`   `Ø`   `Ø`   `!`   `!`   `Ø`   `·`   `!`         
+  `2016-05-10`   [`Petrozavodsk Summer-2015 Petr Mitrichev`]()           `19/ 52`    `O`   `O`   `Ø`   `O`   `·`   `O`   `·`   `O`   `·`   `·`               
+  `2016-05-06`   [`Petrozavodsk Summer-2015 Ivan Smirnov`]()             `18/ 42`    `O`   `·`   `·`   `·`   `·`   `O`   `Ø`   `O`   `O`   `!`   `O`         
+  `2016-04-30`   **`ONSITE|`[`THUPC 2016`]()**                           ` 3/ 73`    `O`   `O`   `O`   `·`   `O`   `O`   `·`   `Ø`   `O`   `!`               
+  `2016-04-23`   [`Petrozavodsk Summer-2015 Yandex Cup Stage 2`]()       `21/ 44`    `O`   `O`   `O`   `Ø`   `O`   `?`   `O`   `·`   `Ø`   `O`               
+  `2016-04-22`   [`Petrozavodsk Winter-2009 Moscow SU`]()                ` 7/ 42`    `O`   `O`   `Ø`   `O`   `O`   `O`   `·`   `·`   `O`   `Ø`   `Ø`         
+  `2016-04-21`   [`NWERC 2005`]()` [IND]`                                ` -/ --`    `Ø`   `·`   `O`   `O`   `O`   `O`   `·`   `O`   `O`                     
+  `2016-04-17`   [`XVI Open Cup GP of Ukraine`]()                        `27/334`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `Ø`   `O`   `O`   `O`   `O`
+  `2016-04-16`   [`XVI Open Cup GP of Peterhof`]()                       `31/125`    `O`   `Ø`   `·`   `O`   `O`   `O`   `O`   `·`   `·`                     
+  `2016-04-15`   [`XVI Open Cup GP of Europe`]()                         `20/174`    `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `·`   
+  `2016-04-09`   [`Petrozavodsk Winter-2015 Nizhny Novgorod SU`]()       `28/ 83`    `Ø`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `·`                     
+  `2016-04-08`   [`ECNA 2015`]()` [3:3]`                                 ` -/ --`    `·`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`                     
+  `2016-04-04`   [`Petrozavodsk Summer-2015 Warsaw U`]()                 `21/ 78`    `·`   `O`   `O`   `·`   `O`   `Ø`   `·`   `O`   `O`   `·`   `O`         
+  `2016-04-03`   [`XVI Open Cup GP of Bashkortostan`]()                  `19/140`    `O`   `·`   `O`   `O`   `O`   `O`   `·`   `O`   `O`   `O`   `·`   `O`   `O`
+  `2016-04-01`   [`Petrozavodsk Summer-2015 Moscow IPT`]()               `13/ 39`    `Ø`   `O`   `O`   `·`   `O`   `·`   `O`   `·`   `·`   `O`               
+  `2016-03-25`   [`Petrozavodsk Summer-2015 JAG`]()                      `17/ 95`    `O`   `O`   `·`   `O`   `·`   `O`   `·`   `·`   `·`   `·`   `O`   `O`   
+  `2016-03-18`   [`XVI Open Cup GP of Japan`]()                          `32/195`    `O`   `O`   `·`   `·`   `·`   `O`   `O`   `O`   `O`   `O`               
+  `2016-03-12`   [`Petrozavodsk Summer-2015 ASC 48`]()                   `13/ 51`    `O`   `·`   `O`   `O`   `·`   `O`   `O`   `Ø`   `·`   `O`               
+  `2016-03-06`   [`XVI Open Cup GP of SPB`]()                            `40/184`    `O`   `·`   `·`   `O`   `O`   `·`   `O`   `O`   `O`   `O`   `O`   `Ø`   
+  `2016-03-04`   [`XVI Open Cup GP of Ekaterinburg`]()                   `18/154`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `Ø`         
+  ` `                                                                                                                                                        
+  `2016-02-01`   **[`ICPCCamp 2016 Makoto Soejima 4`]()**` [2:1]`        `12/ 60`    `·`   `O`   `·`   `·`   `O`   `·`   `·`   `O`   `O`   `O`   `·`   `O`   `Ø`
+  `2016-01-31`   **[`ICPCCamp 2016 Moscow SU Trinity`]()**               ` 5/ 60`    `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   `O`   `·`         
+  `2016-01-30`   **[`ICPCCamp 2016 SPb SU and SPb AU`]()**               ` 2/ 60`    `·`   `O`   `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `O`   `·`   
+  `2016-01-28`   **[`ICPCCamp 2016 GP of China`]()**                     ` 6/ 58`    `·`   `O`   `·`   `·`   `·`   `O`   `·`   `O`   `·`   `O`               
+  `2016-01-27`   **[`ICPCCamp 2016 SJTU Dreadnought`]()**                ` 4/ 57`    `O`   `·`   `·`   `O`   `O`   `O`   `·`   `·`   `·`   `O`               
+  `2016-01-26`   **[`ICPCCamp 2016 Zhejiang U`]()**                      `17/ 59`    `O`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`   `O`               
+  `2016-01-25`   **[`ICPCCamp 2016 ftiasch`]()**` [2:1]`                 ` 4/ 59`    `O`   `O`   `·`   `O`   `·`   `O`   `O`   `O`   `·`   `·`               
+  ` `                                                                                                                                                        
+  `2015-12-13`   **`ONSITE|`[`Asia EC-FINAL 2015`]()**                   `25/288`    `O`   `O`   `·`   `O`   `·`   `O`   `·`   `·`   `·`   `O`   `·`   `O`   `O`
+  `2015-11-22`   **`ONSITE|`[`Asia Shanghai Regional 2015`]()**          ` 2/199`    `O`   `O`   `Ø`   `O`   `O`   `O`   `·`   `·`   `O`   `·`   `O`   `O`   
+  `2015-11-08`   **`ONSITE|`[`Asia Hefei Regional 2015`]()**             ` 8/ 97`    `O`   `·`   `·`   `O`   `O`   `Ø`   `O`   `O`   `Ø`   `·`               
+  ` `                                                                                                                                                        
+  `2015-05-24`   **`ONSITE|`[`Asia Shanghai Metropolitan 2015`]()**      ` 7/200`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `·`   `O`   `O`               
 
-`Date`       `Contest`                                               ` Place ` `A` `B` `C` `D` `E` `F` `G` `H` `I` `J` `K` `L` `M`
------------- ------------------------------------------------------- --------- --- --- --- --- --- --- --- --- --- --- --- --- ---
-`2018-04-11` [`MIPT Workshop 2018 NAIPC`]()                          ` 8/ 58`  `O` `O` `O` `O` `O` `O` `!` `O` `O` `!` `O`
-`2018-04-10` [`MosCode Fest 2018`]()                                 ` 4/100`  `O` `O` `·` `O` `·` `O` `O` `O` `O` `·` `O`
-`2018-04-08` **[`XVIII Open Cup GP of Poland`]()**                   `11/ 83`  `O` `O` `O` `O` `O` `O` `!` `O` `Ø` `!` `O`
-`2018-04-07` [`Petrozavodsk Summer-2017 JOI TST 2012 Selection`]()   ` 3/ 61`  `O` `O` `O` `O` `O` `O` `O` `!` `O` `O`
-`2018-04-03` [`Petrozavodsk Winter-2018 CMU`]()` [2:1]`              `13/ 85`  `O` `O` `O` `O` `!` `O` `O` `O` `O` `O` `·`
-`2018-04-01` [`ECNA 2017`]()` [2:1]`                                 ` -/ --`  `Ø` `!` `O` `O` `O` `O` `O` `O` `O` `O`
-`2018-03-31` [`XVII Open Cup GP of Gomel`]()` [2:1]`                 ` -/ --`  `·` `O` `X` `O` `!` `O` `O` `O` `·` `O` `O`
-`2018-03-28` [`XVI Open Cup GP of Southern Caucasus`]()` [2:1]`      ` -/ --`  `O` `·` `!` `O` `!` `O` `Ø` `O` `!` `O`
-`2018-03-25` [`MIPT Workshop 2018 Moscow SU`]()                      ` 3/ 36`  `·` `O` `O` `O` `O` `O` `·` `·` `O` `O` `Ø` `O` `O`
-`2018-03-24` [`MIPT Workshop 2018 JAG 2017`]()                       ` 5/ 57`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `·` `O` `Ø` `O`
-`2018-03-23` [`MIPT Workshop 2018 Taiwan NTU`]()                     ` 4/ 54`  `O` `O` `O` `!` `O` `O` `O` `O` `!` `O` `O` `!`
-`2018-03-22` [`XVIII Open Cup GP of Saratov`]()                      `11/ 96`  `O` `!` `O` `O` `O` `O` `O` `!` `Ø` `O` `O` `O`
-`2018-03-18` **[`XVIII Open Cup GP of Belarus`]()**                  `12/103`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2018-03-17` [`XVIII Open Cup GP of Korea`]()                        `22/ 91`  `O` `·` `O` `O` `!` `O` `O` `!` `!` `·` `!` `O`
-`2018-03-15` [`XVII Open Cup GP of Wroclaw`]()                       ` 7/ 82`  `O` `Ø` `O` `O` `·` `O` `O` `O` `O` `O` `·`
-`2018-03-11` **[`XVIII Open Cup GP of Baltic Sea`]()**               `14/113`  `O` `O` `O` `O` `O` `O` `·` `O` `O`
-`2018-03-10` [`World Finals 2010`]()                                 `21/148`  `·` `O` `O` `O` `·` `O` `O` `·` `·` `O` `·`
-`2018-03-06` [`BSUIR Open 2015 Championship`]()` [IND]`              ` -/ --`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2018-03-04` [`Petrozavodsk Summer-2017 Ruyi Li 2`]()                ` 7/ 72`  `O` `O` `O` `!` `Ø` `O` `O` `O` `O` `!` `O`
-`2018-03-03` [`Asia Tsukuba Regional 2017`]()                        ` 4/ 73`  `O` `O` `O` `!` `O` `O` `O` `O` `O` `O` `O`
-`2018-02-27` [`Petrozavodsk Winter-2013 SPb SU`]()                   `10/ 66`  `O` `·` `O` `O` `O` `O` `!` `O` `!` `O` `O`
-` `
-`2018-02-04` **[`Chinese Bootcamp 2018 GP of Khamovniki`]()**        ` 9/ 85`  `O` `·` `O` `·` `O` `O` `O` `O` `O` `·` `O`
-`2018-02-03` **[`Chinese Bootcamp 2018 GP of Gomel`]()**             ` 4/ 25`  `O` `O` `·` `·` `O` `O` `·` `·` `·` `·` `O`
-`2018-02-02` **[`Chinese Bootcamp 2018 AtCoder`]()**                 ` 7/ 83`  `O` `·` `·` `O` `O` `O` `·` `O` `O` `·` `O`
-`2018-02-01` **[`Chinese Bootcamp 2018 Polish 2`]()**                ` 8/ 81`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2018-01-31` **[`Chinese Bootcamp 2018 ITMO U`]()**                  ` 8/ 24`  `·` `·` `O` `O` `·` `·` `O` `·` `·` `O` `·` `·`
-`2018-01-30` **[`Chinese Bootcamp 2018 Polish 1`]()**                ` 4/ 23`  `·` `·` `·` `O` `·` `·` `O` `O` `O` `·` `O`
-`2018-01-26` [`Petrozavodsk Summer-2017 UESTC Selection`]()          ` 4/ 46`  `O` `O` `O` `·` `·` `O` `·` `O` `O` `O` `·` `O`
-`2018-01-24` [`XVIII Open Cup GP of Ukraine`]()                      ` 4/ 92`  `O` `O` `O` `O` `Ø` `O` `O` `O` `O` `O` `·` `O`
-`2018-01-23` [`CERC 2017`]()                                         ` 3/ 98`  `O` `!` `!` `!` `·` `O` `O` `O` `O` `O` `O` `O`
-`2018-01-19` [`Petrozavodsk Summer-2017 Moscow IPT`]()               ` 5/ 62`  `Ø` `O` `!` `O` `O` `Ø` `O` `O` `O` `O` `O`
-`2018-01-17` [`Petrozavodsk Summer-2017 Warsaw U`]()                 `10/ 67`  `O` `Ø` `O` `O` `O` `!` `O` `O` `·` `O` `O`
-`2018-01-16` [`JAG Spring 2014`]()                                   ` 6/ 39`  `O` `O` `O` `O` `O` `O` `·` `O` `O` `O`
-` `
-`2017-12-18` [`NEERC 2017`]()                                        ` 2/339`  `O` `O` `O` `O` `O` `O` `O` `·` `O` `O` `O` `O`
-`2017-12-10` [`XVIII Open Cup GP of SPb`]()                          `19/228`  `O` `O` `O` `O` `O` `·` `O` `·` `O` `O` `O` `O`
-`2017-12-09` [`Petrozavodsk Summer-2011 Warsaw U`]()` [IND]`         ` -/ --`  `O` `O` `O` `O` `O` `O` `O` `Ø` `O` `Ø`
-`2017-12-03` **`ONSITE|`[`CCPC Final 2017`]()**                      ` 5/117`  `O` `!` `O` `!` `O` `O` `O` `!` `O` `O` `O`
-`2017-11-26` **`ONSITE|`[`Asia Nanning Regional 2017`]()**           ` 3/227`  `O` `·` `·` `O` `O` `O` `·` `O` `O` `O` `·` `O` `O`
-`2017-11-23` [`PNRC 2017`]()                                         ` 1/157`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-11-20` [`NEERC 2017 Northern Subregional`]()                   ` 4/186`  `O` `O` `O` `·` `O` `O` `O` `O` `O` `!` `O` `O`
-`2017-11-10` [`Petrozavodsk Summer-2013 Gennady Korotkevich`]()      ` 7/107`  `O` `O` `O` `·` `O` `Ø` `O` `O` `·` `O`
-`2017-11-09` [`XVIII Open Cup GP of Romania`]()                      `10/ 91`  `O` `!` `O` `O` `·` `·` `O` `·` `O` `O` `O` `·`
-`2017-11-07` [`Osipovsky Cup 2014`]()                                ` 1/ 75`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-29` **`ONSITE|`[`Asia Xi'an Regional 2017`]()**             ` 2/348`  `O` `O` `·` `!` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-24` [`Petrozavodsk Summer-2014 Xiaoxu Guo 2`]()             ` 1/ 57`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `·` `O`
-`2017-10-21` **[`NEERC 2017 Southern Subregional`]()**               ` 3/1K⁺`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-20` [`NEERC 2016 Southern Subregional`]()                   ` 8/904`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `Ø` `·`
-`2017-10-15` [`XVII Open Cup GP of Siberia`]()                       `13/154`  `O` `O` `·` `O` `O` `O` `O` `O` `O` `·` `O`
-`2017-10-14` [`Petrozavodsk Summer-2016 DPRK`]()                     `10/ 43`  `·` `O` `O` `·` `·` `·` `·` `·` `·` `O` `O` `O` `·`
-`2017-10-07` [`Petrozavodsk Summer-2017 Songyang Chen 1`]()          ` 3/ 51`  `O` `O` `O` `O` `O` `!` `O` `O` `O` `O` `O` `O` `·`
-`2017-10-06` [`Petrozavodsk Winter-2014 Chinese`]()                  ` 3/ 85`  `O` `O` `O` `Ø` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-05` [`Petrozavodsk Winter-2015 Chinese Camp 2`]()           ` 5/108`  `O` `O` `O` `O` `·` `O` `O` `·` `O` `O`
-`2017-10-03` [`ASC 45`]()                                            ` 4/154`  `O` `O` `O` `O` `O` `O` `O` `O` `Ø` `Ø` `O`
-`2017-10-01` **[`XVIII Open Cup GP of Eurasia`]()**                  `13/350`  `O` `O` `·` `O` `O` `·` `·` `O` `O` `O` `O` `O`
-`2017-09-24` **[`XVIII Open Cup GP of Ural`]()**                     `14/ 99`  `O` `O` `O` `!` `O` `O` `·` `X` `!` `·` `O`
-`2017-09-23` **[`Asia Beijing Regional 2017 Online`]()**             `12/1K⁺`  `O` `O` `O` `!` `O` `·` `O` `O` `O` `O`
-`2017-09-16` **[`Asia Xi'an Regional 2017 Online`]()**               `13/1K⁺`  `O` `O` `O` `Ø` `O` `O` `O` `!` `O` `!`
-` `
-`2017-09-07` [`JAG 2013`]()                                          ` 7/ 59`  `O` `O` `O` `O` `O` `O` `O` `!` `O` `·` `O` `O`
-`2017-09-03` [`Bubble Cup X Finals`]()                               `11/314`  `O` `O` `O` `O` `O` `O` `O` `·` `O` `X`
-`2017-09-02` [`2017 NTU WF Team Selection`]()                        ` 1/ 54`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-08-30` [`Asia Qingdao Regional 2016`]()                        ` 2/327`  `O` `O` `O` `O` `·` `O` `O` `·` `O` `·` `O` `O` `·`
-`2017-08-29` [`Petrozavodsk Summer-2014 Petr Mitrichev 12`]()        ` 3/ 53`  `·` `·` `O` `O` `O` `·` `O` `O` `O`
-`2017-08-27` [`XVII Open Cup GP of Eurasia`]()                       ` 8/295`  `O` `O` `O` `Ø` `O` `O` `O` `O` `O` `O` `O` `·`
-`2017-08-23` [`0x12 Ural Championship`]()                            ` 5/ 62`  `O` `O` `O` `O` `·` `·` `O` `O` `O` `O` `O` `X`
-`2017-08-21` [`XVII Open Cup GP of Dolgoprudny`]()                   ` 9/113`  `O` `O` `O` `O` `O` `O` `!` `O` `O` `O` `O`
-`2017-08-16` [`Petrozavodsk Summer-2014 Moscow SU SG`]()             ` 3/ 43`  `·` `O` `O` `Ø` `O` `O` `·` `·` `O` `O`
-`2017-08-15` [`Petrozavodsk Summer-2014 Yandex`]()                   ` 3/ 69`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-07-07` [`Codeforces 750 - Good Bye 2016`]()` [IND]`            ` -/ --`  `O` `O` `O` `O` `O` `Ø` `Ø` `·`
-`2017-07-06` [`Bubble Cup 9 Finals`]()` [IND]`                       ` -/ --`  `Ø` `Ø` `O` `O` `O` `O` `O` `O` `!`
-`2017-07-05` [`BSUIR Open 2016 Semifinal`]()` [IND]`                 ` -/ --`  `O` `Ø` `Ø` `O` `O` `O` `O` `O` `O` `!` `O`
-` `
-`2017-05-24` **`ONSITE|`[`World Finals 2017`]()**                    ` 8/128`  `O` `Ø` `O` `O` `O` `O` `O` `·` `O` `·` `Ø` `O`
-`2017-05-22` [`XIV Open Cup GP of Azov Sea`]()                       ` 7/ 88`  `O` `Ø` `O` `O` `O` `O` `O` `O` `·` `O` `O`
-`2017-05-19` [`Asia Bangkok Regional 2016 `]()                       `15/143`  `!` `O` `O` `O` `O` `O` `O` `O` `O` `·` `Ø` `O`
-`2017-05-18` [`Rocky Mountain Regional 2015`]()                      ` -/ --`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-05-16` [`Petrozavodsk Winter-2013 Jagiellonian U`]()           `16/ 72`  `O` `O` `!` `!` `O` `O` `O` `!` `?` `O` `O` `O`
-`2017-05-12` [`MIPT Workshop 2016 Japanese OI Selection`]()          ` 4/ 33`  `O` `O` `O` `O` `O` `!` `O` `O` `O`
-`2017-05-10` [`BSUIR Open 2016 Finals`]()                            ` 6/ 97`  `O` `·` `O` `O` `O` `O` `O` `O` `O` `·`
-`2017-05-09` [`XVII Open Cup GP of Two Capitals`]()                  `18/140`  `O` `O` `O` `O` `·` `O` `·` `O` `O` `O` `O`
-`2017-05-07` [`World Finals 2016`]()                                 ` 6/130`  `O` `O` `O` `O` `O` `O` `O` `·` `Ø` `O` `O` `O` `·`
-`2017-05-06` [`SPRC 2016`]()` [IND]`                                 ` -/ --`  `O` `O` `·` `O` `O` `O` `·` `·` `O` `O` `O`
-`2017-05-04` [`Grodno 2015`]()                                       ` 4/ 75`  `·` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-05-03` [`Petrozavodsk Summer-2015 Xudyh`]()                    ` 8/ 53`  `O` `·` `O` `O` `O` `Ø` `O` `·` `·` `O`
-`2017-05-02` [`UKIEPC 2016`]()` [IND]`                               ` -/ --`  `!` `O` `O` `·` `O` `O` `O` `O` `O` `!` `·` `O`
-`2017-04-30` **[`XVII Open Cup GP of Ural`]()**                      `13/ 50`  `O` `O` `O` `O` `O` `·` `O` `O` `·` `O` `O` `O` `O`
-`2017-04-29` [`PNRC 2016`]()` [IND]`                                 ` -/ --`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-04-26` [`Asia Singapore Regional 2015`]()` [IND]`              ` -/ --`  `O` `Ø` `O` `O` `O` `O` `O` `O` `O` `O` `·`
-`2017-04-23` [`World Finals 2015`]()                                 `21/145`  `O` `·` `O` `O` `O` `O` `·` `O` `O` `O` `Ø` `O` `Ø`
-`2017-04-17` **[`MIPT Workshop 2017 GP of Moscow Workshop`]()**      ` 5/ 35`  `O` `·` `O` `O` `·` `O` `O` `O` `O` `O` `O`
-`2017-04-16` **[`MIPT Workshop 2017 NAIPC-2017`]()**                 ` 4/ 53`  `O` `O` `O` `O` `Ø` `·` `O` `O` `·` `O` `O`
-`2017-04-15` **[`MIPT Workshop 2017 Worldwide Selection`]()**        `12/ 39`  `·` `O` `·` `O` `O` `Ø` `Ø` `·` `·` `·` `O` `O`
-`2017-04-13` **[`MIPT Workshop 2017 Latin America Selection`]()**    `14/ 38`  `Ø` `O` `O` `·` `·` `·` `O` `O` `·` `O` `O` `·` `O`
-`2017-04-12` **[`MIPT Workshop 2017 Korean Selection 1`]()**         ` 7/ 39`  `O` `·` `O` `Ø` `O` `Ø` `·` `O` `O` `O` `Ø` `O` `·`
-`2017-04-11` **[`MIPT Workshop 2017 Zagreb U Selection 2`]()**       ` 3/ 58`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-04-10` **[`MIPT Workshop 2017 Zagreb U Selection 1`]()**       `12/ 53`  `O` `·` `O` `O` `O` `O` `O` `O` `O` `·` `O` `O`
-`2017-04-04` [`AIM Fund Contest`]()                                  ` 3/ 72`  `O` `O` `O` `Ø` `O` `O` `O` `O` `O` `O` `O`
-`2017-04-03` [`Petrozavodsk Summer-2016 Zhejiang U 2`]()             `16/ 82`  `O` `O` `·` `Ø` `O` `O` `O` `!` `O` `·` `O` `!` `!`
-`2017-04-02` **[`XVII Open Cup GP of Tatarstan`]()**                 ` 9/ 76`  `O` `O` `O` `O` `O` `O` `·` `O` `O` `O` `O` `O`
-`2017-03-28` [`Petrozavodsk Summer-2016 Ce Jin and Jiry Ru`]()       ` 7/ 68`  `O` `O` `O` `·` `·` `O` `O` `!` `O` `O`
-`2017-03-26` **[`XVII Open Cup GP of Poland`]()**                    `13/ 79`  `Ø` `!` `O` `!` `O` `O` `·` `Ø` `O` `O` `O`
-`2017-03-22` [`Petrozavodsk Summer-2014 Warsaw U`]()                 ` 4/ 56`  `O` `O` `O` `!` `O` `O` `O` `O` `O` `O` `·`
-`2017-03-19` [`World Finals 2014`]()                                 `15/131`  `·` `·` `O` `O` `O` `·` `O` `·` `Ø` `·` `O` `·`
-`2017-03-15` [`Petrozavodsk Winter-2015 Xiaoxu Guo 3`]()             `21/101`  `·` `O` `O` `·` `O` `Ø` `O` `·` `O` `O`
-`2017-03-12` [`World Finals 2013`]()                                 ` 8/145`  `O` `O` `O` `O` `·` `O` `·` `O` `O` `O` `Ø`
-`2017-03-08` [`Asia Tsukuba Regional 2016`]()                        ` 7/ 71`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `·`
-`2017-03-05` [`World Finals 2012`]()                                 `14/158`  `·` `O` `O` `O` `O` `·` `O` `·` `O` `·` `O` `O`
-`2017-03-01` [`Petrozavodsk Winter-2014 Saratov SU`]()               `29/133`  `·` `O` `O` `·` `O` `Ø` `!` `·` `·` `O` `O`
-`2017-02-26` [`NEERC 2016`]()                                        ` 7/285`  `O` `O` `Ø` `O` `O` `O` `O` `O` `·` `O` `·` `·` `·`
-` `
-`2017-02-18` **[`ICPCCamp 2017 U of Tokyo Selection 1`]()**          ` 7/124`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `·` `·` `O`
-`2017-02-17` **[`ICPCCamp 2017 Yandex Cup 2017`]()**                 `24/123`  `O` `·` `O` `O` `O` `O` `·` `·` `O` `·`
-`2017-02-16` **[`ICPCCamp 2017 Jagiellonian U`]()**                  `25/121`  `O` `O` `O` `·` `·` `O` `O` `O` `O` `·` `·` `O`
-`2017-02-14` **[`ICPCCamp 2017 THU DDF`]()**                         ` 7/124`  `O` `·` `·` `·` `·` `O` `O` `O` `O`
-`2017-02-13` **[`ICPCCamp 2017 zimpha`]()**                          ` 4/121`  `O` `O` `·` `·` `O` `O` `O` `·` `O` `O`
-`2017-02-12` **[`ICPCCamp 2017 ftiasch`]()**                         `27/121`  `·` `·` `·` `·` `O` `·` `O` `·` `·` `·` `O`
-`2017-01-20` [`AMPPZ-2015`]()                                        `19/ 69`  `O` `O` `·` `O` `·` `O` `·` `·` `O` `·` `·` `O`
-`2017-01-19` [`Asia Beijing Regional 2016`]()                        ` 1/199`  `O` `·` `O` `O` `O` `O` `O` `O` `O` `·` `O`
-`2017-01-18` [`National Taiwan U Selection`]()                       ` 8/ 51`  `O` `O` `·` `O` `O` `O` `·` `O` `O` `O`
-`2017-01-16` [`Kent Nikaido 1`]()                                    ` 5/ 22`  `O` `O` `O` `O` `!` `·` `O` `O` `·` `O` `O`
-`2017-01-13` [`Makoto Soejima 3`]()                                  `11/ 69`  `O` `O` `O` `O` `O` `Ø` `O` `O` `O` `Ø` `Ø`
-`2017-01-12` [`Petrozavodsk Winter-2013 JAG 1`]()                    `12/ 63`  `·` `O` `O` `·` `O` `O` `O` `O` `·` `O`
-`2017-01-10` [`Petrozavodsk Winter-2012 Tokyo Kroliki`]()            ` 4/ 62`  `!` `O` `O` `O` `?` `O` `O` `O` `Ø` `O`
-`2017-01-09` [`Petrozavodsk Summer-2013 Japanese`]()                 ` 6/ 46`  `!` `O` `O` `·` `·` `O` `O` `O` `O`
-`2017-01-06` [`Petrozavodsk Winter-2013 JAG 2`]()                    `42/ 50`  `X` `O` `!` `?` `Ø` `Ø` `·` `Ø` `Ø` `O`
-` `
-`2016-12-11` **`ONSITE|`[`Asia CHINA-Final 2016`]()**                ` 5/314`  `O` `O` `O` `O` `O` `O` `O` `O` `·` `·` `·` `O`
-`2016-12-09` [`CERC 2016`]()                                         ` 8/145`  `O` `O` `O` `·` `O` `O` `·` `O` `·` `O` `O` `O`
-`2016-12-03` [`Petrozavodsk Summer-2016 Ural FU Dandelion`]()        `19/ 51`  `·` `O` `·` `O` `·` `·` `O` `·` `O` `·` `·`
-`2016-11-28` **`ONSITE|`[`CCPC Final 2016`]()**                      ` 4/122`  `O` `O` `Ø` `O` `O` `O` `O` `O` `O` `O` `·` `O`
-`2016-11-22` [`Petrozavodsk Summer-2014 Moscow IPT`]()               ` 6/ 43`  `O` `O` `O` `O` `·` `O` `·` `O` `O` `!` `·`
-`2016-11-19` [`XVII Open Cup GP of SPb`]()                           `47/171`  `O` `O` `·` `O` `O` `O` `O` `O` `Ø` `O` `O`
-`2016-11-06` **`ONSITE|`[`Asia Hong Kong Regional 2016`]()**         ` 1/ 57`  `O` `O` `O` `O` `Ø` `Ø` `·` `O` `O` `O` `O`
-`2016-10-29` [`Petrozavodsk Summer-2016 Warsaw U`]()                 ` 8/ 55`  `O` `O` `Ø` `O` `O` `·` `O` `O` `·` `O`
-`2016-10-28` [`NEERC 2016 Moscow Subregional`]()                     ` 1/256`  `O` `O` `·` `O` `O` `O` `O` `O` `O` `·` `O` `O`
-`2016-10-23` **`ONSITE|`[`Asia Shenyang Regional 2016`]()**          `11/194`  `O` `O` `O` `Ø` `O` `·` `O` `O` `O` `Ø` `·` `Ø` `Ø`
-`2016-10-19` **`ONSITE|`[`CCPC Hangzhou 2016`]()**                   ` 2/179`  `O` `O` `O` `O` `O` `O` `·` `·` `O` `·` `O`
-`2016-10-15` [`Asia Beijing Regional 2015`]()                        ` 5/199`  `O` `·` `O` `O` `·` `·` `O` `·` `O` `O` `O`
-`2016-10-06` [`Petrozavodsk Summer-2016 Pavel Khaustov 2`]()         ` 9/ 73`  `·` `O` `O` `O` `Ø` `O` `Ø` `Ø` `O`
-`2016-10-05` [`Petrozavodsk Summer-2016 Moscow IPT`]()               `12/ 74`  `O` `·` `O` `O` `O` `O` `·` `·` `Ø` `Ø` `O`
-`2016-10-04` **[`CCPC Changchun 2016`]()**                           ` 5/610`  `·` `O` `·` `O` `O` `O` `O` `O` `O` `O` `O`
-`2016-10-02` [`XVII Open Cup GP of Japan`]()                         ` 4/123`  `·` `O` `O` `O` `O` `·` `O` `O` `O` `O`
-`2016-09-25` [`Petrozavodsk Summer-2015 Yandex Cup Stage 1`]()       ` 6/ 75`  `O` `O` `O` `O` `O` `·` `O` `O`
-`2016-09-24` [`Asia Shenyang Regional 2015`]()                       ` 4/173`  `·` `O` `·` `O` `Ø` `O` `O` `O` `O` `·` `Ø` `·` `O`
-`2016-09-23` [`Petrozavodsk Winter-2016 JAG`]()                      `11/ 87`  `O` `O` `O` `O` `O` `O` `O` `O` `·` `·` `O`
-`2016-09-18` [`Petrozavodsk Summer-2014 Ivan Kazmenko`]()            ` 7/ 46`  `O` `O` `Ø` `O` `Ø` `·` `O` `O` `O`
-`2016-09-17` **[`Asia Qingdao Regional 2016 Online`]()**             `77/1K⁺`  `O` `O` `·` `O` `O` `O` `O` `·` `O` `·` `O` `O` `·`
-`2016-09-10` **[`Asia Hong Kong Regional 2016 Online`]()**           ` 2/ 82`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2016-09-09` [`Petrozavodsk Winter-2015 Saratov SU`]()               `11/123`  `O` `O` `!` `·` `·` `O` `O` `O` `O` `O` `O`
-`2016-09-04` [`XIV Open Cup GP of Tatarstan`]()                      `16/160`  `O` `O` `O` `Ø` `O` `O` `O` `·` `O` `Ø` `O` `O`
-`2016-09-03` [`CCPC 2016 Online`]()` [3:0]`                          ` -/ --`  `O` `O` `O` `O` `·` `·` `·` `·` `·` `·` `O`
-`2016-09-01` [`NAIPC 2016`]()                                        ` 2/ 48`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `·`
-` `
-`2016-08-04` [`Petrozavodsk Winter-2014 U of Latvia`]()              ` 4/ 89`  `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2016-08-03` [`Petrozavodsk Winter-2014 Ukrainian`]()                `13/ 77`  `O` `O` `O` `·` `O` `·` `·` `Ø` `·` `·`
-`2016-08-02` [`Petrozavodsk Winter-2014 Moscow SU Tapir`]()          ` 4/ 84`  `Ø` `·` `O` `O` `O` `·` `O` `·` `O` `O`
-`2016-08-01` [`Petrozavodsk Winter-2014 Warsaw U`]()                 `15/ 88`  `O` `O` `·` `·` `O` `O` `·` `O` `O` `O`
-`2016-07-30` [`Petrozavodsk Winter-2014 Jagiellonian U`]()` [3:0]`   ` -/ --`  `·` `O` `O` `·` `O` `O` `O` `O` `Ø` `O` `·`
-`2016-07-29` [`Asia Tsukuba Regional 2015`]()                        ` 2/ 43`  `O` `O` `O` `O` `O` `O` `O` `!` `O` `O` `O`
-`2016-07-27` [`Petrozavodsk Winter-2014 Moscow SU Trinity`]()        `11/ 90`  `O` `·` `O` `O` `O` `O` `·` `·` `·` `Ø` `Ø`
-`2016-07-25` [`NEERC 2015`]()                                        `15/233`  `O` `O` `Ø` `Ø` `O` `O` `O` `·` `·` `O` `O` `O`
-`2016-07-22` [`XV Open Cup GP of Central Europe`]()                  `12/240`  `O` `O` `O` `O` `O` `Ø` `O` `·` `O` `O` `O`
-`2016-07-21` [`XVI Open Cup GP of Eurasia`]()                        `48/409`  `O` `O` `O` `O` `O` `O` `·` `O` `O` `·` `O` `O`
-`2016-07-19` [`XV Open Cup GP of Peterhof`]()                        ` 8/118`  `O` `O` `O` `O` `·` `·` `Ø` `O` `·` `O` `O`
-`2016-07-18` [`JAG Autumn 2014`]()                                   ` 2/ 83`  `O` `O` `O` `O` `O` `O` `O` `O` `!` `O` `O`
-`2016-07-16` [`XV Open Cup GP of Udmurtia`]()                        `14/105`  `O` `O` `O` `!` `O` `·` `Ø` `O` `·` `·`
-`2016-07-14` [`XV Open Cup GP of Karelia`]()                         `12/137`  `O` `O` `Ø` `O` `O` `Ø` `O` `O`
-`2016-07-12` [`XV Open Cup GP of SPb`]()                             `14/200`  `O` `O` `O` `O` `!` `O` `!` `O` `O` `O`
-`2016-07-11` [`XV Open Cup GP of Three Capitals`]()                  `17/200`  `O` `·` `O` `O` `O` `O` `Ø` `O` `O` `Ø` `O`
-`2016-07-08` [`XV Open Cup GP of America`]()                         `14/ 83`  `·` `!` `O` `O` `O` `O` `O` `O` `O` `O`
-`2016-07-06` [`XV Open Cup GP of Tatarstan`]()                       `21/120`  `·` `O` `·` `O` `Ø` `O` `O` `O` `O` `Ø` `O` `O`
-`2016-07-05` [`XV Open Cup GP of Japan`]()                           `53/146`  `O` `O` `O` `Ø` `·` `Ø` `·` `Ø` `·` `Ø`
-`2016-07-03` [`0x13 Ural Championship`]()` [2:1]`                    `21/150`  `O` `O` `O` `Ø` `O` `O` `O` `Ø` `·` `Ø` `O`
-`2016-07-01` [`NEERC 2009 Northern Subregional`]()` [2:1]`           ` 7/142`  `O` `O` `O` `O` `O` `Ø` `!` `O` `O` `O` `O`
-` `
-`2016-05-24` [`Urozero 2015 Warsaw U`]()                             ` 5/ 23`  `O` `·` `O` `O` `·` `O` `O` `Ø` `O` `!` `O`
-`2016-05-22` [`Petrozavodsk Winter-2015 Moscow SU Tapirs`]()         `12/ 83`  `O` `·` `·` `·` `·` `·` `O` `O` `·` `O` `O`
-`2016-05-21` [`XVI Open Cup GP of Siberia`]()                        `25/155`  `O` `O` `O` `O` `O` `·` `O` `O` `!` `O` `O` `·`
-`2016-05-17` [`Petrozavodsk Winter-2015 Wroclaw U`]()                ` 5/ 89`  `·` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `Ø`
-`2016-05-15` [`Petrozavodsk Winter-2015 Michael Tikhomirov`]()       ` 8/ 94`  `O` `·` `·` `·` `O` `O` `O` `·` `·` `O`
-`2016-05-13` [`Petrozavodsk Winter-2015 Jagiellonian U`]()` [3:0]`   ` -/ --`  `O` `O` `!` `O` `Ø` `Ø` `!` `!` `Ø` `·` `!`
-`2016-05-10` [`Petrozavodsk Summer-2015 Petr Mitrichev`]()           `19/ 52`  `O` `O` `Ø` `O` `·` `O` `·` `O` `·` `·`
-`2016-05-06` [`Petrozavodsk Summer-2015 Ivan Smirnov`]()             `18/ 42`  `O` `·` `·` `·` `·` `O` `Ø` `O` `O` `!` `O`
-`2016-04-30` **`ONSITE|`[`THUPC 2016`]()**                           ` 3/ 73`  `O` `O` `O` `·` `O` `O` `·` `Ø` `O` `!`
-`2016-04-23` [`Petrozavodsk Summer-2015 Yandex Cup Stage 2`]()       `21/ 44`  `O` `O` `O` `Ø` `O` `?` `O` `·` `Ø` `O`
-`2016-04-22` [`Petrozavodsk Winter-2009 Moscow SU`]()                ` 7/ 42`  `O` `O` `Ø` `O` `O` `O` `·` `·` `O` `Ø` `Ø`
-`2016-04-21` [`NWERC 2005`]()` [IND]`                                ` -/ --`  `Ø` `·` `O` `O` `O` `O` `·` `O` `O`
-`2016-04-17` [`XVI Open Cup GP of Ukraine`]()                        `27/334`  `O` `O` `O` `O` `O` `O` `O` `Ø` `Ø` `O` `O` `O` `O`
-`2016-04-16` [`XVI Open Cup GP of Peterhof`]()                       `31/125`  `O` `Ø` `·` `O` `O` `O` `O` `·` `·`
-`2016-04-15` [`XVI Open Cup GP of Europe`]()                         `20/174`  `O` `O` `·` `O` `O` `O` `·` `O` `·` `O` `O` `·`
-`2016-04-09` [`Petrozavodsk Winter-2015 Nizhny Novgorod SU`]()       `28/ 83`  `Ø` `O` `O` `O` `Ø` `O` `O` `O` `·`
-`2016-04-08` [`ECNA 2015`]()` [3:3]`                                 ` -/ --`  `·` `O` `O` `O` `O` `O` `O` `O` `O`
-`2016-04-04` [`Petrozavodsk Summer-2015 Warsaw U`]()                 `21/ 78`  `·` `O` `O` `·` `O` `Ø` `·` `O` `O` `·` `O`
-`2016-04-03` [`XVI Open Cup GP of Bashkortostan`]()                  `19/140`  `O` `·` `O` `O` `O` `O` `·` `O` `O` `O` `·` `O` `O`
-`2016-04-01` [`Petrozavodsk Summer-2015 Moscow IPT`]()               `13/ 39`  `Ø` `O` `O` `·` `O` `·` `O` `·` `·` `O`
-`2016-03-25` [`Petrozavodsk Summer-2015 JAG`]()                      `17/ 95`  `O` `O` `·` `O` `·` `O` `·` `·` `·` `·` `O` `O`
-`2016-03-18` [`XVI Open Cup GP of Japan`]()                          `32/195`  `O` `O` `·` `·` `·` `O` `O` `O` `O` `O`
-`2016-03-12` [`Petrozavodsk Summer-2015 ASC 48`]()                   `13/ 51`  `O` `·` `O` `O` `·` `O` `O` `Ø` `·` `O`
-`2016-03-06` [`XVI Open Cup GP of SPB`]()                            `40/184`  `O` `·` `·` `O` `O` `·` `O` `O` `O` `O` `O` `Ø`
-`2016-03-04` [`XVI Open Cup GP of Ekaterinburg`]()                   `18/154`  `O` `O` `O` `O` `O` `O` `O` `Ø` `O` `O` `Ø`
-` `
-`2016-02-01` **[`ICPCCamp 2016 Makoto Soejima 4`]()**` [2:1]`        `12/ 60`  `·` `O` `·` `·` `O` `·` `·` `O` `O` `O` `·` `O` `Ø`
-`2016-01-31` **[`ICPCCamp 2016 Moscow SU Trinity`]()**               ` 5/ 60`  `O` `·` `O` `·` `O` `O` `O` `O` `·` `O` `·`
-`2016-01-30` **[`ICPCCamp 2016 SPb SU and SPb AU`]()**               ` 2/ 60`  `·` `O` `O` `O` `·` `O` `·` `O` `O` `O` `O` `·`
-`2016-01-28` **[`ICPCCamp 2016 GP of China`]()**                     ` 6/ 58`  `·` `O` `·` `·` `·` `O` `·` `O` `·` `O`
-`2016-01-27` **[`ICPCCamp 2016 SJTU Dreadnought`]()**                ` 4/ 57`  `O` `·` `·` `O` `O` `O` `·` `·` `·` `O`
-`2016-01-26` **[`ICPCCamp 2016 Zhejiang U`]()**                      `17/ 59`  `O` `·` `·` `·` `·` `·` `·` `·` `·` `O`
-`2016-01-25` **[`ICPCCamp 2016 ftiasch`]()**` [2:1]`                 ` 4/ 59`  `O` `O` `·` `O` `·` `O` `O` `O` `·` `·`
-` `
-`2015-12-13` **`ONSITE|`[`Asia EC-FINAL 2015`]()**                   `25/288`  `O` `O` `·` `O` `·` `O` `·` `·` `·` `O` `·` `O` `O`
-`2015-11-22` **`ONSITE|`[`Asia Shanghai Regional 2015`]()**          ` 2/199`  `O` `O` `Ø` `O` `O` `O` `·` `·` `O` `·` `O` `O`
-`2015-11-08` **`ONSITE|`[`Asia Hefei Regional 2015`]()**             ` 8/ 97`  `O` `·` `·` `O` `O` `Ø` `O` `O` `Ø` `·`
-` `
-`2015-05-24` **`ONSITE|`[`Asia Shanghai Metropolitan 2015`]()**      ` 7/200`  `O` `O` `O` `Ø` `O` `O` `O` `·` `O` `O`
+------------------------------------------------------------------------
 
----
-
-   
-` · 尚未通过  O 当场通过  [X:Y] 非标准组队赛：X个人使用Y台电脑`  
-` ! 口头通过  Ø 赛后通过  [IND] 个人赛`  
+ \
+` · 尚未通过  O 当场通过  [X:Y] 非标准组队赛：X个人使用Y台电脑`\
+` ! 口头通过  Ø 赛后通过  [IND] 个人赛`
