@@ -1,113 +1,127 @@
-# Info
+Info
+====
 
 Date: 2017.10.19 12:00-17:15
 
 [Link](http://codeforces.com/gym/101063)
 
-# Solutions
+Solutions
+=========
 
-## A Giant Snail Maze
+A Giant Snail Maze
+------------------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 从里向外$dp$，转移时维护前缀$min$正反转两圈。
 
-## B Martian Sunrise
+B Martian Sunrise
+-----------------
 
 solved by Jove, upsolve by none
 
----
+------------------------------------------------------------------------
 
 Jove's solution
 
 贪心的找可以演奏尽可能长的一对即可。
 
-## C Sleep Buddies
+C Sleep Buddies
+---------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 二进制枚举。
 
-## D Interstellar Love
+D Interstellar Love
+-------------------
 
 unsolved
 
-## E Mars Explorer
+E Mars Explorer
+---------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 正着走拿物品不会更优，因此先正着走到最远处，往回走的时候再考虑拿，$bitset$优化背包，需要注意自身重量。
 
-## F Bandejao
+F Bandejao
+----------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 如果$(n+1) \mod k=0$输出$yes$，否则输出$no$。
 
-## G Job List
+G Job List
+----------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 用$std::set$和链表模拟。
 
-## H Reporting on Mars
+H Reporting on Mars
+-------------------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 简单推导发现下标$\mod k$同余的位置符号相同，可以预处理出每类位置取正或者取负的代价，然后简单$dp$即可。
 
-## I Lazy Painting
+I Lazy Painting
+---------------
 
 solved by sk, upsolve by none
 
----
+------------------------------------------------------------------------
 
 sk's solution
 
 每列一个并查集用于找出染色区域左边界上未被染色格子，然后从这些格子出发$BFS$染色。
 
-## J The Keys
+J The Keys
+----------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 根据期望线性可加不难算出$ans=\frac{k-1}{k}\sum_{i=1}^{n}[d_i \neq d_{i+1}]$。
 
-## K Dire, Dire Docks
+K Dire, Dire Docks
+------------------
 
 solved by quailty, upsolve by none
 
----
+------------------------------------------------------------------------
 
 quailty's solution
 
 所有点共线时无解，否则选取字典序最小的点，其他点关于这个点极角排序，极角相同按照距离从近到远排序，再将最后一段极角相同的点$reverse$一下，按照排出来的顺序连边可以得到一个简单多边形，自然是满足条件的。
 
-# Replay
+Replay
+======
