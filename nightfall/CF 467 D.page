@@ -1,108 +1,108 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 vector<int> all, a1, a2;
 int cnt_wall(int l, int r, int y) {
-	vector<int> &tmp = (y == 0 ? a1 : a2);
-	return upper_bound(tmp.begin(), tmp.end(), r) - lower_bound(tmp.begin(), tmp.end(), l);
+    vector<int> &tmp = (y == 0 ? a1 : a2);
+    return upper_bound(tmp.begin(), tmp.end(), r) - lower_bound(tmp.begin(), tmp.end(), l);
 }
 bool is_wall(int x, int y) {
-	vector<int> &tmp = (y == 0 ? a1 : a2);
-	auto it = lower_bound(tmp.begin(), tmp.end(), x);
-	return it != tmp.end() && *it == x;
+    vector<int> &tmp = (y == 0 ? a1 : a2);
+    auto it = lower_bound(tmp.begin(), tmp.end(), x);
+    return it != tmp.end() && *it == x;
 }
 const int N = 3e6 + 5;
 pair<int, int> dp[N][2], his[N][2];
 void upd(int i, int j, int fi, int fj, pair<int, int> val) {
-	if (val >= dp[i][j]) {
-		dp[i][j] = val;
-		his[i][j] = {fi, fj};
-	}
+    if (val >= dp[i][j]) {
+        dp[i][j] = val;
+        his[i][j] = {fi, fj};
+    }
 }
 int main() {
-	int n, m1, m2, t;
-	scanf("%d%d%d%d", &n, &m1, &m2, &t);
-	all.push_back(0);
-	all.push_back(n + 1);
-	for (int i = 0; i < m1; ++ i) {
-		int x;
-		scanf("%d", &x);
-		a1.push_back(x);
-		all.push_back(x - 1);
-		all.push_back(x + 1);
-		all.push_back(x);
-	}
-	for (int i = 0; i < m2; ++ i) {
-		int x;
-		scanf("%d", &x);
-		a2.push_back(x);
-		all.push_back(x - 1);
-		all.push_back(x + 1);
-		all.push_back(x);
-	}
-	sort(all.begin(), all.end());
-	all.erase(unique(all.begin(), all.end()), all.end());
-	memset(dp, -1, sizeof(dp));
-	dp[0][0] = {0, 0};
-	for (int i = 0; i < (int) all.size() - 1; ++ i) {
-		for (int j = 0; j < 2; ++ j) {
-			if (dp[i][j].first == -1) continue;
-			int shot = dp[i][j].first;
-			int half = dp[i][j].second + all[i + 1] - all[i] - 1;
-			shot += half / t;
-			half %= t; half ++;
-			shot -= is_wall(all[i + 1], j);
-			if (shot >= 0) {
-				shot += half / t;
-				half %= t;
-				upd(i + 1, j, i, j, {shot, half});
-			}
-			//printf("dp[%d][%d] = %d %d\n", i, j, dp[i][j].first, dp[i][j].second);
-			if (!is_wall(all[i], j ^ 1)) {
-				int shot = 0;
-				int half = (dp[i][j].first ? t : dp[i][j].second) + all[i + 1] - all[i] - 1;
-				shot += half / t;
-				half %= t; half ++;
-				shot -= is_wall(all[i + 1], j ^ 1);
-				if (shot >= 0) {
-					shot += half / t;
-					half %= t;
-					upd(i + 1, j ^ 1, i, j, {shot, half});
-				}
-			}
-		}
-	}
-	int i = (int) all.size() - 1, j = 0;
-	if (dp[i][j].first == -1) j = 1;
-	if (dp[i][j].first == -1) return 0 * puts("No");
-	vector<int> switch_lane;
-	while (i != 0) {
-		int ii, jj;
-		tie(ii, jj) = his[i][j];
-		//printf("his[%d][%d] = %d %d\n", i, j, ii, jj);
-		if (jj != j) {
-			switch_lane.push_back(ii);
-		}
-		i = ii, j = jj;
-	}
-	reverse(switch_lane.begin(), switch_lane.end());
-	j = 0; int y = 0, nex = t;
-	vector<pair<int, int>> shoot;
-	for (int i = 0; i < (int) all.size(); ++ i) {
-		if (is_wall(all[i], y)) {
-			shoot.push_back({nex, y});
-			nex += t;
-		}
-		if (j < (int) switch_lane.size() && switch_lane[j] == i) {
-			y ^= 1;
-			j ++;
-			nex = max(nex, all[i]);
-		}
-	}
-	puts("Yes");
-	printf("%d\n", (int) switch_lane.size());
-	for (int x : switch_lane) printf("%d ", all[x]); puts("");
-	printf("%d\n", (int) shoot.size());
-	for (auto p : shoot) printf("%d %d\n", p.first, p.second + 1);
+    int n, m1, m2, t;
+    scanf("%d%d%d%d", &n, &m1, &m2, &t);
+    all.push_back(0);
+    all.push_back(n + 1);
+    for (int i = 0; i < m1; ++ i) {
+        int x;
+        scanf("%d", &x);
+        a1.push_back(x);
+        all.push_back(x - 1);
+        all.push_back(x + 1);
+        all.push_back(x);
+    }
+    for (int i = 0; i < m2; ++ i) {
+        int x;
+        scanf("%d", &x);
+        a2.push_back(x);
+        all.push_back(x - 1);
+        all.push_back(x + 1);
+        all.push_back(x);
+    }
+    sort(all.begin(), all.end());
+    all.erase(unique(all.begin(), all.end()), all.end());
+    memset(dp, -1, sizeof(dp));
+    dp[0][0] = {0, 0};
+    for (int i = 0; i < (int) all.size() - 1; ++ i) {
+        for (int j = 0; j < 2; ++ j) {
+            if (dp[i][j].first == -1) continue;
+            int shot = dp[i][j].first;
+            int half = dp[i][j].second + all[i + 1] - all[i] - 1;
+            shot += half / t;
+            half %= t; half ++;
+            shot -= is_wall(all[i + 1], j);
+            if (shot >= 0) {
+                shot += half / t;
+                half %= t;
+                upd(i + 1, j, i, j, {shot, half});
+            }
+            //printf("dp[%d][%d] = %d %d\n", i, j, dp[i][j].first, dp[i][j].second);
+            if (!is_wall(all[i], j ^ 1)) {
+                int shot = 0;
+                int half = (dp[i][j].first ? t : dp[i][j].second) + all[i + 1] - all[i] - 1;
+                shot += half / t;
+                half %= t; half ++;
+                shot -= is_wall(all[i + 1], j ^ 1);
+                if (shot >= 0) {
+                    shot += half / t;
+                    half %= t;
+                    upd(i + 1, j ^ 1, i, j, {shot, half});
+                }
+            }
+        }
+    }
+    int i = (int) all.size() - 1, j = 0;
+    if (dp[i][j].first == -1) j = 1;
+    if (dp[i][j].first == -1) return 0 * puts("No");
+    vector<int> switch_lane;
+    while (i != 0) {
+        int ii, jj;
+        tie(ii, jj) = his[i][j];
+        //printf("his[%d][%d] = %d %d\n", i, j, ii, jj);
+        if (jj != j) {
+            switch_lane.push_back(ii);
+        }
+        i = ii, j = jj;
+    }
+    reverse(switch_lane.begin(), switch_lane.end());
+    j = 0; int y = 0, nex = t;
+    vector<pair<int, int>> shoot;
+    for (int i = 0; i < (int) all.size(); ++ i) {
+        if (is_wall(all[i], y)) {
+            shoot.push_back({nex, y});
+            nex += t;
+        }
+        if (j < (int) switch_lane.size() && switch_lane[j] == i) {
+            y ^= 1;
+            j ++;
+            nex = max(nex, all[i]);
+        }
+    }
+    puts("Yes");
+    printf("%d\n", (int) switch_lane.size());
+    for (int x : switch_lane) printf("%d ", all[x]); puts("");
+    printf("%d\n", (int) shoot.size());
+    for (auto p : shoot) printf("%d %d\n", p.first, p.second + 1);
 }
-~~~
+```
