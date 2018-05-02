@@ -1,0 +1,42 @@
+#Problem A. Relic Discovery
+
+#Problem B. Pocket Cube
+
+#Problem C. Pocky
+
+#Problem D. Lucky Coins
+
+#Problem E. Fibonacci
+
+#Problem F. Lambda Calculus
+
+#Problem G. Coding Contest
+
+#Problem H. Pattern
+
+#Problem I. Travel Brochure
+
+#Problem J. Cliques
+
+#Problem K. Finding Hotels
+
+#Problem L. Tower Attack
+
+题意：
+给定一课N个点的树，每条边有长度Wi
+有Q个询问，每次询问删去两条边后，形成的森林中的最长链。询问相互独立
+N，Q <= 1e5
+Wi <= 1e9
+
+题解：
+有一个性质：
+若树的子集A、子集B各自的最长链已知，那么A与B的并的最长链的端点一定是A和B最长链的四个端点之二
+相当于结合律
+问题变成在dfs序上切出五个区间，求五个区间各自的最长链，再合并
+复杂度O(NlogN)
+有些坑点：
+1、线段树容易炸常数，不过好在这题可以重复算，可以用预处理ST表替代线段树
+2、内存只给了64MB，初始写的dfs序每个点保留了两次，然后ST表炸内存了…
+3、切五个区间时，懒得分类讨论，瞎写了一通然后崩了…当然直到最后也没有分类讨论
+
+#Problem M. Generator and Monitor
