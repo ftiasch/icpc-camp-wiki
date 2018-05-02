@@ -1,0 +1,106 @@
+# 网络流相关
+
+## 最大权闭合图
+
+### 定义
+
+​	闭合图是这样一个点集：$V '\in V$,满足对于$\forall u \in V'$引出的$\forall \left \langle u,v \right \rangle \in E$,必有$v \in V'$成立。最大权闭合图是一个点权之和最大的闭合图。
+
+### 构造网络，使用最小割解决
+
+​	在原图的点集的基础上增加源$s$和$t$；将原图每条有向边 $\left \langle u,v \right \rangle \in E$ 替换为容量为	$c(u,v) = \infty$的有向边$\left\langle u,v \right\rangle \in E_N$；增加连接源$s$到原图每个正点权$v(w_v>0)$的有向边$\left \langle s,v \right \rangle \in E_N$,容量为$c(s,v) = w_v$;增加连接原图每个负点权$v(w_v < 0)$到汇$t$的有向边$\left\langle v,t \right\rangle \in E_N$,容量为$c(v,t) = -w_v$。
+
+​	跑最小割，最大权闭合图的点集$V = S - \{s\}$。
+
+
+
+## 最大密度子图
+
+### 定义
+
+​	定义一个	无向图$G = (V,E)$的密度$D$为该图的边数$|E|$与该图的点数$|V|$的比值$D = \frac{|E|}{|V|}$。给出一个无向图$G = (V,E)$,其具有最大密度的子图$G' = (V',E')$称为最大密度子图。
+
+
+
+### 分数规划，二分密度
+
+​	 Maximize $D = f(x) = \frac{\displaystyle \sum_{e \in E}x_e}{\displaystyle\sum_{v \in V}x_v}$  0-1分数规划模型
+
+​	对于答案的猜测值$g$，构造一个新函数$h(g) = \displaystyle\max_x\{\sum_{e \in E}1\cdot x_e - \sum_{v \in V}g \cdot x_v \}$
+
+​	二分次数为$4 \cdot logn$
+
+### 直接套用最大权闭合图模型
+
+​	类似最大权闭合图，可以把边$e$看成点$v_e$,带上点权1；把点保留，带上点权$-g$；对于所有边$\forall e = (u,v) \in E$,建立两条有向边$\left\langle v_e,u \right\rangle,\left\langle v_e,v \right\rangle$
+
+### 改进算法
+
+​	将每条原无向边$(u,v)$替换为两条容量为$1$的有向边$\left\langle u,v \right\rangle$和$\left\langle v,u \right\rangle$；增加连接源$s$到原图每个点$v$的有向边$\left\langle s,v \right\rangle$，容量为$U$;增加连接原图每个点$v$到汇$t$的有向边$\left\langle v,t \right\rangle$，容量为$(U+2g-d_v)$
+$$
+\begin{cases}
+	c(u,v) = 1	& e \in E	\\\
+	c(s,v) = U		& v \in V	\\\
+	c(v,t) = U + 2g - d_v 	& v\in V
+\end{cases}
+$$
+​			$h(g) = \frac{U\cdot n - c[S,T]}{2}$                  $U = |E|$, $d_v$为度数
+
+### 向带边权图的推广
+
+​	$D = \frac{\displaystyle\sum_{e \in E}w_w}{|V|}$
+$$
+\begin{cases}
+	c(u,v) = w_e	& e \in E	\\\
+	c(s,v) = U		& v \in V	\\\
+	c(v,t) = U + 2g - d_v	& v\in V
+\end{cases}
+$$
+
+
+​					$d_v = \displaystyle\sum_{(u,v)\in E}w_{(u,v)}$		$U = \displaystyle\sum_{e \in E}w_e$
+
+### 向点边均带权的图的推广
+
+​	$D = \frac{\displaystyle\sum_{v\in V}p_v + \sum_{e\in E}w_e}{|V|}$
+$$
+\begin{cases}
+	c(u,v) = w_e	& e \in E	\\\
+	c(s,v) = U		& v \in V	\\\
+	c(v,t) = U + 2g - d_v - 2p_v	& v\in V
+\end{cases}
+$$
+
+$$
+U = 2\displaystyle\sum_{v \in V}|p_v| + \sum_{e \in E}w_e\\
+d_u =\displaystyle\sum_{(u,v)\in E}w_e
+$$
+
+## 匹配相关
+
+ 	1. 匹配：在$G$中两两没有公共端点的边集合$M\subset E$
+ 	2. 边覆盖集：$G$中的任意顶点都至少是 $F$中某条边的端点的边集合$F \subset E$
+ 	3. 点独立集：在$G$中两两互不相连的顶点集合$S \subset V$
+ 	4. 点覆盖集：$G$中的任意边都有至少一个端点属于S的顶点集合$S \subset V$
+
+- 对于不存在孤立点的图中，|最大匹配| + |最小边覆盖| = |$V$|
+- |最大点独立集| + | 最小点覆盖集| = $|V|$ 
+- 在二分图中，|最大匹配| = |最小顶点覆盖|
+
+## 二分图的最小点权覆盖集和最大点权独立集
+
+### 最小点权覆盖集
+
+$$
+\begin{cases}
+c(u,v) = \infty		&	\left\langle u,v \right\rangle \in E \\
+c(s,u) = w_u		&	u \in X		\\
+c(v,t) = w_v		&	v \in Y		\\
+\end{cases}
+$$
+
+简单割$[S,T]$与图$G$的点覆盖集$V' = X' \cup Y'$的对应关系：$[S,T] = [\{s\},X'] \cup [Y',\{t\}]$
+
+### 最大点权独立集
+
+​	利用与点覆盖集的互补性质得出	
