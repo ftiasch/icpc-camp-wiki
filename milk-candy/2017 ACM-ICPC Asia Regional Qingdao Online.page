@@ -51,7 +51,7 @@ solved by quailty, upsolved by none
 quailty's solution
 
 对于$K^{2/3}$不是整数的情况，在[Stern–Brocot
-tree](https://en.wikipedia.org/wiki/Stern%E2%80%93Brocot_tree)上找到端点分母不超过$100000$且包含$K^{2/3}$的最小区间，这需要在树上走出一条路径，注意到拐点只有$\log q$个，每次二分拐点即可，复杂度$O(\log^2 q)$。
+tree](https://en.wikipedia.org/wiki/Stern–Brocot_tree)上找到端点分母不超过$100000$且包含$K^{2/3}$的最小区间，这需要在树上走出一条路径，注意到拐点只有$\log q$个，每次二分拐点即可，复杂度$O(\log^2 q)$。
 
 E King's Visit
 --------------
