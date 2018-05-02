@@ -1,0 +1,13 @@
+# 代码打印脚本
+
+    pr -e'	'4 -t -n "$@" | fold -w 93 | pr -W 93 -l 81 -h "$@" | lpr -o cpi=12 -o lpi=7.2
+
+# 代码打印命令
+
+    printfile "%f" -T 4 --line-number=1
+
+# 编译命令
+
+    [F8] Compile : g++ -o "%e" "%f" -std=c++11 -g
+    [F9] Build   : g++ -o "%e" "%f" -std=c++11 -g -Wall
+    [F5] Execute : g++ -o "%e" "%f" -std=c++11 -g && bash test.sh %e
