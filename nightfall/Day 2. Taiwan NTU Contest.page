@@ -1,0 +1,297 @@
+# A. Almost String Matching
+
+$|x-y|\leq 1$等价于$(x-y)^2((x-y)^2-1)=0$，并且不等的时候该式大于零。使用FFT卷积算这个。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 524288
+#define M 998244353
+const int MOD = M;
+using namespace std;
+int WM[N + 2], IWM[N + 2];
+vector<int> IW[N+2],W[N+2];
+int Pw(int a,int b,int p){
+	int v=1;
+	for(;b;b>>=1,a=1ll*a*a%p)
+		if(b&1)v=1ll*v*a%p;
+	return v;
+}
+void NTT(int*a,int n,int f=1){
+	register int i,j,k,m,w,u,v;
+	for(i=n>>1,j=1;j<n-1;j++){
+		if(i>j)swap(a[i],a[j]);
+		for(k=n>>1;k<=i;k>>=1)i^=k;i^=k;
+	}
+	for(m=2;m<=n;m<<=1)
+		for(i=0;i<n;i+=m)
+			for(j=i;j<i+(m>>1);j++)if(a[j]||a[j+(m>>1)]){
+				u=a[j];v=1ll*(f==1?W[m][j-i]:IW[m][j-i])*a[j+(m>>1)]%M;
+				if((a[j]=u+v)>=M)a[j]-=M;
+				if((a[j+(m>>1)]=u-v)<0)a[j+(m>>1)]+=M;
+			}
+	if(f==-1)for(w=Pw(n,M-2,M),i=0;i<n;i++)a[i]=1ll*a[i]*w%M;
+}
+char A[N],B[N];
+int a[5][N], b[5][N], res[N];
+int main(){
+	for(int m=2;m<=N;m<<=1){
+		WM[m]=Pw(3,(M-1)/m,M),IWM[m]=Pw(3,(M-1)/m*(m-1),M);
+		int o=1;
+		W[m].push_back(o);
+		for(int i=1;i<m;i++)o=1ll*o*WM[m]%M,W[m].push_back(o);
+		o=1;
+		IW[m].push_back(o);
+		for(int i=1;i<m;i++)o=1ll*o*IWM[m]%M,IW[m].push_back(o);
+	}
+	int n, m;
+	scanf("%s",B);m=strlen(B);
+	scanf("%s",A);n=strlen(A);
+	for (int i = 0; i < n; ++ i) a[1][i] = A[i] - 'a' + 1, a[0][i] = 1;
+	for (int i = 0; i < m; ++ i) b[1][i] = B[m - i - 1] - 'a' + 1, b[0][i] = 1;
+	for (int i = 2; i <= 4; ++ i) {
+		for (int j = 0; j < n; ++ j) a[i][j] = 1LL * a[i - 1][j] * a[1][j] % MOD;
+		for (int j = 0; j < m; ++ j) b[i][j] = 1LL * b[i - 1][j] * b[1][j] % MOD;
+	}
+	for (int i = 0; i < 5; ++ i) {
+		NTT(a[i], N);
+		NTT(b[i], N);
+	}
+	for (int i = 0; i < N; ++ i) {
+		(res[i] += 1LL * a[4][i] * b[0][i] % MOD) %= MOD;
+		(res[i] += MOD - 4LL * a[3][i] * b[1][i] % MOD) %= MOD;
+		(res[i] += 6LL * a[2][i] * b[2][i] % MOD) %= MOD;
+		(res[i] += MOD - 4LL * a[1][i] * b[3][i] % MOD) %= MOD;
+		(res[i] += 1LL * a[0][i] * b[4][i] % MOD) %= MOD;
+		(res[i] += MOD - 1LL * a[2][i] * b[0][i] % MOD) %= MOD;
+		(res[i] += 2LL * a[1][i] * b[1][i] % MOD) %= MOD;
+		(res[i] += MOD - 1LL * a[0][i] * b[2][i] % MOD) %= MOD;
+	}
+	NTT(res, N, -1);
+	vector<int> ans;
+	for (int i = m - 1; i < n; ++ i) {
+		if (!res[i]) ans.push_back(i - m + 1);
+	}
+	printf("%d\n", (int) ans.size());
+	for (int i : ans) printf("%d ", i + 1); puts("");
+}
+~~~
+
+# D. Guess the Answer
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+int all0, n, step;
+bool debug = 0;
+string _ans;
+int _ask(string s) {
+	if (debug) {
+		int x = 0;
+		for (int i = 0; i < n; ++ i) x += (s[i] == _ans[i]);
+		step ++;
+		return x;
+	}
+	else {
+		printf("%s\n", s.c_str());
+		fflush(stdout);
+	}
+	int x;
+	scanf("%d", &x);
+	if (x == n) exit(0);
+	return x;
+}
+int ask(vector<int> subset) {
+	int j = 0, k = 0;
+	string s;
+	for (int i = 0; i < n; ++ i) {
+		if (j < (int) subset.size() && subset[j] == i) {
+			k ++;
+			s += '1';
+			j ++;
+		}
+		else {
+			s += '0';
+		}
+	}
+	int cur = _ask(s);
+	int tmp = cur + k - all0;
+	assert(tmp % 2 == 0);
+	return tmp / 2;
+}
+char guess[2005];
+void solve(vector<vector<int>> all, vector<int> ans, int l, int k, int m) {
+	if (k == 1) {
+		if (l >= n) return;
+		guess[l] = ans[0] ? '1' : '0';
+		return;
+	}
+	k = (k + 1 - m / 2) / 2;
+	m /= 2;
+	int B = ans[(int) ans.size() - 2], A = ans.back() - B;
+	vector<vector<int>> allA, allB;
+	vector<int> ansA, ansB;
+	for (int i = 0; i < m - 1; ++ i) {
+		int pos = l + 2 * k + i;
+		int AB = ans[i * 2];
+		int AnBC = ans[i * 2 + 1];
+		if (pos < n) {
+			guess[pos] = (AB + AnBC - B) % 2 == 1 ? '1' : '0';
+			A -= guess[pos] - '0';
+		}
+		vector<int> sA, sB;
+		for (int x : all[i * 2]) {
+			if (x - l < k) sA.push_back(x);
+			else if (x - l < 2 * k) sB.push_back(x);
+		}
+		allA.push_back(sA);
+		allB.push_back(sB);
+		int AnB = AnBC;
+		if (pos < n) AnB -= guess[pos] - '0';
+		int A2 = (AnB + AB) - B;
+		assert(A2 % 2 == 0);
+		ansA.push_back(A2 / 2);
+		ansB.push_back(AB - A2 / 2);
+	}
+	vector<int> aA, aB;
+	for (int i = 0; i < k; ++ i) {
+		aA.push_back(l + i);
+		aB.push_back(l + k + i);
+	}
+	allA.push_back(aA);
+	allB.push_back(aB);
+	ansA.push_back(A);
+	ansB.push_back(B);
+	solve(allA, ansA, l, k, m);
+	solve(allB, ansB, l + k, k, m);
+}
+int main() {
+	/*int m = 1, k = 1;
+	while (k < 1000) {
+		k = 2 * k + m - 1;
+		m = m * 2;
+		printf("%d %d\n", m, k);
+	}
+	return 0;*/
+	scanf("%d", &n);
+	if (debug) {
+		int seed = time(0);
+		cout << seed << endl;
+		srand(seed);
+		for (int i = 0; i < n; ++ i) _ans += rand() & 1 ? '1' : '0';
+		printf("Target : %s\n", _ans.c_str());
+	}
+	string tmp = "";
+	for (int i = 0; i < n; ++ i) tmp += '0';
+	all0 = _ask(tmp);
+	vector<vector<int>> all = {{0}};
+	int m = 1, k = 1;
+	while (k < 1000) {
+		vector<vector<int>> all2;
+		for (int i = 0; i < m; ++ i) {
+			vector<int> a = all[i];
+			static bitset<2000> tmp;
+			tmp.reset();
+			vector<int> b = all[i], nb;
+			for (int &x : b) {
+				x += k;
+				tmp[x] = 1;
+			}
+			for (int i = k; i < 2 * k; ++ i) if (!tmp[i]) nb.push_back(i);
+			if (i == m - 1) {
+				all2.push_back(b);
+				vector<int> t;
+				for (int i = 0; i < 2 * k + m - 1; ++ i) t.push_back(i);
+				all2.push_back(t);
+			}
+			else {
+				vector<int> A = a, B = a;
+				for (int x : b) A.push_back(x);
+				all2.push_back(A);
+				for (int x : nb) B.push_back(x);
+				B.push_back(2 * k + i);
+				all2.push_back(B);
+			}
+		}
+		all.swap(all2);
+		k = k * 2 + m - 1;
+		m = m * 2;
+	}
+	vector<int> answer;
+	for (int i = 0; i < m; ++ i) {
+		//for (int x : all[i]) printf("%d ", x); puts("");
+		answer.push_back(ask(all[i]));
+	}
+	solve(all, answer, 0, k, m);
+	puts(guess);
+	fflush(stdout);
+	if (debug) {
+		for (int i = 0; i < n; ++ i) assert(guess[i] == _ans[i]);
+		assert(step + 1 < 300);
+	}
+}
+~~~
+
+# K. Dropping Marbles
+
+这个容斥是个行列式。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7;
+int mpow(int x, int n) {
+	int res = 1;
+	while (n) {
+		if (n & 1) res = 1LL * res * x % MOD;
+		n >>= 1;
+		x = 1LL * x * x % MOD;
+	}
+	return res;
+}
+const int N = 125;
+int C[N][N], x[N][N], a[N], b[N];
+int cho(int n, int m) {
+	if (n < 0 || m > n || m < 0) return 0;
+	return C[n][m];
+}
+int main() {
+	for (int i = 0; i < N; ++ i) {
+		C[i][0] = 1;
+		for (int j = 1; j <= i; ++ j) C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+	}
+	int T;
+	scanf("%d", &T);
+	while (T --) {
+		int n, m, k;
+		scanf("%d%d%d", &n, &m, &k);
+		for (int i = 0; i < k; ++ i) scanf("%d", &a[i]);
+		for (int i = 0; i < k; ++ i) scanf("%d", &b[i]);
+		for (int i = 0; i < k; ++ i) {
+			for (int j = 0; j < k; ++ j) {
+				x[i][j] = 1LL * cho(m - 1, b[j] - a[i]) * mpow(mpow(2, m - 1), MOD - 2) % MOD;
+			}
+		}
+		int flag = 1;
+		for (int i = 0; i < k; ++ i) {
+			for (int j = i; j < k; ++ j) {
+				if (x[j][i]) {
+					for (int l = 0; l < k; ++ l) swap(x[j][l], x[i][l]);
+					if (j != i) flag = 1LL * (MOD - 1) * flag % MOD;
+					break;
+				}
+			}
+			if (!x[i][i]) {
+				flag = 0;
+				break;
+			}
+			flag = 1LL * x[i][i] * flag % MOD;
+			int r = mpow(x[i][i], MOD - 2);
+			for (int j = i + 1; j < k; ++ j) {
+				int bei = 1LL * x[j][i] * r % MOD;
+				for (int l = 0; l < k; ++ l) (x[j][l] += MOD - 1LL * bei * x[i][l] % MOD) %= MOD;
+			}
+		}
+		printf("%d\n", flag);
+	}
+}
+~~~
