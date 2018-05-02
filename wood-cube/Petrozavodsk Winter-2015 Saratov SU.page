@@ -20,38 +20,50 @@
 │D [-:--]│                                                            │
 │E [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Three Servers [TDJ]
+A. Three Servers \[TDJ\]
+------------------------
 
 $30\times4000\times4000$的DP。
 
-## B. Game on Bipartite Graph [GX]
+B. Game on Bipartite Graph \[GX\]
+---------------------------------
 
 本质相当于在右边点集中找一个子集使得删除这些子集之后剩下的图是左边除了起点节点度数都为偶数，起点度数为奇数，维护xor线性空间即可。
 
-## C. Black and White Board
+C. Black and White Board
+------------------------
 
 插头DP//发现会TLE
 
-## D. Catenary
+D. Catenary
+-----------
 
-## E. Evacuation Plan
+E. Evacuation Plan
+------------------
 
-## F. Empty Vessels [TDJ]
+F. Empty Vessels \[TDJ\]
+------------------------
 
 倒水题，转换成解线性方程组，BFS后构造一下即可。
 
-## G. Maximum Product [TDJ]
+G. Maximum Product \[TDJ\]
+--------------------------
 
 签到题。
 
-## H. Biathlon 2.0 [MZH]
+H. Biathlon 2.0 \[MZH\]
+-----------------------
 
-## I. Archaeological Research [MZH]
+I. Archaeological Research \[MZH\]
+----------------------------------
 
-## J. Sockets [MZH]
+J. Sockets \[MZH\]
+------------------
 
-## K. Toll Roads [TDJ]
+K. Toll Roads \[TDJ\]
+---------------------
 
 枚举根，做N遍树形DP。
