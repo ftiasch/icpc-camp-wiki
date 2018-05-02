@@ -1,77 +1,89 @@
----
-format: Markdown
-title: Milk Candy
-...
-
-# General
+General
+=======
 
 Team **MilkCandy** form Beijing Normal University.
 
-+ 2017.10.22 CCPC Harbin: Gold (2nd place)
+-   2017.10.22 CCPC Harbin: Gold (2nd place)
 
-+ 2017.10.29 CCPC Qinhuangdao: Gold (9th place)
+-   2017.10.29 CCPC Qinhuangdao: Gold (9th place)
 
-+ 2017.11.05 ICPC Qingdao: Gold (12th place)
+-   2017.11.05 ICPC Qingdao: Gold (12th place)
 
-+ 2017.11.26 ICPC Nanning: Gold (4th place)
+-   2017.11.26 ICPC Nanning: Gold (4th place)
 
-+ 2017.12.03 CCPC Finals: ~~Silver~~Gold (14th place)
+-   2017.12.03 CCPC Finals: ~~Silver~~Gold (14th place)
 
-+ 2017.12.17 ICPC ECL-Finals: Gold (7th place)
+-   2017.12.17 ICPC ECL-Finals: Gold (7th place)
 
-+ 2018.04.19 ICPC World Finals: 42nd/31st place
+-   2018.04.19 ICPC World Finals: 42nd/31st place
 
-+ **That's all, thank you.**
+-   **That's all, thank you.**
 
-# Todolist
+Todolist
+========
 
-+ ~~开始爆肝~~
+-   ~~开始爆肝~~
 
-+ ~~敲碗求补题/写题解/写总结~~
+-   ~~敲碗求补题/写题解/写总结~~
 
-+ 畅所欲言
+-   畅所欲言
 
----
+------------------------------------------------------------------------
 
 unsolved
 
 [Music](2017%20ACM-ICPC%20Asia%20Regional%20Xi'an%20Online#h-music)
-[King’s Visit](2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online#e-kings-visit)
-[Line Segments Clipped by Windows](2017%20ACM-ICPC%20Asia%20Regional%20Nanning%20Online#k-line-segments-clipped-by-windows)
-[Decode Alien Message](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#f-decode-alien-message)
+[King’s
+Visit](2017%20ACM-ICPC%20Asia%20Regional%20Qingdao%20Online#e-kings-visit)
+[Line Segments Clipped by
+Windows](2017%20ACM-ICPC%20Asia%20Regional%20Nanning%20Online#k-line-segments-clipped-by-windows)
+[Decode Alien
+Message](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#f-decode-alien-message)
 [Robots](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#k-robots)
-[Reward the Troop](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#l-reward-the-troop)
-[Game on Graph](2016-2017%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#g-game-on-graph)
-[Indiana Jones and the Uniform Cave](2016-2017%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#g-game-on-graph)
+[Reward the
+Troop](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#l-reward-the-troop)
+[Game on
+Graph](2016-2017%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#g-game-on-graph)
+[Indiana Jones and the Uniform
+Cave](2016-2017%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#g-game-on-graph)
 [Blackjack](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2035#b-blackjack)
-[Shooting Game](2009-2010%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2037#i-shooting-game)
+[Shooting
+Game](2009-2010%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2037#i-shooting-game)
 [Coins](2010-2011%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2038#c-coins)
-[Formal Program Verification](2010-2011%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2038#f-formal-program-verification)
-[Impossible to Solve](2010-2011%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2038#i-impossible-to-solve)
-[Divisible Substrings](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#b-divisible-substrings)
-[Preparing Documents](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#c-preparing-documents)
+[Formal Program
+Verification](2010-2011%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2038#f-formal-program-verification)
+[Impossible to
+Solve](2010-2011%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2038#i-impossible-to-solve)
+[Divisible
+Substrings](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#b-divisible-substrings)
+[Preparing
+Documents](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#c-preparing-documents)
 [GridBagLayout](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#d-gridbaglayout)
-[Knapsack Problem](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#f-knapsack-problem)
+[Knapsack
+Problem](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#f-knapsack-problem)
 [Roads](2009-2010%20Summer%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2036#i-roads)
 [Parades](2014-2015%20ACM-ICPC,%20Central%20Europe%20Regional%20Contest#a-parades)
-[Virus synthesis](2014-2015%20ACM-ICPC,%20Central%20Europe%20Regional%20Contest#g-virus-synthesis)
+[Virus
+synthesis](2014-2015%20ACM-ICPC,%20Central%20Europe%20Regional%20Contest#g-virus-synthesis)
 [Hypercube](2015-2016%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#h-hypercube)
-[Iceberg Orders](2015-2016%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#i-iceberg-orders)
+[Iceberg
+Orders](2015-2016%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#i-iceberg-orders)
 
----
+------------------------------------------------------------------------
 
 replay
 
 What is it? Tasty?
 
----
+------------------------------------------------------------------------
 
 sk
 
-[Word Cover](2009-2010%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2037#e-word-cover)
+[Word
+Cover](2009-2010%20Winter%20Petrozavodsk%20Camp,%20Andrew%20Stankevich%20Contest%2037#e-word-cover)
 [Bricks](2014-2015%20ACM-ICPC,%20Central%20Europe%20Regional%20Contest#i-bricks)
 
----
+------------------------------------------------------------------------
 
 Jove
 
@@ -79,7 +91,7 @@ Jove
 
 ~~补不动题的话，写写 replay？~~
 
----
+------------------------------------------------------------------------
 
 quailty
 
@@ -87,123 +99,132 @@ quailty
 
 to be solved
 
-[Fractal Tree](2017-2018%20ACM-ICPC%20Nordic%20Collegiate%20Programming%20Contest#f-fractal-tree)
-~~[Convolution Layer](2017%20%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%20-%20%E7%BD%91%E7%BB%9C%E9%80%89%E6%8B%94%E8%B5%9B#k-convolution-layer)~~
-[Brain-baffling Game](2017%20ACM-ICPC%20Asia%20Regional%20Xi'an%20Online#d-brain-baffling-game)
-[Distance on Triangulation](2015-2016%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#d-distance-on-triangulation)
-[Locating Facilities](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#e-locating-facilities)
+[Fractal
+Tree](2017-2018%20ACM-ICPC%20Nordic%20Collegiate%20Programming%20Contest#f-fractal-tree)
+~~[Convolution
+Layer](2017%20%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%20-%20%E7%BD%91%E7%BB%9C%E9%80%89%E6%8B%94%E8%B5%9B#k-convolution-layer)~~
+[Brain-baffling
+Game](2017%20ACM-ICPC%20Asia%20Regional%20Xi'an%20Online#d-brain-baffling-game)
+[Distance on
+Triangulation](2015-2016%20ACM-ICPC%20Northeastern%20European%20Regional%20Contest#d-distance-on-triangulation)
+[Locating
+Facilities](2015%20ACM-ICPC%20Asia%20Taipei%20Regional%20Contest#e-locating-facilities)
 
-## sk [(Forever_you)](http://codeforces.com/profile/Forever_you)
+sk [(Forever\_you)](http://codeforces.com/profile/Forever_you)
+--------------------------------------------------------------
 
 [sk个人](sk)
 
-+ ~~期末别挂~~
+-   ~~期末别挂~~
 
-+ 新的目标，新的开始
+-   新的目标，新的开始
 
-## swq [(Jove)](http://codeforces.com/profile/Jove)
+swq [(Jove)](http://codeforces.com/profile/Jove)
+------------------------------------------------
 
 [swq个人](swq)
 
-+ ~~训练多补题，多总结~~
+-   ~~训练多补题，多总结~~
 
-+ ~~熟悉队友代码风格~~
+-   ~~熟悉队友代码风格~~
 
-+ ~~CF Div1 ABC 版切~~
+-   ~~CF Div1 ABC 版切~~
 
-+ 希望可以顺利毕业
+-   希望可以顺利毕业
 
-+ 希望明年 BNU 还能进 WF
+-   希望明年 BNU 还能进 WF
 
-## zyh [(quailty)](http://codeforces.com/profile/quailty)
+zyh [(quailty)](http://codeforces.com/profile/quailty)
+------------------------------------------------------
 
 [zyh个人](quailty)
 
-+ ~~CF 争取打上 2600~~
+-   ~~CF 争取打上 2600~~
 
-+ ~~多写题恢复手感~~
+-   ~~多写题恢复手感~~
 
-+ ~~思考奋斗的意义~~
+-   ~~思考奋斗的意义~~
 
-+ ~~Carry 位预定？躺好别送~~
+-   ~~Carry 位预定？躺好别送~~
 
-+ [Yaohui Zeng's ICPCID](https://icpc.baylor.edu/ICPCID/1C7CXXZBJ4NT)
+-   [Yaohui Zeng's ICPCID](https://icpc.baylor.edu/ICPCID/1C7CXXZBJ4NT)
 
-+ 大学四年打比赛认识了很多朋友，走过了很多地方，真的非常开心，有机会再一起去玩
+-   大学四年打比赛认识了很多朋友，走过了很多地方，真的非常开心，有机会再一起去玩
 
-# Training
+Training
+========
 
 Training contests in 2018 will **not** be updated.
 
 Full Attendance
 
 <!-- `2017-07-00` [`---`]()                                                                      `--/--`   `.` `.` `.` `.` `.` `.` `.` `.` `.` `.` `.` -->
-
-`Date`       `Contest`                                                                           `Place`   `A` `B` `C` `D` `E` `F` `G` `H` `I` `J` `K` `L` `M`
------------- ---------------------------------------------------------------------------------  ---------  --- --- --- --- --- --- --- --- --- --- --- --- ---
-`2017-12-17` [`2017 ACM-ICPC Asia East Continent League Final`]()                                `7/329`   `O` `O` `O` `O` `.` `.` `O` `O` `.` `O` `O` `O` `O`
-`2017-12-15` [`2017-2018 ACM-ICPC Northern Eurasia (Northeastern European Regional) Contest`]()  `--/--`   `.` `O` `O` `O` `O` `O` `.` `.` `.` `.` `.` `.`
-`2017-12-13` [`2017-2018 ACM-ICPC, Central Europe Regional Contest`]()                           `--/--`   `O` `.` `.` `.` `.` `O` `O` `O` `.` `O` `.` `O`
-`2017-12-10` [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Tatarstan`]()            `--/--`   `O` `.` `O` `O` `O` `O` `.` `O` `O` `O` `Ø` `O`
-`2017-12-08` [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of SPb`]()                 `--/--`   `O` `O` `O` `.` `O` `.` `O` `.` `O` `O` `O` `O`
-`2017-12-03` [`2017 CCPC Finals`]()                                                             `14/117`   `O` `.` `O` `.` `O` `.` `O` `.` `O` `O` `O`
-`2017-11-30` [`2017-2018 Northwestern European Regional Contest`]()                              `--/--`   `.` `O` `.` `O` `Ø` `O` `O` `O` `O` `.` `O`
-`2017-11-28` [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of America`]()              `--/--`   `O` `O` `O` `O` `O` `.` `O` `.` `.` `O` `.`
-`2017-11-26` [`2017 ACM-ICPC Asia Regional Nanning Onsite`]()                                    `4/228`   `O` `.` `.` `.` `O` `O` `O` `O` `O` `O` `.` `O` `O`
-`2017-11-24` [`2016-2017 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)`]()                `--/--`   `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-11-22` [`2017-2018 ACM-ICPC, NEERC, Southern Subregional Contest`]()                       `--/--`   `Ø` `Ø` `O` `Ø` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-11-20` [`2014-2015 ACM-ICPC Southwestern Europe Regional Contest`]()                       `--/--`   `O` `O` `O` `O` `O` `O` `O` `Ø` `O` `O`
-`2017-11-19` [`2017 ACM-ICPC Asia Regional Beijing Onsite`]()                                    `--/--`   `.` `.` `.` `.` `.` `.` `Ø` `.` `.` `.`
-`2017-11-17` [`2010-2011 ACM-ICPC Southwestern European Regional Programming Contest`]()         `--/--`   `O` `.` `O` `O` `Ø` `Ø` `O` `Ø` `O` `O`
-`2017-11-15` [`2017-2018 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)`]()                `--/--`   `O` `Ø` `O` `O` `O` `O` `O` `Ø` `O` `O` `O` `O` `O`
-`2017-11-14` [`2017 ACM Jordanian Collegiate Programming Contest`]()                             `--/--`   `O` `O` `O` `O` `O` `.` `O` `O` `Ø` `Ø` `Ø` `O` `O`
-`2017-11-12` [`2017-2018 ACM-ICPC, NEERC, Northern Subregional Contest`]()                       `--/--`   `O` `O` `O` `Ø` `O` `Ø` `Ø` `O` `O` `Ø` `O` `O`
-`2017-11-10` [`2017-2018 ACM-ICPC, NEERC, Moscow Subregional Contest`]()                         `--/--`   `O` `Ø` `O` `O` `.` `O` `O` `O` `O` `Ø`
-`2017-11-05` [`2017 ACM-ICPC Asia Regional Qingdao Onsite`]()                                   `12/365`   `.` `O` `.` `.` `O` `.` `.` `O` `O` `O` `.`
-`2017-11-03` [`2017 United Kingdom and Ireland Programming Contest`]()                           `--/--`   `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-11-02` [`ACM-ICPC-Swiss-Subregional 2017`]()                                               `--/--`   `O` `O` `O` `O` `O` `O` `Ø` `O` `O` `O` `O`
-`2017-10-31` [`Lesnoe Ozero-2016. NAIPC-2016`]()                                                 `--/--`   `.` `.` `O` `O` `O` `O` `.` `Ø` `O` `Ø` `O`
-`2017-10-30` [`Lesnoe Ozero 2017. BSUIR Open 2017`]()                                            `--/--`   `O` `O` `O` `.` `O` `O` `O` `Ø` `O` `.`
-`2017-10-29` [`2017 CCPC Qinhuangdao Site`]()                                                    `9/253`   `O` `Ø` `O` `Ø` `O` `Ø` `O` `O` `Ø` `.` `.` `O` `O`
-`2017-10-28` [`2017-2018 ACM-ICPC, NEERC, Southern Subregional Contest, qualification stage`]()  `--/--`   `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-26` [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Moscow Workshops`]()     `--/--`   `Ø` `O` `Ø` `O` `.` `.` `O` `.` `O` `O` `O`
-`2017-10-25` [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two Capitals`]()         `--/--`   `O` `Ø` `O` `O` `.` `O` `.` `Ø` `.` `O` `O`
-`2017-10-22` [`2017 CCPC Harbin Site`]()                                                         `2/188`   `O` `O` `O` `O` `.` `O` `.` `O` `.` `O` `O` `O` `O`
-`2017-10-19` [`2016 USP-ICMC`]()                                                                 `--/--`   `O` `O` `O` `.` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-18` [`2016-2017 ACM-ICPC Nordic Collegiate Programming Contest`]()                      `--/--`   `O` `O` `O` `O` `O` `O` `O` `O` `Ø` `O` `O`
-`2017-10-17` [`2016-2017 ACM-ICPC East Central North America Regional Contest`]()                `--/--`   `.` `O` `O` `O` `O` `O` `O` `O` `O` `.`
-`2017-10-16` [`2016 ACM-ICPC Asia Hong Kong Regional Contest`]()                                 `--/--`   `O` `O` `O` `O` `Ø` `Ø` `Ø` `Ø` `Ø` `O` `O`
-`2017-10-15` [`2017-2018 ACM-ICPC Nordic Collegiate Programming Contest`]()                      `--/--`   `O` `O` `O` `O` `O` `.` `O` `Ø` `O` `O` `O` `O`
-`2017-10-13` [`2015-2016 ACM-ICPC Northeastern European Regional Contest`]()                     `--/--`   `O` `Ø` `Ø` `.` `O` `O` `O` `.` `.` `O` `Ø` `O`
-`2017-10-12` [`2014-2015 ACM-ICPC, Central Europe Regional Contest`]()                           `--/--`   `.` `Ø` `O` `O` `O` `O` `.` `O` `O` `Ø` `Ø` `Ø`
-`2017-10-11` [`2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich Contest 36`]()              `--/--`   `O` `.` `.` `.` `O` `.` `O` `O` `.` `O`
-`2017-10-09` [`2015-2016 Northwestern European Regional Contest`]()                              `--/--`   `O` `Ø` `O` `O` `O` `O` `O` `O` `O` `O` `O`
-`2017-10-08` [`2016-2017 ACM-ICPC Southwestern European Regional Programming Contest`]()         `--/--`   `Ø` `O` `O` `O` `O` `O` `Ø` `O` `Ø` `Ø` `O`
-`2017-10-07` [`2010-2011 Summer Petrozavodsk Camp, Andrew Stankevich Contest 38`]()              `--/--`   `O` `O` `.` `O` `O` `.` `Ø` `O` `.` `O`
-`2017-10-06` [`2009-2010 Winter Petrozavodsk Camp, Andrew Stankevich Contest 37`]()              `--/--`   `O` `O` `Ø` `O` `Ø` `O` `O` `O` `.`
-`2017-10-04` [`2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich Contest 35`]()              `--/--`   `Ø` `.` `O` `Ø` `Ø` `Ø` `O` `Ø` `Ø` `Ø`
-`2017-10-03` [`2014 Benelux Algorithm Programming Contest`]()                                    `--/--`   `O` `O` `O` `O` `O` `O` `O` `Ø` `O` `O` `O`
-`2017-10-02` [`2016-2017 ACM-ICPC Asia Tsukuba Regional Contest`]()                              `--/--`   `O` `O` `O` `O` `Ø` `O` `O` `Ø` `Ø` `Ø` `Ø` 
-`2017-10-01` [`2016-2017 ACM-ICPC Northeastern European Regional Contest`]()                     `--/--`   `O` `Ø` `Ø` `Ø` `O` `O` `.` `O` `.` `O` `Ø` `Ø` `Ø`
-`2017-09-29` [`2015 ACM-ICPC Asia Taipei Regional Contest`]()                                    `--/--`   `O` `O` `O` `O` `!` `.` `O` `O` `O` `!` `O` `.`
-`2017-09-24` [`2017 ACM-ICPC Asia Regional Nanning Online`]()                                   `79/1K+`   `O` `O` `O` `O` `O` `O` `O` `O` `O` `O` `.` `O` `O`
-`2017-09-23` [`2017 ACM-ICPC Asia Regional Beijing Online`]()                                    `7/1K+`   `O` `O` `O` `O` `O` `Ø` `O` `O` `O` `O`
-`2017-09-17` [`2017 ACM-ICPC Asia Regional Qingdao Online`]()                                   `39/1K+`   `O` `Ø` `O` `O` `.` `Ø` `Ø` `O` `O` `O` `O`
-`2017-09-16` [`2017 ACM-ICPC Asia Regional Xi'an Online`]()                                     `28/1K+`   `Ø` `O` `O` `.` `O` `O` `O` `.` `O` `Ø`
-`2017-09-10` [`2017 ACM-ICPC Asia Regional Shenyang Online`]()                                  `80/1K+`   `O` `O` `Ø` `O` `O` `O` `Ø` `O` `Ø` `Ø` `Ø` `O`
-`2017-09-09` [`2017 ACM-ICPC Asia Regional Urumqi Online`]()                                    `95/1K+`   `O` `Ø` `O` `Ø` `O` `O` `O` `O` `O` `O` 
-`2017-08-19` [`2017 CCPC Online`]()                                                             `23/1K+`   `Ø` `Ø` `O` `O` `O` `O` `O` `Ø` `Ø` `O` `Ø`
+  `Date`         `Contest`                                                                             `Place`   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------- ------------------------------------------------------------------------------------ ---------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  `2017-12-17`   [`2017 ACM-ICPC Asia East Continent League Final`]()                                  `7/329`   `O`   `O`   `O`   `O`   `.`   `.`   `O`   `O`   `.`   `O`   `O`   `O`   `O`
+  `2017-12-15`   [`2017-2018 ACM-ICPC Northern Eurasia (Northeastern European Regional) Contest`]()    `--/--`   `.`   `O`   `O`   `O`   `O`   `O`   `.`   `.`   `.`   `.`   `.`   `.`   
+  `2017-12-13`   [`2017-2018 ACM-ICPC, Central Europe Regional Contest`]()                             `--/--`   `O`   `.`   `.`   `.`   `.`   `O`   `O`   `O`   `.`   `O`   `.`   `O`   
+  `2017-12-10`   [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Tatarstan`]()              `--/--`   `O`   `.`   `O`   `O`   `O`   `O`   `.`   `O`   `O`   `O`   `Ø`   `O`   
+  `2017-12-08`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of SPb`]()                   `--/--`   `O`   `O`   `O`   `.`   `O`   `.`   `O`   `.`   `O`   `O`   `O`   `O`   
+  `2017-12-03`   [`2017 CCPC Finals`]()                                                                `14/117`  `O`   `.`   `O`   `.`   `O`   `.`   `O`   `.`   `O`   `O`   `O`         
+  `2017-11-30`   [`2017-2018 Northwestern European Regional Contest`]()                                `--/--`   `.`   `O`   `.`   `O`   `Ø`   `O`   `O`   `O`   `O`   `.`   `O`         
+  `2017-11-28`   [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of America`]()                `--/--`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `.`   `.`   `O`   `.`         
+  `2017-11-26`   [`2017 ACM-ICPC Asia Regional Nanning Onsite`]()                                      `4/228`   `O`   `.`   `.`   `.`   `O`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `O`
+  `2017-11-24`   [`2016-2017 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)`]()                  `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2017-11-22`   [`2017-2018 ACM-ICPC, NEERC, Southern Subregional Contest`]()                         `--/--`   `Ø`   `Ø`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`
+  `2017-11-20`   [`2014-2015 ACM-ICPC Southwestern Europe Regional Contest`]()                         `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`               
+  `2017-11-19`   [`2017 ACM-ICPC Asia Regional Beijing Onsite`]()                                      `--/--`   `.`   `.`   `.`   `.`   `.`   `.`   `Ø`   `.`   `.`   `.`               
+  `2017-11-17`   [`2010-2011 ACM-ICPC Southwestern European Regional Programming Contest`]()           `--/--`   `O`   `.`   `O`   `O`   `Ø`   `Ø`   `O`   `Ø`   `O`   `O`               
+  `2017-11-15`   [`2017-2018 ACM-ICPC Pacific Northwest Regional Contest (Div. 1)`]()                  `--/--`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`
+  `2017-11-14`   [`2017 ACM Jordanian Collegiate Programming Contest`]()                               `--/--`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `O`   `Ø`   `Ø`   `Ø`   `O`   `O`
+  `2017-11-12`   [`2017-2018 ACM-ICPC, NEERC, Northern Subregional Contest`]()                         `--/--`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`   `O`   `O`   `Ø`   `O`   `O`   
+  `2017-11-10`   [`2017-2018 ACM-ICPC, NEERC, Moscow Subregional Contest`]()                           `--/--`   `O`   `Ø`   `O`   `O`   `.`   `O`   `O`   `O`   `O`   `Ø`               
+  `2017-11-05`   [`2017 ACM-ICPC Asia Regional Qingdao Onsite`]()                                      `12/365`  `.`   `O`   `.`   `.`   `O`   `.`   `.`   `O`   `O`   `O`   `.`         
+  `2017-11-03`   [`2017 United Kingdom and Ireland Programming Contest`]()                             `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   
+  `2017-11-02`   [`ACM-ICPC-Swiss-Subregional 2017`]()                                                 `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`         
+  `2017-10-31`   [`Lesnoe Ozero-2016. NAIPC-2016`]()                                                   `--/--`   `.`   `.`   `O`   `O`   `O`   `O`   `.`   `Ø`   `O`   `Ø`   `O`         
+  `2017-10-30`   [`Lesnoe Ozero 2017. BSUIR Open 2017`]()                                              `--/--`   `O`   `O`   `O`   `.`   `O`   `O`   `O`   `Ø`   `O`   `.`               
+  `2017-10-29`   [`2017 CCPC Qinhuangdao Site`]()                                                      `9/253`   `O`   `Ø`   `O`   `Ø`   `O`   `Ø`   `O`   `O`   `Ø`   `.`   `.`   `O`   `O`
+  `2017-10-28`   [`2017-2018 ACM-ICPC, NEERC, Southern Subregional Contest, qualification stage`]()    `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`
+  `2017-10-26`   [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Moscow Workshops`]()       `--/--`   `Ø`   `O`   `Ø`   `O`   `.`   `.`   `O`   `.`   `O`   `O`   `O`         
+  `2017-10-25`   [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two Capitals`]()           `--/--`   `O`   `Ø`   `O`   `O`   `.`   `O`   `.`   `Ø`   `.`   `O`   `O`         
+  `2017-10-22`   [`2017 CCPC Harbin Site`]()                                                           `2/188`   `O`   `O`   `O`   `O`   `.`   `O`   `.`   `O`   `.`   `O`   `O`   `O`   `O`
+  `2017-10-19`   [`2016 USP-ICMC`]()                                                                   `--/--`   `O`   `O`   `O`   `.`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-10-18`   [`2016-2017 ACM-ICPC Nordic Collegiate Programming Contest`]()                        `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`         
+  `2017-10-17`   [`2016-2017 ACM-ICPC East Central North America Regional Contest`]()                  `--/--`   `.`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `.`               
+  `2017-10-16`   [`2016 ACM-ICPC Asia Hong Kong Regional Contest`]()                                   `--/--`   `O`   `O`   `O`   `O`   `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `O`   `O`         
+  `2017-10-15`   [`2017-2018 ACM-ICPC Nordic Collegiate Programming Contest`]()                        `--/--`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `Ø`   `O`   `O`   `O`   `O`   
+  `2017-10-13`   [`2015-2016 ACM-ICPC Northeastern European Regional Contest`]()                       `--/--`   `O`   `Ø`   `Ø`   `.`   `O`   `O`   `O`   `.`   `.`   `O`   `Ø`   `O`   
+  `2017-10-12`   [`2014-2015 ACM-ICPC, Central Europe Regional Contest`]()                             `--/--`   `.`   `Ø`   `O`   `O`   `O`   `O`   `.`   `O`   `O`   `Ø`   `Ø`   `Ø`   
+  `2017-10-11`   [`2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich Contest 36`]()                `--/--`   `O`   `.`   `.`   `.`   `O`   `.`   `O`   `O`   `.`   `O`               
+  `2017-10-09`   [`2015-2016 Northwestern European Regional Contest`]()                                `--/--`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+  `2017-10-08`   [`2016-2017 ACM-ICPC Southwestern European Regional Programming Contest`]()           `--/--`   `Ø`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`   `O`         
+  `2017-10-07`   [`2010-2011 Summer Petrozavodsk Camp, Andrew Stankevich Contest 38`]()                `--/--`   `O`   `O`   `.`   `O`   `O`   `.`   `Ø`   `O`   `.`   `O`               
+  `2017-10-06`   [`2009-2010 Winter Petrozavodsk Camp, Andrew Stankevich Contest 37`]()                `--/--`   `O`   `O`   `Ø`   `O`   `Ø`   `O`   `O`   `O`   `.`                     
+  `2017-10-04`   [`2009-2010 Summer Petrozavodsk Camp, Andrew Stankevich Contest 35`]()                `--/--`   `Ø`   `.`   `O`   `Ø`   `Ø`   `Ø`   `O`   `Ø`   `Ø`   `Ø`               
+  `2017-10-03`   [`2014 Benelux Algorithm Programming Contest`]()                                      `--/--`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`         
+  `2017-10-02`   [`2016-2017 ACM-ICPC Asia Tsukuba Regional Contest`]()                                `--/--`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `Ø`   `Ø`   `Ø`   `Ø`         
+  `2017-10-01`   [`2016-2017 ACM-ICPC Northeastern European Regional Contest`]()                       `--/--`   `O`   `Ø`   `Ø`   `Ø`   `O`   `O`   `.`   `O`   `.`   `O`   `Ø`   `Ø`   `Ø`
+  `2017-09-29`   [`2015 ACM-ICPC Asia Taipei Regional Contest`]()                                      `--/--`   `O`   `O`   `O`   `O`   `!`   `.`   `O`   `O`   `O`   `!`   `O`   `.`   
+  `2017-09-24`   [`2017 ACM-ICPC Asia Regional Nanning Online`]()                                      `79/1K+`  `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `.`   `O`   `O`
+  `2017-09-23`   [`2017 ACM-ICPC Asia Regional Beijing Online`]()                                      `7/1K+`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`               
+  `2017-09-17`   [`2017 ACM-ICPC Asia Regional Qingdao Online`]()                                      `39/1K+`  `O`   `Ø`   `O`   `O`   `.`   `Ø`   `Ø`   `O`   `O`   `O`   `O`         
+  `2017-09-16`   [`2017 ACM-ICPC Asia Regional Xi'an Online`]()                                        `28/1K+`  `Ø`   `O`   `O`   `.`   `O`   `O`   `O`   `.`   `O`   `Ø`               
+  `2017-09-10`   [`2017 ACM-ICPC Asia Regional Shenyang Online`]()                                     `80/1K+`  `O`   `O`   `Ø`   `O`   `O`   `O`   `Ø`   `O`   `Ø`   `Ø`   `Ø`   `O`   
+  `2017-09-09`   [`2017 ACM-ICPC Asia Regional Urumqi Online`]()                                       `95/1K+`  `O`   `Ø`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   `O`               
+  `2017-08-19`   [`2017 CCPC Online`]()                                                                `23/1K+`  `Ø`   `Ø`   `O`   `O`   `O`   `O`   `O`   `Ø`   `Ø`   `O`   `Ø`         
 
 Part Attendance
 
 <!-- `2017-07-00` [`---`]()                                                           `--/--`   `.` `.` `.` `.` `.` `.` `.` `.` `.` `.` `.` -->
+  `Date`         `Contest`                                              `Place`  `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------- ----------------------------------------------------- --------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  `2017-09-27`   [`La Salle-Pui Ching Programming Challenge 2017`]()    `--/--`  `O`   `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`   `O`   
 
-`Date`       `Contest`                                                                `Place`   `A` `B` `C` `D` `E` `F` `G` `H` `I` `J` `K` `L` `M`
------------- ----------------------------------------------------------------------  ---------  --- --- --- --- --- --- --- --- --- --- --- --- ---
-`2017-09-27` [`La Salle-Pui Ching Programming Challenge 2017`]()                      `--/--`   `O` `O` `O` `O` `O` `O` `Ø` `O` `O` `O` `O` `O`
+` . 尚未通过  O 当场通过  ! 口头通过  Ø 赛后通过`
 
-` . 尚未通过  O 当场通过  ! 口头通过  Ø 赛后通过`  
+Others
+======
 
-# Others
+-   感谢叉姐关照
 
-+ 感谢叉姐关照
