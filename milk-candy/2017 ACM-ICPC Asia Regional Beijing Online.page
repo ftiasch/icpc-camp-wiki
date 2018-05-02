@@ -1,0 +1,119 @@
+# Info
+
+Date: 2017.09.23 12:00-17:00
+
+[Link](http://hihocoder.com/contest/acmicpc2017beijingonline/problems)
+
+# Solutions
+
+## A Visiting Peking University
+
+solved by Jove , upsolved by none
+
+---
+
+Jove's solution
+
+签到题，暴力枚举第一天即可。
+
+## B Reverse Suffix Array
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+由$S[A[i-1],n]<S[A[i],n]$可以推出$S[A[i-1]] \leq S[A[i]]$，如果$S[A[i-1]+1,n]>S[A[i]+1,n]$，那么就必须有$S[A[i-1]]<S[A[i]]$，记大小关系中有$t$个$\leq$，利用经典的隔板法可以求出$ans=\binom{t+26}{n}$，直接递推求组合数只涉及大数乘除小数。
+
+## C Matrix	
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+枚举矩形上下边界$i,j$（除去$i=1,j=n$的情况），这样就转化成了一维的最大子段和问题，$dp[k][0/1]$表示以第$k$列为结尾的当前是否进行过替换的最大子段和，这一部分就做完了。对于上边界$i=1$，下边界$j=n$的情况，$O(m^2)$的枚举即可，注意必须进行一次替换。
+
+时间复杂度$O(n^3)$。
+
+## D Agent Communication
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+先猜结论，任取一条直径在上面选两个点连起来不会丢最优解，于是任取一条直径，求出从直径上每个点往子树内走的最大深度，记为$h[]$，现在二分一个答案$res$，那么如果走树边不能满足条件，也就是存在$i \leq j$使得$h[i]+h[j]+(j-i)>res$，那么一定要走新边，记新边为$(x,y)$，这里$x \leq y$，那么有$h[i]+h[j]+|x-i|+|y-j|+1 \leq res$，这限定了$(x,y)$要落在一个菱形区域内，对所有菱形区域求交判断是否为空即可，复杂度$O(n^2 \log n)$。
+
+## E Territorial Dispute
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+$n<4$时特判。
+
+$n \geq 4$时一定有解。关键是如何染色，随意从点集中选四个点，枚举$\frac{C^2_4}{2}$种连线情况：如果存在线段$AB$与$CD$有交点，那么将$A,B$染成一种，$C,D$染成另一种即可；如果不存在线段相交的情况，那么一定是一个三角形包住了一个点，此时将三角形里的点染成一种，三角形三个顶点染成另一种。
+
+## F Cake
+
+upsolved by sk
+
+---
+
+sk's solution
+
+贪心的对加工顺序进行排序。记$calc(i,j)$为第$i$个蛋糕放在第$j$个蛋糕前且只做这两个蛋糕的所需加工时间，$cmp$函数里只需返回$calc(i,j)<calc(j,i)$，排序后按照顺序求出总的加工时间。
+
+~~贪心正确性并不会证。~~
+ 
+## G Bounce
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+~~平面图转对偶图~~将原问题转化成给定一个$(n-1) \times (m-1)$的网格，初始从左上角顶点出发，每次沿着网格的对角线走，计算有多少个交点恰好被经过一次，记$g=\gcd(n-1,m-1)$，不难看出每个$g \times g$的大正方形内部恰好有一条对角线被走过，这部分贡献是$\frac{n-1}{g}\frac{m-1}{g}(g-1)$，再考虑落在大正方形边上的点，位于网格内部的点都会被经过两次，位于网格边界的点上相当于每$2g$个点取出一个，这部分贡献是$\frac{n-1}{g}+\frac{m-1}{g}$。
+
+## H Polynomial Product
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+本质是给两个序列$a_0,a_1,\dots,a_{n-1}$和$b_0,b_1,\dots,b_{m-1}$，定义$c_i=\max(a_j+b_{i-j})$，判断$c_0,c_1,\dots,c_{n+m-2}$是否大于$w$，实际上就是求$ans_i=[c_i>w]=\vee[a_j+b_{i-j}>w]$，考虑对每个$i$求出满足$a_i+b_j>w$的$j$的集合，将所有元素$+i$之后与答案集合取个$or$，排序后双指针可以保证集合元素的修改次数只有$O(m)$，再用$bitset$优化取$or$的过程即可，复杂度$O(nm/w)$。对于原问题中涉及$0$和$1$的特殊运算规则，注意到$w>0$，只需将$0$替换为$-\infty$，$1$替换为$0$。
+
+## I Minimum
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+求$\min \left\{a_x \times a_y \right\}(x,y\in[l,r])$，权值有正有负，那么用一个支持单点修改，区间查询最值的线段树来维护，计算最终答案时讨论一下最值的正负即可。
+
+## J Typist's Problem
+
+solved by Jove, sk, upsolved by none
+
+---
+
+sk's solution
+
+预处理出所有合法状态，建图跑最短路。实际上操作的花费只有$0.5$和$1$两种，可以把每条$1$边在中间加个虚点拆成两条权值为$0.5$的边，这样就可以直接$BFS$了。
+
+# Replay
+
+## quailty
+
+对复杂题意掌握有所欠缺，经常读到后面忘了前面，导致大量罚时。一般来说比赛时间充裕，考虑保证每个题至少由两个人来读。
