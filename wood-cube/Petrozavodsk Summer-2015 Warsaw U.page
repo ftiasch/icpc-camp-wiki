@@ -1,23 +1,36 @@
-## A. Sorcerers of the Round Table
+A. Sorcerers of the Round Table
+-------------------------------
 
-## B. Movie-goer
+B. Movie-goer
+-------------
 
-## C. Speed Reading Course
+C. Speed Reading Course
+-----------------------
 
-## D. Squares
+D. Squares
+----------
 
-## E. Gluttons
+E. Gluttons
+-----------
 
-## F. Highway Modernization [TDJ]
+F. Highway Modernization \[TDJ\]
+--------------------------------
+
 树形DP维护到子树根最长链和子树直径；枚举删掉的边，最长方案为连接两棵子树的直径端点，最短方案为连接两棵子树直径的中点
 
-## G. Car Washes
+G. Car Washes
+-------------
 
-## H. Visits [TDJ]
+H. Visits \[TDJ\]
+-----------------
+
 按步长s分成两类：$s> \sqrt{n}$直接做，$s\leq \sqrt{n}$的相同步长一起离线处理，复杂度$O(n·\sqrt{n}·log{n})$
 
-## I. Seal
+I. Seal
+-------
 
-## J. Desert
+J. Desert
+---------
 
-## K. Direction Signs
+K. Direction Signs
+------------------
