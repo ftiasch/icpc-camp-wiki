@@ -1,0 +1,149 @@
+# Contest Info
+
+date: 2017.12.03 09:00-14:00
+
+practice link: **onsite**
+
+# Solutions
+
+## A. Dogs and Cages
+
+solved by braveTester, upsolved by none
+
+## B. Same Digit
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+由 [Tchisla 解题参考 by Math-Fans](https://mathsfans.github.io/Tchisla/) 可知，答案不超过 $9$。
+
+尝试暴力生成用 $k$ 个 $D$ 能表示的所有值。对于二元运算，必然是将 $k$ 划分成两个更小的情况。对于一元运算，需要设一个足够大的中间运算值的上界，然后使劲搞一搞（例如猜测开根开出无理数之后便不会继续对无理数开根），在实数情况时需要设好精度误差。
+
+注意到上述过程如果只保留中间运算结果均为整数的情况，状态数会大大减少，并且也能在较少的步数内完成对 1 到 100 的构造，在已有步数上界情况下尝试搜出更小的实数解，可以便于设定精度误差进行运算和去重。
+
+然后打个表交上去就好了……~~明明爬个表更快~~
+
+## C. Rich Game
+
+solved by chitanda, upsolved by none
+
+## D. Mr. Panda and Circles
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+只有一个圆并且完整覆盖线段的情况无需考虑。
+
+考虑线段两端分别多出来某一个圆的一部分的情况，设总的多出来部分长度为 $k$ $(k \geq 2)$，则空隙的放置方案有 ${m - 1 - 2 \sum{r_i} - k + n - 2 \choose n - 2}$ 种，而除去两端两个圆外，剩下 $n - 2$ 个圆还有 $(n - 2)!$ 种排列方案。
+
+考虑线段只有一端多出来某一个圆的一部分的情况，设多出来部分长度为 $k$ $(k \geq 1)$，则空隙的放置方案有 ${m - 1 - 2 \sum{r_i} - k + n - 1 \choose n - 1}$ 种，而除去在某端的一个圆外，剩下 $n - 1$ 个圆还有 $(n - 1)!$ 种排列方案。
+
+考虑线段两端都没有多出来的情况，则空隙的放置方案有 ${m - 1 - 2 \sum_{r_i} + n \choose n}$ 种，而 $n$ 个圆有 $n!$ 种排列方案。
+
+需要对于多出来的部分，计算选出需要的圆并且多出来部分长度恰好为 $k$ 有多少种方案，第一种情形的生成函数是 $\left(\sum{\dfrac{x - x^{r_i + 1}}{1 - x}}\right)^2 - \sum{\dfrac{(x - x^{r_i + 1})^2}{(1 - x)^2}}$，第二种情形的生成函数是 $\sum{\dfrac{x - x^{r_i + 1}}{1 - x}}$，其中只有平方部分需要用 FFT 加速卷积，其他地方都可以线性递推得到。
+
+剩下的内容便是枚举 $k$ 计算 ${x - k + y \choose y}$ 中模数出现的次数以及与模数互质的部分的乘积，注意下可能存在的溢出问题即可递推解决（需要计算乘法逆元）。
+
+## E. Evil Forest
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+签到题。
+
+## F. Fair Lottery
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+这是一道单纯形 O(跑得过) 的题。
+
+考虑所有子集都可以实现的情况。设 $2^n$ 个变量 $x_0, x_1, \cdots, x_{2^n - 1}$，满足 $x_i \geq 0$, $\sum_{i = 0}^{2^n - 1}{x_i} = 1$ 和 $\sum_{j \in i}{x_i} = \sum_{k \in i}{x_i}$ ($0 \leq j, k \leq n - 1$)，需要最大化 $\sum_{0 \in i}{x_i}$ 的值。其中第一部分可以去掉 $x_0$ （作为松弛变量）变成不等式，第二部分可以写成 $n$ 个不等式。
+
+现在考虑增加一些限制的情况，即满足 $\sum_{j \in i}{a_j} > m$ 时有 $x_i = 0$ 的限制。由于 $x_0$ 可以用于松弛，故可直接在之前的不等式中清空所有被限制的 $x_i$ 的系数，然后直接解线性规划。
+
+## G. Alice's Stamps
+
+solved by chitanda, upsolved by none
+
+## H. Equidistance
+
+upsolved by skywalkert
+
+---
+
+skywalkert's solution
+
+简单构造题，$n$ 维空间里一定能构造出 $n + 1$ 个点构成的标准单纯形。
+
+考虑现在已经有 $m$ 个两两距离为 $1$ 的点，可以得到它们所代表的 $m - 1$ 个正交基，尝试加入一个新点与这 $m$ 个点两两距离为 $1$。
+
+首先需要找到一个向量垂直于这 $m - 1$ 个正交基，最简单的方法就是枚举 $n$ 个正交的单位向量，找一个不能被这 $m - 1$ 个正交基表示的，然后通过正交化得到一个垂直于这 $m - 1$ 个正交基的向量。
+
+接下来相当于用 $m$ 个点构成的标准单纯形构出 $m + 1$ 个点的标准单纯形。由于 $k$ 维标准单纯形的体积是 $\frac{\sqrt{k + 1}}{k! \sqrt{2^k}}$，以及单纯形的体积可以用底乘高除以 $k$ 表示，可以知道新的这个点到原来 $m$ 个点组成的超平面的距离是 $\sqrt{\frac{k + 1}{2 k}}$，根据重心和新的正交基就可以找到这个新点了。
+
+现在要把上面这个过程重复 $n - m + 1$ 次，第一步需要保证复杂度，那么可以先找出 $n$ 个正交的单位向量，每次选一个还没有选过的去尝试，因为以前就能被表示的向量，以后一定能被表示。
+
+这样的复杂度是 $\mathcal{O}(n^3)$ 的。
+
+## I. Inkopolis
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+去掉一条边变成树上问题，加上一条边也只需要检查所对应树边是不是完全和这条边颜色一样，以及对应点是否连出与这条边颜色一样的树边。
+
+在树上问题中，添加删除一条边只需要考虑对应点是否连出与这条边颜色一样的树边。
+
+整道题只考查了 STL 的基本应用。
+
+## J. Subway Chasing
+
+solved by chitanda, upsolved by none
+
+## K. Knightmare
+
+solved by skywalkert, upsolved by none
+
+---
+
+skywalkert's solution
+
+猜测答案是关于 $N$ 的多项式，上机搜索答案并差分后发现 $N$ 大于某个定值时是多项式，于是小情况打表，大情况用公式算即可，注意答案可能超过 $2^{63} - 1$。
+
+# Replay and Summary
+
+## Replay
+
+拿到题后 `L` 从前往后，`T` 从后往前，`H` 挑了个 G 读。
+
+`L` 上来就看到 A 是个签到题，写完被 `H` 质疑了一下，交上去 run id 10，判的有些慢导致 `L` 有些焦急，不过还是不出意外的过了。
+
+接着 `L` 看到了 B 觉得是个不可做题，跳过，开始读 `C`。期间 `H` 读完 G 想了想复杂度不太对，去读了 E，发现也是个签到，让 tls 去把 E 敲掉。
+
+中间 `L` 推了推 C 发现也是个签到题，等 `T` 交完过了之后上去码。码完很快也过了。
+
+`H` 终于想出了 G 的正确做法，换下敲完的 `L` 去写，15min 后也过了。
+
+`T` 上去写 I，`L` 继续读题，和 `H` 讨论了一下 J 的做法，发现是个简单的差分约束。
+
+`T` 交了一发 I WA 了，此时发现 K 有很多人过，于是赶紧打了个表，和 I 的代码一起打印，换 `H` 上去写 J。
+
+期间 `T` 发现了 K 的规律，换下 `H` 上去写，交了一发 WA。打印了之后静态查了查发现爆 `long long`，改了个小错后过了。
+
+（待完善）
