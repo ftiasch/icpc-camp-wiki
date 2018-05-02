@@ -1,33 +1,33 @@
----
-format: Markdown
-title: swq (Jove)
-...
+Todolist
+========
 
-# Todolist
+-   国庆开始投入训练
 
-+ 国庆开始投入训练
+-   训练后总结、补题
 
-+ 训练后总结、补题
+-   CF Div1 ABC 版切
 
-+ CF Div1 ABC 版切
+CF
+==
 
-# CF 
-## 2017.09.19
+2017.09.19
+----------
 
-[**Codeforces Round #401 (Div. 2)**](http://codeforces.com/contest/777)
+[**Codeforces Round \#401 (Div. 2)**](http://codeforces.com/contest/777)
 
-[C. Alyona and Spreadsheet](http://codeforces.com/contest/777/problem/C)  
+[C. Alyona and Spreadsheet](http://codeforces.com/contest/777/problem/C)
 
-+ 题意：给一个$n*m$的二维数组，每次查询一个行区间，判断这个行区间内是否存在非递减的列。
-+ 解答：$O(n*m)$预处理出每列的非递减段，更新每行向下能数到的最大行，check右端点即可。
+-   题意：给一个$n*m$的二维数组，每次查询一个行区间，判断这个行区间内是否存在非递减的列。
+-   解答：$O(n*m)$预处理出每列的非递减段，更新每行向下能数到的最大行，check右端点即可。
 
-[D. Cloud of Hashtags](http://codeforces.com/contest/777/problem/D)  
+[D. Cloud of Hashtags](http://codeforces.com/contest/777/problem/D)
 
-+ 题意：给一个字符串数组，不改变顺序的情况下，每个字符串可以删掉一个后缀，使数组有序。
-+ 解答：倒着向前比较即可。注意string比较操作的复杂度，应逐字符比较避免超时。
+-   题意：给一个字符串数组，不改变顺序的情况下，每个字符串可以删掉一个后缀，使数组有序。
+-   解答：倒着向前比较即可。注意string比较操作的复杂度，应逐字符比较避免超时。
 
-[E. Hanoi Factory](http://codeforces.com/contest/777/problem/E)  
+[E. Hanoi Factory](http://codeforces.com/contest/777/problem/E)
 
-+ 题意：有$n$个圆环，每个圆环有内环半径$inner$、外环半径$outer$、高$h$三个属性，要把它们垒成塔。$i$在$j$上面应满足，$outer_i<=outer_j$且$outer_i>inter_j$，求能垒成的最大高度。
-+ 解答1：离散化+线段树。把圆环按照$outer$第一关键字降序、$inner$第二关键字降序排序。把$inner$离散化，建一棵线段树表示最上方圆环内环半径为$inner$时，能达到的最优解。遍历排好序的数组，每次查询区间$(0,outer_i)$的最大值，更新$inner_i$的答案。最后答案是线段树中的最大值。
-+ 解答2：贪心+栈。（贪心好难，也不会证。。。）仍然按照上述方法排序，然后依次比较，并放到一个栈里，当遇到无法合法摆放的圆环，把当前栈内圆环依次弹出，直到当前圆环可以合法垒在栈顶圆环上，不断更新最优解。因为一个圆环最多入栈出栈一次，所以复杂度是$O(n)$。
+-   题意：有$n$个圆环，每个圆环有内环半径$inner$、外环半径$outer$、高$h$三个属性，要把它们垒成塔。$i$在$j$上面应满足，$outer_i<=outer_j$且$outer_i>inter_j$，求能垒成的最大高度。
+-   解答1：离散化+线段树。把圆环按照$outer$第一关键字降序、$inner$第二关键字降序排序。把$inner$离散化，建一棵线段树表示最上方圆环内环半径为$inner$时，能达到的最优解。遍历排好序的数组，每次查询区间$(0,outer_i)$的最大值，更新$inner_i$的答案。最后答案是线段树中的最大值。
+-   解答2：贪心+栈。（贪心好难，也不会证。。。）仍然按照上述方法排序，然后依次比较，并放到一个栈里，当遇到无法合法摆放的圆环，把当前栈内圆环依次弹出，直到当前圆环可以合法垒在栈顶圆环上，不断更新最优解。因为一个圆环最多入栈出栈一次，所以复杂度是$O(n)$。
+
