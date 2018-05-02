@@ -1,0 +1,59 @@
+# [Pythagoras](http://acm.hdu.edu.cn/showproblem.php?pid=6211)
+
+##Aki
+
+勾股数生成公式：$(n^2-m^2)^2+(2nm)^2=(n^2+m^2)^2$，之前一直以为这是个特解。
+
+然后用sb树dfs范围内所有互质的$n$和$m$，但是杭电上dfs特别慢，手写一个，再卡卡常数，等人少的时候多交几发就过了。
+
+~~~{.cpp}
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+const int B = 100000, N = 1e9;
+int a[3][1 << 17], mask[3], T;
+long long ans[3];
+struct event {
+	int nl, ml, nr, mr;
+	event() {}
+	event(int nl, int ml, int nr, int mr) : nl(nl), ml(ml), nr(nr), mr(mr) {}
+	__inline void set(int a, int b, int c, int d) { nl = a, ml = b, nr = c, mr = d; }
+};
+int getint() {
+	char c;
+	while (c = getchar(), c < '0' || c > '9');
+	int res = c - '0';
+	while (c = getchar(), c >= '0' && c <= '9') res = res * 10 + c - '0';
+	return res;
+}
+event st[B + 10];
+int main() {
+	scanf("%d", &T);
+	for (int cnt = 0; cnt < T; ++ cnt) {
+		int n;
+		scanf("%d", &n);
+		for (int i = 0; i < (1 << n); ++ i) a[cnt][i] = getint();
+		mask[cnt] = (1 << n) - 1;
+	}
+	int sz = 0;
+	st[sz ++].set(0, 1, 1, 1);
+	while (sz) {
+		int nl = st[sz - 1].nl, nr = st[sz - 1].nr;
+		int ml = st[sz - 1].ml, mr = st[sz - 1].mr;
+		sz --;
+		int n = nl + nr, m = ml + mr;
+		if (1LL * n * n + 1LL * m * m > N) continue;
+		int B = max(m * m - n * n, 2 * n * m);
+		if (!(n & m & 1)) {
+			ans[0] += a[0][B & mask[0]];
+			ans[1] += a[1][B & mask[1]];
+			ans[2] += a[2][B & mask[2]];
+		}
+		st[sz ++].set(n, m, nr, mr);
+		st[sz ++].set(nl, ml, n, m);
+	}
+	for (int i = 0; i < T; ++ i) printf("%lld\n", ans[i]);
+}
+~~~
