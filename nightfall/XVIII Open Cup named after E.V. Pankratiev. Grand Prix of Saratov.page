@@ -1,4 +1,5 @@
-# E. Code-Cola Plants
+E. Code-Cola Plants
+===================
 
 由于是DAG，首先要有$A$的入度为0，$B$的出度为0才能有解。类似的还要每个点入度至少是一，出度至少是一。
 
@@ -8,8 +9,8 @@
 
 考虑对于左边的2度点，构造一条双向边连接右边的两个点（1度点似乎可以强行补成2个点，也就是形成一个自环，本题中没有这种情况）。那么一个匹配，其实对应了一个新图中选一些边给他们定向，要求每个点的有向边入度最多为1。那么显然，满足条件的图形只有树和基环外向树。所以最大匹配就变成在新图中找不相交的环套树（匹配数=点数）或者树（匹配数=点数-1）覆盖所有点，其中选的边数尽可能多。这似乎直接贪（塞爆）就行了。这个做法还可以完成最小边权和的要求（类似Kruskal）。
 
-[TLE 40 O(nsqrtn) Dinic](Saratov E Dinic)
+[TLE 40 O(nsqrtn) Dinic](Saratov%20E%20Dinic)
 
-[OK O(nsqrtn) Hopcroft](Saratov E Hopcroft)
+[OK O(nsqrtn) Hopcroft](Saratov%20E%20Hopcroft)
 
-[OK O(m) code DSU](Saratov E DSU)
+[OK O(m) code DSU](Saratov%20E%20DSU)
