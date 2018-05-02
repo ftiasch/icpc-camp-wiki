@@ -18,32 +18,42 @@
 │D₄[-:--]│              ₀                                             │
 │E₂[-:--]│                                                     ₀      │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. A Two Floors Dungeon [TDJ]
+A. A Two Floors Dungeon \[TDJ\]
+-------------------------------
 
 简单BFS……
 
-## B. Connect Game [GX]
+B. Connect Game \[GX\]
+----------------------
 
 签到题
 
-## C. Do Use Segment Tree [TDJ]
+C. Do Use Segment Tree \[TDJ\]
+------------------------------
 
 裸 链剖+线段树。
 
-## D. Move On Dice
+D. Move On Dice
+---------------
 
-## E. Pipeline Plans
+E. Pipeline Plans
+-----------------
 
 【连通性状压DP题】
 
-## F. Presentation [GX]
+F. Presentation \[GX\]
+----------------------
 
 发现如果一个大小的树曾经被复制粘贴过，那么整个树都可以用复制时的树来表示，随便选一个大小为该值的子树就可以判断整个树能否被复制粘贴出来，然后随便DP即可。
 
-## G. Repairing [MZH]
+G. Repairing \[MZH\]
+--------------------
 
-## H. Sun and Moon [MZH]
+H. Sun and Moon \[MZH\]
+-----------------------
 
-## I. Usoperanto [MZH]
+I. Usoperanto \[MZH\]
+---------------------
