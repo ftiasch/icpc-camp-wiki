@@ -1,0 +1,85 @@
+# Info
+
+Date: 2017.11.02 18:00-23:00
+
+[Link](http://codeforces.com/gym/101597)
+
+# Solutions
+
+## A Chess
+
+solved by sk, upsolved by none
+
+## B Triangle in a Triangle
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+最大三角形必然是凸包上选$3$个点，求凸包后最多只有$6$个点，暴力枚举即可。
+
+## C Candy division
+
+solved by quailty, upsolved by none
+
+## D Effective network
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+向一个点集中加入一个点最多使直径增加$1$，也就是加的点越多反而越容易合法，因此只需要判断原图直径是否$\leq n-k$。
+
+## E Collection
+
+solved by sk, upsolved by none
+
+---
+
+sk's solution
+
+输出原序列$sort+unique$之后少的元素个数。
+
+## F Mattress Run
+
+solved by Jove, upsolved by none
+
+## G Affine
+
+upsolved by quailty
+
+---
+
+quailty's solution
+
+先去掉所有共线点，简单分析可以发现原问题相当于选取若干个向量然后通过选取$[0,1]$的系数来生成这个平面点集，那么当且仅当这个点集是凸多边形、点数是偶数且对边平行且相等时有解且答案为点数一半，否则无解。
+
+## H Compass
+
+solved by Jove, sk, upsolved by none
+
+## I The Secret
+
+solved by quailty, upsolved by none
+
+---
+
+quailty's solution
+
+题意就是给定$A$和$B$以及$n$个$(X_i,Y_i)$，分成若干组使得对每组都有$A \sum X_i \leq \sum X_iY_i \leq B \sum X_i$，尽可能多地自成一组。
+
+由于两个满足条件的组再合并起来也是满足条件的，因此没有必要将它们合并起来，但是对于初始不满足条件的$(X_i,Y_i)$，必然是先合并成一组，尽可能减少不满足条件的程度，然后再尽可能少地加入满足条件的$(X_i,Y_i)$使得这一组满足条件，贪心即可。
+
+## J Box Hedge
+
+solved by Jove, upsolved by none
+
+## K ACM
+
+solved by Jove, upsolved by none
+
+# Replay
