@@ -22,34 +22,48 @@
 │J [-:--]│                                                            │
 │L [-:--]│                                                            │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Pattern String
+A. Pattern String
+-----------------
 
-## B. Bazinga [GX]
+B. Bazinga \[GX\]
+-----------------
 
-## C. Minimum Cut-Cut
+C. Minimum Cut-Cut
+------------------
 
-## D. Pagodas [TDJ]
+D. Pagodas \[TDJ\]
+------------------
 
-## E. Efficient Tree [GX]
+E. Efficient Tree \[GX\]
+------------------------
 
 连通性状压DP
 
-## F. Frogs [TDJ]
+F. Frogs \[TDJ\]
+----------------
 
-## G. Game of Flying Circus [MZH]
+G. Game of Flying Circus \[MZH\]
+--------------------------------
 
-## H. Chessboard [GX]
+H. Chessboard \[GX\]
+--------------------
 
 想象所有棋子都放在棋盘上一起移动，然后把棋盘中棋子的移动看成棋盘的移动即可。
 
-## I. Triple [TDJ]
+I. Triple \[TDJ\]
+-----------------
 
-## J. John's Fences
+J. John's Fences
+----------------
 
-## K. Kykneion asma [MZH]
+K. Kykneion asma \[MZH\]
+------------------------
 
-## L. Number Link
+L. Number Link
+--------------
 
-## M. Meeting [TDJ]
+M. Meeting \[TDJ\]
+------------------
