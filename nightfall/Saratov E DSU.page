@@ -1,4 +1,4 @@
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int N = 5e5 + 5;
@@ -9,110 +9,110 @@ vector<pair<int, int>> g[N * 2];
 int n, k, maty[N * 2], f[N * 2], has_cycle[N * 2];
 bool vis[N * 2];
 void ae(int u, int v) {
-	G[u].push_back(v);
+    G[u].push_back(v);
 }
 int fat(int x) {
-	if (f[x] == x) return x;
-	return f[x] = fat(f[x]);
+    if (f[x] == x) return x;
+    return f[x] = fat(f[x]);
 }
 void dfs(int x, int i) {
-	maty[x] = i;
-	if (vis[x]) return;
-	vis[x] = 1;
-	for (auto e : g[x]) {
-		if (e.second == i) continue;
-		dfs(e.first, e.second);
-	}
+    maty[x] = i;
+    if (vis[x]) return;
+    vis[x] = 1;
+    for (auto e : g[x]) {
+        if (e.second == i) continue;
+        dfs(e.first, e.second);
+    }
 }
 int maxmatch() {
-	int ans = 0;
-	for (int i = 1; i <= k; ++ i) {
-		f[i] = i;
-		has_cycle[i] = 0;
-	}
-	vector<pair<int, int>> cycles;
-	for (int i = 1; i <= n; ++ i) {
-		int p = G[i][0], q = G[i][1];
-		int u = fat(G[i][0]), v = fat(G[i][1]);
-		if (u != v) {
-			if (has_cycle[u] && has_cycle[v]) continue;
-			ans ++;
-			f[u] = v;
-			has_cycle[v] |= has_cycle[u];
-			g[q].push_back({p, i});
-			g[p].push_back({q, i});
-		}
-		else {
-			if (has_cycle[u]) continue;
-			ans ++;
-			has_cycle[u] = 1;
-			g[q].push_back({p, i});
-			g[p].push_back({q, i});
-			cycles.push_back({p, i});
-		}
-	}
-	for (int i = 1; i <= k; ++ i) vis[i] = 0;
-	for (auto u : cycles) dfs(u.first, u.second);
-	for (int i = 1; i <= k; ++ i) if (!vis[i]) dfs(i, 0);
-	for (int i = 1; i <= k; ++ i) {
-		vector<pair<int, int>> e;
-		g[i].swap(e);
-	}
-	return ans;
+    int ans = 0;
+    for (int i = 1; i <= k; ++ i) {
+        f[i] = i;
+        has_cycle[i] = 0;
+    }
+    vector<pair<int, int>> cycles;
+    for (int i = 1; i <= n; ++ i) {
+        int p = G[i][0], q = G[i][1];
+        int u = fat(G[i][0]), v = fat(G[i][1]);
+        if (u != v) {
+            if (has_cycle[u] && has_cycle[v]) continue;
+            ans ++;
+            f[u] = v;
+            has_cycle[v] |= has_cycle[u];
+            g[q].push_back({p, i});
+            g[p].push_back({q, i});
+        }
+        else {
+            if (has_cycle[u]) continue;
+            ans ++;
+            has_cycle[u] = 1;
+            g[q].push_back({p, i});
+            g[p].push_back({q, i});
+            cycles.push_back({p, i});
+        }
+    }
+    for (int i = 1; i <= k; ++ i) vis[i] = 0;
+    for (auto u : cycles) dfs(u.first, u.second);
+    for (int i = 1; i <= k; ++ i) if (!vis[i]) dfs(i, 0);
+    for (int i = 1; i <= k; ++ i) {
+        vector<pair<int, int>> e;
+        g[i].swap(e);
+    }
+    return ans;
 }
 int main() {
-	int a, b, n, m;
-	while (scanf("%d%d%d%d", &n, &m, &a, &b) == 4) {
-		vector<pair<int, int>> edges;
-		for (int i = 0; i < m; ++ i) {
-			int u, v;
-			scanf("%d%d", &u, &v);
-			edges.push_back({u, v});
-			dag[u].push_back(v);
-			in[v] ++;
-			out[u] ++;
-		}
-		bool check = 1;
-		check &= (in[a] == 0);
-		check &= (out[b] == 0);
-		for (int i = 1; i <= n; ++ i) {
-			if (i != a) check &= (in[i] >= 1);
-			if (i != b) check &= (out[i] >= 1);
-		}
-		int ans;
-		if (!check) {
-			puts("NO");
-			goto eee;
-		}
-		for (int i = 1; i <= m; ++ i) {
-			int u, v; tie(u, v) = edges[i - 1];
-			ae(i, v); // EA
-			ae(i, n + u); // EB
-		}
-		for (int i = 1; i <= 2 * n; ++ i) maty[i] = 0;
-		::n = m, ::k = 2 * n;
-		ans = maxmatch();
-		if (ans == (n - 1) * 2) {
-			vector<int> EA, EB;
-			for (int i = 1; i <= n; ++ i) if (maty[i]) EA.push_back(maty[i]);
-			for (int i = n + 1; i <= 2 * n; ++ i) if (maty[i]) EB.push_back(maty[i]);
-			puts("YES");
-			assert((int) EA.size() == n - 1);
-			assert((int) EB.size() == n - 1);
-			for (int u : EA) printf("%d ", u); puts("");
-			for (int u : EB) printf("%d ", u); puts("");
-		}
-		else puts("NO");
+    int a, b, n, m;
+    while (scanf("%d%d%d%d", &n, &m, &a, &b) == 4) {
+        vector<pair<int, int>> edges;
+        for (int i = 0; i < m; ++ i) {
+            int u, v;
+            scanf("%d%d", &u, &v);
+            edges.push_back({u, v});
+            dag[u].push_back(v);
+            in[v] ++;
+            out[u] ++;
+        }
+        bool check = 1;
+        check &= (in[a] == 0);
+        check &= (out[b] == 0);
+        for (int i = 1; i <= n; ++ i) {
+            if (i != a) check &= (in[i] >= 1);
+            if (i != b) check &= (out[i] >= 1);
+        }
+        int ans;
+        if (!check) {
+            puts("NO");
+            goto eee;
+        }
+        for (int i = 1; i <= m; ++ i) {
+            int u, v; tie(u, v) = edges[i - 1];
+            ae(i, v); // EA
+            ae(i, n + u); // EB
+        }
+        for (int i = 1; i <= 2 * n; ++ i) maty[i] = 0;
+        ::n = m, ::k = 2 * n;
+        ans = maxmatch();
+        if (ans == (n - 1) * 2) {
+            vector<int> EA, EB;
+            for (int i = 1; i <= n; ++ i) if (maty[i]) EA.push_back(maty[i]);
+            for (int i = n + 1; i <= 2 * n; ++ i) if (maty[i]) EB.push_back(maty[i]);
+            puts("YES");
+            assert((int) EA.size() == n - 1);
+            assert((int) EB.size() == n - 1);
+            for (int u : EA) printf("%d ", u); puts("");
+            for (int u : EB) printf("%d ", u); puts("");
+        }
+        else puts("NO");
 eee:
-		for (int i = 1; i <= m; ++ i) {
-			vector<int> e;
-			G[i].swap(e);
-		}
-		for (int i = 1; i <= n; ++ i) {
-			vector<int> e;
-			dag[i].swap(e);
-			in[i] = out[i] = 0;
-		}
-	}
+        for (int i = 1; i <= m; ++ i) {
+            vector<int> e;
+            G[i].swap(e);
+        }
+        for (int i = 1; i <= n; ++ i) {
+            vector<int> e;
+            dag[i].swap(e);
+            in[i] = out[i] = 0;
+        }
+    }
 }
-~~~
+```
