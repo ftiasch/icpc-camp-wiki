@@ -21,32 +21,47 @@
 ┌────────┬────────────────────────────────────────────────────────────┐
 │H₇[-:--]│                        ₀                                   │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. Ideal Sets Strike Back [GX]
+A. Ideal Sets Strike Back \[GX\]
+--------------------------------
 
-## B. Solid Stacks [TDJ]
+B. Solid Stacks \[TDJ\]
+-----------------------
 
-## C. Super-Binary [GX]
+C. Super-Binary \[GX\]
+----------------------
 
-## D. Universal Number [GX]
+D. Universal Number \[GX\]
+--------------------------
 
 每次限制住下一位取得的数即可。
 
-## E. Socks [TDJ]
+E. Socks \[TDJ\]
+----------------
 
-## F. The Big Test [TDJ]
+F. The Big Test \[TDJ\]
+-----------------------
 
-## G. Good Morning, Colleague [TDJ]
+G. Good Morning, Colleague \[TDJ\]
+----------------------------------
 
-## H. Fortress
+H. Fortress
+-----------
 
-## I. Bacteria [GX]
+I. Bacteria \[GX\]
+------------------
 
-## J. BST [TDJ]
+J. BST \[TDJ\]
+--------------
 
-题目大意：手动维护一个BST，支持查询插入删除，求每次操作涉及最深节点的深度。额外维护 一个set + 一个LCT 来操作BST即可。需注意题目中`REMOVE`的代价记为最深的被删除的节点的深度，如果这个被删节点只有一个儿子那答案依然只算这个节点的，并非题面前一段提到的最深的操作节点深度…有毒…
+题目大意：手动维护一个BST，支持查询插入删除，求每次操作涉及最深节点的深度。额外维护
+一个set + 一个LCT
+来操作BST即可。需注意题目中`REMOVE`的代价记为最深的被删除的节点的深度，如果这个被删节点只有一个儿子那答案依然只算这个节点的，并非题面前一段提到的最深的操作节点深度…有毒…
 
-## K. Adventurous [MZH]
+K. Adventurous \[MZH\]
+----------------------
 
-## L. ChessMad [MZH]
+L. ChessMad \[MZH\]
+-------------------
