@@ -20,36 +20,48 @@
 │K₂[-:--]│                             ₀                              │
 │I₁[-:--]│                                                 ₀          │
 └────────┴────────────────────────────────────────────────────────────┘
-</span></pre><br>
+</span></pre>
+<br>
 
-## A. MEX-query [TDJ]
+A. MEX-query \[TDJ\]
+--------------------
 
 离线维护对角正方形。
 
-## B. Beer Quadrilaterials [MZH]
+B. Beer Quadrilaterials \[MZH\]
+-------------------------------
 
-## C. Palindrome Extraction [TDJ]
+C. Palindrome Extraction \[TDJ\]
+--------------------------------
 
 Manacher+SA，查询离线。
 
-## D. Short Enough Task [GX]
+D. Short Enough Task \[GX\]
+---------------------------
 
 签到题
 
-## E. Another Short Problem [MZH]
+E. Another Short Problem \[MZH\]
+--------------------------------
 
-## F. Just Another Sequence Problem [MZH]
+F. Just Another Sequence Problem \[MZH\]
+----------------------------------------
 
-## G. Total LCS
+G. Total LCS
+------------
 
-## H. Cyclic String
+H. Cyclic String
+----------------
 
-## I. Circle Clique
+I. Circle Clique
+----------------
 
-## J. Dividing Area [TDJ]
+J. Dividing Area \[TDJ\]
+------------------------
 
 Splay维护环，因为图形可能会不连通，所以需要按连边顺序先建出一棵生成树。
 
-## K. Tree Problem [TDJ]
+K. Tree Problem \[TDJ\]
+-----------------------
 
 有趣的树上毛毛虫操作题。链剖。
