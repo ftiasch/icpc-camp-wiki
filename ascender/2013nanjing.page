@@ -1,48 +1,56 @@
----
-title: Regionals 2013 :: Asia - Nanjing
----
-
-# A. GPA [zmy]
+A. GPA \[zmy\]
+==============
 
 模拟
 
-# B. Poor Warehouse Keeper [jds]
+B. Poor Warehouse Keeper \[jds\]
+================================
 
 计算在每次按上按钮时下按钮的贡献即可
 
-# C. Campus Design [zmy]
+C. Campus Design \[zmy\]
+========================
 
 轮廓线dp
 
-# D. Shoot
+D. Shoot
+========
 
-# E. Circular Lamps
+E. Circular Lamps
+=================
 
-# F. Lunch Time [jds]
+F. Lunch Time \[jds\]
+=====================
+
 费用流，不断更新答案
 
-# G. Drunk [zmy]
+G. Drunk \[zmy\]
+================
 
 积分搞一搞，主要抓住递推关系
 
-# H. Cirnoâs Present [zmy]
+H. Cirnoâs Present \[zmy\]
+==========================
+
 由于三人等价，我们只需考虑其中一人A。树形dp。$dp[i][j][k]$表示在第$i$个节点的时候，奇偶之差为$j$，状态为$k$的方案数。状态$0$表示当前节点分给其他人，状态$1$表示当前节点分给A且现在联通块的大小为奇数，状态$2$表示当前节点分给A且现在联通块的大小为偶数。
 
-# I. Wall Painting [zmy]
+I. Wall Painting \[zmy\]
+========================
 
 拆位，每位分别dp
 
-# J. Ball [zmy]
+J. Ball \[zmy\]
+===============
 
 找规律
 
-# K. D Tree [zmy]
+K. D Tree \[zmy\]
+=================
 
 裸树分治
 
-
-
-# 总结反思 
+总结反思
+========
 
 **zmy**
 
