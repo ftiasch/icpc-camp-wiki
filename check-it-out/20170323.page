@@ -1,8 +1,6 @@
----
-format: Latex
-...
 \begin{itemize}
 \item CCPC2016Final K：直接爆搜所有方块的放法，然后模拟，其实挺好写的，一个小时就写完交了。最后因为写了puts("No solution!\n")WA了半小时
 
 \item WF2015M：按题意模拟即可
 \end{itemize}
+
