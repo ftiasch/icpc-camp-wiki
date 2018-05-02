@@ -1,83 +1,115 @@
-# Contest Info
+Contest Info
+============
 
 date: 2017.09.30 21:02-26:02
 
 [practice link](https://cn.vjudge.net/contest/188362#overview)
 
-# Solutions
+Solutions
+=========
 
-## A. Podracing
+A. Podracing
+------------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
-把道路最狭窄的部分找出来，然后对于至少有一个摄像头的 $y_0$，以 $y = y_0$ 切道路和摄像头，去掉不在范围内的摄像头之后，找相邻点的最大距离，和已有答案取最小值即可。
+把道路最狭窄的部分找出来，然后对于至少有一个摄像头的 $y_0$，以 $y = y_0$
+切道路和摄像头，去掉不在范围内的摄像头之后，找相邻点的最大距离，和已有答案取最小值即可。
 
-## B. The battle near the swamp
+B. The battle near the swamp
+----------------------------
 
 solved by chitanda, upsolved by none
 
-## C. CVS
+C. CVS
+------
 
 solved by braveTester, upsolved by none
 
----
+------------------------------------------------------------------------
 
 braveTester's solution
 
 两个可持久化栈模拟即可。
 
-## D. This cheeseburger you don't need
+D. This cheeseburger you don't need
+-----------------------------------
 
 solved by chitanda, upsolved by none
 
-## E. The Emperor's plan
+E. The Emperor's plan
+---------------------
 
 solved by chitanda, upsolved by none
 
-## F. Illegal spices 
+F. Illegal spices
+-----------------
 
 solved by chitanda, upsolved by none
 
-## G. Cipher Message 3
+G. Cipher Message 3
+-------------------
 
 upsolved by chitanda
 
----
+------------------------------------------------------------------------
 
 chitanda's solution
 
 用 KMP 可以找出匹配的位置，用 FFT 算不同的个数。
 
-## H. Those are not the droids you're looking for 
+H. Those are not the droids you're looking for
+----------------------------------------------
 
 solved by chitanda, upsolved by none
 
-## I. The old Padawan 
+I. The old Padawan
+------------------
 
 solved by chitanda, upsolved by none
 
-## J. The secret module
+J. The secret module
+--------------------
 
 upsolved by skywalkert
 
----
+------------------------------------------------------------------------
 
 skywalkert's solution
 
-注意到最小化后的 DFA 是唯一的，只要能构造出来 NFA 并确定最小化后的 DFA 状态数不超过 `25600` 即可。
+注意到最小化后的 DFA 是唯一的，只要能构造出来 NFA 并确定最小化后的 DFA
+状态数不超过 `25600` 即可。
 
-考虑原 DFA 能接受的数字串 $P$ $x$ $99 \cdots 9$ $y$，其中 $x < 9$，如果 $y + k < 10$，则新 DFA 要能接受 $P$ $x$ $99 \cdots 9$ $(y + k)$，否则新 DFA 要能接受 $P$ $(x + 1)$ $00 \cdots 0$ $(y + k - 10)$，故可用 $2 n + 1$ 个节点的 NFA 直接表示新 DFA，其中前 $n$ 个点照抄原 DFA，但是不作为终止态，中间 $n$ 个点作为 $(x + 1)$ 需要使用的点，最后一个点作为唯一一个终止态。
+考虑原 DFA 能接受的数字串 $P$ $x$ $99 \cdots 9$ $y$，其中 $x < 9$，如果
+$y + k < 10$，则新 DFA 要能接受 $P$ $x$ $99 \cdots 9$ $(y + k)$，否则新
+DFA 要能接受 $P$ $(x + 1)$ $00 \cdots 0$ $(y + k - 10)$，故可用
+$2 n + 1$ 个节点的 NFA 直接表示新 DFA，其中前 $n$ 个点照抄原
+DFA，但是不作为终止态，中间 $n$ 个点作为 $(x + 1)$
+需要使用的点，最后一个点作为唯一一个终止态。
 
-对于原有的转移 $\mathrm{Goto(S, y)}$，如果是转移到非终止态，则保留，否则在保留的前提下，考虑 $y + k$ 和 $10$ 的关系。如果有 $y + k < 10$，那么 $\mathrm{Goto(S, y + k)}$ 增加一个到终止态的转移，否则 $\mathrm{Goto(S', y + k - 10)}$ 增加一个到终止态的转移，其中 $S'$ 是中间 $n$ 个点里与 $S$ 对应的那个点。
+对于原有的转移
+$\mathrm{Goto(S, y)}$，如果是转移到非终止态，则保留，否则在保留的前提下，考虑
+$y + k$ 和 $10$ 的关系。如果有 $y + k < 10$，那么
+$\mathrm{Goto(S, y + k)}$ 增加一个到终止态的转移，否则
+$\mathrm{Goto(S', y + k - 10)}$ 增加一个到终止态的转移，其中 $S'$ 是中间
+$n$ 个点里与 $S$ 对应的那个点。
 
-对于原有的转移 $\mathrm{Goto(S, x)} = T$，如果 $x + 1 < 10$ 则 $\mathrm{Goto(S, x + 1)}$ 增加到 $T'$ 的转移，否则 $x = 9$，$\mathrm{Goto(S', 0)}$ 增加到 $T'$ 的转移。
+对于原有的转移 $\mathrm{Goto(S, x)} = T$，如果 $x + 1 < 10$ 则
+$\mathrm{Goto(S, x + 1)}$ 增加到 $T'$ 的转移，否则
+$x = 9$，$\mathrm{Goto(S', 0)}$ 增加到 $T'$ 的转移。
 
-这个 NFA 转 DFA 可以使用枚举等价子集的形式，这些子集有一些性质，只会包含至多 $3$ 个 NFA 的节点，且它们分别来自前 $n$ 个节点、中间 $n$ 个节点、最后一个节点，因此这样的子集数量是不超过 $2 (n + 1)^2$ 的，直接枚举这些子集的转移，看能到达哪个子集即可，时间复杂度 $\mathcal{O}(n^2)$。
+这个 NFA 转 DFA
+可以使用枚举等价子集的形式，这些子集有一些性质，只会包含至多 $3$ 个 NFA
+的节点，且它们分别来自前 $n$ 个节点、中间 $n$
+个节点、最后一个节点，因此这样的子集数量是不超过 $2 (n + 1)^2$
+的，直接枚举这些子集的转移，看能到达哪个子集即可，时间复杂度
+$\mathcal{O}(n^2)$。
 
-# Replay and Summary
+Replay and Summary
+==================
 
 None is available.
