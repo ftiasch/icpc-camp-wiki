@@ -1,0 +1,338 @@
+# 【坑】B
+
+还没想出来
+
+# 【坑】C
+
+三角形里找一点，只考虑质数情况，找一条离每条边距离为1的和三角形卡一卡去check，不知为何是对的
+
+# D. Knapsack and Queries
+
+维护两个栈，添加在后一个栈中添加，删除在前一个栈中删除，如果前一个栈不够删强行把后一个栈变成前一个栈暴力倒过来扫一遍
+
+询问的时候把两个栈的元素取出，区间找最小值就好了
+
+时间复杂度$O(QMlogM)$
+
+EX：其实前后加删都可以做，不管在前面删完还是在后面删完，直接将一半重构即可，时间复杂度不太确定，不知道有没有log
+
+## lbn187
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define LL long long
+#define N 100100
+#define fr(i,n) for(int i=0;i<n;i++)
+
+class Crypto {
+	public:    
+		Crypto() {
+			sm = cnt = 0;
+			seed();
+		}
+
+		int decode(int z) {
+			z ^= next();
+			z ^= (next() << 8);
+			z ^= (next() << 16);
+			z ^= (next() << 22);
+			return z;
+		}
+
+		void query(long long z) {
+			const long long B = 425481007;
+			const long long MD = 1000000007;
+			cnt++;
+			sm = ((sm * B % MD + z) % MD + MD) % MD;
+			seed();
+		}
+	private: 
+		long long sm;
+		int cnt;
+
+		uint8_t data[256];
+		int I, J;
+
+		void swap_data(int i, int j) {
+			uint8_t tmp = data[i];
+			data[i] = data[j];
+			data[j] = tmp;    
+		}
+
+		void seed() {
+			uint8_t key[8];
+			for (int i = 0; i < 4; i++) {
+				key[i] = (sm >> (i * 8));
+			}
+			for (int i = 0; i < 4; i++) {
+				key[i+4] = (cnt >> (i * 8));
+			}
+
+			for (int i = 0; i < 256; i++) {
+				data[i] = i;
+			}
+			I = J = 0;
+
+			int j = 0;
+			for (int i = 0; i < 256; i++) {
+				j = (j + data[i] + key[i%8]) % 256;
+				swap_data(i, j);
+			}
+		}
+
+		uint8_t next() {
+			I = (I+1) % 256;
+			J = (J + data[I]) % 256;
+			swap_data(I, J);
+			return data[(data[I] + data[J]) % 256];
+		}
+};
+using namespace std;
+LL an,f1[N][505],f2[N][505],A[505],B[505],E[1111];
+int S1,S2,M,W[N],V[N];
+void up(LL&x,LL y){x=max(x,y);}
+void add(int x,int z){//重量 价值
+	fr(i,M)f2[S2+1][i]=f2[S2][i];
+	fr(i,M)up(f2[S2+1][(i+x)%M],f2[S2][i]+z);
+	W[++S2]=x;V[S2]=z;
+}
+void del(){
+	if(!S1){
+		for(;S2;S2--){
+			fr(i,M)f1[S1+1][i]=f1[S1][i];
+			fr(i,M)up(f1[S1+1][(i+W[S2])%M],f1[S1][i]+V[S2]);
+			S1++;
+		}
+	}
+	S1--; 
+}
+void bd(int k,int l,int r){
+	if(l==r){E[k]=A[l];return;}
+	int md=l+r>>1;
+	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+	E[k]=max(E[k<<1],E[k<<1|1]);
+}
+LL qu(int k,int l,int r,int x,int y){
+	if(x>y)return -1e18;
+	if(x<=l&&r<=y)return E[k];
+	int md=(l+r)/2;LL V=-1e18;
+	if(x<=md)up(V,qu(k<<1,l,md,x,y));
+	if(y>md)up(V,qu(k<<1|1,md+1,r,x,y));
+	return V;
+}
+LL qu(int l,int r){
+	LL an=-1e18;
+	fr(i,M)A[i+1]=f2[S2][i];
+	bd(1,1,M);
+	fr(i,M){
+		if(i>=l&&i<=r)up(an,f1[S1][i]+max(qu(1,1,M,1,r-i+1),qu(1,1,M,M-i+l+1,M)));
+		else if(i>r)up(an,f1[S1][i]+qu(1,1,M,M-i+l+1,M-i+r+1));
+		else up(an,f1[S1][i]+qu(1,1,M,l-i+1,r-i+1));
+	}
+	return an;
+}
+int main(){
+	int Q,i,t,w,v,l,r;
+	scanf("%d%d",&M,&Q);
+	Crypto c;
+	for(i=1;i<M;i++)f1[0][i]=f2[0][i]=-1e18;
+	fr(i,Q){
+		scanf("%d%d%d%d%d",&t,&w,&v,&l,&r);
+		t=c.decode(t);
+		w=c.decode(w);
+		v=c.decode(v);
+		l=c.decode(l);
+		r=c.decode(r);
+		if(t==1)add(w,v);else del();
+		an=qu(l,r);if(an<0)an=-1;
+		c.query(an);
+		printf("%lld\n",an);
+	}
+}
+~~~
+
+# 【坑】H
+
+树链剖分，然后每次尽量往后面放，如果会影响下面的子树先去处理下面的子树
+
+发现有一个棘手的问题，就是每一个链条的末端有一段已经构好的，但会遭到破坏，不太好处理
+
+如果不去管他可能会被卡掉，100个点T了七八个
+
+# I. ADD, DIV, MAX
+
+## lbn187
+
+线段树上每个节点和懒惰标记都用$\frac{A}{B}+C$来维护，其中$A<B$
+
+那么对于点$\frac{A}{B}+C$，加上标记$\frac{VA}{VB}+VC$，会变成$\frac{A+(C+VA)*B}{BVB}+VC$，把他变成带分数的形式，懒惰标记也是这样变
+
+如果分母大于$10^9$，那么直接把分母变为$10^9$，分子变成对应数值即可，因为如果分母大于$10^9$其实没有区别
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define LL long long
+#define N 533333
+using namespace std;
+int n,Q,i,op,x,y,z,a[N];
+LL lza[N],lzb[N],lzadd[N],A[N],B[N],V[N];
+void ps(int k){V[k]=max(V[k<<1],V[k<<1|1]);}
+void ADDCHU(int k,LL jia,LL chu,LL zheng){
+	A[k]=A[k]+(V[k]+jia)*B[k];
+	B[k]=B[k]*chu;
+	V[k]=zheng+A[k]/B[k];
+	A[k]%=B[k];
+	if(B[k]>1e9)B[k]=1,A[k]=0;
+	lza[k]=lza[k]+(lzadd[k]+jia)*lzb[k];
+	lzb[k]=lzb[k]*chu;
+	lzadd[k]=zheng+lza[k]/lzb[k];
+	lza[k]%=lzb[k];
+	if(lzb[k]>1e9)lza[k]=max(1000000000ll-(lzb[k]-lza[k]),0ll),lzb[k]=1e9;
+}
+void pd(int k){
+	ADDCHU(k<<1,lza[k],lzb[k],lzadd[k]);
+	ADDCHU(k<<1|1,lza[k],lzb[k],lzadd[k]);
+	lza[k]=0;lzb[k]=1;lzadd[k]=0;
+}
+void bd(int k,int l,int r){
+	lzb[k]=1;B[k]=1;
+	if(l==r){V[k]=a[l];return;}
+	int md=l+r>>1;
+	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+	ps(k);
+}
+void add(int k,int l,int r,int x,int y,int z){
+	if(x<=l&&r<=y){ADDCHU(k,0,1,z);return;}
+	pd(k);int md=l+r>>1;
+	if(x<=md)add(k<<1,l,md,x,y,z);
+	if(y>md)add(k<<1|1,md+1,r,x,y,z);
+	ps(k);
+}
+void chu(int k,int l,int r,int x,int y,int z){
+	if(x<=l&&r<=y){ADDCHU(k,0,z,0);return;}
+	pd(k);int md=l+r>>1;
+	if(x<=md)chu(k<<1,l,md,x,y,z);
+	if(y>md)chu(k<<1|1,md+1,r,x,y,z);
+	ps(k);
+}
+LL qumax(int k,int l,int r,int x,int y){
+	if(x<=l&&r<=y)return V[k];
+	int md=l+r>>1;pd(k);
+	if(y<=md)return qumax(k<<1,l,md,x,y);
+	if(x>md)return qumax(k<<1|1,md+1,r,x,y);
+	return max(qumax(k<<1,l,md,x,y),qumax(k<<1|1,md+1,r,x,y));
+}
+int main(){
+	scanf("%d%d",&n,&Q);
+	for(i=1;i<=n;i++)scanf("%d",&a[i]);
+	bd(1,1,n);
+	for(;Q--;){
+		scanf("%d%d%d%d",&op,&x,&y,&z);x++;y++;
+		if(op==0)add(1,1,n,x,y,z);
+		if(op==1)chu(1,1,n,x,y,z);
+		if(op==2)printf("%lld\n",qumax(1,1,n,x,y));
+	}
+}
+~~~
+
+## Aki
+
+max-min势能分析的版本。那个打标记比赛的时候那个打标记的绕晕了一整场。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+const int N = 2e5 + 5;
+struct node {
+	LL _min, _max, lazy;
+	node(LL _min = 0, LL _max = 0, LL lazy = 0) : _min(_min), _max(_max), lazy(lazy) {}
+	void add(LL x) {
+		_min += x;
+		_max += x;
+		lazy += x;
+	}
+} tree[N * 4];
+node operator + (const node &a, const node &b) {
+	return node(min(a._min, b._min), max(a._max, b._max), 0);
+}
+void pd(int x) {
+	if (tree[x]._min == tree[x]._max) {
+		tree[x + x] = node(tree[x]._min, tree[x]._max, 0);
+		tree[x + x + 1] = node(tree[x]._min, tree[x]._max, 0);
+		tree[x].lazy = 0;
+	}
+	if (tree[x].lazy) {
+		tree[x + x].add(tree[x].lazy);
+		tree[x + x + 1].add(tree[x].lazy);
+		tree[x].lazy = 0;
+	}
+}
+void add(int x, int l, int r, int ql, int qr, LL c) {
+	if (l > qr || r < ql) return;
+	if (l >= ql && r <= qr) {
+		tree[x].add(c);
+		return;
+	}
+	int mid = (l + r) / 2;
+	pd(x);
+	add(x + x, l, mid, ql, qr, c);
+	add(x + x + 1, mid + 1, r, ql, qr, c);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+void div(int x, int l, int r, int ql, int qr, LL c) {
+	if (l > qr || r < ql) return;
+	if (r - l + 1 > 1) pd(x);
+	if (l >= ql && r <= qr) {
+		if (tree[x]._max == tree[x]._min + 1 && tree[x]._max % c == 0) {
+			int delta = tree[x]._min - tree[x]._min / c;
+			tree[x].add(-delta);
+			return;
+		}
+		tree[x]._min /= c;
+		tree[x]._max /= c;
+		if (tree[x]._min == tree[x]._max) return;
+	}
+	int mid = (l + r) / 2;
+	div(x + x, l, mid, ql, qr, c);
+	div(x + x + 1, mid + 1, r, ql, qr, c);
+	tree[x] = tree[x + x] + tree[x + x + 1];
+}
+LL query(int x, int l, int r, int ql, int qr) {
+	if (l > qr || r < ql) return 0;
+	if (l >= ql && r <= qr) {
+		return tree[x]._max;
+	}
+	pd(x);
+	int mid = (l + r) / 2;
+	return max(query(x + x, l, mid, ql, qr), query(x + x + 1, mid + 1, r, ql, qr));
+}
+int main() {
+	int n, q;
+	scanf("%d%d", &n, &q);
+	for (int i = 1; i <= n; ++ i) {
+		int a;
+		scanf("%d", &a);
+		add(1, 1, n, i, i, a);
+	}
+	for (int i = 1; i <= q; ++ i) {
+		int t, l, r, x;
+		scanf("%d%d%d%d", &t, &l, &r, &x);
+		l ++, r ++;
+		if (t == 0) {
+			add(1, 1, n, l, r, x);
+		}
+		else if (t == 1) {
+			div(1, 1, n, l, r, x);
+		}
+		else {
+			LL ans = query(1, 1, n, l, r);
+			printf("%lld\n", ans);
+		}
+	}
+}
+~~~
+
+# 【坑】J
+
+还没怎么看，感觉放在最后一题应该非常难
