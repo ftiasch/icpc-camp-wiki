@@ -1,0 +1,797 @@
+# 弦图
+
+\paragraph{定义}我们称连接环中不相邻的两个点的边为弦。一个无向图称为弦图，当图中任意长度都大于$3$的环都至少有一个弦。弦图的每一个诱导子图一定是弦图。
+				\paragraph{单纯点}设$N(v)$表示与点$v$相邻的点集。一个点称为单纯点当${v}+N(v)$的诱导子图为一个团。引理：任何一个弦图都至少有一个单纯点，不是完全图的弦图至少有两个不相邻的单纯点。
+				\paragraph{完美消除序列}一个序列${v_1,v_2,...,v_n}$满足$v_i$在${v_i,v_{i+1},...,v_n}$的诱导子图中为一个单纯点。一个无向图是弦图当且仅当它有一个完美消除序列。
+				\paragraph{最大势算法}最大势算法能判断一个图是否是弦图。从$n$到$1$的顺序依次给点标号（标号为$i$的点出现在完美消除序列的第$i$个）。设$label_i$表示第$i$个点与多少个已标号的点相邻，每次选择$label_i$最大的未标号的点进行标号。
+				\par 然后判断这个序列是否为完美序列。如果依次判断${v_{i+1},...,.v_n}$中所有与$v_i$相邻的点是否构成一个团，时间复杂度为$O(nm)$。考虑优化，设${v_{i+1},...,v_n}$中所有与$v_i$相邻的点依次为$v_{j1}$,...,$v_{jk}$。只需判断$v_{j1}$是否与$v_{j2}$,...,$v_{jk}$相邻即可。时间复杂度$O(n+m)$。
+				\paragraph{弦图的染色}按照完美消除序列中的点倒着给图中的点贪心染尽可能最小的颜色，这样一定能用最少的颜色数给图中所有点染色。弦图的团数=染色数。
+				\paragraph{最大独立集}完美消除序列从前往后能选就选。最大独立集=最小团覆盖。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 100100
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;//id[i]为点i的标号，seq[i]为标号为i的点
+int n,m,x,y,i,q[N],label[N],id[N],vis[N],seq[N];
+vector<int>G[N];
+struct P{
+	int lab,u;
+	bool operator<(const P&a)const{return lab<a.lab;}
+};
+void ins(int x,int y){G[x].push_back(y);}
+void in(int n){
+	CL(vis);CL(id);CL(label);CL(seq);
+	for(int i=1;i<=n;i++)G[i].clear();
+}
+void mcs(){//MCS算法求标号序列
+	int i,j,u,v;
+	priority_queue<P>Q;//优先队列做到O(mlgn)，可以拉两个链表做到O(n+m)
+	for(i=1;i<=n;i++)Q.push(P{0,i});
+	for(i=n;i;i--){
+		for(;id[Q.top().u];)Q.pop();
+		u=Q.top().u;Q.pop();id[u]=i;
+		for(j=0;j<G[u].size();j++){
+			v=G[u][j];
+			if(!id[v]){
+				label[v]++;
+				Q.push(P{label[v],v});
+			}
+		}
+	}
+	for(i=1;i<=n;i++)seq[id[i]]=i;
+}
+bool ok(){//判断是否是弦图，期望复杂度O(m)
+	int i,j,t,u,v,w;
+	for(i=1;i<=n;i++){
+		u=seq[i];t=0;//标号从小到大找点
+		for(j=0;j<G[u].size();j++){//找标号大于它的点
+			v=G[u][j];
+			if(id[v]>id[u])q[++t]=v;
+		}
+		if(!t)continue;
+		w=q[1];
+		for(j=1;j<=t;j++)if(id[q[j]]<id[w])w=q[j];//找标号大于它的点中最小的
+		for(j=0;j<G[w].size();j++)vis[G[w][j]]=i;
+		for(j=1;j<=t;j++)//判断是否有连边
+			if(q[j]!=w)if(vis[q[j]]!=i)return 0;
+	}
+	return 1;
+}
+int main(){
+	for(;scanf("%d%d",&n,&m),n+m;puts("")){
+		in(n);
+		for(i=1;i<=m;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+		mcs();
+		puts(ok()?"Perfect":"Imperfect");
+	}
+}
+~~~
+
+
+# 同构
+
+## 图同构
+
+令$F_t(i)=(F_{t-1}(i)*A+\sum_{i\to j} F_{t-1}(j)*B+\sum_{j\to i} F_{t-1}(j)*C+D*(i-a))mod P$，枚举点$a$，迭代$K$次后求得的就是$a$点所对应的$hash$值，其中$K,A,B,C,D,P$为$hash$参数，可自选。
+
+## 树同构
+
+我们子树$x$的哈希值为$P(x)$，最大深度为$d(x)$。我们令叶子节点的哈希值为$1$，对于其余节点，其哈希值$P(x)=\prod(r_{d(y)}+P(y)) mod M$，其中$r_i$为随机数。有根树哈希时间复杂度为$O(n)$。
+
+如果要求无根树的哈希值，那么每个点记录最大深度和次大深度来转移，再在树上做一遍DFS，讨论一下即可出解。由于要用到求逆，时间复杂度$O(nlgn)$。
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 111111
+#define M 1000000007
+#define pii pair<int,int>
+#define fors(i)  for(auto i:e[x])if(i!=p)
+using namespace std;
+int ra[N];
+int Pw(int a,int b,int p){
+	int v=1;
+	for(;b;b>>=1,a=1ll*a*a%p)if(b&1)v=1ll*v*a%p;
+	return v;
+}
+int inv(int x,int p){return Pw(x,p-2,p);}
+struct Sub{//子树类，存下面每个点的哈希值，最大和次大深度，以及对应哈希值
+	vector<int>S;int d1,d2,H1,H2;
+	Sub(){d1=d2=0;S.clear();}
+	void add(int d,int v){//加入一个深度为d，哈希值为v的点
+		S.push_back(v);
+		if(d>d1)d2=d1,d1=d;else if(d>d2)d2=d;
+	}
+	int hash(){//哈希函数
+		H1=H2=1;
+		for(int i:S){
+			H1=1ll*H1*(ra[d1]+i)%M;
+			H2=1ll*H2*(ra[d2]+i)%M;
+		}
+		return H1;
+	}
+	pii del(int d,int v){//删除一个深度为d，哈希值为v的点
+		if(d==d1)return {d2+1,1ll*H2*inv(ra[d2]+v,M)%M};
+		return {d1+1,1ll*H1*inv(ra[d1]+v,M)%M};
+	}
+};
+pii U[N];
+int n,i,x,y,A[N];
+Sub T[N];
+vector<int>e[N];
+void prepare(int n){//预处理
+	for(int i=0;i<=n;i++)ra[i]=rand()%M;
+}
+void ins(int x,int y){e[x].push_back(y);}
+void dfsD(int x,int p){//第一遍DFS，做顺着的，预处理，有根树O(n)
+	T[x]=Sub();
+	fors(i)dfsD(i,x),T[x].add(T[i].d1+1,T[i].H1);
+	T[x].hash();
+}
+void dfsU(int x,int p){//第二遍DFS，A[x]求以x点为根的哈希值
+	if(p)T[x].add(U[x].first,U[x].second);
+	A[x]=T[x].hash();
+	fors(i)U[i]=T[x].del(T[i].d1+1,T[i].H1),dfsU(i,x);
+}
+int main(){
+	srand(23333);
+	scanf("%d",&n);prepare(n);
+	for(i=1;i<n;i++)scanf("%d%d",&x,&y),ins(x,y),ins(y,x);
+	dfsD(1,0);dfsU(1,0);
+	for(i=1;i<=n;i++)printf("%d\n",A[i]);
+}
+~~~
+
+# multimap
+
+~~~{.cpp}
+#include<bits/stdc++.h>\\一个元素有多个映射
+#define pii pair<int,int>
+using namespace std;
+multimap<int,int>mp;
+multimap<int,int>::iterator it;
+pair<multimap<int,int>::iterator, multimap<int,int>::iterator> ret;
+int main(){
+	mp.insert(pii(5,6));mp.insert(pii(5,7));
+	mp.insert(pii(5,4));mp.insert(pii(6,8));
+	ret=mp.equal_range(5);\\用equal_range()函数找到元素5的所有映射
+	for(it=ret.first;it!=ret.second;it++)
+		printf("%d ",(*it).second);//6 7 4	
+}
+~~~
+
+# 矩阵乘法线性递推优化
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define LL long long
+#define M 1000000007
+#define N 205
+using namespace std;
+LL GXX(LL n,int m,LL a[],LL c[]){//求第n项,a[]中记录0~m-1项,c[]记录转移式
+	LL v[N]={1},u[N*2],W=!!n,x,an=0;//f(n)=f(n-1)c(m-1)+f(n-2)c(m-2)+...+f(n-m)c(0)
+	int i,j,t,b;
+	for(x=n;x>1;x>>=1)W<<=1;
+	for(x=0;W;W>>=1,x<<=1){
+		memset(u,0,sizeof u);if(b=!!(n&W))x|=1;
+		if(x<m)u[x]=1;else{
+			for(i=0;i<m;i++)for(j=0,t=i+b;j<m;j++,t++)(u[t]+=v[i]*v[j])%=M;
+			for(i=m*2-1;i>=m;i--)for(j=0,t=i-m;j<m;j++,t++)(u[t]+=c[j]*u[i])%=M;
+		}
+		copy(u,u+m,v);
+	}
+	for(i=0;i<m;i++)(an+=v[i]*a[i])%=M;
+	return an;
+}
+int main(){
+	LL n,f[N],g[N];int m,i;
+	scanf("%lld%d",&n,&m);
+	for(i=0;i<m;i++)scanf("%lld",&f[i]);
+	for(i=0;i<m;i++)scanf("%lld",&g[i]);
+	printf("%lld\n",GXX(n,m,f,g));
+}
+~~~
+
+# FFT模任意数
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define M 1000000007
+#define NN 262144//开两倍
+#define PI acos(-1)
+#define LL long long
+#define rep(i,n) for(int i=0;i<n;i++)
+using namespace std;
+typedef complex<double>CP;
+CP w[NN];int N,L,g[NN];
+void pre(){//FFT预处理
+	for(int i=0;i<N;i++){
+		g[i]=g[i>>1]>>1|((i&1)<<(L-1));
+		w[i]=CP(cos(2*PI*i/N),sin(2*PI*i/N));
+	}
+}
+void FFT(CP *a,int n){//变换
+	int i,j,k,o;
+	rep(i,n)if(i<g[i])swap(a[i],a[g[i]]);
+	for(i=2,o=n>>1;i<=n;i<<=1,o>>=1)
+		for(j=0;j<n;j+=i){
+			CP *l=a+j,*r=a+j+(i>>1),*p=w;
+			for(k=0;k<i>>1;k++){
+				CP tmp=*r * *p;
+				*r=*l-tmp;*l=*l+tmp;
+				l++;r++;p+=o;
+			}
+		}
+}
+void mul(int*x,int*y,int*z){//求x*y，存到z中
+	rep(i,N)(x[i]+=M)%=M,(y[i]+=M)%=M;
+	static CP a[NN],b[NN],A[NN],B[NN],C[NN],D[NN];
+	rep(i,N)a[i]=CP(x[i]&32767,x[i]>>15),b[i]=CP(y[i]&32767,y[i]>>15);
+	FFT(a,N),FFT(b,N);
+	rep(i,N){
+		int j=(N-i)&(N-1);
+		static CP da,db,dc,dd;
+		da=(a[i]+conj(a[j]))*CP(0.5,0);db=(a[i]-conj(a[j]))*CP(0,-0.5);
+		dc=(b[i]+conj(b[j]))*CP(0.5,0);dd=(b[i]-conj(b[j]))*CP(0,-0.5);
+		A[j]=da*dc;B[j]=da*dd;C[j]=db*dc;D[j]=db*dd;
+	}
+	rep(i,N)a[i]=A[i]+B[i]*CP(0,1),b[i]=C[i]+D[i]*CP(0,1);
+	FFT(a,N);FFT(b,N);
+	rep(i,N){
+		int da=(LL)(a[i].real()/N+0.5)%M,db=(LL)(a[i].imag()/N+0.5)%M,
+			dc=(LL)(b[i].real()/N+0.5)%M,dd=(LL)(b[i].imag()/N+0.5)%M;
+		z[i]=(da+((LL)(db+dc)<<15)+((LL)dd<<30))%M;
+	}
+}
+int main(){
+	int n,m,i;
+	static int a[NN],b[NN],c[NN];
+	scanf("%d%d",&n,&m);//输入
+	for(i=0;i<=n;i++)scanf("%d",&a[i]);
+	for(i=0;i<=m;i++)scanf("%d",&b[i]);
+	for(L=0;(1<<L)<n+m+1;L++);//得到位数
+	N=1<<L;pre();mul(a,b,c);
+	for(i=0;i<=n+m;i++)(c[i]+=M)%=M,printf("%d ",c[i]);
+}
+~~~
+
+# 牛顿迭代法
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define eps 1e-8
+double x,x0,a;
+double F(double x){
+	return x*x-a;
+}
+double gf(double x){
+	return 2*x;
+}
+int main(){
+	scanf("%lf",&a);
+	x=1.0;
+	for(;fabs(F(x))>eps;){
+		x0=x;
+		x=x-F(x)/gf(x);
+	}
+	printf("%.7lf\n",x);
+}
+~~~
+
+# 平方剩余
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+typedef long long LL; 
+using namespace std;
+LL Pw(LL a,LL b,LL p){
+	LL v=1;
+	for(;b;b>>=1,a=a*a%p)if(b&1)v=v*a%p;
+	return v;
+}
+void multiply(LL&c,LL&d,LL a,LL b,LL w,LL p){
+	LL cc=(a*c+b*d%p*w)%p,dd=(a*d+b*c)%p;
+	c=cc;d=dd;
+}
+bool solve(LL n,LL p,LL&x){//求x^2 mod p=n的解
+	if(p==2)return x=1,1;
+	if(Pw(n,p/2,p)==p-1)return 0;//无解的情况
+	LL c=1,d=0,b=1,a,w;
+	do{
+		a=rand()%p;
+		w=(a*a-n+p)%p;
+		if(w==0)return x=a,1;
+	}while(Pw(w,p/2,p)!=p-1);
+	for(LL d=(p+1)/2;d;d>>=1){
+		if(d&1)multiply(c,d,a,b,w,p);
+		multiply(a,b,a,b,w,p);
+	}
+	return x=c,1;
+}
+int main(){
+	int T;LL n,p,a,b;
+	scanf("%d",&T);
+	for(;T--;){
+		scanf("%lld%lld",&n,&p);n%=p;
+		if(solve(n,p,a)){//有解，输出一个或两个解
+			b=p-a;
+			if(a>b)swap(a,b);
+			if(a==b)printf("%lld\n",a);else printf("%lld %lld\n",a,b);
+		}else puts("No root");//无解
+	}
+}
+~~~
+
+# 单变元模线性不等式
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define LL long long
+using namespace std;
+LL cal(LL m,LL d,LL l,LL r){
+	if(l==0)return 0;
+	if(d==0)return -1;
+	if(d*2>m)return cal(m,m-d,m-r,m-l);
+	if((l-1)/d<r/d)return (l-1)/d+1;
+	LL k=cal(d,(-m%d+d)%d,l%d,r%d);
+	return k==-1?-1:(k*m+l-1)/d+1;
+}
+int main(){
+	LL d,l,r,m;
+	scanf("%lld%lld%lld%lld",&d,&l,&r,&m);
+	printf("%lld\n",cal(m,d,l,r));
+}
+~~~
+
+# 类欧几里德
+
+~~~{.cpp}
+LL G(LL n,LL a,LL d,LL m){
+	if(d==0)return n*(a/m);
+	if(a>=m)return n*(a/m)+G(n,a%m,d,m);
+	if(d>=m)return n*(n-1)/2*(d/m)+G(n,a,d%m,m);
+	return G((a+d*n)/m,(a+d*n)%m,m,d);
+}
+~~~
+
+# 手写压位
+
+~~~{.cpp}
+unsigned getbit(unsigned x,unsigned l,unsigned r){
+	return (x<<(31-r))>>(31-r+l);
+}
+struct Bitset{
+	unsigned f[N];
+	void reset(){memset(f,0,sizeof f);}//清空
+	void setBit(int x){f[x>>5]|=1<<(x&31);}//将某一位置1
+	int getBit(int x){return (f[x>>5]>>(x&31))&1;}//得到某一位
+	void Xor(Bitset&A,int l,int r){//将A ^=f[l,r]
+		int ll=0,rr=r-l;
+		for(;ll<=rr;){
+			int nel=min((l|31),r),nell=min((ll|31),rr),d=min(nel-l,nell-ll);
+			nel=l+d;nell=ll+d;
+			A.f[ll>>5]^=(getbit(f[l>>5],l&31,nel&31))<<(ll&31);
+			l=nel+1;
+			ll=nell+1;
+		}
+	}
+}A,B;
+~~~
+
+# 凸包闵可夫斯基和
+
+~~~{.cpp}
+vector<P> minkowski(vector<P> a,vector<P> b){//给定两个点集a和b，求它们闵可夫斯基和的凸包
+	a=convex_hull(a);b=convex_hull(b);//先求一遍各自的凸包
+	vector<P> c;c.push_back(a[0]+b[0]);//将左下角的点加入
+	int n=a.size(),m=b.size(),i,j;P x,y;
+	a.push_back(a[0]);b.push_back(b[0]);
+	for(i=0,j=0;i<n||j<m;){//按顺序判断加入
+		x=a[i]+b[j+1];y=a[i+1]+b[j];
+		if(sgn(cj(x-c.back(),y-c.back()))>=0)c.push_back(x),j++;
+		else c.push_back(y),i++;
+	}
+	c.pop_back();
+	return c;
+}
+~~~
+
+# 圆与多边形交
+
+拆成若干一点在圆心上的三角形，分四种情况讨论
+
+1、两点都在三角形内，直接输出三角形面积
+
+2、一点在三角形内，一点在三角形外，面积为一个三角形+一个扇形
+
+3、两点都在三角形内，圆心两点的线段（注意是线段）距离小于等于半径，面积为一个扇形+两个三角形
+
+4、否则面积为一个扇形
+
+~~~{.cpp}
+int sgn(D x){return x<-eps?-1:x>eps;}
+int cmp(D x,D y){return sgn(x-y);}
+D sqr(D x){return x*x;}
+struct P{
+	D x,y;
+	P(D x=0,D y=0):x(x),y(y){}
+	void in(){scanf("%lf%lf",&x,&y);}
+	D norm(){return sqrt(x*x+y*y);}
+	D norm2(){return x*x+y*y;}
+	P unit(){D l=norm();return P(x/l,y/l);}
+}A,B;
+int n,i,ca;D k,x,y;vector<P>V;
+bool operator==(P a,P b){return !cmp(a.x,b.x)&&!cmp(a.y,b.y);}
+P operator+(P a,P b){return P(a.x+b.x,a.y+b.y);}
+P operator-(P a,P b){return P(a.x-b.x,a.y-b.y);}
+P operator*(P a,D b){return P(a.x*b,a.y*b);}
+P operator/(P a,D b){return P(a.x/b,a.y/b);}
+D dj(P a,P b){return a.x*b.x+a.y*b.y;}
+D cj(P a,P b){return a.x*b.y-a.y*b.x;}
+D dis(P a,P b){return sqrt(sqr(a.x-b.x)+sqr(a.y-b.y));}
+D Area(P a,P b,P c){return fabs(cj(b-a,c-a)*.5);}
+struct L{P s,t;L(P s=P(),P t=P()):s(s),t(t){}};
+bool point_on_segment(P a,L b){return !sgn(cj(a-b.s,b.t-b.s))&&sgn(dj(b.s-a,b.t-a))<=0;}
+D point_to_line(P a,L b){return fabs(cj(b.t-b.s,a-b.s))/dis(b.s,b.t);}
+D point_to_segment(P a,L b){
+	if(sgn(dj(b.s-a,b.t-b.s)*dj(b.t-a,b.t-b.s))<=0)return point_to_line(a,b);
+	return min(dis(a,b.s),dis(a,b.t));
+}
+P project_to_line(P a,L b){return b.s+(b.t-b.s)*(dj(a-b.s,b.t-b.s)/(b.t-b.s).norm2());}
+struct C{
+	P c;D r;
+	explicit C(P c=P(),D r=0):c(c),r(r){}
+};
+bool in_circle(P a,C b){return cmp(dis(a,b.c),b.r)<=0;}
+C make_circle(P a,P b){return C((a+b)/2,dis(a,b)/2);}
+D twopoint_circle_intersect(L a,C b,P&p1,P&p2){//直线与两点交及距离 
+	D y=point_to_line(b.c,a);
+	D x=sqrt(sqr(b.r)-sqr(y));
+	p1=project_to_line(b.c,a)+(a.s-a.t).unit()*x;
+	p2=project_to_line(b.c,a)-(a.s-a.t).unit()*x;
+	return point_to_segment(b.c,a);
+}
+P point_to_circle(P b,C a){//点和圆心连线和圆的交点 
+	P c=(b-a.c).unit();
+	return a.c+c*a.r;
+}
+D SectorArea(C c,P a,P b){//不大于180度的扇形面积 
+	D u=(c.c-a).norm2(),v=(c.c-b).norm2(),w=(a-b).norm2();
+	return sqr(c.r)*acos((u+v-w)*.5/sqrt(u)/sqrt(v))*.5;
+}
+D circle_and_triangle(C c,P a,P b){
+	if(sgn(cj(a-c.c,b-c.c))==0)return 0;
+	bool f1=in_circle(a,c),f2=in_circle(b,c);
+	P pa,pb; 
+	L l=L(a,b);
+	if(f1&&f2)return Area(a,b,c.c);
+	D d=twopoint_circle_intersect(l,c,pa,pb);
+	if(d>c.r-eps)return SectorArea(c,a,b);
+	if(f1)return Area(a,pb,c.c)+SectorArea(c,pb,b);
+	if(f2)return Area(pa,b,c.c)+SectorArea(c,a,pa);
+	return Area(pa,pb,c.c)+SectorArea(c,a,pa)+SectorArea(c,pb,b);
+}
+D circle_and_polygon(C c,vector<P>a){
+	int n=a.size(),i;D an=0;
+	a.push_back(a[0]);
+	for(i=0;i<n;i++){
+		D d=circle_and_triangle(c,a[i],a[i+1]);
+		if(cj(a[i]-c.c,a[i+1]-c.c)>0)an+=d;else an-=d;
+	}
+	return fabs(an);
+}
+~~~
+
+# 四维偏序
+
+
+~~~{.cpp}
+#include<bits/stdc++.h>//四维偏序，求i<j,Xi<Xj,Yi<Yj,Zi<Zj的对数 
+#define N 100100
+using namespace std;
+int n,i,an,b[N],c[N];
+struct P{int x,y,z,id,f;}p[N],q[N];
+bool cmp(P a,P b){return a.x<b.x||a.x==b.x&&a.y>b.y||a.x==b.x&&a.y==b.y&&a.z>b.z;}
+bool cmp2(P a,P b){return a.y<b.y||a.y==b.y&&a.z>b.z;}
+void add(int x,int z){for(;x<=n;x+=x&-x)c[x]+=z;}
+int qu(int x){int v=0;for(;x;x-=x&-x)v+=c[x];return v;}
+void cdq2(int l,int r){
+	if(l>=r)return;int md=l+r>>1;
+	cdq2(l,md);cdq2(md+1,r);
+	sort(q+l,q+md+1,cmp2);sort(q+md+1,q+r+1,cmp2);
+	int i=l,j=md+1,k=l;
+	for(;j<=r;j++){
+		for(;i<=md&&q[i].y<q[j].y;i++)if(q[i].f)add(q[i].z,1);
+		if(!q[j].f)an+=qu(q[j].z-1);
+	}
+	for(j=l;j<i;j++)if(q[j].f)add(q[j].z,-1);
+}
+void cdq1(int l,int r){
+	if(l>=r)return;int md=l+r>>1;
+	cdq1(l,md);cdq1(md+1,r);
+	sort(p+l,p+md+1,cmp);sort(p+md+1,p+r+1,cmp);
+	int i=l,j=md+1,k=l;
+	for(;j<=r;p[j].f=0,q[k++]=p[j++])
+		for(;i<=md&&p[i].x<p[j].x;q[k++]=p[i++])p[i].f=1;
+	for(;i<=md;q[k++]=p[i++])p[i].f=1;
+	cdq2(l,r);
+}
+int main(){
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)scanf("%d",&p[i].x),p[i].id=i;
+	for(i=1;i<=n;i++)scanf("%d",&p[i].y);
+	for(i=1;i<=n;i++)scanf("%d",&p[i].z);
+	cdq1(1,n);
+	printf("%d\n",an);
+}
+~~~
+
+# 最大团
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 55
+using namespace std;bool ff;
+int n,i,j,an,mc[N],len[N],g[N][N],V[N][N];
+void dfs(int p){
+	int i,j,k;
+	if(!len[p]){
+		if(p>an)an=p,ff=1;
+		return;
+	}
+	for(k=0;k<len[p]&&!ff;k++){
+		if(p+len[p]-k<=an)break;
+		i=V[p][k];
+		if(p+mc[i]<=an)break;
+		for(j=k+1,len[p+1]=0;j<len[p];j++)
+			if(g[i][V[p][j]])V[p+1][len[p+1]++]=V[p][j];
+		dfs(p+1);
+	}
+}
+void work(){
+	int i,j;
+	mc[n]=an=1;
+	for(i=n-1;i;i--){
+		ff=0;len[1]=0;
+		for(j=i+1;j<=n;j++)if(g[i][j])V[1][len[1]++]=j;
+		dfs(1);mc[i]=an;
+	}
+}
+int main(){
+	for(;scanf("%d",&n),n;){
+		for(i=1;i<=n;i++)for(j=1;j<=n;j++)scanf("%d",&g[i][j]);
+		work();
+		printf("%d\n",an);
+	}
+}
+~~~
+
+# HK二分图匹配
+
+~~~{.cpp}
+vector<int>E[N];bool v[N];//未验 
+int n1,n2,q[N],lx[N],ly[N],dx[N],dy[N];
+bool fd(int x){
+	for(int i=0,y;i<E[x].size();i++)
+		if(!v[y=E[x][i]]&&dy[y]==dx[x]+1)
+			if(v[y]=1,!ly[y]||fd(ly[y]))
+				return lx[x]=y,ly[y]=x,1;
+}
+int match(){
+	CL(lx);CL(ly);int an=0,i;
+	for(;;){
+		bool ff=0;int h=0,t=0,x,y;
+		CL(dx);CL(dy);
+		for(i=1;i<=n1;i++)if(!lx[i])q[++t]=i;
+		for(;h^t;){
+			x=q[++h];
+			for(i=0;i<E[x].size();i++)
+				if(!dy[y=E[x][i]]){
+					dy[y]=dx[x]+1;
+					if(ly[y]){
+						dx[ly[y]]=dy[y]+1;
+						q[++t]=ly[y];
+					}else ff=1;
+				}
+		}
+		if(!ff)break;
+		CL(v);
+		for(i=1;i<=n1;i++)if(!lx[i]&&fd(i))an++;
+	}
+	return an;
+}
+~~~
+
+# 极大团计数
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 155
+using namespace std;
+int n,m,i,j,x,y,an,q[N][N],ce[N],ne[N];
+bool g[N][N];
+void dfs(int p){
+	int i,j,k,t,cnt,mv;
+	if(ne[p]==ce[p]){
+		if(!ce[p])an++;
+		return;
+	}
+	for(t=0,i=1;i<=ne[p];i++){
+		for(cnt=0,j=ne[p]+1;j<=ce[p];j++)
+			if(!g[q[p][i]][q[p][j]])cnt++;
+		if(!t||cnt<mv)t=i,mv=cnt;
+	}
+	if(t&&mv<=0)return;
+	for(k=ne[p]+1;k<=ce[p];k++){
+		if(t>0){
+			for(i=k;i<=ce[p];i++)if(!g[q[p][t]][q[p][i]])break;
+			swap(q[p][k],q[p][i]);
+		}
+		i=q[p][k];ne[p+1]=ce[p+1]=0;
+		for(j=1;j<k;j++)if(g[i][q[p][j]])q[p+1][++ne[p+1]]=q[p][j];
+		for(ce[p+1]=ne[p+1],j=k+1;j<=ce[p];j++)
+			if(g[i][q[p][j]])q[p+1][++ce[p+1]]=q[p][j];
+		dfs(p+1);++ne[p];--mv;
+		for(j=k+1,cnt=0;j<=ce[p];j++)if(!g[i][q[p][j]])cnt++;
+		if(!t||cnt<mv)t=k,mv=cnt;
+		if(t&&mv<=0)break;
+	}
+}
+void cluster_counting(){
+	int i;
+	an=ne[0]=ce[0]=0;
+	for(i=1;i<=n;i++)q[0][++ce[0]]=i;
+	dfs(0);
+}
+int main(){//g[][]邻接矩阵，存图
+	scanf("%d%d",&n,&m);
+	for(i=1;i<=m;i++)scanf("%d%d",&x,&y),g[x][y]=g[y][x]=1;
+	cluster_counting();
+	printf("%d\n",an);
+}
+~~~
+
+# 后缀数组
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define CL(a) memset(a,0,sizeof a)
+#define N 111111
+int n,i,sa[N],rk[N],h[N];char s[N];
+int cmp(int *r,int a,int b,int l){return r[a]==r[b]&&r[a+l]==r[b+l];}//用于比较第一关键字与第二关键字,  比较特殊的地方是,预处理的时候,r[n]=0(小于前面出现过的字符)
+void SA(char*s,int*sa,int*rk,int*h,int n,int m){
+	static int V[N],W[N],b[N];int i,j,k,p;CL(V);
+	for(i=1;i<=n;i++)V[rk[i]=s[i]]++;
+	for(i=1;i<=m;i++)V[i]+=V[i-1];
+	for(i=n;i;i--)sa[V[rk[i]]--]=i;
+	for(k=1;k<=n;k<<=1,m=p){//通过已经求出的长度J的SA，来求2*J的SA
+		for(p=0,i=n;i>n-k;i--)b[++p]=i;//特殊处理没有第二关键字的
+		for(i=1;i<=n;i++)if(sa[i]>k)b[++p]=sa[i]-k;//利用长度J的，按第二关键字排序
+		for(CL(V),i=1;i<=n;i++)V[rk[b[i]]]++;
+		for(i=1;i<=m;i++)V[i]+=V[i-1];
+		for(i=n;i;i--)sa[V[rk[b[i]]]--]=b[i];//基数排序部分
+		for(i=1;i<=n;i++)b[i]=rk[i];
+		for(rk[sa[1]]=p=1,i=2;i<=n;i++)//更新名次数组rk[],注意判定相同的
+			rk[sa[i]]=p+=b[sa[i]]^b[sa[i-1]]||b[sa[i]+k]^b[sa[i-1]+k];
+	}
+    for(i=1,k=0;i<=n;h[rk[i++]]=k)//利用单调性求height[]，合法范围2~n 
+    	for(k?k--:0;s[i+k]==s[sa[rk[i]-1]+k];k++);
+}
+int main(){
+	scanf("%s",s+1);n=strlen(s+1);
+	SA(s,sa,rk,h,n,128);
+}
+~~~
+
+# 高精度
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 1010
+#define CL(a) memset(a,0,sizeof a)
+using namespace std;
+struct BN{int v[N],l;}A,B;
+int cmp(BN a,BN b){//a>b->1  a=b->0   a<b->-1
+	if(a.l<b.l)return -1;
+	if(a.l>b.l)return 1;
+	for(int i=a.l;i;i--)if(a.v[i]!=b.v[i])
+		if(a.v[i]>b.v[i])return 1;else return -1;
+	return 0;
+}
+BN num(int x){
+	BN a;int q[15],i,t=0;CL(a.v);
+	for(;x;x/=10)q[++t]=x%10;
+	a.l=t?t:1;
+	for(i=1;i<=t;i++)a.v[i]=q[t-i+1];
+	return a;
+}
+BN getnum(){
+	char s[N];BN a;int i;CL(a.v);
+	scanf("%s",s+1);a.l=strlen(s+1);
+	for(i=1;i<=a.l;i++)a.v[i]=s[a.l-i+1]-'0';
+	return a;
+}
+void print(BN a){
+	for(int i=a.l;i;i--)putchar(a.v[i]+48);
+}
+BN operator+(BN a,BN b){//高精度加法 
+	BN c;int i;CL(c.v);c.l=max(a.l,b.l);
+	for(i=1;i<=c.l;i++)c.v[i]=a.v[i]+b.v[i]+c.v[i],c.v[i+1]=c.v[i]/10,c.v[i]%=10;
+	if(c.v[c.l+1])c.l++;
+	return c;
+}
+BN operator-(BN a,BN b){//要保证a>=b 
+	BN c;int i;CL(c.v);
+	for(i=1;i<=a.l;i++){
+		c.v[i]+=a.v[i]-b.v[i];
+		if(c.v[i]<0)c.v[i]+=10,c.v[i+1]--;
+	}
+	for(c.l=a.l;!c.v[c.l]&&c.l>1;c.l--);
+	return c;
+}
+BN operator*(BN a,BN b){//高精乘高精 
+	BN c;int i,j;CL(c.v);c.l=a.l+b.l-1;
+	for(i=1;i<=a.l;i++)
+		for(j=1;j<=b.l;j++)
+			c.v[c.l-i-j+2]+=a.v[a.l-i+1]*b.v[b.l-j+1];
+	for(i=1;i<=c.l;i++)c.v[i+1]+=c.v[i]/10,c.v[i]%=10;
+	if(c.v[c.l+1])c.l++;
+	return c;
+}
+BN operator*(BN a,int b){//高精乘单精 
+	BN c;int i;CL(c.v);c.l=a.l;
+	for(i=1;i<=a.l;i++)c.v[i]+=a.v[i]*b,c.v[i+1]+=c.v[i]/10,c.v[i]%=10;
+	for(;c.v[c.l+1];)c.l++,c.v[c.l+1]+=c.v[c.l]/10,c.v[c.l]%=10;
+	return c;
+}
+BN operator/(BN a,BN b){//高精除高精，返回商，O(n^2) 
+	if(cmp(a,b)==-1)return num(0);
+	int ws=1;BN c;CL(c.v);
+	for(;cmp(a,b*10)>=0;)b=b*10,ws++;
+	for(c.l=ws;ws;a=a*10,ws--)
+		for(;cmp(a,b)>=0;c.v[ws]++)a=a-b;
+	return c;
+}
+BN operator/(BN a,int b){//高精除单精，O(n) 
+	int i,V=0;bool f=0;BN c;CL(c.v);
+	for(i=a.l;i;i--)V=V*10+a.v[i],c.v[i]=V/b,V%=b;
+	for(c.l=a.l;!c.v[c.l]&&c.l>1;c.l--);
+	return c;
+}
+BN operator%(BN a,BN b){//高精对高精取模 
+	BN c=a/b;
+	return a-(b*c);
+}
+BN operator%(BN a,int b){//高精对单精取模 
+	BN c=a/b;
+	return a-(c*b);
+}
+BN fac(int n){//阶乘 
+	BN a=num(1);
+	for(int i=1;i<=n;i++)a=a*i;
+	return a;
+}
+BN operator^(BN a,int b){//高精度幂次 
+	BN c=num(1);
+	for(;b;b>>=1,a=a*a)if(b&1)c=c*a;
+	return c;
+}
+BN gcd(BN a,BN b){//高精度gcd 
+	if(b.l<=1&&b.v[1]==0)return a;
+	return gcd(b,a%b);
+}
+BN sqrt(BN a){//高精度开根下取整，使用牛顿迭代法 
+	BN b=num(1),c,d;
+	for(;;){
+		c=b;d=b*b;
+		int o=cmp(d,a);
+		if(o==1)b=b-(d-a)/(b+b);
+		else if(o==-1)b=b+(a-d)/(b+b);
+		else break;
+		if(cmp(b,c)==0)break;
+	}
+	return b-num(1);
+}
+int main(){
+}
+~~~
