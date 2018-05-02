@@ -1,0 +1,742 @@
+# [Domiyahtzee!](http://codeforces.com/gym/100641/attachments)
+
+##Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 10;
+char adj[N][N];
+int a[N][N];
+bool use[N][N];
+typedef vector<int> hand;
+bool same(const hand &x, const vector<int> &a) {
+	for (int i : a) {
+		if (x[i] != x[a[0]]) return 0;
+	}
+	return 1;
+}
+bool inc(const hand &x, const vector<int> &a) {
+	for (int i = 1; i < (int) a.size(); ++ i) {
+		if (x[a[i]] - x[a[0]] != i) return 0;
+	}
+	return 1;
+}
+int val(hand x, bool &fir) {
+	sort(x.begin(), x.end());
+	if (same(x, {0, 1, 2, 3, 4})) {
+		if (fir) {
+			fir = 0;
+			return 50;
+		}
+		return 100;
+	}
+	if (inc(x, {0, 1, 2, 3, 4})) return 40;
+	for (int ban = 0; ban < 5; ++ ban) {
+		vector<int> a;
+		for (int i = 0; i < 5; ++ i) if (i != ban) a.push_back(i);
+		if (inc(x, a)) return 30;
+	}
+	if (same(x, {0, 1, 2}) && same(x, {3, 4})) return 25;
+	if (same(x, {1, 2, 3}) && same(x, {0, 4})) return 25;
+	if (same(x, {2, 3, 4}) && same(x, {0, 1})) return 25;
+	if (same(x, {0, 1, 2, 3}) || same(x, {1, 2, 3, 4})) return x[1] * 4;
+	if (same(x, {0, 1, 2}) || same(x, {1, 2, 3}) || same(x, {2, 3, 4})) return x[2] * 3;
+	return 0;
+}
+int calc() {
+	bool fir = 1;
+	int res = 0;
+	for (int i = 0; i < 5; ++ i) {
+		hand h;
+		for (int j = 0; j < 5; ++ j) h.push_back(a[i][j]);
+		res += val(h, fir);
+		//cout << " + " << val(h, fir) << endl;
+	}
+	for (int i = 0; i < 5; ++ i) {
+		hand h;
+		for (int j = 0; j < 5; ++ j) h.push_back(a[j][i]);
+		res += val(h, fir);
+		//cout << " + " << val(h, fir) << endl;
+	}
+	hand h;
+	for (int i = 0; i < 5; ++ i) h.push_back(a[i][i]);
+	res += val(h, fir);
+		//cout << " + " << val(h, fir) << endl;
+	h.clear();
+	for (int i = 0; i < 5; ++ i) h.push_back(a[4 - i][i]);
+	res += val(h, fir);
+		//cout << " + " << val(h, fir) << endl;
+	/*for (int i = 0; i < 5; ++ i) {
+		for (int j = 0; j < 5; ++ j) printf("%d ", a[i][j]);
+		puts("");
+	}
+	cout << res << endl;*/
+	return res;
+}
+int main() {
+	int T, zzz = 0;
+	scanf("%d", &T);
+	while (T --) {
+		for (int i = 0; i < 5; ++ i) {
+			for (int j = 0; j < 5; ++ j) adj[i][j] = a[i][j] = 0;
+		}
+		memset(use, 0, sizeof(use));
+		for (int i = 0; i < 5; ++ i) {
+			for (int j = 0; j < 5; ++ j) {
+				if (a[i][j]) continue;
+				char type[3];
+				scanf("%s", type);
+				adj[i][j] = type[0];
+				if (type[0] == 'V') {
+					int x, y;
+					scanf("%d%d", &x, &y);
+					use[x][y] = use[y][x] = 1;
+					a[i][j] = x;
+					a[i + 1][j] = y;
+				}
+				else if (type[0] == 'H') {
+					int x, y;
+					scanf("%d%d", &x, &y);
+					use[x][y] = use[y][x] = 1;
+					a[i][j] = x;
+					a[i][j + 1] = y;
+				}
+				else {
+					int x;
+					scanf("%d", &x);
+					a[i][j] = x;
+				}
+			}
+		}
+		int ans = calc();
+		for (int q = 1; q <= 6; ++ q) {
+			for (int w = 1; w <= 6; ++ w) {
+				if (use[q][w]) continue;
+				for (int i = 0; i < 5; ++ i) {
+					for (int j = 0; j < 5; ++ j) {
+						if (adj[i][j] == 'H') {
+							int x = a[i][j], y = a[i][j + 1];
+							a[i][j] = q;
+							a[i][j + 1] = w;
+							ans = max(ans, calc());
+							a[i][j] = x;
+							a[i][j + 1] = y;
+						}
+						else if (adj[i][j] == 'V') {
+							int x = a[i][j], y = a[i + 1][j];
+							a[i][j] = q;
+							a[i + 1][j] = w;
+							ans = max(ans, calc());
+							a[i][j] = x;
+							a[i + 1][j] = y;
+						}
+					}
+				}
+			}
+		}
+		printf("Case %d: %d\n", ++ zzz, ans);
+	}
+}
+~~~
+
+## Nisiyama
+
+~~~ { .cpp }
+#include <bits/stdc++.h>
+
+int map[5][5], used[7][7];
+int px[13][2], py[13][2];
+bool f;
+int st[10];
+
+int calc () {
+	for (int i = 1; i <= 6; ++i)
+		if (st[i] == 5) return f ? 100 : (f = true, 50);
+	for (int i = 1; i <= 2; ++i) {
+		for (int j = i; j < i + 5; ++j)
+			if (!st[j]) goto nextTry1;
+		return 40;
+nextTry1:;
+	}
+	for (int i = 1; i <= 3; ++i) {
+		for (int j = i; j < i + 4; ++j)
+			if (!st[j]) goto nextTry2;
+		return 30;
+nextTry2:;
+	}
+	for (int i = 1; i <= 6; ++i) {
+		if (st[i] >= 3)
+			for (int j = 1; j <= 6; ++j) {
+				if (i == j) continue;
+				if (st[j] >= 2) return 25;
+			}
+	}
+	for (int i = 1; i <= 6; ++i)
+		if (st[i] >= 4) return i * 4;
+	for (int i = 1; i <= 6; ++i)
+		if (st[i] >= 3) return i * 3;
+	return 0;
+}
+
+int eval () {
+	int ans = 0;
+	f = false;
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 1; j <= 6; ++j) st[j] = 0;
+		for (int j = 0; j < 5; ++j) ++st[map[i][j]];
+		ans += calc ();
+	}
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 1; j <= 6; ++j) st[j] = 0;
+		for (int j = 0; j < 5; ++j) ++st[map[j][i]];
+		ans += calc ();
+	}
+	for (int j = 1; j <= 6; ++j) st[j] = 0;
+	for (int i = 0; i < 5; ++i) ++st[map[i][i]];
+	ans += calc ();
+	for (int j = 1; j <= 6; ++j) st[j] = 0;
+	for (int i = 0; i < 5; ++i) ++st[map[i][4 - i]];
+	ans += calc ();
+	return ans;
+}
+
+int main () {
+	int T;
+	scanf ("%d", &T);
+	for (int t = 0; t < T; ++t) {
+		for (int i = 0; i < 5; ++i)
+			for (int j = 0; j < 5; ++j)
+				map[i][j] = 0;
+		for (int i = 1; i <= 6; ++i)
+			for (int j = 1; j <= 6; ++j)
+				used[i][j] = 0;
+		for (int l = 0; l < 13; ++l) {
+			char c;
+			int a, b;
+			scanf (" %c", &c);
+			if (c == 'S') {
+				scanf ("%d", &a);
+				for (int i = 0; i < 5; ++i)
+					for (int j = 0; j < 5; ++j)
+						if (map[i][j] == 0) {
+							map[i][j] = a;
+							px[l][0] = px[l][1] = py[l][0] = py[l][1] = -1;
+							goto next;
+						}
+			} else if (c == 'H') {
+				scanf ("%d%d", &a, &b);
+				for (int i = 0; i < 5; ++i)
+					for (int j = 0; j < 4; ++j)
+						if (map[i][j] == 0 && map[i][j + 1] == 0) {
+							map[i][j] = a;
+							map[i][j + 1] = b;
+							used[a][b] = used[b][a] = true;
+							px[l][0] = px[l][1] = i; py[l][0] = j; py[l][1] = j + 1;
+							goto next;
+						}
+			} else if (c == 'V') {
+				scanf ("%d%d", &a, &b);
+				for (int i = 0; i < 4; ++i)
+					for (int j = 0; j < 5; ++j)
+						if (map[i][j] == 0 && map[i + 1][j] == 0) {
+							map[i][j] = a;
+							map[i + 1][j] = b;
+							used[a][b] = used[b][a] = true;
+							px[l][0] = i; px[l][1] = i + 1; py[l][0] = py[l][1] = j;
+							goto next;
+						}
+			}
+next:;
+		}
+		int ans = eval ();
+		for (int i = 1; i <= 6; ++i)
+			for (int j = 1; j <= 6; ++j) {
+				if (used[i][j]) continue;
+				for (int k = 0; k < 13; ++k) {
+					if (px[k][0] == -1) continue;
+					int oc0 = map[px[k][0]][py[k][0]], oc1 = map[px[k][1]][py[k][1]];
+					map[px[k][0]][py[k][0]] = i; map[px[k][1]][py[k][1]] = j;
+					int d = eval ();
+					if (ans < d) ans = d;
+					map[px[k][0]][py[k][0]] = oc0; map[px[k][1]][py[k][1]] = oc1;
+				}
+			}
+		printf ("Case %d: %d\n", t + 1, ans);
+	}
+}
+~~~
+
+##lbn187
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define CL(a) memset(a,0,sizeof(a))
+using namespace std;
+int a[8],v[7][7],lk[7][7],dx[]={0,1,0},dy[]={0,0,1};
+char s[9];bool ff,e[7][7];
+int same(int x,int y){
+	int V=a[y];
+	for(int i=x;i<y;V+=a[i++])
+		if(a[i]!=a[i+1])return 0;
+	if(x==1&&y==5)return ff?100:(ff=1,50);
+	return V;
+}
+int ok(int x,int y){
+	for(int i=x;i<y;i++)if(a[i]+1!=a[i+1])return 0;
+	return 1;
+}
+int cal(int A,int B,int C,int D,int E){
+	int W=0,i,j,cnt;
+	a[1]=A;a[2]=B;a[3]=C;a[4]=D;a[5]=E;
+	sort(a+1,a+6);
+	for(i=3;i<=5;i++)for(j=1;j+i-1<=5;j++)W=max(W,same(j,j+i-1));
+	if(same(1,3)&&same(4,5)||same(1,2)&&same(3,5))W=max(W,25);
+	cnt=unique(a+1,a+6)-a-1;
+	if(ok(1,5))W=max(W,40);
+	if(ok(1,4)||ok(2,5))W=max(W,30);
+	return W;
+}
+int get(){
+	int i,V=0;
+	for(i=1;i<=5;i++)V+=cal(v[i][1],v[i][2],v[i][3],v[i][4],v[i][5]);
+	for(i=1;i<=5;i++)V+=cal(v[1][i],v[2][i],v[3][i],v[4][i],v[5][i]);
+	V+=cal(v[1][1],v[2][2],v[3][3],v[4][4],v[5][5]);
+	V+=cal(v[1][5],v[2][4],v[3][3],v[4][2],v[5][1]);
+	return V;
+}
+int main(){
+	int T,ca,nx,ny,x,y,i,j,o,v1,v2,an;
+	scanf("%d",&T);
+	for(ca=1;ca<=T;ca++){
+		CL(v);CL(lk);CL(e);ff=0;
+		for(nx=ny=i=1;i<=13;i++){
+			scanf("%s",s);
+			for(;v[nx][ny];)
+				if(++ny>5)nx++,ny=1;
+			if(s[0]=='V'){
+				scanf("%d%d",&x,&y);
+				v[nx][ny]=x;
+				v[nx+1][ny]=y;
+				lk[nx][ny]=1;
+				e[x][y]=e[y][x]=1;
+			}else if(s[0]=='H'){
+				scanf("%d%d",&x,&y);
+				v[nx][ny]=x;
+				v[nx][ny+1]=y;
+				lk[nx][ny]=2;
+				e[x][y]=e[y][x]=1;
+			}else if(s[0]=='S'){
+				scanf("%d",&x);
+				v[nx][ny]=x;
+			}
+		}
+		an=get();
+		for(x=1;x<=6;x++)for(y=1;y<=6;y++)if(!e[x][y])
+			for(i=1;i<=5;i++)for(j=1;j<=5;j++)if(o=lk[i][j]){
+				v1=v[i][j];v2=v[i+dx[o]][j+dy[o]];
+				v[i][j]=x;v[i+dx[o]][j+dy[o]]=y;
+				an=max(an,get());
+				v[i][j]=v1;v[i+dx[o]][j+dy[o]]=v2;
+			}
+		printf("Case %d: %d\n",ca,an);
+	}
+}
+~~~
+
+# [Inspectors](http://codeforces.com/gym/100641/attachments)
+
+## Nisiyama
+
+~~~ { .cpp }
+#include <bits/stdc++.h>
+
+const int MAXN = 110;
+const int INF = 1E9;
+
+struct kuhn_munkres {
+
+	int n, w[MAXN][MAXN];  
+
+	int lx[MAXN], ly[MAXN], match[MAXN], way[MAXN], slack[MAXN];
+	bool used[MAXN];
+
+	void hungary(int x) {
+		match[0] = x; 
+		int j0 = 0;
+		std::fill (slack, slack + n + 1, INF);
+		std::fill (used, used + n + 1, false);
+		do {
+			used[j0] = true;
+			int i0 = match[j0], delta = INF, j1 = 0;
+			for (int j = 1; j <= n; ++j) 
+				if (used[j] == false) {
+					int cur = -w[i0][j] - lx[i0] - ly[j];
+					if (cur < slack[j]) {
+						slack[j] = cur;
+						way[j] = j0;
+					}
+					if (slack[j] < delta) {
+						delta = slack[j];
+						j1 = j;
+					}
+				}
+			for (int j = 0; j <= n; ++j) {
+				if (used[j]) {
+					lx[match[j]] += delta;
+					ly[j] -= delta;
+				}
+				else slack[j] -= delta;
+			}
+			j0 = j1;
+		} while (match[j0] != 0);
+		do {
+			int j1 = way[j0];
+			match[j0] = match[j1];
+			j0 = j1;
+		} while (j0);
+	}
+
+	int solve() {
+		for (int i = 1; i <= n; ++i)
+			match[i] = lx[i] = ly[i] = way[i] = 0;
+		for (int i = 1; i <= n; ++i) hungary (i);
+		int sum = 0;
+		for (int i = 1; i <= n; ++i) sum += w[match[i]][i];
+		return sum;
+	}
+
+};
+
+kuhn_munkres _k;
+
+int main () {
+	int T;
+	scanf ("%d", &T);
+	for (int t = 0; t < T; ++t) {
+		scanf ("%d", &_k.n);
+		for (int i = 1; i <= _k.n; ++i)
+			for (int j = i + 1; j <= _k.n; ++j) {
+				scanf ("%d", &_k.w[i][j]);
+				_k.w[j][i] = _k.w[i][j] = -_k.w[i][j];
+			}
+		for (int i = 1; i <= _k.n; ++i)
+			_k.w[i][i] = -INF;
+		printf ("Case %d: %d\n", t + 1, -_k.solve ());
+	}
+}
+~~~
+
+# [Path of Least Persistence](http://codeforces.com/gym/100641/attachments)
+
+# [Speed Skills](http://codeforces.com/gym/100641/attachments)
+
+## Nisiyama
+
+~~~ { .cpp }
+#include <bits/stdc++.h>
+
+const long double EPS = 1E-12;
+
+long long L, S, D, N;
+long long l[110], s[110];
+
+long double loc;
+long long spd;
+long double ll[110];
+int test = 0;
+
+int main () {
+	while (scanf ("%lld%lld%lld%lld", &L, &S, &D, &N) == 4) {
+		if (L == 0 && S == 0 && D == 0 && N == 0) break;
+		loc = L;
+		spd = S;
+		for (int i = 0; i < N; ++i) {
+			scanf ("%lld%lld", &l[i], &s[i]);
+			ll[i] = l[i];
+		}
+		long long sp = spd, spc = 1;
+		for (int i = 0; i < N; ++i) {
+			if (ll[i] + EPS >= loc - 1 && ll[i] <= loc + EPS) {
+				sp += s[i]; 
+				++spc;
+			}
+		}
+		spd = sp / spc;
+		long long ans = 0;
+		while (true) {
+			long long mintick = 1E18;
+			for (int i = 0; i < N; ++i) {
+				long long cur = 1E18;
+				if (s[i] == spd) continue;
+				if (ll[i] + 1. + EPS > loc && ll[i] < loc + EPS)
+					cur = 1;
+				else if (ll[i] + 1. + EPS < loc && s[i] > spd) 
+					cur = (long long) ceil (4. * (loc - 1. - ll[i]) / (s[i] - spd) - EPS);
+				else if (ll[i] > loc + EPS && s[i] < spd)
+					cur = (long long) ceil (4. * (ll[i] - loc) / (spd - s[i]) - EPS);
+				if (mintick > cur) mintick = cur;
+			}
+			if (spd == 0 || mintick <= (long long) floor (4. * (long double) (D - loc) / spd) + EPS) {
+				long double nloc = loc + ((long double) mintick * spd / 4.);
+				long long sp = spd, spc = 1;
+				for (int i = 0; i < N; ++i) {
+					long double nll = ll[i] + ((long double) mintick * s[i] / 4.);
+					if (nll + EPS >= nloc - 1 && nll <= nloc + EPS) {
+						sp += s[i]; 
+						++spc;
+					}
+					ll[i] = nll;
+				}
+				spd = sp / spc;
+				loc = nloc;
+				ans += mintick;
+			} else {
+				long double tm = 4. * (D - loc) / spd;
+				printf ("Case %d: Anna reaches her destination at time %.4f at a speed of %lld\n", ++test, (double) (tm + ans) / 4., spd);
+				break;
+			}
+		}
+	}
+}
+~~~
+
+# [Watch, Man!](http://codeforces.com/gym/100641/attachments)
+
+##Aki
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const double eps = 1e-5;
+const double PI = acos(-1);
+int sgn(const double &x) {return x < -eps ? -1 : x > eps;}
+int cmp(const double &x, const double &y) {return sgn(x - y);}
+double sqr(const double &x) {return x * x;}
+struct point {
+	double x, y;
+	point() {x = y = 0;}
+	point (const double &x, const double &y) : x(x), y(y) {}
+	double norm() const {return sqrt(x * x + y * y);}
+	double norm2() const {return x * x + y * y;}
+	point unit() const {
+		double l = norm();
+		return point(x / l, y / l);
+	}
+	point rot90() const {return point(-y, x);}
+	point _rot90() const {return point(y, -x);}
+};
+point operator - (const point &a, const point &b) {
+	return point(a.x - b.x, a.y - b.y);
+}
+point operator + (const point &a, const point &b) {
+	return point(a.x + b.x, a.y + b.y);
+}
+point operator * (const point &a, double b) {
+	return point(a.x * b, a.y * b);
+}
+point operator / (const point &a, double b) {
+	return point(a.x / b, a.y / b);
+}
+double dot(const point &a, const point &b) {
+	return a.x * b.x + a.y * b.y;
+}
+double det(const point &a, const point &b) {
+	return a.x * b.y - a.y * b.x;
+}
+double dis(const point &a, const point &b) {return (b - a).norm();}
+struct line {
+	point s, t;
+	line (const point &s = point(), const point &t = point()) : s(s), t(t) {}
+	double length() const {return dis(s, t);}
+};
+bool point_on_line(const point &a, const line &b) {
+	return sgn(det(a - b.s, b.t - b.s)) == 0;
+}
+bool two_side(const point &a, const point &b, const line &c) {
+	return sgn(det(a - c.s, c.t - c.s)) * sgn(det(b - c.s, c.t - c.s)) < 0;
+}
+bool intersect_judgement(const line &a, const line &b) {
+	if (point_on_line(b.s, a) || point_on_line(b.t, a)) return true;
+	if (point_on_line(a.s, b) || point_on_line(a.t, b)) return true;
+	return two_side(a.s, a.t, b) && two_side(b.s, b.t, a);
+}
+point line_intersect(const line &a, const line &b) {
+	double s1 = det(a.t - a.s, b.s - a.s);
+	double s2 = det(a.t - a.s, b.t - a.s);
+	return (b.s * s2 - b.t * s1) / (s2 - s1);
+}
+double point_to_line(const point &a, const line &b) {
+	return fabs(det(b.t - b.s, a - b.s)) / dis(b.s, b.t);
+}
+point project_to_line(const point &a, const line &b) {
+	return b.s + (b.t - b.s) * (dot(a - b.s, b.t - b.s) / (b.t - b.s).norm2());
+}
+struct circle {
+	point c;
+	double r;
+	circle(point c = point(), double r = 0) : c(c), r(r) {}
+};
+pair<point, point> line_circle_intersect(const line &a, const circle &b) {
+	double x = sqrt(sqr(b.r) - sqr(point_to_line(b.c, a)));
+	return make_pair(project_to_line(b.c, a) + (a.s - a.t).unit() * x,
+					 project_to_line(b.c, a) - (a.s - a.t).unit() * x);
+}
+struct arc {
+	circle c;
+	point pl, pr;
+	arc() {}
+	arc(circle c, point pl, point pr) : c(c), pl(pl), pr(pr) {}
+};
+const int N = 205, INF = 1e9;
+int ax[N], ay[N], av[N];
+int gx[N], gy[N], gv[N];
+
+struct edge {
+	int f, to, r;
+};
+vector<edge> G[N];
+void ae(int u, int v, int f) {
+	G[u].push_back((edge) {f, v, (int) G[v].size()});
+	G[v].push_back((edge) {0, u, (int) G[u].size() - 1});
+}
+int S, T, d[N], st[N];
+int BFS() {
+	queue<int> q;
+	q.push(S);
+	for (int i = 1; i <= T; ++ i) d[i] = -1;
+	d[S] = 0;
+	while (!q.empty()) {
+		int p = q.front(); q.pop();
+		for (edge e : G[p]) {
+			if (e.f && d[e.to] == -1) {
+				d[e.to] = d[p] + 1;
+				q.push(e.to);
+			}
+		}
+	}
+	return d[T] != -1;
+}
+int DFS(int x, int flow) {
+	if (x == T) return flow;
+	int flow1 = flow;
+	for (int &i = st[x]; i < (int) G[x].size(); ++ i) {
+		edge &e = G[x][i];
+		if (e.f && d[e.to] == d[x] + 1) {
+			int add = DFS(e.to, min(flow, e.f));
+			flow -= add;
+			e.f -= add;
+			G[e.to][e.r].f += add;
+		}
+		if (flow == 0) return flow1 - flow;
+	}
+	return flow1 - flow;
+}
+int dinic() {
+	int res = 0;
+	while (BFS()) {
+		for (int i = 1; i <= T; ++ i) st[i] = 0;
+		res += DFS(S, INF);
+	}
+	return res;
+}
+
+int main() {
+	int n, a, g, zzz = 0;
+	while (scanf("%d%d%d", &n, &a, &g) == 3 && n + a + g) {
+		for (int i = 1; i <= a + g + 2; ++ i) G[i].clear();
+		vector<line> SS;
+		vector<arc> AA;
+		for (int i = 1; i <= n; ++ i) {
+			int t;
+			scanf("%d", &t);
+			vector<point> all;
+			vector<pair<int, pair<int, int>>> tonex;
+			for (int i = 0; i < t; ++ i) {
+				int x, y; char type[2];
+				scanf("%d%d", &x, &y);
+				all.push_back(point(x, y));
+				scanf("%s", type);
+				if (type[0] == 's') {
+					tonex.push_back(make_pair(0, make_pair(0, 0)));
+				}
+				else {
+					scanf("%d%d", &x, &y);
+					tonex.push_back(make_pair(1, make_pair(x, y)));
+				}
+			}
+			for (int i = 0; i < t; ++ i) {
+				point p1 = all[i], p2 = all[(i + 1) % t];
+				if (tonex[i].first == 0) {
+					SS.push_back(line(p1, p2));
+				}
+				else {
+					int dx = tonex[i].second.first;
+					int dy = tonex[i].second.second;
+					point mid = (p1 + p2) / 2.0;
+					line L1 = line(mid, mid + (p2 - p1).rot90());
+					line L2 = line(p1, p1 + point(dx, dy).rot90());
+					point o = line_intersect(L1, L2);
+					double r = dis(o, p1);
+					point pm = p1 + point(dx, dy);
+					if (sgn(det(pm - o, p1 - o)) < 0) swap(p1, p2);
+					AA.push_back(arc(circle(o, r), p1, p2));
+				}
+			}
+		}
+		S = a + g + 1;
+		T = a + g + 2;
+		int full = 0;
+		for (int i = 1; i <= a; ++ i) {
+			scanf("%d%d%d", &ax[i], &ay[i], &av[i]);
+			ae(S, i, av[i]);
+			full += av[i];
+		}
+		for (int i = 1; i <= g; ++ i) {
+			scanf("%d%d%d", &gx[i], &gy[i], &gv[i]);
+			ae(a + i, T, gv[i]);
+		}
+		for (int i = 1; i <= a; ++ i) {
+			for (int j = 1; j <= g; ++ j) {
+				point p1 = point(ax[i], ay[i]);
+				point p2 = point(gx[j], gy[j]);
+				bool gg = 0;
+				for (auto l : SS) {
+					if (!intersect_judgement(l, line(p1, p2))) continue;
+					point p = line_intersect(l, line(p1, p2));
+					if (dot(p - p1, p - p2) <= 0 && dot(p - l.s, p - l.t) <= 0) {
+						gg = 1;
+						break;
+					}
+				}
+				if (gg) continue;
+				//printf("A%d G%d\n", i, j);
+				for (auto x : AA) {
+					circle c = x.c;
+					point pl = x.pl, pr = x.pr;
+					if (point_to_line(c.c, line(p1, p2)) <= c.r) {
+						point q1, q2;
+						tie(q1, q2) = line_circle_intersect(line(p1, p2), c);
+						vector<point> qq = {q1, q2};
+						for (point q : qq) {
+							if (sgn(dot(q - p1, q - p2)) <= 0) {
+								if (det(pr - c.c, pl - c.c) > 0) {
+									if (sgn(det(pr - c.c, q - c.c)) >= 0 && sgn(det(q - c.c, pl - c.c)) >= 0) gg = 1;
+								}
+								else {
+									if (sgn(det(pl - c.c, q - c.c)) < 0 || sgn(det(q - c.c, pr - c.c)) < 0) gg = 1;
+								}
+							}
+						}
+					}
+					if (gg) break;
+				}
+				if (gg) continue;
+				ae(i, a + j, 1);
+			}
+		}
+		int ans = dinic();
+		printf("Case %d: %s\n", ++ zzz, (ans == full ? "Yes" : "No"));
+	}
+}
+~~~
