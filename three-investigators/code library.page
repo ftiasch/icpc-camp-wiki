@@ -1,0 +1,904 @@
+# Dynamic Programming
+
+# Data Structure
+
+## K-Dimensional Tree
+
+skywalkert's code
+
+~~~{.cpp}
+int t, n, m, que[maxn][3], pos[maxn], tot, ord[maxn];
+struct Node {
+	int fa, lch, rch;
+	int p[2], pMin[2], pMax[2];
+	int v, vMin, vPos, vTag;
+	void init(int _fa, int _p[2]) {
+		fa = _fa;
+		lch = rch = 0;
+		p[0] = pMin[0] = pMax[0] = _p[0];
+		p[1] = pMin[1] = pMax[1] = _p[1];
+		v = vMin = INF;
+		vTag = 0;
+	}
+	void upd(Node const &ch) {
+		pMin[0] > ch.pMin[0] && (pMin[0] = ch.pMin[0]);
+		pMin[1] > ch.pMin[1] && (pMin[1] = ch.pMin[1]);
+		pMax[0] < ch.pMax[0] && (pMax[0] = ch.pMax[0]);
+		pMax[1] < ch.pMax[1] && (pMax[1] = ch.pMax[1]);
+	}
+	void adt(int tag) {
+		v += tag;
+		vMin += tag;
+		vTag += tag;
+	}
+} tree[maxn];
+int kd_build(int L, int R, int o, int fa) {
+	int M = (L + R) >> 1;
+	nth_element(ord + L, ord + M, ord + R + 1, [&](int const &u, int const &v) {
+		return que[u][o] < que[v][o];
+	});
+	pos[ord[M]] = M;
+	tree[M].init(fa, que[ord[M]]);
+	if(L < M) {
+		tree[M].lch = kd_build(L, M - 1, o ^ 1, M);
+		tree[M].upd(tree[tree[M].lch]);
+	}
+	if(M < R) {
+		tree[M].rch = kd_build(M + 1, R, o ^ 1, M);
+		tree[M].upd(tree[tree[M].rch]);
+	}
+	return M;
+}
+void kd_up(int rt) {
+	int lch = tree[rt].lch, rch = tree[rt].rch;
+	tree[rt].vMin = tree[rt].v;
+	tree[rt].vPos = rt;
+	if(tree[lch].vMin < tree[rt].vMin) {
+		tree[rt].vMin = tree[lch].vMin;
+		tree[rt].vPos = tree[lch].vPos;
+	}
+	if(tree[rch].vMin < tree[rt].vMin) {
+		tree[rt].vMin = tree[rch].vMin;
+		tree[rt].vPos = tree[rch].vPos;
+	}
+}
+void kd_down(int rt) {
+	if(tree[rt].vTag) {
+		if(tree[rt].lch)
+			tree[tree[rt].lch].adt(tree[rt].vTag);
+		if(tree[rt].rch)
+			tree[tree[rt].rch].adt(tree[rt].vTag);
+		tree[rt].vTag = 0;
+	}
+}
+void kd_access(int rt) {
+	if(tree[rt].fa)
+		kd_access(tree[rt].fa);
+	kd_down(rt);
+}
+void kd_set(int rt, int v) {
+	kd_access(rt);
+	tree[rt].v = v;
+	for( ; rt; rt = tree[rt].fa)
+		kd_up(rt);
+}
+void kd_upd(int rt, int pos, int v) {
+	if(tree[rt].pMax[0] <= pos && tree[rt].pMin[1] >= pos) {
+		tree[rt].adt(v);
+		return;
+	}
+	if(tree[rt].pMin[0] > pos || tree[rt].pMax[1] < pos)
+		return;
+	if(tree[rt].p[0] <= pos && tree[rt].p[1] >= pos)
+		tree[rt].v += v;
+	kd_down(rt);
+	if(tree[rt].lch)
+		kd_upd(tree[rt].lch, pos, v);
+	if(tree[rt].rch)
+		kd_upd(tree[rt].rch, pos, v);
+	kd_up(rt);
+}
+int main() {
+	scanf("%d%d", &n, &m);
+	for(int i = 1; i <= n; ++i) {
+		char op[3];
+		scanf("%s", op);
+		if(op[0] == 'C') {
+			scanf("%d%d%d", que[i] + 0, que[i] + 1, que[i] + 2);
+			ord[++tot] = i;
+		} else { // op[0] == 'G'
+			scanf("%d", que[i] + 0);
+			que[i][2] = 0;
+		}
+	}
+	int rt = kd_build(1, tot, 0, 0);
+	tree[0].v = tree[0].vMin = INF;
+	tree[0].vTag = 0;
+	for(int i = 1, msk = 0; i <= n; ++i)
+		if(que[i][2]) {
+			kd_set(pos[i], que[i][2]);
+		} else {
+			kd_upd(rt, que[i][0] ^ msk, -1);
+			for(cnt = 0; !tree[rt].vMin; kd_set(tree[rt].vPos, INF))
+				addOutput(ord[tree[rt].vPos]);
+			if(cnt)
+				printOutput();
+		}
+	return 0;
+}
+~~~
+
+## Split-Key Treap
+
+skywalkert's code
+
+~~~{.cpp}
+int tot;
+struct Node {
+	int fa, lch, rch;
+	int key, sz, len;
+	LL sum;
+} pool[maxn];
+inline int randL() {
+	return RAND_MAX == 0x7FFF ? rand() << 15 | rand() : rand();
+}
+inline int newNode(int val) {
+	pool[tot].key = randL();
+	pool[tot].sz = 1;
+	pool[tot].len = pool[tot].sum = val;
+	return tot++;
+}
+inline void upd(int rt) {
+	int lch = pool[rt].lch, rch = pool[rt].rch;
+	pool[rt].sz = pool[lch].sz + 1 + pool[rch].sz;
+	pool[rt].sum = pool[lch].sum + pool[rt].len + pool[rch].sum;
+}
+inline pair<int, int> split(int rt, int sz) {
+	if(!rt)
+		return make_pair(0, 0);
+	int lch = pool[rt].lch, rch = pool[rt].rch;
+	if(pool[lch].sz + 1 > sz) {
+		pool[lch].fa = 0;
+		pair<int, int> tr = split(lch, sz);
+		pool[rt].lch = lch = tr.second;
+		if(lch)
+			pool[lch].fa = rt;
+		upd(rt);
+		return make_pair(tr.first, rt);
+	} else {
+		pool[rch].fa = 0;
+		pair<int, int> tr = split(rch, sz - pool[lch].sz - 1);
+		pool[rt].rch = rch = tr.first;
+		if(rch)
+			pool[rch].fa = rt;
+		upd(rt);
+		return make_pair(rt, tr.second);
+	}
+}
+inline int merge(int x, int y) {
+	if(!x || !y)
+		return x | y;
+	else if(pool[x].key < pool[y].key) {
+		int rch = pool[x].rch;
+		pool[rch].fa = 0;
+		rch = merge(rch, y);
+		pool[x].rch = rch;
+		if(rch)
+			pool[rch].fa = x;
+		upd(x);
+		return x;
+	} else {
+		int lch = pool[y].lch;
+		pool[lch].fa = 0;
+		lch = merge(x, lch);
+		pool[y].lch = lch;
+		if(lch)
+			pool[lch].fa = y;
+		upd(y);
+		return y;
+	}
+}
+~~~
+
+# Graph Theory
+
+## Chu-Liu’s Algo for MSA
+
+???'s code
+
+~~~{.cpp}
+int n, m, pre[maxn], val[maxn], tim[maxn], idx[maxn];
+struct Edge {
+	int u, v, w;
+} e[maxm];
+int solve(int n, int rt) {
+	int ret = 0;
+	while(1) {
+		memset(val, 0x3f, n * sizeof(int));
+		val[rt] = 0;
+		for(int i = 0; i < m; ++i)
+			if(e[i].u != e[i].v && e[i].w < val[e[i].v])
+				val[e[i].v] = e[i].w, pre[e[i].v] = e[i].u;
+		for(int i = 0; i < n; ++i)
+			if(val[i] == INF) return INF;
+		memset(tim, -1, n * sizeof(int));
+		memset(idx, -1, n * sizeof(int));
+		int cnt = 0; tim[rt] = rt;
+		for(int i = 0, j; i < n; ++i) {
+			ret += val[i];
+			for(j = i; tim[j] == -1; j = pre[j]) tim[j] = i;
+			if(j != rt && tim[j] == i) {
+				for(int k = pre[j]; k != j; k = pre[k]) idx[k] = cnt;
+				idx[j] = cnt++;
+			}
+		}
+		if(!cnt) return ret;
+		for(int i = 0; i < n; ++i)
+			if(idx[i] == -1) idx[i] = cnt++;
+		for(int i = 0, j; i < m; ++i) {
+			j = e[i].v;
+			e[i].u = idx[e[i].u]; e[i].v = idx[e[i].v];
+			if(e[i].u != e[i].v) e[i].w -= val[j];
+		}
+		n = cnt; rt = idx[rt];
+	}
+}
+~~~
+
+## Dinic's algorithm for computing maximum flow
+
+skywalkert's code
+
+~~~{.cpp}
+const LL INF = 0x3f3f3f3f3f3f3f3fLL;
+int N, M, S, T, lev[maxn], lnk[maxn], cur[maxn];
+struct Edge {
+	int nxt, v;
+	LL w;
+} e[maxm << 1 | 1];
+void addEdge(int u, int v, LL w) {
+	e[M] = (Edge){lnk[u], v, w};
+	lnk[u] = M++;
+	e[M] = (Edge){lnk[v], u, 0};
+	lnk[v] = M++;
+}
+bool bfs() {
+	int L = 0, R = 0; static int que[maxn];
+	memset(lev, -1, N * sizeof(int));
+	lev[S] = 0, que[R++] = S;
+	while(L < R) {
+		int u = que[L++];
+		for(int it = lnk[u]; ~it; it = e[it].nxt)
+			if(e[it].w > 0 && lev[e[it].v] == -1) {
+				lev[e[it].v] = lev[u] + 1;
+				que[R++] = e[it].v;
+			}
+	}
+	return lev[T] != -1;
+}
+LL dfs(int u, LL upp) {
+	if(u == T)
+		return upp;
+	LL ret = 0, tmp;
+	for(int &it = cur[u]; ~it; it = e[it].nxt)
+		if(lev[e[it].v] == lev[u] + 1 && e[it].w > 0
+		&& (tmp = dfs(e[it].v, std::min(upp - ret, e[it].w))) > 0) {
+			e[it].w -= tmp;
+			e[it ^ 1].w += tmp;
+			if((ret += tmp) == upp)
+				break;
+		}
+	if(!ret)
+		lev[u] = -1;
+	return ret;
+} // N, M = 0, S = N-2, T = N-1, lnk[] = -1
+void dinic() {
+	int flow = 0, tmp;
+	while(bfs()) {
+		memcpy(cur, lnk, N * sizeof(int));
+		while((tmp = dfs(S, INF))) flow += tmp;
+	}
+}
+~~~
+
+## Primal-Dual Method for Minimum Cost Flow
+
+skywalkert's code
+
+~~~{.cpp}
+int N, M, S, T, lnk[maxn], dis[maxn], sum, flow, cost;
+struct Edge { int nxt, v, w, c; } e[maxm << 1 | 1];
+bool vis[maxn];
+void addEdge(int u, int v, int w, int c) {
+	e[M] = (Edge){lnk[u], v, w, c}; lnk[u] = M++;
+	e[M] = (Edge){lnk[v], u, 0, -c}; lnk[v] = M++;
+}
+bool SPFA() {
+	int L = 0, R = 0; static int que[maxn];
+	memset(dis, 0x3f, N * sizeof(int));
+	memset(vis, 0, N * sizeof(bool));
+	dis[T] = 0, vis[T] = 1, que[R++] = T;
+	while(L != R) {
+		int u = que[L++]; vis[u] = 0;
+		L == maxn && (L = 0);
+		for(int it = lnk[u]; it != -1; it = e[it].nxt) {
+			if(!e[it ^ 1].w) continue;
+			int v = e[it].v, tp = dis[u] + e[it ^ 1].c;
+			if(tp < dis[v]) {
+				dis[v] = tp;
+				if(!vis[v]) {
+					que[R++] = v; vis[v] = 1;
+					R == maxn && (R = 0);
+				}
+			}
+		}
+	}
+	if(dis[S] == INF) return 0;
+	for(int u = 0; u < N; ++u)
+		for(int it = lnk[u]; it != -1; it = e[it].nxt)
+			e[it].c += dis[e[it].v] - dis[u];
+	return sum += dis[S], 1;
+}
+bool Dijkstra() {
+	priority_queue<pair<int, int> > Q;
+	memset(dis, 0x3f, N * sizeof(int));
+	memset(vis, 0, N * sizeof(bool));
+	dis[T] = 0; Q.push(make_pair(-dis[T], T));
+	while(!Q.empty()) {
+		int u = Q.top().second; Q.pop();
+		if(vis[u]) continue;
+		vis[u] = 1;
+		for(int it = lnk[u]; it != -1; it = e[it].nxt) {
+			if(!e[it ^ 1].w) continue;
+			int v = e[it].v, tp = dis[u] + e[it ^ 1].c;
+			if(tp < dis[v]) {
+				dis[v] = tp;
+				Q.push(make_pair(-dis[v], v));
+			}
+		}
+	}
+	if(dis[S] == INF) return 0;
+	for(int u = 0; u < N; ++u)
+		for(int it = lnk[u]; it != -1; it = e[it].nxt)
+			e[it].c += dis[e[it].v] - dis[u];
+	return sum += dis[S], 1;
+}
+int dfs(int u, int upp) {
+	if(u == T) return upp;
+	vis[u] = 1;
+	int ret = 0, tmp;
+	for(int it = lnk[u]; it != -1; it = e[it].nxt)
+		if(!e[it].c && !vis[e[it].v] && e[it].w
+		&& (tmp = dfs(e[it].v, min(upp - ret, e[it].w))) > 0) {
+			e[it].w -= tmp; e[it ^ 1].w += tmp;
+			if((ret += tmp) == upp)
+				break;
+		}
+	return ret;
+}
+void minCost(int upp = ~0u >> 1) {
+	SPFA();
+	do while(upp > 0) {
+		memset(vis, 0, N * sizeof(bool));
+		int adt = dfs(S, upp);
+		if(!adt) break;
+		upp -= adt; flow += adt;
+		cost += adt * sum;
+	} while(Dijkstra() && sum < 0);
+}
+void solve() { // do sth...
+	N = n + 2, S = N - 2, T = N - 1;
+	M = sum = flow = cost = 0;
+	memset(lnk, -1, N * sizeof(int));
+}
+~~~
+
+## Kuhn–Munkres algorithm
+
+braveTester's code
+
+~~~{.cpp}
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int NMAX = 310, INF = ~0u>>1;
+
+int match[NMAX], slack[NMAX], pre[NMAX];
+int label[2][NMAX], weight[NMAX][NMAX];
+bool visit[NMAX];
+
+void augment(int root, int n)
+{
+	int x, y, delta, nxt, last;
+	memset(visit, 0, sizeof(visit));
+	fill(slack, slack + NMAX, INF);
+	match[last = 0] = root;
+	do{
+		visit[last] = true;
+		x = match[last];
+		delta = INF;
+		for(y = 1;y <= n;y += 1)
+		{
+			if(visit[y])
+				continue;
+			if(label[0][x] + label[1][y] - weight[x][y] < slack[y])
+			{
+				slack[y] = label[0][x] + label[1][y] - weight[x][y];
+				pre[y] = last;
+			}
+			if(slack[y] < delta)
+			{
+				delta = slack[y];
+				nxt = y;
+			}
+		}
+		for(y = 0;y <= n;y += 1)
+		{
+			if(visit[y])
+			{
+				label[0][match[y]] -= delta;
+				label[1][y] += delta;
+			}
+			else
+				slack[y] -= delta;
+		}
+		last = nxt;
+	}while(match[last]);
+	for(y = last;y;y = pre[y])
+		match[y] = match[pre[y]];
+}
+
+int KM(int n)
+{
+	int i, j, delta;
+	int res = 0;
+	for(i = 1;i <= n;i += 1)
+	{
+		delta = 0;
+		for(j = 1;j <= n;j += 1)
+			delta = max(delta, weight[i][j]);
+		label[0][i] = delta;
+		label[1][i] = 0;
+		match[i] = 0;
+	}
+	for(i = 1;i <= n;i += 1)
+		augment(i, n);
+	for(i = 1;i <= n;i += 1)
+		res += label[0][i] + label[1][i];
+	return res;
+}
+~~~
+
+## Stoer-Wagner Algo for global Cut
+
+???'s code
+
+~~~{.cpp}
+int StoerWagner(int n) {
+	int i, j, k, s, t, p = n, min, cut = inf, dist[maxn];
+	bool d[maxn], visit[maxn];
+	memset(d, false, sizeof(d)); // merged or not
+	while (--p > 0) {
+		memset(visit, false, sizeof(visit)); // in S or not
+		memset(dist, 0, sizeof(dist)); // sum of weights in/not in S
+		for (i = 0; d[i]; ++i);
+		visit[i] = true;
+		for (j = 0; j < n; j++)
+			if (!d[j] && !visit[j])
+				dist[j] = g[j][i];
+		t = i, s = i;
+		for (; i < n; i++) {
+			for (min = 0, k = i, j = 0; j < n; j++)
+				if (!d[j] && !visit[j] && dist[j] > min)
+					min = dist[k = j];
+			if (!min) break;
+			visit[k] = true;
+			for (j = 0; j < n; j++)
+				if (!d[j] && !visit[j])
+					dist[j] += g[j][k];
+			s = t; // last element
+			t = k; // current element
+		}
+		if (cut > dist[t]) cut = dist[t];
+		d[t] = true;
+		for (i = 0; i < n; i++)
+			if (!d[i]) {
+				g[s][i] += g[t][i];
+				g[i][s] += g[i][t];
+			}
+	}
+	return cut;
+}
+~~~
+
+# Mathematics
+
+## Factorization based on Primality Test
+
+skywalkert's code
+
+~~~{.cpp}
+const int maxp = 1e6 + 1, maxv = 25;
+int ptot, pr[maxp], d[maxp], cnt; LL n, p[maxc];
+bool miller_rabin(LL n) {
+	if(n == 2) return 1;
+	if(n < 2 || !(n & 1)) return 0;
+	LL s = 0, r = n - 1;
+	for( ; !(r & 1); r >>= 1, ++s);
+	for(int i = 0; pr[i] < n && pr[i] < maxv; ++i) {
+		LL cur = mod_pow(pr[i], r, n), nxt;
+		for(int j = 0; j < s; ++j) {
+			nxt = mod_mul(cur, cur, n);
+			if(nxt == 1 && cur != 1 && cur != n - 1) return 0;
+			cur = nxt;
+		}
+		if(cur != 1) return 0;
+	}
+	return 1;
+}
+LL pollard_rho(LL n) {
+	static LL seq[maxp];
+	while(1) {
+		LL x = rand() % n, y = x, c = rand() % n;
+		LL *px = seq, *py = seq, tim = 0, prd = 1;
+		while(1) {
+			*py++ = y = mod_add(mod_mul(y, y, n), c, n);
+			*py++ = y = mod_add(mod_mul(y, y, n), c, n);
+			if((x = *px++) == y) break;
+			LL tmp = prd;
+			prd = mod_mul(prd, abs(y - x), n);
+			if(!prd) return gcd(tmp, n);
+			if((++tim) == maxv) {
+				if((prd = gcd(prd, n)) > 1 && prd < n) return prd;
+				tim = 0;
+			}
+		}
+		if(tim && (prd = gcd(prd, n)) > 1 && prd < n) return prd;
+	}
+}
+void decompose(LL n) {
+	if(n < maxp) {
+		for( ; n > 1; p[cnt++] = d[n], n /= d[n]);
+	} else if(miller_rabin(n)) {
+		p[cnt++] = n;
+	} else {
+		LL fact = pollard_rho(n);
+		decompose(fact), decompose(n / fact);
+	}
+} // prepare pr(prime) and d(minimal factor)
+~~~
+
+## Fast Fourier transform in modulo any integer
+
+skywalkert's code
+
+~~~{.cpp}
+const int maxLen = 18, maxm = 1 << maxLen | 1;
+const LL maxv = (LL)1e13; // 1e14, 1e15
+const DB pi = acos(-1.0); // double is enough
+struct complex {
+	DB r, i;
+	complex() {}
+	complex(DB r, DB i) : r(r), i(i) {}
+	complex operator + (complex const &t) const { return complex(r + t.r, i + t.i); }
+	complex operator - (complex const &t) const { return complex(r - t.r, i - t.i); }
+	complex operator * (complex const &t) const { return complex(r * t.r - i * t.i, r * t.i + i * t.r); }
+	complex conj() const { return complex(r, -i); }
+} w[maxm];
+int mod, nlim, sp, msk;
+void FFT_init() {
+	for(int i = 0, ilim = 1 << maxLen; i < ilim; ++i) {
+		int j = i, k = ilim >> 1; // 2 pi / ilim
+		for( ; !(j & 1) && !(k & 1); j >>= 1, k >>= 1);
+		w[i] = complex(cos(pi / k * j), sin(pi / k * j));
+	}
+	nlim = std::min(maxv / (mod - 1) / (mod - 1), maxn - 1LL);
+	for(sp = 1; 1 << (sp << 1) < mod; ++sp);
+	msk = (1 << sp) - 1;
+}
+void FFT(int n, complex a[], int flag) {
+	static int bitLen = 0, bitRev[maxm] = {};
+	if(n != (1 << bitLen)) {
+		for(bitLen = 0; 1 << bitLen < n; ++bitLen);
+		for(int i = 1; i < n; ++i)
+			bitRev[i] = (bitRev[i >> 1] >> 1) | ((i & 1) << (bitLen - 1));
+	}
+	for(int i = 0; i < n; ++i)
+		if(i < bitRev[i])
+			std::swap(a[i], a[bitRev[i]]);
+	for(int i = 1, d = 1; d < n; ++i, d <<= 1)
+		for(int j = 0; j < n; j += d << 1)
+			for(int k = 0; k < d; ++k) {
+				complex &AL = a[j + k], &AH = a[j + k + d];
+				complex TP = w[k << (maxLen - i)] * AH;
+				AH = AL - TP, AL = AL + TP;
+			}
+	if(flag != -1)
+		return;
+	std::reverse(a + 1, a + n);
+	for(int i = 0; i < n; ++i) {
+		a[i].r /= n;
+		a[i].i /= n;
+	}
+}
+void polyMul(int aLen, int a[], int bLen, int b[], int c[]) { // c not in {a, b}
+	static complex A[maxm], B[maxm], C[maxm], D[maxm];
+	int len, cLen = aLen + bLen - 1; // optional: parameter
+	for(len = 1; len < aLen + bLen - 1; len <<= 1);
+	if(std::min(aLen, bLen) <= nlim) {
+		for(int i = 0; i < len; ++i)
+			A[i] = complex(i < aLen ? a[i] : 0, i < bLen ? b[i] : 0);
+		FFT(len, A, 1);
+		complex tr(0, -0.25);
+		for(int i = 0; i < len; ++i) {
+			int j = (len - i) & (len - 1);
+			B[i] = (A[i] * A[i] - (A[j] * A[j]).conj()) * tr;
+		}
+		FFT(len, B, -1);
+		for(int i = 0; i < cLen; ++i) c[i] = (LL)(B[i].r + 0.5) % mod;
+		return;
+	} // if min(aLen, bLen) * mod <= maxv
+	for(int i = 0; i < len; ++i) {
+		A[i] = i < aLen ? complex(a[i] & msk, a[i] >> sp) : complex(0, 0);
+		B[i] = i < bLen ? complex(b[i] & msk, b[i] >> sp) : complex(0, 0);
+	}
+	FFT(len, A, 1), FFT(len, B, 1);
+	complex trL(0.5, 0), trH(0, -0.5), tr(0, 1);
+	for(int i = 0; i < len; ++i) {
+		int j = (len - i) & (len - 1);
+		complex AL = (A[i] + A[j].conj()) * trL;
+		complex AH = (A[i] - A[j].conj()) * trH;
+		complex BL = (B[i] + B[j].conj()) * trL;
+		complex BH = (B[i] - B[j].conj()) * trH;
+		C[i] = AL * (BL + BH * tr);
+		D[i] = AH * (BL + BH * tr);
+	}
+	FFT(len, C, -1), FFT(len, D, -1);
+	for(int i = 0; i < cLen; ++i) {
+		int v11 = (LL)(C[i].r + 0.5) % mod, v12 = (LL)(C[i].i + 0.5) % mod;
+		int v21 = (LL)(D[i].r + 0.5) % mod, v22 = (LL)(D[i].i + 0.5) % mod;
+		c[i] = (((((LL)v22 << sp) + v12 + v21) << sp) + v11) % mod;
+	}
+}
+~~~
+
+# String
+
+## Suffix automaton
+
+chitanda's code
+
+~~~{.cpp}
+int tot, root, last, par[maxn * 2], go[maxn * 2][27], val[maxn * 2];
+//last = root = tot = 1 maxn为最大字符数
+void extend(int w){
+	int p = last;
+	int np = ++tot; val[np] = val[p] + 1;
+	while(p && !go[p][w]) go[p][w] = np, p = par[p];
+	if(!p) par[np] = root;
+	else{
+		int q = go[p][w];
+		if(val[p] + 1 == val[q]) par[np] = q;
+		else{
+			int nq = ++tot; val[nq] = val[p] + 1;
+			memcpy(go[nq], go[q], sizeof(go[q]));
+			par[nq] = par[q];
+			par[q] = nq;
+			par[np] = nq;
+			while(p && go[p][w] == q) go[p][w] = nq, p = par[p];
+		}
+	}
+	last = np;
+}
+~~~
+
+## Generalized suffix automaton
+
+chitanda's code
+
+~~~{.cpp}
+int tot, root, last, par[maxn * 2], go[maxn * 2][27], val[maxn * 2];
+//root = last = tot = 1
+void extend(int w){
+	int p = last, np;
+	if(!go[p][w]){
+		np = ++tot; val[np] = val[p] + 1;
+		while(p && !go[p][w]) go[p][w] = np, p = par[p];
+		if(!p) par[np] = root;
+		else{
+			int q = go[p][w];
+			if(val[p] + 1 == val[q]) par[np] = q;
+			else{
+				int nq = ++tot; val[nq] = val[p] + 1;
+				memcpy(go[nq], go[q], sizeof(go[q]));
+				par[nq] = par[q];
+				par[q] = par[np] = nq;
+				while(p && go[p][w] == q) go[p][w] = nq, p = par[p];
+			}
+		}
+		last = np;
+	}else{
+		int q = go[p][w];
+		if(val[p] + 1 == val[q]) last = q;
+		else{
+			int nq = ++tot; val[nq] = val[p] + 1;
+			memcpy(go[nq], go[q], sizeof(go[q]));
+			par[nq] = par[q];
+			par[q] = nq;
+			while(p && go[p][w] == q) go[p][w] = nq, p = par[p];
+			last = nq;
+		}
+	}
+}
+~~~
+
+## Suffix Tree
+
+skywalkert's code
+
+~~~{.cpp}
+int len, tot, rt, curP, curC, curL, rem;
+struct Node {
+	int L, R, fail, nxt[maxc + 1];
+} e[maxn << 1];
+char buf[maxn];
+int newNode(int L, int R) { // [L, R)
+	e[tot] = (Node){L, R, rt}; // nxt = {}
+	return tot++;
+}
+void append(char ch) {
+	buf[len++] = ch, ++rem;
+	for(int las = 0; rem; --rem) {
+		!curL && (curC = len - 1);
+		int p = e[curP].nxt[buf[curC] - 'a'];
+		while(p && curL >= e[p].R - e[p].L) {
+			curC += e[p].R - e[p].L;
+			curL -= e[p].R - e[p].L;
+			curP = p;
+			p = e[curP].nxt[buf[curC] - 'a'];
+		}
+		if(!p) {
+			e[curP].nxt[buf[curC] - 'a'] = newNode(len - 1, maxn);
+			last && (e[last].fail = curP);
+			last = curP;
+		} else if(buf[e[p].L + curL] == ch) {
+			++curL;
+			last && (e[last].fail = curP);
+			break;
+		} else {
+			int u = newNode(e[p].L, e[p].L + curL);
+			int v = newNode(len - 1, maxn);
+			e[curP].nxt[buf[curC] - 'a'] = u;
+			e[p].L += curL;
+			e[u].nxt[buf[e[p].L] - 'a'] = p;
+			e[u].nxt[ch - 'a'] = v;
+			last && (e[last].fail = u);
+			last = u;
+		}
+		curP == rt && curL ? (--curL, ++curC) : (curP = e[curP].fail);
+	}
+} // curP = rt = Node(0, 0), e[rt].fail = rt, curL = 0, append('$')
+~~~
+
+## Palindromic Tree
+
+skywalkert's code
+
+~~~{.cpp}
+int n, tot, cur, len[maxn], f[maxn], nxt[maxn][maxc], half[maxn];
+char buf[maxn];
+int newNode(int length, int fail = 0) {
+	len[tot] = length;
+	f[tot] = fail;
+	memset(nxt[tot], 0, sizeof nxt[0]);
+	return tot++;
+}
+void init() {
+	n = tot = 0;
+	cur = newNode(0);
+	f[cur] = newNode(-1, cur);
+	buf[0] = '\0';
+}
+void append(char ch) {
+	int o = (buf[++n] = ch) - 'a';
+	for( ; buf[n - len[cur] - 1] != buf[n]; cur = f[cur]);
+	if(!nxt[cur][o]) {
+		int p = newNode(len[cur] + 2), q = f[cur];
+		for( ; buf[n - len[q] - 1] != buf[n]; q = f[q]);
+		f[p] = nxt[q][o];
+		for(q = half[cur]; buf[n - len[q] - 1] != buf[n]; q = f[q]);
+		for(q = nxt[q][o]; len[q] > len[p] / 2; q = f[q]);
+		half[p] = q;
+		nxt[cur][o] = p;
+	}
+	cur = nxt[cur][o];
+}
+~~~
+
+# Geometry
+
+## Circle intersection (decesion version)
+
+braveTester's code
+
+~~~{.cpp}
+const int NMAX = 110;
+const double eps = 1e-8;
+
+struct Circle
+{
+	double x;
+	double y;
+	double r;
+};
+
+int N;
+Circle cir[NMAX];
+
+inline double sqr(const double x)
+{
+	return x * x;
+}
+
+int check(double x)
+{
+	int i;
+	int posB, posH;
+	double delta, b, h, dist2;
+	double bMax = -500000, hMin = 500000;
+	for(i = 1;i <= N;i += 1)
+	{
+		delta = sqrt(sqr(cir[i].r) - sqr(cir[i].x - x));
+		b = cir[i].y - delta;
+		h = cir[i].y + delta;
+		if(b > bMax + eps)
+		{
+			bMax = b;
+			posB = i;
+		}
+		if(h + eps < hMin)
+		{
+			hMin = h;
+			posH = i;
+		}
+	}
+	if(hMin - bMax >= eps)
+		return 0;
+	if((dist2 = sqr(cir[posH].x - cir[posB].x) + sqr(cir[posH].y - cir[posB].y)) - sqr(cir[posH].r + cir[posB].r) > -eps)
+		return -1;
+	return ((sqr(cir[posB].r) + dist2 - sqr(cir[posH].r)) * cir[posH].x + (sqr(cir[posH].r) + dist2 - sqr(cir[posB].r)) * cir[posB].x) / (2 * dist2) + eps > x?1:2;
+}
+
+bool solve()
+{
+	int i, res;
+	double l = -500000, r = 500000, mid;
+	for(i = 1;i <= N;i += 1)
+	{
+		l = max(l, cir[i].x - cir[i].r);
+		r = min(r, cir[i].x + cir[i].r);
+	}
+	if(l - r > eps)
+		return false;
+	for(i = 1;i <= 30;i += 1)
+	{
+		mid = (l + r) / 2;
+		res = check(mid);
+		if(!res)
+			return true;
+		if(res < 0)
+			return false;
+		if(res == 1)
+			l = mid;
+		else
+			r = mid;
+	}
+	return false;
+}
+~~~
+
+# Miscellaneous
