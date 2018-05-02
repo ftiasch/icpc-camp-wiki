@@ -1,25 +1,38 @@
-## A. Azrael
+A. Azrael
+---------
 
-## B. Brainy
+B. Brainy
+---------
 
-## C. Calendar
+C. Calendar
+-----------
 
-## D. Denominations
+D. Denominations
+----------------
 
-## E. Euclid
+E. Euclid
+---------
 
-## F. Flowers
+F. Flowers
+----------
 
-## G. Garden
+G. Garden
+---------
 
-## H. Hamilton
+H. Hamilton
+-----------
 
-## I. Invigilation
+I. Invigilation
+---------------
 
-## J. Joke
+J. Joke
+-------
 
-## K. Klothes
+K. Klothes
+----------
 
-## L. (Smurf)Land protection [TDJ]
+L. (Smurf)Land protection \[TDJ\]
+---------------------------------
 
-给出一个有向图，问有哪些点删去了会让SCC数量变多，对每个SCC随便找一个点为源跑Dominator Tree，割点一定是答案，再在反图里跑一遍，最后删掉这个源再做一遍tarjan来判断源是不是答案。
+给出一个有向图，问有哪些点删去了会让SCC数量变多，对每个SCC随便找一个点为源跑Dominator
+Tree，割点一定是答案，再在反图里跑一遍，最后删掉这个源再做一遍tarjan来判断源是不是答案。
