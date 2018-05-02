@@ -1,118 +1,119 @@
-# J. Stairs
+J. Stairs
+=========
 
 和前10项以及下标有关的递推，但是模数很小，暴力一轮模数然后矩乘。感觉自己神志恍惚，30行下了300个毒，查了一年。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long LL;
 LL MOD, dp[5000], trans[10];
 struct mat {
-	int a[10][10];
-	mat() {memset(a, 0, sizeof(a));}
-	mat(int) {
-		memset(a, 0, sizeof(a));
-		for (int i = 0; i < 10; ++ i) a[i][i] = 1;
-	}
+    int a[10][10];
+    mat() {memset(a, 0, sizeof(a));}
+    mat(int) {
+        memset(a, 0, sizeof(a));
+        for (int i = 0; i < 10; ++ i) a[i][i] = 1;
+    }
 };
 mat operator * (const mat &a, const mat &b) {
-	mat c = mat();
-	for (int i = 0; i < 10; ++ i) {
-		for (int j = 0; j < 10; ++ j) {
-			for (int k = 0; k < 10; ++ k) {
-				(c.a[i][j] += a.a[i][k] * b.a[k][j] % MOD) %= MOD;
-			}
-		}
-	}
-	return c;
+    mat c = mat();
+    for (int i = 0; i < 10; ++ i) {
+        for (int j = 0; j < 10; ++ j) {
+            for (int k = 0; k < 10; ++ k) {
+                (c.a[i][j] += a.a[i][k] * b.a[k][j] % MOD) %= MOD;
+            }
+        }
+    }
+    return c;
 }
 mat mpow(mat x, LL n) {
-	mat res = mat(1);
-	while (n) {
-		if (n & 1) res = res * x;
-		x = x * x;
-		n >>= 1;
-	}
-	return res;
+    mat res = mat(1);
+    while (n) {
+        if (n & 1) res = res * x;
+        x = x * x;
+        n >>= 1;
+    }
+    return res;
 }
 LL work(LL n, vector<int> good, LL MOD) {
 /*static LL duipai[1000000];
 duipai[0] = 1;
 for (int i = 1; i <= n; ++ i) {
-	duipai[i] = 0;
-	for (int j : good) if (i >= j) (duipai[i] += duipai[i - j] * (i - j + 1) % MOD) %= MOD;
+    duipai[i] = 0;
+    for (int j : good) if (i >= j) (duipai[i] += duipai[i - j] * (i - j + 1) % MOD) %= MOD;
 }*/
-	::MOD = MOD;
-	mat tr = mat(), a0 = mat();
-	for (int st = 0; st < 10; ++ st) {
-		for (int i = 0; i < st; ++ i) dp[i] = 0;
-		dp[st] = 1;
-		for (int i = st + 1; i < MOD + 10; ++ i) {
-			dp[i] = 0;
-			for (int j : good) if (i >= j && i - j < MOD) {
-				(dp[i] += dp[i - j] * (i - j + 1 + MOD) % MOD) %= MOD;
-			}
-		}
-		for (int i = 0; i < 10; ++ i) {
-			tr.a[i][st] = dp[MOD + i];
-		}
-	}
-	a0.a[0][0] = 1;
-	LL cnt = n / MOD;
-	tr = mpow(tr, cnt) * a0;
-	for (int i = 0; i < 10; ++ i) {
-		dp[i] = tr.a[i][0];
-	}
-	for (int i = 0; i <= n - cnt * MOD; ++ i) {
-		if (i >= 10) dp[i] = 0;
-		for (int j : good) if (i >= j) {
-			(dp[i] += dp[i - j] * (i - j + 1) % MOD) %= MOD;
-		}
-	}
+    ::MOD = MOD;
+    mat tr = mat(), a0 = mat();
+    for (int st = 0; st < 10; ++ st) {
+        for (int i = 0; i < st; ++ i) dp[i] = 0;
+        dp[st] = 1;
+        for (int i = st + 1; i < MOD + 10; ++ i) {
+            dp[i] = 0;
+            for (int j : good) if (i >= j && i - j < MOD) {
+                (dp[i] += dp[i - j] * (i - j + 1 + MOD) % MOD) %= MOD;
+            }
+        }
+        for (int i = 0; i < 10; ++ i) {
+            tr.a[i][st] = dp[MOD + i];
+        }
+    }
+    a0.a[0][0] = 1;
+    LL cnt = n / MOD;
+    tr = mpow(tr, cnt) * a0;
+    for (int i = 0; i < 10; ++ i) {
+        dp[i] = tr.a[i][0];
+    }
+    for (int i = 0; i <= n - cnt * MOD; ++ i) {
+        if (i >= 10) dp[i] = 0;
+        for (int j : good) if (i >= j) {
+            (dp[i] += dp[i - j] * (i - j + 1) % MOD) %= MOD;
+        }
+    }
 //assert(dp[n - cnt * MOD] == duipai[n]);
-	return dp[n - cnt * MOD];
+    return dp[n - cnt * MOD];
 }
 LL exgcd(LL a, LL b, LL &x, LL &y) {
-	if (!b) x = 1, y = 0; else exgcd(b, a % b, y, x), y -= a / b * x;
+    if (!b) x = 1, y = 0; else exgcd(b, a % b, y, x), y -= a / b * x;
 }
 LL CRT(vector<LL> a, vector<LL> m) {
-	int n = (int) a.size();
-	LL M = 1, W, x, y, an = 0;
-	for (int i = 0; i < n; ++ i) M *= m[i];
-	for (int i = 0; i < n; ++ i) {
-		W = M / m[i];
-		exgcd(W, m[i], x, y);
-		an = (an + x * W % M * a[i]) % M;
-	}
-	return (an + M) % M;
+    int n = (int) a.size();
+    LL M = 1, W, x, y, an = 0;
+    for (int i = 0; i < n; ++ i) M *= m[i];
+    for (int i = 0; i < n; ++ i) {
+        W = M / m[i];
+        exgcd(W, m[i], x, y);
+        an = (an + x * W % M * a[i]) % M;
+    }
+    return (an + M) % M;
 }
 LL npow(LL x, LL n, LL MOD) {
-	LL res = 1;
-	while (n) {
-		if (n & 1) res = res * x % MOD;
-		n >>= 1;
-		x = x * x % MOD;
-	}
-	return res;
+    LL res = 1;
+    while (n) {
+        if (n & 1) res = res * x % MOD;
+        n >>= 1;
+        x = x * x % MOD;
+    }
+    return res;
 }
 int main() {
-	freopen("stairs.in", "r", stdin);
-	freopen("stairs.out", "w", stdout);
-	vector<LL> mod = {90LL, 3607LL, 3803LL};
-	LL n, m, k;
-	cin >> n >> m >> k;
-	vector<int> good;
-	for (int i = 0; i < k; ++ i) {
-		int x;
-		scanf("%d", &x);
-		good.push_back(x);
-	}
-	vector<LL> res;
-	for (LL MOD : mod) {
-		res.push_back(work(n, good, MOD));
-	}
-	LL ans = CRT(res, mod);
-	ans = npow(m, ans, 1234567891LL);
-	cout << ans << endl;
+    freopen("stairs.in", "r", stdin);
+    freopen("stairs.out", "w", stdout);
+    vector<LL> mod = {90LL, 3607LL, 3803LL};
+    LL n, m, k;
+    cin >> n >> m >> k;
+    vector<int> good;
+    for (int i = 0; i < k; ++ i) {
+        int x;
+        scanf("%d", &x);
+        good.push_back(x);
+    }
+    vector<LL> res;
+    for (LL MOD : mod) {
+        res.push_back(work(n, good, MOD));
+    }
+    LL ans = CRT(res, mod);
+    ans = npow(m, ans, 1234567891LL);
+    cout << ans << endl;
 }
-~~~
+```
