@@ -1,31 +1,52 @@
-\section{SkyDec}
-\begin{itemize}
-\item log 段 border
-\item lyndon 分解
-\item exkmp/最小表示 注释+检查
-\item SAM + 建后缀树
-\item FFT / NTT
-\item gay 洲筛
-\item ZZX simplex / 实数 simplex
-\end{itemize}
-\section{Syloviaely}
-\begin{itemize}
-\item manacher (done)
-\item SA/UKK 封装 (done)
-\item 研究一下 UKK
-\item 带花树/dinic  (done)
-\item 最小树形图 (done)
-\item dominator tree (done)
-\item 2sat (done)
-\item 二维凸包的快速操作
-\item 三维凸包
-\item $n^2logn$ 判断简单多边形是否（严格）相交 (done)
-\item $nlogn$ 判断简单多边形和边是否严格相交 (done)
-\end{itemize}
-\section{shanquan2}
-\begin{itemize}
-\item KM (done)
-\item Pollard-rho + 快速乘 (done)
-\item 检查板子
-\end{itemize}
+SkyDec
+======
+
+-   log 段 border
+
+-   lyndon 分解
+
+-   exkmp/最小表示 注释+检查
+
+-   SAM + 建后缀树
+
+-   FFT / NTT
+
+-   gay 洲筛
+
+-   ZZX simplex / 实数 simplex
+
+Syloviaely
+==========
+
+-   manacher (done)
+
+-   SA/UKK 封装 (done)
+
+-   研究一下 UKK
+
+-   带花树/dinic (done)
+
+-   最小树形图 (done)
+
+-   dominator tree (done)
+
+-   2sat (done)
+
+-   二维凸包的快速操作
+
+-   三维凸包
+
+-   $n^2logn$ 判断简单多边形是否（严格）相交 (done)
+
+-   $nlogn$ 判断简单多边形和边是否严格相交 (done)
+
+shanquan2
+=========
+
+-   KM (done)
+
+-   Pollard-rho + 快速乘 (done)
+
+-   检查板子
+
 
