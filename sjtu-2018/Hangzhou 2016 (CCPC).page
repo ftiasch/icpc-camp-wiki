@@ -1,6 +1,7 @@
-G - 正解是贪心，不过我的线段树写得也是对的，被卡了常数，O3没用，超级读入优化是错的，把读入优化去掉再卡常数就过了
+G -
+正解是贪心，不过我的线段树写得也是对的，被卡了常数，O3没用，超级读入优化是错的，把读入优化去掉再卡常数就过了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define fr(i,n) for(int i=1;i<=n;i++)
 #define f0(i,n) for(int i=0;i<=n;i++)
@@ -10,89 +11,89 @@ char s[2222];
 int T,n,m,x,y,an,ca,nv,oo,cnt,a[N],f[N],_f[N],V0[N],V1[N],V2[N];
 int V[N],Vk[N];
 void bd(int k,int l,int r){
-	if(l==r){
-		V0[k]=f[l]+l/3;
-		V1[k]=f[l]+(l+1)/3;
-		V2[k]=f[l]+(l+2)/3;
-		return;
-	}
-	int md=l+r>>1;
-	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
-	V0[k]=min(V0[k<<1],V0[k<<1|1]);
-	V1[k]=min(V1[k<<1],V1[k<<1|1]);
-	V2[k]=min(V2[k<<1],V2[k<<1|1]);
+    if(l==r){
+        V0[k]=f[l]+l/3;
+        V1[k]=f[l]+(l+1)/3;
+        V2[k]=f[l]+(l+2)/3;
+        return;
+    }
+    int md=l+r>>1;
+    bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+    V0[k]=min(V0[k<<1],V0[k<<1|1]);
+    V1[k]=min(V1[k<<1],V1[k<<1|1]);
+    V2[k]=min(V2[k<<1],V2[k<<1|1]);
 }
 void qu0(int k,int l,int r){
-	if(V0[k]>=oo)return;
-	if(x<=l&&r<=y){oo=V0[k];return;}
-	int md=l+r>>1;
-	if(x<=md)qu0(k<<1,l,md);
-	if(y>md)qu0(k<<1|1,md+1,r);
+    if(V0[k]>=oo)return;
+    if(x<=l&&r<=y){oo=V0[k];return;}
+    int md=l+r>>1;
+    if(x<=md)qu0(k<<1,l,md);
+    if(y>md)qu0(k<<1|1,md+1,r);
 }
 void qu1(int k,int l,int r){
-	if(V1[k]>=oo)return;
-	if(x<=l&&r<=y){oo=V1[k];return;}
-	int md=l+r>>1;
-	if(x<=md)qu1(k<<1,l,md);
-	if(y>md)qu1(k<<1|1,md+1,r);
+    if(V1[k]>=oo)return;
+    if(x<=l&&r<=y){oo=V1[k];return;}
+    int md=l+r>>1;
+    if(x<=md)qu1(k<<1,l,md);
+    if(y>md)qu1(k<<1|1,md+1,r);
 }
 void qu2(int k,int l,int r){
-	if(V2[k]>=oo)return;
-	if(x<=l&&r<=y){oo=V2[k];return;}
-	int md=l+r>>1;
-	if(x<=md)qu2(k<<1,l,md);
-	if(y>md)qu2(k<<1|1,md+1,r);
+    if(V2[k]>=oo)return;
+    if(x<=l&&r<=y){oo=V2[k];return;}
+    int md=l+r>>1;
+    if(x<=md)qu2(k<<1,l,md);
+    if(y>md)qu2(k<<1|1,md+1,r);
 }
 int main(){
-	scanf("%d",&T);
+    scanf("%d",&T);
 
-	for(;T--;){
-		scanf("%d%d",&n,&m);
-		fr(i,m)a[i]=0;
-		for(int i=n;i;i--){
-			scanf("%s",s+1);
-			fr(j,m)
-				if(!a[j]&&s[j]=='*')a[j]=i;
-		}
-		n+=2;
-		f0(i,n)f[i]=1e9;
-		for(int i=a[1];i<=n;i++)f[i]=0;
-		for(int i=2;i<=m;i++){
-			bd(1,0,n);
-			V[0]=f[0];
-			fr(j,n)V[j]=min(V[j-1],f[j]);
-			Vk[n]=f[n]+(n+1)/2;
-			for(int j=n-1;~j;j--)Vk[j]=min(Vk[j+1],f[j]+(j+1)/2);
-			f0(j,n)_f[j]=1e9,f[j]=1e9;
-			f0(j,a[i]){
-				x=0;y=(a[i]-j+1)/2;
-				nv=V[y]+(a[i]-j+1)/2;
-				x=max(2*(a[i]-j)-1,0);y=n;
-				if(x<=y)nv=min(nv,Vk[x]);
-				x=(a[i]-j+1)/2+1;
-				y=min(2*(a[i]-j)-2,n);
-				if((a[i]-j)%3==0){
-					oo=1e8;qu2(1,0,n);
-					if(x<=y)nv=min(nv,oo+(a[i]-j)/3);
-				}
-				if((a[i]-j)%3==1){
-					oo=1e8;qu0(1,0,n);
-					if(x<=y)nv=min(nv,oo+(a[i]-j)/3+1);
-				}
-				if((a[i]-j)%3==2){
-					oo=1e8;qu1(1,0,n);
-					if(x<=y)nv=min(nv,oo+(a[i]-j)/3+1);
-				}
-				_f[j]=nv;
-			}
-			f[0]=_f[0];
-			fr(j,n)f[j]=min(f[j-1],_f[j]);
-		}
-		an=1e9;
-		f0(i,n)an=min(an,f[i]+(i+1)/2);
-		printf("Case #%d: %d\n",++ca,an);
-	}
+    for(;T--;){
+        scanf("%d%d",&n,&m);
+        fr(i,m)a[i]=0;
+        for(int i=n;i;i--){
+            scanf("%s",s+1);
+            fr(j,m)
+                if(!a[j]&&s[j]=='*')a[j]=i;
+        }
+        n+=2;
+        f0(i,n)f[i]=1e9;
+        for(int i=a[1];i<=n;i++)f[i]=0;
+        for(int i=2;i<=m;i++){
+            bd(1,0,n);
+            V[0]=f[0];
+            fr(j,n)V[j]=min(V[j-1],f[j]);
+            Vk[n]=f[n]+(n+1)/2;
+            for(int j=n-1;~j;j--)Vk[j]=min(Vk[j+1],f[j]+(j+1)/2);
+            f0(j,n)_f[j]=1e9,f[j]=1e9;
+            f0(j,a[i]){
+                x=0;y=(a[i]-j+1)/2;
+                nv=V[y]+(a[i]-j+1)/2;
+                x=max(2*(a[i]-j)-1,0);y=n;
+                if(x<=y)nv=min(nv,Vk[x]);
+                x=(a[i]-j+1)/2+1;
+                y=min(2*(a[i]-j)-2,n);
+                if((a[i]-j)%3==0){
+                    oo=1e8;qu2(1,0,n);
+                    if(x<=y)nv=min(nv,oo+(a[i]-j)/3);
+                }
+                if((a[i]-j)%3==1){
+                    oo=1e8;qu0(1,0,n);
+                    if(x<=y)nv=min(nv,oo+(a[i]-j)/3+1);
+                }
+                if((a[i]-j)%3==2){
+                    oo=1e8;qu1(1,0,n);
+                    if(x<=y)nv=min(nv,oo+(a[i]-j)/3+1);
+                }
+                _f[j]=nv;
+            }
+            f[0]=_f[0];
+            fr(j,n)f[j]=min(f[j-1],_f[j]);
+        }
+        an=1e9;
+        f0(i,n)an=min(an,f[i]+(i+1)/2);
+        printf("Case #%d: %d\n",++ca,an);
+    }
 }
-~~~
+```
 
 I - 解法也是对的TAT
