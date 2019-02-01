@@ -1,0 +1,38 @@
+#解体原因
+A题
+
+~~~cpp
+
+if (dp[i][j][1] < (ll)oo * oo) {
+    for (int k = 0; k < P; k++) {
+        update(dp[i | (1 << k)][k][1], dp[i][j][1] + dist[j][k]);
+    }
+}
+
+~~~
+
+写成
+
+~~~cpp
+
+if (dp[i][j][1] < (ll)oo * oo) {
+    update(dp[i | (1 << k)][k][1], dp[i][j][1] + dist[j][k]);
+}
+
+~~~
+
+愣是没检查出错.
+
+#启示
+
+1.以后不要手咸去开i，j，k这种全局变量，这样就可以避免此错误了。
+
+2.今后写代码注意力要更加集中。
+
+# 补题
+
+L(yzh)
+
+<h1 style="">[Access Denied](https://sjtuoj.weak.cat/problems/detail/10266/)</h1>
+
+
