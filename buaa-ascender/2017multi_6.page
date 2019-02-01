@@ -62,7 +62,7 @@ $$B\cos^{2}\varphi+2A\cos\theta \cos\varphi+B\cos^{2}\theta=0$$
 
 时间复杂度$O(1)$.
 
-另一种几何做法也可以推导出类似的结论。参见[L老师的高中生操作](2017 Multi-University Training Contest - Team 6#b.-mindis)
+另一种几何做法也可以推导出类似的结论。参见[L老师的高中生操作](2017%20Multi-University%20Training%20Contest%20-%20Team%206#b.-mindis)
 
 C. Inversion \[zmy\]
 ====================
