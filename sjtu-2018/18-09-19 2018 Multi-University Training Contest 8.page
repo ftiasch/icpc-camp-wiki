@@ -1,14 +1,20 @@
-# Source
+Source
+======
+
 [HDU](http://acm.hdu.edu.cn/showproblem.php?pid=6397)
 
-# Commitment
+Commitment
+==========
+
 B题卡精度。。
 
-# B. Pizza Hub
+B. Pizza Hub
+============
 
-## lzt
+lzt
+---
 
-~~~ {.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 
 #define cd const long double &
@@ -18,11 +24,11 @@ long double sqr (cd x) { return x * x; }
 long double msqrt (cd x) { return x <= 0 ? 0 : sqrtl (x); }
 
 struct point {
-	long double x, y;
-	explicit point (cd x = 0, cd y = 0) : x (x), y (y) {}
-	point rot (cd s, cd c) const {
-		return point (x * c - y * s, x * s + y * c);
-	}
+    long double x, y;
+    explicit point (cd x = 0, cd y = 0) : x (x), y (y) {}
+    point rot (cd s, cd c) const {
+        return point (x * c - y * s, x * s + y * c);
+    }
 };
 
 point operator + (cp a, cp b) { return point (a.x + b.x, a.y + b.y); }
@@ -38,122 +44,121 @@ point a, b, c;
 long double w;
 
 bool eval (long double m) {
-	point a = ::a, b = ::b, c = ::c;
-	if (dis (a, b) > 0) {
-		point A = point (), B;
-		if (dis2 (a, b) - m * m >= 0) B = point (m, msqrt (dis2 (a, b) - m * m));
-		else B = point (dis (a, b), 0);
-		point dir = (B - A) / dis (A, B);
-		if (dis (a, c) > 0) {
-			long double si = std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
-			long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
-			point C = dir.rot (si, co) * dis (a, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (a, c) > 0) {
-			long double si = -std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
-			long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
-			point C = dir.rot (si, co) * dis (a, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (b, c) > 0) {
-			long double si = std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
-			long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
-			point C = dir.rot (si, co) * dis (b, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (b, c) > 0) {
-			long double si = -std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
-			long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
-			point C = dir.rot (si, co) * dis (b, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-	}
-	std::swap (b, c);
-	if (dis (a, b) > 0) {
-		point A = point (), B;
-		if (dis2 (a, b) - m * m >= 0) B = point (m, msqrt (dis2 (a, b) - m * m));
-		else B = point (dis (a, b), 0);
-		point dir = (B - A) / dis (A, B);
-		if (dis (a, c) > 0) {
-			long double si = std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
-			long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
-			point C = dir.rot (si, co) * dis (a, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (a, c) > 0) {
-			long double si = -std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
-			long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
-			point C = dir.rot (si, co) * dis (a, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (b, c) > 0) {
-			long double si = std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
-			long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
-			point C = dir.rot (si, co) * dis (b, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (b, c) > 0) {
-			long double si = -std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
-			long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
-			point C = dir.rot (si, co) * dis (b, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-	}
-	std::swap (a, c);
-	if (dis (a, b) > 0) {
-		point A = point (), B;
-		if (dis2 (a, b) - m * m >= 0) B = point (m, msqrt (dis2 (a, b) - m * m));
-		else B = point (dis (a, b), 0);
-		point dir = (B - A) / dis (A, B);
-		if (dis (a, c) > 0) {
-			long double si = std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
-			long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
-			point C = dir.rot (si, co) * dis (a, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (a, c) > 0) {
-			long double si = -std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
-			long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
-			point C = dir.rot (si, co) * dis (a, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (b, c) > 0) {
-			long double si = std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
-			long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
-			point C = dir.rot (si, co) * dis (b, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-		if (dis (b, c) > 0) {
-			long double si = -std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
-			long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
-			point C = dir.rot (si, co) * dis (b, c);
-			if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
-		}
-	}
-	return 0;
+    point a = ::a, b = ::b, c = ::c;
+    if (dis (a, b) > 0) {
+        point A = point (), B;
+        if (dis2 (a, b) - m * m >= 0) B = point (m, msqrt (dis2 (a, b) - m * m));
+        else B = point (dis (a, b), 0);
+        point dir = (B - A) / dis (A, B);
+        if (dis (a, c) > 0) {
+            long double si = std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
+            long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
+            point C = dir.rot (si, co) * dis (a, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (a, c) > 0) {
+            long double si = -std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
+            long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
+            point C = dir.rot (si, co) * dis (a, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (b, c) > 0) {
+            long double si = std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
+            long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
+            point C = dir.rot (si, co) * dis (b, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (b, c) > 0) {
+            long double si = -std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
+            long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
+            point C = dir.rot (si, co) * dis (b, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+    }
+    std::swap (b, c);
+    if (dis (a, b) > 0) {
+        point A = point (), B;
+        if (dis2 (a, b) - m * m >= 0) B = point (m, msqrt (dis2 (a, b) - m * m));
+        else B = point (dis (a, b), 0);
+        point dir = (B - A) / dis (A, B);
+        if (dis (a, c) > 0) {
+            long double si = std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
+            long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
+            point C = dir.rot (si, co) * dis (a, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (a, c) > 0) {
+            long double si = -std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
+            long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
+            point C = dir.rot (si, co) * dis (a, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (b, c) > 0) {
+            long double si = std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
+            long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
+            point C = dir.rot (si, co) * dis (b, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (b, c) > 0) {
+            long double si = -std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
+            long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
+            point C = dir.rot (si, co) * dis (b, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+    }
+    std::swap (a, c);
+    if (dis (a, b) > 0) {
+        point A = point (), B;
+        if (dis2 (a, b) - m * m >= 0) B = point (m, msqrt (dis2 (a, b) - m * m));
+        else B = point (dis (a, b), 0);
+        point dir = (B - A) / dis (A, B);
+        if (dis (a, c) > 0) {
+            long double si = std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
+            long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
+            point C = dir.rot (si, co) * dis (a, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (a, c) > 0) {
+            long double si = -std::abs (det (b - a, c - a) / dis (a, b) / dis (a, c));
+            long double co = dot (b - a, c - a) / dis (a, b) / dis (a, c);
+            point C = dir.rot (si, co) * dis (a, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (b, c) > 0) {
+            long double si = std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
+            long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
+            point C = dir.rot (si, co) * dis (b, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+        if (dis (b, c) > 0) {
+            long double si = -std::abs (det (a - b, c - b) / dis (a, b) / dis (b, c));
+            long double co = dot (a - b, c - b) / dis (a, b) / dis (b, c);
+            point C = dir.rot (si, co) * dis (b, c);
+            if (C.x >= 0 && C.x <= m && C.y >= 0 && C.y <= w && B.y <= w) return 1;
+        }
+    }
+    return 0;
 }
 
 int main () {
-	int T; scanf ("%d", &T); while (T--) {
-		int ax, ay, bx, by, cx, cy, ww;
-		scanf ("%d%d%d%d%d%d%d", &ax, &ay, &bx, &by, &cx, &cy, &ww);
-		a.x = ax; a.y = ay; b.x = bx; b.y = by; c.x = cx; c.y = cy; w = ww;
-		if (dis2 (a, b) < dis2 (a, c)) std::swap (b, c), std::swap (bx, cx), std::swap (by, cy);
-		if (dis2 (a, b) < dis2 (b, c)) std::swap (a, c), std::swap (ax, cx), std::swap (ay, cy);
-		long long lx = bx - ax, ly = by - ay, rx = cx - ax, ry = cy - ay;
-		long long area = std::abs (lx * ry - ly * rx);
-		if (area * area > 1ll * ww * ww * ((ax - bx) * (ax - bx) + (ay - by) * (ay - by))) {
-		   puts ("impossible"); continue;
-		}	   
-		long double l = 0, r = dis (a, b);
-		for (int st = 0; st < 50; ++st) {
-			long double m = (l + r) / 2;
-			if (eval (m)) r = m;
-			else l = m;
-		}
-		printf ("%.10f\n", (double) (l + r) / 2);
-	}
+    int T; scanf ("%d", &T); while (T--) {
+        int ax, ay, bx, by, cx, cy, ww;
+        scanf ("%d%d%d%d%d%d%d", &ax, &ay, &bx, &by, &cx, &cy, &ww);
+        a.x = ax; a.y = ay; b.x = bx; b.y = by; c.x = cx; c.y = cy; w = ww;
+        if (dis2 (a, b) < dis2 (a, c)) std::swap (b, c), std::swap (bx, cx), std::swap (by, cy);
+        if (dis2 (a, b) < dis2 (b, c)) std::swap (a, c), std::swap (ax, cx), std::swap (ay, cy);
+        long long lx = bx - ax, ly = by - ay, rx = cx - ax, ry = cy - ay;
+        long long area = std::abs (lx * ry - ly * rx);
+        if (area * area > 1ll * ww * ww * ((ax - bx) * (ax - bx) + (ay - by) * (ay - by))) {
+           puts ("impossible"); continue;
+        }      
+        long double l = 0, r = dis (a, b);
+        for (int st = 0; st < 50; ++st) {
+            long double m = (l + r) / 2;
+            if (eval (m)) r = m;
+            else l = m;
+        }
+        printf ("%.10f\n", (double) (l + r) / 2);
+    }
 }
-
-~~~
+```
