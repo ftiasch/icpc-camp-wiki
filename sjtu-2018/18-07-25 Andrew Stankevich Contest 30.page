@@ -1,13 +1,18 @@
-# Source
+Source
+======
+
 [Codeforces](http://codeforces.com/gym/100345)
 
-# C. Electricity 2
+C. Electricity 2
+================
 
-# J. Zen Garden
+J. Zen Garden
+=============
 
-##lzt
+lzt
+---
 
-~~~ {.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 
 #define cd const double &
@@ -22,10 +27,10 @@ double sqr (cd x) { return x * x; }
 double msqrt (cd x) { return sgn (x) > 0 ? sqrt (x) : 0; }
 
 struct point {
-	double x, y;
-	explicit point (cd x = 0, cd y = 0) : x (x), y (y) {}
-	point rot90 () const { return point (-y, x); }
-	point unit () const { double l = sqrt (x * x + y * y); return point (x / l, y / l); }
+    double x, y;
+    explicit point (cd x = 0, cd y = 0) : x (x), y (y) {}
+    point rot90 () const { return point (-y, x); }
+    point unit () const { double l = sqrt (x * x + y * y); return point (x / l, y / l); }
 };
 
 bool operator == (cp a, cp b) { return cmp (a.x, b.x) == 0 && cmp (a.y, b.y) == 0; }
@@ -39,257 +44,258 @@ double dis2 (cp a, cp b = point ()) { return sqr (a.x - b.x) + sqr (a.y - b.y); 
 double dis (cp a, cp b = point ()) { return sqrt (dis2 (a, b)); }
 
 struct line {
-	point s, t;
-	explicit line (cp s = point (), cp t = point ()) : s (s), t (t) {}
+    point s, t;
+    explicit line (cp s = point (), cp t = point ()) : s (s), t (t) {}
 };
 
 struct circle {
-	point c; double r;
-	explicit circle (cp c = point (), cd r = 0) : c (c), r (r) {}
+    point c; double r;
+    explicit circle (cp c = point (), cd r = 0) : c (c), r (r) {}
 };
 
 circle make_circle (cp a, cp b) {
-	point r = (a + b) / 2; return circle (r, dis (a, b) / 2);
+    point r = (a + b) / 2; return circle (r, dis (a, b) / 2);
 }
 
 double point_to_line (cp a, cl b) { return std::abs (det (b.t - b.s, a - b.s)) / dis (b.s, b.t); }
 point project_to_line (cp a, cl b) { return b.s + (b.t - b.s) * (dot (a - b.s, b.t - b.s) / dis2 (b.t, b.s)); }
 
 point line_intersect (cl a, cl b) {
-	double s1 = det (a.t - a.s, b.s - a.s), s2 = det (a.t - a.s, b.t - a.s);
-	return (b.s * s2 - b.t * s1) / (s2 - s1);
+    double s1 = det (a.t - a.s, b.s - a.s), s2 = det (a.t - a.s, b.t - a.s);
+    return (b.s * s2 - b.t * s1) / (s2 - s1);
 }
 
 std::vector <point> circle_intersect (cc a, cc b) {
-	if (a.c == b.c || cmp (dis (a.c, b.c), a.r + a.r) > 0 || cmp (dis (a.c, b.c), std::abs (a.r - b.r)) < 0) return std::vector <point> ();
-	point r = (b.c - a.c).unit ();
-	double d = dis (a.c, b.c);
-	double x = ((sqr (a.r) - sqr (b.r)) / d + d) / 2;
-	double h = sqrt (sqr (a.r) - sqr (x));
-	std::vector <point> res;
-	if (sgn (h) == 0) res.push_back (a.c + r * x);
-	else res.push_back (a.c + r * x - r.rot90 () * h), res.push_back (a.c + r * x + r.rot90 () * h);
-	return res;
+    if (a.c == b.c || cmp (dis (a.c, b.c), a.r + a.r) > 0 || cmp (dis (a.c, b.c), std::abs (a.r - b.r)) < 0) return std::vector <point> ();
+    point r = (b.c - a.c).unit ();
+    double d = dis (a.c, b.c);
+    double x = ((sqr (a.r) - sqr (b.r)) / d + d) / 2;
+    double h = sqrt (sqr (a.r) - sqr (x));
+    std::vector <point> res;
+    if (sgn (h) == 0) res.push_back (a.c + r * x);
+    else res.push_back (a.c + r * x - r.rot90 () * h), res.push_back (a.c + r * x + r.rot90 () * h);
+    return res;
 }
 
 std::vector <point> line_circle_intersect (cl a, cc b) {
-	if (cmp (point_to_line (b.c, a), b.r) > 0) return std::vector <point> ();
-	double x = msqrt (sqr (b.r) - sqr (point_to_line (b.c, a)));
-	std::vector <point> ret; ret.push_back (project_to_line (b.c, a) + (a.s - a.t).unit () * x);
-	if (sgn (x) != 0) ret.push_back (project_to_line (b.c, a) - (a.s - a.t).unit () * x);
-	return ret;
+    if (cmp (point_to_line (b.c, a), b.r) > 0) return std::vector <point> ();
+    double x = msqrt (sqr (b.r) - sqr (point_to_line (b.c, a)));
+    std::vector <point> ret; ret.push_back (project_to_line (b.c, a) + (a.s - a.t).unit () * x);
+    if (sgn (x) != 0) ret.push_back (project_to_line (b.c, a) - (a.s - a.t).unit () * x);
+    return ret;
 }
 
 std::vector <point> tangent (cp a, cc b) { circle p = make_circle (a, b.c); return circle_intersect (p, b); }
 
 std::vector <line> extangent (cc a, cc b) {
-	std::vector <line> ret;
-	if (cmp (dis (a.c, b.c), std::abs (a.r - b.r)) <= 0) return ret;
-	if (sgn (a.r - b.r) == 0) {
-		point dir = b.c - a.c; dir = (dir * a.r / dis (dir)).rot90 ();
-		ret.push_back (line (a.c - dir, b.c - dir));
-		ret.push_back (line (a.c + dir, b.c + dir));
-	} else {
-		point p = (b.c * a.r - a.c * b.r) / (a.r - b.r);
-		std::vector <point> pp = tangent (p, a), qq = tangent (p, b);
-		if (pp.size () == 2 && qq.size () == 2) {
-			if (cmp (a.r, b.r) < 0) std::swap (pp[0], pp[1]), std::swap (qq[0], qq[1]);
-			ret.push_back (line (pp[0], qq[0]));
-			ret.push_back (line (pp[1], qq[1]));
-		}
-	}
-	return ret;
+    std::vector <line> ret;
+    if (cmp (dis (a.c, b.c), std::abs (a.r - b.r)) <= 0) return ret;
+    if (sgn (a.r - b.r) == 0) {
+        point dir = b.c - a.c; dir = (dir * a.r / dis (dir)).rot90 ();
+        ret.push_back (line (a.c - dir, b.c - dir));
+        ret.push_back (line (a.c + dir, b.c + dir));
+    } else {
+        point p = (b.c * a.r - a.c * b.r) / (a.r - b.r);
+        std::vector <point> pp = tangent (p, a), qq = tangent (p, b);
+        if (pp.size () == 2 && qq.size () == 2) {
+            if (cmp (a.r, b.r) < 0) std::swap (pp[0], pp[1]), std::swap (qq[0], qq[1]);
+            ret.push_back (line (pp[0], qq[0]));
+            ret.push_back (line (pp[1], qq[1]));
+        }
+    }
+    return ret;
 }
 
 std::vector <line> intangent (cc a, cc b) {
-	std::vector <line> ret;
-	point p = (b.c * a.r + a.c * b.r) / (a.r + b.r);
-	std::vector <point> pp = tangent (p, a), qq = tangent (p, b);
-	if (pp.size () == 2 && qq.size () == 2) {
-		ret.push_back (line (pp[0], qq[0]));
-		ret.push_back (line (pp[1], qq[1]));
-	}
-	return ret;
+    std::vector <line> ret;
+    point p = (b.c * a.r + a.c * b.r) / (a.r + b.r);
+    std::vector <point> pp = tangent (p, a), qq = tangent (p, b);
+    if (pp.size () == 2 && qq.size () == 2) {
+        ret.push_back (line (pp[0], qq[0]));
+        ret.push_back (line (pp[1], qq[1]));
+    }
+    return ret;
 }
 
 int N; double X, Y;
 circle C[20];
 
 int main () {
-	std::ios::sync_with_stdio (0);
-	std::cin >> N >> X >> Y;
-	for (int i = 0; i < N; ++i) std::cin >> C[i].c.x >> C[i].c.y >> C[i].r;
-	std::vector <line> ll; std::vector <point> ch;
-	ll.push_back (line (point (0, 0), point (0, Y)));
-	ll.push_back (line (point (0, Y), point (X, Y)));
-	ll.push_back (line (point (X, Y), point (X, 0)));
-	ll.push_back (line (point (X, 0), point (0, 0)));
-	for (int i = 0; i < N; ++i) for (int j = i + 1; j < N; ++j) {
-		std::vector <line> ls = extangent (C[i], C[j]);
-		for (int k = 0; k < ls.size (); ++k) { ll.push_back (ls[k]); ch.push_back (ls[k].s); ch.push_back (ls[k].t); }
-		ls = intangent (C[i], C[j]);
-		for (int k = 0; k < ls.size (); ++k) { ll.push_back (ls[k]); ch.push_back (ls[k].s); ch.push_back (ls[k].t); }
-		ll.push_back (line (C[i].c, C[j].c));
-	}
-	for (int i = 0; i < N; ++i) for (int j = i + 1; j < N; ++j) {
-		std::vector <point> po = circle_intersect (C[i], C[j]);
-		if (po.size () == 1) {
-			ll.push_back (line (po[0], po[0] + (C[i].c - po[0]).rot90 ()));
-			ch.push_back (po[0]);
-		}
-	}
-	for (int i = 0; i < ll.size (); ++i) for (int j = i + 1; j < ll.size (); ++j) 
-		if (sgn (det (ll[i].t - ll[i].s, ll[j].t - ll[j].s)) != 0) {	
-			point p = line_intersect (ll[i], ll[j]); ch.push_back (p);
-		}
-	for (int i = 0; i < ll.size (); ++i) for (int j = 0; j < N; ++j) {
-		std::vector <point> po = line_circle_intersect (ll[i], C[j]);
-		for (int k = 0; k < po.size (); ++k) ch.push_back (po[k]);
-	}
-	for (int i = 0; i < ch.size (); ++i) {
-		bool ok = true; point p = ch[i];
-		if (!(cmp (p.x, 0) >= 0 && cmp (p.y, 0) >= 0 && cmp (p.x, X) <= 0 && cmp (p.y, Y) <= 0)) continue;
-		for (int j = 0; j < N && ok; ++j) {
-			circle c = C[j]; std::vector <point> po = tangent (p, c); po.push_back (c.c);
-			for (int k = 0; k < po.size (); ++k) {
-				point pn = po[k]; if (pn == p) continue;
-				int cnt[3]; cnt[0] = cnt[1] = cnt[2] = 0;
-				for (int l = 0; l < N; ++l) {
-					std::vector <point> cr = line_circle_intersect (line (p, pn), C[l]);
-					for (int m = 0; m < cr.size (); ++m)
-						if (sgn (dot (cr[m] - p, pn - p)) > 0) { ++cnt[cr.size ()]; break; }
-				}
-				if (cnt[2] >= 2 || (cnt[1] >= 1 && cnt[2] >= 1)) { ok = false; break; }
-			}
-		}
-		for (int j = 0; j < N; ++j) if (cmp (dis (p, C[j].c), C[j].r) < 0) ok = false;
-		if (ok) {
-			std::cout << std::fixed << std::setprecision (8) << p.x << " " << p.y << "\n";
-			return 0;
-		}
-	}
-	std::cout << "No Zen\n";
-	return 0;
+    std::ios::sync_with_stdio (0);
+    std::cin >> N >> X >> Y;
+    for (int i = 0; i < N; ++i) std::cin >> C[i].c.x >> C[i].c.y >> C[i].r;
+    std::vector <line> ll; std::vector <point> ch;
+    ll.push_back (line (point (0, 0), point (0, Y)));
+    ll.push_back (line (point (0, Y), point (X, Y)));
+    ll.push_back (line (point (X, Y), point (X, 0)));
+    ll.push_back (line (point (X, 0), point (0, 0)));
+    for (int i = 0; i < N; ++i) for (int j = i + 1; j < N; ++j) {
+        std::vector <line> ls = extangent (C[i], C[j]);
+        for (int k = 0; k < ls.size (); ++k) { ll.push_back (ls[k]); ch.push_back (ls[k].s); ch.push_back (ls[k].t); }
+        ls = intangent (C[i], C[j]);
+        for (int k = 0; k < ls.size (); ++k) { ll.push_back (ls[k]); ch.push_back (ls[k].s); ch.push_back (ls[k].t); }
+        ll.push_back (line (C[i].c, C[j].c));
+    }
+    for (int i = 0; i < N; ++i) for (int j = i + 1; j < N; ++j) {
+        std::vector <point> po = circle_intersect (C[i], C[j]);
+        if (po.size () == 1) {
+            ll.push_back (line (po[0], po[0] + (C[i].c - po[0]).rot90 ()));
+            ch.push_back (po[0]);
+        }
+    }
+    for (int i = 0; i < ll.size (); ++i) for (int j = i + 1; j < ll.size (); ++j) 
+        if (sgn (det (ll[i].t - ll[i].s, ll[j].t - ll[j].s)) != 0) {    
+            point p = line_intersect (ll[i], ll[j]); ch.push_back (p);
+        }
+    for (int i = 0; i < ll.size (); ++i) for (int j = 0; j < N; ++j) {
+        std::vector <point> po = line_circle_intersect (ll[i], C[j]);
+        for (int k = 0; k < po.size (); ++k) ch.push_back (po[k]);
+    }
+    for (int i = 0; i < ch.size (); ++i) {
+        bool ok = true; point p = ch[i];
+        if (!(cmp (p.x, 0) >= 0 && cmp (p.y, 0) >= 0 && cmp (p.x, X) <= 0 && cmp (p.y, Y) <= 0)) continue;
+        for (int j = 0; j < N && ok; ++j) {
+            circle c = C[j]; std::vector <point> po = tangent (p, c); po.push_back (c.c);
+            for (int k = 0; k < po.size (); ++k) {
+                point pn = po[k]; if (pn == p) continue;
+                int cnt[3]; cnt[0] = cnt[1] = cnt[2] = 0;
+                for (int l = 0; l < N; ++l) {
+                    std::vector <point> cr = line_circle_intersect (line (p, pn), C[l]);
+                    for (int m = 0; m < cr.size (); ++m)
+                        if (sgn (dot (cr[m] - p, pn - p)) > 0) { ++cnt[cr.size ()]; break; }
+                }
+                if (cnt[2] >= 2 || (cnt[1] >= 1 && cnt[2] >= 1)) { ok = false; break; }
+            }
+        }
+        for (int j = 0; j < N; ++j) if (cmp (dis (p, C[j].c), C[j].r) < 0) ok = false;
+        if (ok) {
+            std::cout << std::fixed << std::setprecision (8) << p.x << " " << p.y << "\n";
+            return 0;
+        }
+    }
+    std::cout << "No Zen\n";
+    return 0;
 }
-~~~
+```
 
-## mxh
+mxh
+---
 
-~~~ {.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
 
 const double eps=1e-6;
 int sign(double x)
 {
-	return (x>eps)-(x<-eps);
+    return (x>eps)-(x<-eps);
 }
 double msqrt(double x)
 {
-	return sign(x)>0?sqrt(x):0;
+    return sign(x)>0?sqrt(x):0;
 }
 struct Point
 {
-	double x,y;
-	explicit Point (double x = 0, double y = 0) : x (x), y (y) {}
-	Point turn90()	const
-	{
-		return Point(-y,x);
-	}
-	double len()	const
-	{
-		return msqrt(x*x+y*y);
-	}
-	double len2()
-	{
-		return x*x+y*y;
-	}
-	Point unit()	const
-	{
-		return Point(x/len(),y/len());
-	}
+    double x,y;
+    explicit Point (double x = 0, double y = 0) : x (x), y (y) {}
+    Point turn90()  const
+    {
+        return Point(-y,x);
+    }
+    double len()    const
+    {
+        return msqrt(x*x+y*y);
+    }
+    double len2()
+    {
+        return x*x+y*y;
+    }
+    Point unit()    const
+    {
+        return Point(x/len(),y/len());
+    }
 };
 Point operator+(const Point &a,const Point &b)
 {
-	return Point(a.x+b.x,a.y+b.y);
+    return Point(a.x+b.x,a.y+b.y);
 }
 Point operator-(const Point &a,const Point &b)
 {
-	return Point(a.x-b.x,a.y-b.y);
+    return Point(a.x-b.x,a.y-b.y);
 }
 Point operator*(const Point &a,const double &b)
 {
-	return Point (a.x*b,a.y*b);
+    return Point (a.x*b,a.y*b);
 }
 Point operator/(const Point &a,const double &b)
 {
-	return Point (a.x/b,a.y/b);
+    return Point (a.x/b,a.y/b);
 }
 double dot(const Point &a,const Point &b)
 {
-	return a.x*b.x+a.y*b.y;
+    return a.x*b.x+a.y*b.y;
 }
 double det(const Point &a,const Point &b)
 {
-	return a.x*b.y-a.y*b.x;
+    return a.x*b.y-a.y*b.x;
 }
 struct Line
 {
-	Point a,b;
-	Line (const Point &a1,const Point &b1):a(a1),b(b1){}
+    Point a,b;
+    Line (const Point &a1,const Point &b1):a(a1),b(b1){}
 };
 struct Circle
 {
-	Point o;
-	double r;
+    Point o;
+    double r;
 };
 bool isLL(const Line &l1,const Line &l2,Point &p)
 {
-	double s1=det(l2.b-l2.a,l1.a-l2.a);
-	double s2=-det(l2.b-l2.a,l1.b-l2.a);
-	if (!sign(s1+s2))	return false;
-	p=(l1.a*s2+l1.b*s1)/(s1+s2);
-	return true;
+    double s1=det(l2.b-l2.a,l1.a-l2.a);
+    double s2=-det(l2.b-l2.a,l1.b-l2.a);
+    if (!sign(s1+s2))   return false;
+    p=(l1.a*s2+l1.b*s1)/(s1+s2);
+    return true;
 }
 bool isCL(const Circle &a,const Line &l,Point &p1,Point &p2)
 {
-	double x=dot(l.a-a.o,l.b-l.a);
-	double y=(l.b-l.a).len2();
-	double d=x*x-y*((l.a-a.o).len2()-a.r*a.r);
-	if (sign(d)<=0)	return false;
-	Point p=l.a-((l.b-l.a)*(x/y)),delta=(l.b-l.a)*(msqrt(d)/y);
-	p1=p+delta;
-	p2=p-delta;
-	return true;
+    double x=dot(l.a-a.o,l.b-l.a);
+    double y=(l.b-l.a).len2();
+    double d=x*x-y*((l.a-a.o).len2()-a.r*a.r);
+    if (sign(d)<=0) return false;
+    Point p=l.a-((l.b-l.a)*(x/y)),delta=(l.b-l.a)*(msqrt(d)/y);
+    p1=p+delta;
+    p2=p-delta;
+    return true;
 }
 bool tanCP(const Circle &c,const Point &p0,Point &p1,Point &p2)
 {
-	double x=(p0-c.o).len2(),d=x-c.r*c.r;
-	if (d<eps)	return false;
-	Point p=(p0-c.o)*(c.r*c.r/x);
-	Point delta=((p0-c.o)*(-c.r*sqrt(d)/x)).turn90();
-	p1=c.o+p+delta;
-	p2=c.o+p-delta;
-	return true;
+    double x=(p0-c.o).len2(),d=x-c.r*c.r;
+    if (d<eps)  return false;
+    Point p=(p0-c.o)*(c.r*c.r/x);
+    Point delta=((p0-c.o)*(-c.r*sqrt(d)/x)).turn90();
+    p1=c.o+p+delta;
+    p2=c.o+p-delta;
+    return true;
 }
 vector<Line> istanCC(const Circle &c1,const Circle &c2)
 {
-	vector<Line> ret;
-	if (sign((c1.o-c2.o).len2()-(c1.r+c2.r)*(c1.r+c2.r))==0)
-	{
-		Point x=(c1.o-c2.o)/(c1.r+c2.r)*c2.r+c2.o;
-		Point y=(c1.o-x).turn90()+x;
-		ret.push_back(Line(x,y));
-		return ret;
-	}
-	Point p=(c1.o*c2.r+c2.o*c1.r)/(c1.r+c2.r);
-	Point p1,p2,q1,q2;
-	if (tanCP(c1,p,p1,p2) && tanCP(c2,p,q1,q2))
-	{
-		ret.push_back(Line(p1,q1));
-		ret.push_back(Line(p2,q2));
-	}
-	return ret;
+    vector<Line> ret;
+    if (sign((c1.o-c2.o).len2()-(c1.r+c2.r)*(c1.r+c2.r))==0)
+    {
+        Point x=(c1.o-c2.o)/(c1.r+c2.r)*c2.r+c2.o;
+        Point y=(c1.o-x).turn90()+x;
+        ret.push_back(Line(x,y));
+        return ret;
+    }
+    Point p=(c1.o*c2.r+c2.o*c1.r)/(c1.r+c2.r);
+    Point p1,p2,q1,q2;
+    if (tanCP(c1,p,p1,p2) && tanCP(c2,p,q1,q2))
+    {
+        ret.push_back(Line(p1,q1));
+        ret.push_back(Line(p2,q2));
+    }
+    return ret;
 }
 const int maxn=20;
 Circle a[maxn];
@@ -298,83 +304,83 @@ vector<Point> P;
 int n,x,y;
 int main()
 {
-	scanf("%d%d%d",&n,&x,&y);
-	L.push_back(Line(Point(0,0),Point(x,0)));
-	L.push_back(Line(Point(0,0),Point(0,y)));
-	L.push_back(Line(Point(x,y),Point(x,0)));
-	L.push_back(Line(Point(x,y),Point(0,y)));
-	for (int i=1;i<=n;i++)
-		scanf("%lf%lf%lf",&a[i].o.x,&a[i].o.y,&a[i].r);
-	for (int i=1;i<=n;i++)
-		for (int j=i+1;j<=n;j++)
-		{
-			vector<Line> tmp=istanCC(a[i],a[j]);
-			for (int k=0;k<tmp.size();k++)
-				L.push_back(tmp[k]);
-		}
-	for (int i=0;i<L.size();i++)
-		for (int j=i+1;j<L.size();j++)
-		{
-			Point tmp;
-			if (isLL(L[i],L[j],tmp))	P.push_back(tmp);
-		}
-	for (int i=0;i<P.size();i++)
-		if (P[i].x<=x && P[i].x>=0 && P[i].y<=y && P[i].y>=0)
-		{
-			Point now=P[i],p1,p2;
-			if (sign(now.x-93.1491817385)==0 && sign(now.y-143.2968000719)==0)
-			{
-				int QAQ=1;
-			}
-			bool bo=true;
-			for (int j=1;j<=n;j++)
-			if (sign((a[j].o-now).len2()-a[j].r*a[j].r)<0)
-				bo=false;
-			for (int j=1;j<=n;j++)
-			if (tanCP(a[j],now,p1,p2))
-			{
-				Line l(now,p1);
-				Point pp1,pp2;
-				for (int k=1;k<=n;k++)
-				if (j!=k && isCL(a[k],l,pp1,pp2))
-				{
-					if ((pp1-pp2).len()<eps)	continue;
-					if (sign(dot(pp1-now,p1-now))>=0 && sign(dot(pp2-now,p1-now))>=0)
-					{
-						bo=false;
-						break;
-					}
-				}
-				l=Line(now,p2);
-				for (int k=1;k<=n;k++)
-				if (j!=k && isCL(a[k],l,pp1,pp2))
-				{
-					if ((pp1-pp2).len()<eps)	continue;
-					if (sign(dot(pp1-now,p2-now))>=0 && sign(dot(pp2-now,p2-now))>=0)
-					{
-						bo=false;
-						break;
-					}
-				}
-				l=Line(now,a[j].o);
-				for (int k=1;k<=n;k++)
-				if (j!=k && isCL(a[k],l,pp1,pp2))
-				{
-					if ((pp1-pp2).len()<eps)	continue;
-					if (sign(dot(pp1-now,a[j].o-now))>=0 && sign(dot(pp2-now,a[j].o-now))>=0)
-					{
-						bo=false;
-						break;
-					}
-				}
-			}
-			if (bo)
-			{
-				printf("%.6f %.6f\n",now.x,now.y);
-				return 0;
-			}
-		}
-	printf("No Zen\n");
-	return 0;
+    scanf("%d%d%d",&n,&x,&y);
+    L.push_back(Line(Point(0,0),Point(x,0)));
+    L.push_back(Line(Point(0,0),Point(0,y)));
+    L.push_back(Line(Point(x,y),Point(x,0)));
+    L.push_back(Line(Point(x,y),Point(0,y)));
+    for (int i=1;i<=n;i++)
+        scanf("%lf%lf%lf",&a[i].o.x,&a[i].o.y,&a[i].r);
+    for (int i=1;i<=n;i++)
+        for (int j=i+1;j<=n;j++)
+        {
+            vector<Line> tmp=istanCC(a[i],a[j]);
+            for (int k=0;k<tmp.size();k++)
+                L.push_back(tmp[k]);
+        }
+    for (int i=0;i<L.size();i++)
+        for (int j=i+1;j<L.size();j++)
+        {
+            Point tmp;
+            if (isLL(L[i],L[j],tmp))    P.push_back(tmp);
+        }
+    for (int i=0;i<P.size();i++)
+        if (P[i].x<=x && P[i].x>=0 && P[i].y<=y && P[i].y>=0)
+        {
+            Point now=P[i],p1,p2;
+            if (sign(now.x-93.1491817385)==0 && sign(now.y-143.2968000719)==0)
+            {
+                int QAQ=1;
+            }
+            bool bo=true;
+            for (int j=1;j<=n;j++)
+            if (sign((a[j].o-now).len2()-a[j].r*a[j].r)<0)
+                bo=false;
+            for (int j=1;j<=n;j++)
+            if (tanCP(a[j],now,p1,p2))
+            {
+                Line l(now,p1);
+                Point pp1,pp2;
+                for (int k=1;k<=n;k++)
+                if (j!=k && isCL(a[k],l,pp1,pp2))
+                {
+                    if ((pp1-pp2).len()<eps)    continue;
+                    if (sign(dot(pp1-now,p1-now))>=0 && sign(dot(pp2-now,p1-now))>=0)
+                    {
+                        bo=false;
+                        break;
+                    }
+                }
+                l=Line(now,p2);
+                for (int k=1;k<=n;k++)
+                if (j!=k && isCL(a[k],l,pp1,pp2))
+                {
+                    if ((pp1-pp2).len()<eps)    continue;
+                    if (sign(dot(pp1-now,p2-now))>=0 && sign(dot(pp2-now,p2-now))>=0)
+                    {
+                        bo=false;
+                        break;
+                    }
+                }
+                l=Line(now,a[j].o);
+                for (int k=1;k<=n;k++)
+                if (j!=k && isCL(a[k],l,pp1,pp2))
+                {
+                    if ((pp1-pp2).len()<eps)    continue;
+                    if (sign(dot(pp1-now,a[j].o-now))>=0 && sign(dot(pp2-now,a[j].o-now))>=0)
+                    {
+                        bo=false;
+                        break;
+                    }
+                }
+            }
+            if (bo)
+            {
+                printf("%.6f %.6f\n",now.x,now.y);
+                return 0;
+            }
+        }
+    printf("No Zen\n");
+    return 0;
 }
-~~~
+```
