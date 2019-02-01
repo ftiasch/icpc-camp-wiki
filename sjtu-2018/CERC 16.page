@@ -1,123 +1,121 @@
-Solved: 8
-Rank: 1
-
+Solved: 8 Rank: 1
 
 补题：
 
 D cc
 
-D 
+D
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 int n, can[105][105];
 vector <int> a[105][105];
 struct step {
-	int x, y;
-	char d;
-	int c;
-	step() {}
-	step (int x = 0, int y = 0, char d = 0, int c = 0) : x(x), y(y), d(d), c(c) {}
+    int x, y;
+    char d;
+    int c;
+    step() {}
+    step (int x = 0, int y = 0, char d = 0, int c = 0) : x(x), y(y), d(d), c(c) {}
 };
 struct node {
-	int x, y, d;
+    int x, y, d;
 };
 vector<step> ans;
 
 void move(int i, int j, int x, int y) {
-	for(;i < x; i++) {
-		ans.push_back(step(i, j, 'D', 1));
-		a[i + 1][j].push_back(a[i][j].back());
-		a[i][j].pop_back();
-	}
-	for(; j < y; j++) {
-		ans.push_back(step(i, j, 'R', 1));
-		a[i][j + 1].push_back(a[i][j].back());
-		a[i][j].pop_back();
-	}
+    for(;i < x; i++) {
+        ans.push_back(step(i, j, 'D', 1));
+        a[i + 1][j].push_back(a[i][j].back());
+        a[i][j].pop_back();
+    }
+    for(; j < y; j++) {
+        ans.push_back(step(i, j, 'R', 1));
+        a[i][j + 1].push_back(a[i][j].back());
+        a[i][j].pop_back();
+    }
 }
 
 int tox[40005],toy[40005];
 void work(int x, int y, int n) {
-	if (x + y == 12) return;
-	if (n == 0) return;
-	if (n == 1) {
-		move(x, y, 6, 6);
-		return;
-	}
-	if (x + y == 11) {
-		if (a[x][y][a[x][y].size() - 2] > a[x][y][a[x][y].size() - 1]) {
-			ans.push_back(step(x, y, x == 6 ? 'R' : 'D', 2));
-			a[6][6].push_back(a[x][y][a[x][y].size() - 2]);
-			a[6][6].push_back(a[x][y][a[x][y].size() - 1]);
-			a[x][y].pop_back();
-			a[x][y].pop_back();
-		} else {
-			for (int i = 1; i <= 2; i++) {
-				ans.push_back(step(x, y, x == 6 ? 'R' : 'D', 1));
-				a[6][6].push_back(a[x][y][a[x][y].size() - 1]);
-				a[x][y].pop_back();
-			}
-		}
-		return;
-	}
-	int l = 40000, r, tmp;
-	for (int i = 0; i < n; i++) l = min(l, a[x][y][i]);
-	r = l + n - 1;
-	vector <node> dis;
-	for (int i = x; i <= 6; i++) {
-		for (int j = y; j <= 6; j++) {
-			if ((i != x || j != y) && l <= r) {
-				tmp = l + can[i][j] - 1;
-				dis.push_back((node){i, j, min(tmp, r) - l + 1});
-				for (; l <= r && l <= tmp; l++) {
-					tox[l] = i;
-					toy[l] = j;
-				}
-			}
-		}
-	}
-	for (int k = 1; k <= n; k++) move(x, y, tox[a[x][y].back()], toy[a[x][y].back()]);
-	for (int i = dis.size() - 1; i >= 0; i--) {
-		if (dis[i].d) {
-			work(dis[i].x, dis[i].y, dis[i].d);
-		}
-	}
+    if (x + y == 12) return;
+    if (n == 0) return;
+    if (n == 1) {
+        move(x, y, 6, 6);
+        return;
+    }
+    if (x + y == 11) {
+        if (a[x][y][a[x][y].size() - 2] > a[x][y][a[x][y].size() - 1]) {
+            ans.push_back(step(x, y, x == 6 ? 'R' : 'D', 2));
+            a[6][6].push_back(a[x][y][a[x][y].size() - 2]);
+            a[6][6].push_back(a[x][y][a[x][y].size() - 1]);
+            a[x][y].pop_back();
+            a[x][y].pop_back();
+        } else {
+            for (int i = 1; i <= 2; i++) {
+                ans.push_back(step(x, y, x == 6 ? 'R' : 'D', 1));
+                a[6][6].push_back(a[x][y][a[x][y].size() - 1]);
+                a[x][y].pop_back();
+            }
+        }
+        return;
+    }
+    int l = 40000, r, tmp;
+    for (int i = 0; i < n; i++) l = min(l, a[x][y][i]);
+    r = l + n - 1;
+    vector <node> dis;
+    for (int i = x; i <= 6; i++) {
+        for (int j = y; j <= 6; j++) {
+            if ((i != x || j != y) && l <= r) {
+                tmp = l + can[i][j] - 1;
+                dis.push_back((node){i, j, min(tmp, r) - l + 1});
+                for (; l <= r && l <= tmp; l++) {
+                    tox[l] = i;
+                    toy[l] = j;
+                }
+            }
+        }
+    }
+    for (int k = 1; k <= n; k++) move(x, y, tox[a[x][y].back()], toy[a[x][y].back()]);
+    for (int i = dis.size() - 1; i >= 0; i--) {
+        if (dis[i].d) {
+            work(dis[i].x, dis[i].y, dis[i].d);
+        }
+    }
 }
 int main() {
-	can[6][6] = 1;
-	can[5][6] = can[6][5] = 2;
-	for (int i = 6; i >= 1; i--) {
-		for (int j = 6; j >= 1; j--) {
-			if (!can[i][j]) {
-				for (int x = i; x <= 6; x++) {
-					for (int y = j; y <= 6; y++) {
-						can[i][j] += can[x][y];
-					}
-				}
-			}
-		}
-	}
-	scanf("%d", &n);
-	for (int i = 1; i <= n; i++) {
-		int x;
-		scanf("%d", &x);
-		a[1][1].push_back(x);
-	}
-	work(1, 1, n);
-	for (int i = 0; i < ans.size(); i++) {
-		printf("%d %d %c %d\n", ans[i].x, ans[i].y, ans[i].d, ans[i].c);
-	}
-	return 0;
+    can[6][6] = 1;
+    can[5][6] = can[6][5] = 2;
+    for (int i = 6; i >= 1; i--) {
+        for (int j = 6; j >= 1; j--) {
+            if (!can[i][j]) {
+                for (int x = i; x <= 6; x++) {
+                    for (int y = j; y <= 6; y++) {
+                        can[i][j] += can[x][y];
+                    }
+                }
+            }
+        }
+    }
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        int x;
+        scanf("%d", &x);
+        a[1][1].push_back(x);
+    }
+    work(1, 1, n);
+    for (int i = 0; i < ans.size(); i++) {
+        printf("%d %d %c %d\n", ans[i].x, ans[i].y, ans[i].d, ans[i].c);
+    }
+    return 0;
 }
-~~~
+```
 
 J yzh
 
 J: 垃圾 cf，卡我常数，毁我 AC
 
-```cpp
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -132,105 +130,105 @@ map <pii, vector <int>> t;
 map <pii, LL> O, R;
 
 bool get() {
-	int ch = getchar();
-	while (ch != 'O' && ch != 'R') ch = getchar();
-	return ch == 'O';
+    int ch = getchar();
+    while (ch != 'O' && ch != 'R') ch = getchar();
+    return ch == 'O';
 }
 
-	long long ans = 0;
+    long long ans = 0;
 
 void add(int x, int y) {
-	int d = 0;
-	if (x > y) swap(x, y), d = 1;
-	t[mp(x, y)].push_back(d);
+    int d = 0;
+    if (x > y) swap(x, y), d = 1;
+    t[mp(x, y)].push_back(d);
 }
 
 
 vector <int> b;
 
 void solve(int x, int y) {
-	if (x > y) swap(x, y);
-	if (t[mp(x, y)].empty()) return;
+    if (x > y) swap(x, y);
+    if (t[mp(x, y)].empty()) return;
 
-	vector <int> &a = t[mp(x, y)];
+    vector <int> &a = t[mp(x, y)];
 
-	LL oo[2] = {min(O[mp(x, y)], R[mp(x, y)]), min(O[mp(y, x)], R[mp(y, x)])};
-	LL rr[2] = {min(R[mp(x, y)], oo[0] + oo[1]), min(R[mp(y, x)], oo[0] + oo[1])};
+    LL oo[2] = {min(O[mp(x, y)], R[mp(x, y)]), min(O[mp(y, x)], R[mp(y, x)])};
+    LL rr[2] = {min(R[mp(x, y)], oo[0] + oo[1]), min(R[mp(y, x)], oo[0] + oo[1])};
 
-	int le, ri;	
-	if (rr[0] <= rr[1]) le = 0, ri = 1;
-	else le = 1, ri = 0;
+    int le, ri; 
+    if (rr[0] <= rr[1]) le = 0, ri = 1;
+    else le = 1, ri = 0;
 
-	b.clear();
+    b.clear();
 
-	int c1 = 0, c2 = 0, cl = 0, cr = 0;
+    int c1 = 0, c2 = 0, cl = 0, cr = 0;
 
-	for (auto v : a) {
-		if (v == le) b.push_back(le);
-		else {
-			if (b.size() && b[b.size() - 1] == le) {
-				b.pop_back();
-				c1++;
-			}
-			else b.push_back(ri);
-		}
-	}
-	a = b;
-	b.clear();
-	swap(le, ri);
+    for (auto v : a) {
+        if (v == le) b.push_back(le);
+        else {
+            if (b.size() && b[b.size() - 1] == le) {
+                b.pop_back();
+                c1++;
+            }
+            else b.push_back(ri);
+        }
+    }
+    a = b;
+    b.clear();
+    swap(le, ri);
 
-	for (auto v : a) {
-		if (v == le) b.push_back(le);
-		else {
-			if (b.size() && b[b.size() - 1] == le) {
-				b.pop_back();
-				c2++;
-			}
-			else b.push_back(ri);
-		}
-	}
+    for (auto v : a) {
+        if (v == le) b.push_back(le);
+        else {
+            if (b.size() && b[b.size() - 1] == le) {
+                b.pop_back();
+                c2++;
+            }
+            else b.push_back(ri);
+        }
+    }
 
-	for (auto v : b) {
-		if (v) cr++;
-		else cl++;
-	}
+    for (auto v : b) {
+        if (v) cr++;
+        else cl++;
+    }
 
 
-	if (rr[0] <= rr[1]) {
-		ans += (long long)rr[0] * c1 + (long long)rr[1] * c2 + (long long)oo[0] * cl + (long long)oo[1] * cr;
-	}
-	else {
-		ans += (long long)rr[0] * c2 + (long long)rr[1] * c1 + (long long)oo[0] * cl + (long long)oo[1] * cr;
-	}
+    if (rr[0] <= rr[1]) {
+        ans += (long long)rr[0] * c1 + (long long)rr[1] * c2 + (long long)oo[0] * cl + (long long)oo[1] * cr;
+    }
+    else {
+        ans += (long long)rr[0] * c2 + (long long)rr[1] * c1 + (long long)oo[0] * cl + (long long)oo[1] * cr;
+    }
 
-	a.clear();
+    a.clear();
 }
 
 int n, m, K;
 int a[N];
 
 int main() {
-	read(n); read(m);
-	for (int i = 1; i <= m; i++) read(a[i]);
-	for (int i = 1; i < m; i++) {
-		add(a[i], a[i + 1]);
-		O[mp(a[i], a[i + 1])] = INF;
-		O[mp(a[i + 1], a[i])] = INF;
-		R[mp(a[i], a[i + 1])] = INF;
-		R[mp(a[i + 1], a[i])] = INF;
-	}
-	read(K);
-	for (int i = 1; i <= K; i++) {
-		int x, y, p, ki;
-		read(x); read(y); ki = get(); read(p);
-		if (ki) {
-			O[mp(x, y)] = min(O[mp(x, y)], (LL)p);
-		}
-		else {
-			R[mp(x, y)] = min(R[mp(x, y)], (LL)p);
-		}
-	}
-	for (int i = 1; i < m; i++) solve(a[i], a[i + 1]);
-	cout << ans << endl;
+    read(n); read(m);
+    for (int i = 1; i <= m; i++) read(a[i]);
+    for (int i = 1; i < m; i++) {
+        add(a[i], a[i + 1]);
+        O[mp(a[i], a[i + 1])] = INF;
+        O[mp(a[i + 1], a[i])] = INF;
+        R[mp(a[i], a[i + 1])] = INF;
+        R[mp(a[i + 1], a[i])] = INF;
+    }
+    read(K);
+    for (int i = 1; i <= K; i++) {
+        int x, y, p, ki;
+        read(x); read(y); ki = get(); read(p);
+        if (ki) {
+            O[mp(x, y)] = min(O[mp(x, y)], (LL)p);
+        }
+        else {
+            R[mp(x, y)] = min(R[mp(x, y)], (LL)p);
+        }
+    }
+    for (int i = 1; i < m; i++) solve(a[i], a[i + 1]);
+    cout << ans << endl;
 }
 ```
