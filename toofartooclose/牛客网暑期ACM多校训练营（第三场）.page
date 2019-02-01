@@ -1,0 +1,67 @@
+A.[PACM Team](https://www.nowcoder.com/acm/contest/141/A)[zlc]
+==
+
+zlc:DP复杂度是六次方，但是由于数据弱，能卡过。正常做法是枚举前18个和后18个
+
+写正解的时候我六次方卡过去了
+
+B.[Expected Number of Nodes](https://www.nowcoder.com/acm/contest/141/B)[补:zlc]
+==
+
+zlc: (由于太菜，看过题解以后才知道做法)首先发现，每个点怎样会不被删掉
+
+除了这个点本身被固定，还有一种可能就是，这个点为根的时候，有三个以上子树有点被选到
+
+所以直接暴力找点即可
+
+C.[Shuffle Cards](https://www.nowcoder.com/acm/contest/141/C)[zlc]
+==
+
+是个splay或者随便一个平衡树的模板题
+
+D. [Encrypted String Matching](https://www.nowcoder.com/acm/contest/141/D)[补:zlc]
+==
+
+zlc: 发现加密后，只要对应位置的差不超过1，得到式子 $\sum{(A-B)^2+((A-B)^2-1)^2}=0$ ntt加一下就可以了
+
+这个很容易做到ntt10次，然后7次的方法比较恶心，但是好像这个题评测机不稳定，可能会T
+
+E.[Sort String](https://www.nowcoder.com/acm/contest/141/E)[zlc,wjy]
+==
+
+zlc: 首先发现这个东西只和循环节有关。所以kmp找下循环节就行了；注意要判断 n%(n-fail[n])==0! (虽然数据弱)
+
+F. [Sum Of Digit](https://www.nowcoder.com/acm/contest/141/F)[补:zlc]
+==
+
+zlc: 发现这个东西就是个裸的线段树，随便维护就可以了
+
+G.[Coloring Tree](https://www.nowcoder.com/acm/contest/141/G)[补:zlc]
+==
+
+zlc: 这个题真的是我智商被碾压了，这个我根本没想到
+
+做法是: 考虑一个一个染色(这里我还说根本不可能)，然后考虑bfs的过程，会发现你原先 $bfs$ 到的区间全是不同的
+
+所以直接染这个点就可以了
+
+H.[Diff-prime Pairs](https://www.nowcoder.com/acm/contest/141/H)[wjy]
+==
+
+I.[Expected Size of Random Convex Hull](https://www.nowcoder.com/acm/contest/141/I)[补:zlc]
+==
+
+zlc: 首先发现，答案和三角形的样子无关，因为可以通过转换参考系的方法使得选择的多边形重合。
+
+所以，我们只需要暴力找凸包的个数就行了
+
+然而我这个菜鸡不小心随机写错了，就坑了，主要是因为太菜。
+
+J.[Distance to Work](https://www.nowcoder.com/acm/contest/141/J)[补:dh]
+==
+二分答案，算圆和多边形交，得到了正确的板子。
+
+Summary
+=======
+
+zlc1114: 这场我B和G智商被碾压(根本想不到)，I水题犯了错，D和F根本没看到(我觉得我F肯定能一眼会做)，犯了很多策略上或者原则上的错误。我以后一定会改正。
