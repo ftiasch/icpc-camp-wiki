@@ -1,26 +1,28 @@
-# 解体原因
+解体原因
+========
 
 两位队员的写题过慢，难以跟上一队的节奏。换队长上题的话多过两题因该没什么问题。
 
 E剧毒
 
-~~~{.cpp}
+``` {.cpp}
 int w=(((s[lx][ly]-'a')==(s[rx][ry]-'A'))?1:0);
-~~~
+```
 
-# 补题
+补题
+====
 
-H: 写了个[文明]的凸包，[文明]不知道在写什么，愣是写成了个单调栈。
+H: 写了个\[文明\]的凸包，\[文明\]不知道在写什么，愣是写成了个单调栈。
 
 还有：
-```cpp
+
+``` {.cpp}
 while (ch >= '0' && ch < '9') x = x * 10 + ch - '0', ch = getchar();
 ```
 
 hhh.
 
-
-```cpp
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -32,13 +34,13 @@ typedef long double LD;
 #define read(a) scanf("%d", &a)
 
 void readx(int &x) {
-	int ch = getchar();
-	while ((ch < '0' || ch > '9') && ch != 'x') ch = getchar();
-	if (ch == 'x') x = -1;
-	else {
-		x = 0;
-		while (ch >= '0' && ch <= '9') x = x * 10 + ch - '0', ch = getchar();
-	}
+    int ch = getchar();
+    while ((ch < '0' || ch > '9') && ch != 'x') ch = getchar();
+    if (ch == 'x') x = -1;
+    else {
+        x = 0;
+        while (ch >= '0' && ch <= '9') x = x * 10 + ch - '0', ch = getchar();
+    }
 }
 
 #define N 1005
@@ -50,114 +52,113 @@ vector <pii> E[N];
 int n, m, S1, S2, T;
 
 void dij(LL dis[]) {
-	static priority_queue < pair<LL, int> > q;
-	for (int i = 1; i <= n; i++) {
-		if (dis[i] < INF) q.push(mp(-dis[i], i));
-	}
-	while (!q.empty()) {
-		pair<LL, int> o = q.top(); q.pop();
-		int x = o.y; LL d = -o.x;
-		if (d != dis[x]) continue;
-		for (auto e : E[x]) {
-			if (~e.y && dis[e.x] > dis[x] + e.y) {
-				dis[e.x] = dis[x] + e.y;
-				q.push(mp(-dis[e.x], e.x));
-			}
-		}
-	}
+    static priority_queue < pair<LL, int> > q;
+    for (int i = 1; i <= n; i++) {
+        if (dis[i] < INF) q.push(mp(-dis[i], i));
+    }
+    while (!q.empty()) {
+        pair<LL, int> o = q.top(); q.pop();
+        int x = o.y; LL d = -o.x;
+        if (d != dis[x]) continue;
+        for (auto e : E[x]) {
+            if (~e.y && dis[e.x] > dis[x] + e.y) {
+                dis[e.x] = dis[x] + e.y;
+                q.push(mp(-dis[e.x], e.x));
+            }
+        }
+    }
 }
 
 LL dis[105][N];
 
 int K;
 bool fff() {
-	K = min(K, n - 1);
-	for (int i = 0; i <= K; i++) {
-		for (int j = 1; j <= n; j++) {
-			dis[i][j] = INF;
-		}
-	}
-	dis[0][T] = 0;
-	for (int i = 0; i <= K; i++) {
-		dij(dis[i]);
-		for (int x = 1; x <= n; x++) {
-			for (auto e : E[x]) {
-				if (e.y == -1) {
-					dis[i + 1][e.x] = min(dis[i + 1][e.x], dis[i][x]);
-				}
-			}
-		}
-	}
-	bool f1 = 0, f2 = 0;
-	for (int i = 0; i <= K; i++) {
-		if (dis[i][S1] < INF) f1 = 1;
-		if (dis[i][S2] < INF) f2 = 1;
-	}
-	return !(f1 && f2);
+    K = min(K, n - 1);
+    for (int i = 0; i <= K; i++) {
+        for (int j = 1; j <= n; j++) {
+            dis[i][j] = INF;
+        }
+    }
+    dis[0][T] = 0;
+    for (int i = 0; i <= K; i++) {
+        dij(dis[i]);
+        for (int x = 1; x <= n; x++) {
+            for (auto e : E[x]) {
+                if (e.y == -1) {
+                    dis[i + 1][e.x] = min(dis[i + 1][e.x], dis[i][x]);
+                }
+            }
+        }
+    }
+    bool f1 = 0, f2 = 0;
+    for (int i = 0; i <= K; i++) {
+        if (dis[i][S1] < INF) f1 = 1;
+        if (dis[i][S2] < INF) f2 = 1;
+    }
+    return !(f1 && f2);
 }
 
 struct Line {
-	LL a, b;
+    LL a, b;
 };
 
 long double inter(Line x, Line y) { // requires x.a > y.a
-	return ((long double) y.b - x.b) / (x.a - y.a);
+    return ((long double) y.b - x.b) / (x.a - y.a);
 }
 
 LL L1[105], R1[105], L2[105], R2[105];
 
 void work() {
-	K = 0;
-	for (int i = 1; i <= m; i++) {
-		int u, v, w;
-		read(u); read(v); readx(w);
-		if (w == -1) K++;
-		E[u].push_back(mp(v, w));
-		E[v].push_back(mp(u, w));
-	}
-	if (fff()) {
-		puts("-1");
-		return;
-	}
+    K = 0;
+    for (int i = 1; i <= m; i++) {
+        int u, v, w;
+        read(u); read(v); readx(w);
+        if (w == -1) K++;
+        E[u].push_back(mp(v, w));
+        E[v].push_back(mp(u, w));
+    }
+    if (fff()) {
+        puts("-1");
+        return;
+    }
 
-	for (int i = 0; i <= K; i++) {
-		L1[i] = 0, R1[i] = INF;
-		L2[i] = 0, R2[i] = INF;
-		if (dis[i][S1] == INF) swap(L1[i], R1[i]);
-		if (dis[i][S2] == INF) swap(L2[i], R2[i]);
-		for (int j = 0; j < i; j++) {
-			if (dis[j][S1] < INF) R1[i] = min(R1[i], (dis[j][S1] - dis[i][S1]) / (i - j));
-			if (dis[j][S2] < INF) R2[i] = min(R2[i], (dis[j][S2] - dis[i][S2]) / (i - j));
-		}
-		for (int j = i + 1; j <= K; j++) {
-			if (dis[j][S1] < INF) L1[i] = max(L1[i], (dis[i][S1] - dis[j][S1] + j - i - 1) / (j - i));
-			if (dis[j][S2] < INF) L2[i] = max(L2[i], (dis[i][S2] - dis[j][S2] + j - i - 1) / (j - i));
-		}
-	}
+    for (int i = 0; i <= K; i++) {
+        L1[i] = 0, R1[i] = INF;
+        L2[i] = 0, R2[i] = INF;
+        if (dis[i][S1] == INF) swap(L1[i], R1[i]);
+        if (dis[i][S2] == INF) swap(L2[i], R2[i]);
+        for (int j = 0; j < i; j++) {
+            if (dis[j][S1] < INF) R1[i] = min(R1[i], (dis[j][S1] - dis[i][S1]) / (i - j));
+            if (dis[j][S2] < INF) R2[i] = min(R2[i], (dis[j][S2] - dis[i][S2]) / (i - j));
+        }
+        for (int j = i + 1; j <= K; j++) {
+            if (dis[j][S1] < INF) L1[i] = max(L1[i], (dis[i][S1] - dis[j][S1] + j - i - 1) / (j - i));
+            if (dis[j][S2] < INF) L2[i] = max(L2[i], (dis[i][S2] - dis[j][S2] + j - i - 1) / (j - i));
+        }
+    }
 
-	LL ans = INF;
-	for (int i = 0; i <= K; i++)
-		for (int j = 0; j <= K; j++) {
-			LL l = max(L1[i], L2[j]), r = min(R1[i], R2[j]);
-			//cerr << "(" << i << ", " << j << ") "<< l << " " << r << endl;
-			if (l > r) continue;
-			LL t = (i == j ? 233 : (dis[j][S2] - dis[i][S1]) / (i - j));
-			t = min(max(t, l), r);
-			//cerr << t << " t\n";
-			for (LL x = max(t - 2, l); x <= min(t + 2, r); x++) {
-				ans = min(ans, abs((dis[i][S1] + i * x) - (dis[j][S2] + j * x)));
-			}
-		}
-	printf("%lld\n", ans);
+    LL ans = INF;
+    for (int i = 0; i <= K; i++)
+        for (int j = 0; j <= K; j++) {
+            LL l = max(L1[i], L2[j]), r = min(R1[i], R2[j]);
+            //cerr << "(" << i << ", " << j << ") "<< l << " " << r << endl;
+            if (l > r) continue;
+            LL t = (i == j ? 233 : (dis[j][S2] - dis[i][S1]) / (i - j));
+            t = min(max(t, l), r);
+            //cerr << t << " t\n";
+            for (LL x = max(t - 2, l); x <= min(t + 2, r); x++) {
+                ans = min(ans, abs((dis[i][S1] + i * x) - (dis[j][S2] + j * x)));
+            }
+        }
+    printf("%lld\n", ans);
 }
 
 int main () {
-	while (~scanf("%d%d%d%d%d", &n, &m, &S1, &S2, &T) && (n | m | S1 | S2 | T)) {
-		work();
-		for (int i = 1; i <= n; i++) {
-			E[i].clear();
-		}
-	}
+    while (~scanf("%d%d%d%d%d", &n, &m, &S1, &S2, &T) && (n | m | S1 | S2 | T)) {
+        work();
+        for (int i = 1; i <= n; i++) {
+            E[i].clear();
+        }
+    }
 }
-
 ```
