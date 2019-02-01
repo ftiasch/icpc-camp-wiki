@@ -1,0 +1,11 @@
+##Contest Info
+
+date: 2018.08.05 12:00-17:00
+
+##Solutions
+
+###I. Volume of Revolution
+
+**题目大意：**求一个多项式旋转体的体积（stacks是x轴的分段，slices是将旋转的圆弧分成多少节）
+
+**题解：**实际上使用正棱台来逼近的，正棱台体积为$\frac{1}{3}h(S_1+S_2+\sqrt{S_1S_2})​$。曲线的旋转体积为$\lmoustache \pi f(x)^2dx​$。
