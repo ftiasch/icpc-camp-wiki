@@ -1,0 +1,139 @@
+General
+=======
+
+Team **Ascender** from Beihang University
+
+-   2016
+    -   **Team establishment**
+-   2017
+    -   **ICPC ShenYang: Gold (12th place)**
+    -   **CCPC HangZhou: Silver (19th place)**
+    -   **ICPC NanNing: Gold (11th place)**
+    -   **ICPC ECL: Silver (51th place)**
+-   2018
+    -   **ICPC ShenYang: Gold (12th place)**
+    -   **CCPC GuiLin: Gold (17th place)**
+    -   **ICPC JiaoZuo: Gold (11th place)**
+
+Todo List
+=========
+
+-   日常训练/补题
+-   查漏补缺
+-   整理模板
+-   维护wiki页面
+
+训练日志
+========
+
+[训练日志](diary)
+
+zmy(xaphoenix)
+--------------
+
+[zmy个人](zmy)
+
+-   提高数学能力
+-   培养后期题能力
+-   写各种各样的题
+-   补完暑期集训中的非计算几何题
+
+[For The Dream](final_pratice)
+
+jds(kingjgv5)
+-------------
+
+[jds个人](jds)
+
+-   字符串
+-   dp
+-   要重新开始打些cf的比赛了
+
+wbr(MKibera)
+------------
+
+[wbr个人](wbr)
+
+-   补一些CF的比赛
+-   提升读题和debug能力
+-   提高数学水平
+-   练习计算几何
+
+Team Training
+=============
+
+<!-- 
+`2016-00-00` [`---`]()                                                            `   -/  --` `??` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·` `·`
+-->
+  `Date`         `Contest`                                                                                                 `Place`      `??`   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`     `I`   `J`   `K`   `L`   `M`
+  -------------- --------------------------------------------------------------------------------------------------------- ------------ ------ ----- ----- ----- ----- ----- ----- ----- ------- ----- ----- ----- ----- -----
+  `2018-11-30`   [`XIX Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia`](xix_eurasia)                          `27/398`     `2`    `O`   `·`   `O`   `O`   `O`   `·`     `O`   `O`   `O`   `O`   `O`
+  `2018-11-29`   [`XIX Open Cup named after E.V. Pankratiev. Grand Prix of SPb`](xix_spb)                                  `58/253`     `4`    `Ø`   `·`   `·`   `O`   `O`   `O`     `O`   `Ø`   `Ø`   `O`   `·`   `·`
+  `2018-11-24`   [`2018 ACM/ICPC Asia Regional Jiaozuo Contest`](2018jiaozuo)                                              `11/187`     `5`    `O`   `O`   `O`   `O`   `O`   `O`   `·`   `·`     `O`   `·`   `·`   `·`
+  `2018-11-22`   [`2018-2019 ACM-ICPC Southeastern European Regional Programming Contest`](2015_seerc)                     `09/136`     `4`    `·`   `O`   `O`   `·`   `O`   `O`   `O`   `·`     `O`   `·`   `O`
+  `2018-11-20`   [`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Siberia`](xvii_siberia)                        `58/196`     `4`    `O`   `O`   `·`   `·`   `O`   `O`   `·`   `O`     `O`   `·`   `O`
+  `2018-11-18`   [`2018 ACM/ICPC Asia Regional Nanjing Contest`](2018nanjing)                                              `12/618`     `3`    `O`   `O`   `·`   `O`   `O`   `·`   `O`   `·`     `O`   `O`   `O`   `Ø`   `O`
+  `2018-11-14`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ukraine`](xviii_ukraine)                      `64/165`     `3`    `·`   `O`   `O`   `O`   `·`   `O`   `O`   `O`     `Ø`   `O`   `·`   `O`
+  `2018-11-11`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Urals`](xviii_urals)                          `40/155`     `5`    `O`   `O`   `O`   `O`   `·`   `Ø`   `·`   `·`     `·`   `·`   `O`
+  `2018-11-10`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Romania`](xviii_romania)                      `23/165`     `6`    `O`   `·`   `O`   `O`   `·`   `·`   `·`   `·`     `O`   `O`   `·`   `O`
+  `2018-11-07`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Gomel`](xviii_gomel)                          `61/175`     `4`    `O`   `O`   `Ø`   `Ø`   `·`   `O`   `·`   `·`     `·`   `O`   `O`
+  `2018-11-05`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Korea`](xviii_korea)                          `76/144`     `6`    `Ø`   `·`   `O`   `O`   `·`   `O`   `·`   `·`     `Ø`   `·`   `·`   `Ø`
+  `2018-10-23`   [`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Khamovniki`](xviii_khamovniki)                `105/275`    `6`    `O`   `·`   `O`   `·`   `·`   `·`   `O`   `O`     `·`   `·`   `O`
+  `2018-10-21`   [`2018 ACM/ICPC Asia Regional Shenyang Contest`](2018shenyang)                                            `12/187`     `5`    `·`   `·`   `O`   `·`   `O`   `·`   `O`   `·`     `O`   `O`   `·`   `·`   `·` 
+  `2018-08-09`   [`2018 Nowcoder Multi-University Training 7`](2018nc7)                                                    `44/415`     `5`    `O`   `·`   `O`   `·`   `Ø`   `·`   `Ø`   `·`     `·`   `O` 
+  `2018-08-06`   [`BUAA Summer Training 2018.08.06 (compulsory)`](20180806training)                                        `6/85`        `2`    `O`   `·`   `O`   `O`   `O`   `O`   `O`   `Ø`     `O`   `·`   `O`   `O`   `O`
+  `2018-08-04`   [`2018 Nowcoder Multi-University Training 6`](2018nc6)                                                    `28/1662`     `4`    `O`   `·`   `O`   `O`   `·`   `·`   `O`   `·`     `O`   `O`
+  `2018-08-02`   [`2018 Nowcoder Multi-University Training 5`](2018nc5)                                                    `10/1662`     `1`    `O`   `Ø`   `·`   `O`   `O`   `O`   `O`   `O`     `O`   `O` 
+  `2018-05-06`   [`2017-2018 ACM-ICPC, Asia Daejeon Regional Contest`](2017daejeon) **DONE**                               `23/477`     `0`    `Ø`   `O`   `O`   `O`   `O`   `O`   `O`   `O`     `O`   `O`   `Ø`   `O`
+  `2017-11-26`   [`2017 ACM/ICPC Asia Regional Nanning Contest`](2017nanning)                                              `11/228`     `5`    `O`   `·`   `·`   `·`   `O`   `O`   `·`   `O`     `O`   `O`   `·`   `O`   `O`
+  `2017-10-22`   [`2017 ACM/ICPC Asia Regional Shenyang Contest`](2017shenyang)                                            `12/181`     `7`    `·`   `·`   `·`   `·`   `·`   `·`   `·`   `·`     `·`   `·`   `·`   `·`   `·`
+  `2017-10-07`   [`2015-2016 Northwestern European Regional Contest (NWERC 2015)`](2015nwerc) **DONE**                     `3/427`      `0`    `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`     `O`   `O`   `O`         
+  `2017-10-06`   [`2015-2016 ACM-ICPC, NEERC, Northern Subregional Contest`](2015neerc_northern)                           `40/1322`    `1`    `O`   `O`   `O`   `O`   `O`   `Ø`   `O`   `O`     `Ø`   `O`   `·`   `O`   
+  `2017-10-03`   [`2015-2016 Petrozavodsk Winter Training Camp, Moscow SU Trinity Contest`](2016_WTC_MST)                  `78/466`     `5`    `O`   `·`   `·`   `·`   `O`   `Ø`   `·`   `O`     `O`   `·`   `O`   `Ø`   
+  `2017-10-02`   [`2015-2016 Petrozavodsk Winter Training Camp, Makoto rng_58 Soejima Contest 4`](2016_WTC_MRS) **DONE**   `27/195`     `0`    `Ø`   `O`   `O`   `Ø`   `O`   `O`   `Ø`   `O`     `O`   `O`   `Ø`   `O`   `Ø`
+  `2017-09-17`   [`2017 ACM/ICPC Asia Regional Qingdao Online`](2017qingdaoo)                                              `79/17??`    `3`    `O`   `·`   `O`   `Ø`   `·`   `Ø`   `·`   `O`     `O`   `O`   `O`         
+  `2017-09-16`   [`2017 ACM/ICPC Asia Regional Xian Online`](2017xiano)                                                    `27/17??`    `4`    `·`   `O`   `O`   `·`   `O`   `O`   `O`   `·`     `O`   `·`               
+  `2017-09-14`   [`2016 ACM/ICPC Asia Regional Beijing Online`](2016beijingo)                                              `--/---`     `4`    `O`   `O`   `O`   `·`   `O`   `O`   `·`   `·`     `O`   `·`               
+  `2017-09-12`   [`Regionals 2016 :: Asia - Hongkong`](2016hongkong)                                                       `--/065`     `3`    `O`   `O`   `O`   `O`   `·`   `O`   `·`   `Ø`     `·`   `O`   `O`         
+  `2017-09-10`   [`2017 ACM/ICPC Asia Regional Shenyang Online`](2017shenyango)                                            `39/1683`    `3`    `O`   `O`   `·`   `O`   `O`   `O`   `Ø`   `O`     `·`   `O`   `·`   `O`   
+  `2017-09-09`   [`2017 ACM/ICPC Asia Regional Urumqi Online`](2017urumqio) **DONE**                                       `52/1349`    `0`    `O`   `O`   `O`   `Ø`   `O`   `O`   `O`   `O`     `O`   `O`               
+  `2017-08-24`   [`2017 Multi-University Training Contest - Team 10`](2017multi_10) **DONE**                               `48/735`     `0`    `O`   `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `Ø`   `O`     `Ø`   `O`   `O`         
+  `2017-08-22`   [`2017 Multi-University Training Contest - Team 9`](2017multi_9) **DONE**                                 `80/735`     `0`    `Ø`   `O`   `Ø`   `Ø`   `O`   `O`   `Ø`   `O`     `Ø`   `O`               
+  `2017-08-19`   [`2017 CCPC - Online`](2017ccpco) **DONE**                                                                `117/1185`   `0`    `Ø`   `Ø`   `O`   `O`   `O`   `Ø`   `O`   `Ø`     `Ø`   `Ø`   `Ø`         
+  `2017-08-17`   [`2017 Multi-University Training Contest - Team 8`](2017multi_8)                                          `37/735`     `3`    `O`   `O`   `·`   `Ø`   `·`   `O`   `Ø`   `O`     `Ø`   `·`   `O`         
+  `2017-08-15`   [`2017 Multi-University Training Contest - Team 7`](2017multi_7)                                          `177/735`    `3`    `·`   `O`   `Ø`   `·`   `O`   `Ø`   `Ø`   `O`     `Ø`   `Ø`   `O`   `Ø`   `·`
+  `2017-08-12`   [`2013 ACM/ICPC Asia Regional Changchun Online`](2013changchuno)                                          `62/210`     `5`    `O`   `·`   `·`   `O`   `O`   `O`   `·`   `·`     `O`   `O`   `·`         
+  `2017-08-10`   [`2017 Multi-University Training Contest - Team 6`](2017multi_6)                                          `51/767`     `4`    `O`   `Ø`   `O`   `·`   `·`   `·`   `Ø`   `O`     `·`   `O`   `O`   `Ø`   
+  `2017-08-09`   [`Regionals 2013 :: Asia - Chia-Yi`](2013chiayi)                                                          `06/071`     `2`    `O`   `O`   `O`   `O`   `O`   `O`   `O`   `Ø`     `O`   `·`   `·`         
+  `2017-08-08`   [`2017 Multi-University Training Contest - Team 5`](2017multi_5)                                          `31/767`     `4`    `O`   `O`   `·`   `Ø`   `·`   `O`   `·`   `O`     `Ø`   `·`   `O`         
+  `2017-08-06`   [`2014 ACM/ICPC Asia Regional Anshan Online`](2014anshano)                                                `19/507`     `4`    `·`   `O`   `·`   `O`   `O`   `O`   `O`   `·`     `·`   `O`               
+  `2017-08-05`   [`2013 ACM/ICPC Asia Regional Nanjing Online`](2013nanjingo)                                              `11/214`     `3`    `·`   `O`   `O`   `O`   `Ø`   `O`   `·`   `·`     `O`   `O`   `O`         
+  `2017-08-03`   [`2017 Multi-University Training Contest - Team 4`](2017multi_4)                                          `31/767`     `3`    `·`   `Ø`   `O`   `O`   `Ø`   `·`   `O`   \``Ø`   `O`   `Ø`   `O`   `O`   `·`
+  `2017-08-02`   [`Regionals 2013 :: Asia - Chengdu`](2013chengdu)                                                         `29/172`     `3`    `O`   `Ø`   `·`   `O`   `·`   `O`   `Ø`   `O`     `·`   `O`               
+  `2017-08-01`   [`2017 Multi-University Training Contest - Team 3`](2017multi_3)                                          `32/767`     `3`    `·`   `·`   `O`   `O`   `O`   `Ø`   `·`   `O`     `Ø`   `O`   `O`         
+  `2017-07-30`   [`Regionals 2013 :: Asia - Changchun`](2013changchun)                                                     `14/154`     `3`    `O`   `O`   `O`   `O`   `·`   `·`   `O`   `·`     `O`   `Ø`               
+  `2017-07-29`   [`2013 Multi-University Training Contest - Team 7`](2013multi_7)                                          `14/328`     `2`    `O`   `Ø`   `O`   `O`   `Ø`   `O`   `Ø`   `·`     `·`   `O`               
+  `2017-07-28`   [`Regionals 2013 :: Asia - Nanjing`](2013nanjing)                                                         `10/154`     `2`    `O`   `O`   `O`   `·`   `·`   `Ø`   `O`   `Ø`     `O`   `O`   `O`         
+  `2017-07-27`   [`2017 Multi-University Training Contest - Team 2`](2017multi_2)                                          `71/730`     `3`    `O`   `·`   `O`   `Ø`   `·`   `O`   `Ø`   `Ø`     `O`   `·`   `O`         
+  `2017-07-26`   [`Regionals 2013 :: Asia - Hangzhou`](2013hangzhou)                                                       `18/156`     `1`    `O`   `O`   `O`   `Ø`   `·`   `O`   `Ø`   `O`     `O`   `Ø`   `Ø`         
+  `2017-07-25`   [`2017 Multi-University Training Contest - Team 1`](2017multi_1)                                          `39/764`     `5`    `O`   `O`   `O`   `·`   `·`   `O`   `·`   `Ø`     `·`   `·`   `O`   `Ø`   
+  `2017-04-15`   [`2014-2015 Summer Petrozavodsk Camp, Andrew Stankevich Contest 46 (ASC 46)`]()                           `44/ --`     `4`    `O`   `O`   `·`   `·`   `O`   `O`   `O`   `·`     `·`   `O`               
+  `2017-04-09`   [`2017 BUPT Collegiate Programming Contest`]()                                                            `07/125`     `3`    `O`   `O`   `·`   `·`   `O`   `O`   `O`   `O`     `O`   `O`   `·`   `O`   
+  `2017-04-02`   [`2016-2017 ACM-ICPC Southeastern European Regional Programming Contest (SEERC 2016)`]()                  `17/ --`     `3`    `Ø`   `·`   `O`   `O`   `·`   `O`   `O`   `O`     `·`   `O`   `O`         
+
+`· 尚未通过  O 当场通过  [X:Y] 非标准组队赛：X个人使用Y台电脑`\
+`! 口头通过  Ø 赛后通过  [IND] 个人赛(page需放在个人目录下)`
+
+Unofficial Training
+===================
+
+  `Contest`                                         `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  ------------------------------------------------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  [`Regionals 2016 :: Asia - Dalian`](2016dalian)   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`   `O`         
+
+Other
+=====
+
+-   感谢叉姐支持
+-   感谢昂神支持
+
