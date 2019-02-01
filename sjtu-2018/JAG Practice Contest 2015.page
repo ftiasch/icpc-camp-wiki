@@ -1,21 +1,22 @@
-Solve：7  Rank：5
+Solve：7 Rank：5
 
-补题：E(yzh) G(cc) J*(lbn)
+补题：E(yzh) G(cc) J\*(lbn)
 
-E:
-这个 ** oj 要爆栈，所以手动栈。
+E: 这个 \*\* oj 要爆栈，所以手动栈。
 
 不过因为开始考虑到了，写的是类似尾递归的形式，（虽然编译器傻逼不帮我优化）改起来很方便。
 
 下毒：
 
-```cpp
+``` {.cpp}
 while (s[t] >= '0' && s[t] < '9') ret = ret * 10 + s[t++] - '0';
 ```
----
+
+------------------------------------------------------------------------
+
 Code:
 
-```cpp
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -29,29 +30,29 @@ typedef long long LL;
 int n, nn, K;
 
 struct Perm {
-	int a[N * N];
-	int &operator [] (const int x) {
-		return a[x];
-	}
-	void operator *= (Perm &b) {
-		static Perm c;
-		for (int i = 1; i <= nn; i++) c[i] = a[b[i]];
-		for (int i = 1; i <= nn; i++) a[i] = c[i];
-	}
-	void operator = (const Perm &b) {
-		for (int i = 1; i <= nn; i++) a[i] = b.a[i];
-	}
-	void operator *= (int);
+    int a[N * N];
+    int &operator [] (const int x) {
+        return a[x];
+    }
+    void operator *= (Perm &b) {
+        static Perm c;
+        for (int i = 1; i <= nn; i++) c[i] = a[b[i]];
+        for (int i = 1; i <= nn; i++) a[i] = c[i];
+    }
+    void operator = (const Perm &b) {
+        for (int i = 1; i <= nn; i++) a[i] = b.a[i];
+    }
+    void operator *= (int);
 } a;
 
 void Perm::operator *= (int y) {
-	if (y <= 0) return;
-	static Perm d;
-	d = *this;
-	for (y -= 1; y; y >>= 1) {
-		if (y & 1) *this *= d;
-		d *= d;
-	}
+    if (y <= 0) return;
+    static Perm d;
+    d = *this;
+    for (y -= 1; y; y >>= 1) {
+        if (y & 1) *this *= d;
+        d *= d;
+    }
 }
 
 char s[1005];
@@ -59,105 +60,104 @@ char s[1005];
 int t;
 
 int readInt() {
-	int ret = 0;
-	while (s[t] >= '0' && s[t] <= '9') ret = ret * 10 + s[t++] - '0';
-	return ret;
+    int ret = 0;
+    while (s[t] >= '0' && s[t] <= '9') ret = ret * 10 + s[t++] - '0';
+    return ret;
 }
 
 Perm tmp;
 
 void L(int x) {
-	tmp = a;
-	for (int i = 1; i < n; i++) {
-		swap(tmp[(x - 1) * n + i], tmp[(x - 1) * n + i + 1]);
-	}
+    tmp = a;
+    for (int i = 1; i < n; i++) {
+        swap(tmp[(x - 1) * n + i], tmp[(x - 1) * n + i + 1]);
+    }
 }
 
 void R(int x) {
-	tmp = a;
-	for (int i = n - 1; i; i--) {
-		swap(tmp[(x - 1) * n + i], tmp[(x - 1) * n + i + 1]);
-	}
+    tmp = a;
+    for (int i = n - 1; i; i--) {
+        swap(tmp[(x - 1) * n + i], tmp[(x - 1) * n + i + 1]);
+    }
 }
 
 void U(int x) {
-	tmp = a;
-	for (int i = 1; i < n; i++) {
-		swap(tmp[(i - 1) * n + x], tmp[i * n + x]);
-	}
+    tmp = a;
+    for (int i = 1; i < n; i++) {
+        swap(tmp[(i - 1) * n + x], tmp[i * n + x]);
+    }
 }
 
 void D(int x) {
-	tmp = a;
-	for (int i = n - 1; i; i--) {
-		swap(tmp[(i - 1) * n + x], tmp[i * n + x]);
-	}
+    tmp = a;
+    for (int i = n - 1; i; i--) {
+        swap(tmp[(i - 1) * n + x], tmp[i * n + x]);
+    }
 }
 
 Perm ret[1005];
 
 void solve(int x, int dep) {
-	Perm &o = ret[dep];
-	o = a;
-	for ( ; ; ) {
-		t = x;
-		switch (s[x]) {
-			case '(' :
-				solve(x + 1, dep + 1);
-				ret[dep + 1] *= readInt();
-				o *= ret[dep + 1];
-			break;
-			case ')' :
-				t = x + 1;
-				return;
-			break;
-			case 'U' :
-				t = x + 1;
-				U(readInt());
-				o *= tmp;
-			break;
-			case 'D' :
-				t = x + 1;
-				D(readInt());
-				o *= tmp;
-			break;
-			case 'L' :
-				t = x + 1;
-				L(readInt());
-				o *= tmp;
-			break;
-			case 'R' :
-				t = x + 1;
-				R(readInt());
-				o *= tmp;
-			break;
-		}
-		x = t;
-	}
+    Perm &o = ret[dep];
+    o = a;
+    for ( ; ; ) {
+        t = x;
+        switch (s[x]) {
+            case '(' :
+                solve(x + 1, dep + 1);
+                ret[dep + 1] *= readInt();
+                o *= ret[dep + 1];
+            break;
+            case ')' :
+                t = x + 1;
+                return;
+            break;
+            case 'U' :
+                t = x + 1;
+                U(readInt());
+                o *= tmp;
+            break;
+            case 'D' :
+                t = x + 1;
+                D(readInt());
+                o *= tmp;
+            break;
+            case 'L' :
+                t = x + 1;
+                L(readInt());
+                o *= tmp;
+            break;
+            case 'R' :
+                t = x + 1;
+                R(readInt());
+                o *= tmp;
+            break;
+        }
+        x = t;
+    }
 }
 
 
 int main() {
-	read(n); read(K);
-	nn = n * n;
-	for (int i = 1; i <= nn; i++) a[i] = i;
-	scanf("%s", s); s[strlen(s)] = ')';
-	solve(0, 0);
-	for (int i = 1; i <= n; i++)
-		for (int j = 1; j <= n; j++) {
-			printf("%d%c", ret[0][(i - 1) * n + j], j == n ? '\n' : ' ');
-		}
-	return 0;
+    read(n); read(K);
+    nn = n * n;
+    for (int i = 1; i <= nn; i++) a[i] = i;
+    scanf("%s", s); s[strlen(s)] = ')';
+    solve(0, 0);
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++) {
+            printf("%d%c", ret[0][(i - 1) * n + j], j == n ? '\n' : ' ');
+        }
+    return 0;
 }
-
 ```
 
+G CC
 
-G  CC
+先以26联通为走法搞出被挖掉的点的联通块，对于每个联通块，再以26联通为走法扩展出所有没有被挖掉的点。对于这些点，求出联通快的个数num，对答案的贡献为num
+- 1。最终答案再加一即可。
 
-先以26联通为走法搞出被挖掉的点的联通块，对于每个联通块，再以26联通为走法扩展出所有没有被挖掉的点。对于这些点，求出联通快的个数num，对答案的贡献为num - 1。最终答案再加一即可。
-
-~~~cpp
+``` {.cpp}
 
 
 #include <bits/stdc++.h>
@@ -198,15 +198,15 @@ void dfs1(node u) {
     b[u] = 1;
     add(u);
     for (int i = -1; i <= 1; i++) {
-    	for (int j = -1; j <= 1; j++) {
-    		for (int k = -1; k <= 1; k++) {
-    			node v = (node){u.x + i, u.y + j, u.z + k};
-    			if (check(v) && a.find(v) != a.end() && b[v] == 0) {
+        for (int j = -1; j <= 1; j++) {
+            for (int k = -1; k <= 1; k++) {
+                node v = (node){u.x + i, u.y + j, u.z + k};
+                if (check(v) && a.find(v) != a.end() && b[v] == 0) {
                     dfs1(v);
                 }
-    		}
-    	}
-	}
+            }
+        }
+    }
 }
 void dfs2(node u) {
     b[u] = Time;
@@ -241,13 +241,13 @@ int main() {
     b.clear();
     for (iter it = a.begin(); it != a.end(); it++) {
         node now = it -> fi;
-        if (b[now] == 0) {        	
-	        c.clear();
-	        dfs1(now);
-	        doit();
-		}
+        if (b[now] == 0) {          
+            c.clear();
+            dfs1(now);
+            doit();
+        }
     }
     printf("%d\n", ans + 1);
     return 0;
 }
-~~~
+```
