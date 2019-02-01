@@ -1,15 +1,21 @@
-# Source
-[aizu 2856-2866](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2856)
+Source
+======
 
-# D. Revenge of the Broken Door
+[aizu
+2856-2866](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2856)
 
-# J. Farm Village
+D. Revenge of the Broken Door
+=============================
 
-## mxh
+J. Farm Village
+===============
+
+mxh
+---
 
 用set维护正反两个方向的费用
 
-~~~ {.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -21,55 +27,55 @@ ll sum;
 multiset<ll> from,to;
 int main()
 {
-	scanf("%lld",&n);
-	for (int i=1;i<n;i++)
-		scanf("%lld",&a[i]);
-	for (int i=1;i<=n;i++)
-		scanf("%lld",&b[i]);
-	for (int i=1;i<=n;i++)
-	{
-		ans+=b[i];
-		int op=0;
-		if (!from.empty())
-		{
-			ll t=*from.begin();
-			if (t-b[i]+sum<0)
-			{
-				ans+=t-b[i]+sum;
-				from.erase(from.begin());
-				to.insert((-(t+sum))-sum);
-				op=1;
-			}
-		}
-		if (!to.empty())
-		{
-			ll t=*to.begin();
-			if (t+b[i]+sum<0)
-			{
-				ans+=t+b[i]+sum;
-				to.erase(to.begin());
-				from.insert((-(t+sum))-sum);
-				op=-1;
-			}
-		}
-		if (op==0)
-		{
-			from.insert(b[i]-sum);
-			to.insert(-b[i]-sum);
-		}
-		if (op==1)
-		{
-			from.insert(b[i]-sum);
-			from.insert(b[i]-sum);
-		}
-		if (op==-1)
-		{
-			to.insert(-b[i]-sum);
-			to.insert(-b[i]-sum);
-		}
-		sum+=a[i];
-	}
-	printf("%lld\n",ans);
-	return 0;
+    scanf("%lld",&n);
+    for (int i=1;i<n;i++)
+        scanf("%lld",&a[i]);
+    for (int i=1;i<=n;i++)
+        scanf("%lld",&b[i]);
+    for (int i=1;i<=n;i++)
+    {
+        ans+=b[i];
+        int op=0;
+        if (!from.empty())
+        {
+            ll t=*from.begin();
+            if (t-b[i]+sum<0)
+            {
+                ans+=t-b[i]+sum;
+                from.erase(from.begin());
+                to.insert((-(t+sum))-sum);
+                op=1;
+            }
+        }
+        if (!to.empty())
+        {
+            ll t=*to.begin();
+            if (t+b[i]+sum<0)
+            {
+                ans+=t+b[i]+sum;
+                to.erase(to.begin());
+                from.insert((-(t+sum))-sum);
+                op=-1;
+            }
+        }
+        if (op==0)
+        {
+            from.insert(b[i]-sum);
+            to.insert(-b[i]-sum);
+        }
+        if (op==1)
+        {
+            from.insert(b[i]-sum);
+            from.insert(b[i]-sum);
+        }
+        if (op==-1)
+        {
+            to.insert(-b[i]-sum);
+            to.insert(-b[i]-sum);
+        }
+        sum+=a[i];
+    }
+    printf("%lld\n",ans);
+    return 0;
 }
-~~~
+```
