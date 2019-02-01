@@ -1,11 +1,16 @@
-#Source
-[Aizu 2534-2543](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2534)
+Source
+======
 
-# F. Counting 1's
+[Aizu
+2534-2543](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2534)
 
-## mxh
+F. Counting 1's
+===============
 
-~~~ {.cpp}
+mxh
+---
+
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -155,6 +160,7 @@ int main()
     }
     return 0;
 }
-~~~
+```
 
-# I. Hashigo Sama
+I. Hashigo Sama
+===============
