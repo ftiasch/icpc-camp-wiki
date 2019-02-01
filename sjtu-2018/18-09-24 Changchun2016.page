@@ -1,14 +1,20 @@
-# Source
+Source
+======
+
 [HDU](http://acm.hdu.edu.cn/showproblem.php?pid=5911)
 
-# Commitment
+Commitment
+==========
+
 E算法出太晚了。。而且读题的时候漏条件
 
-# E. The Fastest Runner Ms. Zhang
+E. The Fastest Runner Ms. Zhang
+===============================
 
-## mxh
+mxh
+---
 
-~~~ {.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -20,172 +26,171 @@ int f[maxn],dep[maxn];
 int n;
 struct Edge
 {
-	int v,next;
-}	e[maxn<<1];
+    int v,next;
+}   e[maxn<<1];
 int g[maxn],tot;
 void addedge(int x,int y)
 {
-	tot++;
-	e[tot].v=y;
-	e[tot].next=g[x];
-	g[x]=tot;
+    tot++;
+    e[tot].v=y;
+    e[tot].next=g[x];
+    g[x]=tot;
 }
 int que2[maxn];
 int vis[maxn],dis[maxn];
 void update(int x,int y,int z)
 {
-	if (y>z)	swap(y,z);
-	if (x<ans || (x==ans && y<fn1 ) || (x==ans && y==fn1 && z<fn2))
-	{
-		ans=x;
-		fn1=y;
-		fn2=z;
-	}
+    if (y>z)    swap(y,z);
+    if (x<ans || (x==ans && y<fn1 ) || (x==ans && y==fn1 && z<fn2))
+    {
+        ans=x;
+        fn1=y;
+        fn2=z;
+    }
 }
 void clear()
 {
-	tot=0;
-	for (int i=1;i<=n;i++)
-	{
-		du[i]=0;
-		g[i]=0;
-		que2[i]=0;
-		vis[i]=0;
-		dis[i]=0;
-		fa[i]=0;
-		f[i]=0;
-		huan[i]=false;
-		dep[i]=0;
-	}
-	for (int i=1;i<=2*n;i++)
-		que[i]=0;
+    tot=0;
+    for (int i=1;i<=n;i++)
+    {
+        du[i]=0;
+        g[i]=0;
+        que2[i]=0;
+        vis[i]=0;
+        dis[i]=0;
+        fa[i]=0;
+        f[i]=0;
+        huan[i]=false;
+        dep[i]=0;
+    }
+    for (int i=1;i<=2*n;i++)
+        que[i]=0;
 }
 void dfs(int t,int &x,int &y)
 {
-	dep[t]=dep[fa[t]]+1;
-	if (dep[t]>x || (dep[t]==x && t<y))	x=dep[t],y=t;
-	for (int i=g[t];i;i=e[i].next)
-	if (e[i].v!=fa[t] && !huan[e[i].v])
-	{
-		fa[e[i].v]=t;
-		dfs(e[i].v,x,y);
-	}
+    dep[t]=dep[fa[t]]+1;
+    if (dep[t]>x || (dep[t]==x && t<y)) x=dep[t],y=t;
+    for (int i=g[t];i;i=e[i].next)
+    if (e[i].v!=fa[t] && !huan[e[i].v])
+    {
+        fa[e[i].v]=t;
+        dfs(e[i].v,x,y);
+    }
 }
 int zhijing(int root,int x,int &y)
 {
-	int cnt=1;
-	que2[1]=x;
-	vis[x]=x;
-	dis[x]=0;
-	for (int i=1;i<=cnt;i++)
-	{
-		int u=que2[i];
-		for (int j=g[u];j;j=e[j].next)
-		if (vis[e[j].v]!=x && (!huan[e[j].v] || e[j].v==root))
-		{
-			que2[++cnt]=e[j].v;
-			vis[e[j].v]=x;
-			dis[e[j].v]=dis[u]+1;
-		}
-	}
-	y=que2[cnt];
-	for (int i=1;i<=cnt;i++)
-	if (dis[que2[i]]==dis[que2[cnt]] && que2[i]<y)	y=que2[i];
-	return dis[que2[cnt]];
+    int cnt=1;
+    que2[1]=x;
+    vis[x]=x;
+    dis[x]=0;
+    for (int i=1;i<=cnt;i++)
+    {
+        int u=que2[i];
+        for (int j=g[u];j;j=e[j].next)
+        if (vis[e[j].v]!=x && (!huan[e[j].v] || e[j].v==root))
+        {
+            que2[++cnt]=e[j].v;
+            vis[e[j].v]=x;
+            dis[e[j].v]=dis[u]+1;
+        }
+    }
+    y=que2[cnt];
+    for (int i=1;i<=cnt;i++)
+    if (dis[que2[i]]==dis[que2[cnt]] && que2[i]<y)  y=que2[i];
+    return dis[que2[cnt]];
 }
 
 int main()
 {
-	int te;
-	scanf("%d",&te);
-	for (int ca=1;ca<=te;ca++)
-	{
-		scanf("%d",&n);
-		for (int i=1;i<=n;i++)
-		{
-			int x,y;
-			scanf("%d%d",&x,&y);
-			addedge(x,y);
-			addedge(y,x);
-			du[x]++;du[y]++;
-		}
-		for (int i=1;i<=n;i++)
-			huan[i]=true;
-		int cnt=0;
-		for (int i=1;i<=n;i++)
-		if (du[i]==1)
-		{
-			que[++cnt]=i;
-			huan[i]=false;
-		}
-		for (int i=1;i<=cnt;i++)
-		{
-			int u=que[i];
-			for (int j=g[u];j;j=e[j].next)
-			if (huan[e[j].v])
-			{
-				du[e[j].v]--;
-				if (du[e[j].v]==1)
-				{
-					que[++cnt]=e[j].v;
-					huan[e[j].v]=false;
-				}
-			}
-		}
-		ans=2*n;
-		for (int i=1;i<=n;i++)
-		if (huan[i])
-		{
-			fa[i]=0;
-			int tmp;
-			dfs(i,f[i],tmp);
-			f[i]--;
-			fn[i]=tmp;
-			int qwq=0;
-			int dp=zhijing(i,tmp,qwq);
-			update(n+cnt-dp,tmp,qwq);
-			que[1]=i;
-		}
-		cnt=1;
-		huan[que[1]]=false;
-		for (int i=1;i<=cnt;i++)
-		{
-			int u=que[i];
-			for (int j=g[u];j;j=e[j].next)
-			if (huan[e[j].v])
-			{
-				que[++cnt]=e[j].v;
-				huan[e[j].v]=false;
-				break;
-			}
-		}
-		for (int i=1;i<=cnt;i++)
-			que[i+cnt]=que[i];
-		int ha=f[que[1]]+1,fnn=fn[que[1]];
-		int ha2=-2*n,fnn2=0;
-		for (int i=2;i<=2*cnt;i++)
-		{
-			int tmp=f[que[i]]-i;
-			int _ha=ha,_fn=fnn;
-			if (fnn==fn[que[i]])	_ha=ha2,_fn=fnn2;
-			update(2*n-cnt-2-(tmp+_ha),_fn,fn[que[i]]);
-			if (f[que[i]]+i>ha || (f[que[i]]+i==ha && fn[que[i]]<fnn))
-			{
-				ha2=ha;
-				fnn2=fnn;
-				ha=f[que[i]]+i;
-				fnn=fn[que[i]];
-			}	else
-			if (f[que[i]]+i>ha2 || (f[que[i]]+i==ha2 && fn[que[i]]<fnn2))
-			{
-				ha2=f[que[i]]+i;
-				fnn2=fn[que[i]];
-			}
-		}
-		printf("Case #%d: %d %d %d\n",ca,ans,fn1,fn2);
-		clear();
-	}
-	return 0;
+    int te;
+    scanf("%d",&te);
+    for (int ca=1;ca<=te;ca++)
+    {
+        scanf("%d",&n);
+        for (int i=1;i<=n;i++)
+        {
+            int x,y;
+            scanf("%d%d",&x,&y);
+            addedge(x,y);
+            addedge(y,x);
+            du[x]++;du[y]++;
+        }
+        for (int i=1;i<=n;i++)
+            huan[i]=true;
+        int cnt=0;
+        for (int i=1;i<=n;i++)
+        if (du[i]==1)
+        {
+            que[++cnt]=i;
+            huan[i]=false;
+        }
+        for (int i=1;i<=cnt;i++)
+        {
+            int u=que[i];
+            for (int j=g[u];j;j=e[j].next)
+            if (huan[e[j].v])
+            {
+                du[e[j].v]--;
+                if (du[e[j].v]==1)
+                {
+                    que[++cnt]=e[j].v;
+                    huan[e[j].v]=false;
+                }
+            }
+        }
+        ans=2*n;
+        for (int i=1;i<=n;i++)
+        if (huan[i])
+        {
+            fa[i]=0;
+            int tmp;
+            dfs(i,f[i],tmp);
+            f[i]--;
+            fn[i]=tmp;
+            int qwq=0;
+            int dp=zhijing(i,tmp,qwq);
+            update(n+cnt-dp,tmp,qwq);
+            que[1]=i;
+        }
+        cnt=1;
+        huan[que[1]]=false;
+        for (int i=1;i<=cnt;i++)
+        {
+            int u=que[i];
+            for (int j=g[u];j;j=e[j].next)
+            if (huan[e[j].v])
+            {
+                que[++cnt]=e[j].v;
+                huan[e[j].v]=false;
+                break;
+            }
+        }
+        for (int i=1;i<=cnt;i++)
+            que[i+cnt]=que[i];
+        int ha=f[que[1]]+1,fnn=fn[que[1]];
+        int ha2=-2*n,fnn2=0;
+        for (int i=2;i<=2*cnt;i++)
+        {
+            int tmp=f[que[i]]-i;
+            int _ha=ha,_fn=fnn;
+            if (fnn==fn[que[i]])    _ha=ha2,_fn=fnn2;
+            update(2*n-cnt-2-(tmp+_ha),_fn,fn[que[i]]);
+            if (f[que[i]]+i>ha || (f[que[i]]+i==ha && fn[que[i]]<fnn))
+            {
+                ha2=ha;
+                fnn2=fnn;
+                ha=f[que[i]]+i;
+                fnn=fn[que[i]];
+            }   else
+            if (f[que[i]]+i>ha2 || (f[que[i]]+i==ha2 && fn[que[i]]<fnn2))
+            {
+                ha2=f[que[i]]+i;
+                fnn2=fn[que[i]];
+            }
+        }
+        printf("Case #%d: %d %d %d\n",ca,ans,fn1,fn2);
+        clear();
+    }
+    return 0;
 }
-
-~~~
+```
