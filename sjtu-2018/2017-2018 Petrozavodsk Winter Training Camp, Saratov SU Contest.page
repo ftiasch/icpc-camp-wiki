@@ -2,14 +2,14 @@ Solve:7 Rank:1
 
 补题任务： E(lbn) F(yzh) G(cc)
 
-E - 二分图，左部$m$个点代表每条边，右部$2n-2$个点代表入点和出点，做Hopcroft-Karp判断最大匹配是否是$2n-2$即可
+E -
+二分图，左部$m$个点代表每条边，右部$2n-2$个点代表入点和出点，做Hopcroft-Karp判断最大匹配是否是$2n-2$即可
 
 [code](http://codeforces.com/gym/101741/submission/40630080)
 
-
 G - 具体题意以忘，总之是基础的差分约束。
 
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int mod = 1e6;
@@ -131,4 +131,4 @@ int main() {
     }
     return 0;
 }
-~~~
+```
