@@ -1,0 +1,35 @@
+Solve:8 Rank:2
+
+补题任务：H(lbn)
+
+H - 将12类边加好后Floyd求出每个点管的点，将4类点加入求出不可能集合，最后判断一遍3、5类点是否满足条件
+
+~~~{.cpp}
+#include<bits/stdc++.h>
+#define N 102
+#define M 10101
+#define fr(i,n) for(int i=1;i<=n;i++)
+#define x X[i]
+#define y Y[i]
+using namespace std;
+bitset<N>f[N],g[N];
+int n,m,i,L,R,MD,AN,e[M],X[M],Y[M];
+bool ok(int m){
+    fr(i,n)f[i].reset(),f[i][i]=1,g[i].reset();
+    fr(i,m)if(e[i]<=2)if(f[x][y]=1,e[i]==2)f[y][x]=1;
+    fr(i,n)fr(j,n)if(f[j][i])f[j]|=f[i];
+    fr(i,m)if(e[i]==4)fr(j,n)g[j][y]=g[j][y]|f[j][x],g[j][x]=g[j][x]|f[j][y];
+    fr(i,m){
+        if(e[i]==3)if(f[x][y]&&f[y][x]||(f[x]&g[x]).any()&&(f[y]&g[y]).any())return 0;
+        if(e[i]==5)if(((f[x]|f[y])&(g[x]|g[y])).any())return 0;
+    }
+    return 1;
+}
+int main(){
+    for(;scanf("%d%d",&n,&m),n+m;){
+        fr(i,m)scanf("%d%d%d",&e[i],&X[i],&Y[i]);
+        for(L=1,R=m;L<=R;)if(ok(MD=L+R>>1))AN=MD,L=MD+1;else R=MD-1;
+        printf("%d\n",AN);
+    }
+}
+~~~
