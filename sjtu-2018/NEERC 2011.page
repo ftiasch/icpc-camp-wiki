@@ -1,13 +1,16 @@
-# 剧毒
+剧毒
+====
 
 G读入用了整数太搞笑，改后AC，代码就不贴了，没意思。
 
-# 补题
+补题
+====
 
 B(yzh) E(lbn)
 
 B
-```cpp
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -25,12 +28,12 @@ int l[100005];
 char tmp[105];
 
 int Len(int x) {
-	int ret = 0;
-	while (x) {
-		x /= 10;
-		ret++;
-	}
-	return ret;
+    int ret = 0;
+    while (x) {
+        x /= 10;
+        ret++;
+    }
+    return ret;
 }
 
 
@@ -41,73 +44,71 @@ stack <char> sta;
 vector <int> q;
 
 void init() {
-	int nn = 0;
-	for (int i = 1; i <= n; i++) {
-		if (!del[i]) a[++nn] = a[i];
-		else del[i] = 0;
-	}
-	n = nn;
-	int p = 0;
-	for (int i = 1; i <= n; i++) {
-		st[i] = p + 1; 
-		int x = a[i];
-		while (x) {
-			sta.push(char(x % 10 + '0'));
-			x /= 10;
-		}
-		while (!sta.empty()) c[++p] = sta.top(), sta.pop();
-	}
-	st[n + 1] = p + 1;
-	for (int i = 1; i <= 15; i++) c[++p] = 0;
-	q.clear();
+    int nn = 0;
+    for (int i = 1; i <= n; i++) {
+        if (!del[i]) a[++nn] = a[i];
+        else del[i] = 0;
+    }
+    n = nn;
+    int p = 0;
+    for (int i = 1; i <= n; i++) {
+        st[i] = p + 1; 
+        int x = a[i];
+        while (x) {
+            sta.push(char(x % 10 + '0'));
+            x /= 10;
+        }
+        while (!sta.empty()) c[++p] = sta.top(), sta.pop();
+    }
+    st[n + 1] = p + 1;
+    for (int i = 1; i <= 15; i++) c[++p] = 0;
+    q.clear();
 }
 
 int main() {
-	scanf("%d%d", &n, &K);
-	for (int i = 1; i <= n; i++) {
-		scanf("%d", a + i);
-		l[i] = Len(a[i]);
-	}
-	sort(l + 1, l + n + 1);
-	int L = K, len = l[K];
-	while (L && l[L] == len) L--;
-	m = K - L;
+    scanf("%d%d", &n, &K);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", a + i);
+        l[i] = Len(a[i]);
+    }
+    sort(l + 1, l + n + 1);
+    int L = K, len = l[K];
+    while (L && l[L] == len) L--;
+    m = K - L;
 
-	for (int i = 1; i <= n; i++) if (Len(a[i]) < len) del[i] = 1;
-	
-	while (init(), m) {
-		int p = 0;
-		for (int i = 1; i <= n; i++) if (st[i + 1] - st[i] == len) q.push_back(st[i]);
-		for (int i = 0; i < (int)q.size() - 1; i++) {
-			int s1 = q[i], j = s1, s2 = q[i + 1];
-			while (j < s2) {
-				if (c[j] < c[j + len]) {
-					p = s1;
-					break;
-				}
-				else if (c[j] > c[j + len]) break;
-				j++;
-			}
-			if (p) break;
-		}
-		if (!p) break;
-		for (int i = 1; i <= n; i++) if (st[i] == p) {del[i] = 1; break;}
-		m--;
-	}
-	for (int i = n; i && m; i--) {
-		if (Len(a[i]) == len) m--, del[i] = 1;
-	}
-	init();
-	puts(c + 1);
-	return 0;
+    for (int i = 1; i <= n; i++) if (Len(a[i]) < len) del[i] = 1;
+    
+    while (init(), m) {
+        int p = 0;
+        for (int i = 1; i <= n; i++) if (st[i + 1] - st[i] == len) q.push_back(st[i]);
+        for (int i = 0; i < (int)q.size() - 1; i++) {
+            int s1 = q[i], j = s1, s2 = q[i + 1];
+            while (j < s2) {
+                if (c[j] < c[j + len]) {
+                    p = s1;
+                    break;
+                }
+                else if (c[j] > c[j + len]) break;
+                j++;
+            }
+            if (p) break;
+        }
+        if (!p) break;
+        for (int i = 1; i <= n; i++) if (st[i] == p) {del[i] = 1; break;}
+        m--;
+    }
+    for (int i = n; i && m; i--) {
+        if (Len(a[i]) == len) m--, del[i] = 1;
+    }
+    init();
+    puts(c + 1);
+    return 0;
 }
-
 ```
-
 
 E - 枚举A后求解出B的最大最小值，前缀和统计一遍最小答案即可
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define N 266666
 #define fr(i,n) for(int i=1;i<=n;i++)
@@ -115,47 +116,47 @@ using namespace std;
 long long an,nv;
 int n,m,A,B,w,mx,s[N],L[N],R[N],MI[N],MX[N];
 void bd(int k,int l,int r){
-	if(l==r){MI[k]=L[l];MX[k]=R[l];return;}
-	int md=l+r>>1;
-	bd(k<<1,l,md);bd(k<<1|1,md+1,r);
-	MI[k]=min(MI[k<<1],MI[k<<1|1]);
-	MX[k]=max(MX[k<<1],MX[k<<1|1]);
+    if(l==r){MI[k]=L[l];MX[k]=R[l];return;}
+    int md=l+r>>1;
+    bd(k<<1,l,md);bd(k<<1|1,md+1,r);
+    MI[k]=min(MI[k<<1],MI[k<<1|1]);
+    MX[k]=max(MX[k<<1],MX[k<<1|1]);
 }
 int calmi(int k,int l,int r,int x,int y){
-	if(x<=l&&r<=y)return MI[k];
-	int md=l+r>>1,an=1e9;
-	if(x<=md)an=min(an,calmi(k<<1,l,md,x,y));
-	if(y>md)an=min(an,calmi(k<<1|1,md+1,r,x,y));
-	return an;
+    if(x<=l&&r<=y)return MI[k];
+    int md=l+r>>1,an=1e9;
+    if(x<=md)an=min(an,calmi(k<<1,l,md,x,y));
+    if(y>md)an=min(an,calmi(k<<1|1,md+1,r,x,y));
+    return an;
 }
 int calmx(int k,int l,int r,int x,int y){
-	if(x<=l&&r<=y)return MX[k];
-	int md=l+r>>1,an=0;
-	if(x<=md)an=max(an,calmx(k<<1,l,md,x,y));
-	if(y>md)an=max(an,calmx(k<<1|1,md+1,r,x,y));
-	return an;
+    if(x<=l&&r<=y)return MX[k];
+    int md=l+r>>1,an=0;
+    if(x<=md)an=max(an,calmx(k<<1,l,md,x,y));
+    if(y>md)an=max(an,calmx(k<<1|1,md+1,r,x,y));
+    return an;
 }
 void add(int lv,int rv){
-	nv+=(rv-lv+B)/B;
-	s[lv%B]++;
-	s[rv%B]--;
-	if(rv%B<lv%B)s[0]++;
+    nv+=(rv-lv+B)/B;
+    s[lv%B]++;
+    s[rv%B]--;
+    if(rv%B<lv%B)s[0]++;
 }
 int main(){
-	an=1e18;
-	scanf("%d%d%d%d",&n,&m,&A,&B);
-	fr(i,n)scanf("%d%d",&L[i],&R[i]);
-	bd(1,1,n);
-	for(int wa=1;wa<=A;wa++){
-		for(int i=0;i<=B;i++)s[i]=0;
-		nv=0;
-		add(calmi(1,1,n,1,wa),calmx(1,1,n,1,wa));
-		for(int i=wa+1;i<=n;i+=A)
-			add(calmi(1,1,n,i,min(i+A-1,n)),calmx(1,1,n,i,min(i+A-1,n)));
-		w=0,mx=1e9;
-		for(int i=0;i<B;i++)w+=s[i],mx=min(mx,w);
-		an=min(an,nv+mx);
-	}
-	printf("%lld\n",an);
+    an=1e18;
+    scanf("%d%d%d%d",&n,&m,&A,&B);
+    fr(i,n)scanf("%d%d",&L[i],&R[i]);
+    bd(1,1,n);
+    for(int wa=1;wa<=A;wa++){
+        for(int i=0;i<=B;i++)s[i]=0;
+        nv=0;
+        add(calmi(1,1,n,1,wa),calmx(1,1,n,1,wa));
+        for(int i=wa+1;i<=n;i+=A)
+            add(calmi(1,1,n,i,min(i+A-1,n)),calmx(1,1,n,i,min(i+A-1,n)));
+        w=0,mx=1e9;
+        for(int i=0;i<B;i++)w+=s[i],mx=min(mx,w);
+        an=min(an,nv+mx);
+    }
+    printf("%lld\n",an);
 }
-~~~
+```
