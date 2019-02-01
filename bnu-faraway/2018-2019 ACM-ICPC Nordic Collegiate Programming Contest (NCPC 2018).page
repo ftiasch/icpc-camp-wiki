@@ -1,0 +1,118 @@
+Info
+====
+
+Date:2018.10.23
+
+[Link](http://codeforces.com/gym/101933)
+
+Solutions
+=========
+
+A Altruistic Amphibians
+-----------------------
+
+unsolved
+
+B Baby Bites
+------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+C Code Cleanups
+---------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+D Delivery Delays
+-----------------
+
+upsolved by ghc
+
+------------------------------------------------------------------------
+
+ghc's solution
+
+二分套dp。$dp[i]$表示从店里出发，送完前$i$份外卖且回到店里的最早时间，有
+
+$dp[i]=min_{k<i} \{ max(dp[k],t[i])+f(k+1,i) \}$
+
+其中$f(x,y)$表示从店里出发，按顺序送完第$x$至第$y$份外卖后回到店里的最短时间，
+
+$f(x,y)=dis[1][x]+dis[x][x+1]+dis[x+1][x+2]+...+dis[y-1][y]+dis[y][1]$
+
+二分答案后，认为每份外卖订单的等待时间不能超过$mid$。dp转移时会对k产生限制，即$max(dp[k],t[i])+dis[1][k+1]+dis[k+1][k+2]+...+dis[j-1][j] < s[j]+mid , k+1 \leq j \leq i$
+
+从后往前枚举k，即可实现对上述限制的$O(1)$更新，dp复杂度$O(n^2)$
+
+E Explosion Exploit
+-------------------
+
+solved by gjy
+
+------------------------------------------------------------------------
+
+gjy's solution
+
+F Firing the Phaser
+-------------------
+
+unsolved
+
+G Game Scheduling
+-----------------
+
+unsolved
+
+H House Lawn
+------------
+
+solved by gjy
+
+------------------------------------------------------------------------
+
+gjy's solution
+
+I Intergalactic Bidding
+-----------------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+J Jumbled String
+----------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+K King's Colors
+---------------
+
+solved by
+
+'s solution
+
+Replay
+======
+
+ghc
+---
+
+gjy
+---
+
+sk
+--
