@@ -1,0 +1,19 @@
+Back to [../zls]()
+
+# A. Pizza Separation
+n^2^ brute force
+
+# B. XK Segments
+WA once, be careful of equality in binary search.
+
+# C. Square Subsets
+Waste some time. Gaussian elimination is the easiest solution.  
+DP is also OK, should write faster.
+
+# D. String Mark
+Simple counting, just list the condition and code.  
+**Do not be afraid of the coding!!**
+
+# E. Eyes Closed
+Classical segment tree problem.  
+Be careful when writing `pushdown` and whole interval case in `update`, if there are multiple lazy tags.
