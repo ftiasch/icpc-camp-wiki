@@ -1,0 +1,134 @@
+Solve:7 Rank:1
+
+补题任务： E(lbn) F(yzh) G(cc)
+
+E - 二分图，左部$m$个点代表每条边，右部$2n-2$个点代表入点和出点，做Hopcroft-Karp判断最大匹配是否是$2n-2$即可
+
+[code](http://codeforces.com/gym/101741/submission/40630080)
+
+
+G - 具体题意以忘，总之是基础的差分约束。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int mod = 1e6;
+const double oo = 1e9;
+const double eps = 1e-10;
+const int LEN = 1e5 + 5;
+int i, j, k, n, m, s, t, tot;
+int head[LEN], a[LEN], isure[LEN], inq[LEN], q[mod + 5], vis[LEN];
+double dis[LEN];
+struct node {
+    int x, y, z;
+} c[LEN];
+struct edge {
+    int vet, next;
+    double len;
+} E[LEN * 2];
+int getint() {
+    char ch = getchar();
+    while (ch != '?' && ch != '-' && (ch > '9' || ch < '0')) {
+        ch = getchar();
+    }
+    if (ch == '?') {
+        return (int)oo;
+    }
+    int f = 1, res = 0;
+    if (ch == '-') {
+        f = -1;
+        ch = getchar();
+    }
+    while ('0' <= ch && ch <= '9') {
+        res = res * 10 + ch - '0';
+        ch = getchar();
+    }
+    return f * res;
+}
+void add(int u, int v, double c) {
+    E[++tot] = (edge){v, head[u], c};
+    head[u] = tot;
+}
+bool check(double T) {
+    for (int i = 1; i <= n; i++) {
+        head[i] = -1;
+        vis[i] = 0;
+        dis[i] = oo;
+        inq[i] = 0;
+        if (isure[i] == 1) {
+            dis[i] = a[i];
+        }
+    }
+    tot = -1;
+    for (int i = 1; i <= m; i++) {
+        add(c[i].y, c[i].x, T - c[i].z);
+    }
+    int qh = 0, qt = 0;
+    for (int i = 1; i <= n; i++) {
+        q[++qt] = i;
+        inq[i] = 1;
+    }
+    while (qh != qt) {
+        qh = qh + 1 == mod ? 0 : qh + 1;
+        int u = q[qh];
+        inq[u] = 0;
+        for (int e = head[u]; e != -1; e = E[e].next) {
+            int v = E[e].vet;
+            if (dis[v] >= dis[u] + E[e].len) {
+                dis[v] = dis[u] + E[e].len;
+                if (inq[v] == 0) {
+                    vis[v]++;
+                    if (vis[v] > n) {
+                        return false;
+                    }
+                    inq[v] = true;
+                    qt = qt + 1 == mod ? 0 : qt + 1;
+                    q[qt] = v;
+                }
+            }
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        if (isure[i] == 1 && fabs(dis[i] - a[i]) > eps) {
+            return false;
+        }
+        if (fabs(dis[i]) > oo) {
+            return false;
+        }
+    }
+    return true;
+}
+int main() {
+    while (scanf("%d %d", &n, &m) != EOF) {
+        for (int i = 1; i <= n; i++) {
+            a[i] = getint();
+            if (a[i] == oo) {
+                isure[i] = 0;
+            } else {
+                isure[i] = 1;
+            }
+        }
+        for (int i = 1; i <= m; i++) {
+            int x, y, z;
+            scanf("%d %d %d", &x, &y, &z);
+            c[i] = (node){x, y, z};
+        }
+        double l = 0, r = oo * 4;
+        while (r - l > eps) {
+            double mid = (l + r) / 2;
+            if (check(mid)) {
+                r = mid;
+            } else {
+                l = mid;
+            }
+        }
+        check(l);
+        printf("%.15f\n", l);
+        for (int i = 1; i < n; i++) {
+            printf("%.15f ", dis[i]);
+        }
+        printf("%.15f\n", dis[n]);
+    }
+    return 0;
+}
+~~~
