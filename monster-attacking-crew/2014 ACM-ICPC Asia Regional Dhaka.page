@@ -1,10 +1,12 @@
-##Contest Info
+Contest Info
+------------
 
 date: 2018.08.05 12:00-17:00
 
-##Solutions
+Solutions
+---------
 
-###I. Volume of Revolution
+### I. Volume of Revolution
 
 **题目大意：**求一个多项式旋转体的体积（stacks是x轴的分段，slices是将旋转的圆弧分成多少节）
 
