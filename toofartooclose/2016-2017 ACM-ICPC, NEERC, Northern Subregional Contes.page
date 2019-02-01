@@ -1,37 +1,52 @@
-# A. Anniversary Cake
+A. Anniversary Cake
+===================
 
-# B. Boys and Girls
+B. Boys and Girls
+=================
 
-# C. CodeCoder vs TopForces
+C. CodeCoder vs TopForces
+=========================
 
-# D. Digital Addition [zlc1114补]
+D. Digital Addition \[zlc1114补\]
+=================================
+
 题意是问是否存在一个加法表达式使得它变成计算器上那样的形式是给定的样子
 
 大模拟(其实也不太大,我开始看错题是主要原因),就保存最右边,是否进位的条件下是否可行就行了,复杂度$O(n*16(右侧的可能状况)*2*10*10)$枚举就好
 
-写了200行(包括debug),看错条件疯狂eat s**t,两个小时才写完,比赛也结束了
+写了200行(包括debug),看错条件疯狂eat s\*\*t,两个小时才写完,比赛也结束了
 
-# E. Easy Reading
+E. Easy Reading
+===============
 
-# F. Folding
+F. Folding
+==========
 
-# G. Gangsters in Central City [zlc1114]
+G. Gangsters in Central City \[zlc1114\]
+========================================
+
 维护根节点出发的所有块的lca(按dfs序来的话,每块的lca就是dfs序最小和最大的lca),然后再数一下每块的叶节点个数,总个数啥的乱搞就好
 
 做的时候想多了导致卡了20min左右才开始写
 
-# H. Hard Cuts
+H. Hard Cuts
+============
 
-# I. Integral Polygons
+I. Integral Polygons
+====================
 
-# J. Java2016 [zlc1114]
+J. Java2016 \[zlc1114\]
+=======================
+
 卡题意了...枚举题意过的
 
 一眼就看出肯定先构造个2然后按二进制来
 
-# K. King's Heir
+K. King's Heir
+==============
 
-# Summary
+Summary
+=======
 
 **zlc1114:**
 
@@ -39,4 +54,4 @@
 
 2.大模拟写的不够快,开场去看H,想了个错误的方法就去写了,可能再想想会好一些
 
-****
+------------------------------------------------------------------------
