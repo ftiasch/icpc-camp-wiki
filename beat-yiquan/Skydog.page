@@ -1,0 +1,74 @@
+[Front Page]()
+
+todo
+====
+
+-   **Topic**
+    -   数据结构
+    -   字符串
+    -   博弈
+-   **Learn**
+    -   [白书字符串]()
+    -   [白书数据结构]()
+-   **Code Library**
+    -   Binary Search Tree
+    -   String
+
+Skydog Personal Training
+========================
+
+**Legend**:\
+`O` - AC\
+`X` - Tried but failed\
+`.` - Pending\
+`!` - AC without code\
+`Ø` - AC after contest
+
+  **Contest**                **Date**     **Rank**   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  -------------------------- ------------ ---------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  [CF Round 448]() (Div 2)   2017-10-27   Na         `O`   `O`   `O`   `O`   `O`   
+
+Nice problems
+=============
+
+-   **CF**\
+-   [CF 894B](http://codeforces.com/problemset/problem/894/B)\
+-   [CF 891A](http://codeforces.com/problemset/problem/891/A)\
+-   [CF 864D](http://codeforces.com/problemset/problem/864/D)
+-   [CF 797C](http://codeforces.com/problemset/problem/797/C)
+-   [CF 797D](http://codeforces.com/problemset/problem/797/D)\
+-   [CF 896B](http://codeforces.com/problemset/problem/896/B)\
+-   [CF 891B](http://codeforces.com/problemset/problem/891/B)
+
+-   **HYSBZ**\
+-   [HYSBZ 2957](http://www.lydsy.com/JudgeOnline/problem.php?id=2957)
+
+-   **UVA**\
+-   [UVA 01519](https://vjudge.net/problem/UVA-1519)
+
+-   **Hackerrank**\
+-   [Car
+    Show](https://www.hackerrank.com/contests/101hack52/challenges/car-show)
+
+Undone problems
+===============
+
+-   [CF 864E](http://codeforces.com/problemset/problem/864/E)
+-   [CF 864F](http://codeforces.com/problemset/problem/864/F)
+-   [CF 797E](http://codeforces.com/problemset/problem/797/E)
+-   [CF 797F](http://codeforces.com/problemset/problem/797/F)
+-   [CF 896C](http://codeforces.com/problemset/problem/896/C)
+-   [CF 896D](http://codeforces.com/problemset/problem/896/D)
+-   [CF 896E](http://codeforces.com/problemset/problem/896/E)
+
+-   [Costly
+    Intervals](https://www.hackerrank.com/contests/101hack52/challenges/costly-intervals)\
+-   [Impressive
+    Tree](https://www.hackerrank.com/contests/101hack52/challenges/impressive-tree)
+
+Todos
+=====
+
+-   人工栈模拟dfs
+-   [分块]()
+
