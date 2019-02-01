@@ -1,0 +1,197 @@
+Solve:8 Rank:2
+
+补题任务：C*(yzh) J(cc)
+
+J 一堆计算几何套起来就好了，考验模板。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int LEN = 1e6 + 5;
+typedef long double ld;
+ld sqr(ld x) {
+	return x * x;
+}
+const ld eps = 1e-8;
+const ld pi = acos(-1);
+int dcmp (ld x) {
+	if (fabs(x) < eps) return 0;
+	else if (x > 0) return 1;
+	else return -1;
+}
+int n, m, X, Y, tot;
+struct point {
+	ld x, y;
+	point (ld x = 0, ld y = 0) : x(x), y(y) {}
+	ld len2() {
+		return sqr(x) + sqr(y);
+	}
+	ld len() {
+	    return sqrt(len2());
+	}
+	point rot90() {
+		return point(-y, x);
+	}
+	point _rot90() {
+		return point(y, -x);
+	}
+	point unit() {
+		ld d = len();
+		return point(x / d, y / d);
+	}
+};
+point operator + (point x, point y) {
+	return point(x.x + y.x, x.y + y.y);
+}
+point operator - (point x, point y) {
+	return point(x.x - y.x, x.y - y.y);
+}
+point operator * (point x, ld t) {
+	return point(x.x * t, x.y * t);
+}
+point operator / (point x, ld t) {
+	return point(x.x / t, x.y / t);	
+}
+point movepoint(point x, ld a, ld r) {
+	return x + point(cos(a) * r, sin(a) * r);
+}
+ld dist2(point x, point y) {
+	return (x - y).len2();
+}
+ld dist(point x, point y) {
+	return (x - y).len();
+}
+ld cross(point x, point y) {
+	return x.x * y.y - x.y * y.x;
+}
+ld dot(point x, point y) {
+	return x.x * y.x + x.y * y.y;
+}
+struct line {
+	point x, y;
+	line (point x = point(), point y = point()) : x(x), y(y) {}
+} a[LEN];
+struct cir {
+	point c;
+	ld r;
+	cir (point c = point(), ld r = 0) : c(c), r(r) {}
+} c[LEN];
+vector <line> cir_cir_tan(cir a, cir b) {
+	vector <line> res;
+	if (dcmp(a.r - b.r) < 0) swap(a, b);
+	ld d = dist(a.c, b.c);
+	ld diff = a.r - b.r;
+	ld sum = a.r + b.r;
+	point t = b.c - a.c;
+	ld bas = atan2(t.y, t.x);
+	ld ang = acos(diff / d);
+	res.push_back(line(movepoint(a.c, bas + ang, a.r), movepoint(b.c, bas + ang, b.r)));
+	res.push_back(line(movepoint(a.c, bas - ang, a.r), movepoint(b.c, bas - ang, b.r)));
+	if (dcmp(d - sum) == 0) {
+		point p = movepoint(a.c, bas, a.r);
+		res.push_back(line(p, p + t.rot90()));
+	} else if (dcmp(d - sum) > 0) {
+		ang = acos(sum / d);
+		res.push_back(line(movepoint(a.c, bas + ang, a.r), movepoint(b.c, bas + ang + pi, b.r)));
+		res.push_back(line(movepoint(a.c, bas - ang, a.r), movepoint(b.c, bas - ang + pi, b.r)));
+	}
+	return res;
+}
+int parallel(line x, line y) {
+	return dcmp(cross(x.y - x.x, y.y - y.x)) == 0;
+}
+point line_intersect(line x, line y) {
+	ld s1 = cross(x.y - x.x, y.x - x.x), s2 = cross(x.y - x.x, y.y - x.x);
+	return (y.x * s2 - y.y * s1) / (s2 - s1);
+}
+point __CCI(cir x, cir y) {
+	point r = (y.c - x.c).unit();
+	ld d = dist(x.c, y.c);
+	ld t = 0.5 * ((sqr(x.r) - sqr(y.r)) / d + d);
+	ld h = sqrt(sqr(x.r) - sqr(t));
+	return x.c + r * t + r.rot90() * h;
+}
+vector <point> cir_cir_intersect(cir x, cir y) {
+	vector <point> res;
+	res.push_back(__CCI(x, y));
+	res.push_back(__CCI(y, x));
+	return res;
+}
+cir make_cir(point x, point y) {
+	point c = (x + y) / 2.0;
+	ld r = dist(x, y) / 2.0;
+	return cir(c, r);
+}
+vector <line> cir_point_tan(point p, cir a) {
+	vector <line> res;
+	if (dcmp(dist2(p, a.c) - sqr(a.r)) < 0) return res;
+	else if (dcmp(dist2(p, a.c) - sqr(a.r)) == 0) {
+		point t = p - a.c;
+		res.push_back(line(p, p + t.rot90()));
+		res.push_back(line(p, p + t._rot90()));
+	} else {
+		cir c = make_cir(p, a.c);
+		vector <point> d = cir_cir_intersect(a, c);
+		for (int i = 0; i < d.size(); i++) {
+			res.push_back(line(p, d[i]));
+		}
+	}
+	return res;
+}
+ld point_to_line(point x, line y) {
+	return fabs(cross(y.y - y.x, x - y.x)) / dist(y.x, y.y);
+}
+ld point_to_ray(point x, line y) {
+	if (dcmp(dot(y.y - y.x, x - y.x)) > 0) return point_to_line(x, y);
+	else return dist(x, y.x);
+}
+int check_line(const line &L) {
+	for (int i = 1; i <= n; i++) {
+		if (dcmp(c[i].r - point_to_ray(c[i].c, L)) > 0) return 1;
+	}
+	return 0;
+}
+int check(point p) {
+	if (dcmp(p.x) < 0 || dcmp(p.x - X) > 0 || dcmp(p.y) < 0 || dcmp(p.y - Y) > 0) return 0;
+	for (int i = 1; i <= n; i++) {
+		vector <line> L = cir_point_tan(p, c[i]);
+		for (int j = 0; j < L.size(); j++) {
+			if (check_line(L[j])) return 0;
+		}
+	}
+	return 1;
+}
+int main() {
+	freopen("zen.in","r",stdin);
+	freopen("zen.out","w",stdout);
+	scanf("%d %d %d", &n, &X, &Y);
+	a[++tot] = line(point(0, 0), point(X, 0));
+	a[++tot] = line(point(X, 0), point(X, Y));
+	a[++tot] = line(point(X, Y), point(0, Y));
+	a[++tot] = line(point(0, Y), point(0, 0));
+	for (int i = 1; i <= n; i++) {
+		int x, y, r;
+		scanf("%d %d %d", &x, &y, &r);
+		c[i] = cir(point(x, y), r);
+	}
+	for (int i = 1; i < n; i++) {
+		for (int j = i + 1; j <= n; j++) {
+			vector <line> L = cir_cir_tan(c[i], c[j]);
+			for (int k = 0; k < L.size(); k++) a[++tot] = L[k];
+		}
+    }
+	for (int i = 1; i < tot; i++) {
+		for (int j = i + 1; j <= tot; j++) {
+			if (!parallel(a[i], a[j])) {
+				point p = line_intersect(a[i], a[j]);
+				if (check(p)) {
+					printf("%.15f %.15f\n", (double)p.x, (double)p.y);
+					return 0;
+				}
+			}
+		}
+	}
+	puts("No Zen");
+	return 0;
+}
+~~~
