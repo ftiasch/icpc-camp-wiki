@@ -1,7 +1,8 @@
-补题：A(yzh) E*(cc) G(lbn)
+补题：A(yzh) E\*(cc) G(lbn)
 
 A
-```cpp
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -20,44 +21,43 @@ int dp[N][N][N * N];
 
 
 int main() {
-	read(n); read(K);
-	for (int i = 1; i <= n; i++) read(c[i]);
-	for (int i = 1; i <= n; i++) read(a[i]);
-	K = min(K, 1600);
+    read(n); read(K);
+    for (int i = 1; i <= n; i++) read(c[i]);
+    for (int i = 1; i <= n; i++) read(a[i]);
+    K = min(K, 1600);
 
-	for (int t = 0; t <= n; t++) {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j <= K; j++) {
-				dp[t][i][j] = -INF;
-			}
-		}
-	}
+    for (int t = 0; t <= n; t++) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j <= K; j++) {
+                dp[t][i][j] = -INF;
+            }
+        }
+    }
 
-	dp[n][0][0] = 0;
-	for (int t = n; t; t--) {
-		for (int i = 0; i < N; i++) 
-			for (int j = 0; j <= K; j++) if (dp[t][i][j] >= 0) {
-				for (int k = min(40, i + min((K - i) / c[t], a[t])); k >= i; k--) {
-					upd(dp[t - 1][k][j + (k - i) * c[t]], dp[t][i][j] + min(k, a[t]) * c[t]);
-				}
-			}
-	}
-	
-	int ans = 0;
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j <= K; j++) {
-			ans = max(ans, dp[0][i][j]);
-		}
-	}
-	printf("%d\n", ans);
+    dp[n][0][0] = 0;
+    for (int t = n; t; t--) {
+        for (int i = 0; i < N; i++) 
+            for (int j = 0; j <= K; j++) if (dp[t][i][j] >= 0) {
+                for (int k = min(40, i + min((K - i) / c[t], a[t])); k >= i; k--) {
+                    upd(dp[t - 1][k][j + (k - i) * c[t]], dp[t][i][j] + min(k, a[t]) * c[t]);
+                }
+            }
+    }
+    
+    int ans = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j <= K; j++) {
+            ans = max(ans, dp[0][i][j]);
+        }
+    }
+    printf("%d\n", ans);
 }
-
 ```
 
+G -
+不会求凸包T\_T，换了个别人的板子，再抄个凸包快速询问类求两个切点就过了
 
-G - 不会求凸包T_T，换了个别人的板子，再抄个凸包快速询问类求两个切点就过了
-
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define LL long long
 #define PB push_back
@@ -68,8 +68,8 @@ int sgn(LL x){return x<0?-1:x>0;}
 int cmp(LL x,LL y){return sgn(x-y);}
 LL sqr(LL x){return x*x;}
 struct P{
-	LL x,y;
-	P(LL x=0,LL y=0):x(x),y(y){}
+    LL x,y;
+    P(LL x=0,LL y=0):x(x),y(y){}
 };
 bool operator<(P a,P b){return cmp(a.x,b.x)==0?cmp(a.y,b.y)<0:cmp(a.x,b.x)<0;}
 bool operator>(P a,P b){return cmp(a.x,b.x)==0?cmp(a.y,b.y)>0:cmp(a.x,b.x)>0;}
@@ -83,112 +83,112 @@ bool turn_left(P a,P b,P c){return sgn(cj(b-a,c-a))>=0;}
 bool turn_right(P a,P b,P c){return sgn(cj(b-a,c-a))<=0;}
 vector<P>A,up,dw;
 vector<P> convex_hull(const vector<P> &p) {
-	vector<P> ans, S;
-	for (int i = 0; i < (int)p.size(); ++i) {
-		while ((int)S.size() >= 2 && sgn(cj(S.back()-S[S.size() - 2], p[i]-S[S.size() - 2])) <= 0) S.pop_back();
-		S.push_back(p[i]);
-	}
-	ans = S;
-	dw = ans;
-	S.clear();
-	for (int i = p.size() - 1; i >= 0; --i) {
-		while ((int)S.size() >= 2 && sgn(cj(S.back()-S[S.size() - 2], p[i]-S[S.size() - 2])) <= 0) S.pop_back();
-		S.push_back(p[i]);
-	}
-	up = S;
-	for (int i = 1; i + 1 < (int)S.size(); ++i)
-		ans.push_back(S[i]);
-	return ans;
+    vector<P> ans, S;
+    for (int i = 0; i < (int)p.size(); ++i) {
+        while ((int)S.size() >= 2 && sgn(cj(S.back()-S[S.size() - 2], p[i]-S[S.size() - 2])) <= 0) S.pop_back();
+        S.push_back(p[i]);
+    }
+    ans = S;
+    dw = ans;
+    S.clear();
+    for (int i = p.size() - 1; i >= 0; --i) {
+        while ((int)S.size() >= 2 && sgn(cj(S.back()-S[S.size() - 2], p[i]-S[S.size() - 2])) <= 0) S.pop_back();
+        S.push_back(p[i]);
+    }
+    up = S;
+    for (int i = 1; i + 1 < (int)S.size(); ++i)
+        ans.push_back(S[i]);
+    return ans;
 }
 void print(LL x){
-	bool ff;
-	const LL MOD=1e18;
-	if(x%2==1)ff=1;else ff=0;
-	x/=2;
-	printf("%lld",x);
-	if(ff)printf(".5");else printf(".0");
-	puts("");
+    bool ff;
+    const LL MOD=1e18;
+    if(x%2==1)ff=1;else ff=0;
+    x/=2;
+    printf("%lld",x);
+    if(ff)printf(".5");else printf(".0");
+    puts("");
 }
 struct Convex{
-	int n;
-	LL s[N];
-	vector<P>A;
-	Convex(vector<P>_A):A(_A){
-		n=A.size();
-		int p=0,i;
-		s[0]=cj(A.back(),A[0]);
-		for(int i=1;i<n;i++)s[i]=s[i-1]+cj(A[i-1],A[i]);
-	}
-	void update(P p,int id,int &v0,int &v1){
-		if(cj(A[v0]-p,A[id]-p)>0)v0=id;
-		if(cj(A[v1]-p,A[id]-p)<0)v1=id;
-	}
-	void fd(int l,int r,P p,int&v0,int&v1){
-		if(l==r)return;
-		update(p,l%n,v0,v1);
-		int sl=sgn(cj(A[l%n]-p,A[(l+1)%n]-p)),md,sm;
-		for(;l+1<r;){
-			md=l+r>>1;
-			sm=sgn(cj(A[md%n]-p,A[(md+1)%n]-p));
-			if(sm==sl)l=md;else r=md;
-		}
-		update(p,r%n,v0,v1);
-	}
-	bool contain(P p){
-		if(p.x<dw[0].x||p.x>dw.back().x)return 0;
-		int id=lower_bound(dw.begin(),dw.end(),P(p.x,-INF))-dw.begin();
-		if(dw[id].x==p.x){
-			if(dw[id].y>p.y)return 0;
-		}else if(cj(dw[id-1]-p,dw[id]-p)<0)return 0;
-		id=lower_bound(up.begin(),up.end(),P(p.x,INF),greater<P>())-up.begin();
-		if(up[id].x==p.x){
-			if(up[id].y<p.y)return 0;
-		}else if(cj(up[id-1]-p,up[id]-p)<0)return 0;
-		return 1;
-	}
-	bool get_tangent(P p,int&v0,int&v1){
-		if(contain(p))return print(s[n-1]),0;
-		v0=v1=0;
-		int id=lower_bound(dw.begin(),dw.end(),p)-dw.begin(),VA=dw.size(),VB=up.size();
-		fd(0,id,p,v0,v1);fd(id,VA,p,v0,v1);
-		id=lower_bound(up.begin(),up.end(),p,greater<P>())-up.begin();
-		fd(VA-1,VA-1+id,p,v0,v1);
-		fd(VA-1+id,VA-1+VB,p,v0,v1);
-		LL ans=s[n-1];
-		if(v0<v1){
-			ans-=s[v1]-s[v0];
-		}else{
-			ans-=s[v1];
-			ans-=(s[n-1]-s[v0]);
-		}
-		ans+=cj(A[v0],p);ans+=cj(p,A[v1]);
-		print(ans);
-		return 1;
-	}
+    int n;
+    LL s[N];
+    vector<P>A;
+    Convex(vector<P>_A):A(_A){
+        n=A.size();
+        int p=0,i;
+        s[0]=cj(A.back(),A[0]);
+        for(int i=1;i<n;i++)s[i]=s[i-1]+cj(A[i-1],A[i]);
+    }
+    void update(P p,int id,int &v0,int &v1){
+        if(cj(A[v0]-p,A[id]-p)>0)v0=id;
+        if(cj(A[v1]-p,A[id]-p)<0)v1=id;
+    }
+    void fd(int l,int r,P p,int&v0,int&v1){
+        if(l==r)return;
+        update(p,l%n,v0,v1);
+        int sl=sgn(cj(A[l%n]-p,A[(l+1)%n]-p)),md,sm;
+        for(;l+1<r;){
+            md=l+r>>1;
+            sm=sgn(cj(A[md%n]-p,A[(md+1)%n]-p));
+            if(sm==sl)l=md;else r=md;
+        }
+        update(p,r%n,v0,v1);
+    }
+    bool contain(P p){
+        if(p.x<dw[0].x||p.x>dw.back().x)return 0;
+        int id=lower_bound(dw.begin(),dw.end(),P(p.x,-INF))-dw.begin();
+        if(dw[id].x==p.x){
+            if(dw[id].y>p.y)return 0;
+        }else if(cj(dw[id-1]-p,dw[id]-p)<0)return 0;
+        id=lower_bound(up.begin(),up.end(),P(p.x,INF),greater<P>())-up.begin();
+        if(up[id].x==p.x){
+            if(up[id].y<p.y)return 0;
+        }else if(cj(up[id-1]-p,up[id]-p)<0)return 0;
+        return 1;
+    }
+    bool get_tangent(P p,int&v0,int&v1){
+        if(contain(p))return print(s[n-1]),0;
+        v0=v1=0;
+        int id=lower_bound(dw.begin(),dw.end(),p)-dw.begin(),VA=dw.size(),VB=up.size();
+        fd(0,id,p,v0,v1);fd(id,VA,p,v0,v1);
+        id=lower_bound(up.begin(),up.end(),p,greater<P>())-up.begin();
+        fd(VA-1,VA-1+id,p,v0,v1);
+        fd(VA-1+id,VA-1+VB,p,v0,v1);
+        LL ans=s[n-1];
+        if(v0<v1){
+            ans-=s[v1]-s[v0];
+        }else{
+            ans-=s[v1];
+            ans-=(s[n-1]-s[v0]);
+        }
+        ans+=cj(A[v0],p);ans+=cj(p,A[v1]);
+        print(ans);
+        return 1;
+    }
 };
 int n,m,v0,v1;
 int main(){
-	scanf("%d%d",&n,&m);
-	vector<P>_A;
-	for(int i=1;i<=n;i++){
-		int x,y;
-		scanf("%d%d",&x,&y);
-		_A.PB(P(x,y));
-	}
-	sort(_A.begin(),_A.end());
-	Convex A(convex_hull(_A));
-	for(;m--;){
-		int x,y;
-		scanf("%d%d",&x,&y);
-		P o(x,y);
-		A.get_tangent(o,v0,v1);
-	}
+    scanf("%d%d",&n,&m);
+    vector<P>_A;
+    for(int i=1;i<=n;i++){
+        int x,y;
+        scanf("%d%d",&x,&y);
+        _A.PB(P(x,y));
+    }
+    sort(_A.begin(),_A.end());
+    Convex A(convex_hull(_A));
+    for(;m--;){
+        int x,y;
+        scanf("%d%d",&x,&y);
+        P o(x,y);
+        A.get_tangent(o,v0,v1);
+    }
 }
-~~~
+```
 
 A: 代码确实没写挂，因为 DP 假了。
 
-```cpp
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -207,37 +207,37 @@ int dp[N][N][N * N];
 
 
 int main() {
-	read(n); read(K);
-	for (int i = 1; i <= n; i++) read(c[i]);
-	for (int i = 1; i <= n; i++) read(a[i]);
-	K = min(K, 1600);
+    read(n); read(K);
+    for (int i = 1; i <= n; i++) read(c[i]);
+    for (int i = 1; i <= n; i++) read(a[i]);
+    K = min(K, 1600);
 
-	for (int t = 0; t <= n; t++) {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j <= K; j++) {
-				dp[t][i][j] = -INF;
-			}
-		}
-	}
+    for (int t = 0; t <= n; t++) {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j <= K; j++) {
+                dp[t][i][j] = -INF;
+            }
+        }
+    }
 
-	dp[n][0][0] = 0;
-	for (int t = n; t; t--) {
-		for (int i = 0; i < N; i++) 
-			for (int j = 0; j <= K; j++) if (dp[t][i][j] >= 0) {
-			//	fprintf(stderr, "dp %d %d %d : %d\n", t, i, j, dp[t][i][j]);
-				for (int k = min(40, i + min((K - i) / c[t], a[t])); k >= i; k--) {
-			//		fprintf(stderr, "dp %d %d %d <- %d %d %d\n", t - 1, k, j + (k - i) * c[t], t, i, j);
-					upd(dp[t - 1][k][j + (k - i) * c[t]], dp[t][i][j] + min(k, a[t]) * c[t]);
-				}
-			}
-	}
-	
-	int ans = 0;
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j <= K; j++) {
-			ans = max(ans, dp[0][i][j]);
-		}
-	}
-	printf("%d\n", ans);
+    dp[n][0][0] = 0;
+    for (int t = n; t; t--) {
+        for (int i = 0; i < N; i++) 
+            for (int j = 0; j <= K; j++) if (dp[t][i][j] >= 0) {
+            //  fprintf(stderr, "dp %d %d %d : %d\n", t, i, j, dp[t][i][j]);
+                for (int k = min(40, i + min((K - i) / c[t], a[t])); k >= i; k--) {
+            //      fprintf(stderr, "dp %d %d %d <- %d %d %d\n", t - 1, k, j + (k - i) * c[t], t, i, j);
+                    upd(dp[t - 1][k][j + (k - i) * c[t]], dp[t][i][j] + min(k, a[t]) * c[t]);
+                }
+            }
+    }
+    
+    int ans = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j <= K; j++) {
+            ans = max(ans, dp[0][i][j]);
+        }
+    }
+    printf("%d\n", ans);
 }
 ```
