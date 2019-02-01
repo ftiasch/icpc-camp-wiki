@@ -1,0 +1,91 @@
+Info
+====
+
+Date:2018.10.18
+
+[Link](https://vjudge.net/contest/263336#overview)
+
+Solutions
+=========
+
+A An Easy Physics Problem
+-------------------------
+
+solved by sk
+
+B Binary Tree
+-------------
+
+solved by ghc,sk
+
+C Colorful Tree
+---------------
+
+unsolved
+
+------------------------------------------------------------------------
+
+'s solution
+
+D Discover Water Tank
+---------------------
+
+solved by gjy
+
+------------------------------------------------------------------------
+
+gjy's solution
+
+可以看出，题目构成一个树形结构，将高度排序，建出树，树形DP即可。
+
+E Expection of String
+---------------------
+
+unsolved
+
+F Friendship of Frog
+--------------------
+
+unsolved
+
+G Game of Arrays
+----------------
+
+unsolved
+
+H Happiness of Frog
+-------------------
+
+unsolved
+
+I Infinity Point Sets
+---------------------
+
+unsolved
+
+J Journey of Taku
+-----------------
+
+unsolved
+
+K Kingdom of Black and White
+----------------------------
+
+unsolved
+
+L LCM Walk
+----------
+
+unsolved
+
+Replay
+======
+
+ghc
+---
+
+gjy
+---
+
+sk
+--
