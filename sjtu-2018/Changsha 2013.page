@@ -1,9 +1,10 @@
-Solve:4  Rank:7
+Solve:4 Rank:7
 
-补题:C(yzh) D(lbn) F*(lbn) G() I(cc)
+补题:C(yzh) D(lbn) F\*(lbn) G() I(cc)
 
 C
-```cpp
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -17,38 +18,39 @@ typedef long double LD;
 double Rm, R, r, x, y, vx, vy;
 
 double Delta(double a, double b, double c) {
-	return b * b - 4 * a * c;
+    return b * b - 4 * a * c;
 }
 
 pair <double, double> Solution(double a, double b, double c) {
-	double delta = Delta(a, b, c);
-	return mp((-b - sqrt(delta)) / (2 * a), (-b + sqrt(delta)) / (2 * a));
+    double delta = Delta(a, b, c);
+    return mp((-b - sqrt(delta)) / (2 * a), (-b + sqrt(delta)) / (2 * a));
 }
 
 void work() {
-	R += r, Rm += r;
-	double a = vx * vx + vy * vy, b = 2 * x * vx + 2 * y * vy, c = x * x + y * y;
-	if (Delta(a, b, c - R * R) <= 0 || Solution(a, b, c - R * R).x <= 0) puts("0.000000");
-	else if (Delta(a, b, c - Rm * Rm) <= 0) {
-		pair <double, double> ret = Solution(a, b, c - R * R);
-		printf("%.6lf\n", ret.y - ret.x);
-	}
-	else {
-		pair <double, double> re1 = Solution(a, b, c - R * R);
-		pair <double, double> re2 = Solution(a, b, c - Rm * Rm);
-		printf("%.6lf\n", 2 * (re2.x - re1.x));
-	}
+    R += r, Rm += r;
+    double a = vx * vx + vy * vy, b = 2 * x * vx + 2 * y * vy, c = x * x + y * y;
+    if (Delta(a, b, c - R * R) <= 0 || Solution(a, b, c - R * R).x <= 0) puts("0.000000");
+    else if (Delta(a, b, c - Rm * Rm) <= 0) {
+        pair <double, double> ret = Solution(a, b, c - R * R);
+        printf("%.6lf\n", ret.y - ret.x);
+    }
+    else {
+        pair <double, double> re1 = Solution(a, b, c - R * R);
+        pair <double, double> re2 = Solution(a, b, c - Rm * Rm);
+        printf("%.6lf\n", 2 * (re2.x - re1.x));
+    }
 }
 
 int main() {
-	while (scanf("%lf%lf%lf%lf%lf%lf%lf", &Rm, &R, &r, &x, &y, &vx, &vy) != EOF) work();
-	return 0;
+    while (scanf("%lf%lf%lf%lf%lf%lf%lf", &Rm, &R, &r, &x, &y, &vx, &vy) != EOF) work();
+    return 0;
 }
 ```
 
-D 求斐波那契数列的循环节，先将$N$分解质因数，然后对每个质因子$p$的$p-1$和$2(p+1)$的约数check是不是循环节，再lcm起来就好了
+D
+求斐波那契数列的循环节，先将$N$分解质因数，然后对每个质因子$p$的$p-1$和$2(p+1)$的约数check是不是循环节，再lcm起来就好了
 
-~~~{.cpp}
+``` {.cpp}
 #include<bits/stdc++.h>
 #define LL long long
 using namespace std;
@@ -56,67 +58,67 @@ LL n,M,an,tmp,pw[55],q[55];
 int t;
 vector<LL>fac;
 struct JZ{
-	unsigned long long v[2][2];
+    unsigned long long v[2][2];
 }A,F;
 JZ operator*(JZ a,JZ b){
-	JZ c;
-	for(int i=0;i<2;i++)
-		for(int j=0;j<2;j++){
-			c.v[i][j]=0;
-			for(int k=0;k<2;k++)
-				(c.v[i][j]+=a.v[i][k]*b.v[k][j])%=M;
-		}
-	return c;
+    JZ c;
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++){
+            c.v[i][j]=0;
+            for(int k=0;k<2;k++)
+                (c.v[i][j]+=a.v[i][k]*b.v[k][j])%=M;
+        }
+    return c;
 }
 LL fib(LL n){
-	if(n==1)return 1;
-	if(n==0)return 0;
-	A.v[0][0]=A.v[0][1]=A.v[1][0]=1;A.v[1][1]=0;
-	F.v[0][0]=F.v[1][1]=1;F.v[1][0]=F.v[0][1]=0;
-	for(n--;n;n>>=1,A=A*A)if(n&1)F=F*A;
-	return F.v[0][0];
+    if(n==1)return 1;
+    if(n==0)return 0;
+    A.v[0][0]=A.v[0][1]=A.v[1][0]=1;A.v[1][1]=0;
+    F.v[0][0]=F.v[1][1]=1;F.v[1][0]=F.v[0][1]=0;
+    for(n--;n;n>>=1,A=A*A)if(n&1)F=F*A;
+    return F.v[0][0];
 }
 void get(LL n){
-	for(int i=1;1ll*i*i<=n;i++)if(n%i==0){
-		fac.push_back(i);
-		if(1ll*i*i!=n)fac.push_back(n/i); 
-	}
+    for(int i=1;1ll*i*i<=n;i++)if(n%i==0){
+        fac.push_back(i);
+        if(1ll*i*i!=n)fac.push_back(n/i); 
+    }
 }
 bool ok(LL x){
-	if(fib(x+1)==1&&fib(x)==0)return 1;
-	return 0;
+    if(fib(x+1)==1&&fib(x)==0)return 1;
+    return 0;
 }
 int main(){
-	for(;~scanf("%lld",&n);){
-		an=1;t=0;
-		for(int i=2;1ll*i*i<=n;i++)if(n%i==0){
-			q[++t]=i;
-			for(n/=i,pw[t]=1;n%i==0;n/=i)pw[t]*=i;
-		}
-		if(n>1)q[++t]=n,pw[t]=1;
-		for(int i=1;i<=t;i++){
-			M=q[i];
-			if(q[i]==2)tmp=3;else
-			if(q[i]==3)tmp=8;else
-			if(q[i]==5)tmp=20;else{
-				fac.clear();
-				get(q[i]-1);
-				get(2*(q[i]+1));
-				sort(fac.begin(),fac.end());
-				for(LL x:fac)if(ok(x)){tmp=x;break;}
-			}
-			tmp*=pw[i];
-			an=an/__gcd(an,tmp)*tmp;
-		}
-		if(an%2==0)an/=2;
-		printf("%lld\n",an);
-	}
+    for(;~scanf("%lld",&n);){
+        an=1;t=0;
+        for(int i=2;1ll*i*i<=n;i++)if(n%i==0){
+            q[++t]=i;
+            for(n/=i,pw[t]=1;n%i==0;n/=i)pw[t]*=i;
+        }
+        if(n>1)q[++t]=n,pw[t]=1;
+        for(int i=1;i<=t;i++){
+            M=q[i];
+            if(q[i]==2)tmp=3;else
+            if(q[i]==3)tmp=8;else
+            if(q[i]==5)tmp=20;else{
+                fac.clear();
+                get(q[i]-1);
+                get(2*(q[i]+1));
+                sort(fac.begin(),fac.end());
+                for(LL x:fac)if(ok(x)){tmp=x;break;}
+            }
+            tmp*=pw[i];
+            an=an/__gcd(an,tmp)*tmp;
+        }
+        if(an%2==0)an/=2;
+        printf("%lld\n",an);
+    }
 }
-~~~
+```
 
 I 其实是非常简单的树形dp。
 
-~~~cpp
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int LEN = 2e5 + 5;
@@ -172,4 +174,4 @@ int main() {
     }
     return 0;
 }
-~~~
+```
