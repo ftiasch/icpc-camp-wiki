@@ -1,100 +1,103 @@
-# Source
+Source
+======
+
 [HDU](http://acm.hdu.edu.cn/showproblem.php?pid=6230)
 
-# Commitment
-M少考虑了情况。从一开始就一直在解体。。
-查题能力不够。查一道题要很久。
-手里有题没来得及写。
-K题没想到区间有负的。
+Commitment
+==========
 
-# K. Server
+M少考虑了情况。从一开始就一直在解体。。 查题能力不够。查一道题要很久。
+手里有题没来得及写。 K题没想到区间有负的。
 
-## mxh
+K. Server
+=========
 
-~~~ {.cpp}
+mxh
+---
+
+``` {.cpp}
 #include<bits/stdc++.h>
 using namespace std;
-	template<typename T>
+    template<typename T>
 __inline void qk(T & container)
 {
-	container.clear();
-	T(container).swap(container);
+    container.clear();
+    T(container).swap(container);
 }
 
 const int maxn=100010;
 int n,m;
 struct Store
 {
-	int l,r;
-	int a,b;
-}	a[maxn];
+    int l,r;
+    int a,b;
+}   a[maxn];
 vector<int> b[maxn];
 void clear()
 {
-	for (int i=1;i<=n;i++)
-		qk(b[i]);
+    for (int i=1;i<=n;i++)
+        qk(b[i]);
 }
 long double c[maxn];
 
 void insert(int t,long double x)
 {
-	for (int i=t;i;i-=i&(-i))
-		c[i]=min(c[i],x);
+    for (int i=t;i;i-=i&(-i))
+        c[i]=min(c[i],x);
 }
 long double query(int t)
 {
-	long double ans=1e18;
-	for (int i=t;i<=n+1;i+=i&(-i))
-		ans=min(ans,c[i]);
-	return ans;
+    long double ans=1e18;
+    for (int i=t;i<=n+1;i+=i&(-i))
+        ans=min(ans,c[i]);
+    return ans;
 }
 bool check(long double mid)
 {
-	for (int i=1;i<=n+1;i++)
-		c[i]=1e18;
-	long double ans=0;
-	for (int j=1;j<=m;j++)
-	{
-		if (a[j].a-a[j].b*mid<0)	ans+=a[j].a-a[j].b*mid;
-	}
-	insert(1,0);
-	//	insert(1,1,n+1,1,0);
-	for (int i=1;i<=n;i++)
-	{
-		long double sum=1e18;
-		for (auto j:b[i])
-		{
-			long double tmp=query(a[j].l);
-			tmp=tmp+max(a[j].a-a[j].b*mid,(long double)0.0);
-			if (tmp<sum)	sum=tmp;	
-		}
-		if (i==n)	return sum+ans<0;
-		insert(i+1,sum);
-	}
-	return false;
+    for (int i=1;i<=n+1;i++)
+        c[i]=1e18;
+    long double ans=0;
+    for (int j=1;j<=m;j++)
+    {
+        if (a[j].a-a[j].b*mid<0)    ans+=a[j].a-a[j].b*mid;
+    }
+    insert(1,0);
+    //  insert(1,1,n+1,1,0);
+    for (int i=1;i<=n;i++)
+    {
+        long double sum=1e18;
+        for (auto j:b[i])
+        {
+            long double tmp=query(a[j].l);
+            tmp=tmp+max(a[j].a-a[j].b*mid,(long double)0.0);
+            if (tmp<sum)    sum=tmp;    
+        }
+        if (i==n)   return sum+ans<0;
+        insert(i+1,sum);
+    }
+    return false;
 }
 int main()
 {
-	int te;
-	scanf("%d",&te);
-	for (int ca=1;ca<=te;ca++)
-	{
-		scanf("%d%d",&m,&n);
-		for (int i=1;i<=m;i++)
-		{
-			scanf("%d%d%d%d",&a[i].l,&a[i].r,&a[i].a,&a[i].b);
-			b[a[i].r].push_back(i);
-		}
-		long double l=0,r=1000;
-		for (int _i=1;_i<=50;_i++)
-		{
-			long double mid=(l+r)/2;
-			if (check(mid))	r=mid;else l=mid;
-		}
-		printf("%.3f\n",(double)l);
-		clear();
-	}
-	return 0;
+    int te;
+    scanf("%d",&te);
+    for (int ca=1;ca<=te;ca++)
+    {
+        scanf("%d%d",&m,&n);
+        for (int i=1;i<=m;i++)
+        {
+            scanf("%d%d%d%d",&a[i].l,&a[i].r,&a[i].a,&a[i].b);
+            b[a[i].r].push_back(i);
+        }
+        long double l=0,r=1000;
+        for (int _i=1;_i<=50;_i++)
+        {
+            long double mid=(l+r)/2;
+            if (check(mid)) r=mid;else l=mid;
+        }
+        printf("%.3f\n",(double)l);
+        clear();
+    }
+    return 0;
 }
-
-~~~
+```
