@@ -1,1 +1,108 @@
+---
+format: Markdown
+...
 
+#General
+
+Team **Faraway** form Beijing Normal University
+
+- 2018.06.03 ICPC-Invitational(Jiangsu) Gold(2nd place)
+- 2018.09.22 CCPC-Regional(Jilin) Gold(20th place) ($\frac{2}{3}$Faraway)
+- 2018.10.28 ICPC-Regional(Xuzhou) Gold(8th place)
+- 2018.11.25 ICPC-Regional(Jiaozuo) Gold(18th place)
+
+#Todolist
+
+##ghc([zhuaiballl](http://codeforces.com/profile/zhuaiballl))
+
+贪心DP网络流乱搞（？）
+
+##gjy([MisakaKuma](http://codeforces.com/profile/MisakaKuma))
+
+数论组合数学线性问题树上问题
+
+##sk([Forever_you](http://codeforces.com/profile/Forever_you))
+
+数据结构计算几何整理模板
+
+#Training
+
+| `Date`  | `Contest` | `Place`  | `Status` | `A` | `B` | `C` | `D` | `E` | `F` | `G` | `H` | `I` | `J` | `K` | `L` | `M` |
+| :------ | :------------------------------------------------------------------- | :------- | --: | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+|`2018.12.12`|[`XVII Open Cup named after E.V. Pankratiev. Grand Prix of Japan`]()| | `5/10` |`.`|`O`|`.`|`O`|`.`|`.`|`O`|`O`|`.`|`O`|
+|`2018.12.11`|[`XIX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia`]()| | `4/12` |`O`|`.`|`.`|`O`|`O`|`.`|`.`|`.`|`.`|`.`|`O`|`.`|
+|`2018.12.09`|[`XIX Open Cup named after E.V. Pankratiev. Grand Prix of Korea`](https://wiki-bnu-faraway.icpc.camp/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Korea)| | `10/13` |`O`|`.`|`.`|`O`|`O`|`O`|`Ø`|`O`|`O`|`Ø`|`.`|`O`|`Ø`|
+|`2018.12.08`|[`XIX Open Cup named after E.V. Pankratiev. Grand Prix of SPb`]()| | `9/12` |`Ø`|`.`|`.`|`O`|`O`|`O`|`O`|`.`|`O`|`O`|`.`|`.`|
+|`2018.12.07`|[`Asia-Jakarata 2018`]()| | `9/12` |`O`|`.`|`.`|`O`|`.`|`Ø`|`O`|`O`|`O`|`O`|`O`|`O`|
+|`2018.12.05`|[`NWERC 2018`]()| | `10/11` |`Ø`|`O`|`O`|`.`|`O`|`Ø`|`O`|`O`|`O`|`O`|`O`|
+|`2018.12.04`|[`2018-2019 ICPC, NEERC, Northern Eurasia Finals (Unrated, Online Mirror, ICPC Rules, Teams Preferred)`]()| | `8/13` |`Ø`|`.`|`Ø`|`.`|`O`|`O`|`O`|`.`|`.`|`.`|`O`|`O`|`Ø`|
+|`2018.12.02`|[`Nineteenth Russia Open High School Programming Contest Internet Selection`]()**DONE**| | `12/12` |`O`|`O`|`O`|`O`|`O`|`Ø`|`O`|`O`|`O`|`O`|`Ø`|`O`|
+|`2018.12.01`|[`字节跳动冬令营网络赛`]()| | `2/10` |`.`|`O`|`O`|`.`|`.`|`.`|`.`|`.`|`.`|`.`|
+|`2018.11.30`|[`XVII Open Cup named after E.V. Pankratiev. XXI Ural Championship`]()| | `10/13` |`O`|`O`|`O`|`O`|`.`|`.`|`O`|`O`|`.`|`O`|`O`|`Ø`|`O`|
+|`2018.11.20`|[`2018 Arab Collegiate Programming Contest (ACPC 2018)`]()**DONE**| | `12/12` |`O`|`O`|`O`|`O`|`O`|`O`|`Ø`|`O`|`O`|`O`|`O`|`O`|
+|`2018.11.19`|[`2016CCPC东北地区大学生程序设计竞赛`](https://wiki-bnu-faraway.icpc.camp/2016CCPC%E4%B8%9C%E5%8C%97%E5%9C%B0%E5%8C%BA%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B)**DONE**| | `11/11` |`O`|`O`|`O`|`O`|`O`|`O`|`Ø`|`O`|`O`|`O`|`Ø`|
+|`2018.11.17`|[`ZOJ Monthly, February 2016`](https://wiki-bnu-faraway.icpc.camp/ZOJ%20Monthly,%20February%202016)| | `7/11` |`Ø`|`Ø`|`.`|`.`|`O`|`.`|`.`|`O`|`O`|`O`|`.`|`Ø`|
+|`2018.11.16`|[`ACM-ICPC 2018 北京站`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC%202018%20%E5%8C%97%E4%BA%AC%E7%AB%99)| | `7/10` |`O`|`O`|`.`|`O`|`.`|`.`|`Ø`|`O`|`O`|`O`|
+|`2018.11.14`|[`XIX Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia, Division 1.`]()| | `8/11` |`O`|`.`|`O`|`O`|`O`|`.`|`Ø`|`O`|`O`|`.`|`O`|
+|`2018.11.10`|[`ACM-ICPC 2018 青岛站`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC%202018%20%E9%9D%92%E5%B2%9B%E7%AB%99)| | `9/13` |`.`|`Ø`|`O`|`O`|`O`|`O`|`.`|`.`|`.`|`O`|`Ø`|`Ø`|`O`|
+|`2018.11.09`|[`2018-2019 ACM-ICPC Southeastern European Regional Programming Contest (SEERC 2018)`](https://wiki-bnu-faraway.icpc.camp/2018-2019 ACM-ICPC Southeastern European Regional Programming Contest (SEERC 2018))| | `10/11` |`.`|`O`|`O`|`Ø`|`O`|`Ø`|`O`|`Ø`|`O`|`O`|`O`|
+|`2018.11.07`|[`2018-2019 ACM-ICPC Nordic Collegiate Programming Contest (NCPC 2018)`](https://wiki-bnu-faraway.icpc.camp/2018-2019%20ACM-ICPC%20Nordic%20Collegiate%20Programming%20Contest%20(NCPC%202018))| | `8/11` |`.`|`O`|`O`|`Ø`|`O`|`.`|`.`|`O`|`O`|`O`|`O`|
+|`2018.11.04`|[`ACM-ICPC 2018 沈阳站`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC 2018 沈阳站)| | `5/13` |`.`|`.`|`O`|`.`|`O`|`.`|`O`|`.`|`.`|`O`|`.`|`O`|`.`|
+|`2018.11.02`|[`CCPC 2016 杭州`](https://wiki-bnu-faraway.icpc.camp/CCPC 2016 杭州)| | `7/11` |`O`|`O`|`O`|`O`|`O`|`O`|`.`|`.`|`.`|`.`|`O`|
+|`2018.10.26`|[`2017-2018 ACM-ICPC German Collegiate Programming Contest (GCPC 2017)`](https://wiki-bnu-faraway.icpc.camp/2017-2018 ACM-ICPC German Collegiate Programming Contest (GCPC 2017)
+)**DONE**| | `11/11` |`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|
+|`2018.10.23`|[`ACM-ICPC 2015 沈阳站`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC 2015 沈阳站)| | `6/13` |`.`|`O`|`.`|`O`|`.`|`O`|`.`|`.`|`O`|`.`|`Ø`|`.`|`O`|
+|`2018.10.22`|[`XVIII Open Cup named after E.V. Pankratiev. GP of Romania`](https://wiki-bnu-faraway.icpc.camp/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Romania)| | `6/12` |`.`|`.`|`O`|`O`|`.`|`.`|`Ø`|`.`|`Ø`|`Ø`|`.`|`Ø`|
+|`2018.10.18`|[`ACM-ICPC 2015 上海站`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC 2015 上海站)| | `7/12` |`O`|`O`|`.`|`O`|`.`|`O`|`.`|`.`|`Ø`|`.`|`O`|`O`|
+|`2018.10.07`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Urals`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Urals)| | `8/11` |`O`|`O`|`O`|`O`|`.`|`Ø`|`.`|`Ø`|`.`|`Ø`|`O`|
+|`2018.10.06`|[`2017-2018 ACM-ICPC Latin American Regional Programming Contest`](https://wiki-bnu-faraway.icpc.camp/2017-2018 ACM-ICPC Latin American Regional Programming Contest)**DONE**| | `13/13` |`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`Ø`|`O`|
+|`2018.10.05`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia)| | `7/12` |`O`|`O`|`.`|`O`|`.`|`Ø`|`.`|`O`|`.`|`O`|`.`|`O`|
+|`2018.10.04`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ukraine`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ukraine)| | `7/12` |`.`|`O`|`O`|`O`|`.`|`O`|`.`|`O`|`.`|`O`|`.`|`O`|
+|`2018.10.03`|[`2018 USP Try-outs`](https://wiki-bnu-faraway.icpc.camp/2018 USP Try-outs)**DONE**| | `11/11` |`O`|`O`|`O`|`O`|`O`|`Ø`|`O`|`O`|`O`|`O`|`Ø`|
+|`2018.10.02`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof)| | `7/10` |`O`|`.`|`O`|`O`|`O`|`.`|`Ø`|`.`|`O`|`O`|
+|`2018.10.01`|[`Asia-Tsukuba 2017`](https://wiki-bnu-faraway.icpc.camp/Asia-Tsukuba 2017)| | `7/11` |`O`|`O`|`O`|`.`|`Ø`|`O`|`O`|`.`|`O`|`.`|`.`|
+|`2018.09.29`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Korea`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Korea)| | `5/12` |`Ø`|`.`|`O`|`O`|`Ø`|`O`|`.`|`.`|`.`|`.`|`.`|`.`|
+|`2018.09.29`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Saratov`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Saratov)| | `8/12` |`O`|`.`|`O`|`O`|`Ø`|`Ø`|`.`|`.`|`.`|`O`|`O`|`O`|
+|`2018.09.28`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Khamovniki`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Khamovniki)| | `7/11` |`Ø`|`.`|`O`|`.`|`.`|`Ø`|`O`|`O`|`Ø`|`.`|`Ø`|
+|`2018.09.19`|[`Petrozavodsk Winter-2018. Carnegie Mellon U Contest`](https://wiki-bnu-faraway.icpc.camp/Petrozavodsk Winter-2018. Carnegie Mellon U Contest)| | `7/11` |`Ø`|`O`|`O`|`O`|`.`|`O`|`.`|`Ø`|`.`|`Ø`|`.`|
+|`2018.09.16`|[`ACM-ICPC 2018 青岛赛区网络预赛`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC 2018 青岛赛区网络预赛)| | `7/11` |`O`|`O`|`O`|`.`|`.`|`.`|`O`|`O`|`.`|`O`|`O`|
+|`2018.09.15`|[`ACM-ICPC 2018 焦作赛区网络预赛`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC 2018 焦作赛区网络预赛)| | `11/12` |`O`|`O`|`.`|`Ø`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|
+|`2018.09.14`|[`XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Gomel`](https://wiki-bnu-faraway.icpc.camp/XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Gomel)| | `4/11` |`O`|`O`|`.`|`.`|`.`|`O`|`.`|`.`|`.`|`.`|`O`|
+|`2018.09.12`|[`2018 IME Tryouts`](https://wiki-bnu-faraway.icpc.camp/2018 IME Tryouts)**DONE**| | `12/12` |`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|`O`|
+|`2018.09.09`|[`ACM-ICPC 2018 徐州赛区网络预赛`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC%202018%20%E5%BE%90%E5%B7%9E%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)**DONE**| | `11/11` |`O`|`O`|`O`|`O`|`Ø`|`O`|`O`|`O`|`O`|`O`|`O`|
+|`2018.09.08`|[`ACM-ICPC 2018 沈阳赛区网络预赛`]()| | `9/11` |`.`|`O`|`O`|`O`|`Ø`|`O`|`O`|`.`|`O`|`O`|`O`|
+|`2018.09.07`|[`Petrozavodsk Winter-2018. AtCoder Contest`]()| | `7/11` |`O`|`.`|`Ø`|`Ø`|`O`|`O`|`.`|`.`|`O`|`.`|`O`|
+|`2018.09.05`|[`2018 BACS Contest Replay`](https://wiki-bnu-faraway.icpc.camp/2018 BACS Contest Replay)| | `12/13` |`O`|`Ø`|`O`|`.`|`O`|`O`|`Ø`|`Ø`|`Ø`|`O`|`O`|`O`|`Ø`|
+|`2018.09.01`|[`ACM-ICPC 2018 南京赛区网络预赛`](https://wiki-bnu-faraway.icpc.camp/ACM-ICPC%202018%20%E5%8D%97%E4%BA%AC%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)**DONE**| | `12/12` |`O`|`O`|`O`|`O`|`O`|`Ø`|`O`|`Ø`|`O`|`O`|`O`|`O`|
+|`2018.08.25`|[`2018中国大学生程序设计竞赛 - 网络选拔赛`]()| | `9/10` |`O`|`Ø`|`O`|`O`|`O`|`.`|`O`|`Ø`|`O`|`O`|
+|`2018.08.22`|[`2018 Multi-University Training Contest 10`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 10)| | `7/12` |`.`|`.`|`O`|`.`|`O`|`.`|`O`|`O`|`O`|`O`|`.`|`Ø`|
+|`2018.08.20`|[`2018 Multi-University Training Contest 9`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 9)| | `5/11` |`O`|`Ø`|`.`|`O`|`.`|`.`|`.`|`.`|`.`|`Ø`|`O`|
+|`2018.08.19`|[`牛客网暑期ACM多校训练营（第十场）`]()| | `6/10` |`O`|`.`|`O`|`O`|`Ø`|`.`|`.`|`Ø`|`.`|`O`|
+|`2018.08.16`|[`牛客网暑期ACM多校训练营（第九场）`]()| | `6/10` |`Ø`|`.`|`Ø`|`.`|`O`|`Ø`|`Ø`|`Ø`|`.`|`.`|
+|`2018.08.15`|[`2018 Multi-University Training Contest 8`](https://wiki-bnu-faraway.icpc.camp/2018%20Multi-University%20Training%20Contest%208)| | `7/12` |`O`|`O`|`.`|`O`|`O`|`.`|`.`|`.`|`Ø`|`O`|`.`|`O`|
+|`2018.08.13`|[`2018 Multi-University Training Contest 7`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 7)| | `9/11` |`O`|`Ø`|`.`|`Ø`|`O`|`Ø`|`.`|`Ø`|`O`|`O`|`Ø`|
+|`2018.08.11`|[`牛客网暑期ACM多校训练营（第八场）`]()| | `5/10` |`.`|`O`|`Ø`|`.`|`Ø`|`.`|`O`|`O`|`.`|`.`|`.`|
+|`2018.08.09`|[`牛客网暑期ACM多校训练营（第七场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第七场）)| | `4/10` |`O`|`.`|`Ø`|`.`|`Ø`|`.`|`.`|`.`|`.`|`O`|
+|`2018.08.08`|[`2018 Multi-University Training Contest 6`]()| | `7/12` |`O`|`O`|`.`|`O`|`.`|`Ø`|`.`|`.`|`O`|`.`|`Ø`|`O`|
+|`2018.08.06`|[`2018 Multi-University Training Contest 5`]()| | `6/12` |`Ø`|`O`|`.`|`Ø`|`O`|`.`|`O`|`Ø`|`.`|`.`|`.`|`.`|
+|`2018.08.04`|[`牛客网暑期ACM多校训练营（第六场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第六场）)| | `7/10` |`O`|`Ø`|`O`|`O`|`.`|`.`|`O`|`.`|`O`|`O`|
+|`2018.08.02`|[`牛客网暑期ACM多校训练营（第五场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第五场）)| | `9/10` |`O`|`Ø`|`.`|`Ø`|`O`|`O`|`O`|`O`|`O`|`O`|
+|`2018.08.01`|[`2018 Multi-University Training Contest 4`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 4)| | `9/12` |`.`|`O`|`Ø`|`O`|`O`|`.`|`Ø`|`.`|`Ø`|`O`|`O`|`O`|
+|`2018.07.30`|[`2018 Multi-University Training Contest 3`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 3)| | `11/13` |`O`|`.`|`O`|`O`|`.`|`O`|`O`|`Ø`|`Ø`|`Ø`|`Ø`|`O`|`Ø`|
+|`2018.07.28`|[`牛客网暑期ACM多校训练营（第四场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第四场）)| | `8/10` |`O`|`Ø`|`Ø`|`O`|`Ø`|`O`|`O`|`.`|`.`|`Ø`|
+|`2018.07.26`|[`牛客网暑期ACM多校训练营（第三场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第三场）)**DONE**| | `10/10` |`O`|`Ø`|`O`|`Ø`|`O`|`Ø`|`Ø`|`O`|`O`|`Ø`|
+|`2018.07.25`|[`2018 Multi-University Training Contest 2`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 2)| | `8/10` |`.`|`Ø`|`Ø`|`O`|`Ø`|`Ø`|`O`|`Ø`|`.`|`O`|
+|`2018.07.23`|[`2018 Multi-University Training Contest 1`](https://wiki-bnu-faraway.icpc.camp/2018 Multi-University Training Contest 1)| | `9/11` |`O`|`O`|`O`|`O`|`.`|`Ø`|`O`|`O`|`.`|`Ø`|`O`|
+|`2018.07.22`|[`牛客网暑期ACM多校训练营（第二场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第二场）)| | `10/11` |`O`|`Ø`|`Ø`|`O`|`Ø`|`.`|`Ø`|`Ø`|`O`|`Ø`|`Ø`|
+|`2018.07.19`|[`牛客网暑期ACM多校训练营（第一场）`](https://wiki-bnu-faraway.icpc.camp/牛客网暑期ACM多校训练营（第一场）)| | `9/10` |`O`|`Ø`|`Ø`|`O`|`Ø`|`O`|`.`|`Ø`|`Ø`|`O`|
+|`2018.07.18`|[`Egyptian Collegiate Programming Contest 2017 (ACM ECPC 2017)`](https://wiki-bnu-faraway.icpc.camp/Egyptian Collegiate Programming Contest 2017 (ACM ECPC 2017))| | `8/12` |`.`|`.`|`.`|`O`|`O`|`O`|`O`|`.`|`O`|`O`|`O`|`O`|
+|`2018.06.02`|[`ACM International Collegiate Programming Contest, Damascus University Collegiate Programming Contest(2018)`](https://wiki-bnu-faraway.icpc.camp/ACM International Collegiate Programming Contest, Damascus University Collegiate Programming Contest(2018))| | `9/12` |`O`|`O`|`O`|`.`|`O`|`O`|`O`|`.`|`O`|`O`|`O`|`.`|
+|`2018.06.01`|[`2018中国大学生程序设计竞赛 - 女生专场`](https://wiki-bnu-faraway.icpc.camp/2018中国大学生程序设计竞赛 - 女生专场)| | `7/11` |`O`|`O`|`.`|`O`|`.`|`O`|`O`|`.`|`O`|`.`|`O`|
+|`2018.05.25`|[`La Salle-Pui Ching Programming Challenge 培正喇沙編程挑戰賽 2018 `](https://wiki-bnu-faraway.icpc.camp/La Salle-Pui Ching Programming Challenge 培正喇沙編程挑戰賽 2018 )| | `11/12` |`O`|`O`|`O`|`O`|`O`|`O`|`.`|`O`|`O`|`O`|`O`|`O`|
+|`2018.05.19`|[`2018中国大学生程序设计竞赛 - 湖南全国邀请赛`](https://wiki-bnu-faraway.icpc.camp/2018中国大学生程序设计竞赛 - 湖南全国邀请赛)| | `9/11` |`O`|`O`|`O`|`Ø`|`.`|`O`|`O`|`.`|`Ø`|`O`|`O`|
+|`2018.05.12`|[`2018, XI Samara Regional Intercollegiate Programming Contest`](https://wiki-bnu-faraway.icpc.camp/2018, XI Samara Regional Intercollegiate Programming Contest)| | `11/13` |`O`|`O`|`O`|`.`|`O`|`O`|`Ø`|`O`|`Ø`|`O`|`O`|`O`|`O`|`O`|
+|`2018.05.05`|[`2017中国大学生程序设计竞赛 - 女生专场`](https://wiki-bnu-faraway.icpc.camp/2017%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B%20-%20%E5%A5%B3%E7%94%9F%E4%B8%93%E5%9C%BA)| | `9/10` |`O`|`O`|`O`|`O`|`O`|`.`|`O`|`O`|`O`|`O`|
+|`2018.05.02`|[`The 15th Zhejiang Provincial Collegiate Programming Contest`](https://wiki-bnu-faraway.icpc.camp/The%2015th%20Zhejiang%20Provincial%20Collegiate%20Programming%20Contest)| | `12/13` |`O`|`O`|`Ø`|`Ø`|`O`|`O`|`.`|`Ø`|`Ø`|`O`|`O`|`O`|`O`|
+
+
+`  .  尚未通过    O 当场通过  ! 口头通过  Ø 赛后通过`
