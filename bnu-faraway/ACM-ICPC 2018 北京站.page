@@ -1,0 +1,105 @@
+Info
+====
+
+Date:2018.11.16
+
+[Link](https://vjudge.net/contest/270686)
+
+Solutions
+=========
+
+A Jin Yong’s Wukong Ranking List
+--------------------------------
+
+solved by sk
+
+------------------------------------------------------------------------
+
+sk's solution
+
+暴力dfs判环
+
+B Heshen's Account Book
+-----------------------
+
+solved by sk
+
+------------------------------------------------------------------------
+
+sk's solution
+
+cin，cout，stringstream，regex，注意数字跨行相连的情况。
+
+C Pythagorean triple
+--------------------
+
+unsolved
+
+D Frog and Portal
+-----------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+E Xor 2
+-------
+
+unsolved
+
+F The Kth Largest Value
+-----------------------
+
+unsolved
+
+G Solving Equations is Easy
+---------------------------
+
+upsolved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+H Approximate Matching
+----------------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+I Palindromes
+-------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+J Rikka with Triangles
+----------------------
+
+solved by sk
+
+------------------------------------------------------------------------
+
+sk's solution
+
+极角排序转转转，注意坐标范围很大，专卡atan2选手。需要用\_\_int128做乘法。
+
+Replay
+======
+
+ghc
+---
+
+gjy
+---
+
+sk
+--
