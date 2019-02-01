@@ -1,0 +1,10 @@
+# Source
+[Codeforces](http://codeforces.com/gym/101670)
+
+# 解体原因
+
+使用了读到EOF还会接着读的劣质读入优化板子
+
+使用了把longlong强转int作为hash函数的辣鸡unordered_set
+
+**mxh傻逼**
