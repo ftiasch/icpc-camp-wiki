@@ -1,0 +1,61 @@
+[Front Page]()
+
+ZLS Personal Training
+=====================
+
+**Legend**:\
+`O` - AC\
+`X` - Tried but failed\
+`.` - Pending\
+`!` - AC without code\
+`Ø` - AC after contest
+
+  **Contest**                                                              **Date**     **Rank**   `A`   `B`   `C`   `D`   `E`   `F`   `G`   `H`   `I`   `J`   `K`   `L`   `M`
+  ------------------------------------------------------------------------ ------------ ---------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+  [CF Round 448](zls/CF Round 448) (Div 2)                                 2017-10-27   9          `O`   `O`   `O`   `Ø`   `O`   
+  [CF Educational Round 36](zls/CF Educational Round 36) (Div 2)           2018-1-30    413        `O`   `O`   `O`   `Ø`   `Ø`   `Ø`   `Ø`   
+  [Yandex 2018 Qualification Round](zls/Yandex 2018 Qualification Round)   2018-2-17    NA         `O`   `O`   `O`   `Ø`   `O`   `.`   
+
+Pending problems
+================
+
+-   [CF893F](http://codeforces.com/contest/893/problem/F)
+-   [CF894D](http://codeforces.com/contest/894/problem/D)
+-   2017 Nanning Onsite G
+-   2017 Nanning Onsite M
+-   [2014 Beijing Onsite
+    G](http://acm.hdu.edu.cn/showproblem.php?pid=5118)
+-   [2014 Beijing Onsite
+    J](http://acm.hdu.edu.cn/showproblem.php?pid=5121)
+-   [hdu 5789](http://acm.hdu.edu.cn/showproblem.php?pid=5789)
+
+Learning progress
+=================
+
+-   [白书图论](zls/graph-theory)
+-   [白书几何](zls/geometry)
+
+教做人
+======
+
+-   `memset`用于指针不能用`sizeof`
+-   需要重新跑算法时注意跑完之后恢复，如删边跑Dijkstra
+-   无向边还是有向边
+-   返回值的类型(`long long`, `double`）
+-   `double`的`inf`值要注意精度，不可以到1e16(`double`精度范围)
+-   输出答案时注意可能有重复，要去重([hdu1271](http://acm.hdu.edu.cn/showproblem.php?pid=1271))
+-   `map`的key的`operator<`需要满足全序关系，不能是偏序关系
+-   `1ULL<<63` not `1<<63`
+-   `long double`处理超出`long long`一点的数据可以达到精度([CF903D](http://codeforces.com/contest/903/problem/D))
+-   `char`只能保证0-127范围,在128-255需要用`int`
+-   有时排序对于相等元素需要加入人工顺序保证consistency
+
+知识点
+======
+
+-   求实数的最高若干位:取常用对数的小数部分([hdu1568](http://acm.hdu.edu.cn/showproblem.php?pid=1568))
+-   求N!的最末非零位:考虑去掉因子5之后的乘积末尾;乘5等价于除以2([hdu1066](http://acm.hdu.edu.cn/showproblem.php?pid=1066))
+-   随机化([CF906B](http://codeforces.com/contest/906/problem/B))
+-   背包:01背包,完全背包(DP顺序),多重背包(拆分log解法，单调队列线性解法)
+-   单调队列:维护队列最值
+
