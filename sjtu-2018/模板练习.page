@@ -1,0 +1,135 @@
+# [最小K度限制生成树](https://longint.org/questions/685)
+
+DDL: 2018.07.28
+
+已完成：lbn187 NineSwords fstqwq
+
+# [最小树形图](https://longint.org/questions/677)
+
+DDL: 2018.07.29
+
+已完成：lbn187 NineSwords fstqwq
+
+# [K短路](https://longint.org/questions/682)
+
+DDL: 2018.07.30
+
+已完成：lbn187 NineSwords fstqwq
+
+# DP单调性优化
+
+学会并完成一道题目($g$转移到$f$的)
+
+推荐：WorldFinal2016、WorldFinal2017
+
+# [斯坦纳树](https://longint.org/questions/687)
+
+已完成： lbn187 NineSwords fstqwq
+
+DDL: 2018.08.01
+
+# [欧拉回路](http://uoj.ac/problem/117)
+
+DDL: 2018.08.02
+已完成：lbn187 NineSwords fstqwq
+
+# 有上下界网络流
+
+DDL: 2018.08.03
+已完成：lbn187 NineSwords fstqwq
+
+### [无源汇有上下界网络流](https://loj.ac/problem/115)
+
+### [有源汇有上下界最大流](https://loj.ac/problem/116)
+
+### [有源汇有上下界最小流](https://loj.ac/problem/117)
+
+# [Hopcroft算法](http://uoj.ac/problem/78)
+
+DDL：2018.08.04
+
+已完成：lbn187 NineSwords fstqwq
+
+# [KM算法](http://uoj.ac/problem/80)
+
+DDL：2018.08.05
+
+已完成：lbn187 NineSwords fstqwq
+
+# [带花树](http://uoj.ac/problem/79)
+
+DDL：2018.08.11
+
+已完成：lbn187 NineSwords fstqwq
+
+# [线性规划](http://uoj.ac/problem/179)
+
+DDL：2018.08.12
+
+已完成：lbn187 NineSwords fstqwq
+
+# [无向图全局最小割](https://longint.org/questions/798)
+
+DDL：2018.08.13
+
+已完成：lbn187
+
+# [支配树](https://longint.org/questions/780)
+
+DDL：2018.08.15
+
+已完成：lbn187 fstqwq
+
+# [无向图最小割树](https://longint.org/questions/830)
+
+已完成：~~lbn187~~ fstqwq
+
+DDL：2018.08.16
+
+# 双联通
+
+[割点与割边](http://hihocoder.com/problemset/problem/1183)
+
+[双联通分量](http://hihocoder.com/problemset/problem/1184)
+
+DDL：2018.08.18
+
+# 三元环
+
+# 弦图
+
+# 树同构
+
+# FARMLAND
+
+# 最大团和最大独立集
+
+# 极大团计数
+
+# 扩展CRT
+
+# 杜教筛和洲哥筛
+
+# 素数判定和质因数分解
+
+# 矩阵乘法求线性递推数列
+
+# 扩展BSGS
+
+# 原根、阶和指标
+
+# 扩展卢卡斯
+
+# FFT模任意数
+
+# 多项式运算
+
+# 插值
+
+# 牛顿迭代
+
+# 类欧几里得
+
+# 平方剩余
+
+# SB树
