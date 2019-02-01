@@ -1,0 +1,91 @@
+# Source
+[Codeforces](http://codeforces.com/gym/101741)
+
+# B. Expected Shopping
+
+# E. Code-Cola Plants
+
+# F. GCD
+
+# G. Berland Post
+
+## lzt
+
+差分约束。
+
+~~~ { .cpp }
+#include <bits/stdc++.h>
+
+int N, M;
+char str[100000];
+int o[10000];
+int a[10000], b[10000], d[10000];
+double tim[10000];
+
+int eval (double m) {
+	static std::vector <std::pair <int, double>> edge[10000];
+	std::queue <int> q; static int inq[10000], cntq[10000];
+	for (int i = 1; i <= N; ++i) edge[i].clear (), inq[i] = cntq[i] = 0;
+	for (int i = 0; i < M; ++i) {
+		edge[a[i]].push_back (std::make_pair (b[i], d[i] - m));
+	}
+	for (int i = 1; i <= N; ++i) {
+		if (o[i] == -1000001) tim[i] = -1E9;
+		else tim[i] = o[i];
+	}
+	for (int i = 1; i <= N; ++i) q.push (i), inq[i] = true;
+	while (!q.empty ()) {
+		int n = q.front (); q.pop (); inq[n] = false;
+		for (auto u : edge[n]) {
+			if (tim[u.first] < tim[n] + u.second) {
+				if (o[u.first] != -1000001) return false;
+				tim[u.first] = tim[n] + u.second;
+				if (!inq[u.first]) {
+					q.push (u.first);
+					inq[u.first] = true;
+					if (++cntq[u.first] > 2 * N) return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+
+int main () {
+	while (scanf ("%d%d ", &N, &M) == 2) {
+		fgets (str, 100000, stdin);
+		for (int i = 0, size = 1; str[i] != '\n'; ) {
+			while (str[i] == ' ') ++i;
+			if (str[i] == '?') o[size++] = -1000001, ++i;
+			else if ((str[i] >= '0' && str[i] <= '9') || str[i] == '-') {
+				int num = 0, sgn = 1;
+				if (str[i] == '-') sgn = -1, ++i;
+				while (str[i] >= '0' && str[i] <= '9') { 
+					num = num * 10 + str[i++] - '0';
+				}
+				o[size++] = sgn * num;
+			}
+		}
+		for (int i = 0; i < M; ++i) std::cin >> a[i] >> b[i] >> d[i];
+		double l = 0, r = 5E5;
+		for (int st = 0; st < 100; ++st) {
+			double m = (l + r) / 2;
+			if (eval (m)) r = m;
+			else l = m;
+		}
+		eval (r);
+		std::cout << std::fixed << std::setprecision (10) << r << "\n";
+		for (int i = 1; i <= N; ++i) if (o[i] != -1000001) {
+			std::cout << o[i] << " \n"[i == N];
+		} else {
+			std::cout << tim[i] << " \n"[i == N];
+		}
+	}
+}
+~~~
+
+# H. Compressed Spanning Subtrees
+
+# I. Prefix-free Queries
+
+# K. Consistent Occurrences
