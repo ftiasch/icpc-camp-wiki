@@ -1,0 +1,243 @@
+# 解体原因
+
+E题网络流模板太垃圾导致浪费大量时间，影响了后续做题。
+
+D题输出方案最后没时间写了。
+
+D CC 求一个曼哈顿意义下的凸包
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int oo = 1e9 + 5e6;
+const int LEN = 2e5 + 5;
+int n, m, tot, N, anstot, kase;
+int l[LEN], r[LEN], b[LEN];
+int sl[LEN], sr[LEN];
+struct node {
+    int x, y;
+} a[LEN], ans[LEN], t[LEN];
+int now[LEN];
+bool cmp(const node &x, const node &y) {
+    return x.x < y.x || (x.x == y.x && x.y < y.y);
+}
+void work() {
+    sort(ans + 1, ans + 1 + anstot, cmp);
+    int L = 0;
+    t[++L] = ans[1];
+    t[++L] = ans[2];
+    for (int i = 4; i <= anstot; i += 2) {
+        if (ans[i].y == t[L].y && t[L].y == t[L - 1].y) {
+            t[L] = ans[i];
+        } else {
+            if (t[L].y < ans[i].y) t[++L] = (node){ans[i].x, t[L - 1].y};
+            else if (t[L].y > ans[i].y) t[++L] = (node){t[L - 1].x, ans[i].y};
+            t[++L] = ans[i];
+        }
+    }
+    t[++L] = ans[anstot - 1];
+    for (int i = anstot - 3; i >= 1; i -= 2) {
+        if (ans[i].y == t[L].y && t[L].y == t[L - 1].y) {
+            t[L] = ans[i];
+        } else {
+            if (t[L].y < ans[i].y) t[++L] = (node){t[L - 1].x, ans[i].y};
+            else if (t[L].y > ans[i].y) t[++L] = (node){ans[i].x, t[L - 1].y};
+            t[++L] = ans[i];
+        }
+    }
+    anstot = 2;
+    ans[1] = t[1], ans[2] = t[2];
+    for (int i = 3; i < L; i++) {
+        if (t[i].y == ans[anstot].y && ans[anstot].y == ans[anstot - 1].y) {
+            ans[anstot] = t[i];
+        } else ans[++anstot] = t[i];
+    }
+}
+int main() {
+    while (scanf("%d", &n) && n) {
+        tot = N = 0;
+        for (int i = 1; i <= n; i++) {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            a[++N] = (node){x, y};
+            a[++N] = (node){x + 9, y};
+            a[++N] = (node){x, y + 9};
+            a[++N] = (node){x + 9, y + 9};
+            b[++tot] = x;
+            b[++tot] = x + 9;
+        }
+        n = N;
+        sort(b + 1, b + 1 + tot);
+        tot = unique(b + 1, b + 1 + tot) - b - 1;
+        for (int i = 1; i <= tot + 1; i++) {
+            l[i] = sl[i] = oo;
+            r[i] = sr[i] = -oo;
+        }
+        for (int i = 1; i <= n; i++) {
+            int t = lower_bound(b + 1, b + 1 + tot, a[i].x) - b;
+            now[t] = a[i].x;
+            l[t] = min(l[t], a[i].y);
+            r[t] = max(r[t], a[i].y);
+        }
+        for (int i = tot; i >= 1; i--) {
+            sl[i] = l[i], sr[i] = r[i];
+            sl[i] = min(sl[i], sl[i + 1]);
+            sr[i] = max(sr[i], sr[i + 1]);
+        }
+        anstot = 0;
+        int L = l[1], R = r[1];
+        ans[++anstot] = (node){now[1], L};
+        ans[++anstot] = (node){now[1], R};
+        L = max(L, sl[2]);
+        R = min(L, sr[2]);
+        for (int i = 2; i <= tot; i++) {
+            L = min(L, l[i]);
+            R = max(R, r[i]);
+            ans[++anstot] = (node){now[i], L};
+            ans[++anstot] = (node){now[i], R};
+            L = max(L, sl[i + 1]);
+            R = min(R, sr[i + 1]);
+        }
+        work();
+        printf("Case %d:", ++kase);
+        for (int i = 1; i <= anstot; i++) {
+            printf(" %d %d", ans[i].x, ans[i].y);
+        }
+        puts("");
+    }
+    return 0;
+}
+~~~
+
+E 算法是没有问题的，就是模板太过垃圾，改了板子之后AC。
+
+~~~{.cpp}
+#include <bits/stdc++.h>
+using namespace std;
+const int oo = 1e5;
+const int LEN = 8e5 + 5;
+int n, m, ans, tot, src, tar, kase;
+int X[30][30][2005], Y[30][30][2005];
+char c[55][55];
+int dx[] = {-1, 1, 0, 0, 0};
+int dy[] = {0, 0, -1, 1, 0};
+namespace ISAP {
+	int tot, src, tar, qh, qt, cnt;
+    struct edge {
+    	int vet, next, len;
+    } E[LEN * 6];
+    int dis[LEN], gap[LEN], head[LEN], cur[LEN], q[LEN], vis[LEN];
+    void add(int u, int v, int c) {
+    	E[++tot] = (edge){v, head[u], c};
+    	head[u] = tot;
+	}
+	void join(int u, int v, int c) {
+		add(u, v, c);
+		add(v, u, 0);
+	}
+	void bfs(int s) {
+		qh = qt = 0;
+		q[++qt] = s;
+		dis[s] = 0;
+		vis[s] = 1;
+		while (qh < qt) {
+			int u = q[++qh];
+			gap[dis[u]]++;
+			for (int e = head[u]; e != -1; e = E[e].next) {
+				int v = E[e].vet;
+				if (E[e ^ 1].len && !vis[v]) {
+					dis[v] = dis[u] + 1;
+					vis[v] = 1;
+					q[++qt] = v;
+				}
+			}
+		}
+	}
+	int isap(int u, int aug) {
+		if (u == tar) return aug;
+		int flow = 0;
+		for (int e = head[u]; e != -1; e = E[e].next) {
+			int v = E[e].vet;
+			if (E[e].len && dis[v] == dis[u] - 1) {
+				int tmp = isap(v, min(aug - flow, E[e].len));
+				E[e].len -= tmp;
+				E[e ^ 1].len += tmp;
+				flow += tmp;
+				head[u] = e;
+				if (flow == aug || dis[src] == cnt) return flow;
+			}
+		}
+		if (!--gap[dis[u]++]) dis[src] = cnt;
+		++gap[dis[u]];
+		head[u] = cur[u];
+		return flow;
+	}
+	void init(int T) {
+		cnt = 0;
+	    src = ++cnt, tar = ++cnt;
+	    for (int i = 1; i <= n; i++) {
+	        for (int j = 1; j <= n; j++) {
+	            for (int t = 0; t <= T; t++) {
+	                X[i][j][t] = ++cnt;
+	                Y[i][j][t] = ++cnt;
+	            }
+	        }
+	    }
+	    gap[0] = 0, tot = -1;
+	   	for (int i = 1; i <= cnt; i++) {
+		   head[i] = -1;
+		   gap[i] = dis[i] = vis[i] = 0;
+		}
+	}
+	void make_graph(int T) {
+		for (int i = 1; i <= n; i++) {
+	        join(src, X[i][1][0], 1);
+	        join(Y[i][n][T], tar, 1);
+	        for (int j = 1; j <= n; j++) {
+	            for (int t = 0; t <= T; t++) {
+	                join(X[i][j][t], Y[i][j][t], 1);
+	            }
+	        }
+	    }
+	    for (int i = 1; i <= n; i++) {
+	        for (int j = 1; j <= n; j++) {
+	            if (c[i][j] == 'X') continue;
+	            for (int k = 0; k < 5; k++) {
+	                int x = i + dx[k], y = j + dy[k];
+	                if (1 <= x && x <= n && 1 <= y && y <= n && c[x][y] == '.') {
+	                    for (int t = 0; t < T; t++) join(Y[i][j][t], X[x][y][t + 1], 1);
+	                }
+	            }
+	        }
+	    }
+	    for (int i = 1; i <= cnt; i++) cur[i] = head[i];
+	    bfs(tar);
+	}
+	int maxflow() {
+		int res = 0;
+		while (dis[src] < cnt) res += isap(src, oo);
+		return res;
+	}
+}
+bool check(int T) {
+    ISAP :: init(T);
+    ISAP :: make_graph(T);
+    if (ISAP :: maxflow() >= n) return true;
+    else return false;
+}
+int main() {
+    while (scanf("%d", &n) && n) {
+        for (int i = 1; i <= n; i++) {
+            scanf("%s", c[i] + 1);
+        }
+        int l = n - 1, r = n * n;
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (check(mid)) r = mid;
+            else l = mid + 1;
+        }
+        printf("Case %d: %d\n", ++kase, l);
+    }
+    return 0;
+}
+~~~
