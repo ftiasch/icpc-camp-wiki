@@ -1,52 +1,55 @@
-# Source
+Source
+======
 
 [AMPPZ 2012](https://main.edu.pl/en/archive/amppz/2012)
 
-# E. Evaluation of an Expression
+E. Evaluation of an Expression
+==============================
 
-# F. Formula One
+F. Formula One
+==============
 
 ### sez
 
-
-~~~ {.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 
 #define __ __attribute__ ((optimize ("-O3")))
 #define _ __ __inline__ __attribute__ ((__gnu_inline__, __always_inline__, __artificial__))
 
 _ int next_int () {
-//	int ppp; std::cin >> ppp; return ppp;
-	const int SIZE = 110000; static char buf[SIZE + 1]; static int p = SIZE;
-	register int ans = 0, f = 1, sgn = 1;
-	while ((p < SIZE || (p = 0, buf[fread (buf, 1, SIZE, stdin)] = 0, buf[0])) && (isdigit (buf[p]) && (ans = ans * 10 + buf[p] - '0', f = 0, 1) || f && (buf[p] == '-' && (sgn = 0), 1))) ++p;
-	return sgn ? ans : -ans;
+//  int ppp; std::cin >> ppp; return ppp;
+    const int SIZE = 110000; static char buf[SIZE + 1]; static int p = SIZE;
+    register int ans = 0, f = 1, sgn = 1;
+    while ((p < SIZE || (p = 0, buf[fread (buf, 1, SIZE, stdin)] = 0, buf[0])) && (isdigit (buf[p]) && (ans = ans * 10 + buf[p] - '0', f = 0, 1) || f && (buf[p] == '-' && (sgn = 0), 1))) ++p;
+    return sgn ? ans : -ans;
 }
 
 int N;
 long long A[1100000], F[1100000];
 
 __ int main () {
-	std::ios::sync_with_stdio (0);
-	int t;
-	int T = next_int (); while (T--) {
-		t++;
-		N = next_int ();
-		for (int i = 1; i <= N; ++i) A[i] = next_int ();
-		int mx = 1;
-		for (int i = 0; i <= N; ++i) F[i] = 0;
-		for (int i = 1; i <= N; ++i)
-			if (A[i] - i > A[mx] - mx) mx = i;
-		int s = 0;
-		for (int i = 1; i < mx; i++)
-			A[mx] -= A[i];
-		for (int i = mx + 1; i <= N; i++)
-			if (A[i] > s) A[mx] -= A[i] - s;
-			else s++;
-		if (mx - A[mx] > 0) printf("TAK\n");
-		else printf("NIE\n");
-	}
+    std::ios::sync_with_stdio (0);
+    int t;
+    int T = next_int (); while (T--) {
+        t++;
+        N = next_int ();
+        for (int i = 1; i <= N; ++i) A[i] = next_int ();
+        int mx = 1;
+        for (int i = 0; i <= N; ++i) F[i] = 0;
+        for (int i = 1; i <= N; ++i)
+            if (A[i] - i > A[mx] - mx) mx = i;
+        int s = 0;
+        for (int i = 1; i < mx; i++)
+            A[mx] -= A[i];
+        for (int i = mx + 1; i <= N; i++)
+            if (A[i] > s) A[mx] -= A[i] - s;
+            else s++;
+        if (mx - A[mx] > 0) printf("TAK\n");
+        else printf("NIE\n");
+    }
 }
-~~~
+```
 
-# G. Save the Dinosaurs
+G. Save the Dinosaurs
+=====================
