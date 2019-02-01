@@ -1,0 +1,132 @@
+补题　K(yzh)
+
+K
+```cpp
+/* Heroes Never Die. */
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+
+template <class T> inline void read(T &_a) {
+	bool _f = 0; int _c = 0; _a = 0;
+	while (_c < '0' || _c > '9') _f |= _c == '-', _c = getchar();
+	while (_c >= '0' && _c <= '9') _a = _a * 10 + _c - '0', _c = getchar();
+	if (_f) _a = -_a;
+}
+
+#define N 100005
+#define M 200005
+
+int n, m;
+vector <int> E[N], e[N];
+
+int dfn[N], blo[N], ar[N], id[N], od[N], low[N], s[N], stp, top, scc; 
+bool ins[N];
+
+void dfs(int x) {
+	dfn[x] = low[x] = ++stp, s[++top] = x, ins[x] = 1;
+	for (auto v : E[x]) {
+		if (!dfn[v]) dfs(v), low[x] = min(low[x], low[v]);
+		else if (ins[v]) low[x] = min(low[x], dfn[v]);
+	}
+	if (low[x] == dfn[x]) {
+		scc++;
+		ar[scc] = x;
+		do {
+			blo[s[top]] = scc;
+			ins[s[top]] = 0;
+		} while (s[top--] != x);
+	}
+}
+
+void Tarjan() {
+	for (int i = 1; i <= n; i++) if (!dfn[i]) dfs(i);
+	for (int i = 1; i <= n; i++) {
+		for (auto v : E[i]) {
+			if (blo[i] != blo[v]) {
+				e[blo[i]].push_back(blo[v]);
+				od[blo[i]]++; id[blo[v]]++;
+			}
+		}
+	}
+}
+
+int a[N], b[N];
+bool vis[N];
+
+void find(int x, int &ret) {
+	vis[x] = 1;
+	if (od[x] == 0) {
+		ret = x;
+		return;
+	}
+	for (auto v : e[x]) {
+		if (!vis[v]) {
+			find(v, ret);
+			if (ret) return;
+		}
+	}
+}
+
+void make() {
+	int cc = 0, ci = 0, co = 0;
+	for (int i = 1, ret; i <= scc; i++) {
+		if (!id[i] && !vis[i] && (ret = 0, find(i, ret), ret)) {
+			a[++cc] = ar[i];
+			b[  cc] = ar[ret];
+		}
+		else vis[i] = 0;
+	}
+	ci = co = cc;
+	for (int i = 1; i <= scc; i++) {
+		if (!vis[i]) {
+			if (!id[i]) a[++ci] = ar[i];
+			if (!od[i]) b[++co] = ar[i];
+		}
+	}
+	printf("%d\n", max(ci, co));
+	for (int i = 1; i < cc; i++) printf("%d %d\n", b[i], a[i + 1]);
+	for (int i = cc + 1; i <= min(ci, co); i++) printf("%d %d\n", b[i], a[i]);
+	if (ci == co) printf("%d %d\n", b[cc], a[1]);
+	else if (ci > co) {
+		printf("%d %d\n", b[cc], a[co + 1]);
+		for (int i = co + 1; i < ci; i++)  printf("%d %d\n", a[i], a[i + 1]);
+		printf("%d %d\n", a[ci], a[1]);
+	}
+	else if (ci < co) {
+		printf("%d %d\n", b[cc], b[ci + 1]);
+		for (int i = ci + 1; i < co; i++)  printf("%d %d\n", b[i], b[i + 1]);
+		printf("%d %d\n", b[co], a[1]);
+	}
+}
+
+void work() {
+	for (int i = 1, x, y; i <= m; i++) {
+		read(x); read(y);
+		E[x].push_back(y);
+	}
+	Tarjan();
+	int ic = 0, oc = 0;
+	for (int i = 1; i <= scc; i++) {
+		if (!id[i]) ic++;
+		if (!od[i]) oc++;
+	}
+	if (scc == 1) puts("0");
+	else make();
+}
+
+int main() {
+	while (~scanf("%d%d", &n, &m) && (n | m)) {
+		work();
+		for (int i = 1; i <= n; i++) E[i].clear();
+		for (int i = 1; i <= n; i++) dfn[i] = 0;
+		for (int i = 1; i <= scc; i++) e[i].clear();
+		for (int i = 1; i <= scc; i++) id[i] = 0;
+		for (int i = 1; i <= scc; i++) od[i] = 0;
+		for (int i = 1; i <= scc; i++) vis[i] = 0; 
+		stp = top = scc = 0;
+	}
+	return 0;
+}
+
+```
