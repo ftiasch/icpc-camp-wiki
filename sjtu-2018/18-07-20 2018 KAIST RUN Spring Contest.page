@@ -1,0 +1,411 @@
+# Source
+[Codeforces](http://codeforces.com/gym/101806)
+
+# P. Puyo Puyo
+
+# R. Recipe
+
+## mxh
+
+~~~ {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+const ll INF=10000000000000000LL;
+const int maxn=250010;
+int n;
+int f[maxn],c[maxn],l[maxn];
+struct Store
+{
+	ll k,b;
+	ll lim;
+	ll x;
+	int id;
+	ll v(ll x)
+	{
+		return x*k+b;
+	}
+}	a[maxn];
+struct Frac
+{
+	ll x,y;
+	Frac(ll _x=0,ll _y=1)
+	{
+		x=_x;
+		y=_y;
+		int op=0;
+		if (x<0)	x=-x,op^=1;
+		if (y<0)	y=-y,op^=1;
+		if (op)	x=-x;
+	}
+};
+bool operator<(const Frac &a,const Frac &b)
+{
+	return a.x*b.y<b.x*a.y;
+}
+bool operator==(const Frac &a,const Frac &b)
+{
+	return a.x*b.y==b.x*a.y;
+}
+bool cmp_k(int x,int y)
+{
+	if (a[x].k!=a[y].k)	return a[x].k>a[y].k;
+	return a[x].b<a[y].b;
+}
+bool cmp_lim(int x,int y)
+{
+	return a[x].lim>a[y].lim;
+}
+Frac jd(const Store &a,const Store &b)
+{
+	return Frac(a.b-b.b,b.k-a.k);
+}
+int que[maxn];
+int tmp[maxn];
+bool boom(const Store &a,const Store &b,const Store &c)
+{
+	if (b.k==a.k)	return true;
+	if (jd(b,c)<jd(a,c) || jd(a,c)==jd(b,c))	return true;
+	return false;
+}
+void doit(int l,int r)
+{
+	if (l==r)	return;
+	int mid=(l+r)>>1;
+	doit(l,mid);
+	for (int i=l;i<=r;i++)
+		tmp[i]=i;
+	sort(tmp+l,tmp+mid+1,cmp_k);
+	sort(tmp+mid+1,tmp+r+1,cmp_lim);
+	int now=l;
+	int t=0;
+	for (int i=mid+1;i<=r;i++)
+	{
+		while (now<=mid && a[tmp[now]].k>=a[tmp[i]].lim)
+		{
+			if (a[tmp[now]].b==-INF)
+			{
+				now++;
+				continue;
+			}
+			if (t==1 && a[tmp[que[1]]].k==a[tmp[now]].k)
+			{
+				que[1]=now++;
+				continue;
+			}
+			if (t==0 || t==1)
+			{
+				t++;
+				que[t]=now++;
+				continue;
+			}
+			while (t>1 && boom(a[tmp[now]],a[tmp[que[t]]],a[tmp[que[t-1]]]))	t--;
+			que[++t]=now;
+			now++;
+		}
+		if (t!=0)
+		{
+			int l=1,r=t;
+			while (l<r)
+			{
+				int mid=(l+r)>>1;
+				if (a[tmp[que[mid]]].v(a[tmp[i]].x)>a[tmp[que[mid+1]]].v(a[tmp[i]].x))
+					r=mid;else l=mid+1;
+			}
+			a[tmp[i]].b=max(a[tmp[i]].b,a[tmp[que[l]]].v(a[tmp[i]].x)-a[tmp[i]].id*a[tmp[i]].x);
+		}
+	}
+	doit(mid+1,r);
+}
+int main()
+{
+	scanf("%d",&n);
+	for (int i=1;i<=n;i++)
+		scanf("%d",&f[i]);
+	for (int i=1;i<=n;i++)
+		scanf("%d",&c[i]);
+	for (int i=1;i<=n;i++)
+		scanf("%d",&l[i]);
+	for (int i=0;i<=n;i++)
+	{
+		a[i].k=f[i+1]+i+1;
+		a[i].b=-INF;
+		a[i].x=c[i];
+		a[i].lim=l[i]+i;
+		a[i].id=i;
+	}
+	a[0].b=0;
+	doit(0,n);
+	if (a[n].b<0)	printf("Impossible\n");else printf("%lld\n",a[n].b);
+	return 0;
+}
+
+~~~
+
+# U. United States of Eurasia
+
+## lzt
+
+~~~ {.cpp}
+#include <bits/stdc++.h>
+
+#define cd const long long &
+#define cp const point &
+
+long long sqr (cd x) { return x * x; }
+
+struct point {
+	long long x, y;
+	point (cd x = 0, cd y = 0) : x (x), y (y) {}
+};
+
+bool operator < (cp a, cp b) { return (a.x == b.x) ? a.y < b.y : a.x < b.x; }
+point operator + (cp a, cp b) { return point (a.x + b.x, a.y + b.y); }
+point operator - (cp a, cp b) { return point (a.x - b.x, a.y - b.y); }
+point operator * (cp a, cd b) { return point (a.x * b, a.y * b); }
+long long dot (cp a, cp b) { return a.x * b.x + a.y * b.y; }
+long long det (cp a, cp b) { return a.x * b.y - a.y * b.x; }
+long long dis2 (cp a, cp b = point ()) { return sqr (a.x - b.x) + sqr (a.y - b.y); }
+
+long long area (cp a, cp b, cp c) { return std::abs (det (b - a, c - a)); }
+
+bool turn_left (cp a, cp b, cp c) { return det (b - a, c - a) >= 0; }
+int convex_hull (point *a, int l, int r, point *ret) {
+	int cnt = 0;
+	for (int i = l; i <= r; ++i) {
+		while (cnt > 1 && turn_left (ret[cnt - 2], a[i], ret[cnt - 1])) --cnt; 
+		ret[cnt++] = a[i]; }
+	int fixed = cnt;
+	for (int i = r; i >= l; --i) {
+		while (cnt > fixed && turn_left (ret[cnt - 2], a[i], ret[cnt - 1])) --cnt;
+		ret[cnt++] = a[i]; }
+	return cnt - 1;
+}
+
+int N, K;
+point P[300000];
+std::vector <std::pair <int, int>> pos;
+point pp[300000];
+
+long long find (int l, int r) {
+	int size = convex_hull (P, pos[l].first, pos[r].second, pp);
+	if (size == 1) return 0;
+	if (size == 2) return dis2 (pp[0], pp[1]);
+	long long res = 0;
+	for (int i = 0, j = 0; i < size; ++i) {
+		while (area (pp[j], pp[i], pp[(i + 1) % size]) <=
+				area (pp[(j + 1) % size], pp[i], pp[(i + 1) % size]) &&
+				(j + 1) % size != i)
+			j = (j + 1) % size;
+		res = std::max (res, dis2 (pp[j], pp[i]));
+		res = std::max (res, dis2 (pp[j], pp[(i + 1) % size]));
+	}
+	return res;
+}
+
+bool eval (long long m) {
+	int st = 0;
+	for (int cnt = 0, j, res; st < pos.size () && cnt < K; st = res + 1, ++cnt) {
+		for (j = 0; j < 20; ++j) 
+			if (find (st, std::min (st + (1 << j), (int) pos.size () - 1)) > m) break;
+		if (j == 0) if (find (st, st) <= m) {
+			res = st;
+			continue;
+		} else return false;
+		int l = std::min (st + (1 << j - 1), (int) pos.size () - 1),
+			r = std::min (st + (1 << j), (int) pos.size () - 1); 
+		while (l <= r) {
+			int mm = (l + r) / 2;
+			if (find (st, mm) <= m) {
+				res = mm;
+				l = mm + 1;
+			} else {
+				r = mm - 1;
+			}
+		}
+	}
+	return (st == pos.size ());
+}
+
+int main () {
+	std::ios::sync_with_stdio (0);
+	std::cin >> N >> K;
+	for (int i = 0; i < N; ++i) std::cin >> P[i].x >> P[i].y;
+	std::sort (P, P + N);
+	for (int i = 0; i < N; ++i)
+		if (i > 0 && P[i].x == P[i - 1].x) pos.back ().second = i;
+		else pos.push_back ({i, i});
+	long long l = 0, r = 2000000000000000000LL, ans = -1;
+	while (l <= r) {
+		long long m = (l + r) / 2;
+		if (eval (m)) {
+			ans = m;
+			r = m - 1;
+		} else {
+			l = m + 1;
+		}
+	}
+	std::cout << ans << "\n";
+}
+~~~
+
+## mxh
+
+~~~ {.cpp}
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+
+typedef long long ll; 
+const int N=250005;
+struct node
+{
+	int x,y;
+} a[N],p[N];
+node operator-(const node &a,const node &b)
+{
+	node c;c.x=a.x-b.x;c.y=a.y-b.y;return c;
+}
+ll det(const node &a,const node &b)
+{
+	return a.x*1LL*b.y-a.y*1LL*b.x;
+}
+int n,tot;
+int m,lim,cnt;
+int num[N];
+struct Line
+{
+	int x,l,r;
+}	b[N];
+pair<int,int> c[N];
+ 
+ll dis(node a,node b)
+{
+	return (a.x-b.x)*1LL*(a.x-b.x)+(a.y-b.y)*1LL*(a.y-b.y);
+}
+ 
+ll multi(node p0,node p1,node p2)
+{
+	return (p1.x-p0.x)*1LL*(p2.y-p0.y)-(p2.x-p0.x)*1LL*(p1.y-p0.y);
+}
+
+bool turn_left(const node &a,const node &b,const node &c)
+{
+	return det(b-a,c-a)>=0;
+}
+void convex_hell()
+{
+	int cnt=0;
+	for(int i=0; i<n; i++)
+	{
+		while (cnt>1 && turn_left(p[cnt-2],a[i],p[cnt-1]))	--cnt;
+		p[cnt++]=a[i];
+	}
+	int fixed=cnt;
+	for (int i=n-1;i>=0;i--)
+	{
+		while (cnt>fixed && turn_left(p[cnt-2],a[i],p[cnt-1]))	--cnt;
+		p[cnt++]=a[i];
+	}
+	tot=cnt-1;
+}
+ 
+ll solve()
+{
+	convex_hell();
+	int q=1;
+	ll ans=0;
+	p[tot]=p[0];
+	for(int i=0; i<tot; i++)
+	{
+		while(multi(p[i],p[i+1],p[q+1])>multi(p[i],p[i+1],p[q])) q=(q+1)%tot;  //q=(q+1)%tot;
+		ans=max(ans,max(dis(p[i],p[q]),dis(p[(i+1)%tot],p[(q+1)%tot])));	   //取对踵点与边上两端点距离大的值；
+	}
+	return ans;
+}
+
+bool ok(int l,int r,ll mid)
+{
+	if (l==r)	return true;
+	n=0;
+	for (int i=l;i<=r;i++)
+	{
+		if (b[i].l!=b[i].r)
+		{
+			a[n].x=b[i].x;
+			a[n].y=b[i].r;
+			n++;
+		}
+		a[n].x=b[i].x;
+		a[n].y=b[i].l;
+		n++;
+	}
+	ll ans=solve();
+	if (ans>mid)	return false;
+	return true;
+}
+bool check(ll mid)
+{
+	int now=1;
+	for (int i=1;i<=lim;i++)
+	{
+		if (now>cnt)	return true;
+		int k;
+		for (k=1;now+k-1<=cnt;k<<=1)
+		{
+			if (!ok(now,now+k-1,mid))	break;
+		}
+		int l=k/2,r=k;
+		if (now+k-1>cnt)
+		{
+			if (ok(now,cnt,mid))	return true;
+			r=cnt+1-now;
+		}
+		while (l<r)
+		{
+			int mi=((l+r)>>1)+((l+r)&1);
+			if (ok(now,now+mi-1,mid))	l=mi;else r=mi-1;
+		}
+		now+=l;
+	}
+	if (now>cnt)	return true;
+	return false;
+}
+int main()
+{
+	scanf("%d%d",&m,&lim);
+	for (int i=1;i<=m;i++)
+	{
+		int x,y;
+		scanf("%d%d",&x,&y);
+		c[i]=make_pair(x,y);
+		num[++cnt]=x;
+	}
+	sort(num+1,num+cnt+1);
+	cnt=unique(num+1,num+cnt+1)-(num+1);
+	for (int i=1;i<=cnt;i++)
+	{
+		b[i].x=num[i];
+		b[i].l=0;
+		b[i].r=1e9;
+	}
+	for (int i=1;i<=m;i++)
+	{
+		int q=lower_bound(num+1,num+cnt+1,c[i].first)-num;
+		b[q].l=max(b[q].l,c[i].second);
+		b[q].r=min(b[q].r,c[i].second);
+	}
+	ll l=0,r=2000000000000000000LL;
+	for (int i=1;i<=cnt;i++)	l=max(l,(b[i].l-b[i].r)*1LL*(b[i].l-b[i].r));
+	while (l<r)
+	{
+		ll mid=(l+r)>>1;
+		if (!check(mid))	l=mid+1;else r=mid;
+	}
+	printf("%lld\n",r);
+	return 0;
+}
+~~~
