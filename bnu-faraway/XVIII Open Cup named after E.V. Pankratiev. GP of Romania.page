@@ -1,0 +1,113 @@
+Info
+====
+
+Date:2018.10.05
+
+[Link](http://opentrains.snarknews.info/~ejudge/opencup.cgi)
+
+Solutions
+=========
+
+A Balance
+---------
+
+unsolved
+
+B Entanglement
+--------------
+
+unsolved
+
+C Gravity
+---------
+
+solved by ghc
+
+------------------------------------------------------------------------
+
+ghc's solution
+
+差分约束，求每个连通块到地面的最短路，复杂度$O( n * m )$。不该愚蠢地用dfs/bfs求连通块，被卡常了。
+
+D Infinite Pattern Matching
+---------------------------
+
+solved by
+
+------------------------------------------------------------------------
+
+'s solution
+
+E Inheritance
+-------------
+
+unsolved
+
+F Movies
+--------
+
+unsolved
+
+G Origami
+---------
+
+unsolved
+
+H Qnp
+-----
+
+unsolved
+
+I Salaj
+-------
+
+upsolved by gjy
+
+------------------------------------------------------------------------
+
+gjy's solution
+
+首先对于强连通分量数量固定的情况，一定可以调整边使得前$j$个点成为一个强连通分量，剩下的点作孤立点。
+
+考虑前$j$个点构成强连通分量的图用的边数：最少$j$条边，最多$\frac{n(n-1)+j(j-1)}{2}$。
+
+考虑dp，转移过程中需要关注有多少条边是构成当前强连通分量数必须的：于是$dp[i][j][k]$表示考虑$i$条边，前$j$个点构成强连通分量，$k-1$条边是额外必须的。
+
+于是得出转移方程：
+
+dp\[i\]\[j\]\[k\]
+
+-&gt; dp\[i+1\]\[j\]\[k\]
+
+-&gt; dp\[i+1\]\[p\]\[k+1\] (i-k+1 &gt;= p)
+
+在对应的$i$处算进答案即可。
+
+J Taxi
+------
+
+unsolved
+
+K Tris
+------
+
+unsolved
+
+L Xormites
+----------
+
+unsolved
+
+Replay
+======
+
+ghc
+---
+
+gjy
+---
+
+~~gjy自闭了一天，没来~~
+
+sk
+--
