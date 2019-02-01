@@ -1,0 +1,160 @@
+#Source
+[Aizu 2534-2543](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2534)
+
+# F. Counting 1's
+
+## mxh
+
+~~~ {.cpp}
+#include<bits/stdc++.h>
+using namespace std;
+ 
+typedef long long ll;
+const ll INF=1000000000000000000LL;
+struct Ans
+{
+    int op;//-1=None 1=OK 2=Many
+    ll a,b;
+    Ans(int _op=0,ll _a=0LL,ll _b=0LL):op(_op),a(_a),b(_b) {}
+};
+ll a[110];
+ll b[110];
+ll d[110];
+int n;
+ll A,B;
+void clear()
+{
+    memset(a,0,sizeof(a));
+    memset(b,0,sizeof(b));
+    memset(d,0,sizeof(d));
+    n=0;
+    A=B=0;
+}
+void ha(ll x,ll *c)
+{
+    if (x==0)   return;
+    for (int i=0;i<62;i++)
+    {
+        c[i]=x/(1LL<<(i+1))*(1LL<<i);
+        ll q=(x/(1LL<<i));
+        if (q&1)
+        {
+            c[i]+=(x%(1LL<<i))+1;
+        }
+    }
+}
+void doit(ll a,ll b,ll *c)
+{
+    ll d[110];
+    memset(d,0,sizeof(d));
+    memset(c,0,sizeof(int)*100);
+    ha(b,c);
+    ha(a-1,d);
+    for (int i=0;i<62;i++)
+        c[i]-=d[i];
+}
+Ans check1()
+{
+    if (a[n]>(1LL<<n)) return Ans(-1,0LL,0LL);
+    B=(1LL<<n)-1+a[n];
+    if (B>INF)   return Ans(-1,0LL,0LL);
+    ll r=1LL<<n;
+    ll l=r-1;
+    doit(r,B,b);
+    for (int i=0;i<62;i++)
+        b[i]=a[i]-b[i];
+    for (int i=0;i<n;i++)
+    if (b[i]<=0) return Ans(-1,0LL,0LL);
+    for (int i=n;i<62;i++)
+    if (b[i]<0)  return Ans(-1,0LL,0LL);
+    ll ql=1,qr=l;
+    while (ql<qr)
+    {
+        ll mid=((ql+qr)>>1)+((ql+qr)&1);
+        doit(mid,l,d);
+        int q=0;
+        for (int i=0;i<62;i++)
+        {
+            if (d[i]<b[i])   q=1;
+            if (d[i]>b[i])   q=0;
+        }
+        for (int i=0;i<62;i++)
+        {
+            if (q==1 && d[i]>b[i])   return Ans(-1,0LL,0LL);
+            if (q==0 && d[i]<b[i])   return Ans(-1,0LL,0LL);
+        }
+        if (q==1)   qr=mid-1;else ql=mid;
+    }
+    if (ql<=0)   return Ans(-1,0LL,0LL);
+    doit(ql,B,b);
+    for (int i=0;i<62;i++)
+        if (b[i]!=a[i]) return Ans(-1,0LL,0LL);
+    return Ans(1,ql,B);
+}
+Ans check2()
+{
+    if (a[n]>(1LL<<n)) return Ans(-1,0LL,0LL);
+    ll len=a[n];
+    ll base=1LL<<n;
+    for (int i=n-1;i>=0;i--)
+    {
+        if (a[i]>(1LL<<i)) return Ans(-1,0LL,0LL);
+        if (a[i]==len)  base+=1LL<<i;else
+        if (a[i]==0)    continue;else
+        {
+            B=(1LL<<i)-1+a[i]+base;
+            A=B-len+1;
+            if (B>INF)   return Ans(-1,0LL,0LL);
+            if (A<=0)    return Ans(-1,0LL,0LL);
+            doit(A,B,b);
+            for (int i=0;i<62;i++)
+            if (b[i]!=a[i]) return Ans(-1,0LL,0LL);
+            return Ans(1,A,B);
+        }
+    }
+    doit(base,base,b);
+    if (base>INF)    return Ans(-1,0LL,0LL);
+    for (int i=0;i<62;i++)
+        if (b[i]!=a[i]) return Ans(-1,0LL,0LL);
+    return Ans(1,base,base);
+}
+Ans Union(const Ans &a,const Ans &b)
+{
+    if (a.op==-1)   return b;
+    if (b.op==-1)   return a;
+    if (a.op==2 || b.op==2) return Ans(2,0LL,0LL);
+    if (a.a==b.a && a.b==b.b)   return a;
+    return Ans(2,0LL,0LL);
+}
+void outit(const Ans &a)
+{
+    if (a.op==-1)   printf("None\n");
+    if (a.op==1)    printf("%lld %lld\n",a.a,a.b);
+    if (a.op==2)    printf("Many\n");
+}
+int main()
+{
+    while (true)
+    {
+        scanf("%d",&n);
+        if (n==0)   break;
+        for (int i=0;i<n;i++)
+            scanf("%lld",&a[i]);
+        while (n>0 && a[n]==0)   n--;
+        if (a[n]==0 || n>60)
+        {
+            printf("None\n");
+            clear();
+            continue;
+        }
+        Ans ans1=check1();
+        Ans ans2=check2();
+        Ans ans=Union(ans1,ans2);
+        outit(ans);
+        clear();
+    }
+    return 0;
+}
+~~~
+
+# I. Hashigo Sama
