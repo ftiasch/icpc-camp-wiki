@@ -1,0 +1,118 @@
+Info
+====
+
+Date:2018.10.23
+
+[Link](https://vjudge.net/contest/264761#overview)
+
+Solutions
+=========
+
+A Pattern String
+----------------
+
+solved by sk
+
+B Bazinga
+---------
+
+solved by ghc,sk
+
+------------------------------------------------------------------------
+
+ghc,sk's solution
+
+将所有串按编号从n到1的顺序入栈，当入栈串是栈顶串的子串或栈空时，入栈，否则，弹栈并用被弹出串的编号更新答案。
+
+C Minimum Cut-Cut
+-----------------
+
+unsolved
+
+------------------------------------------------------------------------
+
+'s solution
+
+D Pagodas
+---------
+
+solved by ghc,gjy
+
+------------------------------------------------------------------------
+
+ghc,gjy's solution
+
+只需求gcd，所有gcd的倍数均可达。
+
+E Efficient Tree
+----------------
+
+unsolved
+
+F Frogs
+-------
+
+solved by gjy
+
+------------------------------------------------------------------------
+
+gjy's solution
+
+先将$a_i$转化为$m$的约数，$<a_i>=<(a_i,m)>$。
+
+即对于一系列数的倍数求并集，记每个数计算了多少次，暴力容斥即可。
+
+G Game of Flying Circus
+-----------------------
+
+unsolved
+
+H Chessboard
+------------
+
+unsolved
+
+I Triple
+--------
+
+solved by ghc,gjy
+
+------------------------------------------------------------------------
+
+ghc's solution
+
+对于B中的三元组，显然A中只有对应的第一维最大的有效，考虑哪些点在答案集里。
+
+先看二维平面，如果一个点右上角的$h$大于等于该点，则该点不是极大的，树状数组即可。
+
+J John's Fences
+---------------
+
+unsolved
+
+K Kykneion asma
+---------------
+
+unsolved
+
+L Number Link
+-------------
+
+unsolved
+
+M Meeting
+---------
+
+unsolved
+
+Replay
+======
+
+ghc
+---
+
+gjy
+---
+
+sk
+--
