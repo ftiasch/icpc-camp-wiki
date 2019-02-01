@@ -1,7 +1,8 @@
 补题：E(yzh) J(cc)
 
 E
-```cpp
+
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
@@ -16,29 +17,29 @@ typedef long double LD;
 #define N 100005
 
 struct Node {
-	int l, r, v;
-	Node () {v = INF;}
+    int l, r, v;
+    Node () {v = INF;}
 } t[N * 17 * 17]; 
 
 int tcnt = 0; 
 
 void chg(int &x, int l, int r, int p, int v) {
-	if (!x) x = ++tcnt;
-	if (l < r) {
-		int mid = (l + r) >> 1;
-		if (p <= mid) chg(t[x].l, l, mid, p, v);
-		else chg(t[x].r, mid + 1, r, p, v);
-		t[x].v = min(t[t[x].l].v, t[t[x].r].v);
-	}
-	else t[x].v = v;
+    if (!x) x = ++tcnt;
+    if (l < r) {
+        int mid = (l + r) >> 1;
+        if (p <= mid) chg(t[x].l, l, mid, p, v);
+        else chg(t[x].r, mid + 1, r, p, v);
+        t[x].v = min(t[t[x].l].v, t[t[x].r].v);
+    }
+    else t[x].v = v;
 }
 
 int Qry(int x, int l, int r, int ql, int qr) {
-	if (l == ql && r == qr) return t[x].v;
-	int mid = (l + r) >> 1;
-	if (qr <= mid) return Qry(t[x].l, l, mid, ql, qr);
-	if (ql >  mid) return Qry(t[x].r, mid + 1, r, ql, qr);
-	return min(Qry(t[x].l, l, mid, ql, mid), Qry(t[x].r, mid + 1, r, mid + 1, qr));
+    if (l == ql && r == qr) return t[x].v;
+    int mid = (l + r) >> 1;
+    if (qr <= mid) return Qry(t[x].l, l, mid, ql, qr);
+    if (ql >  mid) return Qry(t[x].r, mid + 1, r, ql, qr);
+    return min(Qry(t[x].l, l, mid, ql, mid), Qry(t[x].r, mid + 1, r, mid + 1, qr));
 }
 
 
@@ -46,78 +47,80 @@ int n;
 int a[N], c[N], f[N];
 
 struct BIT {
-	vector <int> b;
-	int rt;
-	BIT () {rt = 0;}
-	void ins(int i) {
-		while (!b.empty() && a[b.back()] < a[i]) {
-			chg(rt, 1, n, b.back(), INF);
-			b.pop_back();
-		}
-		b.push_back(i);
-		chg(rt, 1, n, i, f[i]);
-	}
-	int qry(int i) {
-		return Qry(rt, 1, n, i, n);
-	}
+    vector <int> b;
+    int rt;
+    BIT () {rt = 0;}
+    void ins(int i) {
+        while (!b.empty() && a[b.back()] < a[i]) {
+            chg(rt, 1, n, b.back(), INF);
+            b.pop_back();
+        }
+        b.push_back(i);
+        chg(rt, 1, n, i, f[i]);
+    }
+    int qry(int i) {
+        return Qry(rt, 1, n, i, n);
+    }
 } Bit[N];
 
 int main() {
-	read(n);
-	for (int i = 1; i <= n; i++) read(a[i]);
-	for (int i = 1; i <= n; i++) {
-		read(c[i]);
-		int p = 0, ans = INF;
-		for (int x = a[i]; x; x -= x & -x) {
-			ans = min(ans, Bit[x].qry(p + 1));
-			if (Bit[x].b.size()) p = max(p, Bit[x].b.back());
-		}
-		f[i] = c[i] + (ans == INF ? 0 : ans);
-		for (int x = a[i]; x <= n; x += x & -x) Bit[x].ins(i);
-	}
-	int p = 0, ans = INF;
-	for (int i = n; i; i--) {
-		if (p < a[i]) ans = min(ans, f[i]);
-		p = max(p, a[i]);
-	}
-	printf("%d\n", ans);	
-	return 0;
+    read(n);
+    for (int i = 1; i <= n; i++) read(a[i]);
+    for (int i = 1; i <= n; i++) {
+        read(c[i]);
+        int p = 0, ans = INF;
+        for (int x = a[i]; x; x -= x & -x) {
+            ans = min(ans, Bit[x].qry(p + 1));
+            if (Bit[x].b.size()) p = max(p, Bit[x].b.back());
+        }
+        f[i] = c[i] + (ans == INF ? 0 : ans);
+        for (int x = a[i]; x <= n; x += x & -x) Bit[x].ins(i);
+    }
+    int p = 0, ans = INF;
+    for (int i = n; i; i--) {
+        if (p < a[i]) ans = min(ans, f[i]);
+        p = max(p, a[i]);
+    }
+    printf("%d\n", ans);    
+    return 0;
 }
-
 ```
 
+J
+对于所有包含1个数不超过k的区间，若我们选择了区间\[l,r\]，则其最长连续0的个数是：r
+- l + 1 - ( s\[r\] - s\[l - 1\] ) + k - ( s\[r\] - s\[l - 1\] )。
 
-J 对于所有包含1个数不超过k的区间，若我们选择了区间[l,r]，则其最长连续0的个数是：r - l + 1 - ( s[r] - s[l - 1] ) + k - ( s[r] - s[l - 1] )。
+处理之后可以得到： r - 2 \* s\[r\] - ( l - 1 - 2 \* s\[l - 1\] ) +
+k。相当于求对于满足s\[r\]-s\[l - 1\] &lt;= k的情况下 r - 2 \* s\[r\] - (
+l - 1 - 2 \* s\[l - 1\] )的最大值，所以就可以用单调队列维护递增序列。
 
-处理之后可以得到： r - 2 * s[r]  - ( l - 1 - 2 * s[l - 1] ) + k。相当于求对于满足s[r]-s[l - 1] <= k的情况下 r - 2 * s[r]  - ( l - 1 - 2 * s[l - 1] )的最大值，所以就可以用单调队列维护递增序列。
-
-~~~{.cpp}
+``` {.cpp}
 #include <bits/stdc++.h>
 using namespace std;
 const int LEN = 1e6 + 5;
 char c[LEN];
 int s[LEN], q[LEN], n;
 int f(int x) {
-	return x- 2 * s[x];
+    return x- 2 * s[x];
 }
 int main() {
-	scanf("%s", c + 1);
-	n = strlen(c + 1);
-	for (int i = 1; i <= n; i++) s[i] = s[i - 1] + c[i] - '0';
-	int T;
-	scanf("%d", &T);
-	while (T--) {
-		int k, ans = 0, qh = 1, qt = 0;
-		scanf("%d", &k);
-		q[++qt] = 0;
-		for (int i = 1; i <= n; i++) {
-			while (qh <= qt && s[i] - s[q[qh]] > k) qh++;
-			if (qh <= qt) ans = max(ans, f(i) - f(q[qh]) + k);
-			while (qh <= qt && f(i) <= f(q[qt])) qt--;
-			q[++qt] = i;
-		}
-		printf("%d\n", min(ans, n - s[n]));
-	}
-	return 0;
+    scanf("%s", c + 1);
+    n = strlen(c + 1);
+    for (int i = 1; i <= n; i++) s[i] = s[i - 1] + c[i] - '0';
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        int k, ans = 0, qh = 1, qt = 0;
+        scanf("%d", &k);
+        q[++qt] = 0;
+        for (int i = 1; i <= n; i++) {
+            while (qh <= qt && s[i] - s[q[qh]] > k) qh++;
+            if (qh <= qt) ans = max(ans, f(i) - f(q[qh]) + k);
+            while (qh <= qt && f(i) <= f(q[qt])) qt--;
+            q[++qt] = i;
+        }
+        printf("%d\n", min(ans, n - s[n]));
+    }
+    return 0;
 }
-~~~
+```
