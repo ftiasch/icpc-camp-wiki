@@ -25,8 +25,8 @@ Other features include
 
 -   TeX math
 
--   syntax highlighting of source code files and code snippets
-    (using highlighting-kate)
+-   syntax highlighting of source code files and code snippets (using
+    highlighting-kate)
 
 -   caching
 
@@ -154,22 +154,21 @@ documents will be valid metadata blocks.)
 Currently the following keys are supported:
 
 format
-:   Overrides the default page type as specified in the
-    configuration file. Possible values are `markdown`, `rst`, `latex`,
-    `html`, `markdown+lhs`, `rst+lhs`, `latex+lhs`. (Capitalization is
-    ignored, so you can also use `LaTeX`, `HTML`, etc.) The `+lhs`
-    variants indicate that the page is to be interpreted as
-    literate Haskell. If this field is missing, the default page type
-    will be used.
+:   Overrides the default page type as specified in the configuration
+    file. Possible values are `markdown`, `rst`, `latex`, `html`,
+    `markdown+lhs`, `rst+lhs`, `latex+lhs`. (Capitalization is ignored,
+    so you can also use `LaTeX`, `HTML`, etc.) The `+lhs` variants
+    indicate that the page is to be interpreted as literate Haskell. If
+    this field is missing, the default page type will be used.
 
 categories
-:   A space or comma separated list of categories to which the
-    page belongs.
+:   A space or comma separated list of categories to which the page
+    belongs.
 
 toc
-:   Overrides default setting for table-of-contents in the
-    configuration file. Values can be `yes`, `no`, `true`, or `false`
-    (capitalization is ignored).
+:   Overrides default setting for table-of-contents in the configuration
+    file. Values can be `yes`, `no`, `true`, or `false` (capitalization
+    is ignored).
 
 title
 :   By default the displayed page title is the page name. This metadata
@@ -316,8 +315,8 @@ setting of `math` in the configuration file:
     page](http://sourceforge.net/project/showfiles.php?group_id=172663).
     You'll have two `.zip` archives. Unzip them both in the `static/js`
     directory (a new subdirectory, `jsMath`, will be created). This
-    works with all browsers, but is slower and not as nice looking
-    as MathML.
+    works with all browsers, but is slower and not as nice looking as
+    MathML.
 
 3.  `raw`: Math will be rendered as raw LaTeX codes.
 
@@ -602,8 +601,8 @@ Acknowledgements
 
 A number of people have contributed patches:
 
--   Gwern Branwen helped to optimize gitit and wrote
-    the InterwikiPlugin. He also helped with the Feed module.
+-   Gwern Branwen helped to optimize gitit and wrote the
+    InterwikiPlugin. He also helped with the Feed module.
 -   Simon Michael contributed the patch adding RST support.
 -   Henry Laxen added support for password resets and helped with the
     apache proxy instructions.
