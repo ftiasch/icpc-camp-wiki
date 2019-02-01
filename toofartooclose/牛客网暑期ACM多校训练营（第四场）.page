@@ -1,0 +1,58 @@
+A.[Ternary String](https://www.nowcoder.com/acm/contest/142/A)[zlc,wjy]
+==
+
+zlc: 是个欧拉降幂定理的运用。大家好像大部分写的都是错的降幂公式，我觉得我的没问题。
+
+我在找规律推式子和写程序方面（写挂）花费了很多时间。以后要注意。
+
+B.[Interval Revisited](https://www.nowcoder.com/acm/contest/142/B)[补:zlc]
+==
+
+zlc: 我的做法: [牛客网上题解](https://www.nowcoder.com/discuss/88842?type=101&order=0&pos=1&page=0) 和题解不一样
+
+写了过长时间，没有rush出来
+
+C.[Chiaki Sequence Reloaded](https://www.nowcoder.com/acm/contest/142/C)[wjy]
+==
+
+D.[Another Distinct Values](https://www.nowcoder.com/acm/contest/142/D)[wjy]
+==
+
+E.[Skyline](https://www.nowcoder.com/acm/contest/142/E)[补: zlc]
+==
+
+一眼过去，我就把题读错了 $=\_=!$ mdzz [牛客题解](https://www.nowcoder.com/discuss/88867?type=101&order=0&pos=1&page=0)
+
+然后读对以后就是个简单的扫描线模板题（当然自己写感觉比找模板快吧）
+
+F.[Beautiful Garden](https://www.nowcoder.com/acm/contest/142/F)
+==
+
+G.[Maximum Mode](https://www.nowcoder.com/acm/contest/142/G)[zlc]
+==
+
+发现这个题可以二分答案，所以就愉快的二分答案随便搞了
+
+这个题的暴力是 $n\sqrt{n}$的
+
+H.[Double Palindrome](https://www.nowcoder.com/acm/contest/142/H)
+==
+
+I.[Permutation](https://www.nowcoder.com/acm/contest/142/I)
+==
+
+J.[Hash Function](https://www.nowcoder.com/acm/contest/142/J)[zlc]
+==
+
+zlc: 发现这个是个拓扑序，然后我就没继续想，就愉快的写了个线段树调了一整年
+
+细节较多，写挂的有点恶心。。还好最后调出来了。。不过花费了大量时间。
+
+Summary
+=======
+
+zlc1114: 这场我的时间仍然没有分配好，写挂挂在某题上的时间过多了，导致没时间去看其他题。
+
+  我觉得E题可以一眼秒。。(实际上下来补题读对以后，思路+写用了不到半个小时)
+  
+  还有就是策略有点小问题，这个B题我一眼看到三个log的做法就去rush了，估计如果看到E题我还能rush出来，这个B我二分树套树写的真是太难受了。
