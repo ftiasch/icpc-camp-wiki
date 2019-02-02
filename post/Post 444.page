@@ -1,0 +1,168 @@
+# Codeforces #352 D Roads in Yusland
+
+题意：一个有 $N$ 个点的树，树上的边已经全部损坏了。现在有 $M$ 个工人，每个工人可以修复从$u_i$到$v_i$(保证$v_i$是$u_i$到$root$上的一个点)上的所有边，花费为$c_i$。问把所有边修好的最小花费为多少。
+$ 1 \leq N, M \leq 300 000$
+
+目前已知一种树链剖分+dp的做法。但是无意中发现了叉姐的一种贪心解法..代码看不懂，求这种思路。
+
+```c++
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <set>
+#include <utility>
+#include <vector>
+
+const int N = 300000;
+
+int n, depth[N];
+long long result;
+std::vector<int> tree[N];
+std::set<std::pair<long long, int>> query[N];
+
+typedef std::pair<long long, std::set<std::pair<long long, int>>*> Summary;
+
+Summary merge(const Summary& u, const Summary& v)
+{
+    if (u.second->size() < v.second->size()) {
+        return merge(v, u);
+    }
+    Summary w = u;
+    for (auto&& it : *v.second) {
+        w.second->insert({it.first + v.first - u.first, it.second});
+    }
+    return w;
+}
+
+Summary dfs(int p, int u)
+{
+    depth[u] = ~p ? depth[p] + 1 : 0;
+    Summary s {0, query + u};
+    for (int v : tree[u]) {
+        if (v != p) {
+            auto s2 = dfs(u, v);
+            while (!s2.second->empty() && depth[u] < depth[s2.second->begin()->second]) {
+                s2.second->erase(s2.second->begin());
+            }
+            if (s2.second->empty()) {
+                result = -1;
+            }
+            if (~result) {
+                int tmp = s2.first + s2.second->begin()->first;
+                result += tmp;
+                s2.first -= tmp;
+            }
+            s = merge(s, s2);
+        }
+    }
+    return s;
+}
+
+int main()
+{
+    int m;
+    scanf("%d%d", &n, &m);
+    for (int _ = 0; _ < n - 1; ++ _) {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        a --;
+        b --;
+        tree[a].push_back(b);
+        tree[b].push_back(a);
+    }
+    for (int i = 0; i < m; ++ i) {
+        int u, v, c;
+        scanf("%d%d%d", &u, &v, &c);
+        u --;
+        v --;
+        query[u].emplace(c, v);
+    }
+    dfs(-1, 0);
+    std::cout << result << std::endl;
+}
+```
+
+
+[Veda wrote on 2016-05-28T08:37:03]
+
+---
+
+呃，自己来答……
+
+设 $x_j$ 表示使用第 $j$ 个工人的次数（实际上 $0 \leq x_j \leq 1$），$A_{i, j} = 1$ 当且仅当第 $j$ 个工人能够修复第 $i$ 个点，否则 $A_{i, j} = 0$。
+
+原问题即：
+
+* 对于 $1 \leq i \leq n$, $\sum_{j} A_{i, j} x_j \geq 1 \Leftrightarrow \mathbf{A} \cdot \mathbf{x} \geq \mathbf{e}$；
+* 最小化 $\sum_{j} c_j x_j = \mathbf{c}^T \cdot \mathbf{x} $.
+
+对偶问题即：
+
+* $\mathbf{A}^T \mathbf{y} \leq \mathbf{c}$
+* 最大化 $\mathbf{e}^T \mathbf{y}$.
+
+对偶问题说人话就是，选择最多的点（可以重复选），使得每条路径上的总点数不超过 $c_j$.
+
+可以自底向上贪心，对于每个点，计算可以选择多少次仍然不超过限制。
+具体实现时，用 std::set 维护每条链的余量，启发式合并。
+
+[ftiasch wrote on 2016-05-28T10:06:00]
+
+---
+
+@Hayashimo#3685 但是原问题这么建模是不是整数线性规划了呢？QAQ  
+
+[ed7bc1a3-0d72-4bbd-b5fd-3a82ed0f6dfb wrote on 2016-05-31T05:47:00]
+
+---
+
+@WuHongxun#3702 
+
+原始 LP 是常说的志愿者招募，肯定是整数解……
+
+[ftiasch wrote on 2016-05-31T07:53:00]
+
+---
+
+@Hayashimo#3703 但是志愿者招募是因为矩阵里的1是连续的所以差分之后可以用费用流建图，所以是整数解。可是这里的1并没有连续的性质啊QAQ
+
+[ed7bc1a3-0d72-4bbd-b5fd-3a82ed0f6dfb wrote on 2016-05-31T08:01:22]
+
+---
+
+@WuHongxun#3704 你说得一点不错，但是这里也可以差分然后用费用流解决……
+
+[ftiasch wrote on 2016-05-31T09:04:38]
+
+---
+
+@Hayashimo#3705 像树上差分那样搞吗。。也就是说每个点的方程减去它父亲的方程这样。。？但是这样会不会带来一个问题，每个你把它转成松弛型的时候加的辅助变量，在用这种树上的办法差分之后会在孩子里出现若干次吧。。那就没法费用流了啊QAQ
+
+[ed7bc1a3-0d72-4bbd-b5fd-3a82ed0f6dfb wrote on 2016-05-31T09:22:05]
+
+---
+
+@WuHongxun#3706 
+
+你可以找一下 http://acm.hdu.edu.cn/showproblem.php?pid=3947 这题的解题报告。。。
+
+我亲手 AC 过，所以应该是不会有错的 = =
+
+[ftiasch wrote on 2016-05-31T11:07:11]
+
+---
+
+@Hayashimo#3707 QAQ窝认真思考了这个问题，觉得应该是差分的时候，每个点的方程 变成 每个点减去它所有儿子的方程，所以每个点的地方加的辅助变量只会在它和它父亲的地方出现，而不会在它的儿子中出现，用这种办法差分（而不是窝在lss以为的方式）就好了。。。
+
+还要请教一个关于EXT的问题，就是如果这题的限制不是每个点都要被覆盖，而是每个点都要被覆盖$c_i$次（每个工人还是只能选一次）的话，那么是不是就无法解决了呢QAQ （因为似乎这样就没法把$x_i \leq 1$的限制去掉。。？
+
+[ed7bc1a3-0d72-4bbd-b5fd-3a82ed0f6dfb wrote on 2016-05-31T11:55:44]
+
+---
+
+@WuHongxun#3708 不过好像如果带一个$c_i$的权也没法贪心了。。0.0
+
+[ed7bc1a3-0d72-4bbd-b5fd-3a82ed0f6dfb wrote on 2016-05-31T12:18:43]
+
+---
+
