@@ -1,0 +1,25 @@
+# 「锁定主题」
+
+给定N（Ｎ　＜＝　５００００）个点　和　Ｍ（Ｍ　＜＝　５００００）的图，　其中有Ｋ（Ｋ＜＝　Ｎ）个特殊点
+要求构建尽量多的路径，　满足
+１　路径的两个端点不同，并且属于Ｋ个特殊点
+２　每个特殊点只能最多作为一条路径的端点一次
+３　不同的路径不能含有相同的边
+求最大的可构建的路径数。http://www.codeforces.com/contest/589/problem/H
+
+[pojianshi wrote on 2015-12-07T15:28:34]
+
+---
+
+先不说图，如果是棵树都可以很轻松的构满吧，就是一个连通块内如果有$K$个点，肯定能只用它的一个生成树构出$\lfloor \frac{K}{2} \rfloor$条路径。
+
+[sd_invol wrote on 2015-12-07T16:02:50]
+
+---
+
+Duplicated http://async.icpc-camp.org/d/196-neerc-2015-southern-subregional-h-tourist-guide
+
+[ftiasch wrote on 2015-12-08T05:22:59]
+
+---
+
