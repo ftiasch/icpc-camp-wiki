@@ -1,0 +1,50 @@
+# 2015 北京赛区网络赛 G Boxes
+
+我想知道除了打表和暴搜，还有什么解法？
+
+[RegHorace wrote on 2015-09-21T07:52:56]
+
+---
+
+状态总共就只有$7^7$种，感觉好像没有哦。
+
+[sd_invol wrote on 2015-09-21T12:24:12]
+
+---
+
+有没有神犇能随便说说搜索状态怎么转移。。。
+
+[asdfghj wrote on 2015-09-21T14:25:29]
+
+---
+
+@DPSleeper#514 http://blog.csdn.net/stl112514/article/details/48652507  
+
+[w20810 wrote on 2015-09-22T06:22:02]
+
+---
+
+铜球
+
+[w20810 wrote on 2015-09-22T09:25:14]
+
+---
+
+@w20810#531 @DPSleeper#514 看[这个](http://talk.icpc-camp.org/d/62-2015-g-boxes/3)。
+
+[ftiasch wrote on 2015-09-22T12:48:24]
+
+---
+
+@ftiasch#532 谢叉姐(´・ω・`)后来自己摸出来了
+
+[asdfghj wrote on 2015-09-22T15:20:02]
+
+---
+
+test
+
+[ftiasch wrote on 2015-09-22T15:21:26]
+
+---
+
