@@ -1,0 +1,54 @@
+# UVA 13001 Jumping Frogs
+
+Problem Link (https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=866&page=show_problem&problem=4889)
+
+$10^5$ R红青蛙和G绿色青蛙坐在一条直线。青蛙的所有位置都
+非负整数。每一秒钟，所有的青蛙跳。每个青蛙有它自己的速度.
+线被分为N + 1个连续 interval.  找出最短的时间所有的青蛙达到相同的 interval.
+
+试了 interval tree + binary search, 但是太慢了。
+
+[baodog wrote on 2015-11-14T18:02:44]
+
+---
+
+Problem Link (https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=866&page=show_problem&problem=4889)
+
+10^5 R红青蛙和G绿色青蛙坐在一条直线。青蛙的所有位置都
+非负整数。每一秒钟，所有的青蛙跳。每个青蛙有它自己的速度.
+红色青蛙向右跳，绿色的青蛙向左。
+线被分为N 个连续区间（N<10^5).  找出最短的时间所有的青蛙达到相同的区间
+
+试了 2分 + 区间树 , 但是太慢了。
+
+[baodog wrote on 2015-11-14T18:28:37]
+
+---
+
+我有个想法：假如移动是连续的，那么以时间为x轴，坐标为y轴，每只青蛙的轨迹就成了一条射线。对红、绿青蛙分别维护两个凸壳即可得到到达每个区间的最早、最晚时间。离散的话，将时间下取整即可。
+
+[mstczuo wrote on 2015-11-15T01:20:43]
+
+---
+
+@mstczuo#2601 离散和连续。。。还是挺不一样的吧。。。
+
+[ftiasch wrote on 2015-11-15T01:25:40]
+
+---
+
+@mstczuo#2601 不过你的做法，反一反似乎就是对的。
+
+以时间为 x 轴，坐标为 y，维护两个凸包，每个单位时间，最左边和最右边的青蛙的坐标。这个时间虽然很多，但是这个坐标是个只有 $O(n)$ 段的线性函数。这里红绿青蛙不要单独维护，不然没法并。
+
+然后我们分析一下最左最右两只青蛙的运动，有两种情况：
+
+1. 反向，肯定在它们变得最窄的那个区间相遇。对于变窄的情况，要重新算一算最早是什么时候都在这个区间里面的。
+2. 同向，假设他们都是向右的，那么只会在右端青蛙当前所在区间相遇（这里有个重要的条件是 $R, G \geq 1$）
+
+这样就是 $O(n \log n)$ 了。
+
+[ftiasch wrote on 2015-11-15T01:44:11]
+
+---
+
