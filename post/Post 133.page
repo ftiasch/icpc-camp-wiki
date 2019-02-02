@@ -1,0 +1,43 @@
+# JAG Summer 2012 Day 4 F Pipeline Plans
+
+题意是在R*C的格子上放上一些上面有路的砖，使得可以从起点走到终点，问有多少种放法。
+
+猜测是状压DP，可是每个砖都有数量限制，而且砖的种类好多不知道要怎么处理QAQ。
+求解答thx。
+
+
+[mio wrote on 2015-10-02T09:01:07]
+
+---
+
+直接把每种砖的个数压下来，敢写就敢过啊…
+
+[ftiasch wrote on 2015-10-02T09:08:02]
+
+---
+
+@Varona#1308 可是连通性怎么维护呢。。。看了一下叉姐的代码，没有看懂＝ ＝
+大致现在是知道需要按照轮廓线维护n+1个插头，但是代码的转移过程，changeall，one和colors不理解意义。
+
+[zyeric wrote on 2015-10-05T13:59:27]
+
+---
+
+@zyeric#1501 你是说[这个](http://git.icpc-camp.org/ftiasch/mithril/blob/master/2012-09-17/F.cpp)吗？这是 @bjin 写的。
+
+[ftiasch wrote on 2015-10-05T14:01:56]
+
+---
+
+@Varona#1502 是的，看的就是这份代码。不太理解怎么维护图的连通性。
+
+[zyeric wrote on 2015-10-05T14:14:47]
+
+---
+
+@zyeric#1503 不就是暴力记的嘛……每个颜色表示一个连通块。
+
+[ftiasch wrote on 2015-10-05T14:15:33]
+
+---
+
