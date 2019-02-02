@@ -1,0 +1,75 @@
+# 2015 合肥赛区网络赛 D Difference of Languages
+
+http://acm.hdu.edu.cn/showproblem.php?pid=5487
+
+我的思路是求两个 DFA 的 XOR，新 DFA 的状态空间是两个原 DFA 的状态空间的笛卡尔积。
+BFS 的过程中，遇到第一个 finite state 就输出结果。
+
+结果是 TLE。是因为缺剪枝，还是有更神奇的姿势？
+
+[nerddan wrote on 2015-09-28T04:59:11]
+
+---
+
+根据 [这里](http://dreadnought.icpc-camp.org/2015%20ACM/ICPC%20Asia%20Regional%20Hefei%20Online) 的记载，可能是要考虑一下常数问题 ……
+
+[ftiasch wrote on 2015-09-28T05:00:46]
+
+---
+
+@ftiasch#851 多谢。已经非常努力的做常数优化了并无卵用。不知道哪里能找到 AC 代码让我对比一下？
+
+[nerddan wrote on 2015-09-28T05:20:15]
+
+---
+
+[一份代码](http://paste.ubuntu.com/12600333/)
+
+[sd_invol wrote on 2015-09-28T05:23:40]
+
+---
+
+@Sd_Invol#858 谢谢！
+
+[nerddan wrote on 2015-09-28T07:00:25]
+
+---
+
+我嚓我昨天的代码没改直接 AC 了。811 ms。能申诉吗？
+
+[nerddan wrote on 2015-09-28T07:07:05]
+
+---
+
+@Sd_Invol#858 题目中没有说接受一个不在rule里的字符时怎么转移，，是不转移还是转移到一个非法状态，，看您的代码好像是后者？（PS:这份代码和我的异常相像。。）
+
+[vainman wrote on 2015-09-28T07:12:40]
+
+---
+
+@nerddan#867 HDOJ 确实存在这么一个现象。已经观测到多次了。
+
+[ftiasch wrote on 2015-09-28T07:41:44]
+
+---
+
+@vainman#868 是的，转移到一个"孤岛"状态
+
+[sd_invol wrote on 2015-09-28T07:52:19]
+
+---
+
+> @Sd_Invol#870 是的，转移到一个"孤岛"状态
+
+Orz  题目竟然没有提到半点。。？
+
+[vainman wrote on 2015-09-28T07:53:41]
+
+---
+
+@vainman#871 题目说「串能被一个 DFA 接受而不能被另一个接受」这就够了。描述没有问题。
+
+[nerddan wrote on 2015-09-28T08:04:14]
+
+---
+
