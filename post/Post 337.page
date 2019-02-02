@@ -1,0 +1,27 @@
+# ZeptoLab Code Rush 2015 F Pudding Monsters
+
+题目链接: http://codeforces.com/contest/526/problem/F
+不太懂线段树的做法....怎么维护两个queue
+解答: http://codeforces.com/blog/entry/17281?#comment-220930
+代码: http://codeforces.com/contest/526/submission/10584435
+
+[minamikotori wrote on 2015-12-25T05:52:50]
+
+---
+
+感觉这题的重要条件就是每行每列有且仅有一个monster
+令ai=第i列monster的行坐标
+有一个合法的k*k正方形左边界是第j列，右边界是第i列，显然同(i,j)至多只有一个这样的正方形，当且仅当max{a[j..i]} - min{a[j..i]} = i - j
+而且式子max{a[j..i]} - min{a[j..i]} - i + j肯定非负
+
+那么统计有多少对(j,i)，使得上述式子=0，即为答案
+从小到大枚举i，令fj=max{a[j..i]} - min{a[j..i]} - i + j，我们用线段树来维护min{fj}以及其个数
+每次i移动一下，就会使得某些j的max{a[j..i]}和min{a[j..i]}变化，所以用两个queue（实际是stack？）来快速定位变化的位置
+例如max{a[j..i]}，假设维护好了1..i-1关于ai下降的单调栈s，栈s中每个元素(x,pos)，表示a[pos]=x，假设栈s最后两个元素是(7.3)和(5,7)，能得知4<j<=7，max{a[j..i]}都=5。考虑i移动了一下，拿ai和栈s比较，如果ai比栈s顶小，则说明1..i-1的max{a[j..i]}都没有变化，如果ai比栈s顶大，则退掉栈顶，且栈顶对应的那段区间的max{a[j..i]}都变了，用线段树给区间的f值加上一个数，然后继续退到不能退为止。min同理
+
+由于f非负，所以有fj=0时，用线段树维护的min{fj}一定是0，把一起维护的count加到答案即可
+
+[lostRating wrote on 2015-12-25T09:04:22]
+
+---
+
