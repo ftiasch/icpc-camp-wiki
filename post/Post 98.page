@@ -1,0 +1,35 @@
+# Codeforces Round #322 F Zublicanes and Mumocrates
+
+http://codeforces.com/contest/581/problem/F
+这个题怎么做？
+
+[w20810 wrote on 2015-09-29T07:08:06]
+
+---
+
+设 $f(u, c, x)$ 表示 $u$ 根的颜色是 $c$，子树里面有 $x$ 个黑叶子，直接转移就好啦？
+
+[ftiasch wrote on 2015-09-29T07:24:13]
+
+---
+
+弱弱地贴个链接......
+http://tieba.baidu.com/p/4070877156
+
+[quailty wrote on 2015-09-29T07:28:51]
+
+---
+
+可以参考一下 
+http://www.cnblogs.com/Opaser/p/4845287.html
+
+[opas wrote on 2015-09-30T02:49:18]
+
+---
+
+@ftiasch#956 叉姐,泥应该解释一下, 这个$dp$是$O(N^2)$的. 虽然它看起来状态是$N^2$, 转移是$N$. 当然,我觉得$CF$的题解已经说的很好了. 这个题, 今年多校里面也有吧. [LINK](http://acm.hdu.edu.cn/showproblem.php?pid=5378)
+
+[yuzhou627 wrote on 2015-10-01T06:30:31]
+
+---
+
