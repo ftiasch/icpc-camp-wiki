@@ -1,0 +1,122 @@
+# 2016 Multi-University Training Contest 1 H Shell Necklace
+
+本质是求 $1 / (1 - A)$，但是多项式逆精度好像不够，到底是为什么呢？
+
+精度不够的代码：
+
+```
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+
+const int MOD = 313;
+
+const int N = 1 << 18;
+
+typedef long double Double;
+
+struct Complex
+{
+    Complex(Double x = 0., Double y = 0.) : x(x), y(y) {}
+
+    Double x, y;
+};
+
+Complex operator + (const Complex& a, const Complex& b)
+{
+    return Complex(a.x + b.x, a.y + b.y);
+}
+
+Complex operator - (const Complex& a, const Complex& b)
+{
+    return Complex(a.x - b.x, a.y - b.y);
+}
+
+Complex operator * (const Complex& a, const Complex& b)
+{
+    return Complex(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+}
+
+void FFT(Complex P[], int n, int oper)
+{
+    static const Double PI = acos(-1.);
+
+    for (int i = 1, j = 0; i < n - 1; i++) {
+        for (int s = n; j ^= s >>= 1, ~j & s;);
+        if (i < j) {
+            std::swap(P[i], P[j]);
+        }
+    }
+    for (int d = 0; (1 << d) < n; d++) {
+        int m = 1 << d, m2 = m * 2;
+        Double p0 = PI / m * oper;
+        Complex unit_p0(cos(p0), sin(p0));
+        for (int i = 0; i < n; i += m2) {
+            Complex unit = 1;
+            for (int j = 0; j < m; j++) {
+                Complex &P1 = P[i + j + m], &P2 = P[i + j];
+                Complex t = unit * P1;
+                P1 = P2 - t;
+                P2 = P2 + t;
+                unit = unit * unit_p0;
+            }
+        }
+    }
+}
+
+
+const Complex ZERO(0., 0.);
+
+Complex a[N], b[N], tmp[N];
+
+void inverse(Complex* a, Complex* b, int n)
+{
+    b[0] = 1;
+    // a(x) * b(x) = 1 (mod x^{c / 2})
+    // a(x) * b'(x) = 1 (mod x^c) => a(x) * b'(x) = 1 (mod x^{c / 2})
+    // a(x) * (b(x) - b'(x)) = 0 (mod x^{c / 2})
+    // => b(x) - b'(x) = 0 (mod x^{c / 2})
+    // => b^2(x) - 2b(x)b'(x) + b'^2(x) = 0 (mod x^c)
+    // => a(x)b^2(x) - 2b(x) + b'(x) = 0 (mod x^c)
+    // => b'(x) = 2b(x) - a(x)b^2(x) (mod x^c)
+    for (int c = 2; (c >> 1) < n; c <<= 1) {
+        for (int i = 0; i < c << 1; ++ i) {
+            tmp[i] = i < n && i < c ? a[i] : 0.;
+        }
+        FFT(tmp, c << 1, 1);
+        for (int i = c / 2; i < c << 1; ++ i) {
+            b[i] = ZERO;
+        }
+        FFT(b, c << 1, 1);
+        for (int i = 0; i < c << 1; ++ i) {
+            b[i] = (Complex(2) - (tmp[i] * b[i])) * b[i];
+        }
+        FFT(b, c << 1, -1);
+        for (int i = 0; i < c << 1; ++ i) {
+            b[i] = ((long long)round(b[i].x / (c << 1)) % MOD + MOD) % MOD;
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    while (scanf("%d", &n) == 1 && n) {
+        n ++;
+        a[0] = 1;
+        for (int i = 1; i < n; ++ i) {
+            int a_;
+            scanf("%d", &a_);
+            a[i] = (MOD - a_ % MOD) % MOD;
+        }
+        inverse(a, b, n);
+        printf("%d\n", (int)(((long long)b[n - 1].x % MOD + MOD) % MOD));
+    }
+}
+```
+
+[ftiasch wrote on 2016-07-20T01:29:15]
+
+---
+
