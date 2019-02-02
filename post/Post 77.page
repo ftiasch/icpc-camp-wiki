@@ -1,0 +1,216 @@
+# 2015 上海赛区网络赛 I Explore Track of Point
+
+首先明显等腰三角形的高线上所有点都是P的路径的一部分。
+样例输出是$\sqrt(2)\pi/2\+1$,加上~~大胆猜想，不用证明~~，可以猜想答案是长这样的。
+![1009.png](https://ooo.0o0.ooo/2015/09/26/56066c7470af3.png "1009.png")
+(~~就是这个类似~~尻~~的东西~~，其中两道圆弧与等腰三角形的腰相切)
+然后写一发就过了。
+
+这是我的思考方向。。然后有啥正常的思考方式么
+
+[mikantsumiki wrote on 2015-09-26T10:00:04]
+
+---
+
+你的结论好像是错的……
+
+[ftiasch wrote on 2015-09-26T10:24:52]
+
+---
+
+@ftiasch#650 但是过了
+
+[mikantsumiki wrote on 2015-09-26T10:30:03]
+
+---
+
+@ftiasch#650 我同意叉姐的观点……我们算出来大概是一段圆弧，AB、AC是A到那个圆的两条切线……
+
+[TankEngineer wrote on 2015-09-26T10:30:35]
+
+---
+
+@ftiasch#650 噢我说错了..和高相切..怎么重新编辑
+
+[mikantsumiki wrote on 2015-09-26T10:30:55]
+
+---
+
+@MikanTsumiki#652 因为你这个长度确实是对的……
+
+[TankEngineer wrote on 2015-09-26T10:31:49]
+
+---
+
+@MikanTsumiki#654 没法重新编辑（鞭尸吧 233
+
+不是，我觉得怎么说都是 1 个圆弧 …… 
+
+[ftiasch wrote on 2015-09-26T10:32:25]
+
+---
+
+@TankEngineer#655 话说你们怎么发现的 = = 我是通过一些绘图发现的 ……
+
+[ftiasch wrote on 2015-09-26T10:32:55]
+
+---
+
+@TankEngineer#653 看起来是蒙出了错误的但是数值上恒等的答案..那怎么靠谱地算呢
+
+[mikantsumiki wrote on 2015-09-26T10:33:19]
+
+---
+
+@ftiasch#658 我队友是公式推出来的。。。和叉姐的结论一样。。
+
+[burglar wrote on 2015-09-26T10:34:00]
+
+---
+
+@ftiasch#658 我是通过一些脑洞发现的。我感觉证明可能比较困难。
+
+[TankEngineer wrote on 2015-09-26T10:34:21]
+
+---
+
+但是WA了
+所以我现在开始觉得正确答案是不是就是两个圆弧。。。
+
+[burglar wrote on 2015-09-26T10:35:23]
+
+---
+
+图大概是这样
+[IMG]http://dreadnought.icpc-camp.org/Screenshot%20from%202015-09-26%2018:39:38.png[/IMG]
+
+[TankEngineer wrote on 2015-09-26T10:41:18]
+
+---
+
+比赛的时候用几何画板然后计算出两个对角的和，然后找了一些不在中垂线上的点，YY出来了这个圆，然后在这个圆上取点也是成立的。
+![alt text](http://www-frozenc-com-static.smartgslb.com/img/1.png "Title")
+刚刚用平几证明了下= =马上更。。
+
+[caoyi0905 wrote on 2015-09-26T10:53:40]
+
+---
+
+@TankEngineer#661 药丸，我跟你的做法一模一样。还使用了同样的工具 = =
+
+不过我观察到的事情跟你不太一样，实际上那个圆是以内心和旁心为中心的，我是用这个做的 = =
+
+[ftiasch wrote on 2015-09-26T10:56:49]
+
+---
+
+![alt text](http://www-frozenc-com-static.smartgslb.com/img/1009.png "Title")
+
+四边形BPCQ叫调和四边形= =各种乱七八糟的性质。。
+
+[caoyi0905 wrote on 2015-09-26T11:17:09]
+
+---
+
+@caoyi0905#668 QwQ  太难了。。。没学过数学竞赛的选手只好画画图了。
+
+[ftiasch wrote on 2015-09-26T11:30:31]
+
+---
+
+@ftiasch#670 没有画图基础的只好瞎逼猜了
+
+[mikantsumiki wrote on 2015-09-26T11:39:39]
+
+---
+
+@MikanTsumiki#672 [好书推荐](http://www.amazon.com/You-Can-Draw-30-Days/dp/0738212415)，有中文版
+
+[ftiasch wrote on 2015-09-26T11:53:21]
+
+---
+
+@caoyi0905#668 Orz太神了……
+窝用了各种调和性质才终于艰难证出……
+[IMG]http://static.icpc-camp.org/flarum-emotion/benny/14321.png[/IMG]
+
+[quailty wrote on 2015-09-26T12:18:51]
+
+---
+
+初中数学还给了老师
+
+[sd_invol wrote on 2015-09-26T12:37:52]
+
+---
+
+@Sd_Invol#682 你家初中上这个的？佩服！
+
+[ftiasch wrote on 2015-09-26T12:38:18]
+
+---
+
+@ftiasch#683 高中再没学过平几
+
+[sd_invol wrote on 2015-09-26T12:39:09]
+
+---
+
+@quailty#680 一机灵发现可以用托勒密= =。。然后就比较好做吧
+
+[caoyi0905 wrote on 2015-09-26T12:54:01]
+
+---
+
+考场上试了半天...最后放弃治疗把鏼叫过来鏼直接随手秒了..
+
+[jiry_2 wrote on 2015-09-26T13:02:11]
+
+---
+
+@caoyi0905#688 相当好做且可读= =
+用调和性质的证明会是这样的……
+设AM交圆O于D，延长线交圆O于E，
+设AP延长线交BC于R，交圆O于Q，
+A,D,M,E是调和点列且∠MQE=90°→∠DQM=∠DQA，
+于是∠BQM=∠CQP=∠PBM，
+A,P,R,Q是调和点列且∠AMQ=90°→∠PMR=∠QMR，
+于是∠PMB=∠CMB，
+所以∠BPM=∠QBM=∠QPC=180°-∠APC，
+证毕……是不是有点脏= =
+
+[quailty wrote on 2015-09-26T13:09:46]
+
+---
+
+@quailty#696 这才是大神手笔！
+
+[caoyi0905 wrote on 2015-09-26T13:17:34]
+
+---
+
+不会画图的只好打出来猜T_T
+[img]https://ooo.0o0.ooo/2015/09/27/560735a384416.jpg[/img]
+
+[gyf wrote on 2015-09-27T00:21:19]
+
+---
+
+@caoyi0905#668 真是机智！
+
+[kybconnor wrote on 2015-09-27T00:35:54]
+
+---
+
+直接暴力枚举点打到一个矩阵上，然后输出矩阵，看着像什么就大胆猜测。。。。。然而我似乎把图打反了，队友没看出来( ´_ゝ｀)
+
+[Fuei wrote on 2015-09-27T01:17:44]
+
+---
+
+@gyf#724 刚想问如果没有工具怎么办_(:з」∠)_，这做法不错……
+
+[y761823 wrote on 2015-09-27T02:28:39]
+
+---
+
