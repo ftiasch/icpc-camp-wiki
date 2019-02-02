@@ -1,0 +1,24 @@
+# 2016 Tsukuba Regional Problem C
+
+题目地址:http://judge.u-aizu.ac.jp/onlinejudge/contest/ICPCOOC2016/C.pdf
+n 条传送带对应 n 个仓库。 有m 个机械臂， i 号传送带旁的机械臂可以在 x 点处将 i 号传送带的货物搬到 i + 1 号传送带，也可以从i + 1号搬到 i 号； 输出n行数据， 第 i 行代表可以到达 i 号仓库的传送带数量。
+( 2 <= n <= 200000， 1 <= m < 100000 )
+
+[imtbkcat wrote on 2016-10-18T07:20:06]
+
+---
+
+@imtbkcat#4585 
+
+能到达i号仓库的传送带的集合是一段连续的区间，所以只需要把每个仓库能到的传送带的最小/最大编号dp出来就好了
+
+[totoro wrote on 2016-10-18T12:11:24]
+
+---
+
+@totoro#4587 谢谢
+
+[imtbkcat wrote on 2016-10-18T14:01:38]
+
+---
+
