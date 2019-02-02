@@ -1,0 +1,34 @@
+# Large Schröder Number
+
+对于Schröder数列
+$$S_0=1,S_n=S_{n-1}+\sum_{k=0}^{n-1}{S_k\cdot S_{n-k-1}}$$
+有
+$$S_n=\frac{1}{n}\cdot\sum_{k=1}^{n}{2^k\cdot\binom{n}{k}\cdot\binom{n}{k-1}}$$
+其中$n>0$
+
+偶然在OEIS上看见的，不是很懂，请问该如何证明？
+
+[skywalkert wrote on 2016-05-20T20:46:03]
+
+---
+
+正面回答 tls 的问题的话，应该是直接把
+$$S(x) = \frac{1 - x - \sqrt{1 - 6x + x^2}}{2x}$$ 这个 gf 展开。无奈我好菜啊，展不开……只好曲径通幽一下。
+
+首先我们知道 Schröder Number 就是从 $(0, 0)$ 走到 $(2n, 0)$，每次只能走 $(1, 1), (1, -1), (2, 0)$ 三种向量的路径条数。
+那么前面的递推，其实就是考虑最后一步，如果最后一步是平的，自然就是 $S_{n - 1}$，如果最后一步是 $(1, -1)$，那么相当于枚举对应的 $(1, 1)$ 是在哪里，把路径分成一个 $S_k$ 和一个 $S_{n - k - 1}$.
+
+另一种数数的方法是要知道 $\frac{1}{n} \binom{n}{k}\binom{n}{k - 1}$ 就是 Narayana Number，也就是说从 $(0, 0)$ 走到 $(2n, 0)$，每次只走 $(1, 1), (1, -1)$，恰好有 $k$ 个峰（先向上后马上向下）的方案数。这个方案跟 Schröder 的对应关系是，你可以把一个峰换成一个 $(2, 0)$，或者反之。所以你做的就是 $2^k$ 一个峰的子集，换成横线。
+
+---
+
+你要问我为什么这么熟练？
+
+你可以在 http://people.brandeis.edu/~gessel/homepage/slides/schroder.pdf 找到上面思路的线索……
+
+剩下的问题是为什么 Narayana Number 是这么多，可以看一下 http://www.springer.com/cda/content/document/cda_downloaddocument/9781493930906-c1.pdf 。
+
+[ftiasch wrote on 2016-05-21T05:08:52]
+
+---
+
