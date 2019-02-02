@@ -1,0 +1,26 @@
+# PKU Campus 2016 I Zealots
+
+传送门： http://poj.openjudge.cn/practice/C16I/
+题意： 从一个矩阵中识别字母p k u的个数，字母不相交
+
+[TreeDiagram wrote on 2016-05-10T05:26:26]
+
+---
+
+搬运：
+
+> @quailty 点到重心距离max/min，<7.0判U否则K
+
+---
+
+
+> @zimpha 我是用个最小矩形把U框起来, 然后抠出白色联通块, 找出最大的和次大的, 算了下占整体的比例, 如果他们的差超过0.3那么就是U否则是P或者K
+
+---
+
+> P随意,KU找所有点的平均点,以平均点为圆心,sqrt(总点数/5)为半径内如果有点就是K不然是U
+
+[ftiasch wrote on 2016-05-10T05:34:35]
+
+---
+
