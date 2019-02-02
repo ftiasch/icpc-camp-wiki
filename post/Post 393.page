@@ -1,0 +1,26 @@
+# 51nod 1056 最长等差数列 V2
+
+给出$N$个互异的正整数，问其中是否存在一些数能组成项数不小于$200$的等差数列，如果有则给出最长的长度，如果没有则输出No Solution。
+$1000\leq N\leq 50000$，数字的取值范围为$[2,10^9]$。
+单组数据时限8s。
+
+[skywalkert wrote on 2016-04-03T09:00:55]
+
+---
+
+http://acm.timus.ru/problem.aspx?num=1395 
+
+大概就是这题吧……主要是靠 $O(n^3)$ + 人类智慧  = =
+
+[ftiasch wrote on 2016-04-03T17:42:10]
+
+---
+
+通过人类智慧，我们发现如果将公差相等且公共元素超过 2 的等差数列合并，不会使最优解消失，但可行解的数量降低到了 $\displaystyle O\left(\frac{N^2}{200^2}\right)$！结合鸽巢原理，利用分治可以得到一个 $\displaystyle O\left(\frac{N^2}{200} \log \frac{N}{200}\right)$ 的算法，虽然复杂度很劣，但也勉强能过去了。
+
+做法详见 [Finding Longest Arithmetic Progressions](http://jeffe.cs.illinois.edu/pubs/pdf/arith.pdf)。
+
+[skywalkert wrote on 2017-10-01T19:07:47]
+
+---
+
