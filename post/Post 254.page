@@ -1,0 +1,24 @@
+# Opencup XV GP of Japan H Distance Sum
+
+求这题怎么做。。。不太懂opentrain给的solution里func()函数的意思。。。
+
+[winoros wrote on 2015-11-08T08:12:37]
+
+---
+
+能不能来个题意啊。。
+
+[ftiasch wrote on 2015-11-08T09:51:32]
+
+---
+
+@Varona#2486 
+给一个有边权的树，$n \leq 2 \times 10\^{5}$。
+对与$k \in [1,n]$ 的每一个k。依次输出
+$\min\_{1 \leq v \leq n}{\\{\sum_{i=1}\^{k}{dist(i, v)}\\}}$
+QWQ
+
+[winoros wrote on 2015-11-08T10:37:29]
+
+---
+
