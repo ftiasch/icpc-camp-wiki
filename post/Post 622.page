@@ -1,0 +1,342 @@
+# 2016 沈阳解题报告「施工中」
+
+免责声明：以下为 ICPCCamp 团队撰写的简要题解提示，大部分未经程序验证，如有错误，欢迎指出。
+
+感谢 @xiaojudou @ftiasch @rowdark @sd_invol @zimpha 的贡献。
+
+仍在施工中，然则 
+![image https://async.icpc-camp.org/assets/images/1-RkuoJBwuOpnqnNk3.jpeg](https://async.icpc-camp.org/assets/images/1-RkuoJBwuOpnqnNk3.jpeg)
+
+---
+
+# A. Thickest Burger
+
+
+题意：略
+
+
+题解：$2 \max\{A, B\} + \min\{A, B\}$
+
+
+# B. Relative atomic mass
+
+
+题意：计算只含有 HOC 三种元素的相对分子质量
+
+
+题解：略
+
+
+# C. Recursive sequence
+
+
+题意：设 $f(n) = 2f(n - 2) + f(n - 1) + n^4, f(1) = a, f(2) = b$，求 $f(N)\ \mathrm{mod}\ (2^{31} - 1)$.
+
+
+题解：矩阵乘法，维护 $f(n - 2), f(n - 1), 1, n, n^2, n^3, n^4$ 共 7 项。
+
+
+# D. Winning an Auction 
+
+
+题意: Alice有$A$块钱, Bob有$B$块钱. 有$N$件待售商品, 采用拍卖的方式. 每轮: Alice出$a$ $(0 \le a \le A)$, Bob出$b$ $(0 \le b \le B)$. 谁出钱多, 谁获得那件商品. 如果$a=b$, 那么在奇数轮, 商品被Alice获得, 在偶数轮, 商品被Bob获得. 只有获得商品的人需要付钱. 给出$N, A, B$, 问最优策略下, Alice和Bob各能获得多少商品.
+
+
+题解: 
+
+
+# E. Counting Cliques
+
+
+题意：$n \leq 100$ 个点，$m \leq 1000$ 条边的图，求大小恰好是 $s \leq 10$ 的团的数量。
+
+
+保证度不超过 $20$.
+
+
+题解：直接枚举（？），答案不超过 $\binom{20}{9} \times 100$.
+
+
+# F. Similar Rotations
+
+
+题意: 定义单位球上两个点$p$和$q$之间的距离$dist(p,q)$为球面最短距离. 对于两个旋转矩阵$R_1$和$R_2$, 定义他们的距离$L_{R_1,R_2}=\max\{dist(R_1(p), R_2(p)\}$, 其中$p$是单位球上一点, $R_1(p), R_2(p)$表示点$p$根据$R_1$和$R_2$做旋转. 给出$n$个旋转矩阵, 对于每个矩阵, 找出距离它最近的矩阵的距离.
+
+
+题解: 先丢个[paper](http://www.cs.cmu.edu/~cga/dynopt/readings/Rmetric.pdf)给有兴趣了解这个东西的同学. 旋转矩阵有另外一个表示法, 叫做[Rodrigues' rotation formula](https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula). $${\mathbf {R}}={\mathbf {I}}+(\sin \theta ){\mathbf {K}}+(1-\cos \theta ){\mathbf {K}}^{2}=\mathrm{exp}(\theta \mathbf{K})$$
+
+其中$\mathbf{k}$是旋转轴, $\theta$是旋转角度(逆时针方向), $\mathbf{I}$是$3 \times 3$的单位矩阵, $\mathbf{K}=\mathbf{k} \cdot \mathbf{k}^T$.
+
+令$R=R_1^{-1} \cdot R_2=R_1^T \cdot R_2$, 那么这个$\theta$就是我们要求的$L(R_1,R_2)$, 证明参考上面的paper. 有个显然的结论就是$R$的三个特征值分别是$1,e^{\pm i\theta}$, 于是有$\mathrm{tr}(R)=1+2\cos \theta$, 显然$\theta=\arccos\frac{\mathrm{tr}(R) - 1}{2}$.
+
+于是, $O(n^2)$枚举下, 然后这题就做完了.
+
+update: 由于上面算法精度比较高, 输出需要加个eps才能过(我用1e-7过了).
+
+
+# G. Do not pour out
+
+
+题意：底面直径是 2，高度是 2 的圆柱体容器，里面的液体高度是 $d$. 现在保持液体不倒出时尽量倾斜，问此时液面的面积。
+
+
+题解：二分倾斜角度, 然后求出最多能放入多少液体, 和题目里面的液体体积比较下即可. 知道角度$\alpha$, 液体体积的公式可以自己积分, 也可在数学手册上查表. 体积分成两种情况:
+
+1. 截到圆柱底面, 抠出底面的弓形, 令$b$是底面拱高, $r$是底面半径, $2\theta$是弧所对应的圆心角, $h$是柱髙, 那么体积是$V=\frac{hr^3}{b}(\sin \theta - \frac{1}{3}\sin^3 \theta - \theta \cos \theta)$
+2. 截到圆柱柱面, 没有液体部分和1一样,  反过来算一下.
+
+
+# H. Guessing the Dice Roll
+
+
+题意：给出 $N \leq 10$ 个 $L \leq 10$ 的串，每次丢一个骰子，先出现的串赢，问获胜概率。
+
+
+题解：建一个 AC 自动机，即问上面随机游走碰到每个点的概率。消元 10 次复杂度可能过高，但是可以发现这 10 次的方程组只有 10 个是不同的。所以可以预先把其余 90 个消好，每次只消元最下面 10 行，这样复杂度是 $10 \times 100 \times 10 \times 100$的。
+
+
+# I. The Elder
+
+
+题意: 给出一个$n$个点的有根树, 每条边上有权值, 两个点的距离定义为路上边权和. 给出另一个参数$p$. 令$f_i = \max_{j \text{ is an ancestor of } i} (f_j+dist(i,j)^2+p)$, 求$f_i$的最大值.
+
+
+题解: 直接在树上搞可持久化单调栈就好了. 也可以树分治, 然后凸壳维护.
+
+
+# J. Query on a graph
+
+
+题意: 给出一个环套树, 定义$S(u,k)$是距离$u$距离小于等于$k$的所有点. 有2类操作: 1. 给出$u,k,d$,对$S(u,k)$里面的点, 点权加上$d$; 2. 给出$u,k$, 求出$S(u,k)$内的点权和.
+
+
+题解: 先抠出环, 然后剩下的就是树. 按照距离为$1,2,3$, 随便用线段树维护 BFS 序就好了.
+
+
+# K. New Signal Decomposition 
+
+
+题意: 给出一个长度为$p$的浮点数数组$a_0,a_1,...,a_p$, 定义$r(h,k)=2^{\sin^3(2\pi \frac{hk}{p})}$. 令$b_k=\sum\limits_{h=0}^{p-1}a_h \cdot r(h,k)$, 求出$B=\{b_0,b_1,...,b_{p-1}\}$. 其中$p=13,103,100003$.
+
+
+题解: 见https://async.icpc-camp.org/d/622-2016/14
+
+
+# L. A Random Turn Connection Game
+
+
+题意：给定8乘8的网格，每一轮等概率随机挑一个字符A或B，等概率随机放到空的格子里，问最终第一行到最后一行用A字符连接的概率，和第一列到最后一列用B字符连接的概率。连通只算四连通。
+
+
+题解：明显的是 A, B 最多只有一个人可以赢，所以问题可以等价为每个格子各有一半概率是A, B。问上下以及左右联通的概率。就是经典的插头dp问题了。
+
+
+# M. Subsequence
+
+
+题意：对于一个三元组$(cost_{i,0},cost_{i,1},color_{i})$序列B，定义$value_i=cost_{i,color_{i-1}}$, 序列B的价值为$\sum value_i$。给定一个三元组序列A，求序列A的价值第$k$大子序列的价值。$0 \leq cost \leq 10000$, $n \leq 400000$, $k \leq 400000$。
+
+
+题解：见 https://async.icpc-camp.org/d/622-2016/12
+
+[ftiasch wrote on 2016-10-30T09:43:36]
+
+---
+
+对于10 我个人的做法是：
+先建树然后按照深度（当深度相同按照dfn序列排序）建线段树，之后根据不同情况讨论，求以某些节点为根的子树下对应深度的情况 
+但是貌似常数过大 时间捉鸡 会T
+仅供参考
+
+[burglar wrote on 2016-10-30T10:36:37]
+
+---
+
+这个G的"数学手册"有链接吗？感觉好神啊，simpson艹不过去
+
+[8316bd2a-991a-47fe-ac47-ff04544aa01e wrote on 2016-10-30T12:45:08]
+
+---
+
+@morejarphone#4705 在"立体图形的体积、表面积、侧面积 几何重心与转动惯量计算公式"那一章.
+
+[zimpha wrote on 2016-10-30T13:44:07]
+
+---
+
+@morejarphone#4705 simpson可以艹过去，调一调精度大概就过了
+
+[qscqesze wrote on 2016-10-31T03:22:18]
+
+---
+
+H题 求一份参考代码。
+
+[awsd1231 wrote on 2016-10-31T04:10:17]
+
+---
+
+@qscqesze#4710 我们队simpsonT到死最后还是队友强行积分搞过去了， 你们有能过的simpson模板么？
+
+[burglar wrote on 2016-10-31T06:38:29]
+
+---
+
+I树分治交了好几发同一个版本，终于有一发3700+ms过了，哭/(ㄒoㄒ)/~~这题树分治是不是两个Log的，感觉排序那个log去不掉= =
+
+[xietutu wrote on 2016-10-31T07:47:28]
+
+---
+
+可以求一份J的代码吗？  弱鸡写不出来
+
+[kirito wrote on 2016-10-31T10:45:27]
+
+---
+
+@xietutu#4713 树分治的时候归并一下，不就把排序的 log 省掉了？
+
+[ftiasch wrote on 2016-10-31T11:25:27]
+
+---
+
+可以求一份G题原码吗，队友一直搞不出来...（笑着哭）
+
+[sd197555 wrote on 2016-10-31T11:46:48]
+
+---
+
+来说一下M的题解……
+现场居然被k短路就这么过了……（似乎是这样）没学过k短路的给dalao跪了……
+
+如果只是求最优解的话DP是显然的。
+把int[][]改成Heap[][]就可以求第k大了。
+
+不过普通的可并堆复杂度是O(log size)的，这里不出意外的话size是指数级别的。
+说一个我的合并策略：
+我们用一些F节点来组成堆的结构。
+
+	struct FNode { Heap<FNode> son; Info info; };
+
+大概就是用一个可并堆来维护一个F节点所有的儿子（这些儿子也是F节点）。
+合并的时候就是直接让一个变成另外一个的儿子，意会一下大概长这样子：
+
+	FNode fnode_merge(FNode *u, FNode *v) {
+		if(u->val<v->val) swap(u, v);
+		return new FNode(heap_merge(u->son, new HeapNode(v)), u->info);
+	}
+
+求第k大的时候：
+
+	int kth(FNode *u, int k) {
+		HeapNode *root = new HeapNode(u);
+		for (int i = 1; i < k; ++i) {
+			root = merge(heap_pop(root), heap_merge(root, u->son));
+		}
+		return (root->ptr->info).val;
+	}
+
+大概意会一下差不多就是这样啦。
+传标记这么简单的事情相信大家都会的啦。
+
+以上的所有数据结构都是可持久化的。
+
+时间复杂度应该是O(nlog n)的。
+
+我觉得只要把标记改成kx+b形式的应该就可以~~制裁~~k短路了吧（逃
+
+[falsyta wrote on 2016-10-31T14:32:32]
+
+---
+
+刚刚去看了一眼k短路做法，如果没搞错的话应该是这样吧。
+对DAG求一棵最短路树，然后一开始把(dist[x], x)丢进堆里大概。
+然后以后就是每次取出堆顶以后按照经典的求k小的思路更新了吧（如果我没看错的话）。
+就是按照出边从小到大的顺序往堆里加什么的，做过的人应该都知道。
+感觉没法做kx+b的形式吧，如果有会做的dalao求指导一下萌新。
+
+[falsyta wrote on 2016-10-31T15:02:53]
+
+---
+
+@ftiasch#4715 
+其实我感觉不是归并，而是下放
+
+[Miceren wrote on 2016-10-31T15:59:17]
+
+---
+
+@kirito#4714 代码比较丑，见谅，链接：
+http://paste.ubuntu.com/23409644
+
+[xaphoenix wrote on 2016-11-01T02:34:10]
+
+---
+
+@ftiasch#4715 k路归并似乎还是带log？
+
+[xietutu wrote on 2016-11-01T06:08:37]
+
+---
+
+说一下K的做法……
+首先$b_0=\sum_{h=0}^{p-1}a_h,b_k=a_0+\sum_{h=1}^{p-1}a_hr(h,k)$，
+设原根为$g$，则有$\{g^0,g^1,...,g^{p-2}\}=\{1,2,...,p-1\}$，
+令$h=g^i,k=g^j$，则有$b_{g^i}=a_0+\sum_{j=0}^{p-2}a_{g^j}r(g^i,g^j)$，
+其中$r(g^i,g^j)=2^{sin^3(2\pi\frac{g^ig^j}{p})}=2^{sin^3(2\pi\frac{g^{i+j}}{p})}$，
+记$c_i=a_{g^i},d_i=b_{g^i}-a_0,e_i=2^{sin^3(2\pi\frac{g^{i}}{p})}$，
+则有$d_i=\sum_{j=0}^{p-2}c_js_{(i+j)\ mod \ (p-1)}$，
+把$c[]$翻转之后是一个循环卷积的形式，FFT搞一下即可。
+
+[quailty wrote on 2016-11-01T06:51:05]
+
+---
+
+@quailty#4722 
+\sum
+
+[burglar wrote on 2016-11-01T08:00:30]
+
+---
+
+@quailty#4722  说真的这题需要什么特殊姿势么 。。。 T到死。。
+
+[burglar wrote on 2016-11-01T09:07:31]
+
+---
+
+@quailty#4722 啊 没事了 用了long double所以T了QAQ
+
+[burglar wrote on 2016-11-01T09:44:02]
+
+---
+
+@falsyta#4717 我觉得这个把孩子也用堆的形式来维护的确让插入变成了O(log n)，但是感觉会对POP的过程带来一些难度。我不是很理解你是如何完成POP操作的呢，还是说这个找第K大的部分不是用POP来实现的？
+
+原谅我实在不太懂这个
+root = merge(heap_pop(root), heap_merge(root, u->son));
+是什么意思。。
+
+[Miceren wrote on 2016-11-01T16:36:15]
+
+---
+
+@Miceren#4729 
+不pop，这里代码没写对。。。
+是root = heap_merge(heap_pop(root), heap_merge(root, u->son));
+其中heap_merge和heap_pop都是可并堆完成的操作。。
+也就是son是用左偏树维护的。。heap_merge和heap_pop都是用左偏树实现的。。。
+fnode只实现了merge和kth
+
+[falsyta wrote on 2016-11-02T11:49:04]
+
+---
+
+@falsyta#4732 
+我大概明白了，其实你最后还是用heap弄出来了一个degree是常数的图。。没有真正的实现POP。
+不过你这种写法的确也挺好写的，谢谢！
+
+[Miceren wrote on 2016-11-03T17:41:45]
+
+---
+
