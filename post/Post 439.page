@@ -1,0 +1,1271 @@
+# CCPC-WFinal 粗心验题题解
+
+
+
+
+附验题时的代码一起给出。
+很多没想清楚的繁琐细节都被我搪塞地忽略过去了233 >_<
+1007的证明过程有些繁琐，没能简单说明白
+1008，claris作为出题人和鸟神可能一起讨论了更多更好解法。
+```
+【2016杭电女生赛1001】【C语言签到题】Solving Order
+
+#include<stdio.h>
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+const int N = 12, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+int n, m;
+pair<int, string>a[N];
+void solve()
+{
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		scanf("%d", &n);
+		for (int i = 1; i <= n; ++i)cin >> a[i].second >> a[i].first;
+		sort(a + 1, a + n + 1);
+		for (int i = n; i > 1; --i)cout << a[i].second << ' ';
+		cout << a[1].second << endl;
+	}
+}
+int main()
+{
+	solve();
+	return 0;
+}
+/*
+【题意】
+打气球的志愿者们比较蠢！
+于是，打的气球越多，题目越水>_<。
+我们知道气球数，问你按照什么顺序做题，能够得以从易到难的顺序解决所有问题。
+
+【类型】
+C语言签到题
+
+【分析】
+这题，显然，我们要做的任务只是排序。
+如果你刚接触程序设计，甚至不会c++的STL，可以先把气球数排序。然后按照i从小到大枚举，再依次枚举气球j，
+if(气球数第i大的 == 当前这个j号气球的数量）then print(这个j号气球的颜色），复杂度O(n^2)。
+但是，当然，如果你会STL，最简单的方法，就是按照本程序的方式排个序。这道题目就做完啦啊。
+
+【时间复杂度&&优化】
+O(nlogn)
+
+*/
+```
+```
+【2016杭电女生赛1002】【排列组合 隔板法】water n拆分正整序列方案数
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+#include<assert.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 0, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int main()
+{
+	int T; scanf("%d", &T); assert(T >= 1 && T <= 10);
+	while (T--)
+	{
+		int n; scanf("%d", &n); assert(n >= 1 && n <= 1e6);
+		putchar('1');
+		while (--n) putchar('0');
+		puts("");
+	}
+	return 0;
+}
+/*
+【题意】
+一开始有数量为n（1<=n<=1e6）的水，
+我们每天可以喝数量为任意整数的水，问你有多少种方式可以把水喝完。
+
+【类型】
+简单排列组合 隔板法
+
+【分析】
+这道题其实就是——
+问你，对于整数n，可以把n拆分成多少个不同的正整数序列
+我们考虑排列组合中的隔板法。
+就是n个数，中间有n-1个空位，
+其中每一个空位中，都可以选择插入隔板，从而把这n个数分成若干份，恰好对应本题。
+
+显然——
+如果拆成1份，方案数是C(n-1,1-1)=C(n-1,0)
+如果拆成2份，方案数是C(n-1,2-1)=C(n-1,1)
+如果拆成3份，方案数是C(n-1,3-1)=C(n-1,2)
+...
+如果拆成n份，方案数是C(n-1,n-1)=C(n-1,n-1)
+对应着二项式展开，它们的和恰好是2^(n-1)。
+于是对应着，我们直接输出——
+ 1个1
++(n-1)个0即可。
+
+【时间复杂度&&优化】
+O(n)
+
+*/
+```
+```
+【2016杭电女生赛1003】【暴力】Luck Competition 选数平均数乘2除3 小且最接近的数
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+#include<assert.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 0, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+int n, x;
+int cnt[105];
+int main()
+{
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		MS(cnt, 0);
+		scanf("%d", &n);
+		int sum = 0;
+		for (int i = 1; i < n; ++i)
+		{
+			scanf("%d", &x);
+			sum += x;
+			++cnt[x];
+		}
+		for (int i = 100; i >= 0; --i)cnt[i] += cnt[i + 1];
+		int ans = -1;
+		int num = 10000;
+		for (int i = 0; i <= 100; ++i)
+		{
+			int m = (sum + i) * 2 / (3 * n);
+
+			//如果i是比m小的最大的数则尝试更新答案
+			if (i <= m && (i + 1 > m || cnt[i + 1] == 0))
+			{
+				if (cnt[i] - cnt[i+1] <= num)
+				{
+					ans = i;
+					num = cnt[i] - cnt[i+1];
+				}
+			}
+		}
+		printf("%d %.2f\n", ans, 1.0 / (1 + num));
+	}
+	return 0;
+}
+/*
+【题意】
+n（2~100）个人参加一个游戏，
+每个人选择1~100范围的数。
+然后得到所有数的平均数，再*=2/3，设得到的数为m。
+如果一个人选的数，比m小，且相距m最为接近，那么其便在所有选数相同的人中等概率中奖。
+
+现在，我们也参加比赛，其他n-1个人所选择的数也已经确定了，并且我们知道。
+问你，选什么数拥有最高中奖率，并输出。
+
+【类型】
+暴力
+
+【分析】
+这题选数范围非常小，只有1~100。
+于是我们可以直接暴力枚举这个人选的数是什么，
+然后，我们便可以算出这个m。
+m可以为浮点数或者向下取整变为int，这个是怎样都不影响，于是我们不妨取m为整数。
+
+接下来，如果这个数，是<=m的数中最大的数，我们便可以在这个基础上更新答案。
+如果用一个后缀和优化的话，复杂度就由O(100nT)变为O(100T)
+
+【时间复杂度&&优化】
+O(100nT)->O(100T)
+
+*/
+```
+```
+【2016杭电女生赛1004】【枚举 数学解方程】Clock 下一时刻时针分针恰成角度
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define tmpmtmps(x,y) memset(x,y,sizeof(x))
+#define tmpmC(x,y) memcpy(x,y,sizeof(x))
+#define tmpmP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 0, tmpm = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+void solve()
+{
+	int h, m, s;
+	int angle;
+	while (~scanf("%d:%d:%d%d", &h, &m, &s, &angle))
+	{
+		angle *= 120;
+		int t = 3600 * h + 60 * m + s;
+		int DIF = 1e9;
+		int ansh, ansm, anss;
+		int tmpx, tmpm, tmps;
+		for (int tmph = 0; tmph < 12; ++tmph)
+		{
+			tmpx = tmph * 3600 - angle;
+			tmpm = tmpx / 660;
+			tmps = tmpx % 660 / 11;
+			int T = 3600 * tmph + 60 * tmpm + tmps;
+			int dif = T - t;
+			if (dif <= 0)dif += 12 * 3600;
+			if (dif < DIF)
+			{
+				DIF = dif;
+				ansh = tmph;
+				ansm = tmpm;
+				anss = tmps;
+			}
+			tmpx = tmph * 3600 + angle;
+			tmpm = tmpx / 660;
+			tmps = tmpx % 660 / 11;
+			T = 3600 * tmph + 60 * tmpm + tmps;
+			dif = T - t;
+			if (dif <= 0)dif += 12 * 3600;
+			if (dif < DIF)
+			{
+				DIF = dif;
+				ansh = tmph;
+				ansm = tmpm;
+				anss = tmps;
+			}
+		}
+		printf("Case #%d: %02d:%02d:%02d\n", ++casei, ansh, ansm, anss);
+	}
+}
+int main()
+{
+	solve();
+	return 0;
+}
+/*
+【trick&&吐槽】
+这里注意，
+因为是求下一个时刻，
+所以不光在dif<0时要转化为正数
+在dif=0时，也要转化为正数（不然时刻相同）
+
+【题意】
+时间为12小时制。
+告诉你一个时刻，让你输出在这个时刻之后的下一个时刻，
+满足：该时刻，时针分针掐好相差某个的角度为angle。
+（注意，满足要求的时刻不一定是恰好以秒为单位，可以是秒与秒之间的时刻，我们可以向下取整）
+
+【类型】
+暴力枚举 解方程
+
+【分析】
+如何使得时针与分针的角度恰好相差某个角度呢？我们考虑解方程就好啦！
+钟表有360个度，
+
+一，考虑时针位置
+每小时为30度
+每分钟为1/2度
+每秒钟为1/120度
+于是我们不妨使得所有与角度相关的单位都*=120，转化成整数，告别精度误差。
+（其实也就可以看做是为：以秒为基本单位。）
+转变为：
+每小时为3600
+每分钟为60
+每秒钟为1（其实不用考虑这个）
+
+二，考虑分针位置
+每分钟为6度
+每秒钟为0.1度
+我们一样*=120，转变为——
+每分钟为720
+每秒钟为12（其实不用考虑这个）
+
+然后，同时定义00:00:00时刻的角度为0，11:59:59时刻的角度为43299
+这样，我们可以枚举此时的小时h（0 <= h < 12），
+不过，时针和分针的位置，其实还都受此时的分与秒的影响与限制。
+然而，因为按照题目所说，我们求得的可能并不一定恰好是以秒为单位。
+于是，我们不妨把余下来的时刻设为x分（x为浮点数）
+
+显然：时针的角度tmphpos = h * 3600 + x * 60;
+同时：分针的角度tmpmpos = x * 720.
+
+进而得到——
+angle=abs(h*3600 - x*660)/120
+取下绝对值，得到——
+	120*angle = h*3600 - x*660 
+or	120*anlge = x*660 - h*3600
+
+即：
+   x=(3600*h-120*anlge)/660
+or x=(120*angle+3600*h)/660
+
+于是，这里h已知（暴力枚举），angle已知。
+便可以求得x。
+因为x是double类型。
+所以，/660之后，直接向下取整，便是分钟。
+%660之后，再均分为60份，并向下取整（即%660之后再/=11)，便是秒钟。
+
+【时间复杂度&&优化】
+O(12T)
+
+*/
+```
+```
+【2016杭电女生赛1005】【暴力 bfs or dfs】girlcat 数女孩数和猫咪数
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 1010, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+int n, m;
+char a[N][N];
+const int dy[4] = { -1,0,0,1 };
+const int dx[4] = { 0,-1,1,0 };
+const char girl[5] = { "girl" };
+const char cat[4] = { "cat" };
+int findgirl(int y,int x,int p)
+{
+	if (y<1 || y>n || x<1 || x>m)return 0;
+	if (a[y][x] != girl[p])return 0;
+	if (p == 3)return 1;
+	int ret = 0;
+	for (int i = 0; i < 4; ++i)ret += findgirl(y + dy[i], x + dx[i], p + 1);
+	return ret;
+}
+int findcat(int y, int x, int p)
+{
+	if ( y<1 || y>n || x<1 || x>m )return 0;
+	if (a[y][x] != cat[p])return 0;
+	if (p == 2)return 1;
+	int ret = 0;
+	for (int i = 0; i < 4; ++i)ret += findcat(y + dy[i], x + dx[i], p + 1);
+	return ret;
+}
+void solve()
+{
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		scanf("%d%d", &n, &m);
+		for (int i = 1; i <= n; ++i)scanf("%s", a[i] + 1);
+		int girlnum = 0;
+		int catnum = 0;
+		for (int i = 1; i <= n; ++i)
+		{
+			for (int j = 1; j <= m; ++j)
+			{
+				girlnum += findgirl(i, j, 0);
+				catnum += findcat(i, j, 0);
+			}
+		}
+		printf("%d %d\n", girlnum, catnum);
+	}
+}
+int main()
+{
+	solve();
+	return 0;
+}
+/*
+【吐槽】
+这题是我自己出的一道蠢笨的题目>_<
+因为老师说，需要一道简单偏难度的题目，让大家都能尽量试着写出来。
+（本来出了2道脑洞题，因为老师没开放自主出题权，所以只留下了这个最笨拙的题T_T）
+
+【题意】
+我们拍了一张照片！
+照片是n*m个像素的！
+对于每个像素，都是一个小写英文字符。
+如果连着走4步，是"girl"就是一个girl
+如果连着走3步，是"cat"就是一只cat
+然后问你，这个图上有多少个girl多少只cat
+
+【类型】
+简单bfs or dfs
+
+【分析】
+显然，如果你很熟练的话，只要暴力枚举起点，然后做记录匹配阶段的暴力dfs或者bfs即可。
+然而，这题的友好之处，在于——
+它给并不会算法的人，提供了一个用汗水交换丰收=w=的机会。
+你只要写一串for，或者一大通if！就可以顺利获得一个AC啦！
+for(i)for(j)
+if(a[i][j]=='g')
+{
+	if(a[i-1][j]=='l')
+	{
+		if(...)
+	}
+	if(a[i+1][j]=='l')
+	{
+		if(...)
+	}
+	if(a[i][j-1]=='l')
+	{
+		if(...)
+	}
+	if(a[i][j+1]=='l')
+	{
+		if(...)
+	}
+}
+就这样 = = 
+23333
+
+【时间复杂度&&优化】
+O(Tnm)
+
+*/
+```
+```
+【2016杭电女生赛1006】【DP 类似LCS】Combine String 字符串c拆子串 能否恰好分成a与b
+
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+#include<assert.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 1010, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+char a[N], b[N], c[2*N];
+bool f[N][N];
+int n, m, g;
+void dp_ac()
+{
+	f[0][0] = 1;
+	for (int i = 0; i <= n; ++i)
+	{
+		for (int j = 0; j <= m; ++j)
+		{
+			if (i && j)f[i][j] = 0;
+			if (i && f[i - 1][j] && a[i] == c[i + j])f[i][j] |= f[i - 1][j];
+			if (j && f[i][j - 1] && b[j] == c[i + j])f[i][j] |= f[i][j - 1];
+		}
+	}
+	puts(f[n][m] ? "Yes" : "No");
+}
+
+int main()
+{
+	while (~scanf("%s%s%s", a + 1, b + 1, c + 1))
+	{
+		n = strlen(a + 1);
+		m = strlen(b + 1);
+		g = strlen(c + 1);
+		if (n + m != g) { puts("No"); continue; }
+		dp_ac();
+	}
+	return 0;
+}
+/*
+【trick&&吐槽】
+这道题不能直接用指针的方法做贪心，即下面的程序是错误的
+void greedy_wa()
+{
+	int pa = 1;
+	int pb = 1;
+	int pc = 1;
+	while (pc <= g)
+	{
+		if (pa <= n && a[pa] == c[pc])++pa;
+		else if (pb <= m && b[pb] == c[pc])++pb;
+		else break;
+		++pc;
+	}
+	puts(pc > g ? "Yes" : "No");
+}
+因为可能有这样的数据：
+abce
+abcd
+abcdabce
+我们本来为了匹配，应当释放正确的前缀，即第二个。
+然而我们如果贪心做的话，有可能把首先选择了第一个前缀的abc，这样子就错掉了。
+
+【题意】
+给你两个字符串a，b
+然后再给你一个字符串c（长度都在2000范围内）
+问你——能否恰把c分成两个字符串a，b。
+
+【类型】
+DP
+
+【分析】
+本题的DP类似于LCS（longest common subsequence）（如果不了解的可以搜一下）。
+只是，
+f[i][j]表示第一个字符串用了前i个位置（第i个位置已匹配），第二个字符串的前j个位置（第j个位置已匹配）
+	是否可以对c串成功匹配（成功匹配则必然会匹配到c串的前i+j个位置）。
+f[i][j]==1则表示可以成功匹配
+f[i][j]==0则表示无法成功匹配
+
+显然，初始只有f[0][0]==1
+所以，我们有——
+f[i][j]=	f[i-1][j]&&(a[i]==c[i+j])
+		||  f[i][j-1]&&(b[j]==c[i+j])
+这样，最终f[n][m]==1则为Yes否则为No
+
+【时间复杂度&&优化】
+O(nm)
+*/
+```
+```
+【2016杭电女生赛1007】【博弈 打表找规律】Alice and Bob 可走k步斜对角线的胜负态
+#include<stdio.h> 
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 0, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+int Q, K, n, m;
+int f[100][100];
+int dp(int n, int m)
+{
+	if (n == 1 && m == 1)return 0;
+	if (~f[n][m])return f[n][m];
+	if (n > 1 && !dp(n - 1, m))return f[n][m] = 1;
+	if (m > 1 && !dp(n, m - 1))return f[n][m] = 1;
+	if (n > K&&m > K&&!dp(n - K, m - K))return f[n][m] = 1;
+	return f[n][m] = 0;
+}
+void table(int k)
+{
+	K = k;
+	for (n = 1; n <= 20; ++n)
+	{
+		for (m = 1; m <= 20; ++m)
+		{
+			MS(f, -1);
+			printf("%d ", dp(n, m));
+		}puts("");
+	}
+}
+int main()
+{
+	//table(1);table(2);table(3);
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		scanf("%d%d", &Q, &K); ++K; //首先先使得K+=1
+		while (Q--)
+		{	
+			scanf("%d%d", &n, &m);
+
+			//规律1：如果较小宽度为K的倍数，那么先手必胜
+			if (n > m)swap(n, m); //n<=m
+			if (n%K == 0)
+			{
+				puts("Alice");
+				continue;
+			}
+
+			//规律2：距离顶角元素距离的奇偶性，一样对答案有所影响（特判K==2）
+			int len = n / K;
+			if (K > 2 && (len & 1))
+			{
+				puts((n + m) % 2 == 0 ? "Alice" : "Bob");
+			}
+			else
+			{
+				puts((n + m) % 2 == 0 ? "Bob" : "Alice");
+			}
+		}
+	}
+	return 0;
+}
+/*
+【trick&&吐槽】
+判定奇偶性的时候——
+%2==1往往是错的，有时%2==-1。还是&1 来判定奇偶性的方法比较靠谱
+
+【题意】
+给你一个棋盘，大小为n*m。
+我们一开始在（1,1）点，
+如果我们当前在（x，y），
+那么我们可以在一步之内走到
+（x+1，y）
+（x，y+1）
+（x+k，y+k）
+先告诉你k，k∈[1,1e9]
+然后有q组询问，q∈[1,1000]
+对于每个q，告诉你（n，m）
+n∈[1,1e9]，m∈[1,1e9]。
+无法可走便输了，问先手必胜还是后手必胜。
+
+【类型】
+博弈 打表找规律
+
+【分析】
+对于这题，n和m都是1e9，太大了。
+于是我们要考虑O(1)出解。
+即打表找规律。
+至于，什么是打表找规律呢？
+1，问题数据规模很小，我们可以本地预处理出所有解，然后存到代表段数组中，O(1)输出
+2，问题数据规模很大，我们可以本地跑出小数据的答案，然后猜解大数据的规律。
+
+对于这题——
+K==1时，表示这样的：
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+K==2时，表示这样的：
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 0 1 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+0 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 1 0 1 0 1
+0 1 1 0 1 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0
+1 0 1 1 0 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1
+0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 1 0 1
+1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 1 0
+0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 1 1 1 1 1
+1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1
+0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0
+1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 1
+0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1
+1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0
+
+K==3时，表示这样的：
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+0 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+1 0 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0
+0 1 0 1 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1
+1 0 1 1 0 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1
+0 1 0 1 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0
+1 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1 0 1 0 1
+0 1 0 1 1 0 1 1 0 1 0 1 1 0 1 0 1 0 1 0
+1 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1 1 1 1 1
+0 1 0 1 1 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1
+1 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1 1 0 1 0
+0 1 0 1 1 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1
+1 0 1 1 0 1 0 1 1 0 1 1 0 1 0 1 1 0 1 1
+
+我们发现到，
+对于K>1时，
+对于f[K][K]~f[K][∞]，答案都是1（先手必胜）
+对于f[K][K]~f[∞][K]，答案都是1（先手必胜）
+
+对于f[2K][2K]~f[2K][∞]，答案都是1（先手必胜）
+对于f[2K][2K]~f[∞][2K]，答案都是1（先手必胜）
+
+对于f[3K][3K]~f[3K][∞]，答案都是1（先手必胜）
+对于f[3K][3K]~f[∞][3K]，答案都是1（先手必胜）
+
+......
+
+即f[nK][nK]~f[nK][∞]，答案都是1（先手必胜）
+  f[nK][∞]~f[nK][nK]，答案都是1（先手必胜）
+
+对于其它的f(i,j)，我们要找到第一个位置(pK,pK)，满足i>=pK且j>=pK。
+
+然后：
+如果p是奇数，那么与(pK,pK)同奇偶性的（即横纵坐标之和同奇偶性）都是必胜点，否则为必败点
+如果p是偶数，那么与(pK,pK)同奇偶性的（即横纵坐标之和同奇偶性）都是必败点，否则为必胜点
+
+然而，对于K==1的时候，是特例的。不论p是奇数还是偶数，与(pK,pK)同奇偶性的（即横纵坐标之和同奇偶性）都是必败点，否则为必胜点
+
+
+这里再尝试一下证明:（我们不妨把题目中的由从(1,1)->(n,m)），改变方向为从(n,m)走到(1,1)，这样答案不变，然而考虑和看起来更直观。
+对于初始K==1的，对于（n，m）==（X,X），初始点（先手）的胜负态为：
+（1,1）：必败态
+(1,x)为(1,x-1)的反态，(x,1)为(x-1,1)的反态，为必胜态和必败态的依次轮转。
+（2,2）：必胜态
+(2,x)和(x,2)：都可以找到(1,x)和（1,x-1)的两个前驱，必然有必败态的前驱，所以全为必胜态
+接下来所有点都找不到任何一个必败态的前驱，其状态又归回于——
+（3,3）：必败态
+(3,x)为(3,x-1)的反态，(x,3)为(x-1,3)的反态，为必胜态和必败态的依次轮转。
+（4,4）：必胜态
+(4,x)都可以找到(3,x)和（3,x-1)的两个前驱，(4,x)都可以找到(3,x)和（3,x-1)的两个前驱，必然有必败态的前驱，所以全为必胜态
+……
+所以我们对K==1条件下的结论是正确的
+
+对于初始K>1的，我们不妨使得K+=1，然后，对于（n，m）==（X,X），初始点（先手）的胜负态为：
+(1~K-1,x)与(x,1~K-1)，这些点都是不涉及到斜着走K步的情况的，于是胜负只与奇偶性有关，即偶点必败奇点必胜。
+(K,K)：必胜态，因为其可以一步到(1,1)这个必败态。
+(K,K~x)和(K~x,K)，其既可以达到奇点，又可以达到偶点，所以是必胜态。
+
+就是按照这个过程，奇偶归类，虽然很繁琐，然而我们可以得到结论的证明>_<
+
+*/
+```
+```
+【2016杭电女生赛1008】【数据结构 动态节点线段树】Claris Loves Painting
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 1e5 + 10;
+const int M = 1e7; //一个问题是，我们需要多少个节点呢？(n+m)*log(n)*3 about?
+int casenum, casei;
+int n, m, x, d;
+struct Node
+{
+	int l, r, v;
+}node[M]; int id;
+vector<int>a[N];
+int c[N];
+int dep[N];
+int root[N];	//root[x]表示以x为子树根节点的线段树，其线段树用于维护每个深度的颜色
+int Root[N];	//Root[x]表示以x为子树根节点的线段树，其线段树用于维护每个每个颜色对应的深度
+
+//该函数用于在原有线段树基础上，实现v[p]+=val操作
+int update(int o, int l, int r, int p, int val)
+{
+	int now = ++id;
+	node[now] = node[o];
+	node[now].v += val;
+	if (l == r)return now;
+	int mid = (l + r) >> 1;
+	if (p <= mid)node[now].l = update(node[o].l, l, mid, p, val);
+	else node[now].r = update(node[o].r, mid + 1, r, p, val);
+	return now;
+}
+
+//该函数用户合并两棵线段树，对于深度-颜色数线段树，可以维护使得数量累加；对于颜色-深度线段树，
+int merge(int x, int y, int pos=0)
+{
+	//合并原则1，如果有子树为空可以直接合并，并不需要做修改
+	if (!x && !y)return 0;
+	if (!x)return y;
+	if (!y)return x;
+
+	//合并原则2，两棵子树均非空时，我们需要新建节点做合并
+	int now = ++id;
+	if (!pos)node[now].v = node[x].v + node[y].v;
+	else if (!node[x].l && !node[x].r)										//如果涉及到颜色-深度线段树的合并（即pos不为0），那么我们只有在叶子节点才做删除操作
+	{																		//具体的删除操作，是找到深度较大的颜色，把其在深度-数量线段树中删除
+		node[now].v = min(node[x].v, node[y].v);
+		root[pos] = update(root[pos], 1, n, max(node[x].v, node[y].v), -1);
+	}
+	node[now].l = merge(node[x].l, node[y].l, pos);
+	node[now].r = merge(node[x].r, node[y].r, pos);
+	return now;
+}
+
+void dfs(int x)
+{
+	root[x] = update(0, 1, n, dep[x], 1);		//先在空线段树基础上建立深度-数量线段树，初始化只有dep[x]子树有权值为1
+	Root[x] = update(0, 1, n, c[x], dep[x]);	//然后在空线段树基础上建立颜色-最小深度线段树（该线段树只为了维护叶节点，并没有区间效应），初始化只有颜色c[x]的值为深度dep[x]
+	for (int i = a[x].size() - 1; ~i; --i)
+	{
+		int y = a[x][i];
+		dep[y] = dep[x] + 1;
+		dfs(y);
+		root[x] = merge(root[x], root[y]);		//我们要合并深度-数量线段树，可以直接通过简单的数值累加做合并
+		Root[x] = merge(Root[x], Root[y], x);	//然后我们要通过颜色-深度线段树的查询，对深度-数量线段树做修订
+	}
+}
+
+void init()
+{
+	node[ id = 0 ].v = node[0].l = node[0].r = 0;
+	dep[1] = 1;
+	dfs(1);
+}
+
+int L, R;
+int query(int o, int l, int r)
+{
+	if (!o)return 0;
+	if (l >= L&&r <= R)return node[o].v;
+	int mid = (l + r) >> 1;
+	int ans = 0;
+	if (L <= mid)ans += query(node[o].l, l, mid);
+	if (R > mid)ans += query(node[o].r, mid + 1, r);
+	return ans;
+}
+int main()
+{
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		scanf("%d%d", &n, &m);
+		for (int i = 1; i <= n; ++i)scanf("%d", &c[i]), a[i].clear();
+		for (int i = 2; i <= n; ++i)scanf("%d", &x), a[x].push_back(i);
+		init();
+		int pre = 0;
+		for (int i = 1; i <= m; ++i)
+		{
+			scanf("%d%d", &x, &d);
+			x ^= pre; d ^= pre;
+			L = dep[x]; R = min(n, dep[x] + d);
+			printf("%d\n", pre = query(root[x], 1, n));
+		}
+	}
+	return 0;
+}
+/*
+【trick&&吐槽】
+LCY：csy啊，我们需要一道中等偏上的数据结构体，你出简单点。
+csy：嗯。
+
+【题意】
+给你一棵n（1e5）个节点的树
+每个节点都有一个颜色
+有m（1e5）个询问
+对于每个询问，
+问你以一个节点为子树的根，距离其深度<=d的所有节点中，有多少种不同颜色。
+强制在线。
+
+【类型】
+动态节点线段树
+
+【分析】
+首先，这道题的解题思想是这样的——
+我们做dfs，然后自底向上，维护两个东西。
+1，每个颜色对应的最大深度
+2，每个深度对应的颜色数
+
+然后，我们对于一个新节点（显然处理这个节点的时候，这个节点是位于父节点的结构位置的）
+我们首先，给它建立一棵线段树。在这棵线段树是基于全0线段树展开的。
+唯一不同的是，在dep[x]的位置，权值要为1。
+于是我们按照这个原理，在不超过logn的复杂度内建立一棵线段树。
+
+然后，我们要涉及到其与子节点的合并操作。
+怎么合并的呢？如果有一棵子树为空，那么显然我们直接扔掉。
+否则我们就合并左子树，合并右子树。
+因为这个是维护深度->节点数，
+所以我们合并的时候，直接把节点数相加就好。
+
+我们这样就能够得到：以每个节点为根的子树中，各个深度的颜色数。
+然而，在这个条件下，我们的计数是可能发生重复的。就是同一个颜色，被计数两次。
+如何维护呢？
+我们对于一种颜色，只要维护该颜色的最小深度即可。
+这个同样可以用一棵线段树来实现。
+也去建一棵线段树，这棵线段树也是基于全0线段树展开的。
+只是，在颜色c[x]的位置，权值要为其深度。
+
+这棵线段树虽然说是线段树，然而实际上，其实只是为了维护叶节点而已。
+虽然我们看似是一直查找所有的叶节点，
+然而，一旦是空子树我们就不向下查找了。
+
+【时间复杂度&&优化】
+维护深度-节点数的复杂度是O(nlogn)，因为我们每次修改深度
+查找叶节点的复杂度为log级别，叶节点的数量为n级别，合并操作复杂度为O(1)
+因此总复杂度为O(nlogn)
+
+*/
+```
+```
+【2016杭电女生赛1009】【挖掘本质找关系 模拟】sum 找到最小的正整数，满足a乘sum(n)==b乘S(2n)
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 1010, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+int a, b;
+int gcd(int x, int y)
+{
+	return y == 0 ? x : gcd(y, x%y);
+}
+void gcdit(int &x, int &y)
+{
+	int g = gcd(x, y);
+	x /= g; y /= g;
+}
+char s[N];
+void solve(int sum, int len)
+{
+
+	if (len * 5 > sum) { puts("0"); return; }
+	gcdit(sum, len);
+	MS(s, 0);
+	sum -= len * 5;
+	for (int i = 0; i < len; ++i)s[i] = '5';
+	for (int i = 0; i < len; ++i)
+	{
+		int plus = min(sum, 4);
+		sum -= plus;
+		s[i] += plus;
+	}
+	while (sum >= 4)s[len++] = '4', sum -= 4;
+	if (sum)s[len++] = '0' + sum;
+	reverse(s, s + len);
+	puts(s);
+}
+int main()
+{
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		scanf("%d%d", &a, &b); 
+		if (a == 2 * b) { puts("1"); continue; }
+		if (a > 2 * b) { puts("0"); continue; }
+		gcdit(a, b);
+		int sum = 9 * b;
+		int len = 2 * b - a;
+		solve(9 * b, 2 * b - a);
+	}
+	return 0;
+}
+/*
+【题意】
+我们要找出最小的正整数n满足——
+a*S(n)==b*S(2n)
+a,b的范围都在[1,100]
+
+【类型】
+暴力
+
+【分析】
+这道题目的结果可能非常大，所以我们直接枚举n是要GG的。
+
+首先可以有这样的基础性结论：
+设gcd(a,b)=g, 我们可以先使得b=b/g, a=a/g
+S(n):S(2n)==b:a，那么我们有S(n):S(2n)=b:a。
+
+然后，一个好的做法是，我们研究本质问题。
+我们发现，如果一个digit是0~4，那么*2的效益是完全获得的。
+如果一个digit的是5~9，那么*2后会损失9的收益。
+a*S(n) == b*S(2n)，
+
+我们假设有l的长度是[0,4]范围，有L的长度是[5,9]范围
+那么显然满足：
+S(2n)=S(n)*2-L*9
+替换一下——
+a*S(n) == b*(2S(n)-L*9)
+a*S(n) == 2b*S(n) -L*9*b
+(2b-a)*S(n) == L*9*b
+即——
+9*b:2b-a = S(n):L
+也就是说，我们得到了S(n)与L的比例关系。
+然后模拟一遍即可。
+
+怎么模拟呢？
+我们不妨假设答案n仅有长度为L，且每一位都是5
+然后得到了把数位和sum分撒出去。
+
+对于sum余下的数值，我们依次加到尾巴上。
+如果sum最后把长度为L的字串都填充为'9'之后，还有剩余，那么在前面贪心填充。
+
+*/
+```
+```
+【2016杭电女生赛1010】【旅行商问题DP + 贪心】Ingress 最多走L距离 最多hackK次 的最大得分
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<ctype.h>
+#include<math.h>
+#include<set>
+#include<map>
+#include<vector>
+#include<queue>
+#include<bitset>
+#include<algorithm>
+#include<time.h>
+#include<assert.h>
+using namespace std;
+void fre() { freopen("c://test//input.in", "r", stdin); freopen("c://test//output.out", "w", stdout); }
+#define MS(x,y) memset(x,y,sizeof(x))
+#define MC(x,y) memcpy(x,y,sizeof(x))
+#define MP(x,y) make_pair(x,y)
+#define ls o<<1
+#define rs o<<1|1
+typedef long long LL;
+typedef unsigned long long UL;
+typedef unsigned int UI;
+template <class T1, class T2>inline void gmax(T1 &a, T2 b) { if (b>a)a = b; }
+template <class T1, class T2>inline void gmin(T1 &a, T2 b) { if (b<a)a = b; }
+const int N = 17, M = 0, Z = 1e9 + 7, ms63 = 0x3f3f3f3f;
+int casenum, casei;
+int n, m, K, L;
+int x, y, z;
+int a[N], b[N];
+int d[N][N];
+void floyd()
+{
+	for (int k = 0; k <= n; ++k)
+	{
+		for (int i = 0; i <= n; ++i)
+		{
+			for (int j = 0; j <= n; ++j)
+			{
+				gmin(d[i][j], d[i][k] + d[k][j]);
+			}
+		}
+	}
+}
+int f[1 << 17][17];
+bool ok[1 << 17];
+void tsp()
+{
+	int top = (1 << n + 1) - 1;
+	MS(f, 63);
+	MS(ok, 0);
+	f[1][0] = 0;
+	int ans = 0;
+	for (int i = 0; i <= top; ++i)
+	{
+		for (int j = 0; j <= n; ++j)if (f[i][j] <= L)
+		{
+			if (f[i][j] + d[j][0] <= L)ok[i] = 1;
+			for (int k = 1; k <= n; ++k)
+			{
+				gmin(f[i | 1 << k][k], f[i][j] + d[j][k]);
+			}
+		}
+		if (ok[i])
+		{
+			priority_queue< pair<int, int> >q;
+			for (int j = 1; j <= n; ++j)if (i & 1 << j)q.push(MP(a[j], b[j]));
+			if (q.empty())continue;
+			int tmp = 0;
+			for (int j = 1; j <= K; ++j)
+			{
+				tmp += q.top().first;
+				q.push(MP(max(q.top().first - q.top().second, 0), q.top().second));
+				q.pop();
+			}
+			gmax(ans, tmp);
+		}
+	}
+	printf("Case %d: %d\n", casei, ans);
+}
+int main()
+{
+	scanf("%d", &casenum);
+	for (casei = 1; casei <= casenum; ++casei)
+	{
+		scanf("%d%d%d%d", &n, &m, &K, &L);
+		for (int i = 1; i <= n; ++i)scanf("%d", &a[i]);
+		for (int i = 1; i <= n; ++i)scanf("%d", &b[i]);
+		MS(d, 63);
+		for (int i = 1; i <= m; ++i)
+		{
+			scanf("%d%d%d", &x, &y, &z);
+			gmin(d[x][y], z);
+			gmin(d[y][x], z);
+		}
+		floyd();
+		tsp();
+	}
+	return 0;
+}
+/*
+【题意】
+n（16）个点
+m（n^2）条双向边
+K（50）次hack机会
+最远走L（2000）路程
+
+每个点的初始点权为a[i](500)
+每个点每hack一次点权下降b[i](不会变为负)
+
+【类型】
+DP(tsp)+贪心
+
+【分析】
+我们可以做状压DP
+f[i][j]表示目前经过点的状态集合为i，当前所在点的位置为j的最小路径（算上返程到0点的路径）
+这是典型的旅行商问题。
+由此得出所有可以到达的合法点集，其状态用2进制表示为sta。
+
+然后依次枚举所有的合法sta，
+对于每一个合法sta的所有点权，用贪心原则，用优先队列选取最大的权值。
+
+【时间复杂度&&优化】
+O(2^17*17*17 + 2^17*K*log(17))
+其实，17可以被优化为16。
+然而为了减少出错还是用17的好。
+
+*/
+`
+```
+
+
+[snowy_smile wrote on 2016-05-23T09:35:49]
+
+---
+
