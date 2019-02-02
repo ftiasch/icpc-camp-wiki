@@ -1,0 +1,544 @@
+# 2016香港网赛G题
+
+题意：给个无向图，满足每个联通快的边数最多是点数+2，现在给这个图染色，相邻的点颜色不能相同，输出染色的方案数%p，点数1 <= n <= 50000，颜色数1 <= k <= 1e9，感觉上是dfs序建树然后树dp，但是实现起来似乎很麻烦，想请教有没有比较简单的做法。
+
+[takio wrote on 2016-09-12T07:46:33]
+
+---
+
+@takio#4239 每个联通块最多多2条边, 于是可以考虑把无用的点都缩掉, 然后把那些边上度为2的点也缩掉. 最后剩下来的点不超过6个吧. 之后随便你想怎么暴力都可以.
+
+[zimpha wrote on 2016-09-12T08:46:49]
+
+---
+
+把六条非树边的顶点拿出来，枚举一下这六个点是不是同色啥的，之后做树 dp 就行了吧。
+
+[ftiasch wrote on 2016-09-12T08:47:35]
+
+---
+
+@zimpha#4240 xg 你这个缩还是有点麻烦的，要说好写还是我这个好写啊。。就是不知道够不够过
+
+[ftiasch wrote on 2016-09-12T08:48:35]
+
+---
+
+大致清楚了，感觉两个都不太好写，先去写下，多谢xg和叉姐
+
+[takio wrote on 2016-09-12T13:25:22]
+
+---
+
+找了找我之前出的题的标程。。一共有 3 种，我的方法，XG 的方法，和两个加一起的方法。
+
+这个是我说的方法。。
+```
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+
+const int N = 200000;
+const int M = 10;
+const int MOD = (int)1e9 + 7;
+
+int c, result, mark[N], color[N], ways[N][M];
+std::vector<int> graph[N], order, children[N], dependency[N], vertices;
+
+void dfs(int p, int u)
+{
+    order.push_back(u);
+    mark[u] = 1;
+    for (int v : graph[u]) {
+        if (v != p) {
+            if (mark[v]) {
+                if (~mark[v] >> 1 & 1) {
+                    dependency[u].push_back(v);
+                    mark[v] |= 4;
+                }
+            } else {
+                children[u].push_back(v);
+                dfs(u, v);
+            }
+        }
+    }
+    mark[u] |= 2;
+}
+
+void update(int &x, int a)
+{
+    x += a;
+    if (x >= MOD) {
+        x -= MOD;
+    }
+}
+
+void generate(int i, int m)
+{
+    if (i < (int)vertices.size()) {
+        int v = vertices[i];
+        for (color[v] = 0; color[v] <= m; ++ color[v]) {
+            generate(i + 1, std::max(color[v] + 1, m));
+        }
+    } else if (m <= c) {
+        for (int u : order) {
+            for (int j = 0; j <= m; ++ j) {
+                bool found = ~color[u] && j != color[u];
+                for (int v : dependency[u]) {
+                    found |= j == color[v];
+                }
+                ways[u][j] = !found;
+            }
+            for (int v : children[u]) {
+                int sum = (long long)ways[v][m] * (c - m) % MOD;
+                for (int j = 0; j < m; ++ j) {
+                    update(sum, ways[v][j]);
+                }
+                for (int j = 0; j <= m; ++ j) {
+                    ways[u][j] = (long long)ways[u][j] * (sum + MOD - ways[v][j]) % MOD;
+                }
+            }
+        }
+        int base = 1;
+        for (int i = 0; i < m; ++ i) {
+            base = (long long)base * (c - i) % MOD;
+        }
+        for (int j = 0; j < m; ++ j) {
+            update(result, (long long)base * ways[0][j] % MOD);
+        }
+        update(result, (long long)base * (c - m) % MOD * ways[0][m] % MOD);
+    }
+}
+
+int main()
+{
+    int n, m;
+    scanf("%d%d%d", &n, &m, &c);
+    for (int i = 0; i < m; ++ i) {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        a --;
+        b --;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+    memset(mark, 0, sizeof(mark));
+    dfs(-1, 0);
+    for (int i = 0; i < n; ++ i) {
+        if (mark[i] >> 2) {
+            vertices.push_back(i);
+        }
+    }
+    std::reverse(order.begin(), order.end());
+    memset(color, -1, sizeof(color));
+    result = 0;
+    generate(0, 0);
+    printf("%d\n", result);
+}
+```
+
+XG 说的
+```
+#include <algorithm>
+#include <cassert>
+#include <cstdio>
+#include <cstring>
+#include <queue>
+#include <tuple>
+#include <vector>
+
+const int N = 200000;
+const int M = N + 11;
+const int MOD = (int)1e9 + 7;
+
+int result, n, c, edge_count, a[M], b[M], degree[N], head[N], to[M + M], next_edge[M + M], selected[N], same[N], diff[N], power[N], color[N];
+bool used[M];
+std::vector<int> selected_vertices;
+std::vector<std::tuple<int, int, int>> edges;
+
+void add_edge(int u, int v)
+{
+    to[edge_count] = v;
+    next_edge[edge_count] = head[u];
+    head[u] = edge_count ++;
+}
+
+void update(int &x, int a)
+{
+    x += a;
+    if (x >= MOD) {
+        x -= MOD;
+    }
+}
+
+void generate(int i, int m)
+{
+    if (i < (int)selected_vertices.size()) {
+        int v = selected_vertices[i];
+        for (color[v] = 0; color[v] <= m; ++ color[v]) {
+            generate(i + 1, std::max(color[v] + 1, m));
+        }
+    } else if (m <= c) {
+        int base = 1;
+        for (int i = 0; i < m; ++ i) {
+            base = (long long)base * (c - i) % MOD;
+        }
+        for (auto&& tp : edges) {
+            int a, b, c;
+            std::tie(a, b, c) = tp;
+            if (color[a] == color[b]) {
+                base = (long long)base * same[c] % MOD;
+            } else {
+                base = (long long)base * diff[c] % MOD;
+            }
+        }
+        update(result, base);
+    }
+}
+
+int main()
+{
+    int m;
+    scanf("%d%d%d", &n, &m, &c);
+    edge_count = 0;
+    memset(head, -1, sizeof(head));
+    memset(degree, 0, sizeof(degree));
+    for (int i = 0; i < m; ++ i) {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        a --;
+        b --;
+        add_edge(a, b);
+        add_edge(b, a);
+        degree[a] ++;
+        degree[b] ++;
+    }
+
+    if (m == n - 1) {
+        int result = c;
+        for (int i = 1; i < n; ++ i) {
+            result = (long long)result * (c - 1) % MOD;
+        }
+        printf("%d\n", result);
+        return 0;
+    }
+
+    std::vector<int> queue;
+    for (int i = 0; i < n; ++ i) {
+        if (degree[i] == 1) {
+            queue.push_back(i);
+        }
+    }
+    for (int h = 0; h < (int)queue.size(); ++ h) {
+        for (int iterator = head[queue[h]]; ~iterator; iterator = next_edge[iterator]) {
+            int v = to[iterator];
+            if (--degree[v] == 1) {
+                queue.push_back(v);
+            }
+        }
+    }
+
+    for (int i = 0; i < n; ++ i) {
+        if (degree[i] >= 3) {
+            selected_vertices.push_back(i);
+        }
+    }
+    if (selected_vertices.empty()) {
+        int v = 0;
+        while (degree[v] < 2) {
+            v ++;
+        }
+        selected_vertices.push_back(v);
+    }
+    memset(selected, -1, sizeof(selected));
+    int n2 = 0;
+    for (auto&& v : selected_vertices) {
+        selected[v] = n2 ++;
+    }
+
+    for (int i = 0; i < m; ++ i) {
+        int a = to[i << 1];
+        int b = to[i << 1 | 1];
+        used[i] = degree[a] < 2 || degree[b] < 2;
+    }
+    for (int i = 0; i < n2; ++ i) {
+        int u = selected_vertices.at(i);
+        for (int iterator = head[u]; ~iterator; iterator = next_edge[iterator]) {
+            if (!used[iterator >> 1]) {
+                int count = 1;
+                int e = iterator;
+                used[e >> 1] = true;
+                while (!~selected[to[e]]) {
+                    count ++;
+                    int v = to[e];
+                    assert(degree[v] == 2);
+                    int f = head[v];
+                    while (used[f >> 1]) {
+                        f = next_edge[f];
+                    }
+                    assert(~f && !used[f >> 1]);
+                    used[f >> 1] = true;
+                    e = f;
+                }
+                edges.emplace_back(u, to[e], count);
+            }
+        }
+    }
+
+    same[1] = 0;
+    diff[1] = 1;
+    power[1] = c - 1;
+    for (int i = 2; i < n; ++ i) {
+        same[i] = (long long)diff[i - 1] * (c - 1) % MOD;
+        diff[i] = (power[i - 1] + MOD - diff[i - 1]) % MOD;
+        power[i] = (long long)power[i - 1] * (c - 1) % MOD;
+    }
+    result = 0;
+    generate(0, 0);
+    for (int i = 0; i < (int)queue.size(); ++ i) {
+        result = (long long)result * (c - 1) % MOD;
+    }
+    printf("%d\n", result);
+}
+```
+
+合一起
+```
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <vector>
+#include <utility>
+#include <map>
+
+#define foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)
+
+const int N = 200000;
+const int K = 10;
+const int MOD = (int)1e9 + 7;
+
+std::vector <int> graph[N];
+
+int c, n2, multiple, id[N], depth[N];
+
+void mark_act(int u)
+{
+    if (id[u] == -1) {
+        id[u] = n2 ++;
+    }
+}
+
+std::vector <std::pair <int, int> > graph2[K << 2];
+
+void add_edge(int a, int b, int c)
+{
+    a = id[a];
+    b = id[b];
+    graph2[a].push_back(std::make_pair(b, c));
+    graph2[b].push_back(std::make_pair(a, c));
+}
+
+int prepare(int u)
+{
+    std::vector<int> children;
+    foreach (it, graph[u]) {
+        int v = *it;
+        if (depth[v] == -1) {
+            depth[v] = depth[u] + 1;
+            int ret = prepare(v);
+            if (~ret) {
+                children.push_back(ret);
+            }
+        } else if (depth[v] < depth[u] - 1) {
+            mark_act(u);
+            mark_act(v);
+            add_edge(u, v, 1);
+        }
+    }
+    if ((int)children.size() >= 2) {
+        mark_act(u);
+    }
+    if (id[u] == -1 && children.empty()) {
+        multiple = (long long)multiple * (c - 1) % MOD;
+        return -1;
+    }
+    if (~id[u]) {
+        foreach (it, children) {
+            int v = *it;
+            add_edge(u, v, depth[v] - depth[u]);
+        }
+        return u;
+    }
+    return children[0];
+}
+
+int parent[K << 2];
+bool mark[K << 2];
+std::vector <int> children[K << 2];
+
+void prepare2(int u)
+{
+    foreach (it, graph2[u]) {
+        int v = it->first;
+        if (depth[v] == -1) {
+            depth[v] = depth[u] + 1;
+            parent[v] = u;
+            children[u].push_back(v);
+            prepare2(v);
+        } else if (depth[v] < depth[u] - 1) {
+            mark[v] = true;
+        }
+    }
+}
+
+int power[N], same[N], diff[N];
+
+std::vector <std::vector <int> > states;
+std::map <std::vector <int>, int> imap;
+std::vector <std::vector <int> > trans;
+
+int label[K << 2];
+std::vector <int> ways[K << 2];
+
+void multiply(int &x, int a)
+{
+    x = (long long)x * a % MOD;
+}
+
+int solve(int u, int s)
+{
+    if (ways[u][s] == -1) {
+        int &result = ways[u][s];
+        result = 0;
+        const std::vector <int> &state = states[s];
+        if (parent[u] == -1) {
+            label[u] = 0;
+        } else {
+            label[u] = mark[parent[u]] ? label[parent[u]] + 1 : label[parent[u]];
+        }
+        int m = (state.empty() ? -1 : *std::max_element(state.begin(), state.end())) + 1;
+        std::vector <int> cursame(m, 1), prediff(m + 1, 1), sufdiff(m + 1, 1);
+        foreach (it, graph2[u]) {
+            int v = it->first;
+            if (depth[v] < depth[u]) {
+                int l = it->second;
+                int c = state[label[v]];
+                multiply(prediff[c + 1], diff[l]);
+                multiply(sufdiff[c], diff[l]);
+                multiply(cursame[c], same[l]);
+            }
+        }
+        for (int i = 1; i <= m; ++ i) {
+            multiply(prediff[i], prediff[i - 1]);
+        }
+        for (int i = m - 1; i >= 0; -- i) {
+            multiply(sufdiff[i], sufdiff[i + 1]);
+        }
+        for (int c = 0; c <= m; ++ c) {
+            int coef = 1;
+            if (c < m) {
+                multiply(coef, cursame[c]);
+            } else {
+                multiply(coef, std::max((::c) - m, 0));
+            }
+            multiply(coef, prediff[c]);
+            if (c + 1 <= m) {
+                multiply(coef, sufdiff[c + 1]);
+            }
+            if (coef) {
+                int ss = s;
+                if (~parent[u] && !mark[parent[u]]) {
+                    ss = trans[ss][0];
+                }
+                ss = trans[ss][std::min(c + 1, (int)trans[ss].size() - 1)];
+                foreach (it, children[u]) {
+                    int v = *it;
+                    multiply(coef, solve(v, ss));
+                }
+            }
+            result += coef;
+            if (result >= MOD) {
+                result -= MOD;
+            }
+        }
+    }
+    return ways[u][s];
+}
+
+int main()
+{
+    int n, m;
+    scanf("%d%d%d", &n, &m, &c);
+    for (int i = 0; i < m; ++ i) {
+        int a, b;
+        scanf("%d%d", &a, &b);
+        a --;
+        b --;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }
+    memset(id, -1, sizeof(id));
+    memset(depth, -1, sizeof(depth));
+    depth[0] = 0;
+    n2 = 0;
+    mark_act(0);
+    multiple = 1;
+    prepare(0);
+    same[1] = 0;
+    diff[1] = 1;
+    power[1] = c - 1;
+    for (int i = 2; i < n; ++ i) {
+        same[i] = (long long)diff[i - 1] * (c - 1) % MOD;
+        diff[i] = (power[i - 1] + MOD - diff[i - 1]) % MOD;
+        power[i] = (long long)power[i - 1] * (c - 1) % MOD;
+    }
+    memset(depth, -1, sizeof(depth));
+    depth[0] = 0;
+    memset(mark, 0, sizeof(mark));
+    parent[0] = -1;
+    prepare2(0);
+    int k = m - (n - 1) + 1;
+    states.push_back(std::vector <int>());
+    trans.push_back(std::vector <int>(1, 0));
+    for (int head = 0; head < (int)states.size(); ++ head) {
+        std::vector <int> state = states[head];
+        imap[state] = head;
+        if ((int)state.size() < k) {
+            int m = state.empty() ? -1 : *std::max_element(state.begin(), state.end());
+            std::vector <int> nstate(state);
+            for (int i = 0; i <= m + 1; ++ i) {
+                nstate.push_back(i);
+                trans[head].push_back(states.size());
+                states.push_back(nstate);
+                trans.push_back(std::vector <int>(1, head));
+                nstate.pop_back();
+            }
+        }
+    }
+    for (int i = 0; i < n2; ++ i) {
+        ways[i] = std::vector <int>(states.size(), -1);
+    }
+    int result = multiple;
+    multiply(result, solve(0, 0));
+    printf("%d\n", result);
+    return 0;
+}
+```
+
+[ftiasch wrote on 2016-09-12T16:34:01]
+
+---
+
+这个之前的题也是 Camp 的题么？。。
+
+[xiaodao wrote on 2016-09-12T20:25:37]
+
+---
+
+@xiaodao#4245 是啊
+
+[ftiasch wrote on 2016-09-13T00:04:55]
+
+---
+
