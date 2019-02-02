@@ -1,0 +1,23 @@
+# Pattern String - HDU 5509
+
+[题目](http://acm.split.hdu.edu.cn/showproblem.php?pid=5509)
+学魔博客的[题解](http://ahdoc.blog.163.com/blog/static/247281060201592742119758/)里有一个O(nlogn)的解法，然而完全不懂咋做的...
+
+[danagi wrote on 2017-10-04T05:32:19]
+
+---
+
+http://www.cnblogs.com/clrs97/p/6067368.html
+
+我有另一个$O(n\log n)$的解法。
+
+[Claris wrote on 2017-10-08T10:33:35]
+
+---
+
+@Claris#5436 cls强无敌！
+
+[danagi wrote on 2017-10-08T15:17:30]
+
+---
+
