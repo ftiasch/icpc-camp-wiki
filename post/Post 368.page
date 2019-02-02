@@ -1,0 +1,29 @@
+# WorldFinal 2015 G Pipe Stream
+
+给出一个长度为 L 的水管，已知水流速度是一个在[v1,v2]间的实数，从0时刻开始水会以这个速度从0位置开始通过这个水管，在某一个时刻你可以敲击水管的某个位置从而得知这个位置是否已有水通过，两次敲击间的时间差至少为s秒，第一次敲击最早只能在第s秒。现在想通过敲击来确定出水流的具体速度，确定出的速度与真实速度差的绝对值小等于 t/2即可。问在最坏情况下最少几次敲击能确定出答案。L,v1,v2,s,t <= 10^9
+
+求问怎么做QAQ
+
+[exfjoe wrote on 2016-03-06T09:18:53]
+
+---
+
+@ExfJoe#3240 丢[题解](http://www.csc.kth.se/~austrin/icpc/finals2015solutions.pdf)
+
+[zimpha wrote on 2016-03-17T14:15:22]
+
+---
+
+请问wf的题有地方交么？
+
+
+[burglar wrote on 2016-03-18T05:19:19]
+
+---
+
+@Burglar#3363 可以上uvalive或者[这个](https://icpc.kattis.com/problems).
+
+[zimpha wrote on 2016-03-18T06:37:07]
+
+---
+
