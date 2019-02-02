@@ -1,0 +1,121 @@
+# 2017 Multi-University Training Contest 10 E Cube Summation
+
+如何推出[题解](http://bestcoder.hdu.edu.cn/blog/2017-multi-university-training-contest-10-solutions-by-%E6%9C%9D%E9%B2%9C/)最后的那个式子？以及这题有其他的做法吗？
+（话说网站时不时会不能访问是咋回事？）
+
+[danagi wrote on 2017-08-25T11:45:16]
+
+---
+
+先回答网站的事情：
+a. 昨天备案被查了，换了服务器；
+b. 今天服务器断电了 orz
+
+[ftiasch wrote on 2017-08-25T12:16:10]
+
+---
+
+@danagi#5287 
+
+还有这样一个做法。。。首先可以把 $x^3$ 拆成组合数，然后就是把 $n$ 拆分，里面随便取 $3$ 项。
+
+这个可以 $dp(i, n, k)$ 表示考虑了 $\geq i$ 的数，凑出了 $n$，里面选了 $k \leq 3$ 项的方案数，这个就是
+$dp(i, n, k) = dp(i, n - i, k) + dp(i, n - i, k - 1) + dp(i + 1, n, k)$.
+这样是 $O(n^2)$ 的，可以这样优化一下。
+
+设 $S = 400$. 先 $f(n, i)$ 表示把 $n$ 拆成 $i$ 项的方案数，那么 $f(n, i) = f(n - i, i) + f(n - 1, i - 1)$. 
+那么 $dp(S + 1, n, k) = \sum f(n - S i, i) \binom{i}{k}$.
+
+
+[ftiasch wrote on 2017-08-25T16:35:38]
+
+---
+
+题解好像哪里都没说清楚。。。我稍微写一写。。。
+
+首先，按照 3 次方的基本套路，就是枚举数字 $a, b, c$，然后假设 $a, b, c$ 出现了 $x, y, z$ 次，把答案加上（至少有 $x$ 个 $a$，至少有 $y$ 个 $b$，至少有 $z$ 个 $c$ 的划分数）。如果 $a, b, c$ 都不同的话，那么这个就是 $n - ax - by - cz$ 的划分数，可以用五边型数定理预处理（有重复怎么办，后面再说）。
+上面计数的正确性是因为一个恰好有 $x,  y, z$ 个 $(a, b, c)$ 的划分方案被数了$xyz$ 次。
+
+所以，关键就是求出多项式：
+$\sum_{a \neq  b, b \neq c, a \neq c, i, j, k}  x^{ia + jb + kc} + 3 \sum_{a = b \neq c, i, j, k} x^{a\max\{i, j\} + ck} + \sum_{a = b = c, i, j, k} x^{a \max\{i, j, k\}}$
+
+接下来就需要使劲了。。。第一项是
+$\sum_{a, b, c, i, j, k} - 3\sum_{a = b, c, i, j, k} + 2\sum_{a = b= c} = (\sum_{a, i} x^{ai})^3 - 3 (\sum_{a, i, j} x^{a(i + j)})(\sum_{a, i} x^{ai}) + 2\sum_{a, i, j, k} x^{a(i + j + k)}$
+第二项是
+$3 (\sum_{a = b, i, j} x^{a\max\{i, j\}} )(\sum_{c, k} x^{ck}) - 3\sum_{a = b = c, i, j, k} x^{a(\max\{i, j\} + k)}$
+第三项就是第三项。。
+
+接下来整理一下。。$\sum_{a, i} x^{ai} = \sum_{k} x^k (\sum_{d | k} 1)$.
+
+然后 $\sum_{a = b, i, j} x^{a\max\{i, j\}} - \sum_{a, i, j} x^{a(i + j)} = \sum x^k (\sum_{d | k} (2d - 1) - (d - 1))$
+
+最后一个还是比较复杂。。。
+$\sum_{a, i, j, k} x^{a(i + j + k)} = \sum_{k} x^k (\sum_{d | k} \binom{d - 1}{2})$.
+$\sum_{a, i, j, k} x^{a(\max\{i, j\} + k)} = \sum_{i} x^i (\sum_{d | i} \sum_{m = 1}^{d - 1} (2m - 1)) = \sum_{i} x^i (\sum_{d | i} (d - 1)^2)$
+$\sum_{a, i, j, k} x^{a \max\{i, j, k\}} = \sum_{i} x^i (\sum_{d | i} d^3 - (d - 1)^3) $
+加起来就是 $\sum_{i} x^i (\sum_{d | i} d^2)$
+
+---
+
+颇有一种环绕地球三圈半的感觉。。。我找找有没有更简单的路径
+
+[ftiasch wrote on 2017-08-25T12:41:23]
+
+---
+
+@ftiasch#5286 叉姐带我环球旅行！（误
+
+[danagi wrote on 2017-08-25T14:47:18]
+
+---
+
+@ftiasch#5288  把x的立方拆成组合数是什么意思呀，还有就是前面第一种方案中的枚举数字a,b,c是指什么东东呀，出现的写x,y,z又是什么意思呀，萌新感觉看不懂
+
+[CQU_cwy wrote on 2017-08-26T16:13:09]
+
+---
+
+@CQU_cwy#5301 $\sum_S |S|^3 = \sum_S \sum_{i,j,k \in S} 1$
+
+[yzq986 wrote on 2017-08-26T17:09:41]
+
+---
+
+@CQU_cwy#5301 ![](https://wikimedia.org/api/rest_v1/media/math/render/svg/8c01dd3851da076b5999908be97e6ddc2a00a378)
+
+[sd_invol wrote on 2017-08-27T03:58:26]
+
+---
+
+明白了，谢谢各位大犇
+
+[CQU_cwy wrote on 2017-08-27T04:08:35]
+
+---
+
+@ftiasch#5286 感谢叉姐，基本已经搞懂这个推导了，想知道还有类似的题吗？想多做一点练练手
+
+[danagi wrote on 2017-08-27T07:32:24]
+
+---
+
+@sd_invol#5303 
+昂神能否解释一下S（n,k）和（x）k分别代表的是什么意思吗？
+
+[dreamwyy wrote on 2017-08-28T04:13:32]
+
+---
+
+@dreamwyy#5312 $S(n, k)$ 是第二类斯特林数。
+$(x)_k$ 表示 $x$ 的 $k$ 次下降幂。
+
+[ftiasch wrote on 2017-08-28T04:38:24]
+
+---
+
+@danagi#5305 [Project Euler 602](https://projecteuler.net/problem=602)
+
+[skywalkert wrote on 2018-03-03T16:57:28]
+
+---
+
