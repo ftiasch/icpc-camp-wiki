@@ -1,0 +1,16 @@
+# Petrozavodsk Winter 2015 Saratov SU Contest J Sockets
+
+链接：http://codeforces.com/gym/100886/problem/J
+题意：n个拖线板，m个用电器。现在仅有一个插座；每个拖线板可以分出$a_i$个插口；每个用电器有个阈值$b_i$表示其到总插座长度不能超过$b_i$，求满足条件用电器最大数量。
+
+
+[yzq986 wrote on 2016-08-01T16:56:36]
+
+---
+
+https://wiki.icpc-camp.org/dreadnought/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev%20Grand%20Prix%20of%20Saratov.html
+
+[ftiasch wrote on 2016-08-03T10:12:26]
+
+---
+
