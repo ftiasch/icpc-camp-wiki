@@ -1,0 +1,32 @@
+# 二進位怪題(?)
+
+给定长度为 $n$ 的序列 $A, B$ ($A_i \in \{0, 1\}, 0 \leq B_i \leq 31$)
+接下来 $m$ 行
+每行输入一个 $k$
+得 C_i = A_i ^ (k >> B_i & 1))
+求 $\sum_{i = 1}^n \sum_{j = i}^n \prod_{k = i}^j C_k$
+$0 \leq n, m \leq 10000$
+是否有小于 $O(nm)$ 的作法？
+
+[rsabcmoi wrote on 2016-11-30T13:52:00]
+
+---
+
+@ rsabcmoi＃4821
+抱歉> <
+C的定义应为C_i = A_i^(k>>B_i&1)
+（C也是非0即1）
+
+[rsabcmoi wrote on 2016-11-30T23:43:15]
+
+---
+
+
+抱歉> <
+C的定义应为C_i = A_i xor (k >> B_i＆1）
+（C也是非0即1）
+
+[rsabcmoi wrote on 2016-11-30T23:45:19]
+
+---
+
