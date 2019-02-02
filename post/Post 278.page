@@ -1,0 +1,23 @@
+# XV Open Cup GP of Karelia A Bermutation
+
+给出一个n和b，其中n是给出的排列的大小。$2 \leq n \leq 10\^5$，$1 \leq b$，$2b \leq n$
+定义排列的swap操作为：任意选取一个合法的位置i，将$a\_i, a\_{i+1}, ..., a\_{i+2b-1}$变成$a\_{i+b}, a\_{i+b+1}, ..., a\_{i+2b-1}, a\_i, a\_{i+1}, ..., a\_{i+b-1}$。
+令S(p)为p经过有限次swap操作得到的排列所组成的集合。
+问p在S(p)中的字典序位置。答案对120586241取模
+
+[winoros wrote on 2015-11-17T12:13:34]
+
+---
+
+这题我只会找规律……找到规律就很好做了
+
+[sd_invol wrote on 2015-11-17T12:32:04]
+
+---
+
+@Sd_Invol#2666 woc。。。我去打表看看。。。
+
+[winoros wrote on 2015-11-17T12:40:30]
+
+---
+
