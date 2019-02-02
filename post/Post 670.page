@@ -1,0 +1,25 @@
+# XVI Open Cup Grand Prix of Yekaterinburg, Div 1, Problem H
+
+题目大意：
+　　给定R个n元置换，求这R个置换的（置换群运算下的）生成闭包的大小
+$n \leq 15, R \leq 1000$
+
+感觉像是姿势题，不会做。。。
+
+[totoro wrote on 2017-03-21T02:32:05]
+
+---
+
+原来已经有人问过这个问题了(0 0||)
+https://post.icpc-camp.org/d/636-open-cup-xvi-grand-prix-of-ekaterinburg-h-heimdall
+
+[totoro wrote on 2017-03-21T02:33:58]
+
+---
+
+这不就是 @TankEngineer 讲的科技题嘛。。。
+
+[ftiasch wrote on 2017-03-21T10:54:10]
+
+---
+
