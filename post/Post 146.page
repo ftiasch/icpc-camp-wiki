@@ -1,0 +1,32 @@
+# 关于在linux下的对拍
+
+在linux下的对拍应该怎么写，就像win下的fc, 循环那样。。。
+
+[LoVein wrote on 2015-10-05T06:15:59]
+
+---
+
+```bash
+while true; do
+  ./generate > input
+  ./run < input > output
+  ./std < input > answer
+  if diff output answer; then
+    echo OK
+  else
+    echo WA
+    break
+  fi
+done
+```
+
+[ftiasch wrote on 2015-10-05T06:42:04]
+
+---
+
+学习了！感谢叉姐！！！
+
+[LoVein wrote on 2015-10-05T06:59:49]
+
+---
+
