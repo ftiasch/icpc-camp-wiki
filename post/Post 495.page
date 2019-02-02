@@ -1,0 +1,14 @@
+# Codeforces Round #363 F Coprime Permutation
+
+[题目链接](http://codeforces.com/contest/698/problem/F)
+题目大意：
+一个排列$p_1,p_2,\cdots,p_n$是Coprime Permutation，当且仅当$\forall_{1 \leq i < j \leq n}{coprime(i,j)\Leftrightarrow coprime(p_i,p_j)}$。
+给出$n$和排列中的一部分位置的值，问有多少种方案填补排列中剩下的位置能使得排列变成Coprime Permutation，答案对$(10^9+7)$取模。
+数据范围：
+$2 \leq n \leq 10^6$，排列中给出的值均为不超过$n$的正整数，且两两不同。
+
+
+[skywalkert wrote on 2016-07-22T14:50:46]
+
+---
+
