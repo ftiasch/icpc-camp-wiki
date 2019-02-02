@@ -1,0 +1,44 @@
+# Sichuan Province 2012 J Journey
+
+链接在此：http://acm.bnu.edu.cn/v3/problem_show.php?pid=24258
+
+想法如下：
+假设最后连边的点是p1，p2，先算出p1，p2到所有点的最短距离，对于所有的询问求一次最近公共祖先
+对于每个询问的两个点a，b，设ans1 = a，b到其最近公共祖先的距离，设ans2 = min(p1到a的距离 + p2到b的距离 +　新加边的距离，p1到b的距离 + p2到a的距离 + 新加边的距离)
+那么答案就是max(ans1 - ans2,0)
+请问这种做法哪里有问题吗？一直runtime error到底是做法有问题还是我的写法搓了   ORZ。。。。。
+
+[Fuei wrote on 2015-10-15T08:59:25]
+
+---
+
+做法有问题应该 WA 吧 = = RE 怎么说首当其冲都是你写错啦。
+
+[ftiasch wrote on 2015-10-16T01:32:30]
+
+---
+
+@Varona#1864 benny/{14325}.png
+
+[Fuei wrote on 2015-10-17T13:21:20]
+
+---
+
+@Varona#1864 [IMG]http://static.icpc-camp.org/flarum-emotion/benny/{14325}.png[/IMG]
+
+[Fuei wrote on 2015-10-17T13:22:03]
+
+---
+
+@Varona#1864 叉姐已经解决了  QVQ，  这个方法是没错的。。。是我lca写搓了
+
+[Fuei wrote on 2015-10-22T12:57:58]
+
+---
+
+@Fuei#2092 祝贺你！
+
+[ftiasch wrote on 2015-10-22T13:09:22]
+
+---
+
