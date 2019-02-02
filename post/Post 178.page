@@ -1,0 +1,24 @@
+# ZOJ Monthly October 2015 H Market
+
+最近的ZJU月赛中的H题，想了好久没有思路，求个解法。
+题目连接：
+http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3910
+
+[burglar wrote on 2015-10-12T12:10:07]
+
+---
+
+建好图直接网络流一波冲过去。
+
+建图的方法可以参考这个[题](http://bestcoder.hdu.edu.cn/contests/contest_showproblem.php?cid=620&pid=1003)
+
+[sd_invol wrote on 2015-10-12T15:23:30]
+
+---
+
+@Sd_Invol#1741 我去试试 thx
+
+[burglar wrote on 2015-10-12T15:30:40]
+
+---
+
