@@ -1,0 +1,30 @@
+# Backtrack
+
+I'm wondering if the complexity of a backtrack search algorithm can be somehow bounded or say reduced when the solution is known to be unique? If so, do we have any example?
+
+[safarisoul wrote on 2016-01-11T01:26:50]
+
+---
+
+You can refer to <Listing all the minimum spanning trees in an undirected graph> for example. It's one of the so-called graph listing algorithm. 
+They have running time bounded by O(poly * ANS) where ANS is the size of solutions. For MST, ANS can be exponential. 
+
+
+[ftiasch wrote on 2016-01-11T02:20:08]
+
+---
+
+Another example comes from parameterized algorithm. Say, we'd like to find Hamiltonian cycle in the graph with bounded-treewidth $k$. Standard DP has complexity $O(k\^{O(k)} \mathrm{poly}(n))$.
+
+Using [Isolation Lemma](http://www.wikiwand.com/en/Isolation_lemma) to assign random weight, with constant probability the minimum Hamiltonian cycle **is unique**.  Then we can try to count the minimum weight bi-colored cycle cover of the graph. This DP is relatively easy, you can do it in $O(c\^k \mathrm{poly}(n))$. And we have the final trick, **the hamiltonian cycle is actually a cycle cover**! So if the ham-cycle is minimum, then it will contribute exactly $2$ to the answer. (a connected cycle can be colored by only 2 ways, right?) If the minimum cycle cover is NOT hamiltonian, then it will contributes at least $2\^k$ $(k \geq 2)$. So counting the number of cycle covers modulo $4$ can detect the hamiltonain cycle.
+
+[ftiasch wrote on 2016-01-11T02:29:58]
+
+---
+
+Thanks.
+
+[safarisoul wrote on 2016-01-11T02:55:41]
+
+---
+
