@@ -1,0 +1,28 @@
+# 2011 Multi-University Training Contest 15 Harry Potter and the Present
+
+如题。。这题是背包么？求教。。
+
+[prime21 wrote on 2016-03-06T02:49:58]
+
+---
+
+给个链接或简单说下题嘛哥哥
+
+[AngryBacon wrote on 2016-03-06T04:01:07]
+
+---
+
+@AngryBacon#3234 http://acm.hdu.edu.cn/showproblem.php?pid=3990
+
+[ftiasch wrote on 2016-03-06T04:35:31]
+
+---
+
+这题龙炎做过……，挺暴力的啊，你看W和M肯定有一个小于32。设W比较小吧，把物品分成w_i为0和不为0的。
+对于为0的瞎dp一下，对于不为0的，取的个数不会超过32，也是瞎dp一下。
+所以复杂度就是$O(n*(w*m)^{\frac{3}{2}})$咯
+
+[AngryBacon wrote on 2016-03-06T06:44:24]
+
+---
+
