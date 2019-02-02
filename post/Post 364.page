@@ -1,0 +1,233 @@
+# 51nod 算法马拉松11E 雪之国度
+
+雪之国度有N座城市，依次编号为1到N，又有M条道路连接了其中的城市，每一条道路都连接了不同的2个城市，任何两座不同的城市之间可能不止一条道路。
+雪之女王赋予了每一座城市不同的能量，其中第i座城市被赋予的能量为Wi。
+如果城市u和v之间有一条道路，那么只要此刻雪之女王的能量不小于|Wu-Wv|，这条道路就是安全的。
+如果城市u和v之间存在两条没有重复道路的安全路径（其中每一段道路都是安全的），则认为这两座城市之间有着良好的贸易关系。
+最近，雪之女王因为情感问题，她的能量产生巨大的波动。为了维持雪之国度的经济贸易，她希望你能帮忙对Q对城市进行调查。
+对于第j对城市uj和vj，她希望知道在保证这两座城市之间有着良好贸易关系的前提之下，自己最少需要保持多少的能量。
+
+Input
+每一组数据第一行有3个整数，依次为N,M,Q，表示城市个数，道路个数，和所需要进行的调查次数。
+之后一行，有N个整数，依次为每一个城市被赋予的能量Wi。
+之后M行，每一行有2个整数，表示对应编号的两个城市之间有一条道路。
+之后Q行，每一行有2个整数，表示一组调查的城市目标。
+对于100％的数据来说，3<=N<=100000, 3<=M<=500000, 1<=Q<=100000, 每一座城市的能量Wi满足0<=Wi<=200000.
+Output
+输出一共有Q行，依次对应Q次调查的结果。
+其中第j行给出了第j次调查的结果，即雪之女王需要保持的最少能量值。如果永远也无法做到，输出"infinitely"。
+
+这题感觉是整体二分的做法，对于q个询问进行二分递归。但是我想了很久都没想明白对于递归的每一层，如何做到o(m)来进一步划分这q个询问的范围进而向下一层递归。 请问如何做？
+
+
+[woshi_sb wrote on 2016-03-05T09:31:59]
+
+---
+
+我想通怎么搞了。。。 我太SB了。。。。
+
+[woshi_sb wrote on 2016-03-05T10:37:19]
+
+---
+
+@woshi_sb#3223 所以说用户名很重要啊 XD
+
+[ftiasch wrote on 2016-03-05T11:50:46]
+
+---
+
+@woshi_sb#3223 如果有时间的话也希望能在这里跟大家分享一下思考过程，帮助大家提高？
+
+[xiaojudou wrote on 2016-03-05T15:39:51]
+
+---
+
+我也想问一下这一题，有做出来的提供一下思路吗？
+
+
+[burglar wrote on 2016-03-10T01:13:48]
+
+---
+
+
+![image /assets/images/0-629-KOyxdRW8t2IEzszI.jpg](/assets/images/0-629-KOyxdRW8t2IEzszI.jpg)
+
+
+[samzhang wrote on 2016-03-10T03:08:24]
+
+---
+
+@samzhang#3284 我知道应该是整体二分 （假设划分区间长度为l） 但是如何在O（l）的时间内查询他们之间是有两条无重复道路的路径呢？ 那个生成树的做法没太懂
+
+[burglar wrote on 2016-03-10T05:46:25]
+
+---
+
+@Burglar#3287 这是官方题解。。。我没做这题
+
+
+[samzhang wrote on 2016-03-10T10:12:35]
+
+---
+
+@Burglar#3287 个人感觉那个生成树的做法其实是在求边双联通分量？
+a,b两个点有两条无重复的路径的充要条件是他们在同一个边双里？ 
+
+[totoro wrote on 2016-03-10T14:39:26]
+
+---
+
+@Totoro#3292 道理我都懂 我就是不明白具体怎么做。。我刚接触整体二分 这个贡献如何往下累计？ 每一次都跑一遍图的话显然会T
+
+
+[burglar wrote on 2016-03-11T16:20:37]
+
+---
+
+@Burglar#3306 不用每一次跑一遍图，每一层放在一起处理跑一遍图就好，最多log层
+
+贴份丑丑的[code](http://paste.ubuntu.com/15353568/)
+
+```c
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define maxn 5010000
+#define INF (1 << 30)
+using namespace std;
+
+struct Proc { int Lv,Rv,L,R; } proc[maxn],proc_pas[maxn];
+struct str  { int v,nex; } edge_[maxn << 1];
+struct Edge { int a,b,val,mark; } edge[maxn];
+struct Ques { int a,b,num; } ques[maxn];
+
+typedef int arr32[maxn];
+arr32 js,fa,f,con,js_pas,ans,fst,dep,w;
+int top,tp,tq,n,m,q,e,Max,Min;
+										 
+bool cmp(const Edge &a, const Edge &b) {
+	return (a.val < b.val);
+}
+
+void make_edge(int a,int b) {
+	edge_[++e].nex = fst[a]; fst[a] = e; edge_[e].v = b;
+	edge_[++e].nex = fst[b]; fst[b] = e; edge_[e].v = a;
+}
+
+void dfs(int u) {
+	dep[u] = dep[f[u]] + 1;
+	for (int i = fst[u]; i; i = edge_[i].nex) {
+		int v = edge_[i].v;
+		if (f[u] == v) continue;
+		f[v] = u; dfs(v);
+	}
+}
+
+void build_tree() {
+	for (int i = 1; i <= n; i++) {
+		if (!f[i]) dfs(i);
+	}
+}
+
+int find(int a) { return fa[a] == a ? a : (fa[a] = find(fa[a])); }
+
+int find_con(int a) { return con[a] == a ? a : (con[a] = find_con(con[a])); }
+
+void add(int a,int b) {
+	while (find_con(a) != find_con(b)) {
+		a = find_con(a); b = find_con(b);
+		if (dep[a] < dep[b]) swap(a,b);
+		con[con[a]] = find_con(f[a]);
+		a = find_con(a);
+	}
+}
+
+void add_ans(Proc u) {
+	for (int i = u.L; i <= u.R; i++) {
+		int v = js[i];
+		ans[ques[v].num] = u.Lv;
+	}
+}
+
+void solve() {
+	for (int i = 1; i <= tq; i++) js[i] = i;
+	proc[1] = (Proc) { 0, Max - Min, 1, tq };  top = 1;
+	while (top) {
+		tp = 0;
+		for (int i = 1; i <= top; i++) {
+			if (proc[i].Lv == proc[i].Rv) add_ans(proc[i]);
+			else proc_pas[++tp] = proc[i];
+		}
+		for (int i = 1; i <= n; i++) con[i] = i;
+		top = 0; int pas = 1;
+		for (int i = 1; i <= tp; i++) {
+			int mid = (proc_pas[i].Lv + proc_pas[i].Rv) >> 1;
+			for (; pas <= m && edge[pas].val <= mid; pas++)
+				if (!edge[pas].mark) add(edge[pas].a,edge[pas].b);
+			for (int k = proc_pas[i].L; k <= proc_pas[i].R; k++) js_pas[k] = js[k];
+			int singL = proc_pas[i].L - 1, singR = proc_pas[i].R; 
+			for (int k = proc_pas[i].L; k <= proc_pas[i].R; k++) {
+				int u = js_pas[k];
+				int a = ques[u].a, b = ques[u].b;
+				if (find_con(a) == find_con(b)) js[++singL] = u;
+				else js[singR--] = u;
+			}
+			if (singL >= proc_pas[i].L) proc[++top] = (Proc) { proc_pas[i].Lv, mid, proc_pas[i].L, singL };
+			if (singR <  proc_pas[i].R) proc[++top] = (Proc) { mid + 1, proc_pas[i].Rv, singR + 1, proc_pas[i].R };
+		}
+	}
+}
+
+int main() {
+	freopen("input.in","r",stdin);
+	freopen("output.out","w",stdout);
+	scanf("%d %d %d",&n,&m,&q);
+	Max = -INF; Min = INF;
+	for (int i = 1; i <= n; i++) {
+		scanf("%d",&w[i]);
+		Max = max(w[i],Max);
+		Min = min(w[i],Min);
+	}
+	for (int i = 1; i <= m; i++) {
+		int a,b; scanf("%d %d",&a,&b);
+		edge[i] = (Edge) { a,b,abs(w[a] - w[b]),0 };
+	}
+	sort(edge + 1,edge + m + 1,cmp);
+	for (int i = 1; i <= m; i++) fa[i] = i;
+	for (int i = 1; i <= m; i++) {
+		int a = edge[i].a, b = edge[i].b;
+		find(a); find(b);
+		if (fa[a] == fa[b]) continue;
+		edge[i].mark = 1;
+		make_edge(a,b); fa[fa[a]] = b;
+	}
+
+	build_tree();
+	for (int i = 1; i <= n; i++) con[i] = i;
+	for (int i = 1; i <= m; i++)
+		if (!edge[i].mark) add(edge[i].a,edge[i].b);
+	for (int i = 1; i <= q; i++) {
+		int a,b; scanf("%d %d",&a,&b);
+		if (find_con(a) == find_con(b))
+			ques[++tq] = (Ques) { a,b,i };
+		else ans[i] = -1;
+	}	
+	solve();
+	for (int i = 1; i <= q; i++) {
+		if (ans[i] != -1) printf("%d\n",ans[i]);
+		else printf("infinitely\n");
+	}
+	return 0;
+}
+```
+
+[totoro wrote on 2016-03-12T01:53:00]
+
+---
+
+@Totoro#3307 弄明白了。。。我太执着于整体二分的套路了 thx
+
+[burglar wrote on 2016-03-12T02:19:18]
+
+---
+
