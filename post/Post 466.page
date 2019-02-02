@@ -1,0 +1,39 @@
+# Asia Amritapuri 2015 D Magical Matrix
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=5579)
+
+给出一个$n \times m$的矩阵，问其中有几个子矩阵满足该矩阵中元素的乘积等于$k$
+
+$1 \leq n, m \leq 1000$
+
+$1 \leq k \leq 10000$
+
+保证$k$可表示为$\prod{P_i}$的形式，其中$P_i$为互不相同的质数。
+
+保证矩阵中的每个元素都为$k$的一个质因子或为$1$。
+
+[skyxuan wrote on 2016-06-25T10:18:15]
+
+---
+
+如果 $k$ 是质数，我觉得至少就是 [这个题](https://async.icpc-camp.org/d/361-a-new-one-and-an-old-one) 吧？
+
+现在 $k$ 最多有 $5$ 个质因子，似乎套还是可以套，但是复杂度有点炸裂……
+
+
+[ftiasch wrote on 2016-06-25T13:52:00]
+
+---
+
+https://discuss.codechef.com/questions/80990/ammam-editorial
+
+[mikantsumiki wrote on 2016-06-27T04:50:36]
+
+---
+
+@MikanTsumiki#3856 看到 similar problem，我就都懂了
+
+[ftiasch wrote on 2016-06-27T07:01:04]
+
+---
+
