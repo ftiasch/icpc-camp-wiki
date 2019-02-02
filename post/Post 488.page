@@ -1,0 +1,64 @@
+# 2016 Multi-University Training Contest 1 题解
+
+# Abandoned country
+
+用 Kruskal 算法求出最小生成树后，考虑边 $e = (a, b)$ 被经过的概率，即 $\frac{\mathrm{size}(a) \mathrm{size}(b)}{\binom{n}{2}}$.
+其中 $\mathrm{size}(a), \mathrm{size}(b)$ 是子树 $a, b$ 的大小。
+
+# Chess
+# Game
+# GCD
+
+设 $f(l, r) = \mathrm{gcd}\{a_l, a_{l + 1}, \ldots, a_r\}$，有 $f(l, r + 1) | f(l, r) | a_l$. 
+所以 $f(l, r)$ 只有 $O(n \log\max_i{a_i})$ 个不同的取值，预处理即可。
+
+# Necklace
+
+$(n - 1)!$ 枚举阴的排列，之后相当于最大化能够放入两个阴之间，同时不产生冲突的阳的数量。
+可以在 dfs 时用匈牙利维护最大匹配。
+
+# PowMod
+# Rigid Frameworks
+
+https://www.51nod.com/contest/problemSolution.html#!problemId=1634
+
+# Shell Necklace
+
+$f(n) = \sum_{i = 1}^n a_i f(n - i)$, 分治 FFT. 
+
+# Solid Dominoes Tilings
+
+https://www.51nod.com/contest/problemSolution.html#!problemId=1518
+
+# Subway
+
+找质心，Hash 判树同构。
+
+# tetrahedron
+
+http://maths.ac-noumea.nc/polyhedr/stuff/tetra_sf_.htm
+
+[ftiasch wrote on 2016-07-19T12:36:19]
+
+---
+
+1007 Rigid Frameworks 补充
+https://projecteuler.net/problem=434
+https://www.johannesbader.ch/2013/09/project-euler-problem-434-rigid-graphs/
+
+[kybconnor wrote on 2016-07-19T12:55:07]
+
+---
+
+叉姐能贴一下代码吗。
+
+[xgg wrote on 2016-07-20T11:25:51]
+
+---
+
+@西瓜呀#3926 没 ak 呀……而且比赛时写的代码感觉挺乱的，不值得学习参考⋯⋯
+
+[ftiasch wrote on 2016-07-20T15:25:57]
+
+---
+
