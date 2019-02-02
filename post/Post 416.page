@@ -1,0 +1,34 @@
+# LightOJ 1123 Trail Maintenance
+
+http://www.lightoj.com/volume_showproblem.php?problem=1123
+
+有m条边，每加一条边后询问此时的最小生成树是多少，不存在就输出-1
+
+我是读入一条边存进set->Krusal求最小生成树，可以AC但复杂度比较高
+
+想问下巨巨们有什么其他更快速的方法吗？
+
+[wangb01 wrote on 2016-05-09T13:36:05]
+
+---
+
+你这么做复杂度是 $O(nm \log n)$ 的吧，实际上不要用 std::set，直接插入排序，可以把复杂度变成 $O(nm)$。
+
+更好的办法当然是用 Link-cut Tree 维护最小生成树啦……
+
+[ftiasch wrote on 2016-05-10T02:10:53]
+
+---
+
+@Hayashimo#3553 直接插入排序为什么是O(nm)呢？
+
+[wangb01 wrote on 2016-05-10T05:53:20]
+
+---
+
+@wangb01#3557 你的 std::set 里面只需要保存当前生成树的 $(n - 1)$ 条边啊……
+
+[ftiasch wrote on 2016-05-10T08:04:37]
+
+---
+
