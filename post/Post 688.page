@@ -1,0 +1,108 @@
+# 一道矩阵花式求和的题目
+
+有一个 $n \times m$ 的矩阵 $A$，还有一个 $1 \times n$ 的向量 $B$，定义
+$C_i = \sum_{0 \leq j < n} A[j][B_{i \times j\ \mathrm{mod}\ n}]$，求 $C$.
+
+$n \leq 3 \times 10^5, m \leq 4$
+
+感觉好难。。。。。。。
+
+[CQU_cwy wrote on 2017-05-23T06:19:18]
+
+---
+
+@CQU_cwy#5113 帮你重新排版了一下？你看看意思对么……
+
+[ftiasch wrote on 2017-05-23T06:41:37]
+
+---
+
+@ftiasch#5114 
+应该是A[i][B[i*j%n]],别的没有问题，就是A的第二个下标j应该改为B[i*j%n]
+
+[CQU_cwy wrote on 2017-05-23T06:50:18]
+
+---
+
+@CQU_cwy#5115 
+
+~~实际上就是对于 $x \in \{1, 2, 3, 4\}$ 要快速求有多少 $j$ 满足 $B_{i \times j\ \mathrm{mod}\ n} = x$.~~
+
+~~假设 $\mathrm{gcd}(i, n) = d$，那么 $i\times j\ \mathrm{mod}\ n$ 能够遍历的就是 $0, d, 2d, \ldots$ 一共 $\frac{n}{d}$ 个数，每个数被遍历了 $d$ 遍。~~
+
+~~姑且不论 $d$ 一定是 $n$ 的约数，就算 $\sum_{d} \frac{n}{d}$ 也只有 $O(n \log n)$ 这么多啊……~~
+
+[ftiasch wrote on 2017-05-23T07:16:51]
+
+---
+
+@ftiasch#5116 
+不好意思，题目还有一处有点错，就是应该是A[j][B[i*j%n]],我的锅，非常抱歉
+
+[CQU_cwy wrote on 2017-05-23T07:25:15]
+
+---
+
+这题还有个条件，n是素数
+
+[heart_blue wrote on 2017-05-23T13:05:37]
+
+---
+
+@heart_blue#5119原题题面不是没有说嘛？
+
+[CQU_cwy wrote on 2017-05-23T13:09:01]
+
+---
+
+@CQU_cwy#5120 到底是不是啊？
+
+[ftiasch wrote on 2017-05-26T12:33:41]
+
+---
+
+@ftiasch#5125 
+这是重大校赛的一题，比赛时没人过，题面也没说是质数（感觉是不是质数我都不会做），题面也没有进行修改，
+heart_blue貌似是重大出题组的人，他说是，那可能是题目后面加上去的吧。囧
+
+[CQU_cwy wrote on 2017-05-27T05:26:00]
+
+---
+
+@CQU_cwy#5126 如果 $n$ 是质数的话，取 $n$ 的一个原根 $g$，那么就是算
+
+$\sum_{j} A[g^j][B[g^{i + j}]]$. 这就是个 FFT 了。
+
+[ftiasch wrote on 2017-05-27T09:16:55]
+
+---
+
+@ftiasch#5127 
+明白了，谢谢
+
+[dreamwyy wrote on 2017-05-28T16:40:01]
+
+---
+
+@ftiasch#5127 请问这个怎么用FFT求？
+
+[xy20130630 wrote on 2017-08-04T06:25:49]
+
+---
+
+@xy20130630#5206 
+稍微改写一下@ftiasch#5127 的式子就是
+$\sum_{0 \leq k <m} \sum_j A[g^j][k]\times[B[g^{i+j}]==k]$，这里$[x]=(x\ is\ true\ ?\ 1 \ :\ 0)$，
+枚举$k$然后$FFT$卷一下。
+
+[quailty wrote on 2017-08-04T06:44:03]
+
+---
+
+@quailty#5207 
+谢谢，我明白了 :)
+
+[xy20130630 wrote on 2017-08-04T06:54:28]
+
+---
+
