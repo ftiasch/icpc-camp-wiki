@@ -1,0 +1,56 @@
+# Updates
+
+1. 昨晚服务器搬迁，如果有不稳定的现象欢迎提出 ~
+
+2. 分享一个刷 Talk 的脚本！（仅支持 Mac OSX，其他平台欢迎制作
+
+```
+#!/bin/sh
+hash_code=
+while true; do
+    new_hash_code=`curl -s http://talk.icpc-camp.org/api/discussions | md5`
+    if [ "$hash_code" != "$new_hash_code" ]; then
+        terminal-notifier -title "ICPCCamp::Talk" -message "Updated" -sender com.google.Chrome -open http://talk.icpc-camp.org
+    fi
+    hash_code=$new_hash_code
+    sleep 60
+done
+```
+
+需要使用 brew install terminal-notifier 安装 terminal-notifier。
+
+[ftiasch wrote on 2015-09-29T02:27:06]
+
+---
+
+期待高手做一个win版的白天刷
+
+[xiaojudou wrote on 2015-09-29T02:36:21]
+
+---
+
+稍加改动便可以得到一个Linux版的:
+
+```shell
+#!/bin/sh
+hash_code=
+while true 
+do
+	new_hash_code=`curl -s http://talk.icpc-camp.org/api/discussions | md5sum`
+	if [ "$hash_code" != "$new_hash_code" ] 
+	then
+		notify-send 'talk.icpc has a new update'
+		google-chrome -open http://talk.icpc-camp.org 2>/dev/null &
+	fi
+	hash_code=$new_hash_code
+	sleep 60
+done
+
+```
+
+Ubuntu 14.04 测试 , 并不需要什么东西 .
+
+[CKboss wrote on 2015-09-29T13:50:56]
+
+---
+
