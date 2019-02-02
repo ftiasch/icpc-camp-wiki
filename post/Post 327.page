@@ -1,0 +1,39 @@
+# HDOJ 2089 不要 62
+
+附上代码链接:http://paste.ubuntu.com/13952277/
+
+在网上学习了数位DP的一些知识,然后仿照着A这道题,核心代码如下:
+```
+int  dfs(int pos , int pre , int status , int limit)
+{
+    if(pos < 1) return status;
+    if(!limit && dp[pos][pre][status] != - 1)
+        return dp[pos][pre][status];
+    int endd = limit ? dig[pos] : 9;
+    int ret = 0;
+    for(int i = 0 ; i <= endd; i ++){
+            ret += dfs(pos - 1 , i , status || (pre == 6 && i == 2) || i == 4 , limit && (i == endd));
+    }
+    if(!limit)
+        dp[pos][pre][status] = ret;
+    return ret;
+}
+```
+网上很多都是用二维dp数组,求解这种三维dp的做法应该如何修改?
+
+[DoubleQ wrote on 2015-12-12T03:27:35]
+
+---
+
+你这做法不是挺好的么……为啥要学数组的写法 = =
+
+[ftiasch wrote on 2015-12-14T01:42:29]
+
+---
+
+最后一维status并不需要吧
+
+[winoros wrote on 2015-12-14T08:24:04]
+
+---
+
