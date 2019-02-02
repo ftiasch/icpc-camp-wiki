@@ -1,0 +1,32 @@
+# SPOJ HC10000
+
+[题目链接](http://www.spoj.com/problems/HC10000/)
+题目大意：给出序列 $a_1 = a_2 = 1, a_n = a_{a_{n - 1}} + a_{n - a_{n - 1}}$ ，求这个序列的前 $n$ 项和模 $10^9$ 。
+数据范围：$n \leq 10^{18}$
+关于这个数列：[OEIS - A004001](http://oeis.org/A004001)
+
+
+[skywalkert wrote on 2016-11-18T18:16:42]
+
+---
+
+@skywalkert#4783 这个paper说不定有用: [On Conway's recursive sequence](http://www.sciencedirect.com/science/article/pii/0012365X9400303Z)
+
+[zimpha wrote on 2016-11-19T08:11:07]
+
+---
+
+> @zimpha#4784 Async
+
+$A(n) = 2a_n - n$ 好像也没什么好用的规律啊？
+
+[skywalkert wrote on 2016-11-21T04:37:01]
+
+---
+
+@skywalkert#4791 应该是用那个Q序列。
+
+[sevenkplus wrote on 2017-03-23T03:13:48]
+
+---
+
