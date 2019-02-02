@@ -1,0 +1,55 @@
+# 湘潭邀请赛 2018 （江苏省赛） 题目和提交
+
+题目 https://icpc-camp-cdn.b0.upaiyun.com/permanent/problems/xiangtan-2018.pdf
+虚拟比赛地址 https://www.icpc.camp/contests/6CP5W4knRaIRgU
+我用 @ftiasch 的账户交了所有标程，仅供参考。
+简单的题解（口胡）https://icpc-camp-cdn.b0.upaiyun.com/permanent/problems/xiangtan-2018-solution.pdf
+
+希望能有帮助～有问题请回帖指出，谢谢～
+
+[ftiasch wrote on 2018-05-13T15:07:24]
+
+---
+
+Why the Kth Problem TLE ? unbelievable!
+https://paste.ubuntu.com/p/vjhQwQHJgB/
+
+......
+
+Sorry, I'm fool !!!, forget the EOF != scanf().
+
+[FlushHip wrote on 2018-05-14T00:59:42]
+
+---
+
+请问H题怎么证答案也符合递推关系啊？
+
+[kkky wrote on 2018-06-08T12:44:48]
+
+---
+
+@kkky#5692 假设原来的生成函数是 $g$，所求就是 $\frac{1}{1 - g}$.
+
+$g$ 是线性递推，所以 $g = \frac{p}{q}$，其中 $p$, $q$ 都是多项式。它的倒数自然也是有理函数，自然也是线性递推。
+
+（这样会不会太高级了？）
+
+[ftiasch wrote on 2018-06-08T18:03:24]
+
+---
+
+@kkky#5692 想了想还是打打字……说一个容易让人接受的吧。
+
+你想象是 Bobo 最开始在原点，第一步可以有 $a_i$ 种方法跳到点 $i$，之后每次有 $c_i$ 种方法往后跳 $i$. 
+注意这里有个限制是第二步就一定要跳到 $>n$ 的地方。
+实际上，如果令 $a'_i = a_i - \sum_{j} c_j a_{i - j}$ 的话，就完全没有这个烦恼了。
+
+那所求的问题实际上是，你允许 Bobo 往后跳，还允许它重新开始一段旅程。仔细想想就会发现，这相当于往后跳 $i$ 的方案数变成了 $a'_i + c_i$. 这样就结束了？
+
+所以说这个递推关系是可以直接求出来的（并不需要高斯消元或者 BM，实际上[标程](https://www.icpc.camp/submissions/6CPApWRYouOdPB) 也是这么做的）。
+整个题的复杂度是可以做到 $O(n \log n \log m)$ 的，但是为了和谐就出了一个 $O(n^3 \log m)$ 的 233
+
+[ftiasch wrote on 2018-06-08T18:16:19]
+
+---
+
