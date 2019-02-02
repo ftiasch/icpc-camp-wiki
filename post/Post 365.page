@@ -1,0 +1,74 @@
+# NEERC Moscow Subregional Contest 2011 B Bridge
+
+http://codeforces.com/gym/100863 
+
+题意大概是说，有 $n$ 个点，$i$ 点向 $(i + 1)$ 点连边，两点之间有 $A$，$B$ 两种边分别 $a_i, b_i$ 条，若是走到 $B$ 边上，就会回到 $1$ 号点，求 $1$ 号点到 $n$ 号点的期望步数。
+
+$n, a_i,  b_i \leq 1000$
+
+求教QAQ
+
+[riko wrote on 2016-03-05T13:47:34]
+
+---
+
+设 $f_i$ 表示从 $i$ 号点走到 $n$ 号点的期望，显然 $f_n = 0$。
+同时 $$f_i = p_i f_{i + 1} + (1 - p_i) f_1 + 1$$
+其中 $p_i = \frac{a_i}{a_i + b_i}$
+
+设 $f_1 = x$，$f_i = u_i x + v_i$。代入上式有
+$$u_i x + v_i = p_i (u_{i + 1} x + v_{i + 1}) + (1 - p_i) x + 1$$
+整理得到 $u_i = p_i u_{i + 1} + 1 - p_i, v_i = p_i v_{i + 1} + 1$. 
+
+递推一遍，可以知道 $f_n = u_n x + v_n = 0$，就可以解出 $x$ 了。
+
+[ftiasch wrote on 2016-03-05T14:56:51]
+
+---
+
+@Hayashimo#3226 啊。。我犯了一个错误，叉姐对不起T T，不要打我。B边走一次会消失，以后都不存在了
+
+[riko wrote on 2016-03-06T01:11:18]
+
+---
+
+亲…………你还犯了一个错误。还有 $\sum_i b_i \leq 1000$ 的条件………………
+
+设 $f(i, j)$ 表示到达 $i$ 号点 $j$ 次的期望，答案就是 $f(n, 1)$. 
+
+同时 $f(i, j) = \sum_{k = 0}^{b_i} (f(i - 1, j + k) + j + k) p_{i, j + k, k}$. 其中 $p_{i, j, k}$ 表示一共走了 $(i - 1)$ 到 $i$ 的桥 $j$  次，恰好失败了 $k$ 次的概率。
+
+[ftiasch wrote on 2016-03-06T19:32:52]
+
+---
+
+@Hayashimo#3249 1号点的这些状态该怎么算呢orz
+
+[riko wrote on 2016-03-08T15:11:15]
+
+---
+
+@riko#3257 不就是从 $n$ 推到 $1$ ……
+
+[ftiasch wrote on 2016-03-08T16:16:39]
+
+---
+
+@riko#3257 $f(1, i) = 0$ 啊
+
+[ftiasch wrote on 2016-03-08T16:16:58]
+
+---
+
+@Hayashimo#3259 $p_{i,j,k}$ 应该还需要要求最后一次是成功的
+
+[totoro wrote on 2016-03-10T14:15:48]
+
+---
+
+@Totoro#3291 我感觉不用？
+
+[ftiasch wrote on 2016-03-10T14:53:41]
+
+---
+
