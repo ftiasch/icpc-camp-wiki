@@ -1,0 +1,81 @@
+# 支持 LaTeX 啦！
+
+$r=a(1-\sin\theta)$
+
+[xiaojudou wrote on 2015-09-07T16:51:22]
+
+---
+
+可以使用$\LaTeX$或者$$\LaTeX$$插入公式。效果如下：
+
+$\sqrt{a^2+b^2}$
+$$\LaTeX$$
+
+[ftiasch wrote on 2015-09-07T15:52:44]
+
+---
+
+$c = a \times b$
+
+[Stomach_ache wrote on 2015-09-21T07:52:55]
+
+---
+
+$TeX$
+
+[Stomach_ache wrote on 2015-09-21T09:42:44]
+
+---
+
+$$dp[i]\ =\ \sum_{j = 0}^{j = n} dp[j]$$
+
+[jibancanyang wrote on 2015-10-05T10:34:37]
+
+---
+
+$\sum\limits_{d|n}d$
+
+[QAQ wrote on 2015-10-28T09:48:13]
+
+---
+
+这个latex怎么好像有些问题..
+
+比如\sum\limits_{k=0}^{n} \times \sum\limits_{i=0}^{n}无法正确显示..
+
+[yangyue wrote on 2015-10-29T03:20:29]
+
+---
+
+@yangyue#2268 
+
+主要的问题是[i], ^, \\, \_  在 Markdown 中有特殊含义。正确的方法是使用 \\ 转译，例如：
+
+$\sum\limits\_{k=0}\^{n} \times \sum\limits\_{i=0}\^{n}$
+
+$\sum\limits\\_{k=0}\\^{n} \times \sum\limits\\_{i=0}\\^{n}$
+
+
+[ftiasch wrote on 2015-10-29T03:24:03]
+
+---
+
+@Varona#2269 原来如此。。
+
+[yangyue wrote on 2015-10-29T07:32:31]
+
+---
+
+$$(\sum_{i=1}^n a_i=0)*x$$
+              
+
+[woshi_sb wrote on 2016-09-06T07:12:56]
+
+---
+
+$\sum\limits\_{k=0}\^{n} \times \sum\limits\_{i=0}\^{n}$
+
+[WNJXYK wrote on 2017-09-03T03:14:39]
+
+---
+
