@@ -1,0 +1,46 @@
+# Topcoder Open 2016 Round 3A 题解
+
+Disclaimer: 纯补作业。以下均为 http://codeforces.com/blog/entry/46206 的翻译整理。
+
+---
+
+# ParenthesesAndPermutation	
+
+$s_0$ 是左括号，$\{s_0, s_1, s_2\}$ 中至少有 $2$ 个左括号，……，$\{s_0, s_1, \ldots, s_{2k}\}$ 中至少有 $k + 1$ 个左括号。
+
+贪心，按照 $k$ 从小到大，每次在 $\{s_0, s_1, \ldots, s_{2k}\}$ 中选择一个左括号，为了让 $t$ 尽量合法，每次应该选择 $p_i$ 最小的 $i$ （即让 $t$ 中的左括号尽量靠左）。
+
+Note: 根据以上的 idea，也可以网络流。详见 http://codeforces.com/blog/entry/46206?#comment-306876。
+
+# FoxAndGo4
+
+动态规划，状态 dp[first/second, {t_1, t_2, ..., }] 表示轮到先手/后手，当前剩下的连通分量的根是 $t_1, t_2, ...,$. 
+
+先手的操作是选择 $1$ 个根，例如是 $t_i$，把 $t_i$ 的所有儿子加入状态。后手的状态是选择一个根，完全删掉，获得 $\mathrm{size}(t_i) - 1$ 的价值。
+
+考虑如何简化状态，注意到同构的 $t_i$ 合并。但是这样仍然不够快，再注意到如果 $\mathrm{size}(t_i) = 1$，那么先手和后手都不会获得收益，去掉后答案不变。这样就足以通过了。
+
+Note: 具体的复杂度分析和更多的优化可以参考 http://codeforces.com/blog/entry/46206?#comment-306879。
+
+# TopologicalOrdering	
+
+考虑两条链 $(x_1, x_2, \ldots, x_n)$ 和 $(y_1, y_2, \ldots, y_n)$，假设以 $x_n$ 结束的拓扑序数量是 $a$，以 $y_n$ 结束的是 $b$.
+如果新加一个点 $x_{n + 1}$，连 $x_n \to x_{n + 1}$ 和 $y_{n - 1} \to x_{n + 1}$. 
+那么以 $x_{n + 1}$ 结束的数量变为 $a + b$. 因为删掉后可以选 $x_n$ 和 $y_n$。以 $y_n$ 结束的仍然是 $b$，因为删掉 $y_n$ 后只能删掉 $x_{n + 1}$，跟之前直接删掉 $y_n$ 是一样的。
+
+所以如果我们如果能找到一对 $a, b$，使得 $\mathrm{gcd}(a, b) = 1$，同时 $a + b$ 是想要的方案数，按照上面的构造，我们相当于可以做更相减损，因为互质，所以最后一定可以到达 $(1, 1)$. 
+
+Note: 更多的构造方法：[eatmore](http://codeforces.com/blog/entry/46206?#comment-306864), [Petr](http://codeforces.com/blog/entry/46206?#comment-306882), [cgy4ever](http://codeforces.com/blog/entry/46206?#comment-306878).
+
+---
+
+我的代码 https://code.icpc-camp.org/ftiasch/acm-icpc/src/master/topcoder/topcoder-open/topcoder-open-2016/round-3A
+
+---
+
+最后，CF 原贴中还有一些关于题目质量的讨论，十分有趣，也推荐一看。:)
+
+[ftiasch wrote on 2016-08-31T01:59:06]
+
+---
+
