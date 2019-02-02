@@ -1,0 +1,262 @@
+# 新手入门
+
+# 标签
+
+发布内容请使用标签。
+标签分为**内容标签**和**功能标签**两类。目前，共有 6 个内容标签和 2 个功能标签。
+
+## 内容标签
+
+### 站务
+
+欢迎使用 *意见与建议* 子标签提出意见。
+
+### 算法
+
+讨论（不涉及具体题目）的算法。例如「网络流算法哪家强？」。
+
+### 题目
+
+以题目为单位讨论解法。
+建议使用题目来源和名称作为标题，例如「Codeforces Round #328 E Bear and Bowling」。
+
+目前有 *ICPC*，*Codeforces*，*Topcoder* 三个子标签。
+
+### 训练
+
+讨论训练方法。例如「目标保铁争冠如何训练？」。
+
+### 动态
+
+讨论相关的比赛、活动。例如「如何参加 ICPCCamp ？」。
+
+### 私货
+
+以上标签不适用的讨论。
+
+## 功能标签
+
+### 分享
+
+不需要进一步讨论。例如分享、转载的资料。
+
+### 未解决
+
+字面意思。
+
+# Markdown
+
+支持 Markdown 语法。参见 [Markdown 语法说明（简体中文版）](http://wowubuntu.com/markdown/basic.html)。
+
+[ftiasch wrote on 2015-09-06T06:16:09]
+
+---
+
+建议增加：
+
+1. 为什么应该使用论坛（而非qq群、blog？）
+   #qq群信息密度太低
+   #不能分类、保存、流传
+   #不便于大家交流
+2. FAQ？
+3. 发帖规则
+     什么话题不要发布？什么内容会被删除？
+4. 专栏模块？
+     一是类郭老师专栏。。。一是训练or比赛记录（类似成长记录。。？）
+
+[xiaojudou wrote on 2015-09-07T11:03:58]
+
+---
+
+NPC工置顶
+
+（这里需要新手报到吗？
+
+发送表情的魔法 => [IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+
+[xiaojudou wrote on 2015-09-17T11:38:32]
+
+---
+
+发送表情
+
+[snowy_smile wrote on 2015-09-18T05:10:34]
+
+---
+
+发送表情！
+
+[snowy_smile wrote on 2015-09-18T06:26:40]
+
+---
+
+发送表情！
+
+[luras_oil wrote on 2015-09-21T00:38:43]
+
+---
+
+发送表情失败QAQ
+
+[snowy_smile wrote on 2015-09-21T02:46:47]
+
+---
+
+发送表情！
+
+[Stomach_ache wrote on 2015-09-21T07:44:39]
+
+---
+
+哦新站? 赞一个!
+↑上面都是同学吧哈哈?
+
+[Lik wrote on 2015-09-25T14:55:45]
+
+---
+
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+发送表情！
+
+[qscqesze wrote on 2015-09-26T14:45:17]
+
+---
+
+@qscqesze#704 卿，如何发送表情。雾，逃
+
+[LoneWolf wrote on 2015-09-27T14:15:07]
+
+---
+
+![pic](http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg)
+发送表情！
+
+[skyxuan wrote on 2015-09-30T12:51:38]
+
+---
+
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+[curiosity wrote on 2015-10-01T06:48:05]
+
+---
+
+发送表情！
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+[snowy_smile wrote on 2015-10-01T09:11:29]
+
+---
+
+![发送表情！](http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg)
+
+[Stomach_ache wrote on 2015-10-06T05:29:12]
+
+---
+
+![发送表情](http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg)
+
+[ChouUn wrote on 2015-10-06T16:20:04]
+
+---
+
+ [IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]做个试验。。。
+
+[Voil wrote on 2015-10-08T03:10:37]
+
+---
+
+ [IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+[q234rty wrote on 2015-10-30T14:41:10]
+
+---
+
+被雨林安利过来了，可能会发一些cf翻译之类的吧（跑
+
+[Yangff wrote on 2015-11-10T11:03:23]
+
+---
+
+请问如何添加标签？
+
+[小菜鸟 wrote on 2015-11-28T11:04:29]
+
+---
+
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+[burglar wrote on 2016-01-25T04:13:04]
+
+---
+
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+请问编辑功能是滋瓷自己编辑多久时间内的Post呢。
+
+[Wangzhpp wrote on 2016-03-16T04:29:24]
+
+---
+
+@Kishin_Sagume#3338 答案是 10min。
+
+[ftiasch wrote on 2016-03-16T05:13:09]
+
+---
+
+叉姐现在好像修改不了头像了...
+我刚刚提示
+
+```
+Oops! Something went wrong. Please reload the page and try again.
+```
+Debug下面是这样的
+```
+POST https://async.icpc-camp.org/api/users/916/avatar
+
+<br />
+<b>Warning</b>:  fopen(/var/www/html/assets/avatars/flqbaewenkguzotq.jpg): failed to open stream: Permission denied in <b>/var/www/html/vendor/league/flysystem/src/Adapter/Local.php</b> on line <b>150</b><br />
+{"data":{"type":"users","id":"916","attributes":{"username":"sd197555","avatarUrl":"https:\/\/async.icpc-camp.org\/assets\/avatars\/flqbaewenkguzotq.jpg","bio":null,"joinTime":null,"discussionsCount":0,"commentsCount":3,"canEdit":false,"canDelete":false,"lastSeenTime":"2016-09-21T03:48:47+00:00","isActivated":true,"email":"rui_nan@outlook.com"}}}
+```
+
+[sd197555 wrote on 2016-09-21T03:48:08]
+
+---
+
+@sd197555#4364 我猜现在好了
+
+[ftiasch wrote on 2016-09-21T05:38:26]
+
+---
+
+好快啊 ：D
+
+[sd197555 wrote on 2016-09-21T05:46:32]
+
+---
+
+头像又不能跟新辣。。。
+
+[Foam wrote on 2016-11-10T03:33:32]
+
+---
+
+@Foam#4763 现在要在 icpc-camp.org 上更新噢（
+
+[ftiasch wrote on 2016-11-10T03:37:24]
+
+---
+
+$\sum_{i=1}^n a_i$
+
+[TaoSama wrote on 2016-12-23T10:03:35]
+
+---
+
+$\LaTeX$
+
+[WNJXYK wrote on 2017-09-03T03:12:38]
+
+---
+
