@@ -1,0 +1,112 @@
+# Codeforces 778B Bitwise Formula
+
+为啥超时- 0 0，我看了半天是 $O(m n \log n)$
+
+```
+const int maxn = 100010;
+
+int n, m;
+string str[5010][4];
+map<string, int> var;
+
+int opt(string op, int a, int b) {
+    if(op == "AND")return a & b;
+    if(op == "OR")return a | b;
+    if(op == "XOR")return a ^ b;
+}
+
+int calc(int u, int id) {
+    int num = 0;
+    for(int i = 0; i < n; i++) {
+        if(str[i][1][0] == '1' || str[i][1][0] == '0') {
+            var[str[i][0]] = str[i][1][id] - '0';
+            if(var[str[i][0]] == 1)num++;
+        } else {
+            int a, b;
+            if(str[i][1][0] == '?') {
+                a = u;
+            } else {
+                a = var[str[i][1]];
+            }
+            if(str[i][3][0] == '?') {
+                b = u;
+            } else {
+                b = var[str[i][3]];
+            }
+            var[str[i][0]] = opt(str[i][2], a, b);
+            if(var[str[i][0]] == 1) {
+                num++;
+            }
+        }
+    }
+    return num;
+}
+
+string ba, op, val;
+void solve() {
+    cin >> n >> m;
+    for(int i = 0; i < n; i++) {
+        cin >> ba >> op >> val;
+        str[i][0] = ba;
+        str[i][1] = val;
+        if(val[0] != '0' && val[0] != '1') {
+            cin >> op >> val;
+            str[i][2] = op;
+            str[i][3] = val;
+        }
+    }
+    string maxs, mins;
+    for(int i = 0; i < m; i++) {
+        int a = calc(0, i);
+        int b = calc(1, i);
+        if(a < b) {
+            maxs.push_back('1');
+            mins.push_back('0');
+        } else if(a > b) {
+            maxs.push_back('0');
+            mins.push_back('1');
+        } else {
+            maxs.push_back('0');
+            mins.push_back('0');
+        }
+    }
+    cout << mins << endl;
+    cout << maxs << endl;
+
+}
+```
+
+[tak_fate wrote on 2017-03-01T16:29:40]
+
+---
+
+@ftiasch#4976 我去哦，map换成unordered_map就过了，两个时间差距这么大啊- -
+
+[tak_fate wrote on 2017-03-02T11:49:53]
+
+---
+
+你可能可以做成 $O(nm)$ 的吧……
+
+[ftiasch wrote on 2017-03-02T01:26:28]
+
+---
+
+@tak_fate#4977 你这么搞多了一次 string 的比较啊
+
+[ftiasch wrote on 2017-03-02T15:48:51]
+
+---
+
+可以先预处理变量之间的关系，然后再枚举 bit 去计算 …… 这样就是$O(|s|n \log n+nm)$
+
+[quailty wrote on 2017-03-02T16:03:39]
+
+---
+
+@quailty#4980 嗯，我之前也想到了这个
+
+[tak_fate wrote on 2017-03-03T09:54:51]
+
+---
+
