@@ -1,0 +1,16 @@
+#  UVALive  6836 Automotive Navigation
+
+[题目链接戳这里](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=79055)
+由于题目细节比较多，不太好解释题意
+求解这个题该怎么做呢
+
+[TaoSama wrote on 2015-12-21T16:56:59]
+
+---
+
+打牌。$f(t, x, y)$ 表示 $t$ 时刻，车是不是可能在 $(x, y)$ 这个点。注意每次只会走 $10$，走 $100$ 次也就走 $1000$。但是只有 $50$ 条线段，所以 $(x, y)$ 的可能取值只有 $50 \times 1000$ 个（实际上肯定更少）。
+
+[ftiasch wrote on 2015-12-22T02:38:15]
+
+---
+
