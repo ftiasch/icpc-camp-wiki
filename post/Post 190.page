@@ -1,0 +1,26 @@
+# 好像是2013广东省赛的某道几何
+
+2012年集训队互测梁盾《最远点》。
+
+[sevenkplus wrote on 2015-10-17T01:09:26]
+
+---
+
+给一个凸包，$n \leq 10^ 5$，求每个点的最远点。求教姿势。
+
+[vainman wrote on 2015-10-17T00:36:00]
+
+---
+
+题解：http://www.tsinsen.com/resources/Train2012-test-ld-points.pdf
+
+[sevenkplus wrote on 2015-10-17T01:10:34]
+
+---
+
+@sevenkplus#1870 谢谢！
+
+[vainman wrote on 2015-10-17T23:56:08]
+
+---
+
