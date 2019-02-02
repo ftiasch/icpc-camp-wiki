@@ -1,0 +1,37 @@
+# Dhaka Regional 2014 D Flood in Gridland
+
+给定一个75x75的矩阵和两个数字L、R，每个元素可能为一个数字或空。
+可以使用两种操作：1.某行数字全部加1。2.某列数字全部减1。
+要求操作任意多次使得每个数字都在L,R之间，并且数字的和最大。
+http://www.bubt-cse.edu.bd/ACM-ICPC%202014%20Document/Final_problem_set.pdf
+
+P.S. 看problem archieve好像zimpha同学过了这个题，请指教！
+
+[AngryBacon wrote on 2015-09-16T11:46:26]
+
+---
+
+帮 @zimpha 
+
+[xiaojudou wrote on 2015-09-16T12:04:46]
+
+---
+
+这题我也一直不会，一起排队求 @zimpha 指教！
+
+[ftiasch wrote on 2015-09-16T12:32:38]
+
+---
+
+@ftiasch#269 @AngryBacon#267 
+这个题在codechef上出题人出了一道一样的题来骗钱, 于是我也就会这个题了
+链接: https://discuss.codechef.com/questions/71486/chefbook-editorial
+
+
+输出方案的话是这样的, 在跑完费用流的图中, 如果某条边的流量非空, 那么原来差分约束的<=就可以改成=
+然后在修改后的查分约束图中跑一边最短路就可以搞出方案了.
+
+[zimpha wrote on 2015-09-16T12:45:28]
+
+---
+
