@@ -1,0 +1,16 @@
+# DMOJ New Year's 2018 Hanoi Heuristics
+
+## [题意](https://dmoj.ca/problem/year2018p5):
+> 现在有一个三柱汉诺塔，一共 $n \le 15$个圆盘，以及 $Q \le 20000$个状态。初始时所有圆盘都在第一个柱子，现在需要输出一系列操作使得所有状态都被遍历到。允许经过同一个状态多次，但操作数需要在 $2 \times 10^6$以内。
+
+## [官方题解](https://dmoj.ca/problem/year2018p5/editorial):
+
+> 求每个状态在哈密顿路径上的编号，然后按照这个顺序遍历。
+
+不是很懂具体怎么求，求解。
+
+
+[samzhang wrote on 2018-01-06T07:29:57]
+
+---
+
