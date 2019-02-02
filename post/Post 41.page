@@ -1,0 +1,55 @@
+# 51nod 1039 X^3 Mod P
+
+X^3 mod P = A，其中P为质数。T组询问，给出P和A，求<=P的所有X。
+1 <= T <= 1000, 1 <= A < P <= 10^9。
+时限1s
+
+[skywalkert wrote on 2015-09-18T05:38:54]
+
+---
+
+我猜是个类似二次剩余的论文题……
+
+参考 [New Cube Root Algorithm Based on Third Order Linear Recurrence Relation in Finite Field](http://eprint.iacr.org/2013/024.pdf)
+
+[ftiasch wrote on 2015-09-18T05:42:32]
+
+---
+
+似乎有个$N$次剩余的通用做法, 复杂度是$O(\sqrt P)$
+令$g$是$P$的原根, 令$g^y=X,g^t=A$, 于是有$g^{y \times N} \equiv g^t \text{ mod } P$
+这个式子等价于: $N \times y \equiv t \text{ mod } (P - 1)$
+于是就可以扩展欧几里得求出所有的$y$, 求出$y$的话, $X$也就搞出来了
+
+[zimpha wrote on 2015-09-18T13:24:01]
+
+---
+
+@zimpha#332 但是他这数据范围就是一脸不让你BSGS的意思啊
+
+[ftiasch wrote on 2015-09-18T14:28:44]
+
+---
+
+@ftiasch#337 您说的有理, 我只是想说有个复杂度不靠谱的通用做法而已
+
+[zimpha wrote on 2015-09-18T16:04:46]
+
+---
+
+@ftiasch#324 @zimpha#332 叉老师给的论文有点太高大上了，蒟蒻啃得十分艰辛QAQ。今晚换了篇简单粗暴的，突然秒懂就AC了。
+
+关于求模质数意义下平方根和立方根的问题，我在下面的链接里又水了一贴。（扩域真好用？）
+
+[find square roots and cube roots modulo prime](http://blog.csdn.net/skywalkert/article/details/52591343)
+
+[skywalkert wrote on 2016-09-19T21:03:04]
+
+---
+
+如X姐所说，二次剩余改一下就好了。其实也不算论文题，完全可以自己推出来的。以后可以出一道用光滑数做幂的高次剩余题目。不过这题还是有人用Bsgs过了（我们的机器变快了），以后还是tls来出数据吧，确保无法水过。
+
+[litaoye wrote on 2016-09-21T10:41:51]
+
+---
+
