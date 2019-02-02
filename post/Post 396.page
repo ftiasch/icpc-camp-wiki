@@ -1,0 +1,41 @@
+# BUCT校内网上预选赛 2008 火星货币
+
+将整数 $p \leq 10^6$ 拆分成任意个正整数相加的形式，其中的每个正整数都是 $1, k, k^2, \cdots, $ 的形式 $k \leq 50$
+求不同的拆分方案个数 $\mathrm{mod} 20080607$
+如 $k=2$，$p=7$，则有 $(1,1,1,1,1,1,1),(1,1,1,1,1,2),(1,1,1,2,2),(1,2,2,2),(1,1,1,4),(1,2,4)$ 一共 $6$ 种不同的拆分方案
+一共 $t$ 组样例 $(t \leq 50)$，时限 $2000$ ms
+我只会打表做这题，向各位大神指教不打表的方法
+[题链](http://wenku.baidu.com/link?url=s3SQ7gkqekJD1S70ZapXpvyGoIb6rTgBuPolFOGuLPpb8FoBllKdbZINVizPd7Ic0VBdCwm6Z0tGGHfXNEPre8s_gKmRaHYDSP_PCRTXHSi)
+
+[danagi wrote on 2016-04-10T10:32:38]
+
+---
+
+[SRM 669 HARD PowerPartition](https://community.topcoder.com/stat?c=problem_statement&pm=13945&rd=16549)
+
+或者 [SRM 527 HARD P8XCoinChange](http://community.topcoder.com/stat?c=problem_statement&pm=11155&rd=14552). 
+
+后面一题的题解在 http://apps.topcoder.com/wiki/display/tc/SRM+527
+
+[ftiasch wrote on 2016-04-10T15:01:58]
+
+---
+
+@Hayashimo#3453 感谢叉姐！看了很久终于搞懂了题解上$O(\log^4 N)$的解法，唯一可惜的是解法里有除法需要计算逆元，这题的20080607竟然不是素数，因此这解法就不怎么适用了。PowerPartition的解法里不需要逆元，但只有代码，我看的不是很明白，还得再研究研究（不过后来发现本题直接用完全背包做，只要优化一下取模运算，就不会超时，测试数据没有想象中那么强）
+
+[danagi wrote on 2016-04-11T11:22:36]
+
+---
+
+@danagi#3458 为什么我觉得不需要除法呢？
+
+[ftiasch wrote on 2016-04-11T13:15:52]
+
+---
+
+@Hayashimo#3459 差点忘了还有Usagi的解法，确实不需要除法
+
+[danagi wrote on 2016-04-11T14:23:30]
+
+---
+
