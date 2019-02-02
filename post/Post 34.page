@@ -1,0 +1,22 @@
+# ZOJ  Monthly,September 2015 D Sign Every Day
+
+给出了n段不相交的连续时间和K张卡片，求最多能获得的分数
+
+[14184134 wrote on 2015-09-16T08:37:14]
+
+---
+
+参见[链接](http://dreadnought.icpc-camp.org/ZOJ%20Monthly,%20September%202015)。
+
+建议问题应该把题意写明白，光看你这个描述，根本不能明白卡片、时间之间的关系，连必要的数据范围都没有，很难让人好好回答问题呢。
+
+[ftiasch wrote on 2015-09-16T09:07:13]
+
+---
+
+谢谢叉姐，
+
+[14184134 wrote on 2015-09-16T10:58:04]
+
+---
+
