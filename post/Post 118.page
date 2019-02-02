@@ -1,0 +1,292 @@
+# 2015 四川省赛 I Travel	
+
+「十一弱校连萌 之 强力热身」 I 题的讨论在这里~
+
+[ftiasch wrote on 2015-10-01T07:02:35]
+
+---
+
+这题不错哦
+
+[sd_invol wrote on 2015-10-01T07:15:21]
+
+---
+
+@Sd_Invol#1107 QwQ 数据好难造。。。
+
+[ftiasch wrote on 2015-10-01T07:18:31]
+
+---
+
+问一下是怎么得出只经过b边最多3次就可以从1到n，否则1到n只经过b边不联通这个结论的呢？
+
+[QAQ wrote on 2015-10-01T07:19:33]
+
+---
+
+@ftiasch#1112 
+QwQ叉姐肯定是偷懒没有构造！
+
+[snowy_smile wrote on 2015-10-01T07:19:47]
+
+---
+
+@snowy_smile#1115 我还是构了几组的……贴数据生成器以示清白！
+```
+require_relative 'testlib'
+
+doall do
+  sh 'CXXFLAGS="-O2 -std=c++11 -Wall -Wno-unused-result -Wno-parentheses -Wno-varargs -Wno-attributes"'
+
+  make 'random.cpp'
+  make 'random_dis.cpp'
+  make 'validator.cpp'
+  make 'solution.cpp'
+
+  sh 'mkdir -p ../tests'
+
+  test '001.hand'
+  test '002.hand'
+  test '003.hand'
+  test '004.hand'
+  [0, 1].each do |t|
+    10.times { test :random, '?', 100, 2000, 1000000000, t }
+  end
+  [0, 1].each do |t|
+    test :random, '?', 100000, 500000, 1000000000, t
+  end
+  test :random_dis, '?', 100000, 500000, 1000000000
+
+  sh 'rm -rf *.exe'
+end
+```
+
+[ftiasch wrote on 2015-10-01T07:21:01]
+
+---
+
+@sorry_QAQ#1114 怎么都得不出这个结论吧……
+
+[ftiasch wrote on 2015-10-01T07:21:40]
+
+---
+
+@ftiasch#1117 QAQ那么只经过b边的路有什么结论吗？
+
+[QAQ wrote on 2015-10-01T07:22:47]
+
+---
+
+@sorry_QAQ#1118 没有…… 我是直接在那个补图上做 BFS 的。
+
+[ftiasch wrote on 2015-10-01T07:23:24]
+
+---
+
+@sorry_QAQ#1118 其实没有什么特殊性质，但是对于随机数据深度期望不大，勇敢卡了一下层数暴力SPFA就过了= =
+
+[quailty wrote on 2015-10-01T07:25:33]
+
+---
+
+@ftiasch#1120 明白惹，谢叉姐
+
+[QAQ wrote on 2015-10-01T07:26:44]
+
+---
+
+@quailty#1122 Q神暴力spfa是优化了枚举点的部分吗？
+
+
+[QAQ wrote on 2015-10-01T07:27:25]
+
+---
+
+@sorry_QAQ#1125 稍微卡了一下出队的总次数，然而正确姿势还在学习中= =
+
+[quailty wrote on 2015-10-01T07:28:20]
+
+---
+
+补图的最短路如何找呢？
+
+
+[keambar wrote on 2015-10-01T07:32:36]
+
+---
+
+@keambar#1130 
+
+我们随便拿个你喜欢的东西（链表、std::set、平衡树，啥都行）把还没有访问过的点维护一下，不如叫 $S$。
+
+然后我们正常 bfs，每次从队里里面拿出来一个 $u$，那么我们 for 一遍 $S$ 里面的所有点。假设 for 到的点叫 $v$，这时候有两种情况：
+
+1. $(u, v)$ 有条边，那么 gg，下一个；
+2. $(u, v)$ 没有边，那么太好啦！这条边就在补图里面，$v$ 的最短路也确定了，就把 $v$ 从 $S$ 里面删掉。
+
+总之，(1) 只会发生 $m$ 次，而 (2) 只会发生 $n$  次。
+
+[ftiasch wrote on 2015-10-01T07:35:30]
+
+---
+
+对于a>b的情况，问题化为ans=min(只走b边, a)。维护“当前层的点”， “未走到的点“两个列表，每次对它们枚举，只要一条边不是a就可以扩展，这样最多总共枚举m次。set作hash的话，复杂度O(m*log(m))。
+
+[u0qyz1234 wrote on 2015-10-01T07:42:28]
+
+---
+
+@ftiasch#1134 0.0 那要知道$(u,v)$有没有边不是要遍历之前的邻接表嘛 0.0 这样不会复杂度很大嘛
+
+[TaoSama wrote on 2015-10-01T07:55:48]
+
+---
+
+@TaoSama#1140 我是这样的……
+
+我有个全局数组 marked，每次把 $u$ 拿出来，先扫一遍 $u$ 的邻接表，把所有的相邻的 $v$ 的 marked[v] 标为 $u$。
+
+然后 for $S$的时候，只要看 marked[v] 是不是 $u$ 就行。
+
+[ftiasch wrote on 2015-10-01T07:57:26]
+
+---
+
+@ftiasch#1141 0.0 这样每次进入bfs的时候 都要清空一次这个数组呀 复杂度很可怕的样纸 0.0
+
+[TaoSama wrote on 2015-10-01T07:58:50]
+
+---
+
+@ftiasch#1141 看起来这样就可以不带$\log$啦
+
+[sd_invol wrote on 2015-10-01T07:59:34]
+
+---
+
+@TaoSama#1142 我并没有说要清空啊……
+
+[ftiasch wrote on 2015-10-01T08:00:07]
+
+---
+
+@ftiasch#1144  啊 0.0 我错惹 眼花了 谢谢叉姐啦~ -3-
+
+[TaoSama wrote on 2015-10-01T08:01:46]
+
+---
+
+(1) (u,v) 有条边，那么 gg，下一个； 这个并不是m次吧，是对于每一个u，扫一遍吧，下次队列取其他元素时还可能扫一遍。
+
+[GAUSS wrote on 2015-10-01T09:06:58]
+
+---
+
+@ftiasch#1134 叉姐我觉得这个并不是O（m）,看最下面我的回复
+
+[GAUSS wrote on 2015-10-01T09:13:38]
+
+---
+
+@GAUSS#1158 只有有这条边的时候才会有gg的时候，每个点引出去的边只能gg一次，$n$个点最多$2m$次
+
+[y761823 wrote on 2015-10-01T09:15:45]
+
+---
+
+@sorry_QAQ#1114 巨巨好眼熟，求告知题意QAQ
+
+[highmath wrote on 2015-10-01T11:15:26]
+
+---
+
+@highmath#1181 在n个点完全图中，只有两种边，权值分别为A,B， 现在给出权值为A的所有边，求1到n的最短距离
+
+[usedrose wrote on 2015-10-01T13:40:57]
+
+---
+
+@quailty#1122 Q神好机智。。
+
+[usedrose wrote on 2015-10-01T13:53:03]
+
+---
+
+容我贴个[代码](http://git.icpc-camp.org/ftiasch/acm-icpc/blob/master/my-contests/2015-06-14-sichuan-province-contest/problems/travel/src/solution.cpp)。
+
+[ftiasch wrote on 2015-10-01T15:16:16]
+
+---
+
+@ftiasch#1217 求巨巨贴代码教弱弱做人
+
+[FlyingFatty wrote on 2015-10-01T15:24:56]
+
+---
+
+@FlyingFatty#1219 我不是贴了吗……
+
+[ftiasch wrote on 2015-10-01T15:25:33]
+
+---
+
+叉姐的mark实在是太巧妙了！我竟然傻傻的想hash去了
+
+[poursoul wrote on 2015-10-01T16:14:20]
+
+---
+
+弱校联萌暑假训练的某场也有这道题。。
+
+[james47 wrote on 2015-10-01T16:39:11]
+
+---
+
+@y761823#1161 我感觉并不是这样算的，你这样想，每次从bfs队列里取出一个点，都要扫一遍未加入的点，加入一开始未加入的点是n-2个，第一次扫描，只加入1个点，那么下一次又是O(n)的扫描，广从边的数目分析我感觉并不正确，因为很多扫描是在做无用功。
+
+[GAUSS wrote on 2015-10-02T07:39:35]
+
+---
+
+@ftiasch#1134 召唤叉姐告诉LS为什么复杂度是对的，本人无能为力_(:з」∠)_
+
+[y761823 wrote on 2015-10-02T07:45:17]
+
+---
+
+@GAUSS#1283 并不是每次都是 $O(n)$ 的扫描……
+
+[ftiasch wrote on 2015-10-02T07:52:43]
+
+---
+
+看懂了，
+
+[curiosity wrote on 2015-10-03T06:03:01]
+
+---
+
+@GAUSS#1283 感觉这样做最差的复杂度是{n+n-1+...+1}吧，但是随着n越来越大，这个复杂度是到到不了的，比如n = 10^5的时候，这样有c(n,2)条边，如果想让每次最多只有一个点入队，那么因为n <= 5*10^5这个，经过3个点，highway都用完了，然后第四个点就来一次o(n)就搞定了（弱表示不会证明复杂度，但是感觉n越大，距离最差的复杂度就越远）
+
+[hqwhqwhq wrote on 2015-10-03T11:45:23]
+
+---
+
+@hqwhqwhq#1362 看 @ftiasch#1134 的分析。
+
+[ftiasch wrote on 2015-10-03T12:09:43]
+
+---
+
+@ftiasch#1363 谢叉姐
+
+[hqwhqwhq wrote on 2015-10-03T14:45:53]
+
+---
+
+@usedrose#1196 谢巨巨
+
+[highmath wrote on 2015-10-04T03:46:01]
+
+---
+
