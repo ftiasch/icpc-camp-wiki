@@ -1,0 +1,25 @@
+# CERC 2006 B Bridge
+
+有n个工厂要建在河的两岸，河两岸分别有n个可选地址，岸的每一边的地址都是呈直线排列的，现在要建m条桥，每条桥两边的工厂已给定，问能否至多删除两条桥使得存在一个选址方案使得每条桥互不相交，注意桥不能建于位于同岸的两个工厂之间。n,m<=10000
+https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=254&page=show_problem&problem=1715
+
+我想了一下发现删除两条桥之后图应该是一个深林，且每棵树的点到直径的距离不能大于1,之后就不会了。。。。
+
+[wtw wrote on 2016-09-04T02:35:00]
+
+---
+
+题目的本质就是问能不能删掉至多两条边，使得原图变成一个毛毛虫 https://en.wikipedia.org/wiki/Caterpillar_tree.
+
+先把度为 1 的点去掉，因为这些点最后加上去就行。再把度为 2 的点缩起来，那么这样剩下的图很小，就是常数个点常数条边这样子，枚举一下就行了。
+
+[ftiasch wrote on 2016-09-05T02:52:16]
+
+---
+
+@ftiasch#4172 谢谢叉姐
+
+[wtw wrote on 2016-09-05T05:13:26]
+
+---
+
