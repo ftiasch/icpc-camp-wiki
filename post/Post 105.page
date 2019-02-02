@@ -1,0 +1,26 @@
+# Andrew Stankevich Contest 43 H Frequent Permutations
+
+[gym传送门](http://codeforces.com/gym/100517)
+题目大意
+给一个数列，长度$n \leq 14$，初始$a_i = i$。有$t \leq 300$次操作，每次随机选择两个角标$i$，$j$（两次选择独立）。将两个位置的数交换。
+问操作完之后，出现概率最高的排列以及它的概率
+QwQ求解
+
+[winoros wrote on 2015-09-30T09:54:18]
+
+---
+
+我猜）是这么做的：
+
+你考虑排列的置换分解，具有相同置换分解的排列概率相同。而置换分解的个数是 $n$ 的拆分数那么多，于是暴力打牌就行了。
+
+[ftiasch wrote on 2015-09-30T09:54:53]
+
+---
+
+@ftiasch#1043 想通了，谢谢叉姐-w-
+
+[winoros wrote on 2015-09-30T17:15:30]
+
+---
+
