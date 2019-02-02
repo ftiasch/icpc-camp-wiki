@@ -1,0 +1,34 @@
+# Tianjin 2012 G Swap
+
+[Problem Link](http://acm.hdu.edu.cn/showproblem.php?pid=4437)
+
+给一个10行25列的01矩阵，可以做无数次的行交换及列交换。定义Cup为矩阵中一个0，在它同行左边存在1，在它同行右边也存在1。给定矩阵，问最终Cup最少有几个。
+
+[Nero wrote on 2015-11-17T08:23:00]
+
+---
+
+10！枚举就可以了吧。。
+
+[splinter wrote on 2015-11-17T08:42:39]
+
+---
+
+随机置顶
+
+[xiaojudou wrote on 2016-02-23T01:33:39]
+
+---
+
+问答案是否是0可以用PQ树
+
+[sevenkplus wrote on 2016-02-24T14:40:41]
+
+---
+
+@sevenkplus#3193 不要这么浮夸啊…consecutive one 可以 n3 做的吧…
+
+[ftiasch wrote on 2016-02-24T16:58:58]
+
+---
+
