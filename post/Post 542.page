@@ -1,0 +1,60 @@
+# Single Round Match 697 题解
+
+# DivisibleSetDiv1
+
+因为涉及整数，我们固定一个质数 $p$，设 $p$ 在 $a_i$ 中的幂次是 $e_i$.
+题设条件要求 $a_i^{b_i}$ 是其他数乘积的倍数，那么对 $p$ 来说，应该有 $b_i e_i \geq \sum_{j \neq i} e_j$.
+稍微整理一下，得到 $e_i \geq \frac{\sum_j e_j}{b_i + 1}$.
+形象一点说，就是说 $e_i$ 至少应该占总体的 $\frac{1}{b_i + 1}$. 
+所以，只要 $\sum_i \frac{1}{b_i + 1} > 1$，那么一定无解。
+另一方面，考虑 $a_i$ 要两两不同的要求。如果 $\sum_i \frac{1}{b_i + 1} = 1$ 的话，那么每个 $e_i$ 相等与否实际上等价于 $b_i$ 相等与否。也就是说，只要两个 $b$ 相同，那么 $e$ 一定相同，从而 $a$ 也相同。
+而只要 $\sum_i \frac{1}{b_i + 1} < 1$ 的话，只要稍微调整一下，就能让 $e$ 都两两不同。
+
+# XorOrderDiv1
+
+首先，换一种方式表示 $x^2$，也就是说 
+$$q_i = \sum_{d = 0}^{2^m - 1} \sum_{j = 1}^n \sum_{k = 1}^n [a_i \oplus d > a_j \oplus d][a_i \oplus d > a_k \oplus d].$$
+
+其中 $[\mathrm{condition}]$ 表示当条件 condition 成立时为 $1$，否则为 $0$.
+
+单独拿 $[a_i \oplus d > a_j \oplus d]$ 出来考虑，那么肯定是 $a_i$ 和 $a_j$ 有一段前缀是相同的，在某一位开始不同。那么只要 $d$ 在这一位做出了正确的决定（使得 $a_i$ 这一位是 $1$ 而 $a_j$ 这一位是 $0$），那么$d$ 的其他位就确定了。
+
+我们可以把 $q_i$ 的三个求和号换个顺序，我们先枚举 $j$ 和 $k$，再考虑有多少种 $d$ 能够满足条件。
+但是根据上面的分析，我们其实知道 $j$ 和 $k$ 具体是怎样也是不重要的，关键是 $a_j$ 和 $a_k$ 在哪一位开始和 $a_i$ 不同。
+我们可以预处理 $d(i, x)$ 表示第 $x$ 位开始和 $a_i$ 不一样的数字的数量，那么：
+$$q_i = \sum_{x} d(i, x)^2 2^{m - 1} + \sum_{x \neq y} d(i, x) d(i, y) 2^{m - 2}.$$
+
+稍微优化一下，就可以在 $O(nm)$ 时间解决。
+
+# ConnectedStates
+
+很自然地考虑 Purfer 编码，假设 $i$ 的度数是 $d_i + 1$ 的话，那么满足要求的树应该有
+
+$$(n - 2)! \prod \frac{{a_i}^{d_i + 1} (d_i + 1)}{d_i!} $$ 种
+
+这样容易做出一个 $O(n^3)$ 的 dp。比赛时毛爷爷用 $O(n^2 \log n)$ 的分治 FFT 直接平 A 了。
+
+接下来的技巧我不太熟悉，是在 https://apps.topcoder.com/wiki/display/tc/SRM+697 这里学会的。
+
+实际上要算的是
+
+$$(n - 2)! \prod_{i = 1}^n a_i \sum_{\sum_{i = 1}^n d_i = n - 2} \prod_{i = 1}^n \frac{{a_i}^{d_i}(d_i + 1)}{d_i!}$$
+
+如果我们把其中 $\prod_{i = 1}^n (d_i + 1)$ 的部分展开，就可以得到
+
+$$(n - 2)! \prod_{i = 1}^n a_i \sum_{x_{1, 2, \ldots, n} \in \{0, 1\}}\sum_{\sum_{i = 1}^n d_i = n - 2} \prod_{i = 1}^n \frac{{a_i}^{d_i}{d_i}^{x_i}}{d_i!}$$
+
+也就是
+
+$$(n - 2)! \prod_{i = 1}^n a_i \sum_{x_{1, 2, \ldots, n} \in \{0, 1\}} \prod_{i = 1}^n {a_i}^{x_i} \sum_{\sum_{i = 1}^n (d_i - x_i) = n - 2 - \sum_{i = 1}^n x_i} \prod_{i = 1}^n \frac{{a_i}^{d_i - x_i}}{(d_i - x_i)!}$$
+
+注意到最后一个 sigma 里面，其实就是 $\frac{(\sum_{i = 1}^n a_i)^{n - 2 - \sum_{i = 1}^n x_i}}{(n - 2 - \sum_{i = 1}^n x_i)!}$ 的展开式，那么剩下的问题就可以背包 dp 了。
+
+---
+
+我的代码：https://code.icpc-camp.org/ftiasch/acm-icpc/src/master/topcoder/single-round-match/single-round-match-697
+
+[ftiasch wrote on 2016-09-06T03:23:45]
+
+---
+
