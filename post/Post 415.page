@@ -1,0 +1,97 @@
+# VK Cup 2016 Round 3 题解
+
+# Bear and Colors
+
+固定区间 $[l, r]$ 的左端点 $l$，从小到大枚举 $r$。维护 $\mathrm{cnt}(c)$ 表示颜色 $c$ 出线的次数，每次看看 $(\mathrm{cnt}(t_r), r)$ 是否可以更新众数。
+
+# Bear and Two Paths
+
+输出 a c P d b 和 c a P b d 即可。
+其中 $P$ 是 $\{1, 2, \ldots, n\} \setminus \{a, b, c, d\}$ 的任一排列。
+注意 $n = 4$ 和 $k \leq n$ 无解。
+
+# Levels and Regions
+
+首先研究如何计算 $\{t_1, t_2, \ldots, t_n\}$ 的期望。
+选中第 $1$ 关需要 $1$ 步；选中第 $2$ 关的概率是 $\frac{t_2}{t_1 + t_2}$，期望需要 $\frac{t_1 + t_2}{t_2}$；以此类推，总的期望是：
+$$\sum_{i \leq j} \frac{t_i}{t_j}.$$
+
+设 $S_i = \sum_{j \leq i} t_j, Q_i = \sum_{j \leq i} \frac{S_j}{t_j}, R_i = \sum_{j \leq i} \frac{1}{t_j}$，那么区间 $(l, r]$ 的期望是
+$$\sum_{l < j \leq r} \frac{S_j - S_l}{t_j} = \sum_{l < j \leq r} \frac{S_j}{t_j} - S_l \sum_{l < j \leq r} \frac{1}{t_j} = (Q_r - Q_l) - S_l (R_r - R_l).$$
+
+设 $f(k, i)$ 是把 $[1, i]$ 分成 $k$ 段的最小期望，那么
+$$f(k, i) = \min_{j < i} (f(k - 1, j) - Q_j - S_j \times R_j) - S_j R_i + Q_i.$$
+斜率优化即可。
+
+# Bearish Fanpages
+
+对于每个点 $v$，维护一个 followed[v] 表示它和它的儿子对它的贡献，在把 $x \to y$ 改成 $x \to z$ 的时候，followed[y], followed[z], followed[parent[y]], followed[parent[z]] 会有变化。
+
+一个点的真实值，应该等于 followed[v] 加上它父亲对它的贡献。
+对于每个点维护一个集合 follower[v]，是它儿子按照 followed[v] 从小到大排序的 std::set。
+全局的极值只可能是局部的极值，所以把 follower[v] 的极值加入全局的 std::set GLOBAL 里。
+询问只要通过 GLOBAL 即可。
+修改时，涉及的细节比较多。
+
+# Bear and Destroying Subtree
+
+设 $f(v, d)$ 表示以 $v$ 为根的子树，深度 $< d$ 的概率，答案就是
+$$\sum_{i = 1}^{\infty} \left(1 - f(v, i)\right).$$
+
+同时有递推关系 $f(u, d) = \prod_{v \in \mathrm{children}(v)} \frac{1 + f(v, d - 1)}{2}$.
+对于叶子有 $f(u, 0) = 0, f(u, i) = 1$. 所以增加一片叶子，只会影响 $f(\mathrm{parent}^k(u), k)$ 的值，其中 $\mathrm{parent}^k(u)$ 表示 $u$ 的 $k$ 层祖先。
+
+因为每次都减少一半，只要向上暴力 $60$ 层，就是一个很好的近似了。
+
+# Bears and Juice
+
+首先考虑递推，设 $f(\mathrm{night}, \mathrm{sleep})$ 表示还剩 $\mathrm{night}$ 个晚上，睡了 $\mathrm{sleep}$ 只熊时，最多能够判断的桶的数量。
+边界是 $f(0, \mathrm{sleep}) = 1$ for $\mathrm{sleep} < \min\{\mathrm{bed}, \mathrm{bear}\}$.
+考虑一个桶，假设它被 $i$ 只熊选择，这一共有 $\binom{\mathrm{bear} - \mathrm{sleep}}{i}$ 种不同的熊的集合。如果某个熊的集合醉了，那么这样的桶不能超过 $f(\mathrm{night} - 1, \mathrm{sleep} + i)$，否则将无法分辨。
+总之，$$f(\mathrm{night}, \mathrm{sleep}) = \sum_{i = 0}^{\infty} \binom{\mathrm{bear} - \mathrm{sleep}}{i} f(\mathrm{night} - 1, \mathrm{sleep} + i).$$
+
+考虑优化递推：
+
+## 官方鬼畜
+
+考虑 $f(\mathrm{night}, *)$ 和 $f(\mathrm{night} + p, *)$ 的线性关系，可以花 $O(p^4)$ 的时间算出矩阵。
+之后分 $O(\frac{q}{p})$ 轮，每一轮利用刚才的矩阵，只需要 $p^2$ 的时间，总的复杂度就是 $O(p^4 + pq)$.
+
+## 暴力化简
+
+设 $x_i$ 表示第 $i$ 个晚上睡着的熊，把上面的递推展开，最终的答案就是
+$$\sum_{x_1 + x_2 + \cdots + x_{\mathrm{night}} \leq \mathrm{bed}} \binom{\mathrm{bear}}{x_1} \binom{\mathrm{bear} - x_1}{x_2} \binom{\mathrm{bear} - x_1 - x_2}{x_3} \cdots $$
+
+如果我们枚举 $x_1 + x_2 + \cdots + x_{\mathrm{night}} = k$，这里的方案有 $\mathrm{night}^k$ 种。后面组合数的乘积就是 $\binom{\mathrm{bear}}{k}$. 总之，答案就是
+$$\sum_{k = 1}^{\mathrm{bed}} \binom{\mathrm{bear}}{k} \mathrm{night}^k.$$
+
+## 直观解释
+
+考虑给每个桶标一个 $\mathrm{bear}$ 维的向量 $(x_1, x_2, \ldots, x_{\mathrm{bear}})$，其中 $x_i$ 表示第 $i$ 个熊，哪天去喝，$0$ 表示不喝。其中非 $0$ 的项不能超过 $\mathrm{bed}$ 个，否则如果这桶是酒的话，就会睡掉超过 $\mathrm{bed}$ 头熊。
+
+这种向量的总数显然就是上式那么多。只要给每个桶标不同的向量，最后观察一下每头熊每天睡没睡，就能够唯一确定这个桶了。
+
+# Choosing Ads
+
+如果删去集合中不同的 $(k + 1)$ 个元素，那么出现至少 $\frac{1}{k}$ 的元素不会改变。
+不断删去后，集合中最多只有 $k$ 个元素，用线段树维护即可。
+
+[代码们](http://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/codeforces/674-codeforces-round-351)
+
+[ftiasch wrote on 2016-05-08T03:37:00]
+
+---
+
+请问Bearish Fanpages那题,
+不应该是followed[y],followed[z],followed[parent[y]],followed[parent[z]]的值会变吗
+
+[hiaatcnd wrote on 2016-05-10T09:59:23]
+
+---
+
+@hiaatcnd#3559 对……原来写错了。已经改了。
+
+[ftiasch wrote on 2016-05-10T11:40:32]
+
+---
+
