@@ -1,0 +1,34 @@
+# 一个组合题
+
+问个组合题... 设n=2^k ,S,T∈{0,1}^n, 证明|S^T H T|≤ n, 其中H是相应大小的Hadamard矩阵.
+
+[yuzuriha_inori wrote on 2015-10-13T14:30:32]
+
+---
+
+如果你的Hadamard matrix是normalized (i.e. eigenvalue都是1)，那么直接看eigenvalue。(这东西甚至还有个名字，叫Lindsey's Lemma。)
+
+如果你的Hadamard matrix是unnormalized (i.e. eigenvalue都是$n\^{1/2}$，那么结论是错的。一个例子是$n=4$，$H$长得像维基百科上那样，$S$和$T$前三位是$1$。
+
+[sevenkplus wrote on 2015-10-14T03:12:04]
+
+---
+
+@sevenkplus#1789 第二行eigenvalue是$n\^{1/2}$，写错了。
+
+[sevenkplus wrote on 2015-10-14T03:15:13]
+
+---
+
+@sevenkplus#1790 哦，这里说的是eigenvalue的norm。
+
+[sevenkplus wrote on 2015-10-14T03:15:41]
+
+---
+
+@sevenkplus#1791 谢谢 看来结论是错的= =
+
+[yuzuriha_inori wrote on 2015-10-14T06:20:38]
+
+---
+
