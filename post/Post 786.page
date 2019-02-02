@@ -1,0 +1,22 @@
+# ZOJ 3514 Palindromic Mighty String
+
+[ZOJ 3514](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3514)：给定 $N$ 个字符串 $s_1, s_2, \ldots, s_N$，保证每个字符串由 $7$ 个不同的小写字母组成。构造一个长度不超过 $100$ 的回文串 $\mathrm{str}[1\ldots L]$，使得存在 $0 < k_1 < k_2 < \ldots < k_N < L$ 满足 $s_i$ 是 $\mathrm{str}[k_i\ldots L]$ 的前缀 $(i = 1, 2, \ldots, N)$。如果有多解，输出长度最短的解。如果还有多解，输出字典序最小的解。数据保证有解。
+
+[skywalkert wrote on 2018-03-02T07:39:13]
+
+---
+
+洗个澡想出来了，自问自答一下……
+
+由于 $|s_1| = |s_2| = \ldots = |s_N| = 7$, $0 < k_1 < k_2 < \ldots < k_N < L$ 和 $L \leq 100$，所以 $N \leq 100 - 7 + 1 = 94$。
+
+由于每个字符串的任意两个字符不同，所以 $s_i$ 在 $\mathrm{str}$ 中匹配的位置一定不会跨越回文中心，而且最短的 $\mathrm{str}$ 一定是一个奇回文串。
+
+考虑这些串的匹配位置我们可以设计一个 DP，令 $f(\mathrm{len},  i, j, x, y)$ 表示 $\mathrm{str}$ 的中心还剩下 $2 \cdot \mathrm{len} - 1$ 个字符没填，目前前缀已经匹配了 $s_1, s_2, \ldots, s_{i-1}$ 和 $s_i[1\ldots x]$，后缀已经匹配了 $s_j[y\ldots 7]$ 和 $s_{j + 1}, \ldots, s_N$ 是否可行，对于这个状态，最优解一定是添加 $s_i[x+1]$ 或者 $s_j[y-1]$，枚举最终答案对应的 $\mathrm{len}$，记忆化搜索即可。
+
+事实上不用一次只加一个字符，因为不可能在匹配过程中两个串分别失配一次。
+
+[skywalkert wrote on 2018-03-02T11:12:14]
+
+---
+
