@@ -1,0 +1,242 @@
+# 多项式乘法 % 1000000007
+
+跪求：如何求两个多项式相乘，系数对1000000007取模
+
+[czk wrote on 2015-10-27T04:44:54]
+
+---
+
+直接用FFT的话精度不够，取几个NTT素数来做NTT然后用CRT合并的话需要高精度或者__int128（很多时候不支持。。），有没有比较好的做法。。
+
+[czk wrote on 2015-10-27T04:47:17]
+
+---
+
+@zimpha#2199 噢。对。。。多谢。。话说能够FFT那样搞吗
+
+[czk wrote on 2015-10-27T05:33:19]
+
+---
+
+@czk#2197 可以用分治乘法[Karatsuba algorithm](https://en.wikipedia.org/wiki/Karatsuba_algorithm)
+
+[zimpha wrote on 2015-10-27T05:09:03]
+
+---
+
+@pis#2289 你说得很对，但这无能为力吧 = =
+
+[ftiasch wrote on 2015-10-30T03:10:21]
+
+---
+
+@czk#2201 求问NTT素数怎么合并成1e9+7？
+
+[aclsh wrote on 2015-10-27T05:35:10]
+
+---
+
+@aclsh#2203 找两三个乘积大于P*P*N的数做NTT，P=1e9+7，N是多项式长度，做完之后用CRT合并起来，然后再模P
+
+[czk wrote on 2015-10-27T06:02:25]
+
+---
+
+沈阳那个K题这样写有可能会T
+
+[sd_invol wrote on 2015-10-27T06:04:45]
+
+---
+
+@czk#2204 这个必须要求真实答案小于若干NTT素数乘积才可以吧？比如说a=16,本来要求模10的结果，NTT素数取3和5，16模10结果本来是6 但是16先模15再模10的结果就是1了？
+
+[aclsh wrote on 2015-10-27T07:28:57]
+
+---
+
+@aclsh#2207 PPN 就是系数的上届了。
+
+[ftiasch wrote on 2015-10-27T07:39:59]
+
+---
+
+@Varona#2208 这个系数指的是结果多项式的系数吗（结果多项式系数会对NTT素数取模） 如果是这样的话 假设乘法结果多项式最终系数很大的话（ 比如说 2^10000 ) 那NTT素数也要取接近 2^10000  的值吗 或者是为了满足乘积大于PPN 取很多个NTT素数 这样可能会影响到复杂度
+
+[aclsh wrote on 2015-10-27T07:53:03]
+
+---
+
+@aclsh#2210 两个系数在 P 范围内的多项式乘积系数不会超过 PPN 啊。
+
+[ftiasch wrote on 2015-10-27T07:58:22]
+
+---
+
+@Varona#2211 乘完之后不是还要相同系数合并吗 合并之后可能就超了？
+
+[aclsh wrote on 2015-10-27T08:40:35]
+
+---
+
+@aclsh#2215 模一下啊…
+
+[ftiasch wrote on 2015-10-27T08:46:43]
+
+---
+
+@Varona#2217 可是你这时候模的是NTT素数 而不是1e9+7 这样的话就像上面反例说的那样 结果会出错啊 我的表达实在是有问题啊TAT。。。
+
+[aclsh wrote on 2015-10-27T08:53:50]
+
+---
+
+@aclsh#2220 mod NTT，CRT 拼起来，按照正常的情况 mod 回来，接着搞…
+
+[ftiasch wrote on 2015-10-27T08:55:06]
+
+---
+
+@Varona#2221 按道理是这样的...感谢叉姐耐心指导 先写一发试试看~
+
+[aclsh wrote on 2015-10-27T09:09:23]
+
+---
+
+@aclsh#2210 我看了半天没理解你的反例是什么意思。
+
+[sevenkplus wrote on 2015-10-27T14:17:28]
+
+---
+
+See discussion of counting # of rooted trees with max degree k using FFT:
+http://codeforces.com/blog/entry/20335?#comment-251217
+
+Use this Simple trick, let a_max = max coefficient, decompose by mod to:
+P(x) = P1(x) + √ (a_max) * P2(x).  
+The multiplication of two ordinary polynomials modulo p can be expressed through the four polynomials with small coefficients, and for them accuracy is enough.
+And this is really fast as it needs just doubles FFT (much faster than NTT).
+
+See code posted here:
+http://codeforces.com/blog/entry/19862?#comment-247566
+
+[baodog wrote on 2015-10-27T15:30:44]
+
+---
+
+@baodog#2235 2333
+
+[czk wrote on 2015-10-28T02:55:09]
+
+---
+
+@sevenkplus#2234 可能是我理解错了 意思就是NTT是对特定素数取模得到多项式相乘的结果 而最终我们是要对求多项式对1e9+7的结果 如果先对某个NTT素数取模 再对1e9+7取模 可能会导致结果错误 这是我个人理解 不知道哪里出了问题 转不过来弯了…
+
+[aclsh wrote on 2015-10-28T09:46:17]
+
+---
+
+@aclsh#2245 叉姐说的很清楚了。
+
+[sevenkplus wrote on 2015-10-28T17:31:08]
+
+---
+
+@Varona#2221 叉姐，我还有一个地方没懂，比如说PPN是1e24级别，NTT取了三个1e9,的素数，CRT的时候不是要在三个素数乘积的模系统下求解的吗？
+可是三个素数是1e27了。
+
+[pis wrote on 2015-10-30T02:30:49]
+
+---
+
+@pis#2289 本地提前算好逆元，然后int64就能搞定了。
+
+[litaoye wrote on 2015-11-02T07:29:13]
+
+---
+
+@litaoye#2372 搞得定吗？本质是要算 $a \times b \bmod M \bmod p$，$M$ 是一个超过 int64 的数字。这没办法吧？
+
+[ftiasch wrote on 2015-11-02T07:33:56]
+
+---
+
+@litaoye#2372 对啊。。如果搞得定的话，那么感觉NNT就可以不受取模数的限制了
+
+[mayf3 wrote on 2015-11-02T07:45:31]
+
+---
+
+这么多年我一直是这样用的，虽然当年怎么推的都已经忘了，但好在代码仍在。让我查一下！
+
+设最终结果为z，z mod (p1\*p2) = m1，z mod p3 = m2，那么计算crt的话，设 z - m1 = z'。
+z' % (p1 \* p2) = 0，z' % p3 = m2 - m1。所以求一下逆元，满足inv \* (p1 \* p2) % p3 = 1（int64也能搞定），所以 (m2 - m1) \* inv \* (p1 \* p2) % p3 = z' % p3，因此z' = ((m2 - m1) \* inv % p3) \* p1 \* p2，z = ((m2 - m1) \* inv % p3) \* p1 \* p2 + m1
+
+最终要求的就是z % 1e9 + 7，这中间的数都可以先mod 10^9 + 7 再算，因此int64可以搞定。
+（不知道有没有推错的地方）
+
+[litaoye wrote on 2015-11-02T08:54:36]
+
+---
+
+p1 和 p2 之间是乘号，怎么被吃掉了？
+
+[litaoye wrote on 2015-11-02T08:55:22]
+
+---
+
+@litaoye#2381 markdown会把成对的\*转义成斜体, 比如\*dd\*会变成*dd*
+
+[zimpha wrote on 2015-11-02T09:13:43]
+
+---
+
+@litaoye#2380 感觉你倒数第三条式子推后面的时候有问题，你可以得到z=kp3+(m2-m1)*inv*(p1*p2)+m1，当然k是p1*p2的倍数，你把k默认为0，然而每个k都都回使答案在模1e9+7下不一样。
+
+[pis wrote on 2015-11-04T01:31:37]
+
+---
+
+@pis#2410 你是说两边mod p3相等，但并不表示两个数相等吧？那个不是因为crt么？就是说在这个范围内只有这么一个数！
+
+[litaoye wrote on 2015-11-04T11:09:45]
+
+---
+
+@litaoye#2435 你的方法确实可以把M降到int64做，只不过我实践是时候把当z小于0的时候把它加上M，这么说范围应该在(-M，M)。
+
+[pis wrote on 2015-11-04T11:26:02]
+
+---
+
+@pis#2436 其实预处理一下就好了，用这个写多项式逆元，还是不能保留负号，得在标准模系统下进行
+
+[pis wrote on 2015-11-04T11:46:14]
+
+---
+
+旧事重提。。
+用ntt+crt的方法做了今年多校Team5的1004，发现无法做到在时限内解决。。直接用fft的话，结果可能超过long long，无法转化成longlong后取模，请问各位大神都是如何解决的TnT
+题目链接：http://acm.hdu.edu.cn/showproblem.php?pid=6088
+
+[aclsh wrote on 2017-08-14T06:21:10]
+
+---
+
+@aclsh#5229 你可以看 myy 去年的集训队论文。。。里面详细地讲了怎么做 mod 1e9+7 的 FFT。
+
+也可以看 http://maskray.me/blog/2016-10-03-discrete-fourier-transform
+
+太懒的话可以直接看 https://code.icpc-camp.org/ftiasch/dreadnought-code-library/src/master/improve/FFT.cpp
+
+感慨一下科技进步真快啊（？）
+
+[ftiasch wrote on 2017-08-14T11:22:27]
+
+---
+
+@ftiasch#5230 感谢叉姐指导~ 又学到了新知识 膜拜新科技和各位大佬们ORZ
+
+[aclsh wrote on 2017-08-14T11:42:37]
+
+---
+
