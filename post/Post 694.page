@@ -1,0 +1,58 @@
+# 做题目数据的时候怎么高效的生成一颗树啊
+
+RT 
+我只知道用并查集维护数据正确性，但是这样数据大的时候，随机出来在判 很慢很慢啊。。。
+
+[tabris wrote on 2017-06-29T07:32:59]
+
+---
+
+这种时候就应该安利 https://github.com/ICPCCamp/generators/blob/master/random_tree.cpp 这个了！
+
+[ftiasch wrote on 2017-06-29T14:18:50]
+
+---
+
+@ftiasch#5144  多谢叉姐
+
+[tabris wrote on 2017-06-30T06:41:43]
+
+---
+
+```c++
+for (int i = 2;i <= n;i++) printf("%d\n",rand()%(n-1)+1);
+```
+
+[tigertang wrote on 2017-07-26T06:42:48]
+
+---
+
+@tigertang#5173 你这个生成出来不是树吧……
+
+[ftiasch wrote on 2017-07-26T09:30:25]
+
+---
+
+我是选择维护两个数组，一个是已经构造好的点集，一个是还没有加进树上的。每次从随机从第二个点集选一个点，“挂到”从第一个点集随机选择的一个点上，作为儿子。为了随机，有限度地random_shuffle。嘻嘻~
+
+[zhuynan wrote on 2017-07-26T16:00:46]
+
+---
+
+@ftiasch#5174 哪里不是树辣QAQ
+我好像手抖写错了，把输出改成这样
+```
+printf("%d %d\n",rand()%(i-1)+1,i);
+```
+就可以了
+
+[tigertang wrote on 2017-08-10T08:30:27]
+
+---
+
+@tigertang#5223 期望深度log，点分治直接取根。
+
+[sevenkplus wrote on 2017-08-10T19:20:44]
+
+---
+
