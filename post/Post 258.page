@@ -1,0 +1,21 @@
+# 「锁定主题」
+
+求助：http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1190
+5w组数据，每组数据一个a，b，要求lcm(a,b)+lcm(a+1,b)+...+lcm(b,b)%1000000007,1<=a<=b<=1000000000
+
+[czk wrote on 2015-11-11T04:57:17]
+
+---
+
+sqrt的做法好像不行，分解质因子的时候就直接T了。。
+
+[czk wrote on 2015-11-11T04:57:56]
+
+---
+
+Duplicated http://async.icpc-camp.org/d/97-51nod-1190-v2
+
+[ftiasch wrote on 2015-11-11T05:21:24]
+
+---
+
