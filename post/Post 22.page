@@ -1,0 +1,28 @@
+# TopCoder Single Round Match 667 Level 2 CatsOnTheCircle
+
+这个题怎么做啊? 我推了个公式(不知道对不对), 如果公式没错的话, 感觉组合数很大, 所以是小的时候暴力, 大的时候Stirling公式去逼近阶乘么? 
+
+$ ans = \binom{N-2}{K-1} p^{K-1} q^{N-2 - (K-1)} $
+
+[yuzhou627 wrote on 2015-09-11T16:19:11]
+
+---
+
+我看他们讨论了一下我看不懂的东西……啥电阻网络之类的 = = 不是很懂。
+
+[ftiasch wrote on 2015-09-12T01:01:11]
+
+---
+
+@ftiasch#129 你应该把主代码手拉来talk。
+
+[AngryBacon wrote on 2015-09-12T09:42:11]
+
+---
+
+@AngryBacon#132 按照程序，应该由你请示队长。
+
+[ftiasch wrote on 2015-09-12T09:53:17]
+
+---
+
