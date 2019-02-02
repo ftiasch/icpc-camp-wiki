@@ -1,0 +1,101 @@
+# 2016 MIPT Pre-Finals Workshop Taiwan NTU Contest 题解
+
+官方题解：https://icpc-camp-cdn.b0.upaiyun.com/secure/68a73ed8a6aa6bb1a0a7feb7bf9d2046.pdf
+
+Dreadnought 题解：https://wiki.icpc-camp.org/dreadnought/MIPTCamp%202016%20Day1%20-%20National%20Taiwan%20U%20Contest.html
+
+# A. As Easy As Possible [Bacon]
+
+题解：离线之后倍增或数据结构都可以。
+
+# B. Be Friends [Bacon]
+
+题解：分治，在每个trie的内点里，左子树和右子树一定恰有一条边要连。暴力枚举一边倒另一边查即可。复杂度$O(n\log^2 m)$。
+
+# C. Coprime Heaven [Lolicon]
+
+题解：乱搞。首先分析块的奇偶性，如果放不下所有的偶数必然无解，猜测除此之外一定有解。手动分类讨论+构造，然而有些case过于复杂，难想难写。于是乱搞，暴力枚举前$k$个数放在哪个circle里，对于剩下来的数切成连续的$m$段塞到各个环里。实践证明，$k=3$即可AC。
+
+# D. Drawing Hell [Bacon]
+
+题解：可以发现游戏结束一定是一个三角剖分，而给定点集的任意三角剖分的边数是定的，所以只要求凸包即可。
+
+# E. Easiest Game [Bacon]
+
+题解：一些观察之后，发现lucky pair $(r,s)$有如下等价条件，
+
+不失一般性设$r\le s,n\le m$。
+
+1. $(r+s)\mod 2 =1$
+
+2. $gcd(r,s)=1$
+
+3. $s\le m/2$
+
+4. $r+s \le n$
+
+知道了这些之后，直接暴力容斥即可。复杂度$O(T\sqrt{M})$。
+
+# F. Fibonacci of Fibonacci [Rowdark]
+
+题解：水题。暴力循环节即可。
+
+# G. Global Warming [Bacon]
+
+题解：枚举月亮的每个面，算对地球的影响。需要求固定角度的切线，可以二分，当然也可以卡壳。
+
+有一些烦人的东西，比如要判断地球和月亮的位置关系，比如找到月亮一个面的区间会被分成两个，比如判断反射的光能不能射到地球（而不是相反的方向），需要仔细些。
+
+# H. Hash Collision [Lolicon]
+
+题解：多项式乘法。在n上倍增。用FFT做乘法。
+
+# I. Increasing or Decreasing [Lolicon]
+
+题解：数学。数位dpTLE。可以枚举相同的前缀后面直接组合数。
+
+# J. Just Convolution [Lolicon]
+
+题解：贪心。从大到小枚举和填上。基本同balls and bins模型。
+
+[ftiasch wrote on 2016-10-05T11:28:57]
+
+---
+
+H题FFT会爆精度吧？应该怎么解决？
+
+[hccz95 wrote on 2016-10-05T15:17:45]
+
+---
+
+@hccz95#4532 不会爆精度。。实在不行使用高科技 fft 嘛
+
+[ftiasch wrote on 2016-10-05T15:28:57]
+
+---
+
+@ftiasch#4533 看到q神的代码，是取了mm = sqrt(MOD)，把系数分解x[i]=k*mm + res，然后将k和res分别fft
+这就是高科技fft吗。。。
+
+[hccz95 wrote on 2016-10-05T17:06:43]
+
+---
+
+@ftiasch#4533 这题我看见有人用NTT过的， 取了两个合格的素数做NTT之后CRT了一下就直接对1e6+3取模。。。。。。也不知道怎么回事，为什么可以这么搞？
+
+[burglar wrote on 2016-10-06T06:22:25]
+
+---
+
+@Burglar#4538  $NP^2 \le 10^{18}$，拿俩个 $10^9$ 的质数确实可以。 
+
+[sd_invol wrote on 2016-10-06T06:31:37]
+
+---
+
+因为你算出来的最后结果不会超过$10^{18}$次方，但是用double会报精度，找一个大一点的素数可以算出准确的结果，最后再模$1000003$就行了
+
+[hccz95 wrote on 2016-10-06T09:05:42]
+
+---
+
