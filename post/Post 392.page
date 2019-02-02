@@ -1,0 +1,53 @@
+# CodeForces 656D Rosetta Problem
+
+昨晚愚人节的D题。。题目连接：http://codeforces.com/contest/656/problem/D
+当时不知所云。。
+赛后看题解得知
+四个片段 分别对应四种语言，把他们的输出合并起来就是题目要求的东西。
+- Print number (Brainfuck) — http://ideone.com
+- of ones in (Malbolge) — http://www.malbolge.doleczek.pl/
+- base 8 (Piet) — http://www.rapapaing.com/blog/?page_id=6
+- notation of a (Befunge) — http://www.quirkster.com/iano/js/befunge.html
+合起来刚好是Print number of ones in base 8 notation of a 
+其它都好办，直接复制运行就可以得到相应的输出
+第3个是一张图片，，我试着使用图片进行输出。。结果并没有得到base 8.。。
+
+![image /assets/images/0-655-57iALCKP4PSBQGE0.jpg](/assets/images/0-655-57iALCKP4PSBQGE0.jpg)
+
+是姿势不对还是其他原因？
+
+![image /assets/images/0-655-hS5m56OWSVGkvMOf.jpg](/assets/images/0-655-hS5m56OWSVGkvMOf.jpg)
+
+求一个能够得到base 8 的正解。。。
+
+[bbrsd wrote on 2016-04-02T10:22:58]
+
+---
+
+先从cf把png保存到本地, 打开http://www.rapapaing.com/blog/?page_id=6, 点open, 选择本地文件, codel width写5, 提交. 点运行. 发现输出BASE 8.
+
+[yuzuriha_inori wrote on 2016-04-03T13:15:28]
+
+---
+
+@Yuzuriha_Inori#3440 
+确实出现了BASE 8
+还有一个问题。
+如何知道宽度为5呢？
+
+[bbrsd wrote on 2016-04-06T15:35:23]
+
+---
+
+@bbrsd#3445 画图放大镜...
+
+[yuzuriha_inori wrote on 2016-04-07T15:20:56]
+
+---
+
+@bbrsd#3445 gimp
+
+[sevenkplus wrote on 2016-04-09T16:20:06]
+
+---
+
