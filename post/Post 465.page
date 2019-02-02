@@ -1,0 +1,84 @@
+# Codeforces Round #359 题解
+
+# Robbers' watch
+
+如果 $n$ 和 $m$ 的位数之和超过 $7$ 位，根据抽屉原理，必有重复。
+其他情况暴力枚举。
+
+# Kay and Snowflake
+
+参考 [SRM 692 TreeSums](https://async.icpc-camp.org/d/455-single-round-match-692).
+
+# Optimal Point
+
+首先二分答案 $\delta$。假设最优的点是 $(X, Y, Z)$，
+那么对于任意的点 $i$ 有 $$|x_i - X| + |y_i - Y| + |z_i - Z| \leq \delta$$.
+
+因为 
+$$ |x_i - X| = \max\{x_i - X, X - x_i\}, $$
+$$ |y_i - Y| = \max\{y_i - Y, Y - y_i\}, $$
+$$ |z_i - Z| = \max\{z_i - Z, Z - z_i\}. $$
+所以
+$$ |x_i - X| + |y_i - Y| + |z_i - Z| = \max\{(x_i + y_i + z_i) - (X + Y + Z), \ldots\} \leq \delta. $$
+
+总之，
+$$ \max\{x_i + y_i + z_i\} - \delta \leq X + Y + Z \leq \min\{x_i + y_i + z_i\} + \delta, $$
+$$ \max\{-x_i + y_i + z_i\} - \delta \leq -X + Y + Z \leq \min\{-x_i + y_i + z_i\} + \delta, $$
+$$ \max\{x_i + y_i - z_i\} - \delta \leq X + Y - Z \leq \min\{x_i + y_i - z_i\} + \delta, $$
+$$ \max\{-x_i + y_i - z_i\} - \delta \leq -X + Y - Z \leq \min\{-x_i + y_i - z_i\} + \delta. $$
+
+为了解不等式组，令 $S = Y + Z$，我们知道
+$$ \max\{x_i + y_i + z_i\} - \delta -X \leq S \leq \min\{x_i + y_i + z_i\} + \delta - X, $$
+$$ \max\{-x_i + y_i + z_i\} - \delta +X \leq S \leq \min\{-x_i + y_i + z_i\} + \delta + X. $$
+即区间
+$$[\max\{x_i + y_i + z_i\} - \delta -X, \min\{x_i + y_i + z_i\} + \delta - X]$$
+和区间
+$$[\max\{-x_i + y_i + z_i\} - \delta +X, \min\{-x_i + y_i + z_i\} + \delta + X]$$
+有交，解出 $X$ 的范围。
+
+同理，令 $D = Y - Z$，也可以解出 $X$ 的范围。如果 $X$ 的解集不空，任意选一个 $X = X_0$，得到 $S$ 和 $D$ 的范围。
+如果范围内存在一组 $(S, D)$ 同奇偶，那么 $(Y, Z)$ 也有解。
+如果奇偶性出现问题，需要再取一组 $X = X_1$. 
+
+**具体实现时，中间运算的结果可能会超过 64 位整数。** 我的代码小心地避免了溢出。
+
+# Kay and Eternity
+
+首先对 $y$ 离散化。把每个矩形看作在 $x$ 进入，在 $(x+k)$ 退出。
+我们维护 count[y] 表示 $y$ 点现在被覆盖的次数，那么每次事件是把 $[y, y + k)$ 的 count 加一（或者减一）。
+只要在 count 变化的时候，把变化前的值计入答案即可。
+
+# Travelling Through the Snow Queen's Kingdom
+
+分治。solve(L, R) 考虑所有满足 $L \leq l_i \leq r_i \leq R$ 的询问，
+若 $r_i < \frac{L + R}{2}$ 或者
+$\frac{L + R}{2} \leq l_i$ 则递归处理，
+否则有 $l_i < \frac{L + R}{2} \leq r_i$.
+
+如果用 std::bitset 预处理 $\mathrm{from}(e)$ 表示只用 $< \frac{L+R}{2}$ 的边，从边 $e$ 出发能够到达的点的集合，
+和 $\mathrm{to}(e)$ 表示只用 $\geq \frac{L+R}{2}$ 的边，能够到达边 $e$ 的点的集合，
+那么对于询问 $(l_i, r_i, s_i, t_i)$，只要找 $s_i$ 最小的不小于 $l_i$ 的边 $e$，
+和找 $t_i$ 最大的不大于 $r_i$ 的边 $f$，判断 $\mathrm{from}(e)$ 和 $\mathrm{to}(f)$ 的交集是否为空即可。
+
+为了计算 $\mathrm{from}(e)$，我们可以预处理 $\mathrm{next}(e)$ 表示跟 $e$ 相同起点的，权值比 $e$ 大的最小的边。
+那么 $\mathrm{from}(\mathrm{next}(e)) \subseteq \mathrm{from}(e)$.
+假设 $e$ 是从 $u \to v$ 的，好像还需要预处理从 $v$ 出发的，权值比 $e$ 大的最小的边。
+实际上，这条边就是 $\mathrm{next}(\mathrm{back}(e))$. 
+其中 $\mathrm{back}(e)$ 表示 $e$ 的反向边（题目是双向边，还记得吧？）。
+
+---
+
+我的代码 https://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/codeforces/685-codeforces-round-359
+
+
+[ftiasch wrote on 2016-06-25T07:46:24]
+
+---
+
+这个E题还可以这么做……
+询问按l值从大到小排序，dp[i][j]表示从i出发最早什么时候能到j，按照边的标号从大到小加边，每加一条边(u,v)，只会增加从u出发经过v的路径以及从v出发经过u的路径，其他任何路径都不能经过(u,v)，暴力更新dp值即可，然后处理l值等于当前边的标号的询问，复杂度是O(nm)的。
+
+[quailty wrote on 2016-06-25T08:00:15]
+
+---
+
