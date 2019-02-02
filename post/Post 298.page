@@ -1,0 +1,26 @@
+# UVA 13003 Toll Management (III)
+
+https://uva.onlinejudge.org/external/130/13003.pdf
+10000个点和100000边图，每边可以减少和加多少，而不改变从一个点到每个点的最短路径.
+
+似乎只能 bellman ford 检查，但速度太慢.
+
+
+[baodog wrote on 2015-11-23T08:10:44]
+
+---
+
+随机置顶
+
+[xiaojudou wrote on 2016-02-23T01:33:25]
+
+---
+
+设 $\phi_u$ 表示起点到 $u$ 的最短路长度。对于边 $e = \{u, v\}$，假设它的原来长度是 $w_e$，改变量是 $\Delta_e$，那么需要满足的是 $\phi_u + (w_e + \Delta_e) \geq \phi_v$，也就是 $\Delta_e \geq |\phi_v - \phi_u| - w_e$，这就得到了每条边的下界。
+
+至于增加的话，对于某个 $v$，是需要存在一个 $e'$ 使得 $\phi_u + w_{e'} = \phi_v$ 的。所以对于边 $e = \{u, v\}$ 来说，如果满足前面式子的 $e'$ 唯一，而且就是 $e$ 的话，那么它一点都不能加。否则随便加多少都行。
+
+[ftiasch wrote on 2016-02-23T04:32:32]
+
+---
+
