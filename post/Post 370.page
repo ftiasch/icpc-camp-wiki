@@ -1,0 +1,14 @@
+# 如何判断任意多边形相似呢？
+
+HDU2826  http://acm.hdu.edu.cn/showproblem.php?pid=2826
+
+[alphaway wrote on 2016-03-08T12:34:19]
+
+---
+
+多边形相邻两条边的比值啊, 相邻两边的夹角提取出来, 然后就是做个匹配咯.
+
+[zimpha wrote on 2016-03-08T12:43:41]
+
+---
+
