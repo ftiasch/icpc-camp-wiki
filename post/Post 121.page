@@ -1,0 +1,59 @@
+# 2014 西安赛区 F Color
+
+https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=5052
+大家有什么好的做法吗
+
+[pojianshi wrote on 2015-10-01T11:26:18]
+
+---
+
+这么大的一个论坛……居然没人会做这题吗 = =
+
+[ftiasch wrote on 2015-10-01T14:22:21]
+
+---
+
+@ftiasch#1205 我记得就是个直接的二项式反演。。。？
+
+[zjyjer wrote on 2015-10-01T14:50:47]
+
+---
+
+@zjyjer#1212 窝只是诧异于没人答 = =
+
+[ftiasch wrote on 2015-10-01T14:55:58]
+
+---
+
+@ftiasch#1205 异步io，不要着急！
+
+[xiaojudou wrote on 2015-10-01T14:56:25]
+
+---
+
+$$ g(n) = \sum_{i=1}^n \binom{n}{k} \ f(k) $$
+
+$$ f(n) = \sum_{i=1}^n (-1)^{n-k} \binom{n}{k} \ g(k) $$
+
+假定输入是 $N, M, K$
+裸上二次反演，上面的 $g(n)$ 表示用给定 $n$ 种颜色去染所有格子的方案数（不要求 $n$ 个颜色都用上），这个容易求，就是 $n  (n - 1)^{N-1} $
+
+$f(n)$ 表示必须用 $n$ 种颜色去染所有格子，然后直接算 $f(K)$ 出来，但是这个还不是答案，还要乘以组合数 $\dbinom{M}{K} $，因为还没指定是哪 $k$ 种颜色。
+
+[mayf3 wrote on 2015-10-01T16:17:22]
+
+---
+
+出题人在这里。。。
+这题是我拍脑袋拍出来的。。。
+
+[yangyue wrote on 2015-10-01T17:02:02]
+
+---
+
+@yangyue#1225 拍得好，窝认输。
+
+[ftiasch wrote on 2015-10-01T17:10:52]
+
+---
+
