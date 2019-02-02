@@ -1,0 +1,139 @@
+# Chocolate 2 @ HackerRank
+
+Problem Statement
+
+This challenge is sponsored by the IEEE University Partnership Program.
+
+Let us consider a rectangular bar of chocolate containing n times d chunks of chocolate. Each chunk can be uniquely identified by a pair of integers (i1, i2), where each coordinate i1 indentifies the row of the chunk and i2 identifies the column. i1 can take values between 1 and n, inclusive, and i2 can take values between 1 and d, inclusive. The chunk at the top left corner of the bar is identified by (1,1).
+
+One wants to eat the whole bar using a very elaborate method. The principle is that when the chunk with coordinates (i1,i2) is selected to be eaten, all remaining chunks with coordinates (j1, j2) such that j1 >= i1 and j2 >= i2 are eaten at the same time. The question we ask is:
+
+Given n and d, how many different ways of eating the whole bar are there?
+
+Note: The timeouts have been increased by approximately 50% for this problem.
+
+Input Format
+
+The first line of input contains the integer n. The second line of input contains the integer d. Note that 1 <= n, d <= 100. Furthermore, n and d are chosen such that the maximum number of ways of eating the whole bar will never exceed 10^{138}.
+
+Output Format
+
+The output contains the answer followed by a newline character.
+
+Input (stdin)
+2
+2
+Expected Output
+10
+
+Input (stdin)
+3
+5
+Expected Output
+1036972
+
+Input (stdin)
+4
+4
+Expected Output
+4418360
+
+[safarisoul wrote on 2015-11-11T04:54:44]
+
+---
+
+[link](https://ieee.hackerrank.com/contests/ieeextreme9/challenges/chocolate-2)
+
+SOS
+
+[safarisoul wrote on 2015-11-11T05:25:45]
+
+---
+
+读不懂题诶。。。
+
+[ftiasch wrote on 2015-11-11T05:26:42]
+
+---
+
+方格子巧克力n行d列，从右下角往左上角吃。
+每次吃的时候，吃的那一格，以及其右边，下边，右下边的都会被吃掉。
+最后一定会吃完。
+给定行列数，问总共有多少种吃法？
+n,d < 100
+吃法数<10^138
+
+[safarisoul wrote on 2015-11-11T05:38:00]
+
+---
+
+time limit:
+Java : 6s
+c++: 3s
+
+[safarisoul wrote on 2015-11-11T05:38:49]
+
+---
+
+求原题地址，貌似HackerRank上面没有搜索到。自行理解的题意跟样例对不上。
+
+[litaoye wrote on 2015-11-11T08:22:12]
+
+---
+
+@litaoye#2532 题意是这样的, 给出一个$n \times d$的格子, 一开始没有一个格子被mark, 每次你可以选择一个没有被mark的格子$(i,j)$, 把$(i,j)$和右下角$(n,d)$构成的子矩形都mark一下(格子可以被重复mark). 问有多少种方法使得所有格子都被mark.
+
+[zimpha wrote on 2015-11-11T09:43:14]
+
+---
+
+@litaoye#2532 https://ieee.hackerrank.com/contests/ieeextreme9/challenges/chocolate-2
+
+[safarisoul wrote on 2015-11-11T10:28:53]
+
+---
+
+感谢ls两位的讲解，不知道hackerrank还有这样一个平台，这题目前还不会，只有一个容斥+DP的思路，细节没想清楚，复杂度没想清楚。大概就是说对于任何一个状态的方案数，可以按照其边缘划分为多个矩形来dp，但有重复计算，所以需要考虑容斥。但状态数量指数级，因此状态转移复杂度太高，因此还需要考虑最终求和的时候，每个矩形的状态被计算了多少次。
+
+思路大概是这个方向，先扔出来，不知道对大家有没有帮助。
+
+@zimpha#2534 
+@safarisoul#2535 
+
+[litaoye wrote on 2015-11-12T04:03:39]
+
+---
+
+@litaoye#2547 我感觉是某种杨氏图表计数……然而也不会数。
+
+[ftiasch wrote on 2015-11-12T05:14:17]
+
+---
+
+@Varona#2548 我感觉是某种打表然后oeis。
+
+[sevenkplus wrote on 2015-11-12T19:44:59]
+
+---
+
+@sevenkplus#2554 哦…oeis不太对
+
+[sevenkplus wrote on 2015-11-12T19:47:19]
+
+---
+
+仔细一看，有一个非常强的条件
+[quote] Furthermore, n and d are chosen such that the maximum number of ways of eating the whole bar will never exceed 10^138.[/quote]
+
+所以这题大概就是对于输入数据，状态数不会太大？
+
+[sevenkplus wrote on 2015-11-12T19:53:56]
+
+---
+
+@sevenkplus#2556 完全有可能，这个感觉也就不到20*20的大小。可本地暴力打表。然后对于m,n一方比较小的情况，搞个暴力dp，在线算。
+
+[litaoye wrote on 2015-11-13T03:50:08]
+
+---
+
