@@ -1,0 +1,19 @@
+# Changchun 2015 I Chess Puzzle
+
+链接：http://acm.hdu.edu.cn/showproblem.php?pid=5535
+没有最小字典序会做了，最小字典序怎么搞啊 QAQ
+
+[asdfghj wrote on 2016-09-17T02:37:52]
+
+---
+
+二分染色后将一边的点颜色视为取反，算反面求最小割，贪心确定每个点属于割的哪一边并产生影响 
+
+具体大概是从源点正着bfs到的属于S集，从汇点逆着bfs到的属于T集，接下来依次枚举每个点，如果这个点还不知道属于哪个集，也就是可以属于任何一个集，就根据颜色贪心看把它放到哪个集里，同时以它为端点产生的“非匹配边-匹配边-...-非匹配边”增广路的端点也确定了集合，根据情况bfs一下即可。
+
+[我的代码](https://github.com/tangjz/acm-icpc/blob/master/uvalive/7191.cpp)
+
+[skywalkert wrote on 2016-09-17T16:58:24]
+
+---
+
