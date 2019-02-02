@@ -1,0 +1,19 @@
+# 665F的一种解法的复杂度如何分析
+
+除了官方题解外 adkroxx 也在讨论区提供了一种思路 然后声称复杂度为$O(n^{3/4})$
+然而这种思路的复杂度是如何分析出来的呢
+http://codeforces.com/blog/entry/44466#comment-316932
+
+
+[sagitta wrote on 2016-09-26T00:55:41]
+
+---
+
+http://codeforces.com/blog/entry/44466?#comment-317276
+
+just for ref
+
+[ftiasch wrote on 2016-09-27T01:36:30]
+
+---
+
