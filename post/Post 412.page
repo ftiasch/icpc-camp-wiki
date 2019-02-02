@@ -1,0 +1,20 @@
+# 一个我也不知道从哪里来的题目
+
+给出一个 $n$ ($n \leq 10^4$) 个点的有向无环图，每个点有一个点权 $v$ ($v \leq 10^4$)，一共有 $m$ ($m \leq 2 \times 10^4$) 次询问，每次询问从 $\mathrm{start}$ 出发到 $\mathrm{end}$ 可以经过的点的点权和
+
+[QAQ wrote on 2016-05-02T10:08:03]
+
+---
+
+把点 $10$ 个一组分成 $1000$ 组，预处理 $s(i, mask)$ 表示第 $i$ 组中取了 $\mathrm{mask}$ 这些点的总和，以及 $\mathrm{from}(v)$ 和 $\mathrm{to}(v)$ 表示 $v$ 能到（能到 $v$）的点的 std::bitset 集合。
+
+询问的时候，先用 $\mathrm{from}(\mathrm{start}) \cap \mathrm{to}(\mathrm{end})$ 得到点，然后再询问 $1000$ 次 $s$ 得到结果。
+
+复杂度看上去刚刚好（？）。
+
+至于出处，我猜是今年冬令营策爷的营员交流？
+
+[ftiasch wrote on 2016-05-02T11:46:01]
+
+---
+
