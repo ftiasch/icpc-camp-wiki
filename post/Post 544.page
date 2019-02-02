@@ -1,0 +1,154 @@
+# 2016 湖南省赛 K 盖房子
+
+求助：http://acm.csu.edu.cn/OnlineJudge/contest.php?cid=2122
+题意：给定01矩阵，要求选两个全0的不相交矩形，问方案。
+顺便问下这场比赛有没有题解。。
+
+[czk wrote on 2016-09-09T08:01:36]
+
+---
+
+没有题解。。
+
+```
+#include <cassert>
+#include <cstdio>
+#include <vector>
+
+const int MOD = 1e9 + 7;
+
+void update(int& x, int a)
+{
+    x += a;
+    if (x >= MOD) {
+        x -= MOD;
+    }
+}
+
+template<typename T>
+std::vector<std::vector<T> > rotate(const std::vector<std::vector<T> >& a)
+{
+    int n = a.size();
+    int m = a.at(0).size();
+    std::vector<std::vector<T> > result(m, std::vector<T>(n));
+    for (int i = 0; i < n; ++ i) {
+        for (int j = 0; j < m; ++ j) {
+            result.at(m - 1 - j).at(i) = a.at(i).at(j);
+        }
+    }
+    return result;
+}
+
+bool is_valid(char c)
+{
+    return c == '0';
+}
+
+std::vector<std::vector<int> > process(const std::vector<std::vector<char> >& board)
+{
+    int n = board.size();
+    int m = board.at(0).size();
+    std::vector<std::vector<int> > result(n, std::vector<int>(m));
+    std::vector<int> up(m + 1);
+    up.at(0) = -1;
+    for (int i = 0; i < n; ++ i) {
+        for (int j = 1; j <= m; ++ j) {
+            up.at(j) ++;
+            if (!is_valid(board.at(i).at(j - 1))) {
+                up.at(j) = 0;
+            }
+        }
+        std::vector<int> stack;
+        stack.push_back(0);
+        int sum = 0;
+        for (int j = 1; j <= m; ++ j) {
+            while (up.at(stack.back()) >= up.at(j)) {
+                update(sum, MOD - (long long)(stack.back() - stack.at(static_cast<int>(stack.size()) - 2)) * up.at(stack.back()) % MOD);
+                stack.pop_back();
+            }
+            update(sum, (long long)(j - stack.back()) * up.at(j) % MOD);
+            stack.push_back(j);
+            result.at(i).at(j - 1) = sum;
+        }
+    }
+    return result;
+}
+
+int main()
+{
+    int n, m;
+    while (scanf("%d%d", &n, &m) == 2) {
+        std::vector<std::vector<char> > board(n, std::vector<char>(m));
+        for (int i = 0; i < n; ++ i) {
+            std::vector<char> buffer(m + 1);
+            scanf("%s", buffer.data());
+            buffer.resize(m);
+            board[i] = buffer;
+        }
+        int result = 0;
+        for (int _ = 0; _ < 2; ++ _) {
+            std::vector<std::vector<int> > count[2];
+            for (int i = 0; i < 2; ++ i) {
+                count[i] = process(board);
+                board = rotate(rotate(board));
+            }
+            std::vector<std::vector<int> > sum(n, std::vector<int>(m));
+            for (int i = 0; i < n; ++ i) {
+                for (int j = 0; j < m; ++ j) {
+                    int& ref = sum.at(i).at(j);
+                    ref = count[0].at(i).at(j);
+                    if (i) {
+                        update(ref, sum.at(i - 1).at(j));
+                    }
+                    if (j) {
+                        update(ref, sum.at(i).at(j - 1));
+                    }
+                    if (i && j) {
+                        update(ref, MOD - sum.at(i - 1).at(j - 1));
+                    }
+                }
+            }
+            for (int i = 0; i < n - 1; ++ i) {
+                for (int j = 0; j < m; ++ j) {
+                    update(result, (long long)sum.at(i).at(m - 1) * count[1].at(n - 2 - i).at(m - 1 - j) % MOD);
+                    if (j < m - 1) {
+                        update(result, MOD - (long long)sum.at(i).at(j) * count[1].at(n - 2 - i).at(m - 2 - j) % MOD);
+                    }
+                }
+            }
+            board = rotate(board);
+            std::swap(n, m);
+        }
+        printf("%d\n", result);
+    }
+}
+```
+
+[ftiasch wrote on 2016-09-09T08:22:04]
+
+---
+
+不过说起来 @quailty 好像写了[题解](https://wiki-saltyfish.icpc-camp.org/2016%E5%B9%B4%E6%B9%96%E5%8D%97%E7%9C%81%E7%AC%AC%E5%8D%81%E4%BA%8C%E5%B1%8A%E5%A4%A7%E5%AD%A6%E7%94%9F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B)
+
+[ftiasch wrote on 2016-09-09T11:15:50]
+
+---
+
+好的。。大概懂了。。
+
+[czk wrote on 2016-09-14T07:42:28]
+
+---
+
+诶这两题是不是撞车了 http://www.luogu.org/problem/show?pid=U4577
+
+[samzhang wrote on 2016-09-15T04:24:28]
+
+---
+
+@samzhang#4271 看上去是噢。。。
+
+[ftiasch wrote on 2016-09-15T04:27:17]
+
+---
+
