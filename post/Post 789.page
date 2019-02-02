@@ -1,0 +1,12 @@
+# BZOJ 2334 [SCOI2011]镜像拆分
+
+[题目链接](http://www.lydsy.com/JudgeOnline/problem.php?id=2334)
+
+题目大意：对于任意正整数 $x$ 定义 $\mathrm{rev}_K(x)$ 是将 $x$ 的 $K$ 进制表示（不含前导 0）翻转后得到的数字。给定 $K, A, B$，对于 $x = A, A + 1, \cdots, B$ 统计有多少 $y$ 满足 $x = y + \mathrm{rev}_K(y)$，输出方案数之和对 $20110521$ 取模的值。由于 $A, B$ 可能很大，输入将给出它们的 $K$ 进制表示，其中 $A$ 的长度为 $n$，$B$ 的长度为 $m$。
+
+数据范围：$2 \leq K \leq 10^5, 1 \leq n, m \leq 10^5$
+
+[skywalkert wrote on 2018-03-09T19:37:52]
+
+---
+
