@@ -1,0 +1,68 @@
+# ICPCCamp::Async 和 ICPCCamp::Chat  注册方法
+
+hi 大家，
+
+最近 ICPCCamp 有了新项目 https://chat.icpc-camp.org，是一个在线的聊天平台。
+相比 QQ 的主要优势是原生支持发送高亮代码、LaTeX 公式。同时也有 iOS 和 Android 客户端。
+
+因为一些技术上的原因，Async 和 Chat 的注册方法如下：
+
+1. ** 对于在 Async 上拥有账号的同学 **，使用相同的用户名、密码即可登录 https://chat.icpc-camp.org；
+
+2. ** 对于没有账号的同学 **，可以前往 http://chat.icpc-camp.org 注册，验证邮箱约 10 min 后，使用相同的用户名和密码即可在 https://async.icpc-camp.org 登陆。** 不要使用 QQ 邮箱，你几乎没有机会验证成功。**
+
+还有一点，如果在 async/chat 上修改了密码，那么另一侧不会随之改变。
+
+---
+
+总而言之，欢迎大家使用！
+
+[ftiasch wrote on 2016-06-05T09:07:52]
+
+---
+
+似乎只支持邮箱登录？
+
+[foreverhighness wrote on 2016-06-08T10:03:26]
+
+---
+
+android 客戶端在哪裏啊？
+
+[prime21 wrote on 2016-06-08T14:04:13]
+
+---
+
+@prme21#3758 https://rocket.chat/
+
+不过现在有点技术性问题= =暂时登陆不了
+
+[ftiasch wrote on 2016-06-08T15:21:21]
+
+---
+
+chat用的是katex不是mathjax啊……？
+
+[SCaffrey wrote on 2016-06-25T01:05:13]
+
+---
+
+@SCaffrey#3837 对
+
+[ftiasch wrote on 2016-06-25T02:17:05]
+
+---
+
+QQ邮箱验证成功 学校教育邮箱收不到验证邮件..
+绑定的手机不能解绑嘛？
+
+[RectsusfD wrote on 2017-11-15T03:46:35]
+
+---
+
+@RectsusfD#5492 好像没写解绑定的功能（
+
+[ftiasch wrote on 2017-11-15T08:55:37]
+
+---
+
