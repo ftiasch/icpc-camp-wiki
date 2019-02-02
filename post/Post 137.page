@@ -1,0 +1,187 @@
+# SJTU ACM 常用黑话
+
+考虑到 talk 上活跃着一些 SJTU 的同学，但是他们经常说一些 confusing 的词汇。窝决定记录一下，方 (jiu) 便 (wei) 交 (gao) 流 (xiao)。
+
+# 人名类
+
+培根 = @AngryBacon 
+萝莉控 = @TankEngineer
+
+# 算法类
+
+单挑性 = 单调性
+单挑队列 = 单调队列
+斯大林数 = 斯特林数
+初代斯大林数 = 第一类斯特林数
+次世代斯大林数 = 第二类斯特林数
+小学生容斥 = 容斥
+打牌 = dp
+拉过来日 = 拉格朗日
+马拉车 = Manacher
+旋 xuan4 转 zhuan4 卡 qia3 壳 qiao4
+重 zhong 积分
+
+# 错觉类（鸣谢 @TankEngineer ）
+
+* 「这题给我5分钟！」
+* 「感觉能踩一队！」
+* 「这题他们肯定是暴力过的！」
+* 「板子怎么可能抄错！」
+* 「改了这个地方就能 AC ！」
+* 「过了这题就不会被女队踩了！」
+* 「我感觉这题样例很强！」
+
+欢迎大家补充。
+
+[ftiasch wrote on 2015-10-03T12:54:16]
+
+---
+
+请问"蒯"是一个怎样的动词呢？
+
+[sd_invol wrote on 2015-10-03T13:17:04]
+
+---
+
+@Sd_Invol#1368 这可能需要一位弗兰省的同学来回答……
+
+我理解中是「~~强行~~拿」的意思。
+
+[ftiasch wrote on 2015-10-03T13:18:23]
+
+---
+
+北方用来形容用勺子挖(其中一部分)的动作
+
+[xiaojudou wrote on 2015-10-03T13:51:52]
+
+---
+
+感觉还有以小学生开头的各种 如小学生容斥
+
+[lostRating wrote on 2015-10-03T22:44:13]
+
+---
+
+@edly#1391 你们小学生还擅长点什么吗？
+
+[ftiasch wrote on 2015-10-04T01:05:56]
+
+---
+
+@Varona#1392 小学生系列的WA,RE,TLE
+
+[lostRating wrote on 2015-10-04T03:38:15]
+
+---
+
+@edly#1396 真菜
+
+[ftiasch wrote on 2015-10-04T09:23:49]
+
+---
+
+多重（zhong）边算不算？
+
+[ZJiaQ wrote on 2015-10-04T10:32:14]
+
+---
+
+@ZJiaQ#1409 写出来没有歧义嘛……
+
+[ftiasch wrote on 2015-10-04T11:05:00]
+
+---
+
+请问"±1"是什么意思呢
+
+[sd_invol wrote on 2015-10-04T11:07:17]
+
+---
+
+@Sd_Invol#1416 肯定。
+
+比如说，$[l, r]$ 的长度是 $r - l + 1$，但是 $[l, r)$ 的长度是 $(r - l)$。在无关大局的时候，我们会随便算算。然后说，这里有个 $\pm 1$ 的问题。
+
+[ftiasch wrote on 2015-10-04T11:25:01]
+
+---
+
+@Sd_Invol#1368 拼音:kuai. 本义copy, 强行拿来. 本来只有读音.因为找不到这个字,
+
+[VincentLDL wrote on 2015-10-04T11:58:25]
+
+---
+
+@Varona#1367 怎么能没有xuan4zhuan3qia3qiao4呢？
+
+[TankEngineer wrote on 2015-10-04T13:23:33]
+
+---
+
+@TankEngineer#1420 已更。
+
+[ftiasch wrote on 2015-10-04T14:09:28]
+
+---
+
+$10\^5$杀手
+
+[sd_invol wrote on 2015-10-04T14:36:08]
+
+---
+
+@Sd_Invol#1434 窝正在回忆窝是如何修好这个公式的 = =
+
+[ftiasch wrote on 2015-10-04T14:36:39]
+
+---
+
+@Varona#1435 wow，我发现我有like的权限啦
+
+[sd_invol wrote on 2015-10-04T14:37:05]
+
+---
+
+@Sd_Invol#1436 因为升级了一下论坛版本，当然现在公式就是坏的 = =
+
+[ftiasch wrote on 2015-10-04T14:40:20]
+
+---
+
+@Sd_Invol#1436 可以这么搞10\\\^5, markdown似乎把\^转义了
+
+[zimpha wrote on 2015-10-04T14:40:38]
+
+---
+
+@zimpha#1438 我之前修复了这个问题……但是这样好麻烦啊。
+
+[ftiasch wrote on 2015-10-04T14:41:43]
+
+---
+
+@zimpha#1438 你给了我一个偷懒的方法，我决心不修了 = =
+
+[ftiasch wrote on 2015-10-04T14:59:50]
+
+---
+
+打牌= =
+
+[quailty wrote on 2015-10-04T16:35:13]
+
+---
+
+@Varona#1367 马拉车=Manacher
+
+[TankEngineer wrote on 2015-10-05T01:57:39]
+
+---
+
+@Varona#1367 您曾经用过的：拉过来日乘数法
+
+[TankEngineer wrote on 2015-10-08T11:30:07]
+
+---
+
