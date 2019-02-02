@@ -1,0 +1,24 @@
+# ZOJ 3940 Modulo Query
+
+定义 $f(1, x) = x\ \mathrm{mod} A_1, f(i, x) = f(i - 1, x)\ \mathrm{mod} A_i$ for $2 \leq i \leq N$.
+$A$ 是一个给定的长度为 $N$ 的正整数数组，其中 $x$ 的范围 $0 \leq x \leq M$，
+然后给你 $Q$ 个询问，每一个询问给你一个 $Y$，请问满足$f(n, x) = Y$ 的 $X$ 有多少个 $0 \leq X \leq M$.
+$N \leq 10^5, Q \leq 10^5, 1 \leq A_i \leq 10^9, 0 \leq Y \leq 10^9, 0 \leq M \leq 10^9$
+
+[woshi_sb wrote on 2016-04-23T09:50:50]
+
+---
+
+悄悄地 AC 了一下 = = http://git.icpc-camp.org/ftiasch/acm-icpc/blob/master/zoj/p3940.cpp
+
+大意就是维护一个集合 $S$，集合的元素是一些形如 $(m_i c_i)$ 二元组，表示 $[0, m_i)$ 里面每个数的重数都是 $c_i$。
+初始的时候 $S = \{(M + 1, 1)\}$. 
+
+考虑当 $S\ \mathrm{mod}\ a$ 的时候会发生什么，对于 $m_i < a$，显然没有变化。对于 $m_i \geq a$ 的，我们有 $m_i\ \mathrm{mod}\ a \leq \frac{m_i}{2}$。所以，我们每次只要暴力把 $\geq a$ 的段折起来，这些段的长度变成了一半，然后可能会加入一个长度为 $a$ 的新段。
+
+一共就加了 $n+1$ 个新段，每个段只能对折 $\log(M)$ 次，加上 set 复杂度就是 $O(n \log(M)\log(n))$.  看着有点大，但是写了一下居然就 AC 了……
+
+[ftiasch wrote on 2016-04-23T13:31:53]
+
+---
+
