@@ -1,0 +1,105 @@
+# Codeforces 664D
+
+感觉就是酱紫啊， 暴力枚举。选一个点跑初始0或1使全部变成0或1，如果遇到环时冲突就不行。
+WA7，是不是有什么没考虑啊，我有个同学也WA这 - -
+```cpp
+const ll mod = 1000000007;
+const int maxn = 100010;
+
+struct Edge {
+    int to;
+    char col;
+};
+
+int n, m;
+
+int vis[maxn];
+vector<Edge> edge[maxn];
+bool flag[2];
+
+int fn = 0;
+
+int rev(int a) {
+    if(a == 1)return 2;
+    if(a == 2)return 1;
+}
+
+bool  dfs(char tar, int u, int par, int pre) {
+    vis[u] = pre;
+    for(int i = 0; i < edge[u].size(); i++) {
+        int &v = edge[u][i].to;
+        char &col = edge[u][i].col;
+        if(vis[v] && v != par) {
+            if((col == tar && vis[v] != pre) || (col != tar && vis[v] == pre)) {
+                return false;
+            }
+        }
+        if(!vis[v] && dfs(tar, v, u, col == tar ? pre : rev(pre)) == false) {
+            return false;
+        }
+    }
+    return true;
+}
+
+vector<int> go(char tar) {
+    memset(vis, 0, sizeof(vis));
+    for(int i = 1; i <= n; i++) {
+        if(!vis[i] && dfs(tar, i, -1, 1) == false) {
+            flag[fn] = false;
+            break;
+        }
+    }
+    vector<int> q, qq;
+    if(flag[fn]) {
+        for(int i = 1; i <= n; i++) {
+            if(vis[i] == 1)q.push_back(i);
+            else if(vis[i] == 2)qq.push_back(i);
+        }
+    }
+    fn++;
+    return q.size() < qq.size() ? q : qq;
+}
+
+void solve() {
+    memset(flag, 1, sizeof(flag));
+    scanf("%d%d", &n, &m);
+    for(int i = 0; i < m; i++) {
+        int u, v;
+        char c;
+        scanf("%d%d %c", &u, &v, &c);
+        edge[u].push_back(Edge{v, c});
+        edge[v].push_back(Edge{u, c});
+    }
+    vector<int> k1 = go('R');
+    vector<int> k2 = go('B');
+    vector<int> ans;
+    if(!flag[0] && !flag[1] ) {
+        puts("-1");
+        return ;
+    } else if(flag[0] && flag[1]) {
+        ans = k1.size() < k2.size() ? k1 : k2;
+    } else if(flag[0] && !flag[1]) {
+        ans = k1;
+    } else {
+        ans = k2;
+    }
+    printf("%d\n", ans.size() );
+    for(int i = 0; i < ans.size(); i++) {
+        printf("%d ", ans[i] );
+    }
+    puts("");
+
+}
+```
+
+
+[tak_fate wrote on 2017-03-24T13:10:14]
+
+---
+
+很难gen数据么？
+
+[sevenkplus wrote on 2017-03-24T14:58:59]
+
+---
+
