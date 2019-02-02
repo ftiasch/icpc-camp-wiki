@@ -1,0 +1,30 @@
+# Andrew Stankevich's Contest 46 H Heavy-Light Decomposition
+
+在叉姐某篇ppt里看到了这个题，想了好久没有好思路。。。QwQ求一下正确姿势
+
+[winoros wrote on 2015-09-14T12:41:22]
+
+---
+
+首先，对于每个点的切换可以单独考虑。
+
+其次，假设子树大小分别是 $a$ 和 $b$，只要考虑前 $2 \min(a, b) + 1$ 个元素就行。所以就是启发式合并的复杂度。
+
+[ftiasch wrote on 2015-09-14T12:59:40]
+
+---
+
+直接用动态树倒着模拟也可以，问题在于左右儿子size相同时没办法确定谁是heavy的，那么就先不确定，等到日后可以确定的时候再来。
+
+[AngryBacon wrote on 2015-09-14T20:57:34]
+
+---
+
+@AngryBacon#197 
+
+@ftiasch#195  QwQ感谢叉姐和培根爷！
+
+[winoros wrote on 2015-09-15T04:00:10]
+
+---
+
