@@ -1,0 +1,84 @@
+# hihocoder 1282
+
+题目链接：
+http://hihocoder.com/problemset/problem/1282
+题目大意：
+有一个长度为n的序列A，同时还有一个长度为n的数组B，最开始B的所有值都是0，接下来有m次操作，操作有四种：
+
+1.给定l,r,x，把区间[l,r]中的每一个数Ai(l <= i <= r)变成max(Ai,x)
+
+2.给定l,r,x，把区间[l,r]中的每一个数Ai(l <= i <= r)变成min(Ai,x)
+
+3.给定l,r,x，把区间[l,r]中的数都加上x。
+
+4.给定l,r，询问B数组的区间和。
+
+在每次操作后，对于每一个i，如果Ai发生了变化（即权值和修改前不同），那么就把Bi加上一，否则Bi的值不变。
+
+
+是一个非常麻烦的线段树题， 我按照题解所说的参考WC2016上的营员交流《segment tree beats》的方法，有困难的主要是min操作和max操作， 大概做法
+：对于min操作 维护区间最大值maxNum， 次大值maxSe， 最大值个数maxT，以及B的和sum 在打上min标记x的时候，当
+1、 maxNum ≤ x时直接返回
+2、maxSe ＜x ＜ maxNum 时直接sum加上minT ， 然后maxNum = x， 最后返回
+3、其他情况就DFS此节点的左右子节点，直到出现上述两种情况的时候才返回
+
+针对上述2操作，我在pushDown的时候的做法是如果其左右子节点更新完maxNum之后，如果其maxNum和根节点的maxNum值相等那么它的sum就加上他自己的maxT，
+
+之后就不停的WA， 查了一晚上，发现我这样做的话更新完之后根节点的maxT的值不等于其左右子节点中maxNum和根节点maxNum相等的maxT的和。 
+
+然而我并没有像明白问题出在哪里了， 如果我的思路有问题希望各位帮忙提供一个正确的思路，thx
+如果思路对的话，希望有大神提供一下pushDown函数和dfs函数的写法（我的代码又臭又长，就不献丑了。。）
+
+[burglar wrote on 2016-03-22T15:29:32]
+
+---
+
+可能是pushdown的时候出现了一点偏差？可能在根节点上打了一个标记然后pushdown到孩子之后孩子的信息没有更新对？
+这道线段树题的细节的确非常多QAQ
+
+[jiry_2 wrote on 2016-03-23T10:42:21]
+
+---
+
+@jiry_2#3394 额 我今天又想了一天， 我用以前的陈题测试了一下 我的minNum 和 maxNum 没有问题
+
+加法操作应该也没有问题
+
+改完之后还是minT的值不对。。
+
+我pushDown的时候 如果根节点显示有min操作留下的lazy的话， 下面左右节点如果做节点的maxNum大于等于右节点maxNum的话左节点sum加上根节点的lazy*自己的minT， 右节点同理；
+ 对于dfs到达maxSe ＜x ＜ maxNum 我会更新minNum， maxNum， 以及maxSe
+
+请问还需要注意什么么。。。。。
+
+[burglar wrote on 2016-03-23T11:25:21]
+
+---
+
+@jiry_2#3394  顺便说下 我的minT的更改只会在pushUp函数中间
+
+[burglar wrote on 2016-03-23T11:29:55]
+
+---
+
+@Burglar#3396 QAQ细节这种我一时也说不清楚..我把这次hiho的标程数据打了个包共享了一下..您可以看一下我的代码（虽然可读性很差）
+http://pan.baidu.com/s/1nu19FT3
+
+[jiry_2 wrote on 2016-03-23T13:14:13]
+
+---
+
+@jiry_2#3397 我刚才又搞了一下  把根节点minT和左右子节点minT不相匹配的问题解决了。。 然并卵。。。
+
+
+
+[burglar wrote on 2016-03-23T13:17:02]
+
+---
+
+@jiry_2#3397  谢啦 有代码好搞多啦。。。。。 再这样下去 我感觉我要把这题的通过率刷爆了
+
+[burglar wrote on 2016-03-23T13:19:03]
+
+---
+
