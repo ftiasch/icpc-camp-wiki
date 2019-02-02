@@ -1,0 +1,31 @@
+# Topcoder SRM 675 Div 1 Level 3 BichromeSky2
+
+https://community.topcoder.com/stat?c=problem_statement&pm=14093&rd=16625
+
+平面上有n个点，每个点有prob_i/1000的概率是红色的，否则就是蓝色的。问蓝色的点的凸包与红色的点的凸包交的面积的期望？
+n<=50，坐标范围1000，没有重点，没有三点共线
+
+[splinter wrote on 2016-02-03T01:52:44]
+
+---
+
+终于可以回答了！
+
+---
+
+枚举 $i \to j$ 两个红点，考虑 $i \to j$ 作为凸包交上的边时对答案的贡献。
+
+首先， $i \to j$ 右手侧的点一定都是蓝点。我们把蓝点的凸包 $B$ 求出来。
+
+因为 $i \to j$ 在交上面，所以 $i \to j$ 的左手侧一定有蓝点。虽然我们不知道左侧蓝点凸包的样子，但是我们仍然可以枚举左侧蓝点凸包和凸包 $B$ 的两条切线 $x \to x'$ 和 $y \to y'$（其中 $x', y' \in B$） 。这里枚举的方法就是枚举 $x$，然后找 $x$ 到 $B$ 的切线。$y$ 也同理。
+
+枚举了切线之后，我们就知道 $x \to x'$ 右侧 和 $y \to y'$ 左侧的点都是红点。而 $i \to j$ 的具体贡献就应该跟四边形 $x x' y' y$ 取一个交。
+
+暴力实现以上的想法大概是 $O(n^5)$，但是可以通过预处理一些极角顺序变成 $O(n^4)$。
+
+[我的代码在这里](http://git.icpc-camp.org/ftiasch/acm-icpc/blob/master/topcoder/single-round-match/single-round-match-675/BichromeSky2.cpp)。
+
+[ftiasch wrote on 2016-02-12T06:00:12]
+
+---
+
