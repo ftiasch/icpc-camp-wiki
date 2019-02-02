@@ -1,0 +1,34 @@
+# 2015 沈阳赛区网络赛 A Traversal
+
+占坑
+
+[xiaojudou wrote on 2015-09-19T08:54:40]
+
+---
+
+题目其实是求 $n$ 个点的，度是 $2$ 的生成子图的数量。
+
+设 $f(i, mask)$ 表示考虑了前 $i$ 个点，其中 $[i - p - 2, i - 1]$ 的度序列是 $mask$，很明显，$mask$ 是一个 $(p + 2)$ 位的 $3$ 进制数。转移就是枚举 $i$ 往前面哪些点连边，复杂度是 $100 \times 3^{11} \times 3^2$。
+
+[ftiasch wrote on 2015-09-19T09:28:29]
+
+---
+
+Lolicon说他写了60行……
+
+[TankEngineer wrote on 2015-09-19T11:09:49]
+
+---
+
+@TankEngineer#354 但是萝莉控没有 AC ！
+
+[ftiasch wrote on 2015-09-19T11:45:36]
+
+---
+
+他赛后AC了……
+
+[TankEngineer wrote on 2015-09-19T12:25:47]
+
+---
+
