@@ -1,0 +1,408 @@
+# 2016 ICPC 沈阳网络赛题解
+
+**免责声明：以下是 ICPCCamp 团队所写的非官方题解，署名代表题解作者，非出题人，谢谢！**
+感谢大家的帮助和支持。欢迎大家回帖交流。:)
+
+---
+
+~~过题全靠逛 clarification~~
+
+## 1001 Resident Evil [by zimpha]
+
+题意: 有一个$n \times n$的格子, 有50种怪物. 有$m$个操作, 每次操作会往一个矩形区域放怪物, 每个格子放相同数目的怪物, 或者查询当前50种怪物的奇偶性.
+
+题解: 把怪物个数的奇偶性用$2^{50}$来表示就变成了一个裸二维树状数组, 考虑分成4个二维树状数组做, 具体参考[Iahub and Xors](http://codeforces.com/problemset/problem/341/D). 需要注意, 同一种怪物在P操作里面会出现多次.
+
+## 1002 List wants to travel [by ftiasch]
+
+题意：一棵无根树，两种操作：改变路径上的颜色，和询问路径上有多少段颜色。
+
+题解：序列上问题可以用线段树维护区间两端的颜色以及颜色段数，搬到树上只要树链剖分后用线段树维护即可。
+
+## 1003 hannnnah_j’s Biological Test [by ftiasch]
+
+题意：一个大小为 $n$ 的环，选 $m$ 个位置涂黑，要求相邻两个黑点之间至少间隔 $k$ 个白点，问方案数。
+
+题解：考虑从 0 开始的标号最小的涂黑的位置，有两种情况：
+
+如果该位置 $\geq k$，相当于在一排（不是环） $n - k$ 个椅子里面放 $m$ 个人；
+如果该位置 $< k$， 相当于在一排 $n - 2k - 1$ 个椅子里面放 $(m - 1)$ 个人。这种情况有 k 种。
+
+最后考虑在一排 $n$ 个椅子里面放 $m$ 个人的方案数，相当于要找 $(m + 1)$ 个变量满足 $x_1 \geq 0, x_{2, 3, \ldots, m} \geq k + 1, x_{m + 1} \geq 1$ 同时 $x_1 + x_2 + \cdots + x_{m + 1} = n$ 的方案数。这个方案数就是 $\binom{n - (m - 1)k}{m}$.
+
+至于为什么是上述式子，其中 $x_1$ 表示的是 $1$ 的下标，$x_{2, 3, \ldots, m}$ 表示的是每个人离前一个人的距离，最后的 $x_{m + 1}$ 是松弛变量。可以加加减减让大家的限制都变成 $\geq 1$，就是熟悉的模型啦。
+
+## 1004 Mathematician QSC [by ftiasch]
+
+题意：$f(0) = 0, f(1) = 1, f(n) = f(n - 2) + 2 * f(n - 1), g(n) = f(0)^2 + f(1)^2 + \ldots + f(n)^2$, 求 $x^{g(n * y)}\ \mathrm{mod}\ (s + 1)$.
+
+解法：首先，当 $n \times y \leq 10$ 时暴力。其他情况可以算 $g(n \times y)\ \mathrm{mod}\ \varphi(s + 1)$，由欧拉定理有答案就是 $x^{g(n \times y)\ \mathrm{mod}\ \varphi(s + 1) + \varphi(s + 1)}\ \mathrm{mod}\ (s + 1)$. 
+
+计算 $g(n)$ 时可以矩阵乘法，维护 $f^2(n), f^2(n + 1), f(n)f(n + 1), g(n)$ 四个项，其中：
+
+$$ f^2(n + 2) = (f(n) + 2f(n + 1))^2 = f^2(n) + 4f(n)f(n + 1) + 4f^2(n + 1) $$
+
+$$ f(n + 1)f(n + 2) = f(n + 1)(f(n) + 2 f(n + 1)) = f(n)f(n + 1) + 2f^2(n + 1) $$
+
+## 1005 Running King [by ftiasch]
+
+题意：给定一个$n$, 问有多少$n$个点的无向无重边无自环图满足有环.$\mathrm{mod}\ 1004535809$
+
+解法：答案是所有无向图 $2^{n(n - 1) / 2}$ 的数量减去 $n$ 个点的森林数量 $f(n)$.
+
+然后 $$f(n) = \sum_{i = 1}^n f(n - i) \frac{(n - 1)!}{(n - i)! (i - 1)!} i^{i - 2}$$ 可能写作
+
+$$\frac{f(n)}{n!} = \frac{1}{n} \sum_{i = 1}^n \frac{f(n - i)}{(n - i)!} \frac{i^{n - 2}}{(i - 1)!}$$ 会更清楚地看出是个卷积。那么分治 + NTT 就可以。
+
+## 1006 The Game [by lostRating]
+
+题意：中国象棋，Alice有一个帅，Bob有将和马，Alice赢或者平局都输出Alice赢，否则Alice会尽可能的拖长，Bob会尽可能快的结束，输出Alice和Bob走了多少步棋时结束
+
+题解：经过一段恶心的预处理后，抽象成一个有向图判断先后手胜负的问题，算是个出现过几次的经典模型，没做过的同学可以先拿不用写模拟的2014西安现场赛H练下手。仅判断状态胜负的做法：有一些最终状态可以直接判断胜负，其他的未知状态考虑用逆拓扑序倒推：
+(1)如果一个未知状态有一个后继是必败的，那么它就是必胜的；
+(2)如果一个未知状态后继全是必胜的，那么它就是必败的；
+(3)最后剩下的未知状态就是可以走成环的平局状态。
+算步数只需要在推(1)(2)的时候带步数一起转移并改成spfa就好了
+
+## 1007 odd-even number [by Nero]
+
+题意：一个数字，它每个数位上的奇数都形成偶数长度的段，偶数位都形成奇数长度的段他就是好的。问[L , R]的好数个数。
+
+题解：裸的数位dp, 从高到低考虑每个数位, 状态里存下到当前位为止的值的奇偶性和长度奇偶性即可. 
+
+## 1008 oasis in desert [by sd0061] 
+
+题意：$n$ 个点 $m$ 条无向边的图，每条边长度为$l_i$ 。给定 $K$，定义：
+(1)最大危险集：size最大的点集，满足对于集合中的任意两点，距离大于 $K$；
+(2)最小安全集：size最小的点集，满足对于 $n$ 个点中任意两点若距离不大于 $K$，则至少有一个属于该点集。
+求一个点集同时满足(1)和(2)，且字典序最小。
+
+题解：先 Floyd 一下，然后如果只拿出距离不大于 $K$ 的边，那么首先这个图不能有奇环。因为如果一个奇环的大小为 $2w-1$，那么至少需要 $w$ 个点才能满足 (2)，但这 $w$ 个点不可能形成一个独立集(1)。所以对于每一个是二分图的联通块，必须满足两边点数相同且最大独立集等于最小点覆盖集，等价于这个二分图有完美匹配。这时候任意选二分图的一边就可以满足条件，只需贪心地让字典序最小。
+
+## 1009 QSC and Master [by sd0061] 
+
+题意：$n$ 个pair<int , int>，每次可以选相邻两个pair。如果他们的first不互质就可以把它们都删掉，并且获得second之和的分数，问最大得分。
+
+题解：设$f[i][j]$为$[i,j]$这段区间能取得的最大得分，转移就是不取左边/不取右边/断开拼起来/取两边，其中取两边需要中间能取干净才能取。复杂度 $O(n^3)$。
+
+## 1010 Count Prime [by zimpha]
+
+题意：求$\pi(n) , n \le 10^{11}$。
+
+题解：一个模板题, 具体方法参考[wiki](https://en.wikipedia.org/wiki/Prime-counting_function)或者[Four Divisors](http://codeforces.com/contest/665/problem/F).
+
+
+
+[ftiasch wrote on 2016-09-18T09:07:07]
+
+---
+
+05可以用多项式除法做吗？
+
+[czk wrote on 2016-09-18T09:27:47]
+
+---
+
+1004我补一个求g(n)的方法，设h(n)=f(n)^2
+由f(n)的递推式推出h(n)=5*h(n-1)+5*h(n-2)-h(n-3)
+再由h(n)的递推式推出g(n)=5*g(n-1)+5*g(n-2)-g(n-3)
+
+[danagi wrote on 2016-09-18T09:29:01]
+
+---
+
+@czk#4312 可以。
+
+[ftiasch wrote on 2016-09-18T09:31:23]
+
+---
+
+1004欧拉定理不是要求x和s+1互质吗？
+
+[hccz95 wrote on 2016-09-18T09:36:18]
+
+---
+
+@ftiasch#4314 求和前面的n分之一要怎么处理...想不明白
+
+
+[czk wrote on 2016-09-18T09:39:18]
+
+---
+
+@hccz95#4315 不用，当 $x > \varphi(m)$ 时，$a^{\varphi(m) + x\ \mathrm{mod}\ \varphi(m)} \equiv a (\mathrm{mod}\ \varphi(m))$ 总是对的。不需要互质的条件。
+
+[ftiasch wrote on 2016-09-18T09:40:10]
+
+---
+
+@czk#4316 这个实际上就是 $\mathrm{exp}(T(x))$，其中 $T(x) = \sum_{n \geq 1} \frac{n^{n - 2}}{n!} x^n$ 吧。
+
+[ftiasch wrote on 2016-09-18T09:40:39]
+
+---
+
+04利用类似斐波那契的规律 g(n)=f(n)*f(n＋1)/2
+
+[9bb41502-c231-4499-b22f-cb3d8ca9c389 wrote on 2016-09-18T10:01:43]
+
+---
+
+@ftiasch#4318 对...没看出来
+
+[czk wrote on 2016-09-18T10:23:15]
+
+---
+
+1006如果对象棋比较了解的话可以简化不少。
+比如除了红方先手吃掉了黑方的将或者先手吃掉了黑方的马（而没被将吃）这两种情况，其他的局面（无论先后手）都是黑方必胜。
+所以只要在有向图里去掉这种红方胜的状态然后从黑方的获胜状态开始bfs一遍即可。
+
+[linyuzhou wrote on 2016-09-18T14:20:17]
+
+---
+
+@linyuzhou#4328 膜...
+
+[sd197555 wrote on 2016-09-19T07:31:18]
+
+---
+
+@ftiasch#4318  分治+NTT是不是会超时啊，时限只有2s，还是我写的常数不够好？
+[hdu5322](http://acm.split.hdu.edu.cn/showproblem.php?pid=5322)跟这个很像，但是时限是5s
+
+[Randolph87 wrote on 2016-09-19T07:45:34]
+
+---
+
+@Randolph87#4335 我轻松 AC 了啊，只需 0.4s。
+
+```
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+
+const int MOD = 1004535809;
+
+typedef long long LL;
+
+LL pow_mod(LL a,LL b,LL p) {
+    LL ret = 1;
+    while (b) {
+        if (b & 1) ret = ret * a % p;
+        a = a * a % p;
+        b >>= 1;
+    }
+    return ret;
+}
+
+namespace nero
+{
+    const int ort = 3; // original root in MOD
+    // this code works only when b == 2
+
+    void ntt(LL A[],int n,int inv) {
+        // inv == 1 : ntt, == -1 : intt
+        LL w = 1,d = pow_mod(ort,(MOD - 1) / n,MOD),t;
+        int i,j,c,s;
+        if (inv == -1) {
+            for (i = 1,j = n - 1; i < j; ++ i,-- j)
+                std::swap(A[i],A[j]);
+            for (t = pow_mod(n,MOD - 2,MOD),i = 0; i < n; ++ i)
+                A[i] = A[i] * t % MOD;
+        }
+        for (s = n >> 1; s; s >>= w = 1,d = d * d % MOD) {
+            for (c = 0; c < s; ++ c,w = w * d % MOD) {
+                for (i = c; i < n; i += s << 1) {
+                    A[i | s] = (A[i] + MOD - (t = A[i | s])) * w % MOD;
+                    A[i] = (A[i] + t) % MOD;
+                }
+            }
+        }
+        for (i = 1; i < n; ++ i) {
+            for (j = 0,s = i,c = n >> 1; c; c >>= 1,s >>= 1)
+                j = j << 1 | s & 1;
+            if (i < j) std::swap(A[i],A[j]);
+        }
+    }
+}
+
+const int K = 16;
+
+LL dp[1 << K], buf[1 << K], tb[K][1 << K], inv[(1 << K) + 1];
+
+void solve(int l, int k)
+{
+    if (k > 0) {
+        int r = l + (1 << k);
+        int m = l + r >> 1;
+        solve(l, k - 1);
+        memset(buf, 0, sizeof(*buf) << k);
+        for (int i = 0; i < 1 << k - 1; ++ i) {
+            buf[i] = dp[l + i];
+        }
+        nero::ntt(buf, 1 << k, 1);
+        for (int i = 0; i < 1 << k; ++ i) {
+            (buf[i] *= tb[k][i]) %= MOD;
+        }
+        nero::ntt(buf, 1 << k, -1);
+        for (int i = 1 << (k - 1); i < 1 << k; ++ i) {
+            int res = buf[i]; // * inv[1 << k] % MOD;
+            dp[l + i] += res;
+            if (dp[l + i] >= MOD) {
+                dp[l + i] -= MOD;
+            }
+        }
+        solve(m, k - 1);
+    } else if (l) {
+        dp[l] = dp[l] * inv[l] % MOD;
+    }
+}
+
+int main()
+{
+    // int g = 2;
+    // while (nero::pow_mod(g, (MOD - 1) / 2, MOD) == 1 || nero::pow_mod(g, (MOD - 1) / 479, MOD) == 1) {
+    //     g ++;
+    // }
+    // printf("%d\n", g);
+    for (int i = 1; i <= 1 << K; ++ i) {
+        inv[i] = pow_mod(i, MOD - 2, MOD);
+    }
+    for (int k = 0; k < K; ++ k) {
+        memset(tb[k], 0, sizeof(*tb[k]) << k);
+        LL inv_fact = 1;
+        for (int i = 1; i < 1 << k; ++ i) {
+            tb[k][i] = (i < 2 ? 1 : pow_mod(i, i - 2, MOD)) * inv_fact % MOD;
+            inv_fact = inv_fact * inv[i] % MOD;
+        }
+        nero::ntt(tb[k], 1 << k, 1);
+    }
+    memset(dp, 0, sizeof(*dp) << K);
+    dp[0] = 1;
+    solve(0, K);
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        int n;
+        scanf("%d", &n);
+        LL result = dp[n];
+        for (int i = 1; i <= n; ++ i) {
+            result = result * i % MOD;
+        }
+        printf("%d\n", (int)((pow_mod(2, (long long)n * (n - 1) / 2, MOD) + MOD - result) % MOD));
+    }
+}
+```
+
+[ftiasch wrote on 2016-09-19T07:51:15]
+
+---
+
+@ftiasch#4336 CDQ分治会比这样分治慢很多吗？
+
+[Randolph87 wrote on 2016-09-19T08:07:10]
+
+---
+
+@Randolph87#4337 我这个不就是，cdq 分治吗？
+
+[ftiasch wrote on 2016-09-19T08:22:01]
+
+---
+
+@ftiasch#4338 看懂了，是我常数写的不好
+
+[Randolph87 wrote on 2016-09-19T08:34:47]
+
+---
+
+@ftiasch#4338 数据范围不是2e5吗，为什么我交了一发只算到7e4的就过了
+
+[Randolph87 wrote on 2016-09-19T08:55:07]
+
+---
+
+@ftiasch#4338 数据范围是2e4，结果题面没改，囧。。。。
+
+[Randolph87 wrote on 2016-09-19T08:59:56]
+
+---
+
+> @danagi#4313 
+
+请问 $h(n)=5h(n-1)+5h(n-2)-h(n-3) $是如何得出的呢?
+以及对于一个常系数齐次递推关系$f(n)$，$g(n) = \sum_{i=0}^n f(i)$和$f(n)$具有相同的递推式是否是一个普适的结论呢？
+
+[QAQ wrote on 2016-09-19T09:16:46]
+
+---
+
+@sorry_QAQ#4342 你想一下啊，两个的生成函数都差一个 $\frac{1}{1 - x}$，所以肯定都是有递推的啊。
+
+[ftiasch wrote on 2016-09-19T09:21:41]
+
+---
+
+@femsub#4320 你那样写能AC么 求出来的f[n]和f[n+1]已经是取完摸之后的了  然后在/2的话 数值不就错了么  /2的话并不能每次都和（s+1）互质 求逆元也不行啊。。   
+
+
+[tabris wrote on 2016-09-19T11:30:45]
+
+---
+
+@baiyang#4344 你可以先 mod $2(s + 1)$，最后再 $/ 2$.
+
+[ftiasch wrote on 2016-09-19T11:55:18]
+
+---
+
+最后一个题居然只有一行输入。
+莫名喜感。
+
+[XENO_AMESS wrote on 2016-09-19T21:06:27]
+
+---
+
+@sorry_QAQ#4342 
+
+设
+$ g(n)=f(n)^2 $
+$ h(n)=f(n)f(n-1)$
+把 $f(n)^2$ 展开，有
+$g(n)=4g(n-1)+g(n-2)+4h(n-1)$ 
+对于$h(n)$，把$f(n)$用递推式替换然后乘$f(n-1)$，可以得到
+$h(n)=2g(n-1)+h(n-1)$
+可见$ h(n)-h(n-1)=2g(n-1) $
+于是想到$g(n)-g(n-1)$，用上式代换即可得
+$$ g(n)=5g(n-1)+5g(n-2)-g(n-3) $$
+
+最后求和即可得到题中的g(n) 。
+
+[sd197555 wrote on 2016-09-20T12:18:49]
+
+---
+
+> @ftiasch#4336 // this code works only when b == 2
+请问一下……这句是什么意思啊？
+
+[linyuzhou wrote on 2016-09-21T06:53:43]
+
+---
+
+@linyuzhou#4367 
+
+Nero 的意思应该是这个板子只能做模数是 P * 2^k + 1 的……
+
+
+
+[sd_invol wrote on 2016-09-21T08:29:12]
+
+---
+
+@Sd_Invol#4368 对的，因为有部分注释被删了=w=
+
+[Nero wrote on 2016-09-22T01:38:36]
+
+---
+
