@@ -1,0 +1,90 @@
+#  洛谷P1987 摇钱树
+
+题意：Cpg 正在游览一个梦中之城，在这个城市中有n棵摇钱树。。。这下，可让Cpg看傻了。。。可是Cpg只能在这个城市中呆K天，但是现在摇钱树已经成熟了，每天每棵都会掉下不同的金币（不属于Cpg！）。Cpg每天可以砍掉其中一颗，并获得其树上说有的金币（怎么会有这种好事。。。）。请你帮助Cpg算出他在这K天中最多能获得多少金币。
+第一行两个整数n，K (1<=K<=n<=1000)
+第二行n个整数Mi (Mi <= 100000).表示Cpg刚看到这n棵树时每刻树上的金币数。
+第三行n个整数 Bi.(Bi<=1000)表示每颗摇钱树，每天将会掉落的金币。
+
+想按每天掉钱多少排序然后前i个取j个，但发现是错的，求解法
+
+[moretimes wrote on 2016-08-29T03:34:24]
+
+---
+
+怎么会错啊。。。就是这样子的啊
+
+[ftiasch wrote on 2016-08-29T05:23:10]
+
+---
+
+@ftiasch#4133 因为掉到0不会变负？
+
+[moretimes wrote on 2016-08-29T10:53:49]
+
+---
+
+@moretimes#4134 
+
+呃，我是不是理解错了你的意思呢。。。
+
+我觉得你的意思是：按照 $B_i$ 从大到小排序，然后 $f(i, j)$ 表示前 $i$ 天，已经砍掉了前 $j$ 棵树，转移就是考虑第 $i$ 天要不要砍第 $j$ 棵树，能够得到的金币可以根据 $i, j$ 算出来。
+
+是说这个做法有问题吗？
+
+
+[ftiasch wrote on 2016-08-29T10:59:13]
+
+---
+
+@ftiasch#4135 嗯 按B排序不是很对
+
+[moretimes wrote on 2016-08-29T11:03:32]
+
+---
+
+@moretimes#4136 
+
+写了一下 AC 了呀 = = 
+
+我的代码：
+```
+#include <algorithm>
+#include <cstdio>
+#include <utility>
+#include <vector>
+
+int main()
+{
+    int n, m;
+    while (scanf("%d%d", &n, &m) == 2 && n && m) {
+        std::vector<std::pair<int, int> > tree(n);
+        for (int i = 0; i < n; ++ i) {
+            scanf("%d", &tree[i].second);
+        }
+        for (int i = 0; i < n; ++ i) {
+            scanf("%d", &tree[i].first);
+        }
+        std::sort(tree.begin(), tree.end());
+        std::vector<int> best(m + 1);
+        for (int i = n - 1; i >= 0; -- i) {
+            int a = tree[i].second;
+            int b = tree[i].first;
+            for (int j = m; j >= 1; -- j) {
+                best[j] = std::max(best[j], best[j - 1] + std::max(a - (j - 1) * b, 0));
+            }
+        }
+        printf("%d\n", *std::max_element(best.begin(), best.end()));
+    }
+}
+```
+
+[ftiasch wrote on 2016-08-29T11:36:08]
+
+---
+
+@ftiasch#4137 写错了 好智障。。 蟹蟹叉姐
+
+[moretimes wrote on 2016-08-29T15:23:53]
+
+---
+
