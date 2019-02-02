@@ -1,0 +1,34 @@
+# Daejeon 2017 J Strongly Matchable
+
+给一幅 $n \leq 100$ 为偶数个点的无向无权简单图。判断是否对于任意一种把点涂成 $n/2$ 个黑点和 $n/2$ 个白点的染色方式，都存在黑白点之间的完美匹配。输出Yes和No。
+
+[LiveFish wrote on 2018-01-01T11:13:14]
+
+---
+
+考虑 Hall's theorem，如果存在黑点集 $U$（显然 $|U| \leq \frac{n}{2}$），使得它的邻集 $\delta(U)$ 中的白点数量 $< |U|$，则 No. 
+而 $\delta(U)$ 中最多有 $|\delta(U)| - (\frac{n}{2} - |U|)$ 个白点，也就是要找 $U$ 使得 $|\delta(U)| < \frac{n}{2}$. 
+
+（卡在这里好久，最终在 CF 上 PM 了 koosaga，他回信给了提示）
+
+实际上，考虑 $U' = V \setminus U \setminus \delta(U)$，因为 $|U| \leq \frac{n}{2}$, $\delta(U) < \frac{n}{2}$，所以 $U' \neq \emptyset$. 所以实际上 $\delta(U)$ 是 $U$ 和 $U'$ 的点割。另一方面，考虑任何一个点割 $X - C - Y$，总有 $|X| \leq \frac{n}{2}$ 或者 $|Y| \leq \frac{n}{2}$. 所以就是要问最小点割是否 $< \frac{n}{2}$. 
+
+只要暴力枚举两个点后最大流就行。
+
+[ftiasch wrote on 2018-01-06T06:18:49]
+
+---
+
+@ftiasch#5559 
+请问第一段那里为什么是“最多”。个人理解是剩余黑点全部分配到邻集里面，似乎白点应该是最少？
+
+[crazy_cloud wrote on 2018-01-15T23:49:34]
+
+---
+
+@crazy_cloud#5575 可能是我语文不太到位……就是你说的意思 = =
+
+[ftiasch wrote on 2018-01-16T05:07:21]
+
+---
+
