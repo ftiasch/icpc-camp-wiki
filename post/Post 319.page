@@ -1,0 +1,22 @@
+# Educational Codeforces Round 2 F Edge coloring of bipartite graph
+
+http://codeforces.com/contest/600/problem/F
+请问一下这一题该怎么写？
+题意是：输入a，b，m，a表示二分图左边部分的大小（就是左边的点1~a），b表示二分图右边部分的大小，输入m条边的左右端点，给边标号，使得相邻的边有不同的颜色，按输入的顺序输出每条边的颜色
+
+[avenger wrote on 2015-12-05T08:47:54]
+
+---
+
+可以参考[这里](http://async.icpc-camp.org/d/259-uva-10615-rocks)的讨论。
+
+[ftiasch wrote on 2015-12-05T08:57:44]
+
+---
+
+@Varona#2972 谢谢~~
+
+[avenger wrote on 2015-12-05T10:13:52]
+
+---
+
