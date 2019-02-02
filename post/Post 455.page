@@ -1,0 +1,62 @@
+# Single Round Match 692 题解
+
+# HardProof
+
+枚举边权的下界 $w$ 后，蠢办法是二分上界 $W$，用 Tarjan 判强连通，复杂度是 $O(n^4 \log n)$.
+
+实际上，设 $f(i, j)$ 表示 $i\to j$ 最大边最小的路径的最大边，那么 $W = \max_{i, j} f(i, j)$. 显然，$f(i, j)$ 可以用 Floyd 在 $O(n^3)$ 求出来。
+
+# LinenCenter
+
+考虑目标串是
+```
+x_0 S x_1 S ... x_{k - 1} S x_k
+```
+其中，$x_1, x_2, \ldots, x_k$ 是总长度不超过 $n$ 的字符串。同时要求：
+
+1. $x_i$ 不包含 $S$；
+2. 对于 $i = 0, 1, \ldots, (k - 1)$，$x_i + S$ 不包含 $S$。
+
+我们对串 $S$ 建立 AC 自动机，可以 dp 算出 $x$ 的长度是 $i$ 时，符合上述条件的 $x$ 的数量，假设是 $f_i$.
+其中 $x_k$ 特殊，可以最后再处理。
+
+设 $g(k, i)$ 表示 $x$ 的总长度是 $i$ 的目标串数量，有
+$$g(2k, i) = \sum_{j} g(k, j) \times g(k, i - j).$$
+所以算 $g(k, *)$ 就是倍增多项式乘法，最后再把特殊的 $x_k$ 加上去。
+
+复杂度是 $O(nl + n^2 \log k)$.
+
+# TreeSums
+
+考虑 $v$ 最大的子树 $p$，那么 $v$ 子树的质心，一定是 $p$ 子树的质心往 $v$ 挪一段距离，暴力挪就好了。
+
+复杂度正确的原因是考虑一段重链，那么这上面的质心其实只会从重链的底端挪到顶端，所以复杂度是对的。
+
+---
+
+我的代码
+
+https://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/topcoder/single-round-match/single-round-match-692
+
+[ftiasch wrote on 2016-06-10T08:08:35]
+
+---
+
+这500怎么这么难（爽朗地笑了.jpg
+
+[quailty wrote on 2016-06-10T16:20:59]
+
+---
+
+@quailty#3769 我觉得 500 和 900 放反了……
+
+[ftiasch wrote on 2016-06-10T16:25:03]
+
+---
+
+@quailty#3769 500 似乎求完f_i后O(N^3 ) dp一下。。也可以过
+
+[kybconnor wrote on 2016-06-11T05:36:11]
+
+---
+
