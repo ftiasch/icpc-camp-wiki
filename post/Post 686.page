@@ -1,0 +1,34 @@
+# 2017 湘潭邀请赛 C Intersection
+
+叉姐的题解 https://icpc-camp-cdn.b0.upaiyun.com/permanent/problems/xiangtan-2017-solution.pdf
+
+ 弱鸡想问一下 第二步 求零空间的维数 高斯消元的具体做法 
+
+[jiachinzhao wrote on 2017-05-18T13:37:00]
+
+---
+
+@jiachinzhao#5096 由 [Four Space Theorem](https://www.wikiwand.com/en/Fundamental_theorem_of_linear_algebra)，其实就是维数减去秩。
+
+[ftiasch wrote on 2017-05-18T14:13:22]
+
+---
+
+谢叉姐，好像没问清楚，我其实是想问 \sum ai xi = \sum bj yj 这个式子 如何列矩阵 消元
+
+[jiachinzhao wrote on 2017-05-18T15:07:17]
+
+---
+
+@jiachinzhao#5102 你把右边的移到左边，变量是 $\{x_1, x_2, \ldots, y_1, y_2, \ldots, \}$ 就可以啦？
+
+[ftiasch wrote on 2017-05-19T00:08:44]
+
+---
+
+@ftiasch#5103 我傻逼了，这道题其实就是求给一些数，选若干个异或和为0的方案数，先求线性无关组是为了去重
+
+[jiachinzhao wrote on 2017-05-19T04:29:52]
+
+---
+
