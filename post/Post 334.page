@@ -1,0 +1,32 @@
+# Solving max flow with link-cut trees
+
+想知道这个科技究竟有没有用。而且并不知道为什么LCT可以用来优化最大流。
+
+[prime21 wrote on 2015-12-20T18:23:35]
+
+---
+
+没啥大用……比较难写，跑得也不快。
+
+[ftiasch wrote on 2015-12-21T05:57:41]
+
+---
+
+@Varona#3039 在哪里可以看到相关的讲解？
+
+[prime21 wrote on 2015-12-24T05:03:07]
+
+---
+
+@prme21#3053 https://www.cs.cmu.edu/~sleator/papers/dynamic-trees.pdf
+
+[ftiasch wrote on 2015-12-24T06:03:49]
+
+---
+
+@Varona#3054 thx.
+
+[prime21 wrote on 2015-12-24T12:12:25]
+
+---
+
