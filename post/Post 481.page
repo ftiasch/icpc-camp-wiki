@@ -1,0 +1,17 @@
+# 2012 North America East Central NA I Town Square
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=573&page=show_problem&problem=4141)
+题目大意：
+给出4个半径均为5的可能相交但不重合的圆，求一个正方形框住它们，并且每个圆恰好和一条边相切，每条边恰好和一个圆相切，如果有解则最大化正方形的周长，答案保留到小数点后两位。
+圆心坐标绝对值不超过100。
+
+[skywalkert wrote on 2016-07-12T11:18:47]
+
+---
+
+数据范围比较小，也许小角度差枚举就可以过了，想请教一下分类讨论大师们应该如何做这道题。
+
+[skywalkert wrote on 2016-07-12T11:21:18]
+
+---
+
