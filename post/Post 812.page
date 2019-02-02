@@ -1,0 +1,44 @@
+# PKU campus 2017 D Travel to Qomolangma
+
+https://vjudge.net/problem/OpenJ_POJ-C17D
+题目大意：我们知道，高海拔反应对旅行速度有很大影响。为了简单起见，我们假设Z国家可以分成N个块，N+1条垂直线x= x [0]，x= x[1]，…，x= x [N]。在直线x=Xi上的任意一点，小L v的移动速度等于v [i]，它随x坐标在一个特定块中的值线性增加/减小。更具体地说，如果小L是在x= x [i]和x= x [i+1]之间的块中，他的旅行速度是v = v [i] + (v [i+1]-V[i]) * (x-X[i]) / (x [i+1]-X[i])。求从起始点(x0,y0)到终点(xN,yN)最短时间。
+不太懂怎么入手。
+
+[kkky wrote on 2018-06-08T12:52:39]
+
+---
+
+感觉就是个 [Euler–Lagrange equation](https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation) 的应用题……
+
+没仔细推，但是考虑 $n=1$ ，就是耳熟能详的变分法例题啊……
+
+[ftiasch wrote on 2018-06-08T18:09:10]
+
+---
+
+我的做法是二分出发时的角度，根据 [Fermat's principle](https://en.wikipedia.org/wiki/Fermat%27s_principle) 和 [Snell's law](https://en.wikipedia.org/wiki/Snell%27s_law) 列出每一段内纵坐标 $y$ 和时间 $t$ 关于横坐标 $x$ 的微分方程，一通爆算之后求出位于终点时的 $y$ 和 $t$，根据 $y$ 调整出发时的角度。
+
+感觉可能有一些细节或者精度~~甚至做法上~~的问题，但是这个做法确实可以 AC，~~因为这题数据只有样例。~~
+
+[quailty wrote on 2018-06-09T06:18:33]
+
+---
+
+@quailty#5698 你那个方程应该就是 euler equation 。。。
+
+[ftiasch wrote on 2018-06-09T10:04:25]
+
+---
+
+@ftiasch#5699 有点超出我的知识范围了 →_→
+
+[quailty wrote on 2018-06-09T13:35:35]
+
+---
+
+@quailty#5700 http://www.dartmouth.edu/~phys44/lectures/Chap_1.pdf
+
+[ftiasch wrote on 2018-06-09T14:31:36]
+
+---
+
