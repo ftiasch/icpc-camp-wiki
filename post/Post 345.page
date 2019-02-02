@@ -1,0 +1,81 @@
+# Dhaka 2015 F Unique Party
+
+[题目链接](http://acm.hust.edu.cn/vjudge/problem/viewProblem.action?id=292532)
+
+题目大意：有T组数据，（T<= 20）每组数据会给一个250*250的矩阵，矩阵中每个格子中有一个数字。之后给出q个询问（q <= 10）,每个询问给出一个整数h，问原矩阵的所有子矩阵中满足**中位数大于等于h**(若中位数有两个，则为较大的一个)的子矩阵的面积最大为多少
+
+只会每个询问 O(n^3 logn) 的解法，感觉并不能通过这道题。似乎要至少达到每个询问 O(n^2 logn)?
+
+[skyxuan wrote on 2016-01-18T06:18:33]
+
+---
+
+只要O( n^3 ) + 修剪 = AC.  
+
+
+[baodog wrote on 2016-01-18T16:35:52]
+
+---
+
+很简单的 O( n^3 ) 修剪:
+
+```
+  FORD(h, R, 1) {
+    for(int r1 = 0; r1 + h <= R; r1++) {
+      int r2 = r1 + h - 1;
+      // cannot find better answer.
+      if(h * wbound[r1][r2] <= best) continue;
+      int width = getwidth(r1, r2);
+      wbound[r1][r2] = min(wbound[r1][r2], width);
+      best = max(best, h * width);
+    }
+  }
+
+[baodog wrote on 2016-01-18T16:39:33]
+
+---
+
+@baodog#3097 Orz……学习了……
+
+[skyxuan wrote on 2016-01-19T08:09:41]
+
+---
+
+@skyxuan#3098 
+注意，需要排序查询，i.e., 导致 wbound 递减.
+```
+REP(ii, Q) queries.pb(mp(getint(), ii));
+    sort(all(queries));
+    REP(r1, R) REP(r2, R) wbound[r1][r2] = C;
+    REP(ii,Q) {
+      // m = median.
+      int m = queries[ii].X;
+      int id = queries[ii].Y;
+      int best = solve(m);
+      sol.pb(mp(id, best));
+    }
+    sort(all(sol));
+    REP(ii,Q) printf("%d\n", sol[ii].Y);
+```
+还要注意的 getwidth, 使用 O(n) 解, 这是经典面试问题:
+http://www.geeksforgeeks.org/find-if-there-is-a-subarray-with-0-sum/
+
+[baodog wrote on 2016-01-19T16:40:55]
+
+---
+
+@baodog#3099 
+还要注意的 getwidth, 使用 O(n) 解, 这是经典面试问题:
+http://www.geeksforgeeks.org/find-the-largest-subarray-with-0-sum/
+
+
+[baodog wrote on 2016-01-19T16:54:50]
+
+---
+
+@baodog#3099 恩恩，我已经发现这个问题了。非常感谢您的耐心解答。
+
+[skyxuan wrote on 2016-01-20T09:16:06]
+
+---
+
