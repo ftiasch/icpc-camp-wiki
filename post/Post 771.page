@@ -1,0 +1,18 @@
+# 2010-2011 Asia Tokyo I Intersection of Two Prisms
+
+题意：在三维平面里有两个无限高的棱柱$P1,P2$，它们的横截面都是简单凸多边形，$P1$的横截面平行于$XY$平面，$P2$的横截面平行于$XZ$平面，求两棱柱的交的体积。
+
+输入：两个凸多边形$(3 \leq N,M \leq 100)$，分别代表两棱柱的横截面。
+
+题目链接：http://codeforces.com/gym/101413
+
+[evilgeek wrote on 2017-11-28T12:59:15]
+
+---
+
+直接 simpson 一下？
+
+[quailty wrote on 2017-11-28T15:19:57]
+
+---
+
