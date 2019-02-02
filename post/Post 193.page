@@ -1,0 +1,22 @@
+# NEERC 2012 Moscow Subregional H Hunt for Treasure
+
+[题目链接](http://codeforces.com/gym/100685/problem/H)
+
+我想的是$dp [ i ] [ j ]$表示还有i个未确定的单点 j个未确定的一半的环时候的期望环个数 然而这样写的时候发现会有重复。。应该怎么做呢QAQ
+
+[zscloverinyo wrote on 2015-10-17T09:57:35]
+
+---
+
+搬运 http://twsf.icpc-camp.org/2012-2013%20ACM-ICPC,%20NEERC,%20Moscow%20Subregional%20Contest
+
+[ftiasch wrote on 2015-10-17T10:09:27]
+
+---
+
+@Varona#1876 谢谢叉姐！
+
+[zscloverinyo wrote on 2015-10-18T04:09:55]
+
+---
+
