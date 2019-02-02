@@ -1,0 +1,80 @@
+# Petrozavodsk Summer 2017 Ural FU Dandelion Contest E. K Transform
+
+这题正解是什么，我想用矩阵快速幂+FFT+多项式求逆，但是感觉怪怪的，求大犇正解。
+
+[dreamwyy wrote on 2017-05-18T05:11:40]
+
+---
+
+@dreamwyy#5087 能不能说下题在哪。。。
+
+[ftiasch wrote on 2017-05-18T07:32:17]
+
+---
+
+抱歉，题目在ejudge上面
+http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001487
+
+
+[dreamwyy wrote on 2017-05-18T07:57:48]
+
+---
+
+@ftiasch#5088 
+有一个f(x)函数，有一个m。
+如果x%m==0  f(x)=x/m;
+不然的话f(x)=x-1;
+给你一个n,m,k;
+n<=1e18,m<=1e4,k<=300(保证k是质数)
+问你有多少个数字x可以使f(x)在m情况下运行n次。
+
+[dreamwyy wrote on 2017-05-18T08:04:10]
+
+---
+
+步数指使x从f(x)变成1的f函数运行次数
+假如m=3,
+16的时候要运行
+f(16)->f(15)->f(5)->f(4)->f(3)->1
+要5步
+
+[dreamwyy wrote on 2017-05-18T10:54:29]
+
+---
+
+清楚一些的题意：
+$$f(n)=\begin{cases}f(\frac{n}{k}) & n \text{ mod }k = 0 \\ n-1 & \text{otherwise} \end{cases}$$
+
+令$f^{m}(n)=f^{m-1}(f(n)), f^{0}(n)=n$，给出了$k,m,mod$，问有多少$n$满足$f^m(n)=1$，答案对$mod$取模。
+
+范围$2 \le k \le 10^4, 0 \le m \le 10^{18}, 2 \le mod < 300$.
+
+没记错的话，这个题大概可以搞出一个$k$阶的线性递推式，然后把$O(k^3 \log m)$的矩阵快速幂用FFT优化成$O(k \log k \log m)$。
+
+曾经Codechef有个题叫[RNG](https://discuss.codechef.com/questions/65993/rng-editorial)，你可以参考下啊
+
+[zimpha wrote on 2017-05-18T11:26:30]
+
+---
+
+@zimpha#5093 
+谢了
+
+[dreamwyy wrote on 2017-05-18T11:40:22]
+
+---
+
+FFT优化的应该是平方那个做法。另外这里多项式取模是可以线性推的，很好写。
+
+我记得还有一个不用FFT的做法，可能是std做法(因为这题数据范围很诡异，而且这场已经有一个FFT题了)。
+
+[sevenkplus wrote on 2017-05-18T14:18:29]
+
+---
+
+@sevenkplus#5099 搞错了。std是FFT。
+
+[sevenkplus wrote on 2017-05-18T14:35:11]
+
+---
+
