@@ -1,0 +1,16 @@
+# NEERC 2013 Moscow Subregional L Liar, Liar!
+
+http://codeforces.com/gym/100257/attachments
+题意：给一个每个点入度$\leq 1$的有向图，每次询问$A$，$B$两个点集，判断集合$A$中的点能否与集合$B$中的点其中某点联通。
+$N \leq 50000, Q \leq 50000 $
+
+[yzq986 wrote on 2015-12-04T16:22:55]
+
+---
+
+就是基环外向🌲嘛。🌲上反正也不难搞，就把 $B$ 里面的点 dfs 序排一下，就能快速地判断 $A$ 的子树里面是不是有一个 $B$ 了。
+
+[ftiasch wrote on 2015-12-05T04:44:57]
+
+---
+
