@@ -1,0 +1,49 @@
+# 清华校赛 I Increase a Second
+
+给出$n$个数$a_1a_2...a_n,|a_i|\le500，1\le n\le200$,
+
+求$max(\;|...||a_{p_1}-a_{p_2}|-a_{p_3}|...-a_{p_n}|)$ 
+
+其中 $p_1,p_2...p_n$是$1$到$n$的一个排列
+
+
+[QAQ wrote on 2016-05-01T02:23:36]
+
+---
+
+给出$n$个数$a_1, a_2, \ldots, a_n, |a_i| \leq 500, 1 \leq n \leq 200$,
+
+求$\max(\;|\ldots||a_{p_1}-a_{p_2}|-a_{p_3}|\ldots -a_{p_n}|) $
+
+其中$p_1, p_2, \ldots, p_n$是$1$到$n$的任意一个排列
+
+[QAQ wrote on 2016-05-01T02:25:34]
+
+---
+
+直接给你贴一下lyd当时写的邮件好了。https://gist.github.com/fotile96/3cfd8f31d58a6af659a9d079bda628c9
+
++1s
+
+[fotile96 wrote on 2016-05-01T09:09:21]
+
+---
+
+这个题大概是 Grodno 2015 B 的强化版本
+
+[sd_invol wrote on 2016-05-01T15:10:44]
+
+---
+
+@fotile96#3526 感谢~ o(*￣▽￣*)o 
+
+[QAQ wrote on 2016-05-01T16:36:27]
+
+---
+
+@Sd_Invol#3527 就几乎是原题吧…… = =
+
+[AngryBacon wrote on 2016-05-08T14:36:48]
+
+---
+
