@@ -1,0 +1,29 @@
+# Codeforces Round #263 B Appleman and Tree
+
+http://codeforces.com/contest/461/problem/B
+给定一个树，每个节点是白色或者黑色。可以删去一个边的集合使得剩下来的每个树里面有且仅有一个节点是黑色的。求这样集合的数量。
+这一题dp的转移方程式不懂，求教大牛的详解啊
+
+[avenger wrote on 2015-11-18T14:18:02]
+
+---
+
+$f(v, c)$ 表示点 $v$ 的的子树中，和 $v$ 相连的连通块含有 $c$ 个黑点。显然 $0 \leq c \leq 1$。
+
+考虑点 $v$，假设它的儿子分别是 $u\_1, u\_2, \dots, u\_k$，再 dp 一下，设 $g(i, c)$ 表示已经考虑了前 $i$ 个儿子，同时点 $v$ 的连通块里面含有 $c$ 个黑点。
+
+如果 $v$ 是黑点，那么初始的时候 $g(0, 1) = 1$，否则 $g(0, 0) = 1$。转移的时候，就是 $g(i, c) = g(i - 1, c) \cdot (f(u\_i, 0) + f(u\_i, 1)) + g(i - 1, c - 1) \cdot f(u\_i, 1)$。一共三项，第一项是子树没有点，不删边；第二项是子树有黑点，删边。这两种情况对当前点数都不影响。最后一项是子树有黑点，且不删。
+
+[很久之前的代码](http://codeforces.com/contest/461/submission/7585774)
+[飘逸版 = =](http://codeforces.com/contest/461/submission/7600993)
+
+[ftiasch wrote on 2015-11-18T15:16:52]
+
+---
+
+懂了   谢谢你  ^_^
+
+[avenger wrote on 2015-11-19T04:34:14]
+
+---
+
