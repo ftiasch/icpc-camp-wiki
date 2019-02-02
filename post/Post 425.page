@@ -1,0 +1,31 @@
+# ZOJ 3926 Parity Modulo P
+
+[题目链接](http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemId=5677)
+$T$组数据，给出$x$，求$(x\;mod\;(2^{3021377}-1))\;mod\;2$的值。
+$T\leq 50,0\leq x<10^{1300000}$，输入不超过5MB。
+
+[skywalkert wrote on 2016-05-15T14:09:36]
+
+---
+
+提供一个暴力的做法，求问靠谱的做法 =_=
+The 37th Mersenne prime is $2^{3021377}-1$, which has 909526 decimal digits. 
+注意到输入不超过5MB，$x\geq 2^{3021377}-1$的数据组数不会超过$\frac{5\cdot 2^{20}}{909526}\approx 5$，于是$2^5$枚举答案好了。
+
+
+[skywalkert wrote on 2016-05-15T14:14:43]
+
+---
+
+@skywalkert#3591 感觉很有道理啊= =
+
+[ftiasch wrote on 2016-05-16T01:28:36]
+
+---
+
+@skywalkert#3591 这个就是出题人做法
+
+[zimpha wrote on 2016-05-16T03:37:31]
+
+---
+
