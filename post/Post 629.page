@@ -1,0 +1,29 @@
+# PKU Campus 2016
+
+请问这场的B和I怎么做啊。
+题目链接：http://poj.openjudge.cn/campus2016/
+
+[evilgeek wrote on 2016-11-06T09:02:55]
+
+---
+
+$B$题，长度不会大于$3$（抱歉我不会证明 = =），长度为$3$可以构造出$(y,5y+2,7y+3)$
+
+$I$题，[这里](https://async.icpc-camp.org/d/417-pku-campus-2016-i-zealots)有讨论
+
+[quailty wrote on 2016-11-06T09:24:27]
+
+---
+
+@quailty#4750 B题主要就是想知道怎么不大于三，构造也写出来了，谢q神～
+
+[evilgeek wrote on 2016-11-06T09:59:50]
+
+---
+
+>3怎么证是一个很难的题，有论文专门讲这个。有兴趣可以搜一下
+
+[fancycoder wrote on 2016-11-06T23:52:28]
+
+---
+
