@@ -1,0 +1,102 @@
+# AsyncIO vs SyncIO：新的变化
+
+想必民那桑已经注意到网站的名字默默地改成了 AsyncIO，同时可以通过 http://async-io.icpc-camp.org 进行访问。
+
+与此同时，新的 http://sync-io.icpc-camp.org/loop 也已经上线。大家不妨把 SyncIO 看做是网页版的 QQ，如果不喜欢论坛这种温温吞吞的~~异步~~交流方式，那么欢迎尝试一下 SyncIO 这种同步 IO 吧。
+
+还有两个额外的好处：
+1. 现在有一个脚本，会自动把 AsyncIO 的事件转发到 SyncIO 上。所以 SyncIO at its very least，可以作为论坛的推送器使用，再也不用不断刷新啦！
+2. SyncIO 有个水区，大家可以尽情地围(liao)观(tian)比赛！
+
+[ftiasch wrote on 2015-10-17T09:08:00]
+
+---
+
+ICPCCamp::SyncIO needs your help:
+
+We couldn't find the existing account
+Go back to team site
+
+
+[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA wrote on 2015-10-18T18:48:30]
+
+---
+
+@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA#1930 
+
+要从 /loop 进去，我觉得它设计得有点问题。如果从 / 进去的话，他会为你新建账户 = =
+
+[ftiasch wrote on 2015-10-19T01:04:17]
+
+---
+
+@Varona#1931 是让我们猜网址的游戏么？
+/loop里注册后，点“with gitlab”就显示“We couldn't find the existing account”那些东西。
+
+[sevenkplus wrote on 2015-10-19T02:40:27]
+
+---
+
+@sevenkplus#1938 我不确定 = =再从 /loop 进去试试看？
+
+[ftiasch wrote on 2015-10-19T03:35:42]
+
+---
+
+@Varona#1944 因为他们 git 也没注册？
+
+[xiaojudou wrote on 2015-10-19T04:03:15]
+
+---
+
+@Varona#1944 并没有看到任何区别
+点“with gitlab”之后就转到sync-io.icpc-camp.org/loop/login/gitlab
+然后就We couldn't find the existing account了
+
+[sevenkplus wrote on 2015-10-19T04:19:57]
+
+---
+
+@sevenkplus#1953 另外/loop/login/gitlab是转到/login/gitlab/complete?code=blahblah。我怀疑是哪里代码写得不对。
+
+[sevenkplus wrote on 2015-10-19T04:26:30]
+
+---
+
+@sevenkplus#1954 挺奇怪的，我拿 Chrome 隐身模式试了一下，with gitlab 之后是跳转到 http://git.icpc-camp.org/users/sign_in 。我没法重现你遇到的这件事……
+
+[ftiasch wrote on 2015-10-19T06:12:03]
+
+---
+
+@Varona#1958 点击with gitlab之后会跳转到Gitlab的登录页面，然后跳回来之后会We couldn't find the existing account
+
+[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA wrote on 2015-10-19T12:29:31]
+
+---
+
+@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA#1974 这个ID是想毁灭世界么。。。
+
+[Xuanwo wrote on 2015-10-20T08:33:56]
+
+---
+
+SyncIO 不能用吗？
+
+[laxect wrote on 2015-11-09T02:28:38]
+
+---
+
+@laxect#2499 好像已经503了？
+（不过反正我也从来没成功使用过sync…）
+
+[sevenkplus wrote on 2015-11-09T02:40:48]
+
+---
+
+@laxect#2499 @sevenkplus#2500 实在修不好。。。所以关掉了。
+
+[ftiasch wrote on 2015-11-09T11:35:43]
+
+---
+
