@@ -1,0 +1,102 @@
+# 2015 Multi-University Training Contest 3 F Beautiful Set
+
+求问用反演如何推出两个“ beautiful value”
+
+[QAQ wrote on 2015-09-19T14:26:56]
+
+---
+
+附上一个题意吧
+给出n个数的一个集合{A1,A2,...,An} （n,Ai<1e5)
+定义一个序列的value为所有区间的数的gcd之和，定义 beautiful value 1为一个集合的n!种排列的value之和
+定义beautiful value 2 为 Σp(k)*k(1<=k<=n) p(k)定义为从集合中取k个数，计算这个k个数的gcd的所有方案的gcd的加和
+求 beautiful value 1 和  beautiful value 2
+
+[QAQ wrote on 2015-09-19T14:54:11]
+
+---
+
+大家都熟知某个反演：如果记 $f(d)$ 是最大公约数是$d$的某种东西的数量，而 $g(d)$ 是最大公约数是 $d$ 的倍数的某种东西的数量，那么 $f(d) = \sum_{k \geq 1} \mu(k) g(d \cdot k)$. 
+
+先来看第一问。研究一下，就会发现 $g(d) = \sum_{i = 1}^{c(d)} \binom{c(d)}{i} i! (n - i)! (n - i + 1)$。其中 $c(d)$ 是 $d$ 的倍数的个数。套公式就好了……
+
+[ftiasch wrote on 2015-09-19T14:56:49]
+
+---
+
+@ftiasch#371 题意相当于是输出max{beautiful value 1, beautiful value 2}，然后前者显然大于等于后者。。。就可以了。
+
+[zjyjer wrote on 2015-09-20T02:26:37]
+
+---
+
+@zjyjer#382 那窝就不更新了！谢谢泥！
+
+[ftiasch wrote on 2015-09-20T03:11:52]
+
+---
+
+@zjyjer#382 弱问一发为什么有这么一个显然的结论，完全想不出来，或者给弱一个思考的方向
+
+[QAQ wrote on 2015-09-20T03:43:58]
+
+---
+
+@sorry_QAQ#385 随便考虑一个大小为$k$的集合，看它在两种计算方式中分别贡献了多少。
+
+[zjyjer wrote on 2015-09-20T03:53:37]
+
+---
+
+@sorry_QAQ#385 你完全可以两个都算一下然后取max啊QvQ
+
+[mlz000 wrote on 2015-09-20T10:04:22]
+
+---
+
+@mlz000#394 两个都不会算啊QAQ（啊已经会了一个了（谢叉姐） ）
+
+[QAQ wrote on 2015-09-20T11:04:44]
+
+---
+
+@sorry_QAQ#402 
+我是这么做的
+很容易想到用$cnt_i$表示集合中$i$的倍数个数
+
+* 考虑第一个人
+$F1[x]$表示$gcd$为$x$的倍数的区间的个数
+$f1[x]$表示$gcd$为$x$的区间的个数
+$F1[x]=\sum_{x|d}f1[d]$
+
+且$F1[x]=\sum_{j=1}^{cnt[x]} \binom{cnt[x]}{j}\times j! \times (n-j+1)!$
+从$cnt[x]$里选$j$个数，再把$n-j$个数和这$j$个数算做$n-j+1$的排列
+
+* 考虑第二个人
+$F2[x]$表示$gcd$为$x$的倍数的区间的个数
+$f2[x]$表示$gcd$为$x$的区间的个数
+易知$F2[x] = \sum_{x|d}f2[d]$
+
+且$F2[x]= \sum_{j=1}^{cnt[x]} \binom{cnt[x]}{j}\times j = cnt[x]\times 2^{cnt[x]-1}$
+这个稍微推推就能推出来
+
+同样的$F2[x] = \sum_{x|d}f2[d]$
+
+然后就是我们熟悉的莫比乌斯反演辣！
+
+[mlz000 wrote on 2015-09-20T11:39:03]
+
+---
+
+@mlz000#405 啊终于推出来惹，谢巨巨
+
+[QAQ wrote on 2015-09-23T16:36:13]
+
+---
+
+@mlz000#405 顺便第二个人是集合(打成区间一定是手误(ง •̀_•́)ง)
+
+[QAQ wrote on 2015-09-23T16:53:00]
+
+---
+
