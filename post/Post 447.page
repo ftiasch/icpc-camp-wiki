@@ -1,0 +1,37 @@
+# Single Round Match 691 题解
+
+# Sunnygraphs
+
+如果 $0$ 和 $1$ 在不同的连通分量，那么 $0$ 和 $1$ 只能通过点 $n$ 连通。
+即，$0$ 可以到达的点中，至少有一个点连向 $n$；对 $1$ 同理。
+其他点任意。
+
+如果 $0$ 和 $1$ 在相同的连通分量，类似上面的情况，只要 $0$ 和 $1$ 可达的点至少有 $1$ 个点连向 $n$，则 $0$ 和 $1$ 可以通过点 $n$ 连通。
+唯一例外的情况是所有点都不变，那么 $0$ 和 $1$ 本来就连通。
+
+# Moneymanager
+
+假设 $x = 0$，最优顺序是 $(a_1, b_1), (a_2, b_2), \ldots, (a_n, b_n)$. 
+那么对于 $i < j$，应该有 $a_i \times b_j \geq a_j \times b_i$，否则交换 $i$ 和 $j$ 的位置可以增大利润。
+
+所以在前、后两半，都应该按照 $\frac{a_i}{b_i}$ 降序完成每个项目。
+按照 $\frac{a_i}{b_i}$ 排序，即要把序列分成两个长度为 $\frac{n}{2}$ 的子序列，使得利润最大。
+假设后一半的 $b_i$ 总和是 $B$，那么前一半的每一项都会多 $a_i \times B$ 的价值。
+所以枚举 $B$，用 $f(i, j, b)$ 表示已经分配给前一半 $i$ 个，后一半 $j$ 个，同时前一半的 $b_i$ 值和是 $b$ 的最大利润。
+注意到后一半 $b_i$ 值的和是可以根据 $i, j, b$ 计算的。
+
+# Undivisors
+
+$[1, 61]$ 中的质数只有 $18$ 个，所以每个数都可以表示成 $(c_2, c_3, c_5, c_7, \ldots, c_{61})$ 的一个 $18$ 维向量。
+LCM 就是对每一维分别取 max。
+
+因为向量只有 $6 \times 4 \times 3 \times 3 \times 2^{14}$ 种，
+我们可以 $O(n^4)$ 预处理出 $\mathrm{count}(c_2, c_3, \ldots, c_{61})$ LCM 为这么多的子矩形的数量。
+那么挑两个子矩形就是一个 FWT (Fast Walsh Transform)。
+
+[我的代码](https://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/topcoder/single-round-match/single-round-match-691)
+
+[ftiasch wrote on 2016-05-31T13:14:21]
+
+---
+
