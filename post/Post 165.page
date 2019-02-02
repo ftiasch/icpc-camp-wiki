@@ -1,0 +1,27 @@
+# 平面图判定
+
+如何判定一个无向图是不是平面图。。
+http://codevs.cn/problem/2965/
+
+[czk wrote on 2015-10-08T14:25:56]
+
+---
+
+就是个无聊的论文题。。。John Hopcroft 拿图灵奖的工作。。
+
+[ftiasch wrote on 2015-10-08T14:35:41]
+
+---
+
+233333。。。请问有论文吗。。。
+
+[czk wrote on 2015-10-08T14:50:15]
+
+---
+
+@czk#1615 [链接](http://lmgtfy.com/?q=planarity+testing+algorithm)
+
+[sevenkplus wrote on 2015-10-08T15:30:16]
+
+---
+
