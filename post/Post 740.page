@@ -1,0 +1,54 @@
+# 2017 Beijing Online D Agent Communication
+
+题意：给定一个树，边权全为1，现在给这棵树加一条边，使得新图中最长路最短，问该值为多少
+这道题到底要用什么姿势。。前几名大佬都不到一小时就A了，然后整个比赛下来也没几个队伍过(成功带歪榜)
+
+[sz1231 wrote on 2017-09-24T13:24:18]
+
+---
+
+http://uoj.ac/problem/298
+
+前面的大佬当然做过这个题啦
+
+[ftiasch wrote on 2017-09-24T15:20:57]
+
+---
+
+谢谢叉姐
+
+[sz1231 wrote on 2017-09-25T10:36:51]
+
+---
+
+贴个 IOI2016 的[题解](http://ioinformatics.org/locations/ioi16/contest/IOI2016_analysis.pdf)，
+这个就是D1T3
+
+[curiosity wrote on 2017-09-25T15:23:13]
+
+---
+
+请问如何证明，对于原树的任意一条直径，都可以在直径上找两个点，使得在他们之间加一条边后新图的最长路最短？
+
+[skywalkert wrote on 2017-09-26T13:36:43]
+
+---
+
+@skywalkert#5399 不加答案不会变小？
+
+[ftiasch wrote on 2017-09-26T14:28:31]
+
+---
+
+@ftiasch#5400 我只用这个 argumentation 确定了一定可以在某条直径上找最优解，且若最优解能使最长路变短，那么最优解必然影响到原来所有的直径，但令我 confused 的是为什么在任意一条直径上都可以找到这样的最优解，以及这个条件在边权可以大于 1 时也会成立。 I do apologize for my poor expression.
+
+[skywalkert wrote on 2017-09-27T12:55:59]
+
+---
+
+@skywalkert#5402 把任意一条直径拉出来，如果加的边不在直径上，可以沿着支路把两端分别调整到直径上，答案不会变大。原来在一个更大的环里做任意两点之间最短路的最大值。
+
+[Y_UME wrote on 2017-09-28T06:07:56]
+
+---
+
