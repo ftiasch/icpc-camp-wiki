@@ -1,0 +1,23 @@
+# Codeforces Round #146 B Easy Number Challenge
+
+题目大意：给定 $a,b,c$，求所有 $i \leq a,j \leq b,k \leq c$ 的 $i \cdot j \cdot k$ 的因子数之和。
+
+http://codeforces.com/contest/236/submission/3830195
+上面这个代码似乎是枚举了 $s$ 作为因子的时候的数目，容斥来加减，然而看不懂代码具体思路是什么样的，麻烦大佬解释一下
+
+[younis wrote on 2017-11-29T08:26:58]
+
+---
+
+这个利用了所谓的 [rng-clj 恒等式](http://codeforces.com/blog/entry/5600).
+
+[ftiasch wrote on 2017-11-30T04:58:43]
+
+---
+
+@ftiasch#5532 谢谢叉姐，原来是后面的题目的做法，搜到题解，看得差不多了
+
+[younis wrote on 2017-12-12T09:34:20]
+
+---
+
