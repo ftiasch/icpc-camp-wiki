@@ -1,0 +1,46 @@
+# Latin America 2015 J Just a bit sorted
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=5224)
+
+题目大意：
+
+一个仅包含正整数的序列是just a bit sorted的，当且仅当对任意序列中出现的$x > 1$，在它最后一次出现的位置之前一定出现过$x-1$ 例如：1 2 3 4 和2 3 1 2都是just a bit sorted的，2 3 4 3 2 1 4 3 则不是，因为最后一个2之前没有1。1 3 1 3也不是，因为最后一个3前面没有2.
+
+现在给定序列的长度$n$($1 \leq n \leq 5000$)，有$q$($1 \leq q \leq 1000$)组询问，每次询问给出一个$k_i$($1 \leq k_i \leq 10^9$)，求长度为$n$的序列中所有数字都小于等于$k_i$的just a bit sorted 序列有多少个。
+
+
+$k_i$给那么大好像是没有用的，因为序列中不可能出现大于n的数字。
+
+目前只想到了一个$O(n^4)$的dp……求帮助~~
+
+[skyxuan wrote on 2016-06-17T11:37:35]
+
+---
+
+Google到的，搬运
+
+>// [2, 3, 1, 2] is a valid sequence.
+// L(i): set of number i appear position
+// L(1) = {3}, L(2) = {1, 4}, L(3) = {2}
+// concatenate L(K)L(K-1)...L(1) = [2, 1, 4, 3]
+// map to Euler's Triangle
+// find n elements sequence, k places where A(i) > A(i+1)
+// E(n, k) = (k+1) E(n-1, k) + (n-k) E(n-1, k-1)
+// Reference. Textbook: Concrete Mathematics page. 268 
+
+[sd_invol wrote on 2016-06-17T13:26:52]
+
+---
+
+懂了……谢昂神～
+
+[skyxuan wrote on 2016-06-17T14:35:39]
+
+---
+
+@Sd_Invol#3800 懂了，谢昂神～
+
+[skyxuan wrote on 2016-06-17T14:35:58]
+
+---
+
