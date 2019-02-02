@@ -1,0 +1,43 @@
+# 51nod 1238 最小公倍数之和V3
+
+求助：http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1238
+输入 $n$，求 $\mathrm{lcm}(i, j)$ 之和 $\bmod (10\^9+7)$, $1 \leq i, j \leq n, n \leq 10\^{10}$
+
+[czk wrote on 2015-10-29T02:51:03]
+
+---
+
+噢。。 懂了。。
+
+[czk wrote on 2015-10-29T06:58:15]
+
+---
+
+把lcm改成gcd会做了，lcm还是不会。。
+
+[czk wrote on 2015-10-29T08:12:12]
+
+---
+
+依稀记得杜教曾经在百度空间里贴出来过一个低于线性的做法。
+可惜已经消散在历史的尘埃里了
+(能炸出杜教或者备份了杜教百度空间的真爱粉么！)
+
+[mikantsumiki wrote on 2015-10-29T15:41:24]
+
+---
+
+@MikanTsumiki#2287 
+
+我倒是备份了 http://xudyh.github.io 啦。。。那个 pdf 窝下过之后删掉了 = =
+
+[ftiasch wrote on 2015-10-29T16:52:41]
+
+---
+
+@Varona#2288 来自杜教的礼物（？）http://pan.baidu.com/share/link?shareid=338987&uk=2902582044
+
+[ftiasch wrote on 2015-10-30T14:31:37]
+
+---
+
