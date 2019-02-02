@@ -1,0 +1,45 @@
+# SPOJ PRIME
+
+题目链接：[Factorial factorisation](http://www.spoj.com/problems/PRIME/) 和 [加强版](https://www.51nod.com/onlineJudge/questionCode.html?problemId=1155)
+题目大意：给定正整数 $n$，尝试将 $n$ 的阶乘分解成两个或两个以上的大于 $1$ 的阶乘之积，无解输出 No solution，有解输出阶乘个数最小的任一解。
+数据范围： $2 \leq n \leq 1000$，加强版是 $n \leq 10^5$。
+感谢 @613 友情提供的辅助链接：[Numbers n such that n! can be written as the product of smaller factorials](http://oeis.org/A034878)
+
+[skywalkert wrote on 2017-10-11T13:34:55]
+
+---
+
+显然若解存在，那么分解中最大的那个阶乘数至少应该大于或等于<=n的最大素数，设为p。那么在n!中除去p!之后剩下的数，用爆搜+剪枝（同样用当前剩余的数的最大素因子和可行性剪枝就够了）足以解决。
+
+[LiveFish wrote on 2017-11-07T10:55:07]
+
+---
+
+@LiveFish#5478 我有进行类似的尝试，但是我得到的结论是不需要搜索，大致原因如下：
+
+1. 设不超过 $n$ 的最大质数为 $p_n$，计算 $\frac{n!}{p_n!}$ 在 $n \leq 10^5$ 时的最大值，根据最大值发现，可以使用的阶乘不超过 $200!$；
+2. 筛去 $\frac{n!}{p_n!}$ 在 $n \leq 10^5$ 时存在质因数超过 $200$ 的 $n$，再次计算剩余的 $n$ 对应的最大值，根据最大值发现，可以使用的阶乘不超过 $30!$；
+3. 筛去 $\frac{n!}{p_n!}$ 在 $n \leq 10^5$ 时存在质因数超过 $30$ 的 $n$，再次计算剩余的 $n$ 对应的最大值，根据最大值发现，可以使用的阶乘不超过 $10!$，且当 $n > 16$ 时满足 $n = p_n - 1$ 才可能有解。
+
+因此得到做法，特判 $n = 9, 10, 16$ 的情况，其他情况检查 $n - 1$ 是不是素数，有解时使用一个 $O(10 n)$ 的背包求解。
+
+[skywalkert wrote on 2017-11-07T11:46:04]
+
+---
+
+@skywalkert#5482 由于 poster 年纪大了记性不好，这条评论有许多笔误 = =
+
+找到的规律是有解时一定会分解出 $(n-1)!$，而不一定是 $p_n!$，这一点也可以从 [Factorial Products](http://mathworld.wolfram.com/FactorialProducts.html) 得知：
+
+> There are no nontrivial identities of the form
+>　　　　　　n! = a_1! a_2! ... a_r!
+> for r >= 2 with a_i >= a_j >= 2 for i < j for n <= 18160 except
+> 　 　 　　　　9! = 7! 3! 3! 2!
+> 　　　　　　10! = 7! 6!
+> 	 　 　 　　　　　 = 7! 5! 3!
+>　　　　　　16! = 14! 5! 2!
+
+[skywalkert wrote on 2017-11-07T15:46:35]
+
+---
+
