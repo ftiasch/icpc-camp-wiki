@@ -1,0 +1,15 @@
+# 2015 Taipei Regional  J题 Task Review
+
+题目链接：https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=5485
+题目描述：给定一个有向图，n个点，m条边。要求找出一个子图C，使得该子图的每个连通分量都是一个环(入度等于出度等于1，不能是孤立点)，并且使得花费最小。花费的计算方式是这样：设min_edge为该子图中的最小边权，max_edge为该子图中的最大边权。L(C)=原图中所有边权小于等于max_edge的边的权值和，B(C)=原图中所有边权大于等于min_edge的边的权值和。 该子图的花费是max{L(C),B(C)}  。 n<=500，边权<=10000
+
+[xaphoenix wrote on 2016-10-18T12:30:09]
+
+---
+
+QAQ，问到做法了，自己回答下吧。。首先我们可以二分这个花费，对于一个确定的花费，我们可以找出可以使用的边有哪些。之后我们要考虑的就是如何用这些边拼出满足条件的图。题目条件等价于找一些边，使得每个点的入度=出度=1，我们只要拆点，然后让这两点之间连一条上下界均为1的边，跑一下可行流即可。
+
+[xaphoenix wrote on 2016-10-18T14:04:56]
+
+---
+
