@@ -1,0 +1,68 @@
+# Hackerrank Fibonacci LCM
+
+给定$N$个整数$a_1,a_2,...,a_N$，令$F_1=F_2=1$，$F_n=F_{n-1}+F_{n-2}$，求$\mathrm{lcm}(F_{a_1},F_{a_2},...,F_{a_N}) \bmod (10^9+7)$。
+$N\le 10^5, a_i\le 10^9$。
+[题目链接](https://www.hackerrank.com/challenges/fibonacci-lcm)
+
+[skywalkert wrote on 2015-10-01T19:35:40]
+
+---
+
+没记错的话$N$应该只有100吧？ 
+甩个链接跑啦！[Link](http://yqcmmd.com/2015/06/23/fibonacci)
+
+[yuzhou627 wrote on 2015-10-02T03:01:01]
+
+---
+
+@yuzhou627#1233 $N=10^5$也可以做吧
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+
+[skywalkert wrote on 2015-10-02T05:04:46]
+
+---
+
+@skywalkert#1235 你先看下复杂度啊?
+
+[yuzhou627 wrote on 2015-10-02T05:22:18]
+
+---
+
+@yuzhou627#1240 复杂度大概是 $O(N \sum{\sigma(a_i)})$ 的吧。
+
+[ftiasch wrote on 2015-10-02T05:24:22]
+
+---
+
+@ftiasch#1241 再乘个log吧, 算fibonacci数?
+
+[yuzhou627 wrote on 2015-10-02T05:26:12]
+
+---
+
+@yuzhou627#1242 不对。因为是 $O((N + \log M) \sum{\sigma(a_i)})$ 。
+
+[ftiasch wrote on 2015-10-02T05:31:26]
+
+---
+
+@ftiasch#1243 有理! 
+
+[yuzhou627 wrote on 2015-10-02T05:32:34]
+
+---
+
+@ftiasch#1243 @yuzhou627#1244 
+[这里](http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1355)有个数据范围不一样的，这个该怎么搞呢？记忆化的方法把状态写成两个数字标号还是太多了T_T。。
+数据范围是$N\le5*10^4, a_i\le10^6$。
+
+[skywalkert wrote on 2015-10-02T07:16:10]
+
+---
+
+口胡：当$a_i$比较小的时候有一个反演的方法来容斥，可以做到$O(AlogA)$，$A=max_{i=1}^{n}{a_i}$。例如[这题](http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1355)。
+
+[skywalkert wrote on 2015-10-02T10:39:45]
+
+---
+
