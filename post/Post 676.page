@@ -1,0 +1,45 @@
+# 字符串交错问题
+
+朋友做梦梦到的一个题：判断一个字符串是否由两个相同的字符串交错插入得来（原顺序不变）
+如：AACCMM、ACMACM、ACACMM都是字符串ACM通过一些交错插入的顺序得来的，而ACCAMM、ACMCAM、AAMCCM则无法由ACM得来
+
+[danagi wrote on 2017-04-05T11:03:46]
+
+---
+
+数据范围没有的话……是不是这个题呢？
+[51nod 1400 序列分解](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1400)
+
+
+[skywalkert wrote on 2017-04-05T15:53:11]
+
+---
+
+@skywalkert#5040 这个数据范围就太无聊了吧？
+
+[sevenkplus wrote on 2017-04-05T16:27:55]
+
+---
+
+@skywalkert#5040 的确，我比较想知道数据范围大一些的时候是否有比较好的算法解决
+
+[danagi wrote on 2017-04-05T17:05:08]
+
+---
+
+刚想起来。。。
+
+一般情况下这个问题是NPC的。见http://cstheory.stackexchange.com/questions/34/how-hard-is-unshuffling-a-string
+
+在一些特殊情况下是可做的。上面那个链接里也有。这个特殊情况我以前出过题。见http://acm.hdu.edu.cn/showproblem.php?pid=4665
+
+[sevenkplus wrote on 2017-04-07T20:37:44]
+
+---
+
+@sevenkplus#5045 感谢~
+
+[danagi wrote on 2017-04-08T13:01:17]
+
+---
+
