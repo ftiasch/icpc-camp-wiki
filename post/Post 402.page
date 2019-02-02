@@ -1,0 +1,44 @@
+# OpenJudge 1027 Angry Birds
+
+http://poj.openjudge.cn/practice/1027?lang=en_US
+给你一座由石头垒起来的山（宽度和高度 $\leq 10^5$）。
+定义 top point 为相等连续的一段高度，且相邻两侧的高度都严格小于该高度。
+求至少移除多少块石头才能 使得这座山的 top point 的个数小于等于 $K \leq 300$? 
+不知道如何下手
+
+[acerlawson wrote on 2016-04-22T08:09:24]
+
+---
+
+核心思想大概是堆贪心+并查集？
+搬运题解：
+struct PP {
+    int l, r, hl, hr, h;
+    long long sum;
+    int pre, next;
+}A[100100];
+l左起坐标，r右起坐标，hl左边相连的高度，hr右边相连的高度，h本身的高度，pre左边连着的块下标，next右边连着的块下标
+
+sum表示：目前砍掉的山峰面积。如果这个块是山峰那么sum才有意义，否则为0
+
+一个函数：Cal(id)计算 把这个山峰id砍掉需要的面积。
+    int t = max(A[i].hl, A[i].hr);
+    return ((long long)(A[i].h - t)) * (A[i].r - A[i].l + 1);
+
+这个题还是比较好想的，把横坐标离散化，将山峰插入堆；
+
+每一次弹出一个面积最小山峰：即id = {id: min(Cal(id) + A[id].sum)}（id）和左边或者右边(now)合并起来。
+
+如果没有形成新的山峰，a[now].sum = 0;
+
+形成新的山峰：a[now].sum += A[id].sum + Cal(id); 将这个新的山峰插入堆。
+
+（这里需要注意，就是如果左边和右边高度相等，合并稍微麻烦一些）
+一直循环到堆中元素个数小于等于P
+
+最后的结果就是：总面积 - 剩下的块面积 - 每个块的sum
+
+[prime21 wrote on 2016-06-17T13:49:10]
+
+---
+
