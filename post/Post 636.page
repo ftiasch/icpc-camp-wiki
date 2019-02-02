@@ -1,0 +1,17 @@
+# Open Cup XVI Grand Prix of Ekaterinburg H Heimdall
+
+ 给出$R$个长度为$N$的置换，从中选择一些置换（每个置换可以选择若干个）合并为一个新的置换，问可以生成出多少置换？
+$R \leq 1000, N \leq 15 $
+
+[xietutu wrote on 2016-11-22T12:47:34]
+
+---
+
+当时比赛时贴贴板子就过了。。
+
+可以看 http://roosephu.github.io/attachment/AbsAlg.pdf 或者 http://codeforces.com/blog/entry/21335?locale=ru#comment-260437 
+
+[ftiasch wrote on 2016-11-22T15:48:04]
+
+---
+
