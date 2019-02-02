@@ -1,0 +1,9 @@
+# Shanghai 2015 H Happiness of Frog
+
+[题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=5580)
+给一个长为$n(\leq 3000)$的序列$a_1,a_2,...,a_n(1 \leq a_i \leq 70)$，对其重排得到新的序列，最大化回文子串个数。现在要求出这个最大值以及有多少种序列可以取得这个最大值。称两个序列$a$和$b$是不同的，如果存在某个$i$使得$a_i \neq b_i$。
+
+[quailty wrote on 2017-11-07T11:19:24]
+
+---
+
