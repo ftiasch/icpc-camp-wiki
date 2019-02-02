@@ -1,0 +1,30 @@
+# SHU校赛   J题——膜一下将带给你好运
+
+
+题目链接在这里：[膜一下将带给你好运](http://acmoj.shu.edu.cn/contest/28/problem/130/)
+
+有这样一个公式
+$$f(n)=\sum_{i=233}^{n-233}\phi(i)*[n/i]$$
+给定n，要求$f(n)$的函数值。
+
+队友打表出来一个公式：
+$$g(n)=\sum_{i=1}^{n}\phi(i)*[n/i]=\frac{n*(n+1)}{2}$$
+
+这是为什么啊(笑着哭)
+
+[sd197555 wrote on 2017-07-11T04:15:00]
+
+---
+
+$g(n)=\sum_{i=1}^{n}\phi(i)\lfloor n/i \rfloor=\sum_{i=1}^{n}\sum_{d|i}\phi(d)=\sum_{i=1}^{n}i=\frac{n(n+1)}{2}$
+
+[quailty wrote on 2017-07-11T04:43:41]
+
+---
+
+懂了！蟹蟹~
+
+[sd197555 wrote on 2017-07-11T06:58:31]
+
+---
+
