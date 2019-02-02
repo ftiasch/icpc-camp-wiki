@@ -1,0 +1,120 @@
+# 莫比乌斯函数前缀和
+
+如何求莫比乌斯函数前缀和。。$n \leq 10\^{10}$
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1244
+
+[czk wrote on 2015-10-28T10:42:36]
+
+---
+
+顺带求下欧拉函数前缀和。。ORZ
+
+[czk wrote on 2015-10-28T10:50:11]
+
+---
+
+设 $M(n) = \sum\_{1 \leq k \leq n} \mu(k)$，
+我猜有 $\sum\_{1 \leq k \leq n} M(\lfloor \frac{n}{k} \rfloor) = 1$。
+
+预处理前 $n\^\frac{2}{3}$ 的 $M(n)$，然后用上面式子暴力递归就差不多了。
+
+[ftiasch wrote on 2015-10-28T11:05:36]
+
+---
+
+@Varona#2249 能弱弱地问下第二行怎么推出来的吗。。。
+
+[czk wrote on 2015-10-28T11:26:02]
+
+---
+
+$\sum\_{1 \leq k \leq n} M(\lfloor \frac{n}{k} \rfloor) = \sum\_{1 \leq k \leq n} \sum\_{1 \leq ik \leq n} \mu(i) = \sum\_{1 \leq j \leq n} \sum\_{i | j} \mu(\frac{j}{i}) = 1$
+
+之前瞎猜猜错了……
+
+[ftiasch wrote on 2015-10-28T11:47:52]
+
+---
+
+@Varona#2252 懂了。。厉害
+
+[czk wrote on 2015-10-28T12:12:41]
+
+---
+
+@czk#2253 再发个链接 [Computing the Summation of the Mobius Function](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.6477&rep=rep1&type=pdf)
+
+[ftiasch wrote on 2015-10-28T14:20:58]
+
+---
+
+@Varona#2254 6666。。。先收藏起来明天看了
+
+[czk wrote on 2015-10-28T16:28:30]
+
+---
+
+@Varona#2254 再问一个问题。。
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1238
+求lcm(i,j)之和%1000000007，1<=i,j<=n, n <= 10^10
+
+[czk wrote on 2015-10-28T16:29:35]
+
+---
+
+@czk#2258 请开新帖问……
+
+[ftiasch wrote on 2015-10-28T16:31:18]
+
+---
+
+@czk#2253  菊苣   我暴力递归T了  http://paste.ubuntu.com/12997911/
+
+[12170246 wrote on 2015-10-29T11:09:37]
+
+---
+
+吐槽一句。。首页为什么都是这种题(
+
+[yangyue wrote on 2015-10-29T13:01:07]
+
+---
+
+@yangyue#2280 大概是最近没有什么比赛，其他类型的题都可以容易的搜到题解 \_(°:з」∠)\_
+
+[AngryBacon wrote on 2015-10-29T13:09:16]
+
+---
+
+@AngryBacon#2282 我也很想吐槽啊。这种题我也略苦手……
+
+[ftiasch wrote on 2015-10-29T13:49:18]
+
+---
+
+@12170246#2279 用哈希表记忆化一下跑的飞快
+
+[czk wrote on 2015-10-29T14:59:12]
+
+---
+
+@yangyue#2280 怪我。。。
+
+[czk wrote on 2015-10-29T14:59:48]
+
+---
+
+杜老师教我算了一下复杂度。。
+
+其实说白了就是。。$\sum\_{1 \leq i \leq n\^{1/3}} \sqrt{\frac{n}{i}} = n\^{\frac{2}{3}}$。。
+
+[ftiasch wrote on 2015-10-30T16:07:02]
+
+---
+
+@Varona#2320 这个变形一下还能做吗。。比如说求n^2 mu[n]的前缀和。。。
+
+[czk wrote on 2015-10-31T16:12:17]
+
+---
+
