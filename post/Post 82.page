@@ -1,0 +1,80 @@
+# SPOJ MATCH Perfect Matching
+
+http://www.spoj.com/problems/MATCH/
+n<=300个点的二分图，判断完备匹配的奇偶性
+我好奇是需要什么样观察QAQ 想了蛮久也不会
+
+
+[不会写诗的诗人 wrote on 2015-09-27T03:50:53]
+
+---
+
+$\mathrm{perm}(A) \equiv \mathrm{det}(A) \pmod 2$
+
+所以算行列式就行。
+
+[ftiasch wrote on 2015-09-27T04:31:11]
+
+---
+
+@ftiasch#739 谢谢叉老师！
+
+[不会写诗的诗人 wrote on 2015-09-27T08:50:34]
+
+---
+
+@ftiasch#739 能不能问下叉老师这个结论是哪里粗来的？
+
+[不会写诗的诗人 wrote on 2015-09-27T09:13:32]
+
+---
+
+@不会写诗的诗人#750 
+
+因为$1 = -1 \pmod 2$，所以行列式里面那个就消掉了啊……不就是变成 permanent 了。
+
+[ftiasch wrote on 2015-09-27T09:35:38]
+
+---
+
+卧槽长见识了orz
+
+[acerlawson wrote on 2015-09-27T15:23:30]
+
+---
+
+此题可以加强成模4，出处是CERC 09 (False) Faces，甚至比SPOJ上那题早。
+题解见 http://cepc09.ii.uni.wroc.pl/solutions.html
+
+[sevenkplus wrote on 2015-09-27T23:21:00]
+
+---
+
+@sevenkplus#814 这题可以加强成模 $2^k$。
+
+[ftiasch wrote on 2015-09-28T02:43:44]
+
+---
+
+@ftiasch#830 学习了，求指导。（虽然我也没认真想过……）
+
+[sevenkplus wrote on 2015-09-28T04:37:34]
+
+---
+
+@sevenkplus#844 
+
+你看看那个 2 变 4 的方法啊，类似凑一凑，多花点复杂度就能凑上去。
+
+[ftiasch wrote on 2015-09-28T04:50:58]
+
+---
+
+确实是有趣。
+http://reference.wolfram.com/language/ref/Permanent.html
+以前从不知道积和式Qrz
+
+[不会写诗的诗人 wrote on 2015-09-28T04:53:48]
+
+---
+
