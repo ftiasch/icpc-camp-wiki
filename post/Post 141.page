@@ -1,0 +1,77 @@
+# Petrozavodsk Winter 2013 Day 1 K Kaleidoscope
+
+给一个 $n \times n$ 的由 a 到 z 组成的字符矩阵，求其中「万花筒形」的子矩阵一共有多少个。
+其中「万花筒形」是指，一个边长为奇数的以矩阵的中心为对称点中心对称的正方形矩阵。
+附个网址：http://www.e-olymp.com/en/problems/5552
+
+[strategy wrote on 2015-10-04T14:09:49]
+
+---
+
+奇偶分开做。对于每个中心，二分 hash check。
+
+[ftiasch wrote on 2015-10-04T14:13:04]
+
+---
+
+@Varona#1423 还有个小问题能不能在线性时间里，求一个串的所有字母的以其为左端点的最长回文串长度
+
+[strategy wrote on 2015-10-04T14:18:58]
+
+---
+
+@strategy#1425 这个用回文树似乎可以随便搞
+
+[zimpha wrote on 2015-10-04T14:24:18]
+
+---
+
+@Varona#1423 做$2n$遍manacher应该就不用hash了
+
+[zimpha wrote on 2015-10-04T14:26:35]
+
+---
+
+@zimpha#1428 具体咋做，没明白。
+
+[ftiasch wrote on 2015-10-04T14:28:10]
+
+---
+
+@Varona#1429 对于每个$(i,j)$算出第$i$行以$j$为中心的最长回文串, 类似的算出第$j$列以$i$为中心的最长回文串. 这个对行和列分别搞$n$边manacher. 似乎后面部分枚举中心, 然后乱搞下可以做到$O(n\^2)$ 的样子.
+
+可以做到$O(n\^2)$, 对于每个$(i,j)$分别算出往上/下/左/右延出去的最长距离, 这个用单调队列就好维护了, 然后以$(i,j)$为中心的最大正方形就是四个最长距离的min.
+
+[zimpha wrote on 2015-10-04T14:31:59]
+
+---
+
+@zimpha#1430 他是中心对称……
+
+[ftiasch wrote on 2015-10-04T14:32:44]
+
+---
+
+@Varona#1431 我打开题面看了下, 似乎是关于坐标轴对称
+
++ k is odd,
++ the vertical line going through the square's middle is its axis of symmetry (the square's left and right half are painted symmetrically),
++ the horizontal line going though the square's middle is also its axis of symmetry.
+
+[zimpha wrote on 2015-10-04T14:34:47]
+
+---
+
+@zimpha#1432 那我就明白啦！
+
+[ftiasch wrote on 2015-10-04T14:35:51]
+
+---
+
+看错题了T T（其实是概念不清。。）
+谢谢两位的帮助，信息量好大我回去消化一下。。
+
+[strategy wrote on 2015-10-04T14:43:10]
+
+---
+
