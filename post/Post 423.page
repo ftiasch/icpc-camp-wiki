@@ -1,0 +1,31 @@
+# POI XIII Stage III Crystals
+
+[题目链接](http://main.edu.pl/en/archive/oi/13/kry)
+题目大意：
+给出一个长度为$n$的序列$m_1,m_2,\cdots,m_n$，问有多少长度为$n$的序列$a_1,a_2,\cdots,a_n$满足
+$0\leq a_i\leq m_i$
+$a_1\otimes a_2\otimes\cdots\otimes a_n=0$
+$a_1+a_2+\cdots+a_n\geq 1$
+数据范围：
+$1\leq n\leq 50, 1\leq m_i<2^{32}-1$保证答案不超过$2^{64}$。
+
+
+[skywalkert wrote on 2016-05-14T10:26:15]
+
+---
+
+[官方题解](http://www.oi.edu.pl/static/attachment/20110811/oi13-a4.pdf) page 120 to page 127
+波兰语阅读抓狂中……
+
+[skywalkert wrote on 2016-05-14T10:29:01]
+
+---
+
+对于某一位 $k$，如果某个 $a_i$ 开始 $< m_i$，那么就是说 $a_i$ $k$ 后面得位可以都是可行的。
+
+所以除了 $a_i$ 之外的数随便取，$a_i$ 总能调一调使得亦或起来是 $0$。之后随便算一算就可以了。
+
+[ftiasch wrote on 2016-05-14T18:04:49]
+
+---
+
