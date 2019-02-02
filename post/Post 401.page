@@ -1,0 +1,79 @@
+# SPOJ GOODG
+
+[传送门](http://www.spoj.com/problems/GOODG/)
+### 题目大意
+一个气球，开始大小是0，如果在第i天打气,大小增加 $a_i$，然后后面每天都减少 $d_i$ 大小.（最多减少到大小0)
+问求$n+1$天能到的最大气球大小，$n \leq 10^6$
+
+想了想，$f[i] = \max\{(i - j) (-d_j) + f(j)\} + a[i]$
+然后, $i \times d_j + f[i] - a[i] = j \times d_j + f[j]$
+看起来是$y = ax + b$的样子，感觉可以维护一个上凸壳?
+又貌似，不是简单的用栈维护($d_j$不单调?)... 
+该怎么办呢~怎么办呢
+
+[wumpus wrote on 2016-04-19T04:33:23]
+
+---
+
+是不是就是后缀和的最大值呢？
+
+[ftiasch wrote on 2016-04-19T06:41:53]
+
+---
+
+@Hayashimo#3471 好像不是辣么科学啊~ 因为不是每个后缀都要选QAQ
+
+[wumpus wrote on 2016-04-19T07:38:59]
+
+---
+
+@Wumpus#3469 这个可以cdq分治一下, 然后维护上凸壳, 但是复杂度有点大, 是$O(n\log^2n)$
+
+[zimpha wrote on 2016-04-19T08:23:05]
+
+---
+
+@zimpha#3473 归并一下少个 log 吧。。
+
+@Wumpus = = 看错题了不好意思。。。
+
+[ftiasch wrote on 2016-04-19T12:15:54]
+
+---
+
+@zimpha#3473 会了 thx
+
+[wumpus wrote on 2016-04-19T12:30:38]
+
+---
+
+@Hayashimo#3474 怎么归并少log哇 小板凳听姿势～～～
+
+[wumpus wrote on 2016-04-19T12:33:18]
+
+---
+
+@Hayashimo#3474  大概能把sort归并了 , 不过二分凸壳这个log咋办呢
+
+[wumpus wrote on 2016-04-19T12:59:59]
+
+---
+
+@Wumpus#3477  明白了... i是递增的 
+
+[wumpus wrote on 2016-04-19T13:27:13]
+
+---
+
+@Wumpus#3478 太好了看来你全明白了！其实就算 i 不单调。。。也可以归并嘛。
+
+[ftiasch wrote on 2016-04-19T13:50:16]
+
+---
+
+@Hayashimo#3474 这个归并真有趣
+
+[zimpha wrote on 2016-04-20T03:59:24]
+
+---
+
