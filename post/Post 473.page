@@ -1,0 +1,18 @@
+# POJ 2129 Invariant Polynomials
+
+来源：http://poj.org/problem?id=2129
+题意：令P(x,y)为一关于x,y的多项式。定义若$\forall x \forall y P (x\cos \alpha - y\sin \alpha, x\sin \alpha+ y\cos \alpha) = P (x, y)$时，$\alpha$是$P(x,y)$的旋转不动值。
+现在给定d,n，求以$\frac{2\pi}{n}$为旋转不动值，$deg(P(x,y)) \leq d$时，$P(x,y)$组成的向量空间的维数。
+（题意不清看原题吧qwq）
+
+
+[yzq986 wrote on 2016-07-04T10:53:18]
+
+---
+
+https://en.wikipedia.org/wiki/Molien_series
+
+[ftiasch wrote on 2016-07-05T03:44:44]
+
+---
+
