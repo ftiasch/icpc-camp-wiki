@@ -1,0 +1,21 @@
+# Dhaka 2009 K Integer Game
+
+请问达卡2009的K题，不知道为什么达卡2009年没有题解看...并不知道怎么做
+https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2504
+
+[mayf3 wrote on 2015-10-06T14:37:29]
+
+---
+
+有一股浓浓的双向广搜的味道呀……
+
+[ftiasch wrote on 2015-10-06T14:53:18]
+
+---
+
+@Varona#1535 好有道理。。我想歪了，而且题目有20步限制。。两边分别搜10层。。。。不过不知道状态多不多。。
+
+[mayf3 wrote on 2015-10-06T15:04:46]
+
+---
+
