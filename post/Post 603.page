@@ -1,0 +1,35 @@
+# 2015 Asia Tehran D Laser Game
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=695&page=show_problem&problem=5547)
+题目大意：
+给出二维平面上的$n$条射线（给出起始点和射线上的一个点，都是整点）。
+现在有一个起点和一个终点，都是整点，问从起点走到终点最少要碰到多少条射线，多次碰到同一条射线算一次。
+保证射线起始点、射线上的点、起点和终点的坐标互不相同。射线有可能平行。
+$n \leq 200$，坐标绝对值不超过$10^8$。
+
+[skywalkert wrote on 2016-10-20T13:19:54]
+
+---
+
+题意哪里说"多次碰到同一条射线算一次"了啊我的 tls？
+
+昂老师又丑又乱地绘了 200 行 Farmland 就帅气 AC 了啊
+
+[code](http://paste.ubuntu.com/23356436/)
+
+[sd_invol wrote on 2016-10-20T23:17:47]
+
+---
+
+@sd_invol#4614 Farmland是什么？QAQ
+
+[Fancy wrote on 2016-10-25T10:57:19]
+
+---
+
+@Fancy#4642 看 [这里](https://async.icpc-camp.org/d/14-icpccamp-2015) 的 几何问题选讲。
+
+[ftiasch wrote on 2016-10-25T14:37:51]
+
+---
+
