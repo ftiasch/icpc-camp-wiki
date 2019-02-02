@@ -1,0 +1,145 @@
+# Chiayi 2013 H Surrounding a house
+
+[Problem Link](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4711)
+
+给一个n \* m的网格，格子有权。求用围栏把(1,1)围住的最小代价。围栏四连通。没有被围住的部分得是个连通块。
+n \* m <= 40000，格子权值非负。
+
+怎么捉...
+
+[Nero wrote on 2015-11-13T12:02:02]
+
+---
+
+你说是不是跟 http://poj.org/problem?id=3182 这题有点像呢？
+
+[ftiasch wrote on 2015-11-13T13:01:31]
+
+---
+
+你说是不是和http://codeforces.com/contest/375/problem/C 这个题有点像呢？
+
+[yuzhou627 wrote on 2015-11-13T14:04:43]
+
+---
+
+尼门说的道理我都懂...但是怎么保证没有被围住的部分都连在一起呢...
+
+嘤嘤嘤，如何上图...
+
+[Nero wrote on 2015-11-13T14:59:52]
+
+---
+
+路径把外部区域打断只能是路径先到达某个边界然后以不恰当的方式离开边界再到达另一边界吧
+
+所以跑最短路的时候再开一维记一下就可以了？
+
+[splinter wrote on 2015-11-14T13:36:09]
+
+---
+
+@splinter#2582 
+有这么一种反例...
+10  10 
+   1      1      1      1      1      1      1      1      99     99  
+   1      99     99     99     99     99     99     1      99     99  
+   1      99     99     99     99     99     99     1      99     99  
+   1      99     99     1      1      1      99     1      99     99  
+   1      99     99     1      99     1      99     1      99     99  
+   1      99     99     1      99     1      1      1      99     99  
+   1      99     99     1      1      99     99     99     99     99  
+   1      99     99     99     1      99     99     99     99     99  
+   1      1      1      1      1      99     99     99     99     99  
+   99     99     99     99     99     99     99     99     99     99  
+
+外围的99们被切成了2个区域= =...按照记边界的思路，搞不定这个...
+
+[Nero wrote on 2015-11-14T13:41:47]
+
+---
+
+@Nero#2583 我想到过这个例子。。然后觉得中间那一块99能算做外部区域吗？我当时觉得这应该也算是某种内部区域吧。。。
+
+[splinter wrote on 2015-11-14T13:49:14]
+
+---
+
+@splinter#2584 
+起先我非常支持您的 "这是内部区域" 的说法。
+但是我按照 "离开边界就不能再回来"的设定写了个最短路，然而它wa了。[Code](http://paste.ubuntu.com/13260922/)
+我觉得我代码没有问题...QwQ
+
+
+
+[Nero wrote on 2015-11-14T14:53:24]
+
+---
+
+@Nero#2596 看不出来错。。我觉得代码写得很讲道理。。
+
+[splinter wrote on 2015-11-17T04:30:01]
+
+---
+
+@splinter#2640 Sigh..弃疗..谢谢您了...
+
+[Nero wrote on 2015-11-17T04:40:47]
+
+---
+
+@Nero#2596 不好意思 这题数据传错了 我已经告知管理员 但是他休假中⋯⋯等你发现这题有人ac的时候再提交吧
+
+[rujialiu wrote on 2015-11-17T04:59:01]
+
+---
+
+@Nero#2641 另外 live archive最近几年的台湾赛区还有韩国赛区数据都是我随便做的 只有某些我比较喜欢的题数据比较强 大部分数据比较弱（但是肯定比样例强一些）ac了也不能说明你的代码是对的⋯⋯实在没时间加强数据啦⋯⋯如果大家有做数据电话欢迎发过来～
+
+[rujialiu wrote on 2015-11-17T05:02:49]
+
+---
+
+@rujialiu#2642 好的...
+妈呀惊现入门经典作者- -!!@Varona 快扔大师球
+
+[Nero wrote on 2015-11-17T05:09:41]
+
+---
+
+@rujialiu#2643 然后还有这个题[Link](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4707)它有多解但是并没有special judge...
+
+[Nero wrote on 2015-11-17T05:17:52]
+
+---
+
+@Nero#2647 啊⋯⋯那你有没有写好的呀？我近期没有改数据的计划 不过如果你有现成的spj话可以发给我
+
+[rujialiu wrote on 2015-11-17T05:23:22]
+
+---
+
+@rujialiu#2650 没有现成的，不过可以的话我打算写一个...格式参照[这个](http://blog.csdn.net/sunquana/article/details/41696403)可以吗
+
+[Nero wrote on 2015-11-17T05:50:41]
+
+---
+
+@rujialiu#2650 [uvalive6695spj](http://paste.ubuntu.com/13309014/)
+
+[Nero wrote on 2015-11-17T06:20:34]
+
+---
+
+@Nero#2656 大体就是这样 不过细节有点出入 返回值1是pe 2才是wa 然后argv[2]是标准答案文件 stdin是选手输出 发到rujia.liu at qq.com吧 谢谢啦～
+
+[rujialiu wrote on 2015-11-17T09:54:01]
+
+---
+
+@rujialiu#2663 已发～
+
+[Nero wrote on 2015-11-17T11:43:14]
+
+---
+
