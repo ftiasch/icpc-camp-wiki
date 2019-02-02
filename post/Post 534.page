@@ -1,0 +1,52 @@
+# 快速求组合数和阶乘
+
+有没有O(logn)的复杂度求C(n,m)?
+
+[wtw wrote on 2016-08-31T15:46:09]
+
+---
+
+问题描述不够清晰
+要取mod么，取得话mod最多多大
+预处理时间复杂度算不算
+不取的话精度要求多少
+.etc
+
+[kybconnor wrote on 2016-08-31T16:02:01]
+
+---
+
+不好意思忘了，模数是1e9+7,n的范围1e8
+
+[wtw wrote on 2016-08-31T16:07:33]
+
+---
+
+It looks that you are asking for this one.
+
+http://picks.logdown.com/posts/245545-binomial-coefficient-modulo-prime
+
+[ftiasch wrote on 2016-09-01T00:42:47]
+
+---
+
+后来暴力水过去了，开个千万级别的数组存4的倍数的阶乘，这样时间和空间都不会爆了
+
+[wtw wrote on 2016-09-01T02:21:54]
+
+---
+
+叉姐教了我一个方法额，其实这题C(n,k)中k很小，直接O(k)地算就可以了，23333
+
+[evilgeek wrote on 2016-09-15T04:51:42]
+
+---
+
+下面这个水贴讨论了几个情况的组合数求模
+
+http://blog.csdn.net/skywalkert/article/details/52553048
+
+[skywalkert wrote on 2016-09-17T09:14:48]
+
+---
+
