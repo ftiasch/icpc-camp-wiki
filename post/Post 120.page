@@ -1,0 +1,88 @@
+# 关于二分图多重匹配的问题
+
+用匈牙利的话，比网络流能快多少啊？毕竟匈牙利学的差。。。。。。
+
+[CQU_CST_WuErli wrote on 2015-10-01T08:41:42]
+
+---
+
+听说DINIC跑二分图匹配能做到$O(Elog(V))$？匈牙利最坏情况是$O(VE)$？
+
+[y761823 wrote on 2015-10-01T09:17:14]
+
+---
+
+@y761823#1162 居然是log(V)。。。我一直以为是sqrt(V)。。。
+
+[whalyzh wrote on 2015-10-01T09:26:44]
+
+---
+
+@whalyzh#1166 哎是吗窝不知道Σ( ° △ °|||)︴，窝也不太记得了
+
+[y761823 wrote on 2015-10-01T09:35:33]
+
+---
+
+@y761823#1168 并不能。
+
+匈牙利也不是 Hopcroft。 Hopcroft 才能做到 $O(\sqrt{V}E)$ 。
+
+[ftiasch wrote on 2015-10-01T10:16:37]
+
+---
+
+@ftiasch#1173 这个Hopcroft-Karp，窝瞄了一眼，做的事似乎跟DINIC差不多？所以DINIC跑最大匹配也是$O(\sqrt{V}E)$？
+
+[y761823 wrote on 2015-10-01T12:58:30]
+
+---
+
+@y761823#1193 Dinitz 是 $O(VE)$ 吧。
+
+[ftiasch wrote on 2015-10-01T13:58:10]
+
+---
+
+@ftiasch#1199 
+
+今年国家集训队论文有人证明了一下dinitz对于二分图的时间复杂度是$O(\sqrt{V}E)$.
+
+2015年信息学奥林匹克中国国家队论文集 P152
+
+[sd_invol wrote on 2015-10-01T14:15:30]
+
+---
+
+@Sd_Invol#1204 但是他说得是不是不太对呢，为什么交替链是不相交的呢？
+
+[ftiasch wrote on 2015-10-01T14:28:53]
+
+---
+
+@ftiasch#1206 他只是说当前匹配和某个最大匹配的对称差是不相交的吧
+
+[sd_invol wrote on 2015-10-01T14:33:13]
+
+---
+
+@Sd_Invol#1209 但是这明摆着做不到吧……
+
+[ftiasch wrote on 2015-10-01T14:41:37]
+
+---
+
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]并不怎么明白哦..
+
+[sd_invol wrote on 2015-10-01T14:45:34]
+
+---
+
+@Sd_Invol#1211 
+
+你看他说，是若干不相交的环和链，这句话倒着说就是，每个点的度都不超过 2。这一看就不对啊 ……
+
+[ftiasch wrote on 2015-10-01T14:57:42]
+
+---
+
