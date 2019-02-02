@@ -1,0 +1,180 @@
+# HDOJ 1175 连连看
+
+我用的方法是不带剪枝的广搜，在遍历四个方向的时候，题解里使用的的顺序是右、左、下、上，我一开始用的也是这个，于是ac了，后来又写了一遍，写的时候改了舒徐，改成左上右下，却wa了，求解
+
+[vgiceiceice wrote on 2015-10-30T10:35:18]
+
+---
+
+不帖代码都是耍流氓……谁知道你怎么写的。
+
+[ftiasch wrote on 2015-10-30T11:36:29]
+
+---
+
+@Varona#2309 
+```
+#include<iostream>
+#include<iomanip>
+#include<cstdio>
+#include<cstring>
+#include<sstream>
+#include<stack>
+#include<queue>
+#include<fstream>
+#include<algorithm>
+#include<map>
+#include<set>
+#include<vector>
+#include<functional>
+#include<cmath>
+using namespace std;
+int flag[1005][1005];
+int map1[1005][1005];
+
+int m,n,t;
+struct node
+{
+    int x,y,turn,dir;
+};
+//int dirx[4]= {-1,0,1,0};
+//int diry[4]= {0,-1,0,1}; //左手顺时针
+int dirx[4]= {1,-1,0,0};
+int diry[4]= {0,0,1,-1};
+node start,ending;
+void bfs()
+{
+    queue<node> q;
+    node a,b;
+    start.dir=-1;
+    start.turn=0;
+    q.push(start);
+    while(!q.empty())
+    {
+        a=q.front();
+        q.pop();
+        //cout<<a.x<<a.y<<endl;
+        if(a.x==ending.x&&a.y==ending.y)
+        {
+            cout<<"YES"<<endl;
+            return;
+        }
+        for(int i=0; i<4; i++)
+        {
+            b.x=a.x+dirx[i];
+            b.y=a.y+diry[i];
+            b.turn=a.turn;
+            b.dir=i;
+            if(a.dir != b.dir&&a.dir!=-1) b.turn++;
+            if(b.turn>2)
+             continue;
+            if(b.x<1||b.y<1||b.x>n||b.y>m)
+                continue;
+            if(map1[b.x][b.y]&&!(b.x==ending.x&&b.y==ending.y))
+                continue;
+            if(b.turn<flag[b.x][b.y])
+            {
+                flag[b.x][b.y] = b.turn;
+                q.push(b);
+            }
+        }
+
+    }
+    cout<<"NO"<<endl;
+}
+int main()
+{
+    int q;
+    while(cin>>n>>m&&n!=0&&m!=0)
+    {
+        for(int i = 1; i <= n; i++)
+            for(int j = 1; j <= m; j++)
+                cin>>map1[i][j];
+        cin>>t;
+        while(t--)
+        {
+            cin>>start.x>>start.y>>ending.x>>ending.y;
+            if(start.x==ending.x&&start.y==ending.y)
+            {
+                cout<<"NO"<<endl;
+                continue;
+            }
+            if(map1[start.x][start.y]==0||map1[ending.x][ending.y]==0||(map1[start.x][start.y]!=map1[ending.x][ending.y]))
+            {
+                cout<<"NO"<<endl;
+                continue;
+            }
+
+            for(int i = 1; i <= n; i++)
+                for(int j = 1; j <= m; j++)
+                    flag[i][j]=888;
+            bfs();
+        }
+    }
+    return 0;
+}
+```
+现在使用的这组dirx，diry是可以ac的，上面被注释掉的是我第二次写用的，会wa
+
+[vgiceiceice wrote on 2015-10-30T12:03:09]
+
+---
+
+@zjyjer#2313 奥
+
+[vgiceiceice wrote on 2015-10-30T12:18:22]
+
+---
+
+捶地
+
+[xiaojudou wrote on 2015-10-30T12:05:25]
+
+---
+
+@NPC#2311 什么意思？
+
+
+[vgiceiceice wrote on 2015-10-30T12:15:31]
+
+---
+
+@vgiceiceice#2312 麻烦看一下您上面的回复。
+
+[zjyjer wrote on 2015-10-30T12:17:01]
+
+---
+
+@vgiceiceice#2314 这做法就不对吧 flag[N][M][4 (dir) ]才对吧
+
+[lostRating wrote on 2015-10-30T14:51:40]
+
+---
+
+@edly#2319 为什么不能按这样做，遍历四个方向啊，我看题解都是这样啊，问题出在哪了？
+
+
+[vgiceiceice wrote on 2015-10-31T08:00:32]
+
+---
+
+@vgiceiceice#2323 我没看题目 就看了眼代码 你看是不是这么回事啊
+如果一个node P{x = 1 y = 1 dir = 1 turn = 2}，另一个node Q{x = 1 y = 1 dir = 2 turn = 2}
+一个入队了另一个就入不了队了，事实上两个都要入队去扩展吧？
+
+[lostRating wrote on 2015-10-31T08:20:33]
+
+---
+
+一年前dfs写过。。。
+
+[Fuei wrote on 2015-10-31T16:15:34]
+
+---
+
+@edly#2324 确实是这样的，我想错了，我觉得能过的原因应该是数据太弱了吧。很大程度是蒙过去的
+
+[vgiceiceice wrote on 2015-11-01T03:02:04]
+
+---
+
