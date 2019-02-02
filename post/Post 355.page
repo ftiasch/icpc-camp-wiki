@@ -1,0 +1,77 @@
+# SGU 417 Heavy Disc
+
+假设有一块纸板, (x,y)处的密度为ln(x^2 + y^2 ). 求圆心在(x0, y0), 半径为r的圆的质量.
+//注1.sgu417.
+//注2.保证原点严格在圆外.
+//注3.答案是圆心的密度乘以圆的面积, 但是关键是怎么证.
+
+[yuzuriha_inori wrote on 2016-02-20T03:14:02]
+
+---
+
+Harmonic function 的天然性质
+可以参见任何一本数学分析教科书，或者看 Wikipedia：
+https://en.wikipedia.org/wiki/Harmonic_function
+
+[Broad_Poplar wrote on 2016-02-22T09:37:01]
+
+---
+
+翻译了一下, 有些细节还不懂= =
+http://tempest.icpc-camp.org/The%20Mean%20Value%20Property%20of%20Harmonic%20Functions
+
+[yuzuriha_inori wrote on 2016-02-22T13:27:07]
+
+---
+
+@Yuzuriha_Inori#3163 harmonic function 有标准翻译，称为调和函数……
+另外我真的不信你们数分课没学过这东西啊
+
+[Broad_Poplar wrote on 2016-02-22T16:33:26]
+
+---
+
+@Yuzuriha_Inori#3163 我简单写一个二维的情况吧
+设 $u$  是调和函数，要证明：
+$u(x,y) = \frac{1}{2\pi} \int_0^{2\pi} u(x+ r \cos \theta, y + r \sin \theta)\, \mathrm{d}\theta$
+
+令 $U(r, \theta) = u(x + r \cos \theta, y + r \sin \theta)$, $F(r) = \frac{1}{2\pi} \int_0^{2\pi} U(r, \theta) \,\mathrm{d}\theta$,
+因为$\triangle u = 0$，
+所以 $\frac{\partial^2 U}{\partial \theta^2} + r \frac{\partial}{\partial r} (r \frac{\partial U}{\partial r}) = 0$，
+移项之后两边按圆周积分，注意到 $\frac{\partial U}{\partial \theta}$ 关于 $\theta$ 是周期函数，易得  $r \frac{\partial}{\partial r} (r \frac{\partial F}{\partial r}) = 0$，
+所以 $(r \frac{\partial F}{\partial r})$ 是常数，令$r=0$，可知为$0$，于是 $F$ 是常函数，$F(r) = F(0) = u(x,y)$。
+Q.E.D.
+
+@ftiasch 
+
+[Broad_Poplar wrote on 2016-02-22T17:03:37]
+
+---
+
+@Broad_Poplar#3168 大哥，我简单翻了一下，发现这是 visual complex analysis 最后一章讲的内容。您是不是记错了？
+
+[ftiasch wrote on 2016-02-23T00:13:20]
+
+---
+
+@Varona#3169 并没有……
+您可以参阅常庚哲 史济怀 数分下 275页最上面
+我们作业还做过，题目很难我想了好久所以印象深刻，书后好像有hint
+
+[Broad_Poplar wrote on 2016-02-23T10:45:56]
+
+---
+
+@Broad_Poplar#3178 是在下输了
+
+[ftiasch wrote on 2016-02-23T10:56:34]
+
+---
+
+@Broad_Poplar#3178 懂了.
+不过我们数分也没讲过....
+
+[yuzuriha_inori wrote on 2016-02-24T09:40:14]
+
+---
+
