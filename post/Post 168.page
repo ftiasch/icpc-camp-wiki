@@ -1,0 +1,36 @@
+# HDOJ 4827 Cycle Cocycle
+
+有一个n个点m条边的图，你要给每个点一个0或1的标号，使得每个点与偶数个相同标号的点之间有边。如果有多解输出任意一组。
+1<=n<=1000
+1<=m<=10000，图中无重边无自环。
+http://acm.hdu.edu.cn/showproblem.php?pid=4827
+这题怎么做？
+
+[woshi_sb wrote on 2015-10-09T04:24:50]
+
+---
+
+The same as [POI XII Stage III Two Parties](http://main.edu.pl/en/archive/oi/12/dwa).
+
+[ftiasch wrote on 2015-10-09T04:36:23]
+
+---
+
+谢谢了~~~
+
+[woshi_sb wrote on 2015-10-09T06:27:07]
+
+---
+
+@Varona#1631 原来还有这个出处。这题我是从Lovasz那本习题书上看到的。
+
+[sevenkplus wrote on 2015-10-09T16:41:57]
+
+---
+
+@sevenkplus#1669 [另一个出处](http://www.artofproblemsolving.com/wiki/index.php/2008_USAMO_Problems/Problem_6)。不过方向似乎不太一样。
+
+[ftiasch wrote on 2015-10-09T16:58:19]
+
+---
+
