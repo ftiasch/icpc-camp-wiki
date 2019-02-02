@@ -1,0 +1,35 @@
+# South Pacific 2016 Hilbert's Hash Browns
+
+给定$p, q, n$, 求$|\{a^p+q\ \mathrm{mod}\ n\}|$
+
+$a$为任意整数
+$p, q, n \leq 2^{31}$
+
+不好意思公式我还在编辑、、、
+
+[samzhang wrote on 2016-12-22T09:39:19]
+
+---
+
+不好意思。。。这边的md语法不是很懂为什么渲染失败了、、总之p和n是int正整数，求有多少种不同的a^p mod n
+
+[samzhang wrote on 2016-12-22T09:55:51]
+
+---
+
+把 $n$ 分解质因数，只要算 $a^x\ \mathrm{mod}\ (p^k)$ 的数量，把答案相乘就行。
+
+考虑 $a^x\ \mathrm{mod}\ {p^k}$，如果 $p$ 是 $a$ 的约数，那么不超过 $k$ 项之后恒为 $0$. 否则，根据费马小定理，$\phi(p^k)$ 是一个循环节，枚举一下 $\phi(p^k)$ 的约数，check 一下是不是有更小的循环节。
+
+
+
+[ftiasch wrote on 2016-12-22T12:01:58]
+
+---
+
+@ftiasch 叉姐求再次回复啊。。。。。
+
+[samzhang wrote on 2016-12-24T14:44:32]
+
+---
+
