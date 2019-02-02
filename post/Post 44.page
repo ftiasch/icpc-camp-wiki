@@ -1,0 +1,28 @@
+# 2015 沈阳赛区网络赛 G Matches Puzzle Game
+
+求正确的dp姿势ORZ   [IMG]http://static.icpc-camp.org/flarum-emotion/benny/{14300..14331}.png[/IMG]
+
+[Fuei wrote on 2015-09-19T09:12:11]
+
+---
+
+$f(matches, carry)$ 表示有 $matches$ 根火柴，进位情况是 $ carry \in {0, 1}$。
+
+转移的时候枚举 $b$ 和 $c$ 最低位各是多少，就可以转移啦。
+
+[ftiasch wrote on 2015-09-19T09:15:10]
+
+---
+
+@ftiasch#345 你要不要记是不是已经到了最高位啊
+
+[TankEngineer wrote on 2015-09-19T11:14:19]
+
+---
+
+@TankEngineer#356 要 ……
+
+[ftiasch wrote on 2015-09-19T11:46:07]
+
+---
+
