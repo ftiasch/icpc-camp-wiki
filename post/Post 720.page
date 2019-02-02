@@ -1,0 +1,112 @@
+# CSU 1806 Toll
+
+传送门：http://acm.csu.edu.cn/csuoj/problemset/problem?pid=1806
+这道题目我的想法是：从1到n的最短路至多可能有10!种，根据题目的计算规则，这10!种代价曲线都是直线。那么问题就转化为了维护函数min{$k_{i}*x+b_i$ | 1<=i<=10^6 } ，请问如何高效维护？（函数图像是个折线，求出折线的折点即可）
+
+[xushu wrote on 2017-08-31T00:30:19]
+
+---
+
+@xushu#5315 网上都是自适应辛普森 加 最短路求函数值。如果我的想法能够实现，那么这题可以求得分数形式的精确解。
+
+[xushu wrote on 2017-08-31T00:32:03]
+
+---
+
+我的标程也是这样写的……接下来的事情就是个半平面交。
+
+```
+#include <algorithm>
+#include <cstdio>
+#include <functional>
+#include <utility>
+#include <vector>
+
+#define foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)
+
+typedef std::pair<int, int> Line;
+
+bool check(const Line& a, const Line& b, const Line& c)
+{
+    return (b.second - a.second) * (b.first - c.first) < (c.second - b.second) * (a.first - b.first);
+}
+
+double intersection_x(const Line& a, const Line& b)
+{
+    return (double)(b.second - a.second) / (a.first - b.first);
+}
+
+void dfs(const std::vector<std::vector<Line> >& graph, std::vector<bool>& visited, std::vector<Line>& paths, int n, int u, int k, int b)
+{
+    visited.at(u) = true;
+    if (u == n - 1) {
+        paths.push_back(std::make_pair(k, b));
+    } else {
+        for (int v = 0; v < n; ++ v) {
+            Line edge = graph.at(u).at(v);
+            if (!visited.at(v) && ~edge.first) {
+                dfs(graph, visited, paths, n, v, k + edge.first, b + edge.second);
+            }
+        }
+    }
+    visited.at(u) = false;
+}
+
+int main()
+{
+    int n, m, t;
+    while (scanf("%d%d%d", &n, &m, &t) == 3) {
+        std::vector<std::vector<Line> > graph(n, std::vector<Line>(n, std::make_pair(-1, 0)));
+        for (int _ = 0; _ < m; ++ _) {
+            int a, b, c, d;
+            scanf("%d%d%d%d", &a, &b, &c, &d);
+            a --;
+            b --;
+            graph.at(a).at(b) = std::make_pair(c, d);
+        }
+        std::vector<bool> visited(n);
+        std::vector<Line> paths;
+        dfs(graph, visited, paths, n, 0, 0, 0);
+        std::sort(paths.begin(), paths.end(), std::greater<std::pair<int, int> >());
+        std::vector<Line> planes;
+        foreach (iterator, paths) {
+            Line& p = *iterator;
+            while ((int)planes.size() >= 2 && !check(planes[planes.size() - 2], planes.back(), p)) {
+                planes.pop_back();
+            }
+            planes.push_back(p);
+        }
+        std::vector<double> xs;
+        for (int i = 1; i < static_cast<int>(planes.size()); ++ i) {
+            xs.push_back(intersection_x(planes.at(i - 1), planes.at(i)));
+        }
+        double result = 0.;
+        for (int i = 0; i < (int)planes.size(); ++ i) {
+            double low = 0.;
+            if (i) {
+                low = std::max(low, xs[i - 1]);
+            }
+            double high = t;
+            if (i + 1 < (int)planes.size()) {
+                high = std::min(high, xs[i]);
+            }
+            if (low <= high) {
+                double x = 0.5 * (low + high);
+                result += (planes[i].first * x + planes[i].second) * (high - low);
+            }
+        }
+        printf("%.8f\n", result / t);
+    }
+}
+```
+
+[ftiasch wrote on 2017-08-31T04:47:20]
+
+---
+
+@ftiasch#5317 谢谢！感觉自己像个傻子。。。
+
+[xushu wrote on 2017-08-31T07:05:24]
+
+---
+
