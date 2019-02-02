@@ -1,0 +1,26 @@
+# 将形如8k+3型正整数表示成三个奇数的平方和
+
+如题，$p$是不小于3的正整数，且$8|p-3$，求三个奇数$(x,y,z)$，使得$x^2+y^2+z^2=p$，其中$1\leq x\leq y\leq z$。
+$p\leq 10^{18}$。
+
+[skywalkert wrote on 2016-03-19T07:27:52]
+
+---
+
+直接枚举$x,y,z(0\leq x^2\leq p,x\leq y^2\leq p,y\leq z^2\leq p)$
+可以在$O(p^{3/2})$的时间内求出
+也可以转化为这样的形式：$8n+1=8a+1+8b+1+8c+1(n=a+b+c)$
+又有$(2u+1)^2=4u^2+4u+1=8u(u+1)/2+1$
+所以若$8a+1$能开方则有$a=u(u+1)/2$即$a,b,c$是三角形数
+(其实就是高斯在证明任何自然数能被表示为最多三个三角形数时用到的)
+于是枚举$u(0\leq u\leq \sqrt{2p}\ )$计算$a=u(u+1)/2$，枚举$v(0\leq v\leq \sqrt{2(p-a)})$计算$b=v(v+1)/2$,再计算$c=n-a-b,d=(\sqrt{8c+1}-1)/2$
+如果$d$是整数，则$c$是三角形数，一组解就找到了
+时间复杂度仍然是$O(p^{3/2})$，但常数小很多
+貌似就只能这么快了
+这个在[stackoverflow](http://mathoverflow.net/questions/104322/efficient-computation-of-integer-representation-as-sum-of-three-squares)上有讨论
+票数最多的答案中提到的[文献](http://onlinelibrary.wiley.com/doi/10.1002/cpa.3160390713/epdf)里,使用了随机算法在$C(k)\sqrt{k}/2log k$的时间内求得一个解,其中$C(k)=\prod_{p\ is\ an\ odd\ prime}{(1-{k \choose p}/(p-1))}$
+
+[danagi wrote on 2016-03-31T05:50:47]
+
+---
+
