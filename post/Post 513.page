@@ -1,0 +1,379 @@
+# URAL 1674 Drunk King
+
+链接：http://acm.timus.ru/problem.aspx?space=1&num=1674
+题意：n*m的矩阵，格子8联通。构造一个哈密顿回路，使得：1.相邻两步的方向不能相同，2.路径不自交。
+
+[yzq986 wrote on 2016-08-09T19:33:32]
+
+---
+
+就是构造。。。看下面程序吧。。。
+
+```
+const maxn=501;
+      dir:array[1..8,1..2]of longint=((-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1));
+      dirc:array[0..8]of char=(' ','|','/','-','\','|','/','-','\');
+var a:array[-2..maxn,-2..maxn]of longint;
+    b,c:array[-2..maxn*2,-2..maxn*2]of char;
+    n,m,i,j:longint;
+    flag:boolean;
+procedure swap(var a,b:longint);
+var t:longint;
+begin
+  t:=a;
+  a:=b;
+  b:=t;
+end;
+procedure setc(x,y,k:longint);
+var t:longint;
+begin
+  if k<0 then t:=0 else t:=k;
+  k:=abs(k);
+  c[x*2-1+dir[k][1]][y*2-1+dir[k][2]]:=dirc[t];
+end;
+procedure draw1x(l,r,y:longint);
+var i:longint;
+begin
+  for i:=l to r do
+  begin
+    setc(y,i,4);
+    setc(y+1,i,1);
+  end;
+end;
+procedure draw1y(u,d,x:longint;r:boolean);
+var i:longint;
+begin
+  for i:=u to d do
+    if r then
+    begin
+      setc(i,x,3);
+      setc(i,x+1,6);
+    end
+    else
+    begin
+      setc(i,x,4);
+      setc(i,x+1,7);
+    end
+end;
+procedure draw2x(l,r,y:longint);
+var i:longint;
+begin
+  for i:=l to r do
+  begin
+    setc(y+1,i,2);
+    setc(y+1,i,5);
+    if (i-r) and 1=1 then setc(y,i,3)
+                     else setc(y+2,i-1,3);
+  end;
+end;
+procedure draw2y(u,d,x:longint;r:longint);
+var i:longint;
+begin
+  for i:=u to d do
+    if r=0 then
+    begin
+      setc(i,x+1,7);
+      setc(i,x+1,4);
+      if i<d then
+        if (d-i) and 1=1 then setc(i,x,5)
+                         else setc(i+1,x+2,5);
+    end
+    else if r=1 then
+    begin
+      setc(i,x+1,6);
+      setc(i,x+1,3);
+      if i<d then
+        if (d-i) and 1=1 then setc(i+1,x,5)
+                         else setc(i,x+2,5);
+    end
+    else
+    begin
+      setc(i,x+1,7);
+      setc(i,x+1,2);
+      if (d-i) and 1=1 then setc(i+1,x,1)
+                       else setc(i,x+2,1);
+    end;
+end;
+procedure init;
+var i,j:longint;
+begin
+  for i:=1 to n*2-1 do
+    for j:=1 to m*2-1 do
+      if (i and 1=1)and((i+j) and 1=0) then
+        c[i][j]:='o'
+      else
+        c[i][j]:=' ';
+end;
+procedure fill1(sx,sy,ex,ey:longint);
+var i,k:longint;
+begin
+  setc(ex,ey,2);
+  if ey<sy then exit;
+  k:=(ey-sy)div 4;
+  for i:=0 to k do
+  begin
+    setc(ex,sy-1+i*4,2);
+    setc(ex-1,sy+i*4,5);
+    setc(ex,sy+i*4,3);
+    setc(ex,sy+1+i*4,1);
+    if ex-sx>1 then setc(ex-1,sy+1+i*4,8);
+    draw1y(sx,ex-2,sy+i*4,false);
+    setc(sx,sy+i*4+1,4);
+    setc(sx,sy+2+i*4,5);
+    setc(sx,sy+2+i*4,3);
+    setc(sx,sy+3+i*4,5);
+    draw1y(sx+2,ex,sy+2+i*4,true);
+    setc(sx+1,sy+3+i*4,6);
+  end;
+end;
+procedure restore;
+var i,j:longint;
+begin
+  b:=c;
+  for i:=1 to n*2-1 do
+    for j:=1 to m*2-1 do
+    begin
+      b[j][i]:=c[i][j];
+      if b[j][i]='|' then b[j][i]:='-'
+      else if b[j][i]='-' then b[j][i]:='|';
+    end;
+  c:=b;
+  swap(n,m);
+end;
+procedure print;
+var i,j:longint;
+begin
+  writeln('Yes');
+  for i:=1 to n*2-1 do
+  begin
+    for j:=1 to m*2-1 do
+      write(c[i][j]);
+    writeln;
+  end;
+end;
+begin
+ begin
+  readln(n,m);
+  flag:=true;
+  if (n=2)and(m=2) then
+  begin
+    writeln('Yes');
+    writeln('o-o');
+    writeln('| |');
+    writeln('o-o');
+  end
+  else if (n<=3)or(m<=3)or(n=5)and(m=5) then
+    writeln('No')
+  else if (n and 3=0)or(m and 3=0) then
+  begin
+    if m and 3<>0 then
+    begin
+      swap(n,m);
+      flag:=false;
+    end;
+    init;
+    draw1x(1,m-2,1);
+    if n>5 then setc(1,m-1,5);
+    setc(1,m-1,3);
+    setc(1,m,5);
+    setc(2,m,6);
+    draw1y(3,n-2,1,false);
+    draw1y(3,n-4,m-1,true);
+    setc(2,1,4);
+    setc(n-1,1,3);
+    setc(n-1,1,5);
+    setc(n,1,3);
+    setc(n-1,m-1,5);
+    setc(n-1,m,5);
+    setc(n,m,7);
+    setc(n-2,m-1,3);
+    setc(n-2,m-1,4);
+    if n>5 then setc(n-3,m,5);
+    setc(n-3,m,7);
+    if n=5 then setc(3,m,8);
+    if n<=5 then
+    begin
+      setc(1,m-1,6);
+      setc(1,m-2,-6);
+      setc(1,m-2,7);
+    end;
+    fill1(3,3,n,m-2);
+    if not flag then
+      restore;
+    print;
+  end
+  else if (n and 3=1)or(m and 3=1) then
+  begin
+    if (m and 3<>1)or(n and 3=1)and(m and 3=1)and(n<m) then
+    begin
+      swap(n,m);
+      flag:=false;
+    end;
+    init;
+    setc(1,1,4);
+    setc(1,1,5);
+    setc(1,2,3);
+    setc(1,2,5);
+    setc(2,3,1);
+    setc(2,3,2);
+    setc(2,1,4);
+    setc(3,3,7);
+    setc(3,3,6);
+    setc(3,1,5);
+    setc(3,1,4);
+    setc(4,1,4);
+    draw1y(5,n-2,1,false);
+    setc(n-1,1,3);
+    setc(n-1,1,5);
+    setc(n,1,3);
+    setc(n-1,m-2,5);
+    setc(n-1,m-2,6);
+    setc(n,m-1,1);
+    setc(n,m-1,7);
+    setc(n,m,1);
+    setc(n,m,8);
+    draw2x(4,m-2,1);
+    draw2y(4,n-2,m-2,0);
+    setc(1,m,5);
+    setc(1,m,7);
+    setc(2,m-1,3);
+    setc(2,m-1,4);
+    setc(3,m-1,4);
+    if n and 1=0 then
+    begin
+      setc(3,m-1,6);
+      setc(3,m,5);
+    end
+    else
+    begin
+      setc(3,m-1,3);
+      setc(4,m,5);
+    end;
+    fill1(4,3,n,m-3);
+    if not flag then
+      restore;
+    print;
+  end
+  else if (n and 3=2)or(m and 3=2) then
+  begin
+    if m and 3<>2 then
+    begin
+      swap(n,m);
+      flag:=false;
+    end;
+    init;
+    setc(n-1,m-2,5);
+    setc(n-1,m-2,6);
+    setc(n,m-1,1);
+    setc(n,m-1,7);
+    setc(n,m,1);
+    setc(n,m,8);
+    draw2y(4,n-2,m-2,0);
+    setc(1,m,5);
+    setc(1,m,7);
+    setc(2,m-1,3);
+    setc(2,m-1,4);
+    setc(3,m-1,4);
+    setc(4,1,3);
+    setc(3,2,7);
+    setc(1,1,3);
+    setc(1,1,5);
+    if n and 1=0 then
+    begin
+      draw2x(4,m-2,1);
+      draw2y(4,n-1,1,1);
+      setc(n,2,2);
+      setc(n,2,3);
+      setc(3,m-1,6);
+      setc(3,m,5);
+      setc(2,2,4);
+      setc(2,2,7);
+      setc(2,3,1);
+      setc(2,3,8);
+      setc(1,4,5);
+      setc(1,4,7);
+      setc(3,2,7);
+      setc(3,2,4);
+      setc(4,1,1);
+      setc(4,2,-3);
+      setc(3,4,6);
+      setc(3,4,-1);
+    end
+    else
+    begin
+      draw2x(3,m-2,1);
+      draw2y(5,n,1,2);
+      setc(2,2,1);
+      setc(2,2,2);
+      setc(4,1,5);
+      setc(3,2,8);
+      setc(4,2,8);
+      setc(3,m-1,3);
+      setc(4,m,5);
+    end;
+    fill1(4,4,n,m-3);
+    if not flag then
+      restore;
+    print;
+  end
+  else if (n and 3=3)or(m and 3=3) then
+  begin
+    if m and 3<>3 then
+    begin
+      swap(n,m);
+      flag:=false;
+    end;
+    init;
+    setc(n-1,m-2,5);
+    setc(n-1,m-2,6);
+    setc(n,m-1,1);
+    setc(n,m-1,7);
+    setc(n,m,1);
+    setc(n,m,8);
+    draw2y(4,n-2,m-2,0);
+    setc(1,m,5);
+    setc(1,m,7);
+    setc(2,m-1,3);
+    setc(2,m-1,4);
+    setc(3,m-1,4);
+    setc(2,3,1);
+    setc(2,3,2);
+    setc(1,2,3);
+    setc(1,2,5);
+    setc(1,1,4);
+    setc(1,1,5);
+    setc(3,2,7);
+    setc(3,2,8);
+    setc(4,1,1);
+    setc(4,1,3);
+    setc(5,1,2);
+    setc(5,1,3);
+    setc(4,3,1);
+    setc(4,3,6);
+    setc(4,4,8);
+    setc(4,4,5);
+    setc(3,m,7);
+    setc(4,m,5);
+    draw2x(4,m-2,1);
+    for i:=6 to n do
+    begin
+      setc(i,2,2);
+      setc(i,2,7);
+      setc(i-1,3,3);
+      if i and 1=0 then setc(i-1,4,1) else setc(i,1,1);
+    end;
+    setc(n,3,2);
+    setc(n,3,3);
+    fill1(4,5,n,m-3);
+    if not flag then
+      restore;
+    print;
+  end
+ end;
+end.
+```
+
+[ftiasch wrote on 2016-08-10T05:05:24]
+
+---
+
