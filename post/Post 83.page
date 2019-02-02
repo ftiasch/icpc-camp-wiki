@@ -1,0 +1,95 @@
+# 2015 合肥赛区网络赛 E Shape
+
+给一个多边形，问这个多边形是否能平面密铺
+
+[QAQ wrote on 2015-09-27T13:17:56]
+
+---
+
+以下为转发：
+
+???  17:10:31
+我们猜的结论是，这个polygon，一定可以找到两对点
+???  17:10:37
+(i,i') (j,j')
+???  17:10:54
+i~i'和j~j'完全一样
+???  17:11:25
+对于i~j,i'~j'这两对路径
+???  17:11:36
+无限延长之后完全一样
+???  17:12:09
+所以只要枚举，然后判断复杂度就是五方的
+???  17:12:35
+然而有一点小trick，最后我们的做法并不能算五方
+
+[ftiasch wrote on 2015-09-27T13:19:45]
+
+---
+
+听说是个什么结论？哪位有证明能发一下吗？
+
+[瓶郎 wrote on 2015-09-27T15:28:35]
+
+---
+
+我完整的写一下我们怎么做的吧。
+[IMG]http://i3.tietuku.com/03de0b90c85fca95t.jpg[/IMG]
+我们手画了大量的例子，观察规律，猜了这么一个结论：可以拼接当且仅当存在两对点$(i,i'),(j,j')$，要求$i\rightsquigarrow i'$与 $j \rightsquigarrow  j'$完全相同，$i\rightsquigarrow j$与 $i' \rightsquigarrow  j'$在环同构意义下相同。
+所以只要枚举这两对点然后判断即可，枚举量$O(n^3)$，暴力判断需要$O(n^2)$。
+
+然而交上去吃了一个WA。
+
+过会发现了一个神奇的反例：
+[IMG]http://i3.tietuku.com/c085f356a7a81721t.jpg[/IMG]
+发现问题在于枚举的四个点可能并不是给定的$n$个点，但是又发现题目给定的都是整点，所以即使在这种情况下枚举的点依然只可能是整点。
+而这个题的坐标范围非常小，所以只要把多边形上的整点都补上再做就可以cover这种情况。
+
+所以复杂度就不再是五方的了，而和坐标范围有关系。而范围太小并且一般情况下能拼接的方式非常少，故怎么枚举都可以秒出解。
+
+[AngryBacon wrote on 2015-09-27T17:59:50]
+
+---
+
+这个不是有现成定理么。
+Beauquier, Daniele, and Maurice Nivat. On translating one polyomino to tile the plane. Discrete & Computational Geometry 6.1 (1991): 575-592.
+
+大意：多边形能只靠平移密铺平面当且仅当它的边界能写成$XYZ\overline{XYZ}$。（定义自己猜一下。）
+
+另外此题有线性算法：
+Winslow, Andrew. An Optimal Algorithm for Tiling the Plane with a Translated Polyomino. arXiv preprint. 2015. url: http://arxiv.org/abs/1504.07883
+
+[sevenkplus wrote on 2015-09-27T23:34:56]
+
+---
+
+@sevenkplus#816 看了一点这个paper，里面把平面划分成1*1的cell，似乎多边形的边都是和xy轴平行的，能适应斜线的情况吗？还没读完
+
+[ufo172849z wrote on 2015-09-28T02:02:37]
+
+---
+
+@ufo172849z#821 主要的区别就是取的点不一定是端点吧。
+
+[sevenkplus wrote on 2015-09-28T02:08:46]
+
+---
+
+@sevenkplus#822 感觉不一样，paper里的做法是把边抽象成udlr的长度为1的序列，如果有斜线的情况就没办法划分了，不能化成整数个的单位长度线段。我再继续读读，还没读到算法那块，在看前面的背景定义。
+
+[ufo172849z wrote on 2015-09-28T02:18:12]
+
+---
+
+@ufo172849z#824 很容易修改现有定理啊。看上去还是挺对的？
+
+[sevenkplus wrote on 2015-09-28T04:36:44]
+
+---
+
+@sevenkplus#843 感觉上去如果把所有平行的边都划分成整数个单位线段（不一定为1，不平行的边集不需要单位线段长度相同），可以用这个算法做
+
+[ufo172849z wrote on 2015-09-28T05:14:35]
+
+---
+
