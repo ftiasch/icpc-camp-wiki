@@ -1,0 +1,22 @@
+# SPOJ XYYHHTT Catch Sheep
+
+题目大意：一颗树，$K$个机器人从某点出发，需要走完所有边，问$N$个点，对于每个点，机器人走的距离和最小是多少。
+$N \leq 15000,K \leq 30$
+易想到一个$O(NK^2)$的树形dp，但这道题时限0.1s,看到discuss里有人$O(NK)$被卡常数了。求问$O(NK)$的思路。
+
+[xietutu wrote on 2016-10-27T13:07:07]
+
+---
+
+http://www.docin.com/p-567721869.html
+
+[ftiasch wrote on 2016-10-27T14:23:38]
+
+---
+
+@ftiasch#4681 多谢叉姐。
+
+[xietutu wrote on 2016-10-27T15:44:13]
+
+---
+
