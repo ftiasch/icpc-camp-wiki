@@ -1,0 +1,58 @@
+# Folding Paper
+
+对这种题没有什么思路。。https://competition.ia-toki.org/contests/17/problems/127/ 
+
+[prime21 wrote on 2015-12-08T16:07:05]
+
+---
+
+@prme21#3001 您现在找到解法了吗？
+
+[SCaffrey wrote on 2015-12-21T14:47:01]
+
+---
+
+我实在很想答你这个问题。。。但是我真的不知道怎么看题。。。出离愤怒
+
+[ftiasch wrote on 2015-12-22T02:44:03]
+
+---
+
+@Varona#3048 https://competition.ia-toki.org/contests/10/problems/134/
+
+https://github.com/imcaffrey/BUF/blob/master/Competition%20Gate%20-%20Contest%20-%20Problem%20-%20View.pdf
+
+[SCaffrey wrote on 2015-12-22T04:38:22]
+
+---
+
+@Varona#3048 可以看下面@SCaffrey#3049 的那个链接pdf的。题目名字是folding paper，當時只手玩了前面兩個點。
+
+[prime21 wrote on 2015-12-24T05:02:10]
+
+---
+
+这个问题好像沉底了。。有人会么？@SCaffrey#3049 @Varona#3048 
+
+[prime21 wrote on 2016-02-12T07:56:56]
+
+---
+
+@prme21#3141 暂时不会。。
+
+[ftiasch wrote on 2016-02-12T10:05:14]
+
+---
+
+可以假设第一段一定是朝右的；（否则考虑换个方向看这坨纸...）
+然后可以考虑第一段和第二段在左边连在了一起，第二段和第三段在右边连在了一起，以此类推；
+在某一边连在一起的可以看成一个区间，显然同一边的所有区间只能覆盖或相离，否则无解；
+（其实就是判断是不是括号序列就行了）
+然后方向的话随便脑补一下怎么判断就行。。。
+[贴个丑陋的代码](http://paste.ubuntu.com/15052447/).
+
+
+[carbon wrote on 2016-02-14T09:11:21]
+
+---
+
