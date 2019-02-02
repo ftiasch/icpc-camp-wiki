@@ -1,0 +1,37 @@
+# 关于试题排版
+
+我看到许多NEERC包括Camp的题目，排版格式都差不多。。
+这是什么板子，Latex？感觉很棒！
+
+于是伸手求一份...
+先谢各位了！
+
+[strategy wrote on 2015-12-17T05:30:15]
+
+---
+
+olymp.sty  https://github.com/GassaFM/olymp.sty
+
+
+[ftiasch wrote on 2015-12-17T05:42:01]
+
+---
+
+@Varona#3027 灰常感谢！
+
+[strategy wrote on 2015-12-17T05:54:05]
+
+---
+
+其实你用LaTeX裸排出来，也是差不多的效果
+
+[nanometer wrote on 2015-12-27T13:22:54]
+
+---
+
+@纳米#3063 略有差异= =
+
+[ftiasch wrote on 2015-12-27T14:37:37]
+
+---
+
