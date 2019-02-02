@@ -1,0 +1,22 @@
+# NEERC 2012 Moscow Subregional A Ariel
+
+这道题怎么去维护每轮的可行集合啊？
+
+[Voil wrote on 2015-10-05T04:47:51]
+
+---
+
+我领会了一下[这个代码](http://git.icpc-camp.org/ftiasch/mithril/blob/master/2012-10-21/A.cpp)的精神，感觉就是维护 $3\^m$ 个列表，每次询问的时候进去二分。
+
+每个列表形如「?0101??」，其中 ? 表示 $01$ 皆可。
+
+[ftiasch wrote on 2015-10-05T05:13:51]
+
+---
+
+暴力一发，时间复杂度１ｅ９也过了
+
+[pojianshi wrote on 2015-10-06T05:22:26]
+
+---
+
