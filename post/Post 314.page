@@ -1,0 +1,20 @@
+# LightOJ 1018 Brush (IV) 
+
+这题是给了N个点，问最少要多少条直线把这些点全部覆盖。。N是小于等于16的所以可以暴力。。不过如果N比较大的话，请问有什么好的方法么。。
+
+[传道者 wrote on 2015-12-01T07:26:49]
+
+---
+
+这个叫做 Point Line Cover Problem，有兴趣可以看[「Point Line Cover: The Easy Kernel is Essentially Tight」](http://arxiv.org/abs/1307.2521)，给了一个 FPT。
+
+[ftiasch wrote on 2015-12-01T09:02:26]
+
+---
+
+@Varona#2942 好的，谢谢叉姐。∩ω∩
+
+[传道者 wrote on 2015-12-01T09:15:52]
+
+---
+
