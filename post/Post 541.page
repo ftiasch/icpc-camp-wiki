@@ -1,0 +1,28 @@
+# Single Round Match 696 题解
+
+# GPerm
+
+请戳 https://async.icpc-camp.org/d/514-srm-696-div-1-300-gperm/3 
+
+# Clicounting
+
+折半。首先把涉及 $10$ 条未知边的 $20$ 个点放在前一半。
+然后，对于后一半点预处理 $clique[mask]$ 表示在 $mask$ 的导出子图中的最大团数目。
+
+最后，对于前一半的点枚举一个 mask，表示最终团在前一半中的点是 mask，根据原先预处理好的 $clique[mask]$，自然可以知道在这种情况下，后一半点最多能选的点数。
+那么，对于一个枚举的 mask，实际上就是在 mask 里面的未知边一定要选，mask 外的无所谓，可以用一个长度为 $10$ 的二进制串例如 $111???$ 表示。
+对于一个给定的 $111???$，其实就是可以把其中的 $???$ 任意换成 $01$ 来更新答案，暴力一下即可。
+
+# Substreeng
+
+设 $dp(v, mask)$ 表示以 $v$ 为根的树中，mask 是一个长度为 $2(m + 1)}$ 的 bitset，表示长度为 $i \in \{0, 1, \ldots, m\}$ 的前缀/后缀是否存在的方案数。
+转移时讲道理是 or 卷积，但是实际上暴力 for 一下就 AC 了。
+
+---
+
+我的代码：https://code.icpc-camp.org/ftiasch/acm-icpc/src/master/topcoder/single-round-match/single-round-match-696
+
+[ftiasch wrote on 2016-09-05T16:20:14]
+
+---
+
