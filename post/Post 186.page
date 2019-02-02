@@ -1,0 +1,33 @@
+# Petrozavodsk Winter 2014 Day 2 G Total LCS
+
+给出两个字符串$S$和$T$, 输出$
+S$和$T$的每个连续子串的LCS. 
+
+$|S|, |T| \le 2000$
+
+这个题困扰了好久, 要怎么做啊.
+
+[zimpha wrote on 2015-10-14T11:37:08]
+
+---
+
+@zimpha#1818 不是有个 cyclic LCS 的板子吗？依样画葫芦就画出来了
+
+另：主代码手当年压位 LCS 也过了……
+
+[ftiasch wrote on 2015-10-14T12:22:09]
+
+---
+
+@Varona#1819 用那个板子画了一下, 然后tle了, 一定是我姿势不对...我去研究下压位lcs写法
+
+[zimpha wrote on 2015-10-14T12:45:02]
+
+---
+
+@zimpha#1820 $O(n\^2)$ 怎么会 TLE …… 我当时肯定这么 AC 了的。
+
+[ftiasch wrote on 2015-10-14T15:09:29]
+
+---
+
