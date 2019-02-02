@@ -1,0 +1,151 @@
+# Sichuan Province 2012 G Graph Game
+
+链接 http://acm.uestc.edu.cn/#/problem/show/89
+只会折半之后用4次FWT+4次RFWT做，不知道能不能把四次合并成一次？
+而且也想知道那些1k左右的代码是怎么做的ORZ
+
+[splinter wrote on 2015-10-07T11:44:03]
+
+---
+
+@Sd_Invol 召唤昂神
+
+[ftiasch wrote on 2015-10-07T11:46:17]
+
+---
+
+>愚蠢的人类啊，为什么一定要对半分呢？ = =
+
+先考虑折半，两边分别枚举两边集合的所有子集，以及对应子集导出子图边数的奇偶性。
+
+合并的话稍作推理可以发现对于前一半集合需要知道每个选择的点连向后一半的点边数的奇偶性，得到这个两个集合再做一个与运算的卷积就能知道两个集合之间的边数的奇偶性。
+
+然后余生就在TLE中度过，因为做了4次FWT。
+
+最后想到不一定非要“折半”，因为FWT的瓶颈在于后一半集合的点数，我们可以强行把后一半集合取小一点，就能在时限内满足题目的要求。
+
+[sd_invol wrote on 2015-10-07T13:39:08]
+
+---
+
+诶……我正常对半分就过了啊，没用FWT神马的……
+
+设dp[st]\[i]表示后面一半的点与前面一半相连的奇偶性是st，取出边的数量奇偶性是i的方案数。显然可以2\^(RIGHT+2)预处理出来。然后暴力枚举一下前面哪些点取，就知道后面每个点和前面取了的点连的边的数量是奇是偶，以及后面需要奇数条还是偶数条边可以使得总边数为奇。这是2\^(LEFT)的。于是直接折半就挺平衡了……取RIGHT=19只需243ms……
+
+代码：
+~~~
+#include<vector>
+#include<cstdio>
+#include<cstring>
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+const int RIGHT = 19;
+
+const int N = 40;
+
+int n, m;
+
+int cur;
+
+int mem[2][1 << (RIGHT + 1)];
+
+long long edge[N];
+
+long long ans;
+
+int bar;
+
+void go(int i, long long mask) {
+	if (i == bar) {
+		ans += mem[cur][mask];
+		return;
+	}
+	int d = mask >> (n - i) & 1;
+	long long pre = mask ^ ((long long)d << (n - i));
+	go(i + 1, pre);
+	go(i + 1, pre ^ edge[i] ^ d);
+}
+
+int main() {
+	int t;
+	scanf("%d", &t);
+	while (t--) {
+		scanf("%d%d", &n, &m);
+		for (int i = 0; i < n; ++i) {
+			edge[i] = 0;
+		}
+		for (int i = 0; i < m; ++i) {
+			int u, v;
+			scanf("%d%d", &u, &v);
+			--u, --v;
+			if (u > v) {
+				swap(u, v);
+			}
+			edge[u] |= 1ll << (n - v);
+		}
+
+		ans = 0;
+
+		int right = min(n, RIGHT), left = n - right;
+
+		cur = 0;
+		mem[cur][0] = 1;
+		mem[cur][1] = 0;
+		for (int i = 0; i < right; ++i) {
+			int nxt = cur ^ 1, mask = edge[n - i - 1];
+			memset(mem[nxt], 0, sizeof(int) << (i + 2));
+			for (int st = 0; st < 1 << (i + 2); ++st) {
+				int d = st >> (i + 1) & 1, pre = st ^ (d << (i + 1));
+				mem[nxt][st] += mem[cur][pre];
+				int ost = pre ^ d ^ mask;
+				mem[nxt][st] += mem[cur][ost];
+			}
+			cur = nxt;
+		}
+		bar = left;
+		go(0, 1);
+		static int id = 0;
+		printf("Case #%d: %lld\n", ++id, ans);
+	}
+	return 0;
+}
+~~~
+
+[TankEngineer wrote on 2015-10-07T14:53:23]
+
+---
+
+@TankEngineer#1584 感觉说的非常有道理！
+
+FWT只是用来做了个AND卷积，实际上不用真的卷只要做个前缀和就知道了一个mask里合法的有多少个。
+
+[sd_invol wrote on 2015-10-07T16:26:25]
+
+---
+
+@Varona @TankEngineer#1584 缩进是不是有点问题？
+
+[sevenkplus wrote on 2015-10-07T22:01:02]
+
+---
+
+@sevenkplus#1589 对，不明原因。
+
+[ftiasch wrote on 2015-10-08T00:30:33]
+
+---
+
+@Sd_Invol#1580 我们的TLE情况好像不太一样。。不过你的做法真是6666
+
+[splinter wrote on 2015-10-09T07:25:24]
+
+---
+
+@TankEngineer#1584 非常感谢！
+
+[splinter wrote on 2015-10-09T07:26:25]
+
+---
+
