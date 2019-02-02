@@ -1,0 +1,43 @@
+# Qingdao 2016 E Fibonacci
+
+定义数列$x[n]$，满足$x(n) = f(x(n-1))$,现在给定你$x(0)$，求最小的$n$，满足$x(n) = x(0) \text{ mod }p$ ，其中$f[n]$ 是斐波那契数列，满足$f(0) = 0, f(1) = 1$ and $f(n) = f(n - 1) + f(n - 2)$ for $n \ge 2$，$0 \le x(0) \le 10^9$，$1 \le p \le  200000$。
+
+这题如何做啊？跪求解法。
+
+[woshi_sb wrote on 2016-11-29T15:15:36]
+
+---
+
+其实就是需要一个双射嘛……找到双射乱搞即可，[敝队做法](https://wiki-tdl.icpc-camp.org/2016%20ACM-ICPC%20Asia%20Qingdao%20Regional%20Contest#e.-fibonacci-skywalkert)
+
+[skywalkert wrote on 2016-11-29T17:11:29]
+
+---
+
+唐老师的题解应该已经说得很明白了。。。
+如果第一眼看不懂的话我来补几句
+
+先看看这个题
+http://www.lydsy.com/JudgeOnline/problem.php?id=3884
+
+考虑类似地，令h(p)为斐波那契数在模p意义下的循环节
+对于素数而言：
+若5是p的二次剩余：h(p)|m-1
+否则：h(p)|2(m+1)
+
+当然这些都不重要，特殊地，h(2)=3,h(3)=8,h(5)=20
+对于合数而言
+$h(p^k)=p^{k-1}h(p)$
+
+$h(p_1^{q_1}p_2^{q_2} ... p_k^{q_k})=lcm(h(p_1^{q_1}),h(p_2^{q_2}) ... h(p_k^{q_k}))$
+
+通过观察我们可以发现，所有其他质因子在O(log p)次内就会变成2,3,5三种因子。
+最终一定会收敛。
+
+之后的事情就很简单了，令收敛后的模数为p，在[0,p)中暴力枚举往回带入就行了。
+时间复杂度O(plog^2 p)。
+
+[falsyta wrote on 2016-11-30T14:11:45]
+
+---
+
