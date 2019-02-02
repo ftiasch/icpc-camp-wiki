@@ -1,0 +1,98 @@
+# 湘潭邀请赛 2017 （江苏省赛） 题目和提交
+
+题目 https://icpc-camp-cdn.b0.upaiyun.com/permanent/problems/xiangtan-2017.pdf
+虚拟比赛地址 https://www.icpc-camp.org/contests/4mYguiUR8k0GKE
+简单的~~题解~~（口胡）https://icpc-camp-cdn.b0.upaiyun.com/permanent/problems/xiangtan-2017-solution.pdf
+
+---
+
+评测机不明原因抽搐中。。。如果遇到长时间不评测，可至 https://chat.icpc-camp.org 找我。
+
+不便之处敬请谅解。
+
+[ftiasch wrote on 2017-05-14T10:46:41]
+
+---
+
+好像虚拟比赛不测题唉
+
+[TaoSama wrote on 2017-05-14T14:37:19]
+
+---
+
+@TaoSama#5076  修好了= =
+
+[ftiasch wrote on 2017-05-15T00:18:08]
+
+---
+
+还是不能测。。。
+
+[Vacantxin wrote on 2017-05-15T07:09:24]
+
+---
+
+@Vacantxin#5078 又、又修好了。。。
+
+[ftiasch wrote on 2017-05-15T10:24:53]
+
+---
+
+@ftiasch#5079 又又又测不了了？
+
+[Vacantxin wrote on 2017-05-15T10:59:26]
+
+---
+
+测不了
+
+[Gaillard wrote on 2017-05-15T12:05:37]
+
+---
+
+J题的时限不对唉 QAQ 那 $O(Tnm^2 logm)$ 都 $8e8$ 了 $3s$ 跑不过去
+
+[TaoSama wrote on 2017-05-15T16:44:38]
+
+---
+
+@TaoSama#5082 相信评测机。。。实测标程只需 1s。。。
+
+[ftiasch wrote on 2017-05-15T17:06:50]
+
+---
+
+@ftiasch#5083 QAQ 我写的垃圾代码刚才明明T了，现在回来看了一眼变成了ac 好神奇
+我觉得cache命中好的代码T了，不好的反而过了 - - 好奇怪
+
+[TaoSama wrote on 2017-05-15T17:16:06]
+
+---
+
+@TaoSama#5082 队友胡乱写了一下只跑了 560ms ……
+
+[quailty wrote on 2017-05-15T17:36:18]
+
+---
+
+为什么F在camp能过，湘潭的oj过不了啊= =，数据不一样还是怎么回事啊
+湘潭提交地址：http://202.197.224.59/OnlineJudge2/index.php/Problem/read/id/1265
+
+UPD:我傻叉了= =，那边oj 64d输出。。。
+
+[dididi wrote on 2017-05-16T08:16:33]
+
+---
+
+@ftiasch#5075 评测机又挂掉了吧???
+
+[YuriHehe wrote on 2017-06-13T08:18:23]
+
+---
+
+@YuriHehe#5140 不好意思，应该开起来了
+
+[ftiasch wrote on 2017-06-13T08:36:06]
+
+---
+
