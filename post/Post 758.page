@@ -1,0 +1,184 @@
+# Shenyang 2017 H Legends of the Three Kingdoms
+
+题目大意：
+主公、反贼，忠臣，内奸。
+给定每个角色初始血量（不超过40，主公一定大于1血）。 问：每个角色获胜概率是多少（输出3个数字：主公忠臣获胜概率， 反贼获胜概率，内奸获胜概率）  答案保留6位小数。
+
+我的思路是f[41][41][41][41][4]的DP，用double炸内存。
+用float WA。（也可能我程序写丑了）
+
+希望菊苣能A一下这题求代码对拍……或者更正我的思路~
+
+[xuebohuan wrote on 2017-11-05T13:42:04]
+
+---
+
+@菊苣们
+
+[xuebohuan wrote on 2017-11-05T13:43:17]
+
+---
+
+```
+#include <stdio.h>
+#include <string.h>
+#include <algorithm>
+#include <tuple>
+#include <vector>
+#include <assert.h>
+
+using State = std::tuple<double, double, double>;
+const double eps = 1e-12;
+
+inline int dcmp(double x)
+{
+    return x < -eps ? -1 : x > eps;
+}
+
+State dp[40][40][40][40][4];
+
+template<int at>
+State combine(std::vector<State> &vec)
+{
+    if (vec.empty())
+        return State(0, 0, 0);
+
+    double mx = -1;
+    for (const State &s : vec) {
+        mx = std::max(mx, std::get<at>(s));
+    }
+
+    int cnt = 0;
+    State ret;
+    for (const State &s : vec) {
+        if (dcmp(std::get<at>(s) - mx) == 0) {
+            ret = State(std::get<0>(ret) + std::get<0>(s),
+                        std::get<1>(ret) + std::get<1>(s),
+                        std::get<2>(ret) + std::get<2>(s));
+            cnt ++;
+        }
+    }
+    assert(cnt > 0);
+    return State(std::get<0>(ret) / cnt,
+                 std::get<1>(ret) / cnt,
+                 std::get<2>(ret) / cnt);
+
+}
+
+void init()
+{
+    for (int A = 0; A < 40; ++ A) {
+        for (int B = 0; B < 40; ++ B) {
+            for (int C = 0; C < 40; ++ C) {
+                for (int D = 0; D < 40; ++ D) {
+                    for (int at = 0, count = 0;
+                         count < 4; ++ count, at = (at + 3) % 4) {
+                        if (A == 0) {
+                            if (B == 0 && C == 0 && D != 0) {
+                                dp[A][B][C][D][at] = State(0, 0, 1);
+                            } else {
+                                dp[A][B][C][D][at] = State(0, 1, 0);
+                            }
+                            continue;
+                        }
+                        if (B == 0 && D == 0) {
+                            dp[A][B][C][D][at] = State(1, 0, 0);
+                            continue;
+                        }
+                        if (A == 0 && at == 0 ||
+                            B == 0 && at == 1 ||
+                            C == 0 && at == 2 ||
+                            D == 0 && at == 3) {
+                            dp[A][B][C][D][at] = dp[A][B][C][D][(at + 1) % 4];
+                            continue;
+                        }
+                        std::vector<State> vec;
+                        if (at == 0 || at == 2) {
+                            if (B) 
+                                vec.emplace_back(dp[A][B - 1][C][D][at + 1]);
+                            if (D)
+                                vec.emplace_back(dp[A][B][C][D - 1][at + 1]);
+                            dp[A][B][C][D][at] = combine<0>(vec);
+                        } else if (at == 1) {
+                            if (A)
+                                vec.emplace_back(dp[A - 1][B][C][D][at + 1]);
+                            if (C)
+                                vec.emplace_back(dp[A][B][C - 1][D][at + 1]);
+                            if (D)
+                                vec.emplace_back(dp[A][B][C][D - 1][at + 1]);
+                            dp[A][B][C][D][at] = combine<1>(vec);
+                        } else if (at == 3) {
+                            if (A)
+                                vec.emplace_back(dp[A - 1][B][C][D][0]);
+                            if (B)
+                                vec.emplace_back(dp[A][B - 1][C][D][0]);
+                            if (C)
+                                vec.emplace_back(dp[A][B][C - 1][D][0]);
+                            dp[A][B][C][D][at] = combine<2>(vec);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    init();
+    int cas;
+    scanf("%d", &cas);
+    while (cas--) {
+        int h[4];
+        scanf("%d%d%d%d", h + 0, h + 2, h + 1, h + 3);
+        const State &result = dp[h[0]][h[1]][h[2]][h[3]][0];
+        printf("%.6f %.6f %.6f\n",
+               std::get<0>(result),
+               std::get<1>(result),
+               std::get<2>(result));
+    }
+}
+```
+
+（版权归原作者所有）
+
+[ftiasch wrote on 2017-11-05T18:13:19]
+
+---
+
+@ftiasch#5472 十分感谢！
+
+[xuebohuan wrote on 2017-11-06T02:59:41]
+
+---
+
+啊这题卡精度。。。
+41^4*4*3的double炸内存，用float最后一位有精度误差。
+40^4*4*3的double正好内存够。。。就可以AC了…… 忧桑
+
+感谢叉姐
+
+[xuebohuan wrote on 2017-11-06T03:14:17]
+
+---
+
+@xuebohuan#5474 
+41 * 41 *41*41 * 4*3的double炸内存
+40 * 40 * 40 * 40 * 4 *3的double正好- -#
+
+[xuebohuan wrote on 2017-11-06T03:14:54]
+
+---
+
+@xuebohuan#5475  感觉这题可以存两个概率然后第三个用1.0去减，对空间的常数优化还是挺明显的，不过可能会出现-0.00000的情况
+
+[prince_de_marcia wrote on 2017-11-07T06:22:03]
+
+---
+
+@prince_de_marcia#5476 咦有道理啊！我完全木有想到QAQ
+
+[xuebohuan wrote on 2017-11-08T05:45:54]
+
+---
+
