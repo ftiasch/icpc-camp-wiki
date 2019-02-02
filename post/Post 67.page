@@ -1,0 +1,65 @@
+# Openjudge Stars in Your Window II
+
+题目链接：
+http://www.bailian.openjudge.cn/tm201502/J/
+题目大意：
+平面上有$n(\leq100000)$个整点，坐标绝对值均$\leq1000000000$，求以这$n$个点作为顶点且边与坐标轴平行的矩形个数。
+
+[quailty wrote on 2015-09-23T14:46:59]
+
+---
+
+求解……QAQ
+
+[quailty wrote on 2015-09-23T14:52:20]
+
+---
+
+将$x$坐标离散化，称点数$> \sqrt{n}$的$x$坐标为"比格"，点数$\leq \sqrt{n}$的$x$坐标为"思茅"。
+
+先占个坑
+
+[sd_invol wrote on 2015-09-23T15:08:23]
+
+---
+
+这不是很老的题吗 ……
+
+有两种矩形：
+
+1. 存在一条边在"比格"上。那么我们枚举一个比格。其他线按照$y$ hash。
+
+2. 两条边都在"思茅"上。那么我们枚举两个思茅上的点，这样会得到$O(n^{1.5})$条线段，hash 好了。
+
+可以参考张煜承《一类算法复合的方法》。
+
+[ftiasch wrote on 2015-09-23T15:12:46]
+
+---
+
+编辑不了啦 = = 
+
+然后正如叉姐所说。
+
+还有这道题来自PKU Campus 2015 J
+
+http://poj.openjudge.cn/campus2015/J/
+
+[sd_invol wrote on 2015-09-23T15:16:36]
+
+---
+
+我所知道的出处：
+http://www.spoj.com/problems/RECTANGL/
+
+[sevenkplus wrote on 2015-09-23T18:10:32]
+
+---
+
+[IMG]http://static.icpc-camp.org/flarum-emotion/blue-cat.jpg[/IMG]
+多谢各位大师指点！
+
+[quailty wrote on 2015-09-24T05:27:07]
+
+---
+
