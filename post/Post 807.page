@@ -1,0 +1,23 @@
+# ZOJ 4031 Game on a Tree
+
+题意：
+给定一棵n个点边带权有根树，一开始Bob站在根节点上，每次可以
+1.走向某个儿子，代价为边权
+2.跳转到根节点，无代价
+3.在当前节点设置传送门，之前设置的传送门会失效，无代价
+4.跳转到传送门，无代价
+要求遍历所有叶子节点，求最小代价
+$n\leq 200,0\leq w\leq 10^9$
+vjudge上的dp都没有看懂 = =、
+
+
+[kzoacn wrote on 2018-05-14T11:25:54]
+
+---
+
+https://blog.csdn.net/lifelikes/article/details/80209422
+
+[ftiasch wrote on 2018-05-14T13:45:06]
+
+---
+
