@@ -1,0 +1,16 @@
+# Changchun 2015 C Play a game
+
+题目链接 http://acm.hdu.edu.cn/showproblem.php?pid=5529
+题意是一个删字符游戏，两位玩家轮流玩，每次只能删左边或者右边的一个字符，如果串为空或者串出现在给出的字符串集合中则算输，给个串T以及m个串和q个查询[l, r]，问用T串的[l, r]子串做游戏谁会赢。1≤n,q≤40000，1≤m≤10000。
+弱没能想出什么好的思路，求各大神指教。
+
+[takio wrote on 2015-11-04T05:21:21]
+
+---
+
+http://async.icpc-camp.org/d/223-changchun-2015-c-play-a-game
+
+[sd_invol wrote on 2015-11-04T05:28:45]
+
+---
+
