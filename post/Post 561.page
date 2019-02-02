@@ -1,0 +1,36 @@
+# Bubble Cup 9 - Finals [Online Mirror] A. Festival Organization
+
+题目大意：
+给定$L,R,k$,求$\sum_{i=L}^{R}C(Fib_i,k)\ mod\ 1000000007$
+$L,R \leq 10^{18}$,$k \leq 200$
+
+[totoro wrote on 2016-09-20T12:24:34]
+
+---
+
+官方题解：https://drive.google.com/open?id=0B-ugW6q8pvbfdF9BUTRJZ0JOVmc
+大致思路是将组合数视为多项式，交换内外求和符号后就是 $k$ 个 $Fib_i$ 的 $1..k$ 次等比数列，用通项公式处理就可以了。因为 $5$ 对 $1e9+7$ 没有二次剩余，题解用了 $a+b\sqrt{5}$ 的表示法来规避。
+
+[sfiction wrote on 2016-09-20T12:34:51]
+
+---
+
+@sfiction#4359 好难啊QAQ && Thx!
+
+[totoro wrote on 2016-09-20T13:00:45]
+
+---
+
+@Totoro#4360 - = 写错了……$\sum_{L}^{R}{Fib_{i}^{m}}$ 还不是等比数列……还有一步根据通项公式展开得到多个等比数列……
+本来 zoj3774 就刚好是一道斐波那契数列m次幂求和的题，但 zoj 挂了……
+
+[sfiction wrote on 2016-09-20T13:08:17]
+
+---
+
+@sfiction#4361 我猜[这里](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1236)可以交ZOJ3774
+
+[skywalkert wrote on 2016-09-20T13:40:43]
+
+---
+
