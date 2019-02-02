@@ -1,0 +1,34 @@
+# 2015 Multi-University Training Contest 10 C GCD Tree
+
+求连接n个点的一棵最大生成树，其中<u,v>边的边权是gcd(u,v)，点编号从1开始
+题目连接：http://acm.hdu.edu.cn/showproblem.php?pid=5398
+杜教题解上说“对于多组数据，从1枚举到n，然后加入他向因子连的所有边，使用LCT维护最大生成树即可”。可是比如12的话向2,3,4,6连边，这样会形成很多环啊，要怎么删边呢
+
+[UUZ wrote on 2015-10-11T08:31:56]
+
+---
+
+参考WC水管局长那道题
+
+[splinter wrote on 2015-10-11T08:37:55]
+
+---
+
+@splinter#1684 这样边还要拆点出来啊，瞬间觉得好麻烦啊orz
+
+[UUZ wrote on 2015-10-11T09:22:01]
+
+---
+
+@UUZ#1683 在生成环之前就要把链上最小的边删掉，要一直保证是一棵树
+
+[不会写诗的诗人 wrote on 2015-10-11T13:20:09]
+
+---
+
+@UUZ#1687 这题因为图特殊性，MST的深度并不会太深，暴力维护即可。[代码](http://git.icpc-camp.org/Dreadnought/Trainings/blob/master/2015-08-25/c.cpp)
+
+[AngryBacon wrote on 2015-10-11T16:25:58]
+
+---
+
