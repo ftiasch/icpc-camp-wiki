@@ -1,0 +1,21 @@
+# Andrew Stankevich Contest 46 D Dichromatic Trees
+
+求n个节点，黑点高度不大于h的红黑树个数。
+看其他人的代码是有用到FFT的，但是不懂该怎么搞qwq
+
+[702ca781-5d12-47ec-86c6-976f99ae215f wrote on 2015-10-02T06:06:37]
+
+---
+
+@桜小路ルナ#1247 我大概 bb 一下，细节你自己想想吧。大概就是用 $f(h, n)$ 表示 black height 是 $h$ 的，$n$ 个点的树有多少种。转移大概像是 $f(h, n) = \sum_{i = 0}^{n - 1} f(h - 1, i) f(h - 1, n - 1 - i)$。这其实就是说 $f(h, \cdot)$ 是 $f(h - 1, \cdot)$ 的卷积，自然可以 FFT。
+
+[ftiasch wrote on 2015-10-02T06:07:13]
+
+---
+
+@ftiasch#1248 谢谢叉姐 >_< 之前思路完全想错了
+
+[702ca781-5d12-47ec-86c6-976f99ae215f wrote on 2015-10-02T06:18:45]
+
+---
+
