@@ -1,0 +1,124 @@
+# Asia Amritapuri 2015 J Coprimes
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=679&page=show_problem&problem=5585)
+
+给出一个长为$n$的序列$A$，有$q$组询问，每次询问给出$l, r, k$，询问在区间$[l, r]$中有多少个大小为$k$的子集，使得集合中所有数的$\gcd$为$1$。时限5s。
+
+$1 \leq n, q \leq 50000$
+
+$1 \leq A_i \leq 10000$
+
+[skyxuan wrote on 2016-06-25T11:03:54]
+
+---
+
+莫队
+
+[ftiasch wrote on 2016-06-25T13:38:27]
+
+---
+
+@Hayashimo#3844 没懂……每次询问的$k_i$都是不同的啊，如何维护当前区间中大小为$k_i$的、所有元素$gcd$为$1$的子集个数？
+
+[skyxuan wrote on 2016-06-25T15:35:41]
+
+---
+
+@skyxuan#3847 考虑加入一个数字x后，怎么算当前区间包含大小为k包含x的子集个数，定义f(d,k)为大小位k且gcd是d倍数且包含x的子集个数..如果我们能快速算出f，那么就能反演(容斥)出答案。事实上确实能快速算出，莫队记录下对于数字d，有多少数字是d倍数就行，这样不同的k无非是算的组合数下标不同罢了……加入删除一个数的复杂度是因数个数，因为ai很小只有1w应该没问题
+
+[mikantsumiki wrote on 2016-06-26T00:09:03]
+
+---
+
+@MikanTsumiki#3848 就是组合数不会维护啊……当前是$i$的倍数的数对答案的贡献是$\mu_i  C_{num_i}^{k_1}$，那么从这次询问转移到下次询问的时候所有组合数都会变化啊……而且还有可能出现$k_1$比$num_i$大的情况
+
+[skyxuan wrote on 2016-06-26T01:47:02]
+
+---
+
+@skyxuan#3849 转移只需要记$num_i$啊。。
+答案模的是$10^9+7$。。组合数在预处理出阶乘后是可以O(1)算的。
+以及$k$比$num_i$大大概毫无问题吧。。那个时候组合数看成0就好。
+![](https://ooo.0o0.ooo/2016/06/26/576f75fa77ab2.gif
+)
+
+
+[mikantsumiki wrote on 2016-06-26T06:14:53]
+
+---
+
+@MikanTsumiki#3850虽然组合数可以$O(1)$的求，但 每次有$10000$个$C_{num_i}^k$要算啊，这不是$O(10000)$的复杂度么……
+
+[skyxuan wrote on 2016-06-26T08:20:39]
+
+---
+
+想到一种做法是统计$num_i$等于$j$的个数$sum_j$。之后对于$sum_j < \sqrt{n \log n}$的$j$，用数组记录它的$C_j^k$。对于$sum_j \geq \sqrt{n \log n}$的$j$，这样的$j$不会超过$\sqrt{n \log n}$个（因为所有数的因子个数之和是$n \log n$级别的）可以直接算$C_j^k$。
+
+这样总的复杂度大概是$O(n \sqrt{n} (\sqrt{n} + \sqrt{n \log n}))$?
+
+感觉肯定不是这么做的……
+
+[skyxuan wrote on 2016-06-26T08:27:57]
+
+---
+
+@skyxuan#3852 。。。
+你说的做法就是std做法。。
+题解+代码。
+https://docs.google.com/document/d/1Qph8w3obJZLJZpA_rvtVaVJWD6I7tzFRh6SuqxxrOMg/edit
+
+
+
+[mikantsumiki wrote on 2016-06-26T13:20:32]
+
+---
+
+@MikanTsumiki#3854 soga……灰常感谢~~
+
+BTW，为什么你们找题解都这么熟练啊……有没有这场比赛[D](https://async.icpc-camp.org/d/466-asia-amritapuri-2015-d-magical-matrix)和[I](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=679&page=show_problem&problem=5584)的题解？
+
+[skyxuan wrote on 2016-06-26T15:31:57]
+
+---
+
+@skyxuan#3855 COINS那题。。~~树链剖分然后权值线段树套个主席树然后像zjoi2013某题那样做，反正内存给了1.5G~~
+
+~~感觉树链剖分然后全局二分也行。。~~
+
+~~你问的这三道题复杂度都很爆炸啊感觉，题目都有浓浓的咖喱味~~
+
+[mikantsumiki wrote on 2016-06-27T05:07:08]
+
+---
+
+@MikanTsumiki#3857 啊，刚开始没有想到全局二分……
+
+全局二分的话其实不用树链剖分的，链上加1的操作可以通过在x，y分别+1，在father[LCA(x,y)]减2，之后查询子树就可以了，一个log就可以做，这样一共也就两个log。
+
+[skyxuan wrote on 2016-06-27T05:12:10]
+
+---
+
+@skyxuan#3852 感觉官方题解在开玩笑吧……分享一下我的~~暴力~~做法
+
+考虑容斥，所求即 $\displaystyle\sum_{d}{\mu(d){\sum_{i = L}^{R}{[d | A_i]} \choose K}}$，直接枚举无平方因子数 $d$ 去算是比较尴尬的，但是有用的 $\sum_{i = L}^{R}{[d | A_i]}$ 的取值平均只会有 $O(\sqrt{n})$ 种。
+
+设 $\omega(x)$ 表示 $x$ 的不同质因子个数，对于 $x \leq 10^5$（题目中 $A_i$ 可能的最大值少个 $0$），有 $\omega(x) \leq 6$。令 $c(d) = \sum_{i = L}^{R}{[d | A_i]}$，则 $\sum_{\mu(d) \neq 0}{c(d)} = \sum_{i = L}^{R}{2^{\omega(A_i)}} \leq 2^6 n$，最坏情况下不同的 $c(d)$ 取值分别为 $1, 2, \cdots$，这也只会有 $2^4 \sqrt{n}$ 种。
+
+令 $f(x) = \sum_{c(d) = x}{\mu(d)}$，所求即 $\sum_{x}{f(x) {x \choose K}}$，只要维护出 $f(x) \neq 0$ 的 $O(\sqrt{n})$ 个取值，每次询问就可以 $O(\sqrt{n})$ 次乘法算出答案了。
+
+直接解决多组询问不是很方便，所幸这个题可以离线，所以利用分块或者莫队算法都是可以做的。若使用莫队算法，块大小最好为 $O(\sqrt{n})$（这里假设 $q = O(n)$），每次修改 $\mu(d) \neq 0$ 的 $c(d)$ 是 $O(2^6)$ 的， $f(x) \neq 0$ 的 $x$ 可以用一个支持快速插入/删除的数据结构维护（例如双向链表），总修改复杂度为 $O(2^6 n \sqrt{n})$。
+
+由于修改只涉及元素加减和寻址赋值，乘法只在计算答案时使用，所以跑起来可以很快……
+
+[skywalkert wrote on 2017-08-14T23:07:51]
+
+---
+
+@skywalkert#5233 链表被卡 cache 辣！实际上可以开个 $O(2^6 n)$ 的数组存历史记录里的 $x$，再记录实际 $x$ 所在位置，每次询问完清一清没用的记录，看上去更加 cache friendly，寻址也会少一点。
+
+[skywalkert wrote on 2017-08-15T00:59:47]
+
+---
+
