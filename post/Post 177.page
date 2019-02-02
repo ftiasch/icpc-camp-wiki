@@ -1,0 +1,134 @@
+# ZOJ Monthly October 2015 A Ants
+
+zoj3903怎么做..
+链接：http://acm.zju.edu.cn/onlinejudge/showProblem.do?problemCode=3903
+题意：蚂蚁要从长方体的一个顶点爬到长方体斜对角的那个顶点，已知长方体的最长边长度为n，长方体有各种可能，只要满足其他两边的长度<=n就好，蚂蚁爬的最短路线长度为L，不同的长方体对应不同的L，求所有可能的L的平方和。
+
+[godliness wrote on 2015-10-12T11:55:08]
+
+---
+
+问题相当于求Ans=$\sum_{i=1}^n\sum_{j=1}^i(n^2+(i+j)^2)$
+整理一下可以得到
+Ans=$n^2*n*(n+1)/2+(n+1)*\sum_{i=1}^ni^2+2*\sum_{i=1}^n\sum_{j=1}^ii*j$
+2*$\sum_{i=1}^n\sum_{j=1}^ii*j$=$\sum_{i=1}^n\sum_{j=1}^ni*j+\sum_{i=1}^ni^2$
+$\sum_{i=1}^n\sum_{j=1}^ni*j$=$((n+1)*n/2)^2$
+$\sum_{i=1}^ni^2$=$n*(n+1)*(2n+1)/6$
+
+所以Ans=$n^2*n*(n+1)/2+(n+2)*n*(n+1)*(2n+1)/6+((n+1)*n/2)^2$
+
+[zscloverinyo wrote on 2015-10-12T14:00:40]
+
+---
+
+问题相当于求
+$Ans=\sum\limits\_{i=1}\^{n} \sum\limits\_{j=1}\^{i} (n\^2+(i+j)\^2)$
+整理一下可以得到
+
+$Ans= n^ 2\times n$$ \times (n+1) $$/2$$+$$(n+1)$$\times$$\sum\limits\_{i=1}\^{n} i^ 2$+$2 \times$ $\sum\limits\_{i=1}\^{n} \sum\limits\_{j=1}\^{i} i\times j $
+
+2*$\sum\limits\_{i=1}\^{n} \sum\limits\_{j=1}\^{i} i\times j $=$\sum\limits\_{i=1}\^{n} \sum\limits\_{j=1}\^{n} i \times j$ $+\sum\limits\_{i=1}\^{n} i ^ 2 $
+$\sum\limits\_{i=1}\^{n} \sum\limits\_{j=1}\^{n} i \times j$=$( n\times (n+1) /2)^ 2$
+$\sum\limits\_{i=1}\^{n} i ^ 2$ = $ n \times (n+1) \times (2n+1) / 6 $
+
+所以Ans=$ n ^ 2 \times $$ n \times$$ (n+1)/2$ + $(n+2) \times$ $n \times$$(n+1) \times$$(2n+1)/6$+$( n\times (n+1) /2)^ 2$
+
+[zscloverinyo wrote on 2015-10-12T14:51:18]
+
+---
+
+@zscloverinyo#1740 其实不用那么麻烦，在得出Ans的表达式之后，就可以知道最后结果肯定是一个关于N的多项式，次数不会超过5次（两个区间for，for里面是平方）
+然后做法就暴力三重循环求出前几项，然后牛顿插值就行了，不需要推公式
+
+[mayf3 wrote on 2015-10-13T02:27:42]
+
+---
+
+牛顿插值要如何做啊 写代码吗？ 我倒是觉得推公式就1分钟
+
+[yuzuriha_inori wrote on 2015-10-13T02:53:11]
+
+---
+
+@Yuzuriha_Inori#1754 有模板。。这个推是不难，万一题目来一个6层循环的求和，推公式就还不如暴力写插值了
+
+[mayf3 wrote on 2015-10-13T03:11:14]
+
+---
+
+@mayf3#1755 当时看这个化简不麻烦就直接化简啦 ~ 牛顿插值没用过。。
+
+[zscloverinyo wrote on 2015-10-13T04:32:11]
+
+---
+
+@mayf3#1749 用牛顿插值会有精度误差吗？
+
+[godliness wrote on 2015-10-13T07:31:08]
+
+---
+
+@godliness#1765 不会……
+
+[ftiasch wrote on 2015-10-13T08:35:10]
+
+---
+
+@Varona#1767 不好意思..不是很懂怎么做诶..差商不是都是分数么..
+
+[godliness wrote on 2015-10-13T12:13:45]
+
+---
+
+@godliness#1773 咱不是 mod 1e9+7 有逆嘛= =
+
+[ftiasch wrote on 2015-10-13T13:54:47]
+
+---
+
+ @Varona#1777
+
+四国以/捂脸..
+
+[godliness wrote on 2015-10-14T02:18:11]
+
+---
+
+有牛顿插值的模板（教程）吗，想学一下= =
+
+[Voil wrote on 2015-10-14T04:26:02]
+
+---
+
+@Voil#1797 高斯消元会不会！
+
+[ftiasch wrote on 2015-10-14T04:41:04]
+
+---
+
+@Varona#1800 还不会。。。
+
+[Voil wrote on 2015-10-14T05:25:11]
+
+---
+
+@Voil#1801 用拉格朗日插值吧, 直接上公式, 简单明了
+
+[zimpha wrote on 2015-10-14T05:52:46]
+
+---
+
+@Voil#1801 @zimpha#1802 
+
+其实这种特殊的问题，还是应该线性插出来比较好……
+
+[ftiasch wrote on 2015-10-14T06:22:56]
+
+---
+
+@Voil#1797 去做UvaLive4209
+
+[不会写诗的诗人 wrote on 2015-10-14T11:37:03]
+
+---
+
