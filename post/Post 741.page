@@ -1,0 +1,29 @@
+# USACO 2005 Nov Silver Cow Acrobats
+
+给定 $n$（$n\le 1000$） 个二元组 $\{(a,b)\}$，$a$，$b$ 是不超过 $1000$ 的正整数。求这 $n$ 个二元组的一个排列 $(a_1, b_1), (a_2, b_2),  . . . , (a_n, b_n)$ 使得 $\max\{a_1, a_2 + b_1, a_3 + b_1 + b_2, ... , a_n + \sum\limits_{1 \le i < n} b_i \}$ 最小。 
+
+
+
+
+[zjsdut wrote on 2017-09-25T07:18:06]
+
+---
+
+http://poj.org/problem?id=3045 
+
+[ftiasch wrote on 2017-09-25T08:00:53]
+
+---
+
+多谢叉姐。补一个[证明](https://amoshyc.github.io/ojsolution-build/poj/p3045.html#id6)。从证明过程可以看出，贪心策略成立的前提是 $b \ge 0$ （从而对于一般情形并不成立）， 对 $a$ 的正负性并无要求。
+
+[zjsdut wrote on 2017-09-26T03:06:21]
+
+---
+
+一般性的做法是二分答案。
+
+[zjsdut wrote on 2017-09-26T05:10:55]
+
+---
+
