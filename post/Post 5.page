@@ -1,0 +1,31 @@
+# Codeforces Round #318 E Bear and Bowling
+
+一些非官方算法：
+
+* [汇编](http://codeforces.com/contest/573/submission/12760770)
+* [平衡树](http://codeforces.com/contest/573/submission/12764750)
+
+[ftiasch wrote on 2015-09-06T08:14:28]
+
+---
+
+我来讲讲 [aaaaajack](http://codeforces.com/contest/573/submission/12764750) 的做法。
+
+首先，要相信[题解](http://codeforces.com/blog/entry/20040)的贪心。也就是说，只要每次选择使当前答案增加最大的元素，这样可以得到每种长度的最优解。
+
+换句话说，我们是以某种顺序$o_1, o_2, \dots, o_n$选择元素。为了得到这个排列，我们不需要像题解一样模拟。我们考虑前$i$个元素的最优顺序$o_1, o_2, \dots, o_i$和前$(i + 1)$个元素的最优顺序$p_1, p_2, \dots, p_{i + 1}$。不难发现（？），$o_1, o_2, \dots, o_i$ 一定是$p_1, p_2, \dots, p_{i + 1}$的子序列。（证明：当$(i + 1)$插入时，后面的元素的增量会同时加上$a_{i + 1}$，不影响相对大小关系）。
+
+因此，只需要考虑$(i + 1)$插入到$o_1, o_2, \dots, o_i$的位置即可。假设插入到$o_j$后面，因为$(i + 1)$的右边没有元素，所以增加的权就是$(j + 1) \cdot a_{i + 1}$。而因为每个元素的权都是递增的，只需要二分查找即可。
+
+实现的时候因为需要维护每个元素的权，所以需要一个你喜欢的数据结构。时间复杂度是$O(n \log n)$，比题解好不少。
+
+[ftiasch wrote on 2015-09-10T11:50:44]
+
+---
+
+@ftiasch#85 场次写错了，318
+
+[AngryBacon wrote on 2015-09-12T11:29:56]
+
+---
+
