@@ -1,0 +1,9 @@
+# 【偶尔更新】日经问题整理
+
+Q：ejudge（opentrains）使用的评测系统上 Wall time-limit exceeded 是什么意思？
+A：（我猜测）ejudge 的评测器有（至少）两层 timer，内层 timer 卡 user time，外层 timer 卡 real time. 在交互题中，在 perform 一个 block read 的时候，是不在 user space block 的，所以这时候只会触发外层的 timer，造成 Wall time-limit exceeded. 
+
+[ftiasch wrote on 2017-04-30T03:15:03]
+
+---
+
