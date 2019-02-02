@@ -1,0 +1,84 @@
+# ICPCCamp XVII OpenCup Grand Prix of Eurasia 历险记
+
+**以下是 ICPCCamp 团队所写的非官方题解**，感谢大家的帮助和支持。欢迎大家回帖交流。
+
+感谢 @NPC @ftiasch @rowdark @zimpha @edly @Sd_Invol 在过程中的帮助。
+
+---
+
+## Problem 1. Maximum sum with swaps [rowdark AC]
+
+题意：长度为$10^5$的数组，绝对值不超过$10^9$，可以swap不超过10次，输出能得到的最大的子段和以及swap方案。
+
+题解：$dp(i,j,k,l)$表示到数组第$i$个位置，换入的数选了$j$个，换出的数选了$k$个，当前区间状态为$l$（未开始，进行中，一结束）时的最大值。求方案回滚下即可。
+
+## Problem 2. Inspection [sd0061 AC]
+
+题意：一个有向图，问加最少加几条有向边让图有个回路，不能加自环。
+
+题解：$n=1$显然无解，然后看图中是否已经有环，此时答案为 $0$。否则看图中是否有边，答案为$1$，再否则答案为$2$。
+
+## Problem 3. Karmon go [rowdark AC]
+
+题意：给$a$,$b$,$c$,问$a \times b$和$c$哪个大。
+
+题解：直接判即可。
+
+## Problem 4. Park trails
+
+题意：？？？
+
+题解：？？？
+
+## Problem 5. Autocomplete [sd0061 AC]
+
+题意： 简化完就是给一堆 bitset， 询问一个 bitset ， 问 xor 以后 popcount 不大于 $K$ 的数量，bitset 长度都相同。
+
+题解： 直接 map 套 vector 套 bitset 暴力即可。
+
+
+## Problem 6. Amazing Divisibility [edly AC]
+题意：$10^5$个数，所有 pair 接起来多少个是$7$的倍数
+
+题解：小水题
+
+## Problem 7. Group tournament [rowdark AC]
+题意：给一个比赛状况，有些场次还没比，构造一个方案使得最后大家的分数为给定值。胜负有两种，一种胜负为赢的3分，输的0分，一种为赢的2分，输的1分。
+
+题解：未定的场次流量为3，然后跑网络流。
+
+## Problem 8. Multiplier [rowdark AC]
+
+题意：构造一个 $N$ 倍乘法器，效果是给一个 $x$ ， 输出 $N*x$。电路元件有加法器，输入两个数，输出两个数的和；减法器，输入两个数，输出两个数的差；$k$移位器,$k$可以自己设，输入一个数$x$，输出$x * 2^k$。 但移位器的输入不能是加法器或减法器的输出。给 $N$ 问至少需要多少个元件。
+
+题解：答案不超过8，于是暴搜打表即可。
+
+## Problem 9. Guess the modulo [rowdark AC]
+题意：对方有$n$和$m$，($2 \le n \le 100$，$2 \le m \le 10^9$)，告诉你$n$和$n-1$个数的数组。你要猜出$m$，你每次可以
+1) ? p ($0 \le p \le 10^9$)，将 $p$加入数组末尾，对方算出最后 $n$个数的和mod $m$（称其为 $s$），将 $s$加入数组末尾并告诉你 $s$
+2) ! M，猜测$m = M$，交互终止
+操作数不得大于 1000。
+
+题解：随机乱搞，每次大概会知道当前数的一个倍数，然后一直GCD，注意如果能搞出当前GCD-1，那么显然可以直接输出了。
+
+## Problem 10. Carts [zimpha AC]
+题意： 给出$N$个点, 每次可以移动一个点(上下左右), 问最少的步数, 使得所有点在同一个直线上, 并且所有点要相邻. 直线要和坐标轴平行.
+
+题解： 不妨只考虑和$x$轴平行, 显然$x$和$y$是可以分开考虑的. 首先需要选取一个合适的$y$, 使得$\sum\limits_{i=1}^{N}\mid y_i-y\mid$最小, 于是$y$选取中位数就好了. 接下来考虑$x$, 需要选择一个数$k$, 使得最终士兵的位置为$k,k+1,k+2,...,k+N-1$. 步数为$\sum\limits_{i=1}^{N}\mid x_i-(k+i-1)\mid=\sum\limits_{i=1}^{N}\mid(x_i-i+1)-k\mid$, 于是把$x$坐标变换下, 同样选择中位数就好了.
+
+## Problem 11. School informatics [zimpha AC]
+题意： 有一个长度为$L$的文本, 字符集大小为$N$. 可以选则一个数$X$, 每$X$个字符当做一个整体编码(需要$\lceil \log_2{N^X} \rceil$的bits). $X$最大不能超过$K$, 选择一个合适的$X$使得, 编码整个文本需要的bits最少.
+
+题解： 显然答案就是$\min\limits_{X=1}^{K}\{\lceil X\log_2{N} \rceil \cdot \lceil \frac{L}{X} \rceil\}$. 注意到$\lceil \frac{L}{X} \rceil$最多只有$O(\sqrt{L})$种. 于是枚举$\lceil \frac{L}{X} \rceil$然后找出对于最小的$X$用来更新答案就好了. 由于$\lfloor \frac{L}{X} \rfloor$的最小$X$和$\lceil \frac{L}{X} \rceil$的最小$X$只有$\pm 1$的差距, 可以通过枚举$\lfloor \frac{L}{X} \rfloor$解决.
+
+## Problem 12. Give the Parabellum away
+题意： 有两个人A和B, 一开始A在$(p_x,p_y)$处, 速度恒定为$(u_x,u_y)$. B一开始在$(q_x,q_y)$处, 速度大小恒定为$v$. A和B在任意时刻距离都是一样的. 给出$n$个询问, 每次问$t_i$时刻B的位置.
+
+题解：？？？
+
+
+
+[sd_invol wrote on 2016-10-02T13:47:14]
+
+---
+
