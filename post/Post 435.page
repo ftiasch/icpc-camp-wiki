@@ -1,0 +1,37 @@
+# SPOJ PAIRDIV2
+
+给定正整数n,a,b，问有多少个有序对(x,y)满足$x\times y$是n的倍数,且满足$1\leq x \leq a,1\leq y \leq b$,答案模$10^9$输出。100组数据，5秒时限,n,a,b均小于等于$10^{18}$，且保证n的最大质因子不超过$10^5$
+link:http://www.spoj.com/problems/PAIRDIV2/
+
+[mikantsumiki wrote on 2016-05-23T05:03:37]
+
+---
+
+仿照 http://async.icpc-camp.org/d/203-changchun-2015-b-count-a-times-b/11 这个做一下？
+
+[ftiasch wrote on 2016-05-23T06:21:14]
+
+---
+
+@Hayashimo#3655 ..类似的式子推出来了，a和b有一个等于n知道怎么做..但是如果不等的话，式子就不知道怎么化简了..主要是感觉积性函数的性质好像不满足了..
+
+[mikantsumiki wrote on 2016-05-23T07:55:09]
+
+---
+
+@MikanTsumiki#3657 我现在也是约数个数平方复杂度，这样不能过吧？
+
+我再试试看化简
+
+[ftiasch wrote on 2016-05-23T16:07:51]
+
+---
+
+$O(\sigma(n)\log n)$ 的做法参考[这里](https://www.51nod.com/answer/index.html#!answerId=2723)。
+
+注意到做法的瓶颈是对于 $n$ 的每个约数 $d$ 求出满足 $\frac{n}{d} | x$, $x \leq a$ 且 $\gcd(d, \frac{x}{\frac{n}{d}}) = 1$ 的 $x$ 数量，直接做的复杂度是 $O(\sigma^2(n))$ 的，利用容斥可以发现所需进行的计算则是枚举 $d$ 的约数 $d'$ ，后者对前者消除多余的贡献，为了高速地完成这件事情，可以将 $n, d, d'$ 均化为质因子幂次的形式，进行高维差分即可。由于每一维之间是互不影响的，差分的过程实际上就是每一维轮流 bfs 一遍，维数 $\omega(n) = O(\log n)$ 。
+
+[skywalkert wrote on 2017-02-26T09:52:21]
+
+---
+
