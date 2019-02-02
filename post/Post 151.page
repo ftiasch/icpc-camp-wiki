@@ -1,0 +1,22 @@
+# Codeforces Round #323 C Superior Periodic Subarrays
+
+初学者，这个题目感觉好难，哪位哥哥姐姐帮我看一下啊   http://codeforces.com/contest/582/problem/C
+
+[avenger wrote on 2015-10-05T13:03:33]
+
+---
+
+令$g=\gcd(s,n)$, 那么可以把$0\sim n-1$分为$g$类, 每一类$i \equiv g \text{ mod }n$, 然后某个$a_i$会和$i \text{ mod }n$这一类的所有位置比较, 显然$a_i$要是这一类中的最大数, 于是把每一类最大数所在的位置标出来. 于是就是在这些标出来的位置中找个长度为$s$的, 同时满足$\gcd(s,n)=g$. 只要枚举$g$就好了, 复杂度大概$O(n \sqrt n)$.
+
+大抵还需要注这个东西是环, 于是需要考虑首尾哪些被标记的位置, 以及还需要特判所有位置都被标记的情况.
+
+[zimpha wrote on 2015-10-05T13:12:34]
+
+---
+
+过了，谢谢你 ︿(￣︶￣)︿
+
+[avenger wrote on 2015-10-08T03:35:00]
+
+---
+
