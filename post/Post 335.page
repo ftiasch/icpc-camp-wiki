@@ -1,0 +1,18 @@
+# 51nod 1301 集合异或和
+
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1301
+题意：给定N和M，要求构造两个集合X，Y，X的元素$\in$[1,N], Y的元素$\in$[1,M]，并且X，Y集合交集为空，X集合的xor和小于Y集合的xor和，问方案数mod(1e9+7)，集合可为空，此时异或和为0 ，1<=n,m<=2000
+QwQ， 求问怎么搞。。 只想到三维的dp
+
+[czk wrote on 2015-12-21T14:58:17]
+
+---
+
+你三方的F[ i][j][k]应该是前i个数，X xor和为j，Y xor和为k
+但你最后只要求j < k，意味着二进制下的j和k，有一段前缀相等，然后某一位j是0，k是1
+枚举这一位，然后维护j xor k的前缀，以及这一位j和k分别是什么
+
+[lostRating wrote on 2015-12-21T17:51:58]
+
+---
+
