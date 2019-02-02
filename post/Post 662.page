@@ -1,0 +1,67 @@
+# Beijing 2016 G A Triangle Puzzle
+
+We invented a new kind of puzzle.\par
+It is played on triangle towers.
+The structure of the triangle towers is as shown above. The $i^{th}$ layer has i cross points.\par
+There is one number on every cross point. Denote the $j^{th}$ number on the $i^{th}$ layer as p(i,j). We can see each triad $p(i,j),p(i+1,j),p(i+1,j+1)$ form a regular triangle. An operation rotates the numbers in a single triad $p(i,j),p(i+1,j),p(i+1,j+1)$ in counterclockwise direction for 120 degrees.\par
+The puzzle is, given two triangle towers of the same size with numbers on them, can the first tower become exactly the same with the second one by some operations?\par
+Please note that this problem is special judged.
+Input
+There are no more than 20 test cases.\par
+For each test case, the first line contains a integer N, indicating the number of layers of the two towers. Then N lines follow, the $i^{th}$ line contains i numbers, the $j^{th}$ number indicates p(i,j) of the first triangle tower. The following N lines describe the second triangle tower in the same format. $(1\le N\le 100,0\le p(i,j)<2^{31})$
+Output
+For each test case, if the solution does not exist, output a single line “-1”.\par
+Otherwise, output the number of used operations M in the first line. The following M lines describe the solution, each line with two numbers i,j, separated by a single space, indicating rotating $p(i,j),p(i+1,j),p(i+1,j+1)$in counterclockwise direction for 120 degrees. You should guarantee that $1\le j\le i<N,M\le N^3$.
+Sample Input
+3
+1
+2 3
+4 5 6
+6
+5 3
+4 2 1
+1
+2
+2
+1
+2
+3
+Sample Output
+12
+2 2
+1 1
+2 1
+2 2
+2 2
+2 2
+2 1
+2 2
+2 2
+2 1
+2 2
+2 2
+0
+-1
+
+[CookiC wrote on 2017-02-20T15:51:03]
+
+---
+
+求解！
+
+[CookiC wrote on 2017-02-20T15:52:13]
+
+---
+
+@ftiasch 叉姐 这是2016的（忘记标了…）
+
+[CookiC wrote on 2017-02-22T07:00:14]
+
+---
+
+首先 $N$ 步以内能完成任意两个数的交换，其次一次交换不会改变逆序数的奇偶性，这可以用来判定是否有解。前N-2行暴力构造，最后两行要一起考虑，注意一下相同的数的处理就行了。
+
+[Kuroda wrote on 2017-02-22T14:06:30]
+
+---
+
