@@ -1,0 +1,36 @@
+# POJ 2109 Power of Cryptography
+
+1.这道题哪里使用了贪心的思想？
+2.为什么double能放下的书，我改成long就会wa呢？
+
+[vgiceiceice wrote on 2015-10-11T09:43:30]
+
+---
+
+1. 不知道哪里使用了贪心的思想。
+2. 因为 long  放不下。
+
+[ftiasch wrote on 2015-10-11T10:21:10]
+
+---
+
+@Varona#1696 
+long不是精度比double大吗？
+
+
+[vgiceiceice wrote on 2015-10-11T10:43:22]
+
+---
+
+@vgiceiceice#1697 可能你 C 语言没学好，推荐再回去学一下 ……
+
+[ftiasch wrote on 2015-10-11T10:58:33]
+
+---
+
+@Varona#1698 long double可以吧
+
+[bpbpbpbp wrote on 2015-10-11T12:50:54]
+
+---
+
