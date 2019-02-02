@@ -1,0 +1,29 @@
+# 51nod 1222 最小公倍数计数
+
+题目大意：令$F(n)$表示满足$x\le y$且$lcm(x,y)=n$的二元组$(x,y)$的数量，求$\sum_{i=a}^{b}{F(i)}$。
+限制：数据范围$1\le a\le b\le 10^{11}$，时间6秒。
+[题目链接](http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1222)，题源是Project Euler的某题。
+
+[skywalkert wrote on 2015-10-01T04:09:04]
+
+---
+
+看[这里](http://git.icpc-camp.org/ftiasch/acm-icpc/blob/master/project-euler/p379/p379.cpp)我当时瞎搞了一下就 AC 了 = =
+
+
+[ftiasch wrote on 2015-10-01T04:11:58]
+
+---
+
+设$(x,y)=r,x=ar,y=br$，那么$\sum_{i=1}^{n}{F(i)}$可以被表示为$\sum_{a}\sum_{b}\sum_{r}{[a\le b][(a,b)=1][abr\le n]}$。
+化简一下就是$\sum_{d=1}^{\sqrt{n}}{\mu(d)\sum_{a}\sum_{b}\sum_{r}{[a\le b][abr\le \lfloor\frac{n}{d^2}\rfloor]}}$。
+不考虑$[a\le b]$的话后面就是三个数乘积的统计，做法和[2012年成都赛区的J](http://acm.hdu.edu.cn/showproblem.php?pid=4473)一样。
+$[a\le b]$比较讨厌，假设$(a,b)$和$(b,a)$均被统计两次故使统计结果直接除$2$的话会使得$a=b$的情况少算一半，考虑最原始的式子里，$a=b$则$a=b=1$，所以只需要在容斥后的结果上加上$n$再除$2$即可。
+时间复杂度的证明：
+设$F(n)$表示统计满足$abc\le n$的$(a,b,c)$三元组个数的时间复杂度，则$F(n)=O(\sum_{i=1}^{n^\frac{1}{3}}{(\sqrt{\frac{n}{i}} - i)})=O(n^\frac{2}{3})$。
+设$T(n)$表示整体算法的复杂度，则$T(n)=O(\sum_{d=1}^{\sqrt{n}}{F(\frac{n}{d^2})})=O(n^\frac{2}{3})$。
+
+[skywalkert wrote on 2015-10-01T04:36:40]
+
+---
+
