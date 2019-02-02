@@ -1,0 +1,114 @@
+# JAG Summer 2012 Day 4 B Area Folding
+
+给一个复杂多边形，多边形点不超过100个，求闭合部分的面积之和。
+http://www.bnuoj.com/v3/contest_show.php?cid=6866#problem/B
+求问这题怎么做呀？
+
+[peterpan wrote on 2015-10-02T07:27:23]
+
+---
+
+@peterpan#1281 把所有交点求出来，把所有小块挖出来，一块一块加。
+
+[ftiasch wrote on 2015-10-02T07:49:04]
+
+---
+
+@ftiasch#1285 小块怎么挖呀，叉姐
+
+[peterpan wrote on 2015-10-02T07:51:11]
+
+---
+
+@peterpan#1286 参考这个 [「几何问题选讲」](http://static.icpc-camp.org/camp2015/AngryBacon.pptx)
+
+
+[ftiasch wrote on 2015-10-02T07:51:57]
+
+---
+
+@ftiasch#1287 叉姐 可否有这道题的源码学习下   实现好复杂。。。。
+
+[幻月瑶琴 wrote on 2015-10-03T15:45:42]
+
+---
+
+@幻月瑶琴#1378 戳[这里](http://git.icpc-camp.org/ftiasch/mithril/blob/master/2012-09-17/B.cpp)。
+
+[ftiasch wrote on 2015-10-03T15:52:58]
+
+---
+
+@Varona#1287 谢谢叉姐，过了。不过是按照求出轮廓再求面积的方法过了的。您说的挖小块的方法，还不是很会＝ ＝
+
+[peterpan wrote on 2015-10-05T08:01:04]
+
+---
+
+@peterpan#1474 我感觉我们在说同一件事啊。。
+
+[ftiasch wrote on 2015-10-05T08:04:25]
+
+---
+
+@Varona#1285 您代码里面的判断点在线段上，特判一个端点是为了防止det暴精度？（我的意思是直接sgn(det(a-p,p-b))==0&&sgn(dot(a-p,p-b))>=0能被卡掉？）
+
+
+
+[xwind wrote on 2015-10-06T12:01:31]
+
+---
+
+@xwind#1515 不是。
+
+一般来说，$\epsilon$ 的量纲是长度，那么 det 的量纲应该是长度的平方，为了统一量纲，应该用 $\frac{a \times b}{\| a\|}$ 和 $\epsilon$ 比较。
+如果不判端点的话，分母会是 $0$。
+
+[ftiasch wrote on 2015-10-06T13:04:58]
+
+---
+
+@Varona#1519 从前一直没有管过量纲，您遇到过能卡掉不统一量纲的数据？
+
+[xwind wrote on 2015-10-06T13:17:51]
+
+---
+
+@xwind#1520 能。
+
+这题仿佛就能……因为那个代码风格应该是 @shangjingbo 改的。肯定不是我一开始就这么写的……
+
+[ftiasch wrote on 2015-10-06T13:24:24]
+
+---
+
+@Varona#1521 然而为什么不用管dot？它的量纲也是平方的呀
+
+[xwind wrote on 2015-10-06T13:59:48]
+
+---
+
+@xwind#1527 因为相对于 $= 0$ 来说，$ \leq 0$ 相对宽松一点，就算判错直觉上影响不会太大。
+
+[ftiasch wrote on 2015-10-06T14:01:32]
+
+---
+
+@Varona#1528 非常感谢，有理有据，令人信服
+
+[xwind wrote on 2015-10-06T14:05:36]
+
+---
+
+@xwind#1529 我觉得前面那个有点强行解释的意味。我觉得严谨的做法应该是要两边都除会比较好。
+
+[ftiasch wrote on 2015-10-06T14:06:41]
+
+---
+
+@Varona#1530 我今天发现，aizu上面因为是用linux评测，所以这个题不是因为量纲炸了，换成long double不判量纲也能过，2333333
+
+[xwind wrote on 2015-11-02T07:15:56]
+
+---
+
