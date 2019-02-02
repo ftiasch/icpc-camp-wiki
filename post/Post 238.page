@@ -1,0 +1,46 @@
+# CodeForces Round #196 D Book of Evil
+
+[link](http://codeforces.com/problemset/problem/337/D)
+题意是出一个$n$个点的树，在其中选择$p$个点，统计树上到这$p$个点的距离都小于$d$的点的个数
+数据范围 $(1 \leq m \leq n \leq 100000 , 0 \leq d \leq n - 1)$
+看到别人的代码是两遍dfs，但是并没有看懂，求具体思路QwQ
+
+[QAQ wrote on 2015-11-01T04:15:44]
+
+---
+
+设选择的点集是 $S$，那么关键是对于每个点 $v$，求 $d(v) = \max\\{ \langle v, s \rangle : s \in S\\}$。其中 $\langle u, v \rangle$ 是点 $u$ 和 $v$ 在树上的距离。
+
+然后模仿求直径的方法，有个结论是「距离一个点最远的点一定是直径的端点」，所以只要求限制在 $S$ 的树（更确切地说，点集 $S$ 的斯坦纳树）的直径 $(a, b)$，那么 $d(v) = \max\\{ \langle v, a \rangle, \langle v, b\rangle \\}$ 。
+
+[我的代码](http://codeforces.com/contest/337/submission/4301260)
+
+[ftiasch wrote on 2015-11-01T04:31:57]
+
+---
+
+@Varona#2341 限制在$S$中的树这个地方不是很理解，指的是将 $S$中的节点作为叶子在原树切下来的一个新树吗？
+（虽然去看了斯坦纳树的定义但是还是不是很明白
+
+[QAQ wrote on 2015-11-01T06:05:28]
+
+---
+
+@sorry_QAQ#2345 对就是这个意思。
+
+[ftiasch wrote on 2015-11-01T06:59:50]
+
+---
+
+@Varona#2346 明白惹~谢叉姐
+
+[QAQ wrote on 2015-11-01T07:21:47]
+
+---
+
+@Varona#2346 明白惹~谢叉姐
+
+[QAQ wrote on 2015-11-01T07:23:54]
+
+---
+
