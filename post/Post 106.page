@@ -1,0 +1,73 @@
+# 2014 上海赛区 L Top ACMers
+
+[题目链接](http://7xjob4.com1.z0.glb.clouddn.com/bd1ef1b832e5c75e5e66ccbf75d3a2c0)
+
+题目大意：给出n个点m条边的有向图，问至少再添加几条有向边可以使得原图变为一个全序关系。
+n、m范围为1e5
+
+[skyxuan wrote on 2015-09-30T12:49:41]
+
+---
+
+我以为大家都知道这是一个错题的……
+
+[ftiasch wrote on 2015-09-30T12:50:22]
+
+---
+
+纳尼……是错题……！？
+
+[skyxuan wrote on 2015-09-30T12:57:36]
+
+---
+
+@skyxuan#1050 标程似乎用的最小路径覆盖……
+
+[dtyfc wrote on 2015-09-30T13:35:14]
+
+---
+
+@dtyfc#1051 原来是最小路径覆盖........wa了整场
+
+[Suvigo wrote on 2015-09-30T14:36:00]
+
+---
+
+@Suvigo#1058 但是最小路径覆盖有反例。
+
+当时 Dracrays 就是因为发现了反例，所以没有做 L 题。
+
+[ftiasch wrote on 2015-09-30T14:36:45]
+
+---
+
+@ftiasch#1059 所以大家对今年的EC-final肥肠的畏惧！
+
+[AngryBacon wrote on 2015-10-01T15:24:34]
+
+---
+
+@AngryBacon#1218 EC-FINAl是google命题？
+
+[ZJiaQ wrote on 2015-10-02T11:15:02]
+
+---
+
+@ZJiaQ#1327 不出意外是
+
+[sd_invol wrote on 2015-10-02T11:17:49]
+
+---
+
+@Sd_Invol#1328 话说今年的ec-final和另外五个赛区的辣个X和Y出来了没有
+
+[ZJiaQ wrote on 2015-10-02T13:38:11]
+
+---
+
+@ZJiaQ#1334 完全不知道哦 = =
+
+[sd_invol wrote on 2015-10-02T13:50:15]
+
+---
+
