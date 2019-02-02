@@ -1,0 +1,44 @@
+# Chengdu 2013 C Clumsy Algorithm
+
+[题目链接](http://acm.hdu.edu.cn/contests/contest_showproblem.php?pid=1003&cid=487)
+
+题目大意：对于一个排列p，交换p [ i ] 和p [ j ] 所需要的花费为2|i - j|-1,设将排列p重新排列为{1,2,...,n}所需要的最小花费为f(p)，以及g(p):
+![pic](http://acm.hdu.edu.cn/data/images/C487-1003-1.jpg)
+
+给出排列的前k项{a1, a2, ..., ak}，求所有以其为前缀的n的排列p中满足f(p)=g(p)的个数。
+（语文拙计）
+
+[skyxuan wrote on 2015-10-22T08:36:01]
+
+---
+
+找找规律就知道这个等价于 LIS 不超过 3…（大概
+
+后面打牌就好了。
+
+[ftiasch wrote on 2015-10-22T11:34:34]
+
+---
+
+@Varona#2091 这种规律都能找出来……给叉姐跪了……
+我最开始的感觉是对于{1,2,3,...,n}的排列，只有(2,3,...,n,1)和{n,1,2,..,n-1}才满足条件，然而按照这样dp的话，样例都过不了……而其他可能的情况又想不到……
+原来只要LIS不超过三都可以？我再想想吧……
+蟹蟹叉姐>_<
+
+
+[skyxuan wrote on 2015-10-22T13:32:46]
+
+---
+
+@skyxuan#2098 好像当时全世界都找出来了… 
+
+[ftiasch wrote on 2015-10-22T17:48:01]
+
+---
+
+@Varona#2102 T_T
+
+[yangyue wrote on 2015-10-23T10:25:52]
+
+---
+
