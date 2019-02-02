@@ -1,0 +1,104 @@
+# 2016 CCPC 杭州 J Just a math problem
+
+@wtw#4616 能不能弱弱地问怎么nlgn地预处理前100w啊，不怎么懂啊
+
+[evilgeek wrote on 2016-10-24T03:37:57]
+
+---
+
+@wtw#4616 弱弱地问怎么nlgn地预处理前100w啊，不怎么懂啊
+
+[evilgeek wrote on 2016-10-24T03:39:03]
+
+---
+
+@wtw#4616 弱弱地问怎么nlgn预处理前100w啊，不怎么懂啊
+
+[evilgeek wrote on 2016-10-24T03:40:09]
+
+---
+
+给定 $n \leq 10^{12}$
+求 $\sum_{k = 1}^n 2^{f(k)}$ ，$f(k)$ 是 $k$ 这个数素因子的个数，这题怎么做？
+
+[doodle wrote on 2016-10-21T13:31:40]
+
+---
+
+$\mathrm{answer} = \sum_x \mu(x) \sum_{t = 1}^{n / x^2} \lfloor \frac{n}{x^2t} \rfloor$
+
+对第二个 sigma 可以 $O(n \log n)$ 预处理出前 100w，这样做起来对每组询问应该很快了
+
+[wtw wrote on 2016-10-21T15:14:22]
+
+---
+
+那个公式怎么推出来的？？
+
+[doodle wrote on 2016-10-21T16:10:05]
+
+---
+
+$\mathrm{answer} = \sum_x \mu^2(x) \lfloor \frac{n}{x} \rfloor$
+这个根据莫比乌斯的定义应该挺好理解的。
+然后我们利用莫比乌斯函数来反演，我们要去掉包含素因子次数大于等于2的x，所以对 $\mu^2(x) = \sum_{t^2 | x} \mu(t)$
+接着化简就得出原式了
+
+[wtw wrote on 2016-10-21T16:34:42]
+
+---
+
+请问这个2的f[k]次方怎么转换的？就是怎么消除2的幂次方，这里一直想不明白
+
+[doodle wrote on 2016-10-22T02:36:26]
+
+---
+
+@doodle#4620 $2^{f(k)}$就是$k$的无平方因子的因子个数，现在枚举无平方因子数$x$，$1$到$n$中被$x$整除的数的个数是$\lfloor \frac{n}{x} \rfloor$
+
+[quailty wrote on 2016-10-22T04:15:44]
+
+---
+
+@quailty#4621 瞬间懂了！
+
+[doodle wrote on 2016-10-22T10:38:04]
+
+---
+
+@evilgeek#4625 
+
+设 $s(n) = \sum_{i = 1}^n \lfloor\frac{n}{i}\rfloor$，那么
+$$s(n) - s(n - 1) = 1 + \sum_{i = 1}^{n - 1} \left(\lfloor\frac{n}{i}\rfloor - \lfloor\frac{n - 1}{i}\rfloor\right). $$
+
+而 $\lfloor\frac{n}{i}\rfloor - \lfloor\frac{n - 1}{i}\rfloor$ 只有在 $n$ 是 $i$ 的倍数时为 $1$.
+
+[ftiasch wrote on 2016-10-24T06:14:45]
+
+---
+
+@ftiasch#4629 懂了，谢叉姐
+
+[evilgeek wrote on 2016-10-24T07:40:40]
+
+---
+
+@wtw#4616 
+单组询问的复杂度应该是$\sum_{x=1}^{\sqrt{n}}\sqrt{n/x^2}=\sqrt{n}\log n$吧，请问预处理第二个sigma可以做多组询问吗？
+
+[xy20130630 wrote on 2017-08-09T00:34:18]
+
+---
+
+@xy20130630#5211 你预处理第二个 sigma 之后不就是$O(\sqrt{n})$枚举 x 么 ……
+
+[quailty wrote on 2017-08-09T02:22:09]
+
+---
+
+@xy20130630#5211 对不起我眼瞎 = = 你说得对 ……
+
+[quailty wrote on 2017-08-09T02:42:52]
+
+---
+
