@@ -1,0 +1,34 @@
+# Topcoder SRM 669 Div 1 Level 2 LineMST
+
+一个粗暴的方法是 $L^{N - 1}$ 枚举 line MST 上的每条边边权，那么其他非树边的边权下界就是经过的边权的最大值。
+
+你看着这像是一个 RMQ，那么自然就可以想到笛卡尔树。我们考虑 line MST 上边权最大的那条边，那么跨过这条边的下界都应该是这个值，左右也就独立了。
+
+具体地说就是考虑 $f(n, m)$ 表示现在有 $n$ 条边，最大值只能到 $m$ 的方案数。那么假设最大的是第 $i$ 条边，那么：
+
+$$f(n, m) = f(n, m - 1) + \sum_{i = 1}^{n} f(i - 1, m - 1) \cdot f(n - i, m) \cdot (L - m + 1)^{i \cdot (n + 1 - i) - 1} $$
+
+答案就是 $\frac{N!}{2} \cdot f(N - 1, L)$。
+
+[ftiasch wrote on 2015-09-28T13:49:13]
+
+---
+
+[题目链接](http://community.topcoder.com/stat?c=problem_statement&pm=14017&rd=16549)
+
+[ruclion wrote on 2015-09-28T13:30:35]
+
+---
+
+然后再乘以n！/2吧
+
+[ruclion wrote on 2015-09-28T15:20:29]
+
+---
+
+@ruclion#892 您说得太对了！
+
+[ftiasch wrote on 2015-09-28T15:40:24]
+
+---
+
