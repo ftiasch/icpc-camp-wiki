@@ -1,0 +1,22 @@
+# 2017 Beijing Onsite B Reverse Suffix Array
+
+由rank[sa[i-1]+1]>rank[sa[i]+1]可以推出，charAt(sa[i-1])<charAt(sa[i])。怎么证明满足这个必要条件的字符串，的sa数组就是原数组。怎么证明这个充分性啊orz
+
+[clatisus wrote on 2017-09-24T01:55:41]
+
+---
+
+我觉得还挺明显的。。。如果真的想要写出来证明可以试着每次在前面加一个字符归纳。
+
+
+
+[ftiasch wrote on 2017-09-24T02:39:24]
+
+---
+
+@ftiasch#5380 我试试 谢谢叉姐w
+
+[clatisus wrote on 2017-09-24T02:46:50]
+
+---
+
