@@ -1,0 +1,21 @@
+# Shenyang 2015 E Efficient Tree
+
+题目链接：http://acm.hdu.edu.cn/showproblem.php?pid=5513
+需要怎么描述状态转移呢？
+
+[zyeric wrote on 2015-11-03T08:57:14]
+
+---
+
+只要做了 NOI2007 生成树计数 就会了。
+
+[sd_invol wrote on 2015-11-03T09:14:50]
+
+---
+
+@Sd_Invol#2403 谢谢昂神。（感觉每次自己写的程序都在statistic的最后，真是忧伤T_T
+
+[zyeric wrote on 2015-11-04T03:11:41]
+
+---
+
