@@ -1,0 +1,43 @@
+# Topcoder Open Round 2B 题解
+
+# TriangleTriples
+
+$\neg((a + b > c) \wedge (b + c > a) \wedge (c + a > b)) = (a + b \leq c) \vee (b + c \leq a) \vee (c + a \leq b)$. 
+
+因为右式 $3$ 个析取不会同时成立，所以只需统计计算 $3$ 种情况的方案，即 http://www.spoj.com/problems/RNG/ $n = 2$ 的情况。
+
+注：也可数位 dp。
+
+# FoxAndGemstone
+
+判断对于 $16!$ 种宝石的重量排列，都存在 *唯一* 的最重的包。所以，只需对于包 $i$ 计算，以它为最重的包的排列数量 $p_i$。如果 $\sum_i p_i = 16!$，则可能；否则不可能。
+
+包 $a$ 比包 $b$ 重的充要条件是，对于任意 $j$，都有 $\mathrm{cnt}(a, j) \geq \mathrm{cnt}(b, j)$. $\mathrm{cnt}(x, j)$ 表示包 $x$ 中重量不小于 $j$ 的宝石数量。
+
+用 $dp_i(S)$ 表示 $S$ 中的宝石重量排列的方案数，转移时枚举重量最小的宝石进行转移。
+
+复杂度是 $O(n 2^{m} m)$，其中 $m = 16$.
+
+# ParenthesesTree
+
+把左括号作为 $+1$，右括号作为 $-1$，设 $x(u)$ 表示根到 $u$ 路径上权值的和。
+显然 $x(u) \neq x(\mathrm{parent}(u))$ 而且 $|x(u) - x(\mathrm{parent}(u))| \leq 1$. 
+
+$u \to v$ 是一个合法的括号序列，当且仅当：
+
+1. $x(u) = x(v)$; 
+2. 对于 $u$ 到 $\mathrm{LCA}(u, v)$ 上的点 $p$，都有 $x(p) \geq x(u)$；
+3. 同理对 $v$。
+
+仿照 http://codeforces.com/contest/434/problem/D 建立网络流模型即可。
+唯一无法表示的是 $x(u) \neq x(\mathrm{parent}(u))$ 这个限制。
+注意到奇数层的点只能是奇数 $x$，偶数层的点只能是偶数，这个限制自然不复存在。
+
+---
+
+代码 http://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/topcoder/topcoder-open/topcoder-open-2016/round-2B
+
+[ftiasch wrote on 2016-05-27T01:48:31]
+
+---
+
