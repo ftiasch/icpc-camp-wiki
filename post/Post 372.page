@@ -1,0 +1,56 @@
+# 强连通分量最多可以删掉多少条边？
+
+给定一个$n(n\leq 5000)$个点，$m(m\leq 100000)$条边的强连通图，问最多可以删掉多少条边，使得剩下的图依旧强连通。
+
+[Claris wrote on 2016-03-10T15:29:09]
+
+---
+
+搬运一下：这是俗称的 MSSS（Minimum Spanning Strongly Subgraph），大概是 NP Hard 的。
+
+[ftiasch wrote on 2016-03-10T16:25:19]
+
+---
+
+http://stackoverflow.com/questions/1536067/minimum-cost-strongly-connected-digraph
+
+[samzhang wrote on 2016-03-10T20:11:36]
+
+---
+
+一看就做不了哦，能做这个不就能判定hamilton cycle了么
+
+[AngryBacon wrote on 2016-03-13T06:46:14]
+
+---
+
+我还是要吐槽一句，为什么这么多人自己编个不知道能不能做的题都还要给个范围。
+
+[AngryBacon wrote on 2016-03-14T05:24:31]
+
+---
+
+@AngryBacon#3328 我也不知道啊 = =
+
+[ftiasch wrote on 2016-03-14T05:38:20]
+
+---
+
+@AngryBacon#3328 可能是表达了自己对世界的美好祝愿？
+
+[ftiasch wrote on 2016-03-14T05:38:38]
+
+---
+
+@Hayashimo#3331 この素晴らしい世界に祝福を!
+
+[zimpha wrote on 2016-03-14T07:05:59]
+
+---
+
+@AngryBacon#3328 窝不小心读错题意了TAT
+
+[Claris wrote on 2016-03-14T15:43:45]
+
+---
+
