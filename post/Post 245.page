@@ -1,0 +1,64 @@
+# f(n)=f(n-2)+f(n/2) f0=f1=1
+
+递推式…f(n)=f(n-2)+f(n/2) f0=f1=1
+除法向下取整，问能否求出通项，或者log求出
+
+[pis wrote on 2015-11-04T05:01:00]
+
+---
+
+这个递推的结果大概是个log(n)次的多项式，可以试试求这个多项式。
+
+[litaoye wrote on 2015-11-06T09:41:37]
+
+---
+
+@litaoye#2462 不懂。。求解详细一点点的思路，51nod好像还有道题目，把2换成k的
+
+[mayf3 wrote on 2015-11-06T15:14:50]
+
+---
+
+@mayf3#2466 对，我们是有这样一个题目，但需要高精，也许以后会改一下题面，把高精去掉。那个题目有dp和生成函数两个做法，但我不太方便写题解（其实原来有题解的，后来被我删掉了）。
+
+[litaoye wrote on 2015-11-10T05:04:13]
+
+---
+
+dp的话，就是这个递推可以看做是将n划分为若干个2的幂的和，所对应的方案数，然后有个log(n)^3 的dp方法。
+
+[litaoye wrote on 2015-11-10T05:15:43]
+
+---
+
+刚用母函数推出了个结果：
+$f(n)$ 即为
+
+$n=1 \cdot c\_0+2 \cdot c\_1+4 \cdot c\_2+8 \cdot c\_3+...+2\^k \cdot c\_k$ ($k$为以$2$为底$n$的对数)
+
+的非负整数解$(c\_0,c\_1,c\_2,...,c\_k)$的个数
+这个解释是否会好些
+（支持markdown语法怎么插入不了LaTeX公式？）
+
+[world2 wrote on 2015-11-10T15:02:05]
+
+---
+
+@world2#2516 （帮你改了）要用 $<math>$ 的语法插入
+
+[ftiasch wrote on 2015-11-11T03:18:12]
+
+---
+
+既然知道就是用 $2^k$ 凑 $n$ 的方案数，那么只要套
+
+> [SRM 527 HARD P8XCoinChange](http://community.topcoder.com/stat?c=problem_statement&pm=11155&rd=14552) [题解](http://apps.topcoder.com/wiki/display/tc/SRM+527)
+
+就可以啦。
+
+
+
+[ftiasch wrote on 2016-04-19T13:54:41]
+
+---
+
