@@ -1,0 +1,24 @@
+# Petrozavodsk Summer 2015 Moscow IPT Contest H Sasha And Swag Strings
+
+给一个长度不大于 $10^5$ 仅包含小写字母的字符串，构出他的后缀树后把所有只有一个儿子的节点也进行压缩。求最后这棵树上所有树边上字符串的不同子串个数之和。
+
+例如abaaa的答案为17.
+
+![image /assets/images/0-4-VMRUA67msvNSNMoc.jpg](/assets/images/0-4-VMRUA67msvNSNMoc.jpg)
+
+
+[sd_invol wrote on 2016-03-30T04:22:33]
+
+---
+
+我来记录一下怎么做吧……
+
+首先，建立 compacted Suffix Automaton，也就是把出度为 1 的点并一并，使得结果自动机的每个点出度至少是 2。
+那么 compacted Suffix Automaton 相当于是后缀树合并同构子树后得到的，对它 dfs 的结果就是后缀树。所以说，后缀树上的每一段字符串，都可以在 CSAM 中找到。
+
+因为这个 CSAM 边长总和是 $3n$，所以只要对于每个边算一下不同的子串数目，乘以在后缀树中出现的次数就行了。
+
+[ftiasch wrote on 2016-04-01T03:32:17]
+
+---
+
