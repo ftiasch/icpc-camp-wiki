@@ -1,0 +1,71 @@
+# Codeforces Round #360
+
+# NP-Hard Problem
+
+二分图黑白染色。
+
+# Remainders Game
+
+设 $n = \prod_{i} p_i^{k_i}$, 有解当且仅当对于 $i$，存在 $j$ 使得 $p_i^{k_i} |\; c_j$.
+
+# The Values You Can Make
+
+设 $f(i, j, k)$ 表现前 $i$ 个里面总和是 $j$，找零是 $k$ 是否可能。
+
+# Dividing Kingdom II
+
+对于每个询问，按照从大到小加边，直到出现奇环。复杂度是 $O(qm)$. 
+
+一些事实：
+
+1. 内存顺序访问比随机快，应该把边按照从大到小存放；
+2. 非递归的并查集比递归的并查集快；
+3. 俄罗斯人好像都是启发式合并的……
+
+# TOF
+
+收缩 SCC，对于有出度的点，只要连到没有出度的连通块就好了。对于没有出度的连通块，求一个最小环即可。
+
+---
+
+我的代码 https://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/codeforces/687-codeforces-round-360
+
+[ftiasch wrote on 2016-06-30T13:43:22]
+
+---
+
+卡常大法好ww
+
+[quailty wrote on 2016-06-30T14:25:37]
+
+---
+
+请问叉姐能解释一下D的正解怎么做的呢。。。官方题解不是很能看懂
+
+
+[samzhang wrote on 2016-07-01T12:49:51]
+
+---
+
+@samzhang#3865 
+
+线段树。对于线段树区间 $[l, r]$，把 $[l, r]$ 里面的边从小到大加入并查集，只保留使并查集结构变化的边，只有 $O(n)$ 条。
+
+询问时，会得到 $O(n \log m)$ 条关键边，排序再暴力，复杂度是 $O(q n \log m \log(n \log m))$. 
+
+[ftiasch wrote on 2016-07-01T18:12:27]
+
+---
+
+@Hayashimo#3866 原来是这样啊，为啥出题人写的题解如此难懂。。。
+
+[samzhang wrote on 2016-07-02T05:07:04]
+
+---
+
+@samzhang#3868 出题人菜啊
+
+[ftiasch wrote on 2016-07-02T05:20:26]
+
+---
+
