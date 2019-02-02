@@ -1,0 +1,20 @@
+# Bubble Cup 9 Finals [Online Mirror] H. Pokermon League challenge
+
+n个人,e对仇恨关系.有若干个team,每个人都有一个team wish list(一个人只能加入list中的一个team).
+再把这些team划分成2个阵营,满足:
+each trainer belongs to exactly one team;
+no team is in both conferences;
+total hate between conferences is at least e / 2;
+every trainer is in a team from his wish-list.
+cf这题的标签是随机.以这题为例,随机题的能随机到答案的概率要怎么算呀?有没有什么固定的套路?
+
+[wumpus wrote on 2016-09-13T12:32:26]
+
+---
+
+没有固定套路
+
+[ftiasch wrote on 2016-09-13T13:44:54]
+
+---
+
