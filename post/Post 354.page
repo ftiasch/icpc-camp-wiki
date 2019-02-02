@@ -1,0 +1,37 @@
+# Andrew Stankevich's Contest 8 Fibonacci Period
+
+给定一个不大于1e9的数p，求在此模意义下的fibonacci数列的最短周期
+这里周期的定义是存在一个n，若对于任意的i>n，使得fib[i] mod p = fib[i+x] mod p，则称x是一个周期
+
+
+[totoro wrote on 2016-02-18T05:46:48]
+
+---
+
+愉快地BSGS一下就好了。
+
+参考题目 http://acm.hdu.edu.cn/showproblem.php?pid=4794
+
+[sd_invol wrote on 2016-02-18T10:26:25]
+
+---
+
+发个paper [The Period of the Fibonacci Sequence Modulo j](http://math.arizona.edu/~ura-reports/071/Campbell.Charles/Final.pdf)
+广义Fibonacci数列循环节 [Cycles in the Generalized Fibonacci Sequence modulo a Prime](http://www.damtp.cam.ac.uk/user/dv211/mathmag02.pdf)
+
+[zimpha wrote on 2016-02-18T11:21:42]
+
+---
+
+@Sd_Invol#3149 赤果果的bsgs会tle吧。。。
+
+[totoro wrote on 2016-02-18T14:17:42]
+
+---
+
+@Totoro#3152 （￣ε（＃￣）☆╰╮（￣▽￣／／／）刚才的话当我没说
+
+[totoro wrote on 2016-02-18T14:47:38]
+
+---
+
