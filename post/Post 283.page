@@ -1,0 +1,33 @@
+# NEERC 2014 Moscow Subregional G Genealogy
+
+http://codeforces.com/gym/100519/problem/G
+带环的有向图最长路
+
+[minamikotori wrote on 2015-11-18T14:42:38]
+
+---
+
+虽然它确实有环……但是它只有一个环啊……
+
+[ftiasch wrote on 2015-11-18T15:07:33]
+
+---
+
+@Varona#2704 题目中并没有保证只有一个环啊QAQ
+
+[minamikotori wrote on 2015-11-18T17:58:01]
+
+---
+
+@MinamiKotori#2706 每个顶点出度<=1，可以推出每个弱连通分量中至多有一个有向环，否则找一条路径把两个环连起来就会产生矛盾
+
+[quailty wrote on 2015-11-18T20:05:27]
+
+---
+
+@quailty#2707 感谢wwww
+
+[minamikotori wrote on 2015-11-19T09:11:28]
+
+---
+
