@@ -1,0 +1,19 @@
+# SRM 676 Div1 450
+
+https://community.topcoder.com/stat?c=problem_statement&pm=14085&rd=16626
+450这个SG模拟步数的上限是怎么算出来的？
+有的人直接把k变成了4 + k % 4，请问是为什么呢
+
+[mirai wrote on 2015-12-19T05:20:31]
+
+---
+
+咱实在是没做过。。。= =
+
+但是我感觉这种事情不都是找找规律么。。。
+
+
+[ftiasch wrote on 2015-12-19T12:19:08]
+
+---
+
