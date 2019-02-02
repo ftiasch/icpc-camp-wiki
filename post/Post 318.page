@@ -1,0 +1,34 @@
+# Codeforces Round #325 C Alice, Bob, Oranges and Apples
+
+链接：http://codeforces.com/problemset/problem/585/C
+这题正解是根据Stern–Brocot tree来做的？　没怎么看懂官方题解的意思...
+
+[ltwy wrote on 2015-12-05T08:46:21]
+
+---
+
+题目就在描述 SBTree 啊……所以不就是直接走。
+
+[ftiasch wrote on 2015-12-05T09:00:43]
+
+---
+
+咦　谢谢叉姐哈　我去研究下SBTree 话说那个比较高大上的SBT就是这个么？
+
+[ltwy wrote on 2015-12-05T09:06:03]
+
+---
+
+@ltwy#2974 不知道你在问什么……
+
+[ftiasch wrote on 2015-12-05T12:29:28]
+
+---
+
+@ltwy#2974 
+平衡树的SBT？那是Size Balanced Tree，和这个完全不一样。
+
+[linyuzhou wrote on 2015-12-10T01:43:37]
+
+---
+
