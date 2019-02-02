@@ -1,0 +1,36 @@
+# UVA 12956 Curious Guardians
+
+[题目链接](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=problem_stats&problemid=4835&category=)
+求解法
+
+[curiosity wrote on 2015-10-15T16:59:58]
+
+---
+
+prufer序列？
+
+[lostRating wrote on 2015-10-15T20:43:01]
+
+---
+
+更新一下题目[链接](http://acm.hust.edu.cn/vjudge/problem/visitOriginUrl.action?id=259571)，昨晚贴成了Statistics的链接了。
+
+[curiosity wrote on 2015-10-16T06:02:43]
+
+---
+
+首先，一棵n个点的带标号无根树一定和一个长度为n-2的prufer编码一一对应。其次，每个点的度数等价于其在编码中出现的次数 - 1。于是暴力dp即可。
+
+[rowdark wrote on 2015-10-16T08:02:36]
+
+---
+
+http://codeforces.com/blog/entry/20335#comment-251217
+
+啊只有一个人写了我想出的 O(n log^2 n) FFT 解。
+
+
+[baodog wrote on 2015-11-13T06:00:49]
+
+---
+
