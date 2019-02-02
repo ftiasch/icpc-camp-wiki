@@ -1,0 +1,12 @@
+# HDOJ 5354 Bipartite Graph
+
+http://acm.hdu.edu.cn/showproblem.php?pid=5354
+题意是n个点，m条边(10w),问哪些点删除之后是二分图(n个回答，第i个回答是单独删除第i个点之后是不是二分图)。
+
+标解是可复原的并查集+分治。
+可是那个分治当左右端点在mid两边的时候两个区间都要加。如果端点都是1，n的话复杂度不就变成nmlogn了么？
+
+[VincentLDL wrote on 2015-11-24T12:09:16]
+
+---
+
