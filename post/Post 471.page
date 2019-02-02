@@ -1,0 +1,39 @@
+# SRM 693 题解
+
+@JCVB 的题目好难 :(
+
+---
+
+# BiconnectedDiv1
+
+设 $f(i, \mathrm{state})$ 表示前 $i$ 个点，点 $\{i, i - 1\}$ 的连通状态是 $\mathrm{state}$ 时的最小代价。转移是简单的连通性 dp。
+
+聪明点，考虑点 $i$ 结束了双连通分量，那么 $\{i - 1, i - 2\}$ 一定已经连通，同时加入了 $(i - 1, i)$ 和 $(i - 2, i)$ 两条边。
+如果此时有 $(i - 1, i - 2)$ 这条边，那么这个连通分量已经完整。否则只能有 $(i - 3, i - 1)$ 这条边。又是一个和前面一样的情况。
+所以，每个双连通分量的样子一定是 $(i, i + 1), (i, i + 2), (i + 1, i + 3), \ldots, (j - 2, j), (j - 1, j)$. 
+那么设 $\mathrm{dp}(i)$ 表示前 $i$ 个点的最优解，转移时枚举 $j$ 表示双连通分量从 $j$ 开始，依上转移即可。
+
+# BipartiteConstruction
+
+请看 http://codeforces.com/blog/entry/45648?#comment-302375.
+
+# TriangleFree
+
+如果 $\mathrm{deg}(v) \geq 3$，标记点 $v$ 删除点 $v$ 和它相邻的边。总度数只有 $60 \times 2 = 120$，每次会把总度数减少 $6$. 所以只会标记 $120 / 6 = 20$ 个点。
+
+没有标记的点，组成一些链、环、和三角形（特殊的环）。暴力 $2^{20}$ 枚举被标记点的情况，如果有被标记点组成的三角形，那么 gg。否则对于链、环上的边 $(u, v)$，如果它们和一个被选取的被标记点 $w$ 相邻，那么 $(u, v)$ 不能同时选取。总之变成一个链、环上的独立集计数，dp 即可。注意处理三角形的特殊情况。
+
+---
+
+我的代码 https://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/topcoder/single-round-match/single-round-match-693
+
+[ftiasch wrote on 2016-07-01T18:22:26]
+
+---
+
+250  似乎扔个费用流也挺方便的。。
+
+[kybconnor wrote on 2016-07-05T08:08:58]
+
+---
+
