@@ -1,0 +1,17 @@
+# UVALive 7570 Malvika and Animesh play Red-Blue cards
+
+https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=5592
+
+题目大意：n张牌，每张牌有正反两面，从左到右给出n张牌的初始正反面。A,B轮流翻牌，A先手。翻牌规则：玩家选一张正面的牌（记录为i牌），把它变成反面。然后玩家可以选择（当然也可以不选）i牌右边的并且紧挨着i牌的连续若干张反面的牌，把它们变成正面）。谁不能操作，谁就输了。假设两者都是最聪明的，问先手赢还是后手赢。
+
+[doodle wrote on 2016-10-27T07:29:44]
+
+---
+
+设正面为1，反面为0，把纸牌序列按左到右(高位到低位)的顺序写成二进制数$x$，发现每次操作就是在原来的数上减去不大于$x$的某个$2^i$。
+然后数学归纳一下可以证明当$3|x$时后手胜，否则先手胜。
+
+[totoro wrote on 2016-10-27T11:10:20]
+
+---
+
