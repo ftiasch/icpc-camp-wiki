@@ -1,0 +1,31 @@
+# ZOJ Monthly, September 2015 B Board
+
+[题目链接](http://acm.zju.edu.cn/onlinejudge/showContestProblem.do?problemId=5574)
+
+用1阶L形覆盖n阶L形，问是否存在方案并输出。
+
+[sd_invol wrote on 2015-09-14T07:21:39]
+
+---
+
+方案都是存在的, 可以每次剥掉3层的来构造. 
+参考[这个图片](http://i1.tietuku.com/fce1783df9e29906.jpg)
+
+[zimpha wrote on 2015-09-14T09:50:15]
+
+---
+
+@zimpha#190 懂了！感谢><
+
+[sd_invol wrote on 2015-09-14T11:49:40]
+
+---
+
+扩3也可以……就是并不容易一下子想到……
+容易想到，先摆出2*3的长方形和n=2的L形，然后最核心是n=1或n=2，每次往外扩展2（对n%3分3类讨论）
+详细参见：http://blog.csdn.net/fcxxzux/article/details/48428631
+
+[toraoh wrote on 2015-09-15T13:33:54]
+
+---
+
