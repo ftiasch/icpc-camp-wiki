@@ -1,0 +1,91 @@
+# Codeforces Round #323 D Once Again...
+
+真心弱，求不要嫌弃给个正解，QWQ。
+
+[IMG]http://viber.tsymbal.su/data/stickers/14325.png[/IMG]
+
+[传道者 wrote on 2015-10-05T03:11:02]
+
+---
+
+一个简单的粗暴的方法是矩阵乘法……
+
+用 $f(i, j)$ 表示考虑到底 $i$ 个数，最后一个数是 $j$。只有两种转移，取第 $i$ 个数或者不取。然后矩阵快速幂就可以啦？
+
+[ftiasch wrote on 2015-10-05T03:15:51]
+
+---
+
+@Varona#1454 请问巨巨能再详细一点嘛？？话说我发布话题的时候为什么找不到在哪里设置Tag呢（捂脸
+
+[传道者 wrote on 2015-10-05T03:18:20]
+
+---
+
+@传道者#1457 你哪里不明白呢？
+
+[ftiasch wrote on 2015-10-05T03:19:34]
+
+---
+
+@Varona#1458 啊~ 现在的话好像有点懂了，我现在试一下，谢谢啦。。刚才因为没有看到第二行的解释，不好意思啊。:-P
+
+[传道者 wrote on 2015-10-05T03:22:59]
+
+---
+
+@Varona#1454 请教下叉姐，如果考虑T和n的关系应该这么做。我是这么想的，首先n是固定的。这一串子序列必然有很多重复的，不妨设最大的非递减序列在每段（每一个n为一段)的最大值为a1, a2, .., aT, 则a1 <= a2 <=...<= aT。如果T大于n，必然存在ai = ai+1这种情况，这些段的数值都是相同的。我们可以让剩下的(T-n)端都等于max(count(a1),count(a2),..,count(an)。但是接下来怎么做就不明白了，谢谢叉姐。。
+
+[sysuwx wrote on 2015-10-07T05:35:40]
+
+---
+
+@sysuwx#1543 
+
+如你所说，如果设第 $i$ 段中的最大值是 $m_i$，那么 $m_1, m_2, \dots, m_{n + 1}$ 中至少有两个相同的。如果 $T > n$，那么还有 $T - (n + 1)$ 是相同的数。
+
+那么，我们用 $f(i, j, \mathrm{used})$ 表示现在考虑了 $i$ 段，最后一个数的大小是 $j$，used 表示是否已经插入了 $T - (n + 1)$ 段相同的数。转移的时候就是枚举第 $(i - 1)$ 段的最大值 $k$，如果 $j = k$，那么可以这时候把 $T - (n + 1)$ 段相同的插入到这两段中间。
+
+[ftiasch wrote on 2015-10-07T07:05:22]
+
+---
+
+@Varona#1547 谢谢叉姐!这题有没有什么别的思路，我看了官网的题解提供了2种方法，第一种是矩阵幂运算的，第二种是利用这个性质的，但是感觉和我想的不一样，而且不知道怎么去证明。
+
+[sysuwx wrote on 2015-10-07T07:19:34]
+
+---
+
+@sysuwx#1548 
+
+没看懂你想问什么？= =
+
+[ftiasch wrote on 2015-10-07T07:20:21]
+
+---
+
+@Varona#1549 好吧。。。我面壁去。 其实我是对这个题解不知道怎么证明。。
+> here's an alternative solution. As soon as a1, a2, ..., anT contains maximum n distinct elements, it's any non-decreasing subsequence has a maximum of n - 1 increasing consequtive element pairs. Using that fact, one could calculate standard longest non-decreasing subsequence dynamic programming on first n array blocks (a1, ..., an2) and longest non-decreasing subsequence DP on the last n array blocks (anT - n + 1, ..., anT). All other T - 2n blocks between them will make subsegment of consequtive equal elements in longest non-decreasing subsequence. 
+
+[sysuwx wrote on 2015-10-07T07:29:59]
+
+---
+
+@sysuwx#1551 感觉说的是一个意思啊……因为长不过 $n$ 段，短不过 $n$ 段。所以去掉前后 $n$ 段之后中间肯定是一样的啊。
+
+[ftiasch wrote on 2015-10-07T07:50:08]
+
+---
+
+@Varona#1554 谢啦！我还是觉得叉姐的dp做法更容易理解点，真的很谢谢你！
+
+[sysuwx wrote on 2015-10-07T08:10:31]
+
+---
+
+@sysuwx#1555 但是我觉得题解的做法好写一点……
+
+[ftiasch wrote on 2015-10-07T08:11:01]
+
+---
+
