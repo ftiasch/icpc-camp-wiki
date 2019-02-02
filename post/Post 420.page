@@ -1,0 +1,53 @@
+# Topcoder Open 2016 Round 2A 题解
+
+# LCMGCD
+
+设 $\mathrm{ways}(a, b)$ 表示最后留下的数字 $2^x 3^y$ 满足 $x \geq a, y \geq b$ 的不同的合并序列的方案数。
+如果目标是 $t = 2^a 3^b$，那么只要 $\mathrm{ways}(a, b) - \mathrm{ways}(a + 1, b) - \mathrm{ways}(a, b + 1) + \mathrm{a + 1, b + 1} > 0$，那么就是可能的。
+
+为了计算 $\mathrm{ways}(a, b)$，根据 $x < a$ 或者 $x \geq a$，$y < b$ 或者 $y \geq b$，所有数字被分为 $4$ 类。
+设 $dp(a, b, c, d)$ 表示 $4$ 类数分别剩下了 $a, b, c, d$ 个时的方案数，就可以转移了。
+
+# CliqueCuts
+
+## 我的做法
+
+把顶点分成 $A, B$ 两个部分，假设 Alice 选择的团是 $C$，那么贡献可以分为在 $A$ 内、在 $B$ 内、和跨过 $A, B$ 这三种。因为是加法，我们分别考虑怎么算。
+
+首先，如果我们枚举的是 $C \cap B$ 的话，$C \cap A$ 应该是 $C \cap B$ 中点的邻居的交集的子集。我们可以用 subset convolution 预处理 $\mathrm{count}(S)$ 表示 $C \cap A \subset S$ 的数量，以及 $\mathrm{sum}(S)$ 表示 $C \cap A \subset S$ 在 $A$ 内的贡献的和。
+
+对于 (1) (2) 的话，在枚举 $C \cap B$ 时，我们可以维护那个交，然后用 $\mathrm{count}(S)$ 和 $\mathrm{sum}(S)$ 差一下就行。至于 (2) ，我们考虑一个 $v \in A$ 的贡献，这里又有两种情况：
+一种是 $v \in C$，那么这时候 $C \setminus \{v\} \cap B \subset S \cap \delta(v)$. 另一种是 $v \notin C$，也类似。
+
+跑得比较慢……要卡卡常数才能过。
+
+## Petr 的做法
+
+设 $\mathrm{clique}(S)$ 表示点集 $S$ 中团有多少个。
+考虑边 $(a, b)$ 的贡献，如果 $(a, b)$ 在团中，对应的数量有 $\mathrm{clique}(V \cap \delta(a) \cap \delta(b))$。如果 $(a, b)$ 不在团中，对应的数量有 $\mathrm{clique}(V \setminus \{a, b\})$.
+
+现在计算 $\mathrm{clique}(S)$，假设 $v \in S$ 是其中编号最大的点，那么有
+$$\mathrm{clique}(S) = \mathrm{clique}(S \setminus \{v\}) + \mathrm{clique}(S \cap \delta(v)).$$
+
+当 $v \leq 23$ 的时候把 $S$ 的结果记忆化，这部分复杂度只有 $2^{23}$。
+当 $v$ 从 $45$ 到 $23$ 的时候，因为每次只会分叉 $2$，所以复杂度也不会超过 $2^{22}$.
+
+## Pavel 的改进（？）
+
+上面要算 $O(n^2)$ 次 $\mathrm{clique}$，但是我们其实只关心
+$\mathrm{clique}(V \cap \delta(a) \cap \delta(b)) - \mathrm{clique}(V \setminus \{a, b\}) = \mathrm{clique}(V \cap \delta(a)) + \mathrm{clique}(V \cap \delta(b)) - \mathrm{clique}(V)$.
+只有 $O(n)$ 个 $\mathrm{clique}$ 要算。
+
+# VendingMachines
+
+用 $dp(n, i)$ 表示剩下 $n$ 次机会，现在使用 $i$ 的最大期望；同时 $g(n, i) = \max_{j \neq i} dp(n, j)$. 
+那么 $dp(n, i) = \sum_{k = 1}^\infty g(n - k, i) p_i(k)$，其中 $p_i(k)$ 表示使用 $i$，要 $k$ 次才中的概率。
+
+分治 FFT 算这个 dp 就行了。
+
+[代码们](http://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/topcoder/topcoder-open/topcoder-open-2016/round-2A).
+
+[ftiasch wrote on 2016-05-13T09:34:16]
+
+---
+
