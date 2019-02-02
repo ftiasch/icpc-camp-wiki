@@ -1,0 +1,25 @@
+# URAL 1677 Monkey at the Keyboard
+
+链接：http://acm.timus.ru/problem.aspx?space=1&num=1677
+大意：给定字符集为N,给一个字符串S，问期望多少次能第一次敲出完整的S
+
+
+[yzq986 wrote on 2016-08-09T18:24:53]
+
+---
+
+http://ppwwyyxx.com/2013/Recurrent-Event/
+
+[zjyjer wrote on 2016-08-10T03:03:57]
+
+---
+
+同 ctsc2006 歌唱王国，做法是KMP+生成函数（依稀记得毕老师已经把这个题推广到Trie上了？
+推荐两个可以看的中文题解
+OI国家集训队作业2008/homework1/yly/研究/数学期望/数学期望在信息学奥赛中的运用.doc
+http://vfleaking.blog.163.com/blog/static/17480763420125208531440/
+
+[skywalkert wrote on 2016-08-10T10:25:18]
+
+---
+
