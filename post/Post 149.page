@@ -1,0 +1,38 @@
+# OpenCup XVI GP of Japan C Kuru Kuru Sushi
+
+$n$ 个点组成一个环，每两个相邻点之间有条边，长度为 $w_i$。有 $q$ 个请求，每个请求是一个二元组 $(s_i, t_i)$。
+
+现在要给这 $n$ 条边定向。每个请求的代价为，从$s_i$到$t_i$ 的最短距离。在满足所有请求的情况下，它们的代价总和最小是多少？
+
+$n, q, w_i \le 10\^5$
+
+求解。。。
+
+[chffy wrote on 2015-10-05T12:08:55]
+
+---
+
+丢[链接](http://dreadnought.icpc-camp.org/XVI%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Japan#TOC)跑。
+
+[ftiasch wrote on 2015-10-05T12:09:58]
+
+---
+
+收到。。（叉姐回复好快）
+
+[chffy wrote on 2015-10-05T12:12:14]
+
+---
+
+感觉这个题怎么写都有点麻烦啊
+
+[sd_invol wrote on 2015-10-05T12:32:49]
+
+---
+
+@Sd_Invol#1491 [一份精妙的代码](http://lpaste.net/142389)，我还没研究太懂，你有兴趣可以看下。
+
+[AngryBacon wrote on 2015-10-06T03:04:58]
+
+---
+
