@@ -1,0 +1,42 @@
+# JAG Summer 2012 Day 4 I Sun and Moon
+
+这道题怎么做啊，是要求一个多项式方程的整数根吗？
+
+[keepit wrote on 2015-10-02T07:03:57]
+
+---
+
+经过一番紧张而激烈的英语学习……我终于知道了这题是什么意思了。
+这题是要找最小的 $x$，使得：
+
+1) $\sum p_i o_i x^{o_i - 1} = 0$
+2) $\sum p_i x^{o_i} = 0$ 
+
+同时成立！！！所以我们知道 $x$ 肯定是最低次项系数的约数，只要用 Pollard-rho 把这个系数分解开，求出所有因数，然后 check 就行了。因为会暴 long long，所以要利用中国剩余定理，多模几个质数检查。
+
+[ftiasch wrote on 2015-10-02T08:14:15]
+
+---
+
+@ftiasch#1292 第二个式子是怎么来的啊0.0.“所以我们知道 x 肯定是最低次项系数的约数”这句也没有懂T-T
+
+[keepit wrote on 2015-10-02T08:29:24]
+
+---
+
+@keepit#1301 所以说你需要紧张而激烈的英语学习……
+
+最后一段中的 minimum number of days from the eclipse in which the society can succeed in "Ritual of Sun and Moon" whether "Ritual of Sun" can be performed or not 的意思是：如果进行了太阳仪式，那么会得到式子 (1)；如果没进行了太阳仪式，那么会得到式子 (2)。
+
+就是任何一个多项式方程，都能写成 $x^{k_0} (a_0 + \sum_{i \geq 1} a_i x^{k_i - k_0}) = 0$. 那么括号内的东西~~膜~~ $x$，就会得到 $a_0 \bmod x = 0$，也就是 $x$ 是 $a_0$ 的约数。
+
+[ftiasch wrote on 2015-10-02T08:34:18]
+
+---
+
+@ftiasch#1302 这个or not真的是好隐蔽啊。。明白了！！谢谢叉姐>-<~
+
+[keepit wrote on 2015-10-02T08:45:11]
+
+---
+
