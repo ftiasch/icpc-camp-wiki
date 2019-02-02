@@ -1,0 +1,37 @@
+# Topcoder SRM 669 Div 2 Level 3 LineMSTDiv2
+
+SRM669 Div2 Hard求解...没啥思路...非常感谢！
+~~题目（抱歉怕表达不太清楚就直接贴了过来..）~~
+
+[题目链接](http://community.topcoder.com/stat?c=problem_statement&pm=14018&rd=16549)
+
+[LimitW wrote on 2015-09-28T13:29:20]
+
+---
+
+我猜可以这么做……
+
+$2^{n - 1}$ 枚举最后的 line MST 的边权（无视编号），那么这个 line MST 有 $n!$ 种方法嵌入到原图中。因为它是 MST，那么其他的边相当于有个下界（如果跨过了一条 $2$ 的边，那么它就一定要是 $2$），这样就可以算出方案数了。
+
+[ftiasch wrote on 2015-09-28T13:38:14]
+
+---
+
+@ftiasch#883 抱歉不是很明白为何有n！种方法嵌入原图？如 N = 3, 1 - 2 - 3 和 3 - 2 - 1的排列是否认为相同？
+
+[LimitW wrote on 2015-09-28T13:50:41]
+
+---
+
+@LimitW#885 不好意思 = = 要除个2。
+
+[ftiasch wrote on 2015-09-28T13:55:22]
+
+---
+
+@ftiasch#887 一开始看不太懂别人的代码...刚又去看了看发现应该就是这个思路..谢谢叉姐～！
+
+[LimitW wrote on 2015-09-28T14:31:09]
+
+---
+
