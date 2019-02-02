@@ -1,0 +1,22 @@
+# XIII Open Cup named after E.V. Pankratiev. GP of Azov Sea H. The lost key
+
+给定一棵$N(N\leq 50000)$个点的无根树，每条边有一个数字$c_i(0\leq c_i\leq 100000)$。
+$M(M\leq 50000)$次询问，每次给一个长度为$L_i$的数字串，找到树上的一条路径是这个串，输出任意一组解。
+$\sum_{i=1}^M L_i\leq 50000$。
+
+[Claris wrote on 2016-10-02T09:10:06]
+
+---
+
+我这题可能至今没过。。就是 T
+
+[ftiasch wrote on 2016-10-02T09:22:09]
+
+---
+
+@ftiasch#4499 这题大致是怎么个方向？
+
+[Claris wrote on 2016-10-02T09:23:03]
+
+---
+
