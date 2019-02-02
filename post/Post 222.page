@@ -1,0 +1,39 @@
+# PKU Campus 2015 D Ancient Greek Challenge
+
+http://poj.openjudge.cn/practice/C15D/
+现在有一个WA的解法QAQ   
+二分R,找到一个最小的R能够同时包含这3个圆,然后根据R确定出一个我要的圆心,之后再特判一下和3个圆是否同时内切.
+其中二分出R的时候,根据和三个圆内含的关系搞出来3个圆,判断3个圆是否有公共部分.
+看有公共部分的时候:先暴力枚举两个圆,如果这两个圆内含,就用小圆和另一个去看是否相交,如果相交,就把交点求出来和第三个圆比一下是否在它内.这样弄3次.
+不知道是思路错了还是精度跪了...
+
+[ruclion wrote on 2015-10-25T07:32:05]
+
+---
+
+我记得出题人跟我说过是卡精度……
+
+所以只能用纯几何做法了：[Gergonne's solution](https://www.wikiwand.com/en/Problem_of_Apollonius#/Gergonne.27s_solution)。
+
+[ftiasch wrote on 2015-10-25T08:00:33]
+
+---
+
+全是英文的也不知道从哪一段开始读(⊙o⊙)....   叉姐你能不能告诉我读哪几段  或者直接丢一个简易的几何方法讲解....
+
+[ruclion wrote on 2015-10-25T11:57:46]
+
+---
+
+@Varona#2140 这插件有些炫酷啊
+
+[AngryBacon wrote on 2015-10-25T18:26:12]
+
+---
+
+@ruclion#2145 不是说了是Gergonne's solution那一节么。
+
+[sevenkplus wrote on 2015-10-25T13:47:31]
+
+---
+
