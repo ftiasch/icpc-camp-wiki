@@ -1,0 +1,18 @@
+# Hefei 2015 A Bus Routes
+
+请问A题的递推式是怎么算的……推了好久推不出……
+
+[mssjtxwd wrote on 2016-05-26T16:58:55]
+
+---
+
+先数 $n$ 个点，边有 $m$ 种颜色的连通图数量 $G_n$，再减掉 $n$ 个点的树的数量。
+
+后者简单，就是 $n^{n - 2} \times m^{n - 1}$ （via Cayley's formula）。
+
+后者，就是常见的 $G_n = F_n - \sum_{i = 1}^{n - 1} \binom{n - 1}{i - 1} F_{n - i} G_i$. 其中 $F_n$ 表示 $n$ 个点的图的数量，也就是 $(m + 1)^{n(n - 1) / 2}$. 
+
+[ftiasch wrote on 2016-05-27T01:46:08]
+
+---
+
