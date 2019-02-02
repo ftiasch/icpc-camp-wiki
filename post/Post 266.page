@@ -1,0 +1,18 @@
+# 「锁定话题」
+
+题目链接：http://codeforces.com/gym/100792/problem/E
+
+题意：$2^k$个人进行淘汰赛，每场比赛精彩程度定义为两个选手的权值之积，然后编号小的选手获胜进入下一轮，考虑所以排列作为初始的对决安排，问所有比赛的精彩程度之和的期望.
+
+这个题要怎么入手啊？我只会枚举两个人，然后算在哪一层对决的概率. 肯定就超时了…… 求教！
+
+[yuzhou627 wrote on 2015-11-14T14:33:57]
+
+---
+
+Duplicated 「http://async.icpc-camp.org/d/217-neerc-2015-moscow-subregional-e-entertainment/3」
+
+[ftiasch wrote on 2015-11-14T14:37:59]
+
+---
+
