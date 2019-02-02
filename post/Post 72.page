@@ -1,0 +1,15 @@
+# 2015 Multi-University Training Contest 7 C Hotaru's problem
+
+题目: [LINK](http://acm.hdu.edu.cn/showproblem.php?pid=5371). 
+这个题, Manacher处理好了之后, 感觉正确姿势是要加个set维护, 或者二分一下之类的, 但是网上好多二维枚举过的, 例如这个代码: [LINK](http://www.cnblogs.com/chengsheng/p/4726693.html). 我在想, 这个暴力枚举可以叉掉么? 还是说其实复杂度是有保证的呢? 
+
+[yuzhou627 wrote on 2015-09-25T06:20:19]
+
+---
+
+多校题总该有解的？
+
+[xiaojudou wrote on 2016-02-24T17:29:05]
+
+---
+
