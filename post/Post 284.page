@@ -1,0 +1,15 @@
+# 「锁定话题」
+
+能不能用ac自动机找出所有长度为i的开始位置为j的非合法初始字符子串，然后根据长度做dp，用bitset优化？
+wa了，求解。。。
+
+[alpc_wt wrote on 2015-11-19T01:08:11]
+
+---
+
+Duplicated 「http://async.icpc-camp.org/d/223-changchun-2015-c-play-a-game」
+
+[ftiasch wrote on 2015-11-19T01:11:50]
+
+---
+
