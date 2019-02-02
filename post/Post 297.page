@@ -1,0 +1,36 @@
+# 请教一个斐波那契堆实现
+
+rt
+
+[acme wrote on 2015-11-22T07:25:47]
+
+---
+
+（并没有写过
+
+所以说还是用 Hollow Heap 吧！
+
+[ftiasch wrote on 2015-11-22T09:03:52]
+
+---
+
+可以看看lyd在冬令营的[交流课件](http://wenku.baidu.com/view/5e2f7c24ed630b1c59eeb5cb.html?from=search)。。
+
+[zscloverinyo wrote on 2015-11-23T01:10:15]
+
+---
+
+Hollow Heap (from dryski):
+http://paste.ubuntu.com/13477382/
+
+Fibonacci Heap (from Amber):
+http://paste.ubuntu.com/13477353/
+
+Pairing Heap:
+http://www.sanfoundry.com/cpp-program-implement-pairing-heap/
+
+
+[baodog wrote on 2015-11-23T15:41:21]
+
+---
+
