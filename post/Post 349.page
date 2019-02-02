@@ -1,0 +1,74 @@
+# Codeforces Round #277 B OR in Matrix
+
+
+486B简要题意：从前有个矩阵A，还有个B
+B[i][j] = a[i][1] OR a[i][2] ... OR a[1][j] ... a[m][j]
+(Bij is OR of all elements in row i and column j of matrix A)
+给出B问是否能还原出A
+
+486B求的是OR运算的……如果我们换成别的运算应该怎么做呢？
+
+[SCaffrey wrote on 2016-02-06T04:17:25]
+
+---
+
+or 取反就是 and，我们考虑 xor。xor 这题也是存在的，而且做法比较麻烦。
+
+简单地说就是 $O(n\^2)$ 个变量 $O(n\^2)$ 个方程的高斯消元，然后考虑优化。你会发现把每个 $2 \times 2$ 格子对应的 $4$ 个方程之后方程就剩下 $4$ 个非零变量了。也就是说除去一行一列之外的所有变量都可以变成其他 $2$ 个变量的线性组合（？），然后就可以做了……
+
+
+[ftiasch wrote on 2016-02-06T10:06:06]
+
+---
+
+@Varona#3120 
+这题我出过。SPOJ JZPLIT。
+
+[sevenkplus wrote on 2016-02-07T14:49:26]
+
+---
+
+@sevenkplus#3121 哦太好了！谢谢题源！
+
+[ftiasch wrote on 2016-02-07T16:05:06]
+
+---
+
+@sevenkplus#3121 能请问下JZPLIT怎么做吗。。233
+
+[czk wrote on 2016-02-11T08:32:15]
+
+---
+
+@czk#3126 我在回复中 @Varona#3120 说了啊。
+
+[ftiasch wrote on 2016-02-11T09:52:42]
+
+---
+
+@Varona#3128 弱并不能看懂这两个题有什么联系。。可能是我没懂你的做法。。把2*2格子对应的4个方程怎么之后就会剩下4个非零变量，最后再高斯消元吗？
+
+[czk wrote on 2016-02-11T13:01:25]
+
+---
+
+@czk#3135 
+
+假设矩形是 $n \times m$ 的，那么第 $(i, j)$ 个方程 $L_{i, j}$ 是 $$(X_{i, 1} \oplus X_{i, 2} \oplus \cdots \oplus X_{i, m}) \oplus (X_{1, j} \oplus X_{2, j} \oplus \cdots \oplus X_{n, j}) = A_{i, j}$$
+
+对于所有的 $1 \leq i < n, 1 \leq j < m$，我们把 $4$ 个方程 $L_{i, j}, L_{i, j + 1}, L_{i + 1, j}, L_{i + 1, j + 1}$ 异或一下，就会得到 $X_{i, j} \oplus X_{i, j + 1} \oplus X_{i + 1, j} \oplus X_{i + 1, j + 1} = A_{i, j} \oplus A_{i, j + 1} \oplus A_{i + 1, j} \oplus A_{i + 1, j + 1}$。我们不妨令右端的常数为 $B_{i + 1, j + 1}$。
+
+上面这个方程可以写成 $X_{i, j} = B_{i, j} \oplus X_{i - 1, j - 1} \oplus X_{i - 1, j} \oplus X_{i, j - 1}$，所以只要确定了第一行和第一列，就可以表示出所有的 $X_{i, j}$ ($2 \leq i \leq n, 2 \leq j \leq m$). 如果我们把 $X_{1, 1}$ 枚举了，那么 $X_{i, j}$ 就可以表示成 $X_{i, 1} \oplus X_{1, j} \oplus C_{i, j}$ 的形式，其中$C_{i, j}$ 是一个常数。
+
+这时候再考虑原来的方程。。。就可以直接解出来了。但是具体还得讨论 $n$, $m$ 的奇偶性。。你自己搞吧。
+
+[ftiasch wrote on 2016-02-11T14:03:26]
+
+---
+
+@Varona#3137 噢。这个算是懂了，但是开关灯的问题能依瓢画葫芦吗？
+
+[czk wrote on 2016-02-11T16:10:08]
+
+---
+
