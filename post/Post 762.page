@@ -1,0 +1,14 @@
+# 2017 Qingdao  A Battle in Two Pairs of Heroes 
+
+求你萌讲讲思路。。。
+
+[prime wrote on 2017-11-14T11:39:34]
+
+---
+
+把 4 个英雄的血量压进 dp 里面。。。这样可能是 $O(m^4)$ 的，你想一下就知道最后一维是单调的，可以变成一个 $O(m^3)$ 的 dp。
+
+[ftiasch wrote on 2017-11-14T23:57:09]
+
+---
+
