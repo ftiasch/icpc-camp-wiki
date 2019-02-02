@@ -1,0 +1,39 @@
+# MIPT-2016 Pre-Finals Workshop, Taiwan NTU Contest H
+
+题目链接：https://acm.bnu.edu.cn/v3/contest_show.php?cid=8506#problem/H
+给定字符串哈希算法如下， 求给定长度 $n \leq 10^6$，$m \leq 30000$和$p$，问有多少对长度为n的字符串哈希值相等。
+```
+int hash(int n, int m, int p, const char *s) {
+   int h = 0;
+   for (int i = 0; i < n; i++) h = (h * p + s[i]) % m;
+   return h;
+}
+```
+看了下别人的代码都是FFT做的。。。这个要怎么搞
+还有顺便问下今天弱校题解啥时候出。。
+
+
+[burglar wrote on 2016-10-05T11:03:37]
+
+---
+
+范围都不说完。。
+就是 $f(n, x)$ 表示长度为 $n$ 的 hash 值是 $x$ 的有多少个，倍增 $n$，合并的时候就是多项式乘法啊。。
+
+
+[ftiasch wrote on 2016-10-05T11:39:19]
+
+---
+
+@ftiasch#4529 啊 我好像有点明白了 我再去推推
+
+[burglar wrote on 2016-10-05T11:56:53]
+
+---
+
+其实和[这个题](http://codeforces.com/contest/623/problem/E)是一样的
+
+[quailty wrote on 2016-10-05T12:00:58]
+
+---
+
