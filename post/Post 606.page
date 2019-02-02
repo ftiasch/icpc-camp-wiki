@@ -1,0 +1,43 @@
+# 2016 NEERC, Southern Subregional Contest  K. Roads Orientation Problem
+
+给定N个点 M条边的联通无向图 无自环无重边 以及起点S 终点T 
+要求给每条边定向 使得点S只有出边 点T只有入边 其他的点既有出边也有入边 并且定向后的图不能包含环
+题目要求 输出一组满足以上条件的解 求问这题怎么做QAQ
+N<=4e5 M<=1e6 
+
+[zscloverinyo wrote on 2016-10-24T05:27:42]
+
+---
+
+忘记放题目[链接](http://codeforces.com/contest/730/problem/K)了QAQ
+
+[zscloverinyo wrote on 2016-10-24T05:42:03]
+
+---
+
+好难 QAQ
+
+[ftiasch wrote on 2016-10-25T01:20:13]
+
+---
+
+看新套路wiki学习新套路: https://wiki-new-meta.icpc-camp.org/2016-2017%20ACM-ICPC,%20NEERC,%20Southern%20Subregional%20Contest
+看代码就好, 题解用来脑补证明
+
+[yuzuriha_inori wrote on 2016-10-25T13:10:00]
+
+---
+
+很想知道这种做法是怎么想出来的。。
+T_T
+
+[totoro wrote on 2016-10-27T10:39:57]
+
+---
+
+能想到的部分是先从s到t做一条路径 然后每次把分叉出去的一条路径归入已有的顺序 看成一条更长的路径. 但是如何用dfs树来进行这种分解, 还有能O(1)确定分叉出去的路径是朝前还是朝后确实想不到...
+
+[yuzuriha_inori wrote on 2016-10-28T03:44:27]
+
+---
+
