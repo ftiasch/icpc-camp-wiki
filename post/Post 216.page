@@ -1,0 +1,27 @@
+# NEERC 2015 Southern Subregional G Hiring
+
+http://codeforces.com/problemset/problem/589/G
+
+[life4711 wrote on 2015-10-22T13:28:24]
+
+---
+
+ 我要用到两棵树状数组。。。。。二分第几天mid,用  一个树状数组求到mid天的除去准备时间的总时间，另一个树状数组求1到mid天有几天因为一天的时间比准备时间少而删去的天数
+
+[Fuei wrote on 2015-10-22T13:32:26]
+
+---
+
+http://codeforces.com/contest/589/submission/13722662   代码在此。。。。。 我讲的很是不清楚。。。  要不直接看代码吧？
+
+[Fuei wrote on 2015-10-22T13:33:00]
+
+---
+
+@life4711#2096 按长度倒序添加所有天，当添加完长度为>=t的所有天之后，询问所有准备时间为t的人。
+这一步只要在用树状数组求k值即可，树状数组维护时间和天数的前缀和。复杂度$O(n\log n)$。[代码](http://codeforces.com/contest/589/submission/13765518)
+
+[AngryBacon wrote on 2015-10-22T14:25:16]
+
+---
+
