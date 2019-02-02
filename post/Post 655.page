@@ -1,0 +1,14 @@
+# 2016 Asia Daejeon J Room
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=731&page=show_problem&problem=5631)
+题目大意：
+定义简单多边形是不自交的多边形（可以是凹的）。
+定义简单多边形是正交的当且仅当它的边是水平的或垂直的。
+定义简单多边形是单调的当且仅当任何一条垂直线与它的交是至多一条线段。
+给出一个正交且单调的简单多边形的边数 $n$ ，以及每条边上的一个非端点的点坐标、每条边是水平或垂直的，如果这个多边形存在则求这个多边形的周长，否则输出 -1 。
+数据范围：$4 \leq n \leq 500000$，给出的点都是整点且坐标 $\in [-2^{30},2^{30}-1)$ 。
+
+[skywalkert wrote on 2016-12-19T12:22:14]
+
+---
+
