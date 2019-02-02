@@ -1,0 +1,30 @@
+# 第四届ACM_DIY群程序设计竞赛 G Multiplication Table
+
+[题目链接](http://ac.jobdu.com/problem.php?pid=1427)
+
+题目大意：
+
+令 $\cdot$ 表示整数乘法， $G = \{1, 2, \cdots, n\}$ ，请你找到一个定义在 $G$ 上的运算 $*$ （即对于任意 $i, j \in G$ ，有 $i * j \in G$），满足：
+
+- $*$ 是可交换的（即对于任意 $i, j \in G$ ，有 $i * j = j * i$）
+- $*$ 是可结合的（即对于任意 $i, j, k \in G$ ，有 $i * (j * k) = (i * j) * k$）
+- $G$ 中任意元素关于 $*$ 左可约（即对于任意 $i, j, k \in G$ ，若 $i * j = i * k$ ，则 $j = k$ ）
+- 对于任意 $i, j \in G$ ，若 $i \cdot j \leq n$ ，则 $i * j = i \cdot j$
+
+（前三个条件可以概括为： $G$ 关于 $*$ 成交换群）
+
+请你给出 $n = 1, 2, \cdots, 40$ 时的任意一组解。
+
+[skywalkert wrote on 2017-03-05T16:57:45]
+
+---
+
+我出的。标程是暴搜打表。
+
+
+哦，搜的方法是假设最后的结果是个循环群。发现能够搜出来。
+
+[sevenkplus wrote on 2017-03-08T21:30:54]
+
+---
+
