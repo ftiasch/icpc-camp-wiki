@@ -1,0 +1,28 @@
+# CERC 2008 E Morphing is Fun
+
+[题目链接](http://www.spoj.com/problems/MORPH/)
+
+题目大意：
+
+$T$ 组测试数据，每组测试数据给定整数 $n$ 和 $n$ 个由前 $n$ 个小写字母组成的字符串 $p_1, p_2, \cdots, p_n$。
+
+对于任意一个由前 $n$ 个小写字母组成的字符串 $S$，定义它经过一次变换后得到的字符串 $f(S)$ 为将 $S$ 中每个字符 $x$ 替换成 $p_x$ 后连结而成的新字符串。定义 $f^{k + 1}(S) = f(f^k(S))$，特别地，有 $f^0(S) = S$。
+
+请你判定“对于任意的正整数 $k$，存在非负整数 $N$ 使得所有整数 $n \geq N$ 满足 $f^n(\mathrm{a})$ 的第 $k$ 个字符是同一个字符”是否成立。
+
+数据范围：$1 \leq T \leq 10^4, 1 \leq n \leq 26, 1 \leq |p_i| \leq 100~(i = 1, 2, \cdots, n)$
+
+样例解释：
+
+对于 $n = 2$, $p_1 = \mathrm{ab}$, $p_2 = \mathrm{a}$, 有 $\{f^n(\mathrm{a})\}_{n = 0}^{\infty} = \{\mathrm{a}, \mathrm{ab}, \mathrm{aba}, \mathrm{abaab}, \cdots\}$，命题成立。
+
+对于 $n = 3$, $p_1 = \mathrm{ba}$, $p_2 = \mathrm{c}$, $p_3 = \mathrm{c}$, 有 $\{f^n(\mathrm{a})\}_{n = 0}^{\infty} = \{\mathrm{a}, \mathrm{ba}, \mathrm{cba}, \mathrm{ccba}, \cdots\}$，命题成立。
+
+对于 $n = 3$, $p_1 = \mathrm{ba}$, $p_2 = \mathrm{c}$, $p_3 = \mathrm{b}$, 有 $\{f^n(\mathrm{a})\}_{n = 0}^{\infty} = \{\mathrm{a}, \mathrm{ba}, \mathrm{cba}, \mathrm{bcba}, \cdots\}$，命题不成立。
+
+对于 $n = 3$, $p_1 = \mathrm{b}^{15}$, $p_2 = \mathrm{c}^{15}$, $p_3 = \mathrm{c}$, 有 $\{f^n(\mathrm{a})\}_{n = 0}^{\infty} = \{\mathrm{a}, \mathrm{b}^{15}, \mathrm{c}^{225}, \mathrm{c}^{225}, \cdots\}$，命题成立。
+
+[skywalkert wrote on 2018-03-22T20:49:18]
+
+---
+
