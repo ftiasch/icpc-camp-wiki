@@ -1,0 +1,478 @@
+# 2016 ICPC 青岛网络赛题解
+
+免责声明：以下是 ICPCCamp 团队所写的非官方题解，署名代表题解作者，非出题人，谢谢！
+
+感谢大家的帮助，也欢迎大家回帖交流解题想法~
+
+---
+
+## 1001 AC by zimpha
+
+题意：给出一个整数$n$, 找出一个大于等于$n$的最小整数$m$, 使得$m$可以表示为$2^a3^b5^c7^d$.
+
+题解：预处理出所有形为$2^a3^b5^c7^d$即可, 大概只有几k个.
+
+## 1002 AC by sd0061
+
+题意：给 $n$，求 $\sum_{k=1}^{n}\frac{1}{k^2}$。
+ 
+题解：$n$ 很大的时候答案趋近于$\frac{\pi^2}{6}$，$n$ 小的时候预处理即可。
+
+## 1003 AC by sd0061
+
+题意：敏感词屏蔽，给一堆敏感词，给一段文本，要求把文本中所有的敏感词用*代替。
+
+题解：对敏感词建出AC自动机，在AC自动机上跑文本，就可以得到文本的每个前缀的最长匹配后缀，扫一遍即可得到结果。
+
+## 1004 AC by sd0061
+
+题意：有一壶水, 体积在 $L$ 和 $R$ 之间, 有两个杯子, 你要把水倒到两个杯子里面, 使得杯子水体积几乎相同(体积的差值小于等于1), 并且使得壶里剩下水体积不大于1. 你无法测量壶里剩下水的体积, 问最小需要倒水的次数。
+
+题解：考虑倒水的大致过程，$L = 0$ 和 $L = 1$ 的情况应该是等价的，所以不妨设 $L > 0$。首先向一个杯子倒 $\frac{L}{2}$ 升水，再往另一个杯子倒 $\frac{L}{2}+1$ 升水。接下来就来回往两个杯子里倒 2 升，直到倒空为止。这样就很容易分析出需要倒水的次数。唯一注意的是最后壶里面可以剩下 1 升水，可以省一次倒水的操作。
+
+## 1005 AC by sd0061
+
+题意：问 $n$ 个手势的石头剪刀布游戏是否能保证出每种手势胜率都一样。
+
+题解：当每种手势的攻防个数完全相等才能保证平衡，所以容易得出 $n$ 是奇数时游戏平衡，否则不平衡。
+
+## 1006 AC by Nero
+
+题意：$n$个点$m$条无向边的图，找一个欧拉通路/回路$P_0, P_1, .. P_m$($P_i$是节点标号)，使得$a_{P_0} \oplus a_{P_1} \oplus .. \oplus a_{P_m}$最大。输出这个值。
+
+题解：由欧拉路性质，奇度点数量为0或2。一个节点被进一次出一次，度减2，产生一次贡献，因此节点$u$的贡献为$(\lfloor \frac {degree_u}{2} \rfloor\text{ mod }2) * a_u$。欧拉回路的起点贡献多一次，欧拉通路的起点和终点贡献也多一次。因此如果是欧拉回路的话枚举一下起点就好了。
+
+## 1007 AC by Nero
+
+题意：$n$个有序序列的归并排序.每次可以选择不超过$k$个序列进行合并,合并代价为这些序列的长度和.总的合并代价不能超过$T$, 问$k$最小是多少。
+.
+题解：首先二分一下这个$k$。然后在给定$k$的情况下，这个代价其实就是$k$叉的哈夫曼树问题。因此直接套用哈夫曼树的堆做法即可。复杂度$O(n \log^2 n)$，这样优化一下读入是可以卡过去的。
+然后主代码手表示，利用合并的单调性，可以去掉优先队列得到$O(n \log n)$的做法：先对所有数排序，另外一个队列维护合并后的值，取值时从两个序列前端取小的即可。
+昂：如果$(n-1)\ \mathrm{mod}\ (k-1) \neq 0$，要把最小的$(n-1)\%(k-1)+1$个数先合并一下。
+
+## 1008 AC by ftiasch
+
+题意：给出一个$n \times m$的格子, 格子$(i,j)$上有个值$p(i,j)$. 两个格子之间的距离定义为两个格子中心的欧几里得距离. 你可以选择一个格子, 距离它小于等于$r$的那些格子都会贡献$p(i,j)/(d+1)$, $d$为两个格子的距离. 选择一个格子, 使得贡献和最大.
+
+题解：取 $M \geq \max(n + 2r , m + 2r)$，造两个多项式 $A[i * M + j] = p(i, j)$，$B[i * M + j] = \frac{1}{\sqrt{i^2+j^2} + 1}$，它们的卷积  $C = A * B$ 的第 $(i * M + j)$ 项就是 $(i, j)$ 格子的贡献和。所以只要 FFT 即可。
+
+## 1009 AC by ftiasch
+
+题意：给出 n 个点的无向带权树，问删掉每条边后的直径。
+
+题解：找出树的一条直径 $(a, b)$，然后分别以 $a, b$ 为根，dp 预处理子树 $v$ 的直径。
+
+如果删掉的边不在直径上，那么有一颗子树的直径就是原树的直径，另一边已经预处理好了。如果在直径上，很显然两遍都预处理了。
+
+## 1010 AC by sd0061
+
+题意：01 背包，100 个物品，其他数值都是 $[0, 10^9]$ 内的均匀随机数。
+
+题解：我的做法是先吧所有物品按收益率排序，然后加上可行性剪枝。可是这样还是会 TLE 的。考虑数据的特殊性，加上个卡时就可以通过了。
+
+## 1011 AC by lostRating
+
+题意：1000个点10000条边的无向图，敌人从n走一条最短路到1，在第i条路设置障碍的代价是wi，求最少的代价使得敌人至少会遇到一次障碍。
+
+题解：bfs+最小割（裸）
+
+## 1012 AC by lostRating
+
+题意：50个数，10W个询问，每次问删掉第i,j,k个数后，是否存在一种选10个数和为87的方案，只需要输出 ’Yes’ 或者 ’No’
+
+题解：暴力：不同的询问大概2W个，每个暴力bitset DP，抠一抠能卡着过。优化1：先求出一组解，如果询问和解没交就是’Yes’，否则暴力，不同的询问大概1W个；优化2：先预处理出所有询问的答案，能方便的复用之前的DP数组，不用每次从头开始重新求。
+
+## 1013
+
+题意：给出一个字符串, 兹茨往后加一个字符, 然后询问一个字符串$T$(是原来字符串的一个子串以区间$[l,r]$形式给出), 问$T$中一个子串最长的至少出现两次的连续子串的长度. 强制在线.
+
+题解：？？？
+
+
+
+
+[ftiasch wrote on 2016-09-17T09:02:02]
+
+---
+
+球1003卡空间技巧
+
+[fjzzq2002 wrote on 2016-09-17T09:22:04]
+
+---
+
+1010 的 “卡时” 是什么意思？
+
+[wc wrote on 2016-09-17T09:39:20]
+
+---
+
+12的预处理所有的解，时间差不多多少？？
+
+[Suvigo wrote on 2016-09-17T10:15:09]
+
+---
+
+说一点不同做法……
+
+1003
+空间卡得半死……模版串长度>1e5暴力kmp，不会超过9次，长度<=1e5分成若干个总长在[1.5e5,2.5e5]内的组，每组跑AC自动机，不会超过7次
+
+1007
+用map代替优先队列能冲过去
+
+1009
+强行dp子树内外的最长链（辛苦队友
+
+1010
+dp[i]是一个关于j的分段函数，数据随机所以分段点不会太多(?)，转移相当于把两个分段函数取max，把两个函数的分段点放一起按x排序之后扫一遍
+
+1012
+pre[i][j][k][l]表示在打死不选第i个数的前提下在前j个数中选k个是否能凑到l，bitset压第四维，同理suf[i][j][k][l]，但是记是否能凑到87-l，对于一个查询(i,j,k)(i<=j<=k)，整个区间分成可能为空的四段，枚举在前两段中选多少个数然后把两个bitset与一下
+
+[quailty wrote on 2016-09-17T10:28:04]
+
+---
+
+我来补一句1013做法。。。
+
+不考虑插入的话。。。我们从1到n加入每个字符。。然后在加入第r个字符的时候回答所有形如[l:r]的询问。。以下的当前串均指s[1:r]。。
+用后缀树（严格上来说是后缀自动机的parent树）维护。。记根到节点x形成的字符串为str[x]。。
+考虑在每个后缀树节点x上维护一个last[x]表示str[x]在当前串中最后一次出现的右端点。。
+每当加入一个字符s[r]的时候parent树上会加入一个叶节点u，此时我们应该把根到u的路径上的last都赋值为r。。
+再仔细思考一下。。。会发现根据原last（记作last'[x]）和r可以更新答案。。。（因为[last'[x]-len[x]+1:last'[x]]和[r-len[x]+1:r]是str[x]的最后两次出现。。。于是用一个线段树就可以维护答案了）
+链赋值对应着LCT的基本操作access。。于是我们用LCT来维护这个last。。同一棵splay里的last一样。。。
+于是就能维护答案了。。。
+
+在线插入很简单。。因为答案是维护在线段树上的。。。把线段树可持久化就行了。。。
+
+[falsyta wrote on 2016-09-17T11:05:51]
+
+---
+
+按照我的经验，1010这种背包题，只要不构造数据，就算给1000个物品都能随便搜过。。。
+
+[nanometer wrote on 2016-09-17T11:26:28]
+
+---
+
+1010，显然，最优解不可能大于可分割背包最优解。所以，每次搜索算一次可分割背包作为上界。若上界比当前最优值差，可以剪枝。
+
+```
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+int n, vLimit, v[100], w[100];
+long double rate[100];
+long long wBest;
+
+void swap(int i, int j) {
+	int tmp;
+	tmp = v[i];
+	v[i] = v[j];
+	v[j] = tmp;
+	tmp  = w[i];
+	w[i] = w[j];
+	w[j] = tmp;
+	double tmp2;
+	tmp2 = rate[i];
+	rate[i] = rate[j];
+	rate[j] = tmp2;
+}
+
+
+void sort() {
+	for (int i = 0; i < n; ++ i) {
+		for (int j = i + 1; j < n; ++ j) {
+			if (rate[i] < rate[j]) swap(i, j);
+		}
+	}
+}
+
+bool can_cut(int k, int _vCurrent, long long _wCurrent) {
+	long double vCurrent = _vCurrent;
+	long double wCurrent = _wCurrent;
+	for (int i = k; i < n && vCurrent < vLimit; ++ i) {
+		if (vCurrent + v[i] < vLimit) {
+			vCurrent += v[i];
+			wCurrent += w[i];
+		} else {
+			wCurrent += rate[i] * (vLimit - vCurrent);
+			vCurrent = vLimit;
+		}
+	}
+	return wCurrent < wBest;
+}
+
+void search(int k, int vSum, long long wSum) {
+	if (wSum > wBest) {
+		wBest = wSum;
+	}
+	if (k < n && !can_cut(k, vSum, wSum)) {
+		if ((long long)vSum + v[k] <= vLimit) {
+			search(k + 1, vSum + v[k], wSum + w[k]);
+		}
+		search(k + 1, vSum, wSum);
+	}
+}
+
+int main() {
+	while (scanf("%d%d", &n, &vLimit) != EOF) {
+		for (int i = 0; i < n; ++ i) {
+			scanf("%d%d", &v[i], &w[i]);
+			rate[i] = (long double)w[i] / (long double)v[i];
+		}
+		sort();
+		wBest = 0;
+		search(0, 0, 0);
+		std::cout << wBest << std::endl;
+	}
+}
+```
+
+[nanometer wrote on 2016-09-17T12:50:03]
+
+---
+
+伸手求一份1008能AC的code....我们队的代码死活TLE....
+
+[totoro wrote on 2016-09-17T13:26:10]
+
+---
+
+@Totoro#4302 
+```#include <algorithm>
+#include <cmath>
+#include <cassert>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+
+const int N = 1 << 21;
+
+struct Complex
+{
+    Complex(double x = 0., double y = 0.) : x(x), y(y) {}
+
+    double x, y;
+};
+
+Complex operator + (const Complex& a, const Complex& b)
+{
+    return Complex(a.x + b.x, a.y + b.y);
+}
+
+Complex operator - (const Complex& a, const Complex& b)
+{
+    return Complex(a.x - b.x, a.y - b.y);
+}
+
+Complex operator * (const Complex& a, const Complex& b)
+{
+    return Complex(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+}
+
+Complex a[N], b[N];
+
+const double pi = acos(-1.);
+
+void sincos(double p, double& y, double& x)
+{
+    y = sin(p);
+    x = cos(p);
+}
+
+void FFT(Complex P[], int n, int oper)
+{
+    for (int i = 1, j = 0; i < n - 1; i++) {
+        for (int s = n; j ^= s >>= 1, ~j & s;);
+        if (i < j) {
+            std::swap(P[i], P[j]);
+        }
+    }
+    Complex unit_p0;
+    for (int d = 0; (1 << d) < n; d++) {
+        int m = 1 << d, m2 = m * 2;
+        double p0 = pi / m * oper;
+        sincos(p0, unit_p0.y, unit_p0.x);
+        for (int i = 0; i < n; i += m2) {
+            Complex unit = 1;
+            for (int j = 0; j < m; j++) {
+                Complex &P1 = P[i + j + m], &P2 = P[i + j];
+                Complex t = unit * P1;
+                P1 = P2 - t;
+                P2 = P2 + t;
+                unit = unit * unit_p0;
+            }
+        }
+    }
+}
+
+
+int main()
+{
+#ifdef LOCAL_JUDGE
+    freopen("H.in", "r", stdin);
+#endif
+    int n, m;
+    double R;
+    while (scanf("%d%d%lf", &n, &m, &R) == 3) {
+        int r = 0;
+        while (r + 1 <= R) {
+            r ++;
+        }
+        int N = r + n + r;
+        int M = r + m + r;
+        int K = 0;
+        while (1 << K < N * M) {
+            K ++;
+        }
+        memset(a, 0, sizeof(*a) << K);
+        memset(b, 0, sizeof(*b) << K);
+        for (int i = 0; i < n; ++ i) {
+            for (int j = 0; j < m; ++ j) {
+                double x;
+                scanf("%lf", &x);
+                a[i * M + j] = x;
+            }
+        }
+        FFT(a, 1 << K, 1);
+        for (int i = -r; i <= r; ++ i) {
+            for (int j = -r; j <= r; ++ j) {
+                double s = std::hypot(i, j);
+                if (s < R) {
+                    b[(i + r) * M + (j + r)] = 1 / (1 + s);
+                }
+            }
+        }
+        FFT(b, 1 << K, 1);
+        for (int i = 0; i < 1 << K; ++ i) {
+            a[i] = a[i] * b[i];
+        }
+        FFT(a, 1 << K, -1);
+        double result = 0.;
+        for (int i = 0; i < n; ++ i) {
+            for (int j = 0; j < m; ++ j) {
+                double ref = (a[(i + r) * M + (j + r)].x) / (1 << K);
+                result = std::max(result,  ref);
+            }
+        }
+        printf("%.3f\n", result);
+    }
+}
+```
+
+[ftiasch wrote on 2016-09-17T14:10:31]
+
+---
+
+@ftiasch#4303 蟹蟹叉老师！
+
+[totoro wrote on 2016-09-17T15:38:09]
+
+---
+
+@quailty#4298 1003貌似直接跑AC自动机能A并不炸内存?
+
+[xuebohuan wrote on 2016-09-18T01:07:48]
+
+---
+
+Problem L. Eighty seven
+
+类背包问题。不妨假设我们已经有一组解了，记为F(1)。则F(1)对应了1到n中的某10个数字，一次考虑其中每一个x，我们知道只要询问中有x，则F(1)一定不能说明是否有解。于是尝试找到对应的10组新的解，其中第i组对应删除了F(1)中第i个数字后的一种方案。记新的10组答案为F(2)到F(11)。对于F(2)到F(11)中的每一个，重述上述分析，进而得到再100组新的解F(12)到F(111)。再拓展一层得到F(112)到F(1111)。
+
+对于每一次询问，先考虑F(1)，若不满足则考虑F(2)到F(11)中对应的那一个，依然不满足则考虑F(12)到F(111)中对应的那一个，再不满足，则考察最后1000个中的。因为每一次询问只给出了3个禁止的对象，这样的方法总可以回答原问题。
+
+时间复杂度上，每一次找方案基于位运算可以做到O(10*N)，一共1111次。每一次询问只需要遍历其中4个答案即可。
+
+(...: 您老兄数据又出水了吧...
+...: 嘛要不然这一题也要光头了...
+)
+
+[AHdoc wrote on 2016-09-18T01:44:18]
+
+---
+
+@comtm4#4307 只要不把AC自动机装进结构体……（数据不满吧= =
+
+[quailty wrote on 2016-09-18T10:45:04]
+
+---
+
+@quailty#4322 百度搜到第一个AC自动机题解。。他就把AC自动机装进结构体了QAQ  26*1e6的内存好凶残
+
+[xuebohuan wrote on 2016-09-18T10:59:53]
+
+---
+
+@comtm4#4323 噢= =那看上去没什么关系
+
+[quailty wrote on 2016-09-18T11:07:00]
+
+---
+
+1010这个随机背包。。把容量体积除以5000再做普通背包就过了。。。
+
+[jcvb wrote on 2016-09-18T16:14:19]
+
+---
+
+@quailty#4324 
+
+@comtm4#4307 
+我看了1003网上那些AC的代码，都是直接开的1e6，但是自己也开1e6就MLE，对比了一下代码，发现AC的那些代码都是分配节点时才对节点进行初始化，其他部分都无异，于是我猜评测机是以你操作过的空间大小计算而不是以你一开始分配的空间大小计算的，就试着也改成分配节点时初始化，MLE的问题果然就解决了
+
+[danagi wrote on 2016-09-20T10:06:49]
+
+---
+
+@danagi#4353 是这样的，你可以试试只开 4e5 个节点，也是可以 AC 的。
+
+只能说一个是数据太水了，没有能把自动机塞满的数据，另一个是出题人在 OJ 上测试疏忽，导致没有给够应有的空间。
+
+[sd_invol wrote on 2016-09-20T11:37:50]
+
+---
+
+提供1012的另一个做法
+不删去任何数、删去一个数和删去两个数的方案可以DP预处理存下来，遇到这样的询问直接回答。
+于是只剩下删除三个数的询问
+设DPijk[num][sum]表示删除ai,aj,ak后选num个数和为sum的方案数，询问即是问DPijk[10][87]是否为0
+XJB容斥
+DPijk[10][87] = 
+DPnone[10][87] - DPi[9][87 - ai] - DPj[9][87 - aj] - DPk[9][87 - ak] + DPij... + DPik... + DPjk... - DPijk[7][87 - ai - aj - ak]
+然后发现容斥中几乎所有的项都预处理过了（不删去任何数、删去一个数和删去两个数），式子变成
+DPijk[10][87] = （一堆O(1)出结果的项）- DPijk[7][87 - ai - aj - ak]
+递归下去搞搞，回答一次询问就是O(4)的了
+
+
+[linyuzhou wrote on 2016-09-20T12:18:54]
+
+---
+
+@Sd_Invol#4355 嗯，我也是这样想的，本来好好的一道题大家都能做的，卡内存也不是这样卡的，想来只能是出题人测试的疏忽
+
+[danagi wrote on 2016-09-20T15:14:48]
+
+---
+
+@falsyta#4299 
+请教一下1013，有一个细节的实现好像有点问题。
+添加字符s[r]的时候，我们要将拿s[r]的父亲、s[r]父亲的父亲、……逐个更新线段树。这样做的复杂度是O(n log n)的。
+例如，abbabb中，添加第6个字符'b'时，其父亲"abb"需要更新一次（对应线段树[1, 3]区间），其父亲的父亲"b"也需要更新一次（对应线段树[5, 5]区间）。这样最坏情况下需要更新n次。就是因为这个导致我超时了。请问您是如何处理的？
+
+[africamonkey wrote on 2017-01-21T10:23:40]
+
+---
+
+@africamonkey#4947 
+正如falsyta所说，就是lct中每个splay是同一个last，只需要在里面找最大的step即可。
+AC辣～～～～～～～～～～
+
+[africamonkey wrote on 2017-01-22T08:11:51]
+
+---
+
