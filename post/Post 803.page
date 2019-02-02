@@ -1,0 +1,88 @@
+# ZOJ 4029 Now Loading!!! 
+
+题目给出 $n$ 个 $a_i$ 和 $m$ 个 $p_j$，
+规定对于每个 $p_j$，
+$z_j = \sum \lfloor \frac{a_i}{\lceil \log_{p_j}{a_i} rceil} \rfloor$
+
+答案 $\sum_j {z_j \cdot j} \mathrm{mod}\ 10^9$
+
+根据数据ceil( log(p[j],a[i]) )范围在1~30，
+所以预处理t=1~30，sum[i][t]，是floor(a[i]/t)的前缀和，
+对固定的j，求∑ floor( a[i] / ceil( log(p[j],a[i]) ) )的时候就枚举t=1~30
+二分查找 p[j]^t 和 p[j]^(t+1) 在a[i]中的位置，假设是st和ed，就可以直接sum[ed][t]-sum[st][t]这样的求出来
+
+思路都没错，但是有两个问题想不通……
+一个是sum[i][t]定义成全局变量，定义成long long类型就会Segmentation Fault，定义成int类型就不会，想不通。
+一个是ans在最后要+MOD再%MOD，否则就会WA，可是根据题目ans不可能会是负的啊，想不通。
+
+```
+#include<bits/stdc++.h>
+typedef long long LL;
+using namespace std;
+const int maxn=500100;
+const LL MOD=1e9;
+
+int n,m;
+LL a[maxn],p[maxn];
+int sum[maxn][35];  //这个数组改成LL类型就会Segmentation Fault
+
+void init()
+{
+    sort(a+1,a+n+1);
+    for(int t=1;t<=32;t++)
+    {
+        sum[0][t]=0;
+        for(int i=1;i<=n;i++) sum[i][t]=(sum[i-1][t]+a[i]/t)%MOD;
+    }
+}
+
+int main()
+{
+    int T;
+    cin>>T;
+    while(T--)
+    {
+        cin>>n>>m;
+        for(int i=1;i<=n;i++) cin>>a[i];
+        for(int i=1;i<=m;i++) cin>>p[i];
+        
+        init();
+        
+        LL ans=0;
+        for(int i=1;i<=m;i++)
+        {
+            LL z=0;
+            for(LL x=1,cnt=1;;x*=p[i],cnt++)
+            {
+                int st=upper_bound(a+1,a+n+1,x)-a-1;
+                if(st>=n) break;
+                int ed=upper_bound(a+1,a+n+1,x*p[i])-a-1;
+                if(st==ed) continue;
+                
+                z=(z+sum[ed][cnt]-sum[st][cnt])%MOD;
+            }
+            ans=(ans+z*i)%MOD;
+        }
+        cout<<(ans+MOD)%MOD<<endl;  //一定要+MOD再%MOD，否则就会WA
+    }
+}
+```
+
+[freenm wrote on 2018-05-11T03:20:49]
+
+---
+
+前一个问题，超空间了？
+
+后一个问题，你中间 z=(z+sum[ed][cnt]-sum[st][cnt])%MOD; 把 $z$ 减到负数了啊……
+
+[ftiasch wrote on 2018-05-13T15:24:39]
+
+---
+
+@ftiasch#5666 嗷 好有道理啊……蠢了蠢了……
+
+[freenm wrote on 2018-06-05T01:19:10]
+
+---
+
