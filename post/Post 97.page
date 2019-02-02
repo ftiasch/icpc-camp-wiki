@@ -1,0 +1,107 @@
+# 51nod 1190 最小公倍数之和 V2
+
+$t$ 组询问，给出 $a$ 和 $b$，询问 $\sum_{i=a}^{b}{\mathrm{lcm}(i,b)} \bmod (10^9+7)$。
+$t \le 50000,1 \le a \le b \le 10^9$
+
+[题目链接](http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1190)
+
+[skywalkert wrote on 2015-09-29T03:06:08]
+
+---
+
+我觉得可以跟 [SPOJ LCMSUM](http://www.spoj.com/problems/LCMSUM/) 一样做啊 = =
+
+[ftiasch wrote on 2015-09-29T03:09:41]
+
+---
+
+@ftiasch#919 LCMSUM是$O(n \log n)$预处理$O(1)$处理询问的，卡$O(T\sqrt{n})$，这个题再容斥一遍不是也会变成$O(T\sqrt{n})$吗 >_<
+
+[skywalkert wrote on 2015-09-29T03:18:21]
+
+---
+
+@ftiasch#916 LCMSUM有一个子问题是$[1,R]$里与$R$互质的数之和，为$\frac{R\phi(R)}{2}$，这个题里是$[L,R]$里与$R$互质的数之和，这个该怎么快速得到呢？
+
+[skywalkert wrote on 2015-09-29T03:13:09]
+
+---
+
+@skywalkert#918 再容斥一遍？
+
+[ftiasch wrote on 2015-09-29T03:15:04]
+
+---
+
+@skywalkert#920 怎么会是 $O(1)$ 询问 …… 我印象中是 $O(\sigma(n))$ 的啊。
+
+[ftiasch wrote on 2015-09-29T03:19:38]
+
+---
+
+@ftiasch#921 我想错了不好意思>_<，那么这个题单次$O(\sigma(n))$也有点危险吧，时限1秒
+
+[skywalkert wrote on 2015-09-29T03:23:44]
+
+---
+
+@skywalkert#922 看出题人的心情咯 = = 
+
+但是既然 LCMSUM 就只能 $O(\sigma(n))$ 的话，这个题没可能做得更好吧。
+
+[ftiasch wrote on 2015-09-29T03:24:32]
+
+---
+
+@ftiasch#923 嗯，我想再问一下容斥的细节。
+如果照搬LCMSUM的方法，首先枚举$gcd(i,b)=k$，这个是$O(\sigma(n))$的，然后需要求$[\lfloor\frac{a}{k}\rfloor,\lfloor\frac{b}{k}\rfloor]$里与$\lfloor\frac{b}{k}\rfloor$互质的所有数之和，这个可以$O(1)$求吗？还是说就$O(\sqrt{\lfloor\frac{a}{k}\rfloor}+\sqrt{\lfloor\frac{b}{k}\rfloor})$暴力一下呢？
+
+[skywalkert wrote on 2015-09-29T03:33:28]
+
+---
+
+@skywalkert#924 直接搞是 $O(\sigma^2(n))$ 的 = = 
+
+[ftiasch wrote on 2015-09-29T05:22:48]
+
+---
+
+@skywalkert#924 
+$\sum\limits_{d|b} b\times (\phi(\frac{b}{d})\times\frac{b}{2d}  - \sum\limits_{i=1}^{\lfloor\frac{a}{d}\rfloor} i \times [gcd(\frac{i}{d}, \frac{b}{d}) = 1])$
+后面那一项继续容斥 
+$\sum\limits_{d|b} b\times (\phi(\frac{b}{d})\times\frac{b}{2d}  - \sum\limits_{t | \frac{b}{d}}^{t \leq \lfloor\frac{a}{d} \rfloor} \mu(t) \times t \times (1+\lfloor\frac{a}{dt}\rfloor)\lfloor\frac{a}{dt}\rfloor / 2)$
+窝不知道有没有写错...
+之后对于后面减的那部分 直接枚举$dt=x$
+$\sum\limits_{x|b}^{x <= a} (1+\lfloor\frac{a}{x}\rfloor)\lfloor\frac{a}{x}\rfloor / 2 \times \sum\limits_{d|x} \mu(t)t$
+$f(x) = \sum\limits_{d|x}\mu(t)t$ 可以$O(2^{10}\times \sqrt{n} )$预处理出来
+
+并没有过题验证。。。。不过思路应该差不多, 这种类型的破题简直出烂了
+
+[yangyue wrote on 2015-09-29T14:56:37]
+
+---
+
+@yangyue#1007 谢谢，另外我觉得$f(x)$可以利用积性函数的性质快速算，首先将$b$质因数分解，然后再以dfs或bfs的形式枚举$x$，这样方便用$f(\frac{x}{p})$和$f(p)$算$f(x)$。
+
+[skywalkert wrote on 2015-10-01T02:26:22]
+
+---
+
+@skywalkert#1072 请问如何在 $\sigma(n)$ 内枚举一个10^9 的数的约数。。。
+
+[czk wrote on 2015-11-11T14:36:01]
+
+---
+
+@czk#2542 至少可以 Pollar rho 开。。。然后暴力枚举
+
+[ftiasch wrote on 2015-11-11T16:34:49]
+
+---
+
+@Varona#2543 我服。。
+
+[yangyue wrote on 2015-11-13T17:01:29]
+
+---
+
