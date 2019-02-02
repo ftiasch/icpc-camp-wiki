@@ -1,0 +1,37 @@
+# Opencup XVI Grand Prix of SPB C Eulerian Graphs
+
+定义一个无重边的无向图是欧拉图，当且仅当它存在恰好一条回路走每条边恰好一次，即欧拉回路。
+定义两个点数相同的无向图$G_1=(V_1,E_1),G_2=(V_2,E_2)$是同构的，当且仅当存在双射$f:V_1\to V_2$，使得$g((u,v))=(f(u),f(v))$是$E_1\to E_2$的双射。
+求$n$个点不同构的欧拉图个数，答案模$(10^9+7)$。
+当$n=3$时数量为$5$，当$n=4$时数量为$11$。
+$1\leq n\leq60$。
+
+
+[skywalkert wrote on 2016-05-22T13:42:06]
+
+---
+
+上mathworld查了一下[Eulerian Graph](http://mathworld.wolfram.com/EulerianGraph.html)无果，大概画了一下$n=3$和$n=4$的情况如下图，便于理解题意。$n\geq5$的时候还有不只一个简单环的情况，萌新并不会画……
+
+![image /assets/images/0-74-Wffkg9L1op4TofU2.jpg](/assets/images/0-74-Wffkg9L1op4TofU2.jpg)
+
+![image /assets/images/0-74-JCv46Ur1AfnbgBl3.jpg](/assets/images/0-74-JCv46Ur1AfnbgBl3.jpg)
+
+
+
+[skywalkert wrote on 2016-05-22T13:59:37]
+
+---
+
+http://async.icpc-camp.org/d/175-open-cup-xvi-grand-prix-of-spb-c-eulerian-graphs
+
+[sd_invol wrote on 2016-05-22T14:00:23]
+
+---
+
+我在另一边回复一下好了……
+
+[ftiasch wrote on 2016-05-22T16:22:24]
+
+---
+
