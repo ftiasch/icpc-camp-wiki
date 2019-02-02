@@ -1,0 +1,46 @@
+# Codeforces Round #364 Problem B Connecting Universities
+
+一棵树，偶数个叶子节点，将叶子两两匹配，选择一种匹配方式，使每对点之间的路径长度和最长。
+怎么搞额。。
+
+[tak_fate wrote on 2017-07-30T06:54:56]
+
+---
+
+考察每条边的贡献，显然每条边最多被两侧叶子数的min这么多条路径经过，
+上界是可以取到的，只需让所有路径都经过带权重心（叶节点权值为1，否则为0）。
+
+[quailty wrote on 2017-07-30T07:03:35]
+
+---
+
+@tak_fate#5179 请问有没有题目链接呀？
+
+[Fancy wrote on 2017-07-30T07:22:40]
+
+---
+
+@Fancy#5182 实际上和[这个题](http://codeforces.com/contest/700/problem/B)是完全一样的。
+
+[quailty wrote on 2017-07-30T07:23:05]
+
+---
+
+@quailty#5183 谢谢qls！
+
+[Fancy wrote on 2017-07-30T07:24:48]
+
+---
+
+@Fancy#5182 额， 我是突然脑补出来的0.0
+
+[tak_fate wrote on 2017-07-30T08:01:28]
+
+---
+
+@quailty#5183 %qls，为啥你记得这么多题号Orz
+
+[tak_fate wrote on 2017-07-30T08:02:02]
+
+---
+
