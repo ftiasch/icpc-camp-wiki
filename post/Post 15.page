@@ -1,0 +1,87 @@
+# Codeforces Round #319 D Flights for Regular Customers
+
+$30 n^3 m / 64$ 才$150^4$辣，感觉好对啊...
+
+[Nero wrote on 2015-09-10T18:49:29]
+
+---
+
+我也是压的……坐等TLE。
+
+[ftiasch wrote on 2015-09-10T18:46:22]
+
+---
+
+> @Nero#101 30 n^3 / 64
+
+原来CF的机器已经是1e8好对的机器了吗 = = 我算复杂度的时候少了个$O(\log n)$，所以感觉特别对！现在想起来怕极了……
+
+[ftiasch wrote on 2015-09-10T18:50:28]
+
+---
+
+@ftiasch#102 咦我的乘号去哪了-v-
+
+[Nero wrote on 2015-09-10T18:54:10]
+
+---
+
+@Nero#104 你的乘号变成强调标记了…
+
+[sd_invol wrote on 2015-09-10T18:56:33]
+
+---
+
+@Nero#104 先凑合用吧……这mathjax是我强行加上去的，所以跟* ___ * 这种markdown语法有些冲突。
+
+[ftiasch wrote on 2015-09-10T18:56:44]
+
+---
+
+压位矩阵幂？
+
+[Nero wrote on 2015-09-10T18:43:51]
+
+---
+
+没有压位强行过了……我觉得我的方法是$O(mn^3 \log d)$的。
+
+[Source](http://codeforces.com/contest/576/submission/12944464)
+
+然后发现压位变得更慢了 = =
+
+[Source](http://codeforces.com/contest/576/submission/12961072)
+
+[sd_invol wrote on 2015-09-10T23:02:51]
+
+---
+
+压位矩乘的优秀写法
+```c++
+struct Mat {
+        vector<bitset<N> > a; 
+}
+Mat operator * (const Mat &a, const Mat &b) {
+        Mat ret;
+        for(int i = 0; i < n; ++ i) {
+	        for(int j = 0; j < n; ++ j) {
+	            if (a.a[i][j]) {
+			ret.a[i] |= b.a[j];
+		    }
+		}
+	    }
+	    return ret;
+}
+
+```
+
+[AngryBacon wrote on 2015-09-12T09:25:42]
+
+---
+
+[姿势正确后的快如飞](http://codeforces.com/contest/576/submission/12971092)
+
+[sd_invol wrote on 2015-09-12T10:00:08]
+
+---
+
