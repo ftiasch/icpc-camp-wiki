@@ -1,0 +1,21 @@
+#     KTU Programming Camp (Day 3) L. Many recursions
+
+http://codeforces.com/gym/100739/problem/L
+2^a 的结论很容易猜到，但是怎么证呢？
+
+[riko wrote on 2016-02-24T03:11:48]
+
+---
+
+观察式子, 首先$h(a)=1$, 然后把$h(0)$展开, 会得到$$h(0)=1+\frac{a}{1!}+\frac{a(a-1)}{2!}+\frac{a(a-1)(a-2)}{3!}+...+\frac{a!}{a!}=\sum_{i=0}^{a}\binom{a}{i}=2^a$$
+
+[zimpha wrote on 2016-02-24T04:39:32]
+
+---
+
+@zimpha#3188 明白了，谢谢
+
+[riko wrote on 2016-02-25T02:52:06]
+
+---
+
