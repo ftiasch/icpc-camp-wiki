@@ -1,0 +1,67 @@
+# World CodeSprint 10 Interoffice Travel
+
+有一颗n个节点，且边权都为1的树。有一个w[i]表示走路径长度为i时的花费。求对于每个点i来说，别的点到达点i的花费和
+也就是求所有的di
+di = Sum (1 <= j <= n) w[  dis(i , j) ];
+多case
+T <= 20
+n <= 1e4 , w[0] = 0 , 0 <= wi <= 1e4
+
+
+[nnOnn wrote on 2018-04-05T07:47:03]
+
+---
+
+分治 + FFT。
+
+考虑所有跨过分治中心 $c$ 的路径，假设是 $x$ -- $c$ -- $y$ 这样。
+FFT 求出 $f(d) = \sum_{y} w[d + \mathrm{dis}(c, y)]$. 另一边查 $f(\mathrm{dis}(x, c))$. 就行。
+
+FFT 的话，就相当于拿 $\sum_{i} w[i] x^i$ 和 $\sum_{y} x^{-\mathrm{dis}(c, y)}$ 做乘法。
+
+---
+出处可能是 cc？我肯定见到过……
+
+[ftiasch wrote on 2018-04-05T12:04:33]
+
+---
+
+> @ftiasch#5620 不懂。能详细说一下吗，为什么看起来这个求的是距离为i的时的花费和。
+
+[nnOnn wrote on 2018-04-05T14:59:17]
+
+---
+
+@ftiasch#5620 懂了，谢谢。
+
+[nnOnn wrote on 2018-04-06T03:05:33]
+
+---
+
+[PRIMEDST](http://www.codechef.com/AUG13/problems/PRIMEDST)
+
+[quailty wrote on 2018-04-06T16:36:39]
+
+---
+
+@quailty#5625 虽然都是树分治 + FFT，但是跟这个还不全然是一回事……
+
+我是记得我见过一模一样的，也是给个 w 的
+
+[ftiasch wrote on 2018-04-07T19:37:26]
+
+---
+
+@ftiasch#5626 https://www.hackerrank.com/contests/world-codesprint-10/challenges/interoffice-travel
+应该是这个吧
+
+[heart_blue wrote on 2018-05-02T08:27:29]
+
+---
+
+@heart_blue#5655 感谢
+
+[ftiasch wrote on 2018-05-02T10:44:18]
+
+---
+
