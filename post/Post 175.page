@@ -1,0 +1,68 @@
+# Open Cup XVI Grand Prix of SPb C Eulerian Graphs
+
+给定一个$n\le 60$，问有多少个$n$个点的图（无重边，可以有自环）存在一条非空的欧拉路。
+两个图不同当且仅当不同构。
+这题现场只有软泥怪老爷坑出来了。
+
+[AngryBacon wrote on 2015-10-11T16:35:11]
+
+---
+
+没有opencup的帐号，这些题想做也做不了
+
+[vanquish wrote on 2015-10-11T19:03:28]
+
+---
+
+@vanquish#1713 我决定去codeforces花高价收帐号，促使opencup开放注册。。。
+
+[vanquish wrote on 2015-10-11T20:30:59]
+
+---
+
+@vanquish#1714 请看[这个帖子](http://async.icpc-camp.org/d/176-opencup)。
+
+[ftiasch wrote on 2015-10-12T00:12:54]
+
+---
+
+@AngryBacon#1711 引用一下R老爷的简要做法, 但是在下并没有看懂
+
+> Apply Burnside's lemma. We don't need to try all permutations: if the permutation graphs of two permutations are the same, we get the same results, so the complexity is O(partition_number(N) * something). Still my program required 10 minutes on the max test, so I computed all answers locally.
+
+
+[zimpha wrote on 2015-10-12T01:20:39]
+
+---
+
+@zimpha#1718 对这个我也看到了，我觉得他的something大概是个dp，我也还没想清。
+
+[AngryBacon wrote on 2015-10-12T01:55:26]
+
+---
+
+我们依次计算 $f(1), f(2), \ldots, f(n)$. 
+我们可以先不考虑连通，仅要求度数都是偶数，假设这样的方案数是 $g(n)$. 为了从 $g(n)$ 去掉不连通的，只需要枚举 $n$ 的一个划分，代表 $n$ 的连通快的大小，然后从中减去这些连通快大小的 $f$ 的乘积就好了。
+
+接下来我们考虑怎么算 $g$. 为此，我们考虑 Burnside，我们枚举一个 $n$ 一个划分，这实际上是 Burnside 那个 fix point 的置换的 cyclic decomposition 的每个循环节的大小，这样图的边会划分成若干类（这不重要），为了算那个矩阵全 0 解的数量，其实就是高斯消元一下得到 nulity 就可以了，然后 $2^\mathrm{nulity}$. 
+
+实际上高斯消元是可以省的，维护维护就好了……懒得维护可以暴力消元然后打个表。
+
+[ftiasch wrote on 2016-05-22T16:27:22]
+
+---
+
+@Hayashimo#3652 请问算的是哪个矩阵QAQ
+
+[ed7bc1a3-0d72-4bbd-b5fd-3a82ed0f6dfb wrote on 2016-05-30T10:48:11]
+
+---
+
+@WuHongxun#3699 
+
+每条边是一个变量，每个点是一个方程，要求相邻的边异或起来是 $0$。
+
+[ftiasch wrote on 2016-05-30T10:52:16]
+
+---
+
