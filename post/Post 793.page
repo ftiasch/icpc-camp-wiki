@@ -1,0 +1,27 @@
+# 计蒜客Sign Location
+
+https://nanti.jisuanke.com/t/24833
+我的想法是用dp，可是不会优化。想请教下正确的解法。
+
+[shdut wrote on 2018-03-27T00:57:14]
+
+---
+
+决策单调性
+
+[quailty wrote on 2018-03-27T09:51:12]
+
+---
+
+@quailty#5618   dp[i,j] 代表第i个数是 第j个sign 的最小代价，那 dp[i,j]=min(dp[k,j-1]+cost(k,i)), s[i,j]表示代价最小的k，那 在计算的时候，最小边界我用的是 max（s[i,j-1],s[i-1,j]），可是最大边界我不知道怎么设，能再请教一下吗？
+
+[shdut wrote on 2018-04-06T03:29:55]
+
+---
+
+@shdut#5623 分治就好了，定义过程 solve(l,r,tl,tr) 表示现在要求解下一层（放多一个 sign）的 [l,r] 的 dp 值，并且最优决策在 [tl,tr] 内，求出 m=(l+r)/2 的最优决策 tm 然后递归 solve(l,m-1,tl,tm) 和 solve(m+1,r,tm,tr)
+
+[quailty wrote on 2018-04-06T16:34:13]
+
+---
+
