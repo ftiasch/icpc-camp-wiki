@@ -1,0 +1,22 @@
+# UValive 3605 Roommate
+
+题目地址：https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1606
+题意：有2个人J、Y和n(<=50)个家具，题目给定每个人使用每个家具的时间(<=100)。再给定n、m(<=300)与长度为n、m的序列表示J和Y要以序列的顺序分别使用n、m个家具。每个时刻一个家具只能被一个人使用。求最早结束时间。
+我的想法：设f[i][j][k]表示J用完序列的前i个家具的结束时间为k时，Y用完序列的前j个家具的最早结束时间。我猜k这一维应该不会有很多情况，所以k这一维用map来存了，试着打了一下但最后还是tle了。。
+
+[ZJZNKU wrote on 2016-10-02T13:06:51]
+
+---
+
+不懂要 k 做什么
+
+[ftiasch wrote on 2016-10-02T13:16:40]
+
+---
+
+@ftiasch#4511 因为我觉得从f[i][j]转移到f[i+1][j]时需要J完成1到i的时间和Y完成1到j的时间，不然第一个序列的第i+1个家具和第二个序列的第j个家具相同时就不好处理了。而且我觉得对于(i,j)，只存min(max(J完成1到i的时间,Y完成1到j的时间))感觉也是不够的，可能无法转移到最优的答案。
+
+[ZJZNKU wrote on 2016-10-02T14:01:32]
+
+---
+
