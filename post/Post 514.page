@@ -1,0 +1,25 @@
+# SRM 696 Div 1 300 Gperm
+
+Hero has an undirected multigraph. (Each pair of vertices can be connected by arbitrarily many undirected edges. There may also be arbitrarily many self-loops at each vertex.) Hero's graph has exactly 50 vertices, labeled 0 through 49. The graph has at most 20 edges. You are given the list of those edges: the vector <int>s x and y. For each valid i, there is an edge that connects the vertices x[i] and y[i]. (Self-loops have x[i] = y[i].) Hero needs to paint all vertices red. He can paint the vertices in any order he likes, one vertex at a time. Each time he paints a vertex he has to pay a fee. The fee is computed as the number of edges that already have both endpoints red. Hero wants to minimize the sum of all fees he has to pay. Find the order in which he should paint the vertices, and return the corresponding total fee.
+>给出一个翻译:给一个50个点，20条边，可能重边可能自环的无向图。对所有节点按照某一个顺序染色，每个节点染色的费用定义为将这个节点染色后图中两端都被染色的边的个数，求最小费用
+
+请问该怎么捉呢
+
+[QAQ wrote on 2016-08-11T03:01:03]
+
+---
+
+呆萌手 @rowdark 说：
+
+时光倒流，相当于一开始所有边都存在，每次选择一个点，删除它和它相邻的所有边。
+
+那么对于没有连边的点，肯定是最后再选。只需考虑有边的 40 个点。
+
+如果一个点相邻的边已经被删掉了，那么把它留到最后就行。所以设 dp(edges) 表示还有 edges 这些边存在，那么这些边的端点也一定存在，每次枚举删除哪个点即可。
+
+
+
+[ftiasch wrote on 2016-08-11T11:15:47]
+
+---
+
