@@ -1,0 +1,35 @@
+# 有标号的平面图计数
+
+可不可以也像KPGRAPHS里面一样按照连通图计数的套路来做啊？或者有没有科学的地方看论文。。
+
+[prime21 wrote on 2016-03-06T15:36:59]
+
+---
+
+真的不是在逗我……这能做？
+
+[ftiasch wrote on 2016-03-06T16:53:09]
+
+---
+
+从[这个侧面](http://www.combinatorics.org/Volume_9/PDF/v9i1r43.pdf)看，应该是还没被数出来。
+
+[ftiasch wrote on 2016-03-06T16:54:59]
+
+---
+
+真的不是在逗我……这不是早就能做了？
+https://oeis.org/A096332
+
+（顺带一提，我那年冬令营图计数的talk里也提到过这个。）
+
+[sevenkplus wrote on 2016-03-06T22:17:38]
+
+---
+
+@sevenkplus#3250 google 没搜到这个数列 = = 输了。
+
+[ftiasch wrote on 2016-03-07T01:27:19]
+
+---
+
