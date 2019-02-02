@@ -1,0 +1,29 @@
+# 51nod 1634 刚体图
+
+题目地址：
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1634
+
+题解表示题目可以等价于求左侧n个点右侧m个点的联通图的数目，我的大体思路是做状压dp 捣鼓了半天发现有重复 有人能提供一下题解或者思路么？
+
+[burglar wrote on 2016-03-14T12:35:02]
+
+---
+
+题目的原型是：https://projecteuler.net/problem=434
+
+两道题目的区别在于，PE中加固的边只可以有一种方向，51nod中加固的边可以有两种方向。
+
+对于PE中题目的分析（以及为什么等价）可以戳：http://www.johannesbader.ch/2013/09/project-euler-problem-434-rigid-graphs/    （大意就是你要是这个二分图不联通的话，你握住中间的那个格子可以把整个框架拧巴一下）
+
+51nod中的这个题只要对于每种联通的、有$k$条边的二分图再乘以$2^k$计数就可以啦。。
+
+[Wangzhpp wrote on 2016-03-15T07:50:08]
+
+---
+
+$f_{i,j}$表示左边i个点右边j个点的答案，用所有二分图减去不联通的，枚举左边1号点所在联通块大小乘个组合数就行了。复杂度O(n^4)。
+
+[Recursion wrote on 2016-03-20T02:34:54]
+
+---
+
