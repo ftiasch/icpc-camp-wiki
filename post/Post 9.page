@@ -1,0 +1,76 @@
+# Codeforces Bubble Cup 8 - Finals [Online Mirror] C Party
+
+各位讨论下这题的算法，黑科技收集 =w=
+我们队使用KM一直TLE on #13，最后不得已卡系统时间过掉了……
+肯定是有更高级的姿势的吧
+
+[AngryBacon wrote on 2015-09-06T15:27:38]
+
+---
+
+@行者
+
+[ftiasch wrote on 2015-09-06T15:30:09]
+
+---
+
+明天研究下，先占个楼……
+
+[TankEngineer wrote on 2015-09-06T15:36:42]
+
+---
+
+目前已知的通过方式有三种。
+1. $O\left(\binom{n}{n / 2} \cdot n^3\right)$ 先枚举哪些人周五去，然后做三方KM。卡系统时间可过。
+2. DP+手写26位整数极限压位 http://codeforces.com/contest/575/submission/12871607
+3. 官方正解，一边用DFS枚举每个人属于周五还是周六，一边做KM增广。
+可以看作KM的矩阵每次添加一行，然后寻找维护这一行的的增广路。
+根据H题的结论，枚举量仍为$O\left(\binom{n}{n/2}\right)$，每次维护的复杂度为$O(n^2)$。
+
+[AngryBacon wrote on 2015-09-07T08:05:31]
+
+---
+
+@AngryBacon#59 关于算法2，似乎有个[文章](http://corner.mimuw.edu.pl/?p=748)可以看。这样复杂度是不是能更好呢……？
+
+[ftiasch wrote on 2015-09-07T08:20:55]
+
+---
+
+学习了KM的正确姿势后写的正解：[Source](http://codeforces.com/contest/575/submission/12881383)
+
+[TankEngineer wrote on 2015-09-07T08:26:42]
+
+---
+
+@Sd_Invol#87 具体的讲解和代码见http://e-maxx.ru/algo/assignment_hungary
+三方优化部分的描述用google翻译过来不是太通顺，凑活看吧 = =
+好像又是一项在毛子烂大街而在国内没人用的科技啊。
+
+[AngryBacon wrote on 2015-09-10T19:46:25]
+
+---
+
+有个人随机化过了
+http://codeforces.com/contest/575/submission/12871332
+
+[chffy wrote on 2015-09-10T14:15:25]
+
+---
+
+@TankEngineer#61 能大概讲解一下这种托氏KM吗？
+
+大众KM可能由于姿势不优美被卡。[Source](http://codeforces.com/contest/575/submission/12924156)
+
+想起来了@ftiasch 的一句话……一般市面上流通的KM都不是$O(n^3)$的，看来的确如此。
+
+[sd_invol wrote on 2015-09-10T14:39:47]
+
+---
+
+@AngryBacon#107 谢培根爷( •̀ ω •́ )y
+
+[sd_invol wrote on 2015-09-10T23:00:59]
+
+---
+
