@@ -1,0 +1,40 @@
+# 一类RMQ问题
+
+//没有具体的题，偶尔想到的..
+如果给定一个数组a[1..n],一个操作(l,r,k,v)被定义为修改[l..r]内小于k的数为v，问Q次操作后的数组;
+如果加入查询操作呢，例如操作(l,r)是询问[l,r]这段的sigma之类的
+
+[mssjtxwd wrote on 2016-06-22T07:09:56]
+
+---
+
+相似题目
+http://www.lydsy.com/JudgeOnline/problem.php?id=4364
+该题题解
+http://www.ioinformatics.org/locations/ioi14/contest/day1/wall/wall-solution.pdf
+
+P.S. 吉司机的论文可能对你会有帮助
+
+
+[samzhang wrote on 2016-06-22T08:59:55]
+
+---
+
+@samzhang#3821 谢谢！请问吉司机的论文是哪一篇。。
+
+[mssjtxwd wrote on 2016-06-22T11:38:30]
+
+---
+
+@mssjtxwd#3822 16年集训队论文
+
+[samzhang wrote on 2016-06-22T12:37:31]
+
+---
+
+直接上segment tree beats啊
+
+[mxh1999 wrote on 2016-07-01T05:12:19]
+
+---
+
