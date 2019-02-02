@@ -1,0 +1,75 @@
+# VK Cup 2016 Round 2 题解
+
+
+# Little Artem and Matrix
+
+常见的思路是倒着处理，在知道信息的时候给对应的元素赋值，操作时倒着操作，就能知道最初的状态了。
+
+但是你能一遍处理完吗？
+
+# Little Artem and Dance
+
+$1, 3, 5, \ldots, $ 和 $2, 4, 6, \ldots, $ 形成两个交错的环。
+只要维护 $1$ 和 $2$ 的位置，输出的时候再把其余元素填上即可。
+
+# Little Artem and Random Variable
+
+$$\Pr[X \leq i] \Pr[Y \leq i] = \Pr[\max\{X, Y\} \leq i]$$
+
+$$(1 - \Pr[X \leq i]) (1 - \Pr[Y \leq i]) = \Pr[X > i] \Pr[Y > i] = \Pr[\min\{X, Y\} > i]$$
+
+联立以上两个方程就可以解出 $\Pr[X \leq i], \Pr[Y \leq i]$.
+
+# Little Artem and Time Machine
+
+对于不同元素的插入、删除、询问是独立的，可以分别处理。
+对于某种元素 $v$，对于时间维护一个数据结构，插入和删除对应于后缀的加减，查询对应询问元素的值。
+
+# Little Artem and 2-SAT
+
+SAT $e_1$ 和 $e_2$ 不等价，
+则存在一组 $x_1, x_2, \dots, x_n$ 使得 $e_1$ 为真，$e_2$ 为假（或者反之）。
+如果 $e_2$ 为假，则存在一个合取 $a \wedge b$ 为假，也就是 $a, b$ 均为假。
+
+考虑 $e_1$ 构成的有向图，要强制使变量 $x$ 为假，即不选取 $x$ 的所有前驱，同时取 $\bar{x}$ 的所有后继。
+假设 $e_1$ 本身是可满足的，产生矛盾的可能就是 $xy$ 的前驱和 $\bar{x}\bar{y}$ 的后继有交。
+
+用 std::bitset 预处理 $\mathrm{PREV}(v)$ 和 $\mathrm{SUCC}(v)$ 表示 $v$ 的前驱、后继的集合，这样就可以快速地判断啦。
+
+如果不熟悉使用 std::bitset 处理前驱、后继集合的技巧，可以参考 [SPOJ DAGCNT2](http://www.spoj.com/problems/DAGCNT2/).
+
+# Little Artem and Graph
+
+设 $N(v)$ 表示点 $v$ 的邻居，考虑 $N(v)$ 中编号最大的点 $u$，那么 $N(v) \subset (N(u) \cup \{u\})$. 
+把 $v$ 作为 $u$ 的儿子，得到一颗（有根）树。我们在树上进行 DP。
+
+DP 的状态是 $f(v, S)$，表示当决策完 $v$ 这颗子树的点后，$N(v)$ 里面点的连通性状态是 $S$ 的方案数。
+为了计算 $f(v, S)$，我们转而计算 $g(v, i, S)$ 表示决策完 $v$ 的前 $i$ 个儿子后，$N(v) \cup \{v\}$ 里面点的连通性状态是 $S$ 的方案数。
+考虑 $g(v, 0, S)$，唯一的方案就是考虑 $v$ 和 $N(v)$ 之间的边，一共有 $2^{|N(v)|}$ 种可能。当 $i > 0$ 时，其实就是枚举一个 $g(v, i - 1, S')$ 和一个 $f(c_i, S'')$ 进行合并。最后得到了 $g(v, \mathrm{deg}(v), S)$ 后，把 $S$ 里面的点 $v$ 去掉，就可以得到 $f(v, S)$ 了。
+
+[所有代码](http://git.icpc-camp.org/ftiasch/acm-icpc/tree/master/codeforces/668-codeforces-round-348)
+
+[ftiasch wrote on 2016-04-25T01:33:45]
+
+---
+
+~~看到老年人战斗力还杠杠的我就放心了~~
+
+别的题呢？都很简单吗
+
+[xiaojudou wrote on 2016-04-25T11:21:32]
+
+---
+
+前排等，正好卡着题。。
+
+[传道者 wrote on 2016-04-25T11:36:03]
+
+---
+
+卡题+1，求带……
+
+[SCaffrey wrote on 2016-04-25T12:46:28]
+
+---
+
