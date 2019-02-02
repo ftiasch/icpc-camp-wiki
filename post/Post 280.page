@@ -1,0 +1,51 @@
+# Beijing 2015 E Stamps
+
+题目大意：一个买邮票的故事。一共有n种邮票，买到每一种邮票的概率是均等的，也就是1/n，每一种邮票的价值是不同的，第i张邮票的费用为H(i,k)，H(i,k)的定义如下：
+H(i, 0) = 1, for i = 1, 2, ...
+H(i, k) = H(1, k-1) + H(2, k-1) + ... + H(i, k-1), when k > 0 and i >0
+问题是：求收集完整一套邮票的费用之和的期望。数据规模是1<=n<=100000,0<=k<=9。
+要求输出(MONEY×(n!)^10 )%1000003 
+
+[longo wrote on 2015-11-18T05:03:14]
+
+---
+
+每一种邮票的价值是不同的
+您确定没读错题?
+
+[yuzuriha_inori wrote on 2015-11-18T05:44:08]
+
+---
+
+@Yuzuriha_Inori#2682 呃，是每一次售出的邮票价值是不同的，第i次售出的邮票的费用为H(i,k)，多谢指正。
+
+[longo wrote on 2015-11-18T05:52:11]
+
+---
+
+丢题解  http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20Regional%20Beijing
+
+[zimpha wrote on 2015-11-18T06:06:35]
+
+---
+
+@zimpha#2684 感谢！
+
+[longo wrote on 2015-11-18T06:41:05]
+
+---
+
+> @zimpha#2684 http://dreadnought.icpc-camp.org/2015%20ACM-ICPC%20Asia%20Regional%20Beijing
+
+链接失效了。还有备份嘛。。
+
+[quinwu wrote on 2018-05-17T07:56:32]
+
+---
+
+@quinwu#5674 https://wiki.icpc.camp/dreadnought/2015%20ACM-ICPC%20Asia%20Regional%20Beijing
+
+[Aguin wrote on 2018-05-18T01:13:54]
+
+---
+
