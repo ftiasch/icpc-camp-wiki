@@ -1,0 +1,31 @@
+# 一个式子的证明
+
+
+![image /assets/images/0-685-xtNorjXtkYudgP2W.jpg](/assets/images/0-685-xtNorjXtkYudgP2W.jpg)
+
+求指点，这个式子是怎么来的呢
+
+[zddsgs wrote on 2016-05-15T08:49:19]
+
+---
+
+左边就是无平方因子数的个数，右边相当于枚举平方因子去容斥/反演
+
+[quailty wrote on 2016-05-15T17:17:16]
+
+---
+
+@quailty#3598 懂了，谢谢
+
+[zddsgs wrote on 2016-05-16T00:37:47]
+
+---
+
+@quailty#3598 （要按照 ***）去容斥、去反演
+
+23333
+
+[ftiasch wrote on 2016-05-16T04:32:40]
+
+---
+
