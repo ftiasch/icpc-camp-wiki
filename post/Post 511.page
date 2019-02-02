@@ -1,0 +1,26 @@
+# URAL 1363 Halftones
+
+[题目链接](http://acm.timus.ru/problem.aspx?space=1&num=1363)
+题目大意：
+给出一个$N \times M$的整数矩阵$A$，对于$1 \leq i \leq N, 1 \leq j \leq M$满足$0 \leq A_{i, j} \leq 255$。
+求一个$N \times M$的整数矩阵$B$，矩阵中的元素只能是$0$或$255$，使得对于$1 \leq i \leq N, 1 \leq j \leq M$有$$|\frac{\sum_{|k - i| \leq 10, 1 \leq k \leq N, |l - j| \leq 10, 1 \leq l \leq M}{B_{k, l} - A_{k, l}}}{\sum_{|k - i| \leq 10, 1 \leq k \leq N, |l - j| \leq 10, 1 \leq l \leq M}{1}}| \leq 20$$
+数据范围：$75 \leq N, M \leq 300$
+
+看上去可以随机？
+
+[skywalkert wrote on 2016-08-08T20:14:18]
+
+---
+
+粗略地按照$A_{i, j}$的大小来随机$B_{i, j}$，并且及时check那个条件以决定是否从头开始重新随机，这样做可以在Ural上通过，但是在51nod上部分点会超时，51nod上的[题目链接](https://www.51nod.com/onlineJudge/questionCode.html#!problemId=1148)，数据范围是$75 \leq N, M \leq 500$，求助\_(:3JZ)_
+
+[skywalkert wrote on 2016-08-08T21:14:24]
+
+---
+
+tls可以这样，当你随机0或255之后，得到的值可能比A[i,j]大或小，那么相差的这部分，可以分配到相邻的未处理的某些节点中，那么处理到那个节点的时候，他的值就包含了以前的误差，随机的时候可以弥补一些独立随机的问题。
+
+[litaoye wrote on 2016-08-12T09:13:47]
+
+---
+
