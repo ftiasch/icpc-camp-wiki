@@ -1,0 +1,133 @@
+# SPOJ DIVCNT2
+
+题目大意：
+求 $F(n)=\sum_{i=1}^n \sigma_0(i^2),\ n \leq 10^{12}$
+
+我是这样处理的：
+设 $\omega(n)$ 为 $n$ 的不同质因子数
+$f(n)=\sigma_0(n^2)$
+$g(n)=2^{\omega(n)}$
+$h(n)=\mu^2(n)$
+
+则有 $f=g*1,\ g=h*1$
+所以 $f=h*(1*1)=h*\sigma_0$
+$F(n)=\sum_{i=1}^n (\mu^2*\sigma_0)(i)=\sum_{i=1}^n \mu^2(i) \sum_{j=1}^{\lfloor n/i \rfloor} \sigma_0(j)$
+
+[zddsgs wrote on 2016-05-17T13:13:28]
+
+---
+
+噗。。怎么过一会儿就不能修改了。。。。问题还没打完。。
+
+---
+
+（接上）
+由于 $\mu^2(n)$ 和 $\sigma_0(n)$ 的前缀和都可以 $O(\sqrt n)$ 暴力计算，所以通过预处理前 $n^{2/3}$ 项前缀和，可使复杂度降到 $O(n^{2/3})$。（应该是这样吧。。。）
+
+这样得到了正确答案，但是为什么我的 solution 要 50s+, 1300+ M 内存，而有人只要 20s+，4,5 M内存 就 A 了呢。。
+难道这题有什么更优的解法？求老司机指点。
+
+[zddsgs wrote on 2016-05-17T13:26:59]
+
+---
+
+对了，上面的时间都是总时间，单测试点时限为 20s。
+出题人甚至说他的解法 10s （总时间）就能 A。
+
+[zddsgs wrote on 2016-05-17T13:38:04]
+
+---
+
+$abc$
+
+[owaski wrote on 2016-05-21T16:56:47]
+
+---
+
+额，话说您知道这个$\sum_{i=1}^{n}\sigma_0(i)^2$怎么算吗
+
+[owaski wrote on 2016-05-21T16:58:47]
+
+---
+
+@owaski#3641 好像是不知道，您现在会做了吗
+
+[zddsgs wrote on 2016-06-01T12:06:24]
+
+---
+
+@owaski#3641 可以参考2016年任之洲的国家集训队论文《积性函数求和的几种方法》，复杂度能做到$O(n^{3/4}/logn)$。
+
+[quailty wrote on 2016-06-03T07:34:37]
+
+---
+
+@owaski#3641 或者分段打表然后区间筛也（应该）可以
+
+[quailty wrote on 2016-06-03T07:36:18]
+
+---
+
+@quailty#3728 好神
+
+[suiyuan2009 wrote on 2016-06-27T14:37:34]
+
+---
+
+@zddsgs#3619 回复下这个古老的问题，网上流传的做法的确不是正解，出题人做法的时空应该都是$O(n^{0.6})$的。我还没有实现，但是大致思路如下：
+
+
+分成两部分，第一部分是算$f(n)=\sum\limits_{i=1}^{n} \mu^2(i)$，第二部分是算$g(n)=\sum\limits_{i=1}^{n} \lfloor \frac{n}{i} \rfloor$，网上流传的做法都是$O(\sqrt{n})$硬艹，但实际上两个都至少可以做到$O(\sqrt[3]{n})$。
+
+$\sum\limits_{i=1}^{n} \mu^2(i)=\sum\limits_{i=1}^{\sqrt{n}} \mu(i) \lfloor \frac{n}{i^2}\rfloor$，注意到$i \ge \sqrt[3]{n}$的时候，$\frac{n}{i^2} \le \sqrt[3]{n}$，于是可以枚举$x=\frac{n}{i^2}$，统计哪些$\mu(i)$要加，大概就是$[\sqrt{\frac{n}{x+1}}, \sqrt{\frac{n}{x}}]$这个区间里面的要加，于是只要预处理出$1$到$\sqrt{n}$的$M(n)=\sum\limits_{i=1}^{n} \mu(i)$就可以$O(\sqrt[3]{n})$算了。
+
+至于$\sum\limits_{i=1}^{n} \lfloor \frac{n}{i} \rfloor$，你只要过了DIVCNT1就知道怎么$O(\sqrt[3]{n})$算了。
+
+综上，你只要线性筛预处理前$n^{0.6}$的$f(n)$和$g(n)$，剩下的用上述方法算，就可以时空总体做到$O(n^{0.6})$了。
+
+[zimpha wrote on 2018-01-06T13:16:23]
+
+---
+
+@zimpha#5561 那 DIVCNT1 怎么做呢？= =
+
+[ftiasch wrote on 2018-01-07T01:41:45]
+
+---
+
+@ftiasch#5562 据我所知有2种做法。
+
+一种是来自这篇[paper](https://arxiv.org/abs/1206.3369)，按照tls在[这里](/d/757-spoj-divcnt1) 的说法，这个做法实现比较麻烦。
+
+另一种是Min25根据[PE 540 forum](https://projecteuler.net/thread=540;post=229299)里面计算$x^2+y^2 \le n$整点个数方法改良的，很惭愧，还没有尝试去学会它。大致思路应该是用Stern-Brocot-Tree来找凸壳近似$xy=n$这条曲线。这个做法应该也可以用来解决Min25去年加的新题[AFS3](http://www.spoj.com/problems/AFS3/)。
+
+附：Min25方法的[实现](https://ideone.com/lZnZTU)。
+
+[zimpha wrote on 2018-01-07T02:40:34]
+
+---
+
+@zimpha#5561 @ftiasch#5562 实现了下上面的做法，内存用的还是挺大的（附：[代码](https://gist.github.com/zimpha/f73be8296a1ced52f2d6701a11543eca)），速度上是Min_25的$2.4$倍差不多，于是上面的肯定也不是正解。拍拍脑袋想出了下面的做法：
+
+$F(n)=\sum\limits_{d=1}^{n}\mu^2(d) \sum\limits_{i=1}^{\lfloor \frac{n}{d} \rfloor} \sigma_0(i)$，注意到$\sum\limits_{i=1}^{\lfloor \frac{n}{d} \rfloor} \sigma_0(i)$其实就是$\sum\limits_{dxy \le n}1$，而且$d$还是个squarefree number，这就告诉我们，这个是可以容斥计算的。
+
+令$g(n)=\#\{(x,y,z) \mid xyz \le n\}$，$A_{p}=g(\lfloor \frac{n}{p^2}\rfloor)$，$p$是squarefree number，那么显然$$F(n)=g(n)-\sum_{p}A_p+\sum_{p,q}A_{pq}-\sum_{p,q,r}A_{pqr}+...$$
+
+也就是说$$F(n)=\sum_{i=1}^{\lfloor \sqrt{n}\rfloor}\mu(i) g(\lfloor \frac{n}{i^2}\rfloor)$$
+
+这个做法的话，内存上只需要$O(\sqrt{n})$，那些内存少的应该就是这个做法。但是我还没有找到快速的方法算$g(n)$，只会$O(n^{\frac{2}{3}})$硬算，速度比不上上面说的$O(n^{0.6})$做法。
+
+[zimpha wrote on 2018-01-13T04:45:50]
+
+---
+
+@zimpha#5567 重新想了想，这个做法可以类似地上面算squarefree number的方法优化。只需要算$\frac{n}{i^2}$ ($i \le \sqrt[3]{n}$)的那些$g(\frac{n}{i^2})$。然后，用DIVCNT1的方法来优化算$g(n)$，可以$O(n^{\frac{4}{9}+\epsilon})$算$g(n)$。
+
+优化了除法之后跑了6s左右，不知道Blue.Mary是怎么做的，可能还有其他方法吧。
+
+**2018.01.20 update**: 用常数很小的$O(n^{0.5})$替换$O(n^{\frac{1}{3}+\epsilon})$来计算$g(n)$，目前可以跑到4.42 s。已经跑得比Min_25快了，弃疗。
+
+[zimpha wrote on 2018-01-19T07:54:38]
+
+---
+
