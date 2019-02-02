@@ -1,0 +1,48 @@
+# Timus 2044 31 Palindromes
+
+题目传送门:http://acm.timus.ru/problem.aspx?space=1&num=2044
+题目大意:询问前缀s[1....i]能不能被分为1,2,...,31个回文串，以压位的形式输出
+愚蠢的我，已经和队友尝试了各种方法，然而并不会做
+然后发现了一个非常相似，虽然过了，但是是用回文树O(n*n)莽过去的
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1154
+
+[xwind wrote on 2016-08-06T12:00:33]
+
+---
+
+可以先看看timus 2058. 100500 palidnromes, 过了这个题, 上面那个题也就过掉了. 推荐一个常数比较大的[模板](https://github.com/zimpha/algorithmic-library/blob/master/string-utility/palindomic-factorization.cc), 贴了就过掉了. 不过timus 2044是卡过去的. 要想快速过掉timus 2044, 你需要实现这篇paper[EERTREE: An Efficient Data Structure for Processing Palindromes in Strings](http://arxiv.org/abs/1506.04862).
+
+[zimpha wrote on 2016-08-06T18:26:06]
+
+---
+
+@zimpha#4014 您2044最后一发是用的O(nlogn)的解法吗？感觉好快呀。
+
+[xwind wrote on 2016-08-23T11:41:09]
+
+---
+
+@xwind#4107 对, 我实现了这篇paper, 你可以参考下[EERTREE](https://github.com/zimpha/algorithmic-library/blob/master/string-utility/eertree.cc). 另外这题scanf和printf会使程序变慢.
+
+[zimpha wrote on 2016-08-24T02:19:00]
+
+---
+
+@zimpha#4108 您最后实现了离线的O(n)的解法吗？还是用超级输入输出挂搞定的？我实现的O(nlogn)怕是常数惊人，卡着时间过.....，慢了3倍
+
+[xwind wrote on 2016-08-25T02:25:07]
+
+---
+
+@xwind#4112 您2044有分别做奇偶分解吗？
+
+[xwind wrote on 2016-08-25T02:46:18]
+
+---
+
+@xwind#4113 分奇偶了, 慢的话是用了printf的锅, 改成std::cout就好了.
+
+[zimpha wrote on 2016-08-25T07:06:35]
+
+---
+
