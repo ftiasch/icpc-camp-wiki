@@ -1,0 +1,61 @@
+# 多字符串模糊匹配问题
+
+问题描述如下：
+
+给定50个字符串
+每个字符串的长度为1000.（每个字符为‘A’，‘C’，‘G’，‘T’其中一个）
+
+从中找出 符合条件的子串，条件如下：
+1. 子串长度必须为15
+2. 子串必须在每个母串中都出现
+3. 且子串至多可以有7个字符不一样（也就是15个字符里面至少有8个一样）
+
+举个栗子：
+对于 子串 【AAATTTGGTTACGGG】， 如果是5个字符不同，如下情况均满足
+AAAAAAGGTTTTGGG (5 mutations), 
+CGCTTTGGTTACTGG (4 mutations),
+AAATGGGGTTATGGG (3 mutations), 
+AACTTGGTTACGGA (2 mutations), 
+AAATTTGGGTACGGG (1 mutation) 
+AAATTTGGTTACGGG (0 mutation).
+
+时间限制，最多3分钟。
+
+请问这类问题如何解，谢谢
+
+
+[bbrsd wrote on 2017-04-24T08:28:12]
+
+---
+
+@ftiasch  求叉姐指点
+
+[bbrsd wrote on 2017-04-24T08:46:57]
+
+---
+
+@bbrsd#5056 我只能说 ****，但是你们又不高兴，我怎么办
+
+[ftiasch wrote on 2017-04-24T13:26:12]
+
+---
+
+rosalind的题？
+
+[sevenkplus wrote on 2017-04-24T17:09:47]
+
+---
+
+@ftiasch#5057 。。
+
+
+[bbrsd wrote on 2017-04-25T04:45:48]
+
+---
+
+@sevenkplus#5058 别人给的一题
+
+[bbrsd wrote on 2017-04-25T04:46:38]
+
+---
+
