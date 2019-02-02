@@ -1,0 +1,76 @@
+# 按照历史的进程看，TeX的支持势在必行
+
+要不然姿势水平怎么提高
+
+[AngryBacon wrote on 2015-09-06T15:15:32]
+
+---
+
+@AngryBacon#38 您说得真是有理有据，这个也在todo list里面了。
+
+p.s. 以及它其实可以支持上标^就像这样。
+
+[ftiasch wrote on 2015-09-06T15:16:19]
+
+---
+
+@ftiasch#39 以及有空的话代码高亮也可以搞搞，当然这个并不着急。
+总之编辑功能有些薄弱，能嵌入个编辑器就好了。
+
+[AngryBacon wrote on 2015-09-06T15:29:57]
+
+---
+
+> @AngryBacon#43 ftiasch 以及有空的话代码高亮也可以搞搞，当然这个并不着急。
+
+代码高亮是支持的。例如：
+
+```cpp
+int main() {
+}
+```
+
+```haskell
+main :: IO ()
+main = undefined
+```
+
+[ftiasch wrote on 2015-09-06T15:30:49]
+
+---
+
+@ftiasch#45 哦好好，那这样的话，我觉得还是最好要有个markdown编辑器，对不知道是markdown或没学过markdown的人友好些
+
+[AngryBacon wrote on 2015-09-06T15:43:14]
+
+---
+
+> @AngryBacon#47 ftiasch 哦好好，那这样的话，我觉得还是最好要有个markdown编辑器，对不知道是markdown或没学过markdown的人友好些
+> 
+> Like
+
+这对开发人员要求太高了，要不你来写吧（指
+
+[ftiasch wrote on 2015-09-06T15:45:11]
+
+---
+
+这种预览功能好炫酷！
+```
+    int delta = 1 << 30;
+    for (int i = 0 ; i < n ; ++ i)
+        if (!fy[i])
+            delta = min(delta , slack[i]);
+    for (int i = 0 ; i < n ; ++ i) {
+        if (fx[i]) lx[i] -= delta;
+        if (fy[i])
+            ly[i] += delta;
+        else
+            slack[i] -= delta;
+    }
+```
+
+[sd_invol wrote on 2015-09-06T15:52:48]
+
+---
+
