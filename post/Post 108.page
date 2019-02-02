@@ -1,0 +1,442 @@
+# yyの安利贴
+
+楼主下午睡了三个小时睡不着。决定开一个贴安利若干我队打比赛时的工具。
+先自我介绍, 楼主来自复旦大学, 2015年 World FInals 铁牌选手. 
+楼主会持续更(an)新(li)一些对大家有(mei)用的东西, 包括一些题, 算法, 模板, 比赛的经验之类的.
+视心情更(tai)新(jian)。
+
+[yangyue wrote on 2015-09-30T17:29:07]
+
+---
+
+好顶赞！资瓷！
+
+[mlz000 wrote on 2015-09-30T17:32:35]
+
+---
+
+敲碗等更新~
+
+[mlz000 wrote on 2015-09-30T17:33:06]
+
+---
+
+http://git.icpc-camp.org/fudan_yangyue/talk.icpc-camp.org 一些工具和模板楼主会往这里放
+
+[yangyue wrote on 2015-09-30T17:45:09]
+
+---
+
+[IMG]http://i11.tietuku.com/8d516fda390239e6.png[/IMG]
+[IMG]http://i11.tietuku.com/2d7b847b9d8bfbed.png[/IMG]
+
+打比赛最重要的是什么? 字典可以丢, 笔可以扔, 脑子可以不带, 模板绝对不能忘了.
+我看过很多别人的令人糟心的模板排版.
+一个好的排版才可以抄的爽啊!
+不仅抄的爽, 还可以大幅度节约模板的页数.
+比如我队打今年Final的时候板子里有这个. 本来这是为了应付Regional的, 但是因为最后发现塞了一坨25页还没满, 也就懒得删了.
+[IMG]http://i11.tietuku.com/ca503601da56f91c.png[/IMG]
+
+所以, 楼主来安利这一套如果生成模板的工具啦！
+感谢我队刘大师, 他不辞辛苦的造了这么好的轮子.
+楼主已经上传到gitlab上. 欢迎大家使用.
+
+楼主再试试能不能睡着
+
+[yangyue wrote on 2015-09-30T17:54:12]
+
+---
+
+感谢分享！
+
+[quailty wrote on 2015-09-30T19:19:20]
+
+---
+
+赞赞赞~
+
+[Raywzy wrote on 2015-10-01T00:46:28]
+
+---
+
+赞哦
+
+[sd_invol wrote on 2015-10-01T00:56:45]
+
+---
+
+资兹
+
+[yuzhou627 wrote on 2015-10-01T02:34:47]
+
+---
+
+感谢分享～
+
+[gyf wrote on 2015-10-01T03:06:00]
+
+---
+
+woc....在212的时候看到过....当时还准备蒯下来....
+
+[totoro wrote on 2015-10-01T03:58:48]
+
+---
+
+感谢。。为啥那个连接我点进去啥都没呢？
+
+[dezhonger wrote on 2015-10-01T22:06:21]
+
+---
+
+@dezhonger#1228 这是生成模板的工具，不是模板。
+
+[sevenkplus wrote on 2015-10-02T00:57:08]
+
+---
+
+$LATEX$
+
+[Stomach_ache wrote on 2015-10-02T01:01:07]
+
+---
+
+昨天下午Fork了一下,结果至今都在  ....
+
+Forking in progress.
+Please wait while we import the repository for you. Refresh at will.
+
+@ftiasch 
+
+[CKboss wrote on 2015-10-02T02:44:28]
+
+---
+
+@CKboss#1232 我也发现了 … 看我有空修一修。
+
+[ftiasch wrote on 2015-10-02T03:09:51]
+
+---
+
+@CKboss#1232 经证实是 gitlab 本身的 bug，已经有 fix 了。
+~~但是昨夜地震把光缆震断了……我暂时更新不来。~~
+
+修好啦。
+
+[ftiasch wrote on 2015-10-02T05:16:19]
+
+---
+
+报的错误是缺少geometry.sty可能是什么原因呢？
+（算不算挖坟呢。。。
+
+[zyeric wrote on 2015-10-11T13:48:24]
+
+---
+
+@zyeric#1706 并不懂唉, 具体的贴上来?
+
+[yangyue wrote on 2015-10-11T14:14:34]
+
+---
+
+@zyeric#1706 缺少geometry.st
+
+应该是你的latex的包不全。 装一下ctex
+
+[yangyue wrote on 2015-10-11T14:16:05]
+
+---
+
+@yangyue#1708 蟹蟹提示，之前直接装的xelatex，缺的包有些多＝ ＝
+
+[zyeric wrote on 2015-10-12T01:57:41]
+
+---
+
+杨老师，咱能不能催更啊！
+
+[ftiasch wrote on 2015-10-12T02:14:26]
+
+---
+
+@Varona#1721 叉姐都这么说了。我整理一下, 明天更一下现场赛试机注意事项吧。毕竟被辣指导教育了这么多年！
+
+[yangyue wrote on 2015-10-12T03:16:42]
+
+---
+
+多谢安利
+
+
+[bpbpbpbp wrote on 2015-10-12T04:10:05]
+
+---
+
+练习赛, 题过不过其实没啥关系。 当年打比赛鄙队还有魔咒, 练习赛打的好第二天基本跪了。
+借着练习赛, 测试Judge环境才是这时候真正应该做的。
+
+下面我就写写应该注意什么.
+
+选手:
+
+	国内赛区现场赛全用的PC\^2。这个傻逼软件不仅BUG多, 还难用。
+	特别是那个AutoJudge，会把Runtime Error返回成Wrong Answer.
+	就算有裁判, 还是可能发生误返的情况。
+	PC\^2的手工评测是这样的流程, 选手提交后, PC^2的控制台上会出现新提交, 裁判打开后, 可以浏览代码和执行这个代码。执行之后, PC\^2并不是返回这个代码是WA还是RE, 它会给你一个WA或AC的推荐返回. AC的话一般没有什么问题, WA的话就需要裁判去看代码的stderr(? 有点记不清了), 根据stderr的结果来返回是否RE。
+
+	我们不能保证一个赛区的裁判素质非常高, 把他们全看成傻逼才是比较好的思路。
+	所以一定要测试评测环境.
+
+	楼主总结了这么几个需要测试的RE的地方
+		1. 爆栈.
+		2. 整数除以0.
+		3. 数组严重越界.
+		4. assert(?这个作为比赛中走投无路的调试方式吧)
+		5. 不return 0会咋样..(虽然好像确实不会咋样, 不过听说某些OJ判RE的方式是return 0.)
+
+	还有Java的一些RE.
+	重点说说爆栈这件事. 比如楼主写了这么个C程序来测试爆栈. 
+
+  [IMG] http://i13.tietuku.com/15656c65aa1c48a3.png [/IMG]
+
+	正常情况下这时候就是RE了, 如果你觉得太小改大点。
+	但是, 这个可能是会被O2优化掉的, 不能作为开了O2环境的测试代码.
+	甚至你在dfs()内对全局变量更改也会被优化成一个循环。
+	大家可以加上-S 命令看一下汇编
+[IMG]http://i13.tietuku.com/b14136e2de8bba2e.png[/IMG]
+        楼主不是匡大家, 真的优化成for了
+	建议大家建一个链DFS一下, 来确认一下.
+
+	楼主想了半天, 还是决定不给大家开栈的代码.
+	大家想实现的话自己想一想有一门叫CSAPP的课, 用一下register char* 这种啦. 具体就不剧透了, 不熟悉这一套理论的就不要用了.
+	接着感受一下环境用的顺手不顺手, 比如鄙队13年长春, gedit不能用, 直接被恶心出局. 有问题马上去找裁判, 喷特么的.
+	最后就是狂发Clar调戏Judge, 开不开O2啊, 开不开c++11啊, 能不能交汇编代码啊(我在说什么呢).
+
+教练:
+
+	教练的话最好有个懂行的去开教练会, 问Judge的负责人关于比赛的环境问题.
+	包括了上述的一些编译选项, 时限内存多少.
+
+
+最后大家也别太相信返回的结果, WA的话还是思考一下是否有RE的可能, 检查数组越界爆栈. 数组越界不返回RE是正常的。
+
+最后祝大家区域赛旗开得胜.
+
+
+
+
+
+
+[yangyue wrote on 2015-10-13T02:52:37]
+
+---
+
+有没有人用的gedit啊, 鄙队当时把gedit配置的十分好用.
+比如ctrl+F10直接运行并在gedit界面输出答案
+ctrl+F8直接编译并且打开gdb..
+感觉省了十分多的时间, 有没有人想要啊.
+有的话我下次更新这个
+
+[yangyue wrote on 2015-10-13T05:47:20]
+
+---
+
+@yangyue#1760 虽然我现在不用gedit，不过我挺好奇你们gedit配置需要多久。
+
+时间短的话可以比vim多大概几十秒的时间来抢first submission和first ac……
+
+[AngryBacon wrote on 2015-10-13T06:12:08]
+
+---
+
+@yangyue#1760 求gedit更新！
+
+[zscloverinyo wrote on 2015-10-13T07:57:36]
+
+---
+
+@yangyue#1760 求gedit配置！
+
+[CKboss wrote on 2015-10-13T11:10:00]
+
+---
+
+@yangyue#1760  所以，扔进src文件夹的后缀是什么，总是提示找不到
+
+[rniilius wrote on 2015-10-13T12:13:31]
+
+---
+
+@rniilius#1772 不是空的就可以，或者还需要一个子目录
+
+[sd_invol wrote on 2015-10-13T14:14:56]
+
+---
+
+那个生成器里面有很多dirty hack...甚至还有没有妥善处理的GPL代码（。）
+因为一直能用我也就懒得清理了，没想到居然被发出来了orz，我还是去清理一下吧
+
+[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA wrote on 2015-10-13T14:17:21]
+
+---
+
+- - 这个每个大标题怎么设置换页呢 - -  全部挤在一起好难受啊
+
+[TaoSama wrote on 2015-10-14T03:25:33]
+
+---
+
+@AngryBacon#1764 求分享一下比赛用vimrc！
+
+[yuzhou627 wrote on 2015-10-14T04:01:57]
+
+---
+
+@yangyue#1810 感觉这个手速再快，也要丧失抢 FB 的机会的啊！
+
+[ftiasch wrote on 2015-10-14T09:15:22]
+
+---
+
+看着大家对Gedit热情很高, 我也很开心啊!
+
+以下是gedit设置步骤
+
+Step 1.
+打开Preferences, 找到Plugin, 在里面找到external tools这个选项, 打上钩, 顺便设置一下你们喜欢的theme, 字体啊, 缩进方式等等.
+
+Step2.
+打开Tools, 下拉菜单中有一个叫Manage External Tools, 点进去后, 用你们最快的手速把它弄成下面两张图
+
+[IMG]http://i13.tietuku.com/f16c166194433196.png[/IMG]
+[IMG]http://i13.tietuku.com/35e9e565cb1b3849.png[/IMG]
+
+注意一下那个要改成bash, 不是sh
+
+解释一下.
+Ctrl+F10的时候会以-O2 -std=c++11 -Wall的选项编译文件. 如果编译失败在gedit以红颜色现实错误信息, 你可以点行号跳到那一行. 编译成功的话会 跳出一个新的terminal 显示stdout, 还有程序用时. 如果存在和文件名相同的.in文件, 那么会将stdin redirect向$OUT.in
+
+Ctrl+F8会以-g -std=c++11 -Wall编译文件. 编译失败和上面是一样的. 成功的话会跳出gdb. 如果你以文件作为stdin来gdb, 那么在设置断点后, 执行r < xxx.in, xxx是文件名.
+
+这个应该会比vim快捷一些? 再也不需要手打编译命令, 手打./xxx < xxx.in
+
+#感谢我校刘大师#
+
+
+
+[yangyue wrote on 2015-10-14T09:06:21]
+
+---
+
+@Varona#1811 全场FB还是随缘好了~
+
+[yangyue wrote on 2015-10-14T09:45:59]
+
+---
+
+@yangyue#1810 vimrc里加几行键位映射也可以实现一键编译运行，不明白为什么大多数队伍的vimrc里都没有这个。。
+
+[u0qyz1234 wrote on 2015-10-14T10:00:39]
+
+---
+
+@u0qyz1234#1815 感觉那个很难用...
+
+[yangyue wrote on 2015-10-14T10:46:09]
+
+---
+
+@Varona#1811 实际上这个需要的是使用鼠标和按Ctrl+C / Ctrl+V的手速啊！对于讨厌用鼠标的人来说本来也不会考虑用Gedit吧……
+
+我去试下录个视频看看我要花多久配置好了……
+
+[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA wrote on 2015-10-14T13:52:53]
+
+---
+
+@yuzhou627#1795 我一般比赛用的vimrc只有四行
+```
+set nu ai ci si mouse=a ts=4 sts=4 sw=4
+nmap<F2> : vs %<.in <CR>
+nmap<F8> : !./%< < %<.in <CR>
+nmap<F9> : make %< <CR>
+```
+可选填的代码比如
+```
+nmap<F4> : !gedit % <CR>
+nmap<F5> : !./%< <CR>
+nmap<F10> : !g++ % -o %< -O2 -g -Wall <CR>
+```
+
+[AngryBacon wrote on 2015-10-14T14:02:18]
+
+---
+
+@yangyue#1065 0.0 怎么支持中文呀
+
+[TaoSama wrote on 2015-10-15T03:14:54]
+
+---
+
+@TaoSama#1835 模板那个吗, 中文直接用就好了啊. 只要你包装齐了. README.md应该都有写
+
+[yangyue wrote on 2015-10-15T05:39:13]
+
+---
+
+https://www.youtube.com/watch?v=1NolajzlrVg
+试了一下要差不多100秒。虽然机智的你们肯定能看出来我哪里哪里可以简化一下缩几十秒出来……然而实际情况哪有那么冷静（
+
+这个东西就是用于队伍里三个人的编辑器习惯不一致的时候的折衷方案。
+配起来既没有敲vimrc快，gedit用起来也没有熟练使用vim的选手使用vim效率高。然而，万一你的队友说他不会用Vim……
+
+[AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA wrote on 2015-10-15T10:26:25]
+
+---
+
+@Varona#1811 嘛。。gedit的话可以先敲完签到题再慢慢配呀233
+
+[flydutchman wrote on 2015-10-15T14:20:28]
+
+---
+
+@Flydutchman#1844 要是签到题一直签到 5 小时了怎么办 233
+
+另：这个帖子凑齐了贵队三位大师，是不是可以召唤神龙了！
+
+[ftiasch wrote on 2015-10-15T14:39:27]
+
+---
+
+能不能大概介绍一下，windows下怎么用你发的模版，readme里面不是很清楚，或者介绍一下我应该学习什么才会使用？
+
+
+[xry wrote on 2015-10-28T23:35:16]
+
+---
+
+@xry#2263 环境变量名配好, 装好字体后运行make.bat
+
+[yangyue wrote on 2015-10-29T03:11:58]
+
+---
+
+四处膜学长。敲碗求更新。
+
+[linyuzhou wrote on 2015-11-10T04:34:53]
+
+---
+
+prprpr yuege xhm lym... 今年队友都不用vim。。。没人给窝配vim快捷键了。。 明天就热身赛了。。舔楼主能获得好运吗。。
+
+[potaty wrote on 2015-11-13T16:15:51]
+
+---
+
+@potaty#2570 女神么么哒
+
+[yangyue wrote on 2015-11-13T17:00:02]
+
+---
+
