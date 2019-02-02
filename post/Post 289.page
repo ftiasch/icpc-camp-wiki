@@ -1,0 +1,158 @@
+# 51nod 1034 骨牌覆盖v3
+
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1034
+用1*2的骨牌覆盖n×m的矩阵，问有多少种方案。
+2<=n,m<=100
+
+[czk wrote on 2015-11-19T11:47:38]
+
+---
+
+不会是状压吧。。
+
+[czk wrote on 2015-11-19T11:48:02]
+
+---
+
+http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1034
+用1*2的骨牌覆盖n×m的矩阵，问有多少种方案。
+2<=n,m<=100
+wiki上有个用三角函数算的公式。。取模怎么搞
+（前面删的怎么弄不回来了。。。）
+
+[czk wrote on 2015-11-19T12:08:45]
+
+---
+
+很久以前 51nod 上有这题的讨论。。。我当时没有弄太懂（惭愧），只记得一些大概。。。
+
+有两派。。。一派是用 FKT Algo，就是给平面图定向一下，算个行列式，来得到方案数的**平方**，这里的问题是开方开不太出来。。。其实我最后也不太知道咋搞（其实只是不会开方！） = =
+
+另外一个就是直接拿切比雪夫多项式算那个三角的式子。。但是细节咱也不太明白。。
+
+总而言之就是我是个菜鸡根本做不来这题。。
+
+[ftiasch wrote on 2015-11-19T12:38:16]
+
+---
+
+~~噢。。。我看了一眼题发现根本不取模啊。。。那直接 FKT 强上感觉就 AC 了？~~ 并不能 AC
+
+[ftiasch wrote on 2015-11-19T12:42:59]
+
+---
+
+原来不是取模。。fkt是什么鬼。。
+
+[czk wrote on 2015-11-19T13:19:59]
+
+---
+
+@czk#2750 https://www.wikiwand.com/en/FKT_algorithm 就是有个算法专门数平面图匹配数。。
+
+[ftiasch wrote on 2015-11-19T14:11:19]
+
+---
+
+这题一个出处是Timus 1594。
+做法就是那个式子。据说有人Java暴力过了。
+另外Timus上可以打表。
+
+[sevenkplus wrote on 2015-11-19T17:49:58]
+
+---
+
+@sevenkplus#2765 我也见过有人 FKT + 猜符号过了那个题。。
+
+[ftiasch wrote on 2015-11-20T00:53:46]
+
+---
+
+@Varona#2767 233333
+
+[czk wrote on 2015-11-20T07:00:37]
+
+---
+
+用一些带高精的语言，暴力算wiki上面那个公式就好，做好常数优化。至于PI，Sin，Cos的精度问题，需要自己用泰勒展开来做。复杂度大概是3次方+的（因为那个精度问题比较奇妙，所以不会算具体复杂度，总之不到4次方）。而用FKT+高斯消元+行列式，大概要6次方吧（好像还得用那个降阶定理？有些记不清当年犯过的傻了），反正算的很吐血，不懂FKT也可以直接构造那个行列式，可惜是个(m*n) * (m*n)的行列式。
+
+最后，我认为还有一条路，但不会。各种骨牌覆盖，大概是可以找出递推式的，递推的项数Min(m,n)。最初的几个都可以OEIS找到。除了OEIS，如何找这个递推，并不会。也许可以先从2阶推起，然后3阶.....，找出其中的联系。另外也可以试试从那个装压的dp里面寻找线索(min(m,n) <= 8)。当然如果有了递推式，就可以出那种m <= 100，n <= 1e18的题了。
+
+[litaoye wrote on 2015-11-20T10:25:38]
+
+---
+
+@litaoye#2776 你确定递推项数是min(n,m)？
+
+[sevenkplus wrote on 2015-11-20T17:34:50]
+
+---
+
+@sevenkplus#2782 我只是人脑看OEIS找的，并不能确定。大概我也不太可能真的去证明这个，只是抛个思路出来。当然如果能够证伪的话，我也可以更新一下认知上的错误。
+
+[litaoye wrote on 2015-11-23T05:32:03]
+
+---
+
+@litaoye#2805 递推式的存在性是从暴力状压DP来的，所以项数非常大。我个人的感觉是不太可能存在线性次数的递推。
+
+[sevenkplus wrote on 2015-11-23T17:58:20]
+
+---
+
+@sevenkplus#2818 今天我查了一下OEIS上，后面的那些数据，果然我的认知是错的，随着Min(m,n)的增大，递推的项数并不是Min(m,n)，并且可能也不是线性的，给大家提供一个列表。
+
+2*n http://oeis.org/A000045
+3*2n http://oeis.org/A001835
+4*n http://oeis.org/A005178
+5*2n http://oeis.org/A003775
+6*n http://oeis.org/A028468
+7*2n http://oeis.org/A028469
+8*n http://oeis.org/A028470
+9*n http://oeis.org/A028471
+10*n http://oeis.org/A028472
+
+顺带问一下7k+，那种方格图的汉密尔顿回路数量（插头dp），有没有可能是线性次数的递推？
+
+[litaoye wrote on 2015-11-26T04:54:57]
+
+---
+
+提供一个算具体方案数（不取模）但是不用高精度有理数的做法，会用到高精度整数的只有CRT的部分，其他部分可以用 __int128_t 完成。
+
+这个平面图比较特殊，所以计算完美匹配数平方的那个矩阵可以不用写成 $nm \times nm$ 的，而是用一个关于 $n \times n$ 的 $m$ 次多项式表示。
+
+为了避开我不会的内容，我们从[Wikipedia](https://en.wikipedia.org/wiki/Domino_tiling#Counting_tilings_of_regions)上给出的公式开始介绍。
+
+令 $r_n(i) = 2 \cos(\frac{\pi i}{n + 1})$ ，则公式可以表示为 $$\sqrt[4]{\prod_{j = 1}^{n} \prod_{k = 1}^{m} (r_n^2(j) - i^2 r_m^2(k))},$$ 其中 $i = \sqrt{-1}$ 。
+
+注意到 $n, m$ 之间没有什么限制，我们可以将公式表示成 $m$ 个多项式的乘积，即 $$\sqrt[4]{\prod_{k = 1}^{m}{F(i r_m(k)) F(-i r_m(k))}},$$ 其中 $$F(x) = \prod_{j = 1}^{n}{(x - r_n(j))}.$$
+
+不难发现 $- r_m(k) = r_m(m + 1 - k)$ ，所以公式其实是 $$\sqrt{\left |\prod_{k = 1}^{m} F(i r_m(k))\right |},$$ 注意这里有绝对值符号。
+
+对于这个 $F(x)$ ，通过叉姐的提醒我们可以在[Wikipedia](https://en.wikipedia.org/wiki/Chebyshev_polynomials#Roots_and_extrema)找到它和第二类切比雪夫多项式 $U_n(x)$ 的关系，可以根据 $U_n(x)$ 零点恰好是 $\frac{r_n(j)}{2}\ (j = 1, 2, \cdots, n)$ 以及 $U_n(x)$ 的最高次项系数为 $2^n$ 得知 $F(x) = U_n(\frac{x}{2})$ ，和切比雪夫多项式拥有相同的特征——它们都是整系数多项式。
+
+然而上面那个乘积还是并不好算的，为此我们需要更棒的性质，在[MathWorld](http://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html)可以找到它的矩阵特征是 $$U_n(x) = \det(2x I_n + A_n),$$ 其中 $I_n$ 是 $n$ 阶单位矩阵， $A_n$ 是只在主对角线两侧的对角线上值为 1 的 $n$ 阶矩阵，也即 $A_n(i, j) = [|i - j| = 1]$ 。
+
+然后你带进去就可以发现 $$\prod_{k = 1}^{m} F(i r_m(k)) = \prod_{k = 1}^{m}\det(i r_m(k) I_n + A_n) = (-i)^{n m} \det(\prod_{k = 1}^{m}(i A_n - r_m(k) I_n)),$$ 机智的你一定发现这里出现了这样一个多项式 $$G(x) = \prod_{k = 1}^{m}{(x - r_m(k))},$$ 所以公式变成了 $$\sqrt{\left|(-i)^{nm}\det(G(i A_n))\right|} = \sqrt{\left|\det(G(i A_n))\right|}.$$
+
+根据Wikipedia，有 $$U_0(x) = 1, U_1(x) = 2x, U_n(x) = 2x U_{n - 1}(x) - U_{n - 2}(x)\ (n > 1),$$ 那么就有 $$U_m(\frac{i A_n}{2}) = i A_n U_{m - 1}(\frac{i A_n}{2}) - U_{m - 2}(\frac{i A_n}{2}),$$ 仔细观察可以发现 $U_m(\frac{i A_n}{2})$ 的每个元素要么实部为 0 要么虚部为 0 ，所以我们可以维护 $i^m U_m(\frac{i A_n}{2})$ 从而避免复数运算，而一个矩阵乘以 $A_n$ 的复杂度实际上是 $\mathcal{O}(n^2)$ 的，所以我们可以 $\mathcal{O}(n^2 m)$ 递推求出 $U_m(\frac{i A_n}{2})$ 。
+
+剩余的内容是对一个整系数矩阵求行列式并开方的过程，我采取的方法是取多个大质数计算模意义下的行列式，例如取 $T$ 个质数的时候复杂度是 $\mathcal{O}(T n^3)$。由于行列式的值一定是一个平方数，可以利用二次剩余的技巧确定行列式的正负号。
+
+开方和求矩阵的部分都不是最慢的部分，主要是求行列式比较慢。
+
+（其实我觉得Wikipedia上的公式就是拿这个矩阵算出来的，我只是倒过来找到了这个矩阵）
+
+> Written with [StackEdit](https://stackedit.io/).
+
+[skywalkert wrote on 2017-03-23T17:27:21]
+
+---
+
+@skywalkert#5017 这个做法和 FKT 做法相同， $nm \times nm$ 的邻接矩阵具有分形的特征，大力分块一下就可以找到规律了，最终求的也是一个 $n \times n$ 的行列式的平方根，由于邻接矩阵具有对称性，最终不需要算出行列式具体值再开根，而是直接从线性基里得到行列式的平方根，当然这么做对于算精确值也只是复杂度上乘个 1/2 的常数。
+
+[skywalkert wrote on 2017-09-07T08:32:33]
+
+---
+
