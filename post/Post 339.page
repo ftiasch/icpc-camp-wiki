@@ -1,0 +1,33 @@
+# UVA 13051 Enchanted Forest
+
+http://uva.onlinejudge.org/external/130/13051.pdf
+
+给定一个图（<=15个节点），计算连通图的数量
+
+计算断开图 .... 分配子集，使得每个子集连接，但不连接其他子集的数目.
+但这似乎是 O( 4^n ) bitmask dp.  这个题需要 ~ O( 3^n ) or O( n 3^n )...
+
+
+
+
+[baodog wrote on 2016-01-01T22:40:54]
+
+---
+
+设 $f(V)$ 表示连通点集 $V$ 的数目，$E(V)$ 表示点集 $V$ 中边的数目。
+
+那么 $$f(V) = 2\^{E(V)} - \sum\_{v\_0 \in S, S \subset V} f(S) \cdot 2\^{E(V \setminus S)}$$.
+
+**这个 dp 是 $O(3\^n)$ 的。**
+
+[ftiasch wrote on 2016-01-02T05:57:15]
+
+---
+
+  Σ 2^k * nCk = 3^n - 1 = O( 3^n )  谢谢，这是正确的.
+ 
+
+[baodog wrote on 2016-01-02T07:36:48]
+
+---
+
