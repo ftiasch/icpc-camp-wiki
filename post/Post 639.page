@@ -1,0 +1,17 @@
+# CCPC-Finals 2016 热身赛 C
+
+题目大意，给定一个n的排列和一个$\leq 3$的常量p，现在让你求一个最大的k，使得可以通过下面的操作使原排列变得有序：
+step1:将排列划分成k个区间，每个区间内部从小到大排序。
+step2:选择p个区间，可以任意交换这p个区间的位置。
+$n \leq 5000$
+
+[totoro wrote on 2016-11-26T08:41:09]
+
+---
+
+据说就是 [这个题](https://code.google.com/codejam/contest/5264487/dashboard#s=p3)
+
+[ftiasch wrote on 2016-11-26T11:08:14]
+
+---
+
