@@ -1,0 +1,97 @@
+# Shanghai 2014 A The Matrix Revolutions
+
+http://7xjob4.com1.z0.glb.clouddn.com/9a779a3513c5d5cc3ad2489c56f1f84f
+n个点，m条边的有向无环图，每条边有一个属性w，w=1表示这条边只能是虫洞，w=2表示这条边只能是普通道路，w=3表示这条边可以是虫洞或者是普通道路，问生成树中使用不超过k个虫洞的方案有多少种。。
+（顺带问下这里如果用搜索功能。。好像上边那个Search Forum并没有用。。）
+
+[czk wrote on 2015-11-25T12:10:02]
+
+---
+
+贴一个以前乱写的……
+
+http://sd-invol.github.io/2015/05/31/Matrix-Tree-Polynomial/
+
+[sd_invol wrote on 2015-11-25T12:20:14]
+
+---
+
+@Sd_Invol#2864 233，好牛逼。。
+
+[czk wrote on 2015-11-25T12:26:15]
+
+---
+
+@Sd_Invol#2864 令$y=1$的话，如果$i$和$j$有一条$w=3$的边的话，假设Kirchhoff矩阵为$A$，是不是应该$A(i, i)$ += $(x+1)\^2$,$A(j,j)$ += $(x+1)\^2$, $A(i,j)$ -= $(x+1)\^2$, $A(j,i)$ -= $(x + 1)\^2$?
+
+[czk wrote on 2015-11-25T13:32:48]
+
+---
+
+@czk#2867 为什么是平方呀
+
+[sd_invol wrote on 2015-11-25T14:16:33]
+
+---
+
+这题一个出处是 TCO 14 R3B 1000pt。
+
+[sevenkplus wrote on 2015-11-25T23:59:56]
+
+---
+
+另外链接失效了。
+
+[sevenkplus wrote on 2015-11-26T00:00:46]
+
+---
+
+@Sd_Invol#2868 不用平方吗。。难道是直接A(i,i)+=(x+1), A(j,j) += (x+1), A(i, j) -= (x + 1), A(j, i) -= (x + 1)?
+
+[czk wrote on 2015-11-26T05:53:33]
+
+---
+
+@sevenkplus#2874 https://community.topcoder.com/stat?c=problem_statement&pm=13369&rd=16058
+这个吗。。找不到题解。。
+
+[czk wrote on 2015-11-26T06:20:24]
+
+---
+
+@czk#2876 是啊，为什么要平方
+
+[sd_invol wrote on 2015-11-26T06:22:54]
+
+---
+
+@Sd_Invol#2878 $C_r = B_r B_r\^T$, C是kirchhoff矩阵，B是关联矩阵，我是觉得有一条w=2的边的话应该是关联矩阵加上（x+1），C矩阵要加上平方吧。。
+
+[czk wrote on 2015-11-26T06:55:51]
+
+---
+
+http://blog.renren.com/blog/276931340/941105774?bfrom=01020110200
+
+[BIT_silence wrote on 2015-11-26T12:37:03]
+
+---
+
+@BIT_silence#2885 多谢。。
+
+[czk wrote on 2015-11-26T15:29:56]
+
+---
+
+@BIT_silence#2885 这样的话能用原来的方法证明吗。。
+
+[czk wrote on 2015-11-26T16:03:52]
+
+---
+
+@czk#2890 证明不都是 Cauchy–Binet formula 么……
+
+[BIT_silence wrote on 2015-11-26T16:08:27]
+
+---
+
