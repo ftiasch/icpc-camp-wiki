@@ -1,0 +1,9 @@
+# XIII Open Cup GP of Azov Sea E. Land in Krasnaya Polyana
+
+给定一个$N\times M$的矩阵$c[i][j]$，要求选择$N$个A类点，每个A类点位于不同行，另外选择$M$个B类点，每个B类点位于不同列，一个点只能被选择一次。最小化这些点的代价之和。
+$N\times M\leq 10^6$。
+
+[Claris wrote on 2016-10-02T10:43:50]
+
+---
+
