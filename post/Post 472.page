@@ -1,0 +1,24 @@
+# UVA 12713 Pearl Chains
+
+https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4451
+题意：读入X,Y,Z,A,B
+有x,y,z三种珠子，各自分别有X,Y,Z种颜色，现要求n(x)+n(z)=A，n(y)+n(z)=B，（n(x)表示x种珠子的数量），问能组成多少种珠子链。答案模1000003（长度不同或某位颜色不同即算作不同种）
+
+[yzq986 wrote on 2016-07-03T10:27:30]
+
+---
+
+设 $Q = \frac{Z}{XY}$，
+答案是 $\sum_i \binom{a + b - i}{a} \binom{a}{i} Q^i$. 
+设上式是 $f(a, b)$，那么 $f(a, b) = f(\lfloor \frac{a}{p} \rfloor, \lfloor \frac{b}{p} \rfloor) \sum_{i = 0}^{p - 1} \binom{a + b - i\;\mathrm{mod}\; p}{a\;\mathrm{mod}\; p} \binom{a\;\mathrm{mod}\; p}{i\;\mathrm{mod}\; p} Q^i$.
+
+[ftiasch wrote on 2016-07-03T13:22:46]
+
+---
+
+@Hayashimo#3871 谢叉姐，求教除了$\binom{n}{m}$,a^n 在mod p意义下，可以拆分成乘数和余数两部分相乘以外，还有其他常用的可以拆分的吗。。
+
+[yzq986 wrote on 2016-07-04T10:44:03]
+
+---
+
