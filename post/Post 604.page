@@ -1,0 +1,11 @@
+# 2015 Asia Tehran E Billboard
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&category=695&page=show_problem&problem=5548)
+
+题目大意：
+给定一个 $m$ 行 $n$ 列的 01 矩阵，有 $r$ 次机会使整行变成 1，有 $s$ 次机会使一个位置变成 1，问操作后全 1 子矩阵的最大面积。$m, n \le 300$。用 $O(n^2m\log m)$ 的算法卡过了，不知道有没有更精妙的算法。
+
+[braveTester wrote on 2016-10-20T16:52:05]
+
+---
+
