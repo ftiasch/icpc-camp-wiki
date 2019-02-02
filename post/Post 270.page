@@ -1,0 +1,51 @@
+# Hefei 2008 F Programmers
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2275)
+环上有$n$个开区间，选出尽量多的区间，使得这些区间两两有交集。
+$n\le1000$，环上至多有$1440$个本质不同的端点。
+
+[skywalkert wrote on 2015-11-15T09:18:01]
+
+---
+
+我有个想法：如果不是一个环，那么这些区间的交集一定是某个区间，于是枚举每个点看有多少区间覆盖它，找个最大值就好。变成一个环之后其实也差不多，所有区间的交集要么是一个区间，要么是两个区间。对于两个区间的情况，枚举两个点，看有多少区间能覆盖它们（或其中一个）。具体实现的时候，可以用些数据结构优化一下。
+
+[mstczuo wrote on 2015-11-15T10:47:36]
+
+---
+
+噢……一直忘记跟你说这个题了。
+
+这背后的理论是这样的……首先一个 trapezoid graph 的最大团可以 $O(n \log n)$ 求出来，然后可以证明，然后这个图是 circular-arc graph，是 circular trapezoid graph 的一个特例，可以证明肯定有一条弦在区间里面，然后枚举这条弦，就能  reduce 到 trapezoid graph 上，然后就有一个 $O(n\^2 \log n)$ 的算法了。
+
+详情请看「Circular and Circle Trapezoid Graphs」这篇 paper。
+
+[ftiasch wrote on 2015-11-15T15:17:21]
+
+---
+
+@mstczuo#2609 交集为空的情况呢？
+
+[sevenkplus wrote on 2015-11-16T01:36:53]
+
+---
+
+@Varona#2611 最早做到这个复杂度的是 Alberto Apostolico, Susanne E. Hambrusch. Finding maximum cliques on circular-arc graphs
+
+[sevenkplus wrote on 2015-11-16T01:53:35]
+
+---
+
+@sevenkplus#2618 另外比较惊讶的是这个题现在好像还没有O(n polylog n)的算法。（有个O(m+nlogn)的，不过显然容易退化。）
+有兴趣的人可以试试秒一下。
+
+[sevenkplus wrote on 2015-11-16T01:57:44]
+
+---
+
+@sevenkplus#2617 哦哦，是我表述有误，交集可能为空。但一定存在两个子区间，使得选出的每个区间至少包含其中一个子区间。
+
+[mstczuo wrote on 2015-11-16T06:34:14]
+
+---
+
