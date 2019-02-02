@@ -1,0 +1,36 @@
+# hdu3333可修改
+
+Given two integers x and y, you are required to implement two operations as follow:
+(a) U x y: modify the xth integer to y
+(b) Q x y: return the sum of different integers from the xth integer to the yth integer
+
+
+[Rewolf wrote on 2015-10-08T15:59:58]
+
+---
+
+一样维护树套树啊……
+
+[ftiasch wrote on 2015-10-08T16:02:30]
+
+---
+
+ @Varona#1618 啊……
+只能树套树吗0.0
+
+[Rewolf wrote on 2015-10-08T16:05:06]
+
+---
+
+@Rewolf#1619 呃 = = 你一定想 cdq 分治也不是不行 …… 总之一定是个 X 套 Y 的复杂度。
+
+[ftiasch wrote on 2015-10-08T16:22:51]
+
+---
+
+http://www.spoj.com/problems/XXXXXXXX/
+
+[fotile96 wrote on 2015-10-09T04:18:52]
+
+---
+
