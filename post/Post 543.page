@@ -1,0 +1,231 @@
+# 2016 湖南省赛 D Toll
+
+关于这道题，大家的做法都是simpson积分法，但是突然发现一个问题，就是网上的ac代码跑如下的数据时：
+7 11 20
+1 2 3 4
+1 3 2 6
+1 4 9 1
+2 7 6 2
+3 7 5 1
+3 5 2 2
+3 6 10 4
+4 5 1 8
+4 6 9 3
+5 7 2 12
+6 7 14 4
+asr(0,20,eps) 并不等于 asr(0,19,eps)+asr(19,20,eps)，我突然凌乱了，积分不是满足可加性的嘛？
+这题最后的答案是按照asr(0,20,eps)来算，asr(0,20,eps)是1513.333333333
+而asr(0,19,eps)+asr(19,20,eps)是1515.25000000.
+谁能解释一波？
+
+[woshi_sb wrote on 2016-09-06T03:37:02]
+
+---
+
+呃，这是因为 simpson 求的并不是真正的积分，而是积分的一个近似，那么分开不等于合起来，不是非常正常嘛……
+
+我虽然也有一个标程是数值积分的，但是不是标准的 simpson。这是因为这个图形本质是一个凸包，所以我在积分一个区间的 $[l, r]$ 的时候，我看一下中点 $\frac{l + r}{2}$ 是不是和 $l, r$ 共线，如果共线，那么根据凸包的性质，这一段肯定是条直线，直接算出来就行了（甚至不用 simpson 用二次函数拟合），否则递归。
+
+---
+
+```
+#include <algorithm>
+#include <cstdio>
+#include <functional>
+#include <utility>
+#include <vector>
+
+typedef std::pair<int, int> Line;
+
+const double INF = 1e10;
+const double EPS = 1e-9;
+
+int main()
+{
+    int n, m, t;
+    while (scanf("%d%d%d", &n, &m, &t) == 3) {
+        std::vector<std::vector<Line>> graph(n, std::vector<Line>(n, {-1, 0}));
+        for (int _ = 0; _ < m; ++ _) {
+            int a, b, c, d;
+            scanf("%d%d%d%d", &a, &b, &c, &d);
+            a --;
+            b --;
+            graph.at(a).at(b) = {c, d};
+        }
+        auto shortest_path = [&](double t) {
+            std::vector<std::vector<double>> d(n, std::vector<double>(n, INF));
+            for (int i = 0; i < n; ++ i) {
+                for (int j = 0; j < n; ++ j) {
+                    auto&& e = graph.at(i).at(j);
+                    if (~e.first) {
+                        d.at(i).at(j) = e.first * t + e.second;
+                    }
+                }
+            }
+            for (int k = 0; k < n; ++ k) {
+                for (int i = 0; i < n; ++ i) {
+                    for (int j = 0; j < n; ++ j) {
+                        d[i][j] = std::min(d[i][j], d[i][k] + d[k][j]);
+                    }
+                }
+            }
+            return d[0][n - 1];
+        };
+        std::function<double(double, double, double, double)> recur = [&](double l, double ly, double r, double ry) {
+            double m = 0.5 * (l + r);
+            double my = shortest_path(m);
+            if (my <= 0.5 * (ly + ry) + EPS) {
+                return my * (r - l);
+            }
+            return recur(l, ly, m, my) + recur(m, my, r, ry);
+        };
+        printf("%.8f\n", recur(0, shortest_path(0), t, shortest_path(t)) / t);
+    }
+}
+```
+
+[ftiasch wrote on 2016-09-06T04:20:01]
+
+---
+
+求了一遍半平面交
+
+[Y_UME wrote on 2016-09-06T04:44:22]
+
+---
+
+@ftiasch#4185 这组数据我验证了一下，应该积分就是1515.25000000，用simpson积分算出来的1513.333333333应该是错误的，就算是simpson是近似的，也不会差那么多吧？ 如果真是这样，simpson的做法应该都错了。
+
+[woshi_sb wrote on 2016-09-06T06:35:11]
+
+---
+
+@woshi_sb#4189 说说我的做法，考虑到每条边都是$c_i*t+d_i$的形式。
+那么最后从1到n的路径总费用的形式就是$$\(sum c_i)*t+d_i$$的形式
+这样我们就可以把前面的部分作为状态，后面作为值，得到一个二维的状态值，$dp[u][j]$代表的是到达点u且加起来的c值为j的最小d和值，跑一遍spfa即可，最后得到很多的二元组$(j,dp[n][j])$，然后我们可以通过单调队列去除一些明显不可能构成最短路的二元组，最后我们得到时一个随着j递增而减少的二元组序列，我们把二元组看成是一个坐标轴上的点，显然凸包就是最优解，凸包上面的交点就是我们积分里的分割点，把这些分割点算出来，然后通过原积分公式分段的算一下就好了。
+思路不知道对错，一直WA，然而找不到哪错了。
+
+[woshi_sb wrote on 2016-09-06T08:04:18]
+
+---
+
+@woshi_sb#4189 我的simpson算了一下是1515.25000000呀，还有你的凸包上的交点为积分里的分割点没看懂。。。
+
+[fhy_tan wrote on 2016-09-06T08:35:13]
+
+---
+
+@woshi_sb#4191 你都把凸包算出来了，交点之间不就是个一次函数么，直接积分就好了，要啥 simpson。
+
+以及，下面的标程和上面我发的数值算法算出来都是那个 1515.25.
+
+```
+#include <algorithm>
+#include <cstdio>
+#include <functional>
+#include <utility>
+#include <vector>
+
+#define foreach(i, v) for (__typeof((v).begin()) i = (v).begin(); i != (v).end(); ++ i)
+
+typedef std::pair<int, int> Line;
+
+bool check(const Line& a, const Line& b, const Line& c)
+{
+    return (b.second - a.second) * (b.first - c.first) < (c.second - b.second) * (a.first - b.first);
+}
+
+double intersection_x(const Line& a, const Line& b)
+{
+    return (double)(b.second - a.second) / (a.first - b.first);
+}
+
+void dfs(const std::vector<std::vector<Line> >& graph, std::vector<bool>& visited, std::vector<Line>& paths, int n, int u, int k, int b)
+{
+    visited.at(u) = true;
+    if (u == n - 1) {
+        paths.push_back(std::make_pair(k, b));
+    } else {
+        for (int v = 0; v < n; ++ v) {
+            Line edge = graph.at(u).at(v);
+            if (!visited.at(v) && ~edge.first) {
+                dfs(graph, visited, paths, n, v, k + edge.first, b + edge.second);
+            }
+        }
+    }
+    visited.at(u) = false;
+}
+
+int main()
+{
+    int n, m, t;
+    while (scanf("%d%d%d", &n, &m, &t) == 3) {
+        std::vector<std::vector<Line> > graph(n, std::vector<Line>(n, std::make_pair(-1, 0)));
+        for (int _ = 0; _ < m; ++ _) {
+            int a, b, c, d;
+            scanf("%d%d%d%d", &a, &b, &c, &d);
+            a --;
+            b --;
+            graph.at(a).at(b) = std::make_pair(c, d);
+        }
+        std::vector<bool> visited(n);
+        std::vector<Line> paths;
+        dfs(graph, visited, paths, n, 0, 0, 0);
+        std::sort(paths.begin(), paths.end(), std::greater<std::pair<int, int> >());
+        std::vector<Line> planes;
+        foreach (iterator, paths) {
+            Line& p = *iterator;
+            while ((int)planes.size() >= 2 && !check(planes[planes.size() - 2], planes.back(), p)) {
+                planes.pop_back();
+            }
+            planes.push_back(p);
+        }
+        std::vector<double> xs;
+        for (int i = 1; i < static_cast<int>(planes.size()); ++ i) {
+            xs.push_back(intersection_x(planes.at(i - 1), planes.at(i)));
+        }
+        double result = 0.;
+        for (int i = 0; i < (int)planes.size(); ++ i) {
+            double low = 0.;
+            if (i) {
+                low = std::max(low, xs[i - 1]);
+            }
+            double high = t;
+            if (i + 1 < (int)planes.size()) {
+                high = std::min(high, xs[i]);
+            }
+            if (low <= high) {
+                double x = 0.5 * (low + high);
+                result += (planes[i].first * x + planes[i].second) * (high - low);
+            }
+        }
+        printf("%.8f\n", result / t);
+    }
+}
+```
+
+[ftiasch wrote on 2016-09-06T08:48:26]
+
+---
+
+@ftiasch#4193   我是直接求的积分啊，我并没有用simpson，然而就是WA，然后比对了别人的AC程序，验证这个数据的时候它们的算出来都是1513.333333333，然而它们就是AC了，我还以为是数据错了呢。。。。    
+
+叉姐，跪求加上这组数据，感觉好多人都是错误的程序然后AC了。。
+
+[woshi_sb wrote on 2016-09-06T09:01:30]
+
+---
+
+@fhy_tan#4192 
+我说错了，不是凸包上的交点是分割点，应该是凸包上的斜率才是分割点。。。
+
+[woshi_sb wrote on 2016-09-06T09:02:15]
+
+---
+
+@ftiasch#4193   对对，我的做法跟这个标程很像，不过它好像是把所有的路径求出来了，多谢叉姐的代码，我来研究一下。。
+
+[woshi_sb wrote on 2016-09-06T09:10:15]
+
+---
+
