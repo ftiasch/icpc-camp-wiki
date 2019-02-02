@@ -1,0 +1,15 @@
+# Dhaka 2016 H - Harmonic Matrix
+
+https://uva.onlinejudge.org/external/131/13155.pdf
+
+交换相邻元素，使得行顺序和列顺序在相同的行或列上相同
+限制为 < $2.5 \times R \times C$总交换次数
+看起来像从角落贪心或DP？
+似乎很难实现这个约束.
+
+
+
+[baodog wrote on 2016-12-06T17:03:25]
+
+---
+
