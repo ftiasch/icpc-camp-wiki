@@ -1,0 +1,34 @@
+# Codeforces Round #347E Binary Table
+
+题目地址http://codeforces.com/contest/663/problem/E
+
+关于官方题解最后那里将 2^n * n^3 的式子化简是怎么做到的，想不通。。
+
+[fhy_tan wrote on 2016-05-05T07:03:19]
+
+---
+
+题解告诉我们，
+$dp[k][mask]=\frac{1}{k}\sum_{p=0}^{n-1}\sum_{f=1}^{k}(-1)^f \cdot dp[k-f][mask \oplus (2^p \cdot (f\ \mathrm{mod}\ 2)]$
+现在用$k-2$代替$k$，则有
+$dp[k-2][mask]$
+$=\frac{1}{k-2}\sum_{p=0}^{n-1}\sum_{f=1}^{k-2}(-1)^{f} \cdot dp[k-2-f][mask \oplus (2^p \cdot ((f)\ \mathrm{mod}\ 2)]$
+$=\frac{1}{k-2}\sum_{p=0}^{n-1}\sum_{f=1}^{k-2}(-1)^{f+2} \cdot dp[k-2-f][mask \oplus (2^p \cdot ((f+2)\ \mathrm{mod}\ 2)]$
+$=\frac{1}{k-2}\sum_{p=0}^{n-1}\sum_{f=3}^{k}(-1)^f \cdot dp[k-f][mask \oplus (2^p \cdot (f\ \mathrm{mod}\ 2)]$
+
+[quailty wrote on 2016-05-05T10:38:08]
+
+---
+
+顺带一提，这题裸上fwt是很轻松愉快的
+
+[quailty wrote on 2016-05-05T10:51:37]
+
+---
+
+@quailty#3538  原来如此，谢谢了
+
+[fhy_tan wrote on 2016-05-06T07:14:19]
+
+---
+
