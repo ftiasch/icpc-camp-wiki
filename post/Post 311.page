@@ -1,0 +1,51 @@
+# Daejeon 2011 K Traveling Spiders
+
+[题目链接](https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3860)
+题目大意：在一个$n\times n\times n$的魔方上有一个起点和一个终点，构造一个从起点到终点的哈密尔顿路径，恰好经过每个点一次。无解输出$-1$，否则输出路径上的$6\cdot n\^2$个点。
+$2\le n\le 50$。
+
+[skywalkert wrote on 2015-11-29T09:05:07]
+
+---
+
+我用了一个随机的哈密尔顿路径算法, 就AC了
+https://www.math.cmu.edu/~af1p/Texfiles/AFFHCIRG.pdf
+
+p330.
+
+[baodog wrote on 2015-11-29T16:17:13]
+
+---
+
+我来嘴炮一个直接构造的
+首先对于一个面 我们通过走蛇形一个起点终点都在某个角的哈密尔顿通路
+AB
+DC
+如果四个角为ABCD，n为奇数可以是A->C, n为偶数可以是A->B
+然后我们假设这个正方体是这样
+......A----B
+..../|.... /|
+../...F--/-E
+D----C . /
+| /   ..|./
+H----G
+六个面上下左右前后为udlrfb
+对于n为偶数，我们可以B->C->D->H->G->F->B 对应面的顺序为ufldrb
+对于n为奇数，我们可以B->D->G->B(面ufr), A->H->E->A(面ldb)得到两个不相交的环，并且覆盖了所有的点，由于是蛇形，在f面和d面的交线HG上，一定会有这样的
+a-b-c-d-e-f-g......
+A-B-C-D-E-F-G......
+其中abcdefg属于f面，ABCDEFG属于d面， 通过下面的交换就可以将两个环并在一起
+a-b-c d-e-f-g......
+.......| |
+A-B-C D-E-F-G......
+
+[elfness wrote on 2015-11-30T03:11:13]
+
+---
+
+@elfness#2932 请问一下这个是哈密尔顿回路吧？如果是规定了起点和终点的哈密尔顿路径呢？
+
+[skywalkert wrote on 2015-12-09T11:15:37]
+
+---
+
