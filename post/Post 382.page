@@ -1,0 +1,17 @@
+# 将形如4k+1型的素数表示成两个整数的平方和
+
+如题，$p$是质数，且$4|p-1$，求一对整数$(x,y)$，使得$x^2+y^2=p$，其中$0\leq x\leq y$。
+$p\leq 10^{18}$。
+
+[skywalkert wrote on 2016-03-18T10:06:11]
+
+---
+
+@skywalkert#3377 参考这个[回答](http://math.stackexchange.com/a/1925)
+
+先求出$x^2 \equiv -1 \text{ mod } p$的最小整数解$x_0$, 然后用$x_0$和$p$做辗转相除法, 记录每次的余数$r$, 直到$r \le \sqrt{p}$, 那么这个$r$作为$x$, $y=\sqrt{p-x^2}$.
+
+[zimpha wrote on 2016-03-18T12:26:29]
+
+---
+
