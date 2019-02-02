@@ -1,0 +1,133 @@
+# 2016 Multi-University Training Contest 4 C Bonds
+
+放上题目[链接](http://acm.hdu.edu.cn/showproblem.php?pid=5765)
+题意大概是给出$ N\le 20$个点的无向连通图，对于每一个边询问这个边在多少个极小割边集中出现。
+怎么捉呢？
+
+[QAQ wrote on 2016-07-29T00:17:31]
+
+---
+
+贴一份 @rowdark 的代码，读不懂再说吧 :)
+```
+#include<stdio.h>
+#include<stdlib.h>
+#include<cstring>
+#include<iostream>
+#include<ctype.h>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<set>
+#include<map>
+#include<stack>
+#include<queue>
+#include<cmath>
+#include<bitset>
+#include<iomanip>
+#include<complex>
+#include<utility>
+
+using namespace std;
+
+int nei[21];
+int T,N,M;
+int cnt[1048580];
+int tot;
+int inv[1048580];
+int e[400][2];
+
+bool bfs(int mask){
+	if(!mask) return false;
+	int nmask=mask&-mask;
+	int qmask=mask&-mask;
+	while(qmask){
+		int f=inv[qmask&-qmask];
+		qmask^=1<<f;
+		int fmask=(nmask|nei[f])&mask;
+		qmask|=fmask^nmask;
+		nmask=fmask;
+	}
+	return nmask==mask;
+}
+
+void dfs(int st,int op1,int op2){
+	if(st==N){
+		if(bfs(op1)&&bfs(op2)){
+			++tot;
+			++cnt[op1];
+			++cnt[op2];
+		}
+		return;
+	}
+	dfs(st+1,op1|(1<<st),op2);
+	dfs(st+1,op1,op2|(1<<st));
+}
+
+int main(){
+	for(int i=0;i<20;++i) inv[1<<i]=i;
+	scanf("%d",&T);
+	for(int tt=1;tt<=T;++tt){
+		scanf("%d%d",&N,&M);
+		tot=0;
+		for(int i=0;i<N;++i) nei[i]=0;
+		for(int i=0;i<M;++i){
+			int x,y;
+			scanf("%d%d",&x,&y);
+			nei[x]|=1<<y;
+			nei[y]|=1<<x;
+			e[i][0]=x,e[i][1]=y;
+		}
+		for(int i=0;i<(1<<N);++i) cnt[i]=0;
+		dfs(1,1,0);
+		for(int i=1;i<(1<<N);i<<=1){
+			for(int j=0;j<(1<<N);++j){
+				if(j&i) cnt[j^i]+=cnt[j];
+			}
+		}
+		printf("Case #%d:",tt);
+		for(int i=0;i<M;++i) printf(" %d",tot-cnt[(1<<e[i][0])|(1<<e[i][1])]);
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+[ftiasch wrote on 2016-07-29T01:26:48]
+
+---
+
+@Hayashimo#3975 我来问问题惹QAQ
+这个bfs是不是判断$mask$的点集是否联通呢？tot保存的是否是所有的极小联通分量的大小，cnt数组存的是什么呢
+QAQ求教育
+
+
+[QAQ wrote on 2016-07-29T02:36:37]
+
+---
+
+[官方题解](http://bestcoder.hdu.edu.cn/blog/2016-multi-university-training-contest-4-solutions-by-fzu/)
+我的做法第一部分和题解类似，第二部分是枚举一条边$(u,v)$，如果是割边答案为1，否则统计存在多少种点集的划分$(A,U-A)$，使得$u \in A$且$v \in U-A$，并且$A$和$U-A$均连通，那么可以对$u \in A$ AND $A\ is\ connected$压一个bitset，对$v \in U-A$ AND $U-A\ is\ connected$压一个bitset，两个bitset AND一下之后数1的个数即可，总的复杂度是$O(n2^n+m2^n/16)$，这比直接枚举$u \in A$且$v \in U-A$的$A$跑得慢。
+
+[quailty wrote on 2016-07-29T03:38:56]
+
+---
+
+@sorry_QAQ#3977 
+考虑枚举点集的划分$(A,U-A)$，如果$A$和$U-A$均连通，那么两个集合之间的边的答案都会+=1，容斥一下，就是所有边减去$A$内部的边再减去$U-A$内部的边，然后一条边实际上就是一个二元集，一个点集内部的边就是这个点集中的所有二元子集，于是只要对每个二元集计算它的所有超集的权值和，做一个高维前缀和（就是对每一维把1的值加到0上）即可。
+
+[quailty wrote on 2016-07-29T03:49:35]
+
+---
+
+@quailty#3979 
+
+就这样看懂惹，谢Q巨
+
+@Hayashimo#3975 
+以及感谢叉老师
+
+[QAQ wrote on 2016-07-29T07:06:37]
+
+---
+
