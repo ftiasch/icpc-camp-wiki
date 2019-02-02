@@ -1,0 +1,14 @@
+# HDOJ 6159 Graph Of Zhuper
+
+就是CCPC网络赛1010，我是照着CAMP给的题解写的，是不是对于n的每个因子d都要构造长度为n/d的多项式进行一次多项式exp，我这样写一直到超时。还有这题要求对任意素数取模，我网上看别人对这种题的做法是用中国剩余定理，请问这道题应该是最终结果取一次中国剩余定理就好，还是只要是用到FFT的地方都要用一次
+
+[J_X wrote on 2017-09-14T09:25:30]
+
+---
+
+任意 mod 的问题应该抄 https://code.icpc-camp.org/ftiasch/dreadnought-code-library/src/master/improve/FFT.cpp.
+
+[ftiasch wrote on 2017-09-14T12:13:35]
+
+---
+
