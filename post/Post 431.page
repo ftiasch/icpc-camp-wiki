@@ -1,0 +1,41 @@
+# 51nod 1221 矩阵中不重复的元素 V3
+
+[题目链接](http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1221)
+题目大意：给出$n,m,a,b$，对于整数$X\in[a,a+n),Y\in[b,b+m)$，求$X^Y$的不同结果数，答案模$(10^9+7)$。
+限制条件：$2\leq n,m\leq5\cdot10^{15},2<a,b\leq10^{15}$，单组数据时限5s。
+PS: [ProjectEuler29](https://projecteuler.net/problem=29)的加强版
+
+[skywalkert wrote on 2016-05-21T10:29:49]
+
+---
+
+TCO 2012(?) Round 2A 吧
+
+[ftiasch wrote on 2016-05-21T11:54:22]
+
+---
+
+@Hayashimo#3639 限制条件有点不一样，TCO2013 Round 2A ThePowers的限制条件是$1\leq n,m\leq10^9,a=b=1$，单组数据时限2s。
+
+[skywalkert wrote on 2016-05-22T12:24:24]
+
+---
+
+主要问题在于去重，为了考虑重复的情况，对于 $x \in \mathbb{N}^+$ 且 $x > 1$，我们定义 $\mathrm{ord}(x) = \max\{\alpha \mid y^\alpha = x, y \in \mathbb{N}^+\}$，这样便于在整数上进行讨论。 $x = 1$ 的情况可以特判。
+
+对于 $X_1, X_2 \in [a, a + m), Y_1, Y_2 \in [b, b + n)$，如果有 ${X_1}^{Y_1} = {X_2}^{Y_2}$，那么有 $\displaystyle\sqrt[\mathrm{ord}(X_1)]{X_1} = \sqrt[\mathrm{ord}(X_2)]{X_2}$ 和 $\mathrm{ord}(X_1) \cdot Y_1 = \mathrm{ord}(X_2) \cdot Y_2$，从而可以将 $X_1, X_2$ 简化到 $T = \sqrt[\mathrm{ord}(X_1)]{X_1}$ 的幂次上，其中 $\mathrm{ord}(T) = 1$。
+
+考虑枚举满足 $\mathrm{ord}(T) = 1$ 的数字 $T$，则有 $\left \lfloor \log_{T}(a - 1) \right \rfloor < \mathrm{ord}(X_1), \mathrm{ord}(X_2) \leq \left \lfloor \log_{T}(a + m - 1) \right \rfloor$。由于 $T > 1$，则有 $\log_{T}(a + m - 1) \leq \log_{2}(a + m - 1)$，那么令 $L = \left \lfloor \log_{T}(a - 1) \right \rfloor + 1, R = \left \lfloor \log_{T}(a + m - 1) \right \rfloor$，则对于所有的 $T$，不同的 $[L, R]$ 只有至多 $\log_{2}(a - 1) + \log_{2}(a + m - 1)$ 种，而且每个 $[L, R]$ 对应的 $T$ 是一段连续区间中满足 $\mathrm{ord}(T) = 1$ 的数字。
+
+而满足 $1 < T \leq N, k \mid \mathrm{ord}(T)$ 的数字 $T$ 数量为 $\sqrt[k]{N} - 1$，利用容斥技巧即可 $O(\log N \log \log N)$ 计算一个区间中 $\mathrm{ord}(T) = 1$ 的数字个数。因此可以预处理所有可能的区间，将问题转化为计算满足 $A \in [L, R], Y \in [b, b + n)$ 的 $A \cdot Y$ 的不同结果数。
+
+再次考虑重复的情况，所求是能被表示成至少一种 $A \cdot Y$ 的数字个数，可以用至少能表示成其中某些特定 $A$ 的公倍数的数字个数容斥出来，具体来说，考虑 $[L, R]$ 中的 $k$ 个互异的数字 $A_1, A_2, \cdots, A_k$，它们能表示出的倍数 $Z$ 需要满足 $A_i \mid Z, b \leq \frac{Z}{A_i} < b + n$ $(i = 1, 2, \cdots, k)$，整理后有 $\mathrm{lcm}\{A_1, A_2, \cdots, A_k\} \mid Z$ 以及 $b \cdot \max\{A_1, A_2, \cdots, A_k\} \leq Z \leq (b + n - 1) \cdot \min\{A_1, A_2, \cdots, A_k\}$，这样的 $Z$ 对数字个数的贡献是 $(-1)^k$。
+
+直接枚举 $[L, R]$ 的幂集合是不可取的，复杂度较高，分析其中冗余的信息，不外是很多情况的贡献会相抵消。具体来说，对于一个候选集合 $S = \{A_1, A_2, \cdots, A_k\}$，考虑属于 $[L, R]$ 但不属于候选集合的其他数字 $A'$，令 $S' = S \bigcup A'$，如果有 $\mathrm{lcm} S = \mathrm{lcm} S',$ $\max S = \max S',$ $\min S = \min S'$，那么 $S$ 和 $S'$ 的贡献就会相互抵消。结合这个观察结果，我们可以尝试用搜索的方式遍历 $[L, R]$ 的幂集合，但构建候选集合时先选择最小值与最大值，而且在选择其他元素时，每次都要求使 $\mathrm{lcm}$ 变化，这样可以避免许多 $\mathrm{lcm}, \max, \min$ 重复的情况的枚举，而能产生贡献的不同的 $\mathrm{lcm}$ 数量较少，程序实现地细致一些即可通过。
+
+例如 $A \in [1, P], Y \in [1, Q]$ 的情况， $\mathrm{lcm}$ 的数量不会超过 $[1, PQ]$ 中 $P$-[smooth number](https://en.wikipedia.org/wiki/Smooth_number) 的数量，而这样的数字个数在 $P$ 比较小的时候是趋近 $\frac{1}{\pi(P)!}\prod_{p \leq P, p\text{ is prime}}\frac{\log PQ}{\log p}$ 的，其中 $\pi(P)$ 表示不超过 $P$ 的质数个数。
+
+[skywalkert wrote on 2017-10-10T14:22:22]
+
+---
+
