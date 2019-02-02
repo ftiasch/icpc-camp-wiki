@@ -1,0 +1,44 @@
+# Codeforces Round #334  E Pastoral Oddities
+
+题意描述：每次添加一条边，每添加完一条边后完成一个询问，询问内容如下：从已添加的边中选择若干条边构成一个图，满足每个点的度数都是奇数，并且权值最大边最小，每次输出最小的最大边权值。看了几份代码觉得不是很懂，希望大牛们不吝赐教ORZ...
+
+[aclsh wrote on 2015-12-08T02:49:13]
+
+---
+
+首先，考虑静态版本的问题（没有插入）。你需要知道贪心是对的。即，从小到大加入每条边，如果所有联通块都是偶数就停下来。
+
+以[我的代码](http://codeforces.com/contest/603/submission/14666980)为例讲一下分治的思路，其实就是一般的离线最小生成树的方法（这里可以参考[Offline Algorithms for Dynamic Minimum Spanning Tree Problems](https://www.ics.uci.edu/~eppstein/pubs/Epp-TR-92-04.pdf)这篇论文）。
+
+其中，solve(l, r, others)表示处理 $[l, r)$ 这一段边，others 是前面已经插入的边（但是不确定在不在最优解里面）。
+
+我函数一进来先
+```cpp
+    for (int i = l + 1; i < r; ++ i) {
+        merge(a[i], b[i]);
+    }
+    int limit = 0;
+    for (int i = 0; i < (int)others.size(); ++ i) {
+        if (merge(a[others[i]], b[others[i]])) {
+            limit = i + 1;
+        }
+    }
+```
+就是假设，如果这里面的边都是最小的，那么 others 里面还有哪些有用的。这个计算的结果是 $[0, limit)$ 里面的边都是要使用的。
+
+接下来的
+```cpp
+        for (int i = limit; i < (int)others.size(); ++ i) {
+            if (merge(a[others[i]], b[others[i]])) {
+                may.push_back(others[i]);
+            }
+        }
+```
+就是计算，有哪些边有可能进入最优解里面。之后就是递归计算了。
+
+时间有限，先写这么多。如果还有疑问可以接着回复我~
+
+[ftiasch wrote on 2015-12-08T05:31:48]
+
+---
+
