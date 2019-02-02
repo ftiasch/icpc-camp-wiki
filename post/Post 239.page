@@ -1,0 +1,52 @@
+# Codeforces Round #328 C The Big Race
+
+http://codeforces.com/contest/592/problem/C  弱菜表示这道题没有任何思路，看给cf上给的题解也不明白，求巨巨们指点下==
+
+[说了窝最菜辣 wrote on 2015-11-01T04:19:23]
+
+---
+
+大概就是到$lcm(w,b)$以及后面连续的$min(w,b)$个格子会使得他们两个平局，然后瞎搞就可以了？（大概
+
+[QAQ wrote on 2015-11-01T04:24:41]
+
+---
+
+感觉说的太笼统了。。补题之后回来（强行）补充一下
+
+首先你需要注意到满足题目要求的能使得他们两个平局的跑道长度是一些连续的区间
+更一般的，是从$i*lcm(w,m) (0\leq i\leq \frac{t}{lcm(w,b)})$开始的长度为$min(w,b)$的区间(这个应该画个图就清楚了)
+然后的话就是将$t$划分为两个部分，前面部分的长度是$lcm(w,b)\times k \;\;\;(k=\lfloor\frac{t}{lcm(w,b)}\rfloor) $这一段对最后答案的贡献是$k\times min(w,b)$
+剩下的就是剩下的部分了，不妨设剩下的跑道长$rem\;(rem=t-k \times lcm(w,b))$这部分对答案的贡献就是$min(min(a,b),rem)$
+然后就是取个gcd约分一下就没有了
+
+
+Ps. 如果你用的是C++的话，因为题目给的数据很极限，要注意一下溢出等各种神奇的状况
+
+[QAQ wrote on 2015-11-01T08:00:13]
+
+---
+
+
+Pss. 我用的是$\lfloor\frac{n}{a\times b}\rfloor = \lfloor \frac{\lfloor \frac {n}{a}\rfloor}{b} \rfloor$ (感觉其实大家应该都知道
+
+[QAQ wrote on 2015-11-01T08:04:15]
+
+---
+
+偶然间补到了这个题……简单证明一下吧……
+结论：
+$x\ mod\ w=x\ mod\ b$的解是$0\leq x\ mod\ lcm(w,b)\ <min(w,b)$。
+证明：
+注意到$(x+lcm(w,b))mod\ w=x\ mod\ w$，模$b$同理，
+故只需考虑$0\leq x<lcm(w,b)$的情形，
+又$x\ mod\ w=x-w[\frac{x}{w}]$，模$b$同理，
+则有$w[\frac{x}{w}]=b[\frac{x}{b}]$，即有$\frac{w}{gcd(w,b)}[\frac{x}{w}]=\frac{b}{gcd(w,b)}[\frac{x}{b}]$，
+于是$\frac{w}{gcd(w,b)}|[\frac{x}{b}]$，但是$[\frac{x}{b}]<\frac{lcm(w,b)}{b}=\frac{w}{gcd(w,b)}$，
+只能是$[\frac{x}{b}]=0$，即$x<b$，同理$x<w$，故$x<min(w,b)$，
+这时$x\ mod\ w=x\ mod\ b=x$，原方程成立，于是得证。
+
+[quailty wrote on 2016-06-02T19:54:00]
+
+---
+
