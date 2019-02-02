@@ -1,0 +1,36 @@
+# 关于随机生成数据的题目
+
+看到过很多题目，都说数据是随机生成的，比如： All array numbers are generated randomly. In other words, each number is taken with equal probability from 1 to N.
+这类题目往往我都找不到突破口，求讲解。
+
+[Stomach_ache wrote on 2015-10-04T10:39:02]
+
+---
+
+感觉这些问题不能草率地归为一类问题……其中还是有很多不同的。
+
+[ftiasch wrote on 2015-10-04T10:41:38]
+
+---
+
+嗯。因为有的题目在规定时间内是无法做到的，但是他会说：数据是随机生成对（比如范围是1到N），那么我该如何利用这个信息？还有，当N的大小不同时有什么区别吗？比如N是3000和N是1e9的区别。谢谢！
+
+[Stomach_ache wrote on 2015-10-04T11:01:16]
+
+---
+
+@Stomach_ache#1413 我意思就是……不同题目的利用方式有点不同啊。
+
+[ftiasch wrote on 2015-10-04T11:04:29]
+
+---
+
+我曾经出锅一道这样的题目。。。
+http://acm.hdu.edu.cn/showproblem.php?pid=3971 
+
+原因是不加这句话我不太能保证算法的时间复杂度。。。
+
+[xiaodao wrote on 2015-10-04T12:18:43]
+
+---
+
