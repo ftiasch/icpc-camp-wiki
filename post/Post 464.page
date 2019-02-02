@@ -1,0 +1,70 @@
+# IPSC 2016 C Counting swaps
+
+给定一个长度为$n$的排列$p$，每次可以交换两个数$p_i$和$p_j$，问经过最少次数的操作使得排列$p$变成$1,2,\dots,n$有多少中方案。
+
+$n \leq 100000$
+
+[KuribohG wrote on 2016-06-23T07:58:41]
+
+---
+
+拆分成环计算，长度为$n$的环对应的答案为$n^{n-2}$，请问这个怎么证明？
+题解中说可以与$n$个点带标号生成树一一对应，这个怎么证明？
+
+[KuribohG wrote on 2016-06-23T07:59:51]
+
+---
+
+你把这个环 画在一个圆上 看看三角剖分的数量
+哇
+
+[yuzuriha_inori wrote on 2016-06-23T14:46:38]
+
+---
+
+虽然不是很看得懂ls的证明。。
+
+贴一个看来的。
+
+首先需要n-1次交换才能排好序的长度为n排列只有(n-1)!个(显然)。。
+
+以下默认排列p长度为n。。
+
+
+假设排列p经过了n-1次交换排好序，交换序列依次为:$(a_1,b_1),(a_2,b_2),...,(a_{n-1},b_{n-1})$,$a_i<b_i$
+那么我们可以建立一个交换序列到 点有标号且边有标号无向图的双射:
+交换序列为$(a_1,b_1),(a_2,b_2),...,(a_{n-1},b_{n-1})$,
+<=================>
+建图，图G的第i条边为$(a_i,b_i)$。。
+
+下面有引理：
+**交换序列是最短排序序列当且仅当G没有环。**
+成立也是显然的。。（不会证可以考虑归纳法）
+
+然后就可以愉快证明了啦。。
+----
+不妨假设排列p需要交换$n-1$次才能排好，那么设$C(p)$为最少交换次数交换方案数。
+
+根据对称性。。我们知道对于所有需要交换$n-1$次的排列p，$C(p)$都是相等的。。
+所以记$C_n$为交换$n-1$次才可排序的排列的交换方案数。
+同时我们知道每一个排列的最短交换序列都对应了一棵边有标号点有标号树。。vice versa
+
+那么我们知道$C_n\times (n-1)!$=边有标号点有标号树数目。。
+设点有标号树数目为$T_n=n^{n-2}$
+那么"边有标号点有标号树数目"=$T_n\times (n-1)!$
+所以我们有$C_n\times (n-1)!=T_n\times (n-1)!$
+于是$C_n=T_n$
+证毕
+
+~~当然打比赛的时候可不会这么闲地证明。。直接oeis~~
+
+References:
+J. Denes, The representation of a permutation as the product of a minimal number of transpositions, and its connection with the theory of graphs. (最早应该是这人发现了这个命题。。但是我google不到这篇paper。。)
+[A Solution to a Problem of Denes: a Bijection Between Trees and Factorizations of Cyclic Permutations](https://www.sciencedirect.com/science/article/pii/S0195669889800289) 
+(这篇的话只需要看第一页关于Denes论文的介绍就够做这题了。。)
+
+
+[mikantsumiki wrote on 2016-06-23T15:01:26]
+
+---
+
