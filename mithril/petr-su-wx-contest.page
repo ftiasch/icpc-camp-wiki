@@ -1,0 +1,43 @@
+# Petrozavodsk SU Wx Contest
+
+## A. You\'re in the Army Now [Solved, Jingbo Shang]
+
+贪心。
+
+## B. Art
+
+## C. Ballistic [Solved, Bin Jin]
+
+带入$n+1$个值用行列式算出$y_i=f(x_i)$，再用多项式插值求出多项式系数。
+
+官方解法：设$t_k = \mathrm{Tr}(A^k)$， $|A - \lambda E| = (-1)^n(c_n + c_{n - 1} \lambda + \cdots + \lambda^n)$，则有：
+$$ t_1 + c_1 = 0 $$
+$$ t_k + c_1 t_{k - 1} + c_2 t_{k - 2} + \cdots + c_{k - 1} t_1 + k c_k = 0$$
+
+## D. Castle [Solved, Xiaoxu Guo]
+
+二分，$O(\log N)$判断点在凸多边形内。
+
+## E. Creeping [Solved, Jingbo Shang]
+
+状态压缩动态规划。
+
+## F. Lock [Solved, Bin Jin]
+
+搜索，按顺序枚举空位，然后尝试各种放法。
+
+## G. Princess [Solved, Bin Jin]
+
+数学，$\min_{n} n \times x^{\frac{1}{n}}$ 。
+
+## H. Runes
+
+## I. Spell [Solved, Xiaoxu Guo]
+
+后缀数组或者后缀自动机
+
+## J. Orcish Transportation [Solved, Jingbo Shang]
+
+一个和2SAT类似的对称的图求最大流，要求对称的边流量相等。
+直接用Dinic推流，但是每次同时增广两个对称的增广路。公共的的残量除以二取min。
+

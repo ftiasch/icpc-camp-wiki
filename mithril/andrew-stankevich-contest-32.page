@@ -1,0 +1,53 @@
+# Andrew Stankevich's Contest \#32
+
+## A. Graph Theory [Solved, Xiaoxu Guo]
+
+构造长度为$2r$的环，加上一条长度为$d - r$的链即可。特判$r = 1$的情况。
+
+## B. Minimal Matrix [Solved, Bin Jin]
+
+枚举列的offset，然后行上用线性的环状最小表示算法。$O(n^3)$
+
+## C. Nothing On TV [Solved, Xiaoxu Guo]
+
+把圆反演，然后可以发现到原点的距离是一个拓扑序。在确定的过程中，需要查询半平面内是否有点，可以动态维护凸包，也可以分治。
+
+## D. Avoiding Partitions [Solved, Jingbo Shang]
+
+先预处理大小为$n$的集合的拆分数，然后用容斥原理计算，需要使用并查集和高精度运算。
+
+## E. Points and Lines [Solved, Bin Jin]
+
+博弈树。状态中需要记录的有，留下的奇数大小的连通块个数，偶数大小的连通块个数，
+以及现在不影响连通性所能连的边的条数的奇偶性。$O(n^2)$
+
+## F. Reversing Prefixes [Solved, Xiaoxu Guo]
+
+贪心，每次选尽量靠后字典序最小的字符，把选中的字符倒着输出，没选中的正着输出即可。
+
+## G. Inverse Range Minimum Query [Solved, Xiaoxu Guo]
+
+贪心，把区间从大到小放，要求每次区间内都至少有一个空位，放完把区间标记为不可行。
+
+## H. Road Signs
+
+## I. Triangular Tiling [Solved, Bin Jin]
+
+网络流，图为二分图，要用一条边或者两条连续的边覆盖所有顶点。
+
+做法类似于最大匹配，但是限制左右顶点到源汇的流量上界为2下届为1，这样就得到每个点的度数$d_i$满足
+$1 \leq d_i \leq 2$的一个子图，把这个子图上的链或者环拆成需要的一条或者两条边
+
+## J. Wikipidia [Solved, Bin Jin]
+
+只有一层嵌套，`<i>`在`<b>`中或者`<b>`在`<i>`中。所以每个位置共有三种状态
+
+* 当前栈为空
+* 当前栈为`<i>`
+* 当前栈为`<b>`
+
+这样就可以做到线性
+
+## K. XOR [Solved, Bin Jin]
+
+动态规划，状态为前$n$个数字的异或有$m$个$1$

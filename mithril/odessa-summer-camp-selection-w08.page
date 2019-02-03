@@ -1,0 +1,35 @@
+# Odessa Summer Camp Selection (Winter 2008)
+
+## A. A+B Problem [Solved, Xiaoxu Guo]
+
+枚举进制，模拟
+
+## B. Apples [Solved, Xiaoxu Guo]
+
+注意到性价比低的物品不会超过$100$次，枚举100^3次。
+
+## C. Death Star 3 [Solved, Xiaoxu Guo]
+
+贪心，每次找最深的没被覆盖的节点，用它的$k$级祖先覆盖它。
+
+## D. D-dependent numbers [Solved, Bin Jin]
+
+## E. Etiquette [Solved, Xiaoxu Guo]
+
+费用流，经典的餐巾问题。
+
+另外可以贪心，三分买的餐巾次数，每次尽量使用新的餐巾，再使用最早的慢洗，再使用最近的快洗。
+
+## F. Markov Chains [Solved, Jingbo Shang]
+
+## G. Physics Game [Solved, Jingbo Shang]
+
+## H. Scythians [Solved, Bin Jin]
+
+## I. Strange Integration and Simple Simplification [Solved, Bin Jin]
+
+## J. Magic Towers [Solved, Xiaoxu Guo]
+
+后缀数组
+
+## K. Triangles [Solved, Bin Jin]

@@ -1,0 +1,39 @@
+# 2012 Multi-University Training Contest 1
+
+## A. Clairewd's message [Solved, Xiaoxu Guo]
+
+Hash
+
+## B. Divide Chocolate [Solved, Xiaoxu Guo]
+
+递推。
+
+## C. Holedox Eating [Solved, Jingbo Shang]
+
+模拟，multiset。
+
+## D. Hourai Jeweled [Solved, Xiaoxu Guo]
+
+树形动态规划。
+
+## E. Let's Hit Our Head! [Solved, Bin Jin]
+
+参见[StrangeElevator](http://community.topcoder.com/stat?c=problem_statement&pm=11305)。
+
+## F. Lightning [Solved, Bin Jin]
+
+生成树计数。
+
+## G. Mahjong
+
+## H. Matrix [Solved, Jingbo Shang]
+
+最小割，和profit一样。
+
+## I. Saving Princess claire_ [Solved, Xiaoxu Guo]
+
+最短路。
+
+## J. Seikimatsu Occult Tonneru [Solved, Jingbo Shang]
+
+网络流。

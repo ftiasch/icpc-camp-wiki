@@ -1,0 +1,40 @@
+# ACM/ICPC 2012 Jinhua Regional Contest (Preliminary)
+
+## A. Mines [Solved, Xiaoxu Guo] 
+
+树套并查集，复杂度$O(N \log^2
+N)$。如果类似划分树的方法，可以把复杂度降低为$O(N \log N)$。
+
+## B. Battery [Solved, Bin Jin] 
+
+考虑每个间隔，作为端点的事件点组成凸包。对于相邻两点的积分直接计算，复杂度$O(N^2)$。
+
+## C. Magic Board 
+
+## D. A very hard Aoshu problem [Solved, Jingbo Shang] 
+
+枚举。
+
+## E. Worms [Solved, Xiaoxu Guo] 
+
+圆与多边形的交。
+
+## F. Aeroplane chess [Solved, Bin Jin] 
+
+递推。
+
+## G. GPA [Solved, Xiaoxu Guo] 
+
+因为费用是凸函数，所以可以费用流。可以观察到只有一类边有费用，可以使用最大流求解。
+
+## H. Sum [Solved, Jingbo Shang] 
+
+不考虑修改操作，只需要容斥即可。对于修改的点，$O(M)$暴力计算。
+
+## I. Minimum Spanning Tree [Solved, Bin Jin] 
+
+参见[SPOJ MSTS](http://www.spoj.pl/problems/MSTS)。
+
+## J. Family Name List [Solved, Xiaoxu Guo] 
+
+LCA。

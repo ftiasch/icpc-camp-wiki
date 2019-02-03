@@ -1,0 +1,69 @@
+# Kazakhstan and Ukraine contest
+
+## A. Maximal Convex Subset [Solved, Xiaoxu Guo]
+
+枚举凸包的最低点，动态规划计算最大值。
+
+## B. Death Star [Solved, Bin Jin]
+
+题目是求竞赛图上长度为$m(3\leq m \leq 5)$的简单环的个数
+
+比赛中用的方法很复杂
+
+* 令$B{a,b} = a \to b$这条边存在
+* 首先是一个$O(n^3 / bitlen)$的用位运算暴力计算，
+从$a$点到$b$点长度为$2$的路个个数$C_{a,b}$。
+* 其次考虑$a \to b \to c$，由于是竞赛图，显然有$a \neq c$
+所以所有长度不超过$6$的环都是简单环
+* 对于长度为$3,4$的环，很容易从$B_{a,b}, C_{a,b}$在$O(n^2)$时间内算出来
+* 对于长度为$5$的环，先计算$a \to b \to c \to d$的条数，首先是用$C$算出
+$a,b,c,d$没有任何限制的条数，然后减去$a=d$的长度为$4$的环的长度，再减去
+$b=d$或者$a=c$的长度为三的环拖一条链的情况，再加上$b=d$且$a=c$的三元环的情况
+* 算出了满足$a,b,c,d$互不相同的$a\to b \to c \to d$的方案数之后，考虑$a,d$
+之间的边的方向，$d\to a$是需要求的，这里继续容斥的计数方法。
+* 对于任意$a \to b \to c$，和任意$d,e$，$a,b,c,d,e$互不相同，$d,e$有边，不妨
+设为$d \to e$，则我们需要排除$d \to a \to b \to c \to e$加上$d \to e$的情况。
+这里用容斥，在$a \to b \to c$和 $d \to e$的大前提下，先计算 所有的，减去 $a \to d \to e$的
+减去 $d \to e \to c$的，加上$a \to d \to e \to c$的方案数
+* 令 $A$为$a \to b \to c, a \to d \to e$ $a,b,c,d,e$互不相同的方案数
+* 令 $B$为$a \to b \to c, d \to e \to c$ $a,b,c,d,e$互不相同的方案数
+* 令 $C$为$a \to b \to c \to d, a \to e \to d$ $a,b,c,d,e$互不相同的方案数
+* 则 $A=B=C$，之前容斥大概是先减去$2A$，再减去$2B$，再加上$C$，所以这里需要计算$A$
+* 先忽略任何的，直接可以算出来，对于$a \to b \to c, a \to d \to e$，再减去 $c = e$
+的情况，再减去$b=e$或者$c=d$的情况，最后再减去$b=d$的情况即可
+
+
+
+## C. Elevator
+
+## D. Numbers [Solved, Bin Jin]
+
+容斥原理，数有多少对在一起，答案是
+
+$$\sum_{i=0}^{n} \binom{n}{i}2n(2n-i-1)!(-2)^i$$
+
+## E. Pareto's Domination [Solved, Xiaoxu Guo]
+
+按照$A_i$排序，以$B_i$为下标，维护$C_i$的最大值。
+
+## F. Unexperienced Soldiers
+
+## G. Stocks Dynamics [Solved, Xiaoxu Guo]
+
+KMP
+
+## H. Vader's trouble [Solved, Xiaoxu Guo]
+
+每次选择i数量最少的矩形，用链表加速。
+
+## I. War of the Empires [Solved, Bin Jin]
+
+随机一个向量，对所有点做点积，如果区间不相交，则找到一种区分方式
+
+## J. One Way [Solved, Bin Jin]
+
+枚举源点到左侧的所有边是否存在，可以分别的算出右侧每个点是否可达，进一步可以算出终点是否可达
+
+## K. Wheels [Solved, Jingbo Shang]
+
+要求的时刻有两种：完全重合，或者碰巧double了一份。注意无解输出-1。

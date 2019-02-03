@@ -1,0 +1,96 @@
+# POI X
+
+## ~~Sequences without Stammers(cia)~~
+
+Problem
+:    构造长度为$N$的字符集最少的字符串，不包含形如$xx$的子串。
+Solution
+:    [solution](poi-x-cia)
+
+## ~~Chocolate(cze)~~
+
+Problem
+:    $N \times M$的巧克力，每条横线和竖线有代价，求拆成$1 \times 1$的最小代价（不能同时操作多块）。
+Solution
+:    对于同种线，先大后小，所以排序后动态规划。
+
+## ~~Numerals of Przesmyks(lic)~~
+
+Problem
+:    将所有由"+"和"-"组成的字符串（其中不能出现连续$M$个"-"）按照字典序排序，给出字符串求标号或者给出标号求字符串。
+Solution
+:    数位动态规划。
+
+## ~~Printed-Circuit Boards(ply)~~
+
+Problem
+:    把一个串并联电路导线黑白染色，使得每个节点都至少有一条黑色边，问黑色边数量的最小值。
+Solution
+:    电路结构是个树，树形动态规划即可。
+
+## ~~Smugglers(prz)~~
+
+Problem
+:    给出点带权的有向图，找一个包含点$1$环，使得环长加上点权的最小值最小。
+Solution
+:    点权的最小值是包装，直接枚举环上的另一个点，用两段最短路作为环长即可。
+
+## ~~Mastermind II(mas)~~
+
+Problem
+:    解决数字宾果游戏。
+Solution
+:    枚举。
+
+## ~~Motorways(aut)~~
+
+Problem
+:    把给出的$N$条线段分为两组，每组现在不能相交（可以包含）。
+Solution
+:    把相交关系建图，就是二分图染色问题，但是边太多。还是一样做，每次拿出一条与当前线段相交的线段染色，最后检查是否合法即可。可以用线段树处理左端点在某区间内，右端点的最大值，这样就变成$O(N \log N)$的复杂度。
+
+## ~~Trinomial(tro)~~
+
+Problem
+:    求$(1 + x + x^2)^n$展开式中$x^i$的系数除以$3$的余数。
+Solution
+:    [solution](last-contest-w06#c.-coefficients-solved-bin-jin)
+
+## Tiles(kaf)
+
+Problem
+:    给出$k$和$l$，如果$|i - j| = k$或$|i - j| = l$则连边，问$1, 2, \ldots, n$的联通块数量。$n \leq 10^{500}$
+
+## ~~Connections(pol)~~
+
+Problem
+:    求有向图两点间的$K$短路。
+Solution
+:    枚举起点，Dijkstra维护前$K$短路。
+
+## ~~Treasure(ska)~~
+
+Problem
+:    模拟。
+
+## ~~Sums(sum)~~
+
+Problem
+:    询问$b$能否表示为集合$A$中的元素之和（允许重复）。
+Solution
+:    最短路，求出模$A_0$的每个剩余系可行的最小元素。
+
+## ~~Monkeys(mal)~~
+
+Problem
+:    维护无向图，支持删边，求每个点与点1分离的时刻。
+Solution
+:    逆序并查集，因为要遍历联通块，所以用链表启发式合并。
+
+## ~~Shuffle(tas)~~
+
+Problem
+:    求置换$P$的$k$次根。
+Solution
+:    对于长度为$l$的置换，如果原来是大小为$d \cdot l$的置换，需要满足$\gcd(l, \frac{k}{d}) = 1$，所以还需背包求方案。
+

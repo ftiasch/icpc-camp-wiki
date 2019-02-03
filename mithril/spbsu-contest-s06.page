@@ -1,0 +1,45 @@
+# SPbSu Contest (Summer 2006)
+
+## A. Business [Solved, Xiaoxu Guo]
+
+树形动态规划。
+
+## B. Coding [Solved, Jingbo Shang]
+
+最大团搜索。
+
+## C. Cyclic suffixes [Solved, Jingbo Shang]
+
+Hash求最长公共前缀。
+
+## D. MagLev [Solved, Bin Jin]
+
+暴力把图建立出来，大概19000+个节点，现BFS，然后在DAG上做DP
+
+## E. Quadrilaterals [Solved, Jingbo Shang]
+
+USACO OPEN 10老题。
+
+## F. Impudence Queue [Solved, Xiaoxu Guo]
+
+Splay维护序列。
+
+## G. Raccoons [Solved, Xiaoxu Guo]
+
+利用对称性，贪心构造（$f$是骗你的）。
+
+## H. Robots' DNA [Solved, Bin Jin]
+
+FFT
+
+## I. Sums [Solved, Bin Jin]
+
+贪心
+
+## J. Psychic Test [Solved, Bin Jin]
+
+设第二个数是$q$，则$n | q^2$，长度根据等差数列是$n / (n, q)$，直接把$n$分解质因数之后
+
+$$n = \prod a_{i}^{p_i}$$
+
+$$q = \prod a_{i}^{\lceil \frac{p_i}{2} \rceil}$$

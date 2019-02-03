@@ -1,0 +1,36 @@
+# Andrew Stankevich Contest 20 (Summer 2006)
+
+## A. String Decomposition [Solved, Xiaoxu Guo]
+
+枚举左端点，KMP求出每个线段的最小表示，之后动态规划。
+
+## B. Divide by Two [Solved, Xiaoxu Guo]
+
+按照题意模拟。
+
+## C. Do It Yourself
+## D. False RSA [Solved, Bin Jin]
+
+枚举$k$，二分检测是否合法，剩下就做二维背包就可以了
+
+## E. Kingdom Inspection [Solved, Xiaoxu Guo]
+
+猜测一定有解，这样直接每次用动态规划合并两个子序列就可以了
+
+## F. London Streets [Solved, Bin Jin]
+
+简单的动态规划
+
+## G. Word Morpher [Solved, Bin Jin]
+
+只考虑前$k$个字符，然后暴力找循环节
+
+## H. Range Minimum Query [Solved, Xiaoxu Guo]
+
+平衡树
+
+## I. Starbugs Coffee [Solved, Jingbo Shang]
+
+二分答案，之后求二分图最小边覆盖。
+
+## J. Unreachable Code

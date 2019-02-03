@@ -1,0 +1,44 @@
+# Japanese Alumni Group Past Problems Selection
+
+## A. Building Bridges [Solved, Xiaoxu Guo]
+
+最小生成树。
+
+## B. Organization Chart [Solved, Bin Jin]
+
+构造。
+
+## C. Gather on the Clock [Solved, Xiaoxu Guo]
+
+动态规划。
+
+## D. Dancing Cube [Solved, Xiaoxu Guo]
+
+打表模拟。
+
+## E. Election [Solved, Jingbo Shang]
+
+模拟。
+
+## F. Highways [Solved, Xiaoxu Guo]
+
+在凸包上三分。
+
+## G. Karakuri Doll [Solved, Bin Jin]
+
+广搜。
+
+## H. Light the Room [Solved, Xiaoxu Guo]
+
+几何，先计算不反射照亮的区间，再计算反射后照亮的区间。我们知道区间的端点必然是线段的端点，直接拿出所有线段端点，取中线判断即可。
+
+## I. The Phantom
+
+## J. Painting
+
+## K. Up and Down [Solved, Xiaoxu Guo]
+
+状态压缩动态规划。
+
+## L. Embedding Poset into Lattice
+

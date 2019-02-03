@@ -1,0 +1,40 @@
+
+# ACM/ICPC Dhaka Regional Contest 2008
+
+## A. Find the Format String [Solved, Xiaoxu Guo]
+
+模拟
+
+## B. Switch Bulbs [Solved, Xiaoxu Guo]
+
+BFS
+
+## C. Schedule of a Married Man [Solved, Xiaoxu Guo]
+
+模拟
+
+## D. Puzzles of Triangles [Solved, Bin Jin]
+
+求$x \in [1, n]$且$n | x^2$的$x$的个数，pollard-rho分解质因数
+
+## E. Chemical Plant [Solved, Bin Jin]
+
+按照边为状态，两种转移，走这条边或者在起点等，然后动态规划
+
+## F. Clicking Checkboxes [Solved, Xiaoxu Guo]
+
+动态规划
+
+## G. Magic Rings [Solved, Bin Jin]
+
+找出$\binom{n}{3}+\binom{n}{2}+n$个圆，然后二分答案
+
+## H. Line Chart
+
+## I. Mobile Tower [Solved, Xiaoxu Guo]
+
+费用流
+
+## J. Stopping Doom's Day [Solved, Bin Jin]
+
+目标函数是个多项式，暴力找出些样本之后差值

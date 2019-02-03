@@ -1,0 +1,41 @@
+# Belarussian SU Contest
+
+## A. Data Coding [Solved, Bin Jin]
+
+$2^{n-1}$枚举每位是否有进位，剩下就是解方程了，可以把$gcd(n,k)$个环找出来，对每个环枚举一个数字
+
+另一种方法是用ext gcd，列出方程之后求整数解即可
+
+## B. Kingdom Division [Solved, Xiaoxu Guo]
+
+最优直线肯定经过某个格点，枚举后每个格子对应一个极角区间，排序扫描即可。 注意考虑经过原点的格子。
+
+## C. Farmer's happiness [Solved, Xiaoxu Guo]
+
+梯形剖分，预处理每条线段下的点数（有向），最后枚举三角形。
+
+## D. Generalized Fibonacci numbers [Solved, Bin Jin]
+
+直接枚举$0 < x - na - mb \leq min(a,b)$的$n,m$，用二项式系数计算
+
+## E. Hello Space! [Solved, Jingbo Shang]
+
+用最大最小误差去check每个数是1还是2，然后总的再check一遍误差是否合法，然后模拟输出，判断是否是合法输出。
+
+## F. Equivalent images
+## G. Labyrinth [Solved, Bin Jin]
+
+BFS，要求最中间的一个或者两个位置都要有多个可选的位置
+
+## H. Mafia forever! [Solved, Jingbo Shang]
+
+构造，先考虑$t=1$的情况，按奇偶分类并配对，然后直接把加起来$n$种货币都为偶数的两个帮派合并，
+继续下去，一定可以得到解
+
+## I. Password [Solved, Bin Jin]
+
+对于输入的最后一个数字，枚举$2^{n-1}$是否有进位，然后用之前的数字查看是否满足条件，计数比较简单
+
+## J. Buying roads [Solved, Xiaoxu Guo]
+
+找出直径（或环），枚举上面的左端点，在移动右端点的同时用优先队列维护前$K$小的元素。

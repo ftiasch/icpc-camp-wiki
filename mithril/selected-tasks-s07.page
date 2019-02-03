@@ -1,0 +1,50 @@
+# Selected Tasks from Warsaw University Contest + Some Croatian Online Olympiads
+
+## A. Barricades [Solved, Xiaoxu Guo]
+
+如果根节点必须选，那么可以在dfs序列上进行$O(n^2)$的动态规划。再利用点分治的思想，每次找一个最大子树最小的节点作为根，然后分治，这样总复杂度仍可以保持在$O(n^2)$。
+
+## B. Bicycle [Solved, Xiaoxu Guo]
+
+缩完点之后bfs判断$\infty$，然后在拓扑图上dp计数。
+
+## C. Bond [Solved, Jingbo Shang]
+
+状态压缩dp，范围更大可以取log之后KM。
+
+## D. Debug [Solved, Xiaoxu Guo]
+
+奇偶分类二分答案，然后暴力hash即可。
+
+## E. Guards [Solved, Xiaoxu Guo]
+
+计算几何暴力。
+
+## F. Lights [Solved, Bin Jin]
+
+动态规划，记录两行最后一个格子的情况即可。
+
+## G. Neighbours [Solved, Jingbo Shang]
+
+线段树维护扫描线
+
+## H. ROT13 [Solved, Jingbo Shang]
+
+暴力+hash，需要去重。
+
+## I. Table [Solved, Jingbo Shang]
+
+预处理每个格子向上最长的空地，然后暴力。
+
+## J. Toplist [Solved, Bin Jin]
+
+贪心构造解。前$k$个和前$k-1$个正好差了一个，那么第$k$个就可以确定。
+
+## K. Triangulations [Solved, Jingbo Shang]
+
+卡特兰数求和，模不是质数的数。用线段树维护因子表。
+
+## L. Waclaw [Solved, Bin Jin]
+
+分形上求相邻三角形，由于标号很好，直接由输入得到答案。
+

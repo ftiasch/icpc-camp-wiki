@@ -1,0 +1,41 @@
+# Warsaw University Contest (Winter 2007)
+
+## A. Aragorn [Solved, Xiaoxu Guo]
+
+Problem
+:    给无向图的边标号，使得同一个点的边标号最大公约数是$1$。
+Solution
+:    如果存在多于$1$个度为$1$的点，则无解（$n = 2$是个例外）。否则以度为$1$的点为根开始深度优先遍历，以遍历的顺序给边标号。除了根之外，每个点都会有标号为$x$和$x + 1$两条边，而因为有$1$，所以根也满足条件。
+
+## B. Beautiful garden [Solved, Xiaoxu Guo]
+
+Problem
+:    给平面上的$N$个点染黑白两色，使得同一横线（竖线）上数量差不超过$1$。
+Solution
+:    以行和列为点，把交点作为边建立二分图，只要每次找一条欧拉路交替染色即可。
+
+## C. Collector [Solved, Xiaoxu Guo]
+
+贪心。
+
+## D. Dwarfs [Solved, Xiaoxu Guo]
+
+状态压缩动态规划。
+
+## E. EU plates [Solved, Bin Jin]
+
+求最大的$k$满足$m^k | n!$，把$m$分解质因数之后计算其在$n!$中的幂次
+
+## F. Furious alien
+## G. Gift [Solved, Bin Jin]
+
+容斥原理，考虑有多少对相邻的相同颜色。可以直接推出公式(n-1对相同和n对相同是相同的情况)。也可以用递推式，用矩阵乘法优化
+
+## H. Hurried container
+## I. Irregular York [Solved, Jingbo Shang]
+
+调整，不断地朝着目标点走，当出现环的时候找附近5*5有没有解，无解的话就往右上角小跳一下，继续调整
+
+## J. Jack and Joan [Solved, Bin Jin]
+
+待定系数之后高斯消元

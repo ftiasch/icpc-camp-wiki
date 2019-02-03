@@ -1,0 +1,44 @@
+# Warsaw U Contest (Winter 2011)
+
+## A. Blocks [Solved, Xiaoxu Guo]
+
+求最长的平均值$\geq k$的子串。
+
+令$S_i = A_1 + A_2 + \cdots + A_i - i * k$，问题等价于求$S_i \geq S_j$且$i - j$最大。可以观察到如果$S_{i'} > S_i$且$i' > i$，则$i'$不是最优决策。维护两个单调列表扫描即可。
+
+## B. Conspiracy
+## C. Fire Brigade
+## D. Hamsters [Solved, Xiaoxu Guo]
+
+给出若干互不相交的模版，求最短串使得模版出现$m$次。
+
+因为$\langle +, \max \rangle$是环，所以矩阵乘法即可。预处理矩阵需要KMP。
+
+## E. Lightning Conductor [Solved, Xiaoxu Guo]
+
+对于$i$，求最小的$p$满足$\forall j, h_j \leq h_i + p - \sqrt{|i - j|}$。
+
+等价于求$\max\{h_j + \sqrt{|i - j|}\}$的。因为$w(i, j) = \sqrt{|i - j|}$满足四边形不等式，二分即可。
+
+## F. Lollipop [Solved, Bin Jin]
+
+考虑三种情况即可
+
++ 从最左端的1的两侧向右尝试
++ 从最右端的1的两侧向左尝试
++ 从最左端向右尝试
+
+## G. Minima Game [Solved, Bin Jin]
+
+每次必然取最大的若干个数，先排序之后动态规划，决策的集合是包含的，每次考虑新增加的决策就可以了
+
+## H. Nasty Sets [Solved, Bin Jin]
+
+一个$O(q^2)$的做法是按$\mod q$分类，记$x_i$为满足$i+jq \in S$最小的$j$，列出类似最短路的式子，
+所有满足式子的$x_i$都是一组解，正好形成一条链，所以可以动态规划
+
+答案是 $$\frac{\binom{p+q}{p}}{p+q}$$
+
+## I. Ones
+## J. Railway
+## K. Shift [Solved, Jingbo Shang]

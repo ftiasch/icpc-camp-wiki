@@ -1,0 +1,25 @@
+# ONTAK 2010
+
+## ~~Non-Squarefree Numbers(pod)~~
+Problem
+:    求第$n$个有平方因子的数。
+Solution
+:    二分答案，容斥原理计算。
+
+## ~~Peaks(szc)~~
+Problem
+:    对于无向图$G$，询问点$v$通过权$\leq x$的边可达的点集中，点权第$k$大的。
+Solution
+:    按照权从小到大添加边，联通分量形成一棵树（有$n$个叶子和至多$n - 1$个内点），问题等价于询问子树中叶子第$k$大，通过深度优先遍历转化为区间问题，时间复杂度$O(m \log m + q \log n)$。
+
+## ~~Creative Accounting(wyd)~~
+Problem
+:    求模$m$最大的子串。
+Solution
+:    用部分和表达，就是$(S_i - S_j)$模$m$最大，枚举$S_i$，分$S_i, S_j$的大小情况讨论，需要数据结构维护。
+
+## ~~Keyboard(kla)~~
+Problem
+:    $n \times m$的棋盘，$\frac{n \cdot m - 1}{2}$张骨牌，每次可以移动骨牌，点击空位，求使给定位置被点击一次的最少移动次数。
+Solution
+:    空位的移动关系是树，之后统计即可。

@@ -1,0 +1,37 @@
+# ACM/ICPC Changchun Regional Contest 2012
+
+## A. Alice and Bob [Solved, Xiaoxu Guo]
+## B. Bit Magic [Solved, Xiaoxu Guo]
+
+每位分开做，就成了裸的2-sat判断有没有解。
+
+## C. The Little Girl who Picks Mushrooms [Solved, Jingbo Shang]
+
+枚举哪3个包送人，剩下的特判是否有没有确定的包即可。
+
+## D. Simple Function
+## E. Conquer a New Region [Xiaoxu Guo]
+
+每次考虑一条权值最小的边，分治成两边（根在不同侧的问题可以递归，因为根到另一侧的答案已经确定）。
+可以反过来考虑用并查集实现。
+
+## F. Fantastic Necklace [Solved, Bin Jin]
+
+树上dp+hash，然后环上用Burnside。
+
+## G. Palindromic Substring
+## H. Math Magic [Solved, Jingbo Shang]
+
+直接dp。
+
+## I. Polaris of Pandora [Solved, Bin Jin]
+
+分段+二分。
+
+## J. Split the Rectangle [Solved, Jingbo Shang]
+
+先bfs得到矩形切割的结果，建树，做LCA。
+
+## K. Yukari\'s Birthday [Solved, Bin Jin]
+
+枚举半径R，然后二分Base即可。特判R=1的情况。

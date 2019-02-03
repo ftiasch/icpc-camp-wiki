@@ -1,0 +1,42 @@
+# Last Contest
+
+## A. Bread [Solved, Xiaoxu Guo]
+
+暴力。
+
+## B. Bridges [Solved, Jingbo Shang]
+
+每次找当前方案最少的搜。
+
+## C. Coefficients [Solved, Bin Jin]
+
+$(x^2+x+1)^n = (x^2-2x+1)^n = (x-1)^{2n}$
+
+## D. Dogs [Solved, Bin Jin]
+
+把坐标算出来之后简单的BFS即可
+
+## E. Gallery [Solved, Xiaoxu Guo]
+
+半平面交。
+
+## F. Strong Inversion [Solved, Xiaoxu Guo]
+
+平衡树。
+
+## G. L-Game [Solved, Bin Jin]
+
+把18000左右个状态全部预处理出来之后，从终止的必败状态开始，必败直接
+可以从必胜到达，如果一个节点到达的点都是必胜，则必败
+
+## H. Sewers [Solved, Xiaoxu Guo]
+
+先随意把奇度点配对，然后将每个联通分量欧拉回路并入路径。
+
+## I. Slurm [Solved, Bin Jin]
+
+简单的parser
+
+## J. Squares [Solved, Xiaoxu Guo]
+
+枚举对角线。

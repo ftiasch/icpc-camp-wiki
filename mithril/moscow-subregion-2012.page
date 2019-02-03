@@ -1,0 +1,39 @@
+# ACM/ICPC NEERC Moscow Subregion 2012
+
+## A. Ariel [Solved, Jingbo Shang]
+## B. Billy and Willy in Moscow [Solved, Bin Jin]
+## C. Cinderella [Solved, Xiaoxu Guo]
+
+模拟
+
+## D. Darkwing Duck
+## E. Epic fail for Genie [Solved, Bin Jin]
+
+很复杂的讨论，尽量取大于1的，然后枚举用多少个负数。需要注意一些特殊情况。
+
+## F. Flood [Solved, Jingbo Shang]
+
+简单的模拟
+
+## G. Gadget Hackwrench [Solved, Xiaoxu Guo]
+
+预处理之后LCA
+
+## H. Hunt for Treasure! [Solved, Bin Jin]
+
+可以用stirling数算不考虑错排序列时的方法，然后再用一次容斥算条件概率和条件期望。
+
+## I. Innovative Business [Solved, Jingbo Shang]
+
+用$A\times B$的tiles去覆盖$N\times M$的棋盘。可以切割。但是要求能放大的就放大的，而且不能有一条edge有多个相邻的edge。
+首先$(N/A)\times(N/B)$个大块。
+之后右边和下边两个长条中也贪心放。
+最后右下角有一个tile，需要考虑是否有废料可以搞定它。
+
+## J. Just Another Disney Problem [Solved, Bin Jin]
+
+构造，用分治的想法，类似归并排序
+
+## K. Key to Magica's diary [Solved, Xiaoxu Guo]
+
+模拟
