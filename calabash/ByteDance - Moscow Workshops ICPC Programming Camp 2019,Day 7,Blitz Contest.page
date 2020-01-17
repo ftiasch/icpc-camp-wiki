@@ -1,0 +1,112 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019,Day 7,Blitz Contest
+
+Participation Date: 2019.02.22
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Arithmetic on a Board
+
+> unsolved
+
+##B. Binary Tree
+
+> solved by calabash_boy (1:22 +1)
+
+##C. Codeforces
+
+> solved by sy_chen (1:14 +2)
+
+##D. Digit Statistics
+
+> solved by sy_chen (1:33)
+
+##E. Euclid
+
+> unsolved
+
+##F. Forbidden Triples
+
+> solved by sy_chen (0:59 +1)
+
+One can use inclusion-exclusion principle to derive a $O(1)$ formula.
+
+##G. Grasshopper
+
+> solved by sy_chen (0:30)
+
+##H. Hand Gun
+
+> unsolved
+
+##I.  Intersect the Lists
+
+> unsolved
+
+##J. Jumping Fleas and a Dog
+
+> solved by sy_chen (1:56)
+
+Note that it's unnecessary to use the jump operation, so the answer is the minimum distance over all points to the destination.
+
+##K. Key words
+
+> solved by sy_chen (2:42 +1) 
+
+##L. Language Troubles
+
+> solved by sy_chen (1:27)
+
+One can find that $f(2n+1)=2f(n)+1$, and $f(2n)=2f(n)-1$. Just calculate recursively.
+
+##M. Multiple Barcodes
+
+> upsolved by Roundgod
+
+The number of non-empty rectangle is $\frac{h(h-1)w(w-1)}{4}$. For the $n=2$ case, first count all possible pairs, then minus some overcounts. Should handle a few cases.
+
+##N. New Bus Routes
+
+> solved by Roundgod (1:19)
+
+Use prefix sum.
+
+##O. Optimal Cheating
+
+> unsolved
+
+##P. Phi
+
+> solved by Roundgod (0:47 +2)
+
+Use segment sieve. Should run in $O((B-A)\log{(B-A)})$
+
+##Q. Qualification Round
+
+> solved by sy_chen (0:23 +1)
+
+##R. Regular Convex Polyhedra for Dummies
+
+> solved by sy_chen (1:51 +1)
+
+There are only five regular polyhedra. Also use Euler's formula $E=V+F-2$ to check if the condition is satisfied.
+
+##S. Sequence
+
+> solved by sy_chen (0:12 +1)
+
+#Replay
+
+To be added.
