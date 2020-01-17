@@ -1,0 +1,70 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2019 南京赛区网络预赛
+
+Participation Date: 2019.9.1
+
+Contest Link: [ACM-ICPC 2019 南京赛区网络预赛](https://www.jisuanke.com/contest/3004?view=challenges)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod
+
+Solution Link: [Code for ACM-ICPC 2019 南京赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202019%20%E5%8D%97%E4%BA%AC%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. The beautiful values of the palace
+
+> solved by sy_chen (1:22)
+
+##B. super_log
+
+> solved by Roundgod (1:36 +6)
+
+Use Euler's formula to compute the answer, hardcode the answer for small cases.
+
+##C. Tsy's number 5
+
+> solved by sy_chen (3:36)
+
+##D. Robots
+
+> solved by sy_chen (2:55 +5)
+
+##E. K Sum
+
+> solved by Roundgod (2:55 +1)
+
+Classical sieve problem, not worthy to mention.
+
+##F. Greedy Sequence
+
+> solved by Roundgod(1:16)
+
+Classical segment tree problem.
+
+##G. Quadrilateral
+
+> solved by sy_chen(4:34 +4)
+
+##H. Holy Grail
+
+> solved by Roundgod (0:46)
+
+Just run SPFA of Bellman-Ford $6$ times. 
+
+##I. Washing clothes
+
+> solved by Roundgod (4:32 +4)
+
+It can be seen there exists a separation point. Enumerate on the point, and the answer is $O(\frac{n}{1}+\frac{n}{2}+\dots+\frac{n}{n})=O(n\log{n})$
+
+#Replay
+
+To be added.
