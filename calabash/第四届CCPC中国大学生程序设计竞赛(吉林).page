@@ -1,0 +1,106 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 第四届CCPC中国大学生程序设计竞赛(吉林)
+
+Participation Date: 2018.9.22
+
+Contest Link: To be added
+
+PDF Statements: To be added
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 第四届CCPC中国大学生程序设计竞赛(吉林)](https://github.com/wcysai/Calabash/tree/master/%E7%AC%AC%E5%9B%9B%E5%B1%8ACCPC%E4%B8%AD%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AB%9E%E8%B5%9B(%E5%90%89%E6%9E%97))(Only H available)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. The Fool
+
+> solved by Roundgod (0:07)
+
+One simple and easy-to-think-of solution: since there are only $O(\sqrt{n})$ different numbers for $\lfloor\frac{n}{i}\rfloor$ for $1\leq i \leq \sqrt{n}$, and still only $O(\sqrt{n})$ different numbers for $\lfloor\frac{n}{i}\rfloor$ for $\sqrt{n}\le i \leq n$. Thus there are only $\sqrt{n}$ different possible numbers for $\lfloor\frac{n}{i}\rfloor$, iterate over all of them to find out the answer. Time complexity: $O(\sqrt{n})$.
+
+Alternative solution: The formula can be rewritten as $\sum\limits_{x=1}^{n}\sum\limits_{y=1}^{n}[xy==n]$, that is, the number of pairs $(x,y)$ such that $xy=n$, since all pairs with different $x$ and $y$ are counted twice, the parity of the answer only depends on the parity of $\lfloor\sqrt{n}\rfloor$. Time complexity:$O(1)$.
+
+##B. The World
+
+> solved by sy_chen (0:29)
+
+Just do it. One can't be too careful with such kind of problems.
+
+##C. Justice
+
+> solved by sy_chen (1:55 +2)
+
+It is possible iff the total weight is no less than 1. To construct a feasible solution, one may select the weights greedily.
+
+##D. The Moon
+
+> solved by Roundgod (0:47 +1)
+
+Easy dynamic programming. Let $dp[x]$ be the expected number of times when $q=\frac{x}{200}$, the tranferring equation is trivial. The answer can be found at $dp[4]$. Note that $dp[200]=1/p$, which can be inferred by the summation of geometric progression.
+
+##E. The Tower
+
+> solved by sy_chen (1:25)
+
+It is easy and straightforward to write an equation with $t$ as unknown. After some algebra one may discover that it is a quadratic equation. Hence it can be solved by formula. Note that $0 \leq z \leq h$ is necessary when collision occurs. 
+
+##F. The Hermit
+
+> solved by calabash_boy (1:31 +1)
+
+The key point to the problem is *left end point is no-decreasing* , which means *right end point is no-decreasing too*. After knowing that, we can easily find that both the left and the right end point whose radius covering the point i is no-decreasing, so in O(n) time, for every point i, we can get a interval $[L,R]$ whose radius covering the point i, then consider each j in interval $[max(L,i+2),R]$, the pair (i,j-1,j) is a legal pair. Complexity:$O(n)$   
+
+##G. High Priestess
+
+> solved by sy_chen (4:49)
+
+Various possible ways solve this problem. Since the number of resistors are rather generous, we may consider to combine the current network with a new resistor in series or in parallel. Let $p/q$ denote the current resistance, if we add a new resistor in series, we obtain a resistance of $(p+q)/q$; if we add a new resistor in parallel, we obtain a resistance of $q/(p+q)$. Hence, one may use something similar to Euclid's algorithm to compute the number of resistors needed to construct some fractional resistance. Since an absolute error of $10^{-7}$ is allowed, one may use some randomization to search for a constructible fractional resistance.
+
+##H. Lovers
+
+> upsolved by Roundgod
+
+Hardcore segment tree.
+
+Maintain five properties in the segment tree: 
+
+1. The final answer
+2. The sum of the power of $10$ of the length of all strings
+3. The added suffix(lazy)
+4. The added prefix(lazy)
+5. The added length(lazy)
+
+Once come up with those five properties, the rest is simple.
+
+##I. Strength
+
+> solved by Roundgod (2:31 +1)
+
+Let's try two different strategies, in the first strategy we aim to clear the opponent's board, while in the second we don't. 
+
+In the first strategy, we should check if we really can do this, and then we should waste the least damage that is overdealt to the monsters that are in the defense positions.^[This is intuitive.] To implement is, using a set and $lower\_bound$ function would do. 
+
+In the second strategy, we shouldn't consider the opponent's monsters that are in the defense positions. Then we should use our monster with the highest strength to attack the opponent's monster with the lowest strength, and our monster with the second highest strength to attack the opponent's monster with the second lowest strength... until one run out of monsters or the strength of our monster isn't greater than the opponent's monster.^[Why is this true? Consider the case when two players both have two monsters in normal positions with Alice's strengths 2 and 4, and Bob's strengths 1 and 3.] To implement this, first sort the two arrays and then use the two-pointers method.
+
+##J. Wheel of Fortune
+
+> unsolved
+
+##K. The Magician
+
+> unsolved
+
+##L. The Hanged Man
+
+> unsolved
+
+#Replay
+
+Roundgod: H题弄自闭了啊......回去要重修线段树了。
