@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Hello Barcelona Autumn 2018. Both Divisions Contest 2.
+
+Participating Date: 2018.10.1
+
+Contest Link: [Hello Barcelona Autumn 2018. Both Divisions Contest 3.](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002557)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Bootcamp/Contest5/statements.pdf)
+
+Solution Link: [Code for Hello Barcelona Autumn 2018. Both Divisions Contest 3.](https://github.com/wcysai/CodeLibrary/tree/master/Bootcamp/Contest5)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. A lot
+
+> upsolved 
+
+Let's say the primitive root is $g$, then we need to find for $X$ and $Y$, what's its order with $g$, respectively. Then the problem is reduced to a congruential equation and can be solved easily. How to find the order? Use baby-step-giant-step method, but since we have $Q$ queries here, the $m$ we set here doesn't equal to $\sqrt{P}$, but  we set $m=10^{6}$, so that the complexity can be reduced to $O(10^{6})$. 
+
+##B. Almost Average
+
+> unsolved
+
+##C. Amoeba
+
+> solved (1:42 +1)
+
+##D. Automaton
+
+> unsolved
+
+##E. Average Palindromes
+
+> upsolved
+
+For each position we count the answer separately. To find out how far from this position can reach, we need to use binary search to determine the next position without question mark and is a palindrome from this position. This can be done maintaining rolling hashes. And for each question mark, we add $\frac{25}{26}$ of the current length to the answer, and continue searching with the rest of the answer multiplied by $\frac{1}{26}$. It can be seen after several times of this decreasing, the answer would not be affected and thus we and cut off. The time complexity is $O(n\log{n})$.
+
+##F. Continued Fraction
+
+> solved (0:50)
+
+Just do case analysis.
+
+##G. K-pletes
+
+> unsolved
+
+##H. NIMG
+
+> upsolved
+
+Consider the normal solution using Sprague-Grundy theorem, which runs in $O(F^{2})$. Here we modify the transition a little bit. To compute $f(x)$, where $f$ denotes the Sprague-Grundy function take $M=\sqrt{x}$, and decompose the transitions into dividing the number into less than $M$ parts and more than $M$ parts. For the first part, we can directly compute the answer. For the second part, we iterate over the $O(M)$ possible larger numbers $l$ and for each number, since the only concern is the parity of counts of $l$ and $l-1$, we need to iterate no more than 4 times. So the overall complexity is $O(F\sqrt{F})$.
+
+##I. Semi-cool Points
+
+> solved (2:14 +1)
+
+One can multiply some of the coordinates by one, so the problem is reduced to finding the number of integer-coordinate points and inclusion-exclusion. Use Pick's Theorem.
+
+##J. Stairs
+
+> unsolved
+
+##K. Number of Zeroes
+
+> solved (0:32 +1)
+
+With some analysis this problem can be reduced to finding the sum of a geometry series. Since the modulo may not be prime, we can't directly compute modular inverses, but we can do matrix exponentiation instead.
+
+#Replay
+
+To be added.
