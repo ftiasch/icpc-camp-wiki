@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2019 沈阳赛区网络预赛
+
+Participation Date: 2019.9.14
+
+Contest Link: [ACM-ICPC 2019 沈阳赛区网络预赛](https://www.jisuanke.com/contest/3007?view=challenges)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for ACM-ICPC 2019 沈阳赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202019%20%E6%B2%88%E9%98%B3%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Maomao's candy
+
+> solved by Roundgod (2:59 +4)
+
+Enumerate the reachable corner to get the largest number of moves. For the sum of fibonaaci numbers, either matrix exponentiation, or noticing that $472634375^2\equiv 5(\mod 1025436931)$ will do.
+
+##B. Dudu's maze
+
+> solved by calabash_boy (1:08 +1)
+
+##C. Dawn-K's water
+
+> solved by calabash_boy (0:41)
+
+##D. Fish eating fruit
+
+> solved by Roundgod (1:23)
+
+Classical tree dynamic programming.
+
+##E. Gugugu's upgrade schemes
+
+> solved by sy_chen (1:54)
+
+##F. Honk's pool
+
+> solved by calabash_boy (0:25 +1)
+
+##G. Special necklace
+
+> solved by sy_chen (2:33 +1)
+
+##H. Texas hold'em Poker
+
+> solved by sy_chen (1:17 +1)
+
+##I. Self-game
+
+> solved by sy_chen (4:13 +2)
+
+##J. Ghh Matin
+
+> solved by Roundgod (1:51)
+
+Use inclusion-exlusion principle, enumerate on the cycle size, plus some combinatorial argument should solve the problem. 
+
+##K. Guanguan's Happy water
+
+> solved by Roundgod (0:43)
+
+Direct application of Berlekamp-Massey algorithm.
+
+#Replay
+
+To be added.
