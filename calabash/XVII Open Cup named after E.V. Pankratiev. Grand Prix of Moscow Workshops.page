@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVII Open Cup named after E.V. Pankratiev. Grand Prix of Moscow Workshops
+
+Practicing Date: 2019.5.21
+
+Contest Link: [XVII Open Cup named after E.V. Pankratiev. Grand Prix of Moscow Workshops](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010377)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Moscow%20Workshops/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XVII Open Cup named after E.V. Pankratiev. Grand Prix of Moscow Workshops](https://github.com/wcysai/Calabash/tree/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Moscow%20Workshops)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Centroid Tree 
+
+> solved by sy_chen (3:34 +1)
+
+We may rerun the algorithm and check if the tree is changed. Note that there may be two centroids, but either one can be the root of current tree (rather than the one with minimum index as described in problem statement).
+
+##B. Completely Multiplicative Function
+
+> solved by Roundgod (1:21 +1)
+
+Let $f(p)=\begin{cases} 1  & p \mod 3=0\text{ or }p\mod 3 = 2 \\ -1  & p \mod 3=1 \end{cases}$ for each prime $p$, then one can prove by induction that the imbalace up to $n$ doesn't exceed $\log_{3}n$.
+
+##C. Even and Odd
+
+> solved by sy_chen (4:59)
+
+For each vertex biconnected component, if the induced subgraph is not bipartite, remove the edges in this component. The resulting graph is the union of several bipartite components. For each component, count number of pairs of vertices with same and different colors, respectively.
+
+##D.  Great Again
+
+> solved by calabash_boy (2:27 +1)
+
+##E. Jumping is Fun
+
+> solved by Roundgod (4:17 +4)
+
+Use binary lifting togetther with segment tree/sparse table to maintain the reachable segment starting from each position using $2^k$ steps. To find out the answer, descend from the highest bit of $2^k$ and also use the data structure built before for query. The time complexity is $O(n\log^2{n})$.
+
+##F. Online LCS
+
+> unsolved
+
+##G. Brawling
+
+> solved by Roundgod (0:10 +1)
+
+After erasing the consecutive $L$s in the prefix and the consecutive $R$s in the suffix, the answer is $0$ or $1$, depending on if there's somebody remaining, plus the length of erased segments.
+
+##H. I Spy
+
+> solved by sy_chen (1:14 +3)
+
+We may binary search for the distances of the transmitters to the origin. Since there are not too many integer points in a circle, query all of them.
+
+##I. Rage Minimum Query
+
+> solved by calabash_boy (0:37 +1)
+
+##J. Regular Cake
+
+> solved by sy_chen (4:39 +1)
+
+Consider an intermediate regular $\text{lcm}(m,n)$-gon. The intermediate polygon has the same radius as the inner one, and has the same center-edge distance as the outer one.
+
+##K. Piecemaking
+
+> solved by Roundgod (0:47 +2)
+
+Mark vertices in $A$ as black and vertices in $B$ as white. Let $dp_{v,0/1/2}$ be the minimum answer considering the subtree of $v$, with the connected component that $v$ lies in is colorless/black/white. The transferring is trivial.
+
+#Replay
