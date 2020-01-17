@@ -1,0 +1,81 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Discover Vladivostok 2019. Division A Day 4
+
+Practicing Date: 2019.8.28
+
+Contest Link: [Discover Vladivostok 2019. Division A Day 4](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002608)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%204/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Discover Vladivostok 2019. Division A Day 4](https://github.com/wcysai/Calabash/tree/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%204)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A.  Survival Route
+
+> unsolved
+
+##B. Dispersed parentheses
+
+> solved by sy_chen (0:32)
+
+##C.  Chocolate triangles
+
+> unsolved
+
+##D.  LWDB
+
+> solved by Roundgod (1:43)
+
+Construct the centroid decomposition tree of the original tree, such that the maximal depth becomes $O(\log{n})$. For each vertex, maintain a monotone stack containing the updates with the distances and the operation time. For each update/query, one need to transverse from the vertex to the root on the centroid decomposition tree, and a binary search is also needed when answering queries. It takes $O(\log{n})$ for operation type $1$ and $O((\log{n})^2)$ for operation type $2$. Therefore the overall complexity is $O(n\log{n}+q(\log{n})^{2})$, where the former part is for building up sparse table for querying LCA. 
+
+##E.  Pea-City
+
+> solved by sy_chen (4:04)
+
+##F. Beautiful sums
+
+> solved by sy_chen (3:24 +5)
+
+##G. Nano alarm-clocks
+
+> solved by sy_chen (1:16 +2)
+
+##H.  Lunch
+
+> solved by Roundgod (1:17 +1)
+
+##I. Accounting Numeral System
+
+> solved by calabash_boy (3:25 +4)
+
+##J. Ceizenpok’s formula
+
+> solved by Roundgod (3:02 +4)
+
+If $m$ is a prime, we can use Lucas's formula. But when $m$ isn't, we may factorize $m$, computing $\binom{n}{k}\mod p^{k}$ for each $p^{k}\mid m$, where the latter part can be calculated with extracting the parts that contains $p$ as a divisor and calculate recursively. 
+
+##K. Dividing an orange
+
+> solved by Roundgod (4:42 +1)
+
+Observe the patterns and do some case analysis, be careful when $n=2k$, $n=2k+1$, $n=2k+2$ or $n=2k+3$.
+
+##L. The Pool for Lucky Ones
+
+> solved by Roundgod (0:49 +3)
+
+Enumerate over all possible cases amd take the minimum answer.
+
+
+#Replay
+
+
