@@ -1,0 +1,106 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 ICPC Asia Yinchuan Onsite
+
+Practicing Date: 2019.10.23
+
+Contest Link: Not Available Yet
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019%20ICPC%20Asia%20Yinchuan%20Onsite/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019 ICPC Asia Yinchuan Onsite](https://github.com/wcysai/Calabash/tree/master/2019%20ICPC%20Asia%20Yinchuan%20Onsite)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Girls Band Party
+
+> solved by sy_chen (2:32 +2)
+
+This can be solved by dynamic programming. For each name preprocess the maximum power of card with and without bonus color respectively. Then let `dp[n][s][i][j]` denote the state that considering the first $n$ cards, with $s$ cards selected, and among the selected cards, there are $i$ cards with bonus names and $j$ cards with bonus color. Finally take the one with maximum eventual point.
+
+##B. So Easy
+
+> solved by Roundgod (0:04 +1)
+
+If the required element is $a[i][j]$, then the answer is $a[1][j]-a[1][1]+a[i][1]$.
+
+##C. Image Processing
+
+> upsolved by Roundgod
+
+Let $dp[i]$be the answer for first $i$ elements, then $dp[i]=\min\limits_{j=0}^{i-k} dp[j]+f(j+1,i)$ where $f(j,i)=\max(a_j,a_{j+1},\dots,a_i)-\min(a_j,a_{j+1},\dots,a_i)$. It can be observed that $argmax$ $dp[i]$ is monotone with respect to $i$. Therefore we can maintain three monotone deques, two for computing suffix minimum/maximum, and the last one for maintaining nondecreasing dp values. The overall complexity is $O(n)$.
+
+##D. Easy Problem
+
+> solved by Roundgod (3:00 +2)
+
+By mobius inversion formula, the answer is $$\sum\limits_{i=1}^{\lfloor \frac{m}{d} \rfloor} \mu(i){\left(  \sum\limits_{j=1}^{\lfloor \frac{m}{id} \rfloor} (id)^k \right)}^n$$.
+
+Precalculate $f(n)=\sum\limits_{i=1}^{n}i^k$, the above formula can be calculated in $O(n\log{m})$ time. Since $n$ is large and $59964251=643\times 93257$, we can calculate $n\bmod \varphi(643)$ and $n\bmod \varphi(93257)$, then use Chinese Remainder Theorem to get the answer.
+
+##E. XOR Tree
+
+> upsolved by Roundgod
+
+Consider $(x\oplus y)^2$, by letting $x_i$ be the $i$th bit in the binary representation of $x$, we can rewrite it as $\left(\sum\limits_{i=0}^{30} [x_{i}\neq y_{i}] 2^i\right)^2=\sum\limits_{i=0}^{30}\sum\limits_{j=0}^{30}[x_{i}\neq y_{i}\wedge x_{j}\neq y_{j} ]2^{i+j}$, where $[S]=\begin{cases} 1 & S\text{ is true}\\ 0 & S\text{ is false} \end{cases}$. Therefore, we can fix $i$ and $j$, then we need to calculate for each vertex $v$, the number of $4(\text{or }2)$ possible bitmasks set in the $i$th bit and $j$th bit in $p(v,k)$, which can be solved in $O(n)$ using long path decomposition. The overall compexity is $O(n(\log A)^2)$, where $A=10^9$.
+
+##F. Function!
+
+> solved by Roundgod (0:50)
+
+The formula can be rewritten as $$\sum\limits_{i=1}^{40}\sum\limits_{a=2}^{a^i\leq n}a\sum\limits_{b=a^i}^{\min(n,a^{i+1}-1)}1$$.
+
+For the summation when $i>1$, we can solve using brute force. When $i=1$, we calculate the case when $a\leq \sqrt{n}$ and $a> \sqrt{n}$ separately. The overall complexity is $O(\sqrt{n})$.
+
+##G. Pot!!
+
+> solved by sy_chen (0:18)
+
+For each prime we may build a segment tree to maintain the maximum order of this prime.
+
+##H. Delivery Route
+
+> solved by sy_chen (3:17 +1)
+
+We may first contract each strongly connected component and obtain a directed acyclic graph, where each component contains only bidirectional edges. We may run Dijkstra's algorithm with multiple starting points for each component, in topological order of the contracted graph. Then we may push the component's results to its successors.
+
+##I. Base62
+
+> solved by calabash_boy (0:32)
+
+##J. Toad’s Travel
+
+> solved by sy_chen (4:44)
+
+Duplicate the non-cycle edges. The resulting graph is Eulerian. Since we do not need to return to the root, we can stop at some point of the graph. The benefit of doing so can be computed by dynamic programming after computing the block-cut tree of the cactus.
+
+##K. Largest Common Submatrix
+
+> solved by calabash_boy (1:42)
+
+##L. Xian Xiang
+
+> solved by sy_chen (4:34 +2)
+
+We can use dynamic programming. First for each pair objects we may precompute the bitmask of objects in the two paths between the two objects. Then we can do the dynamic programming efficiently.
+
+##M. Crazy Cake
+
+> unsolved
+
+##N. Fibonacci Sequence
+
+> solved by sy_chen (0:00)
+
+```
+print '1 1 2 3 5'
+```
+
+#Replay
