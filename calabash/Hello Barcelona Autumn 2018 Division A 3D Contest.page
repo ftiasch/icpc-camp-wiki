@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Hello Barcelona Autumn 2018 Division A 3D Contest
+
+Participating Date: 2018.9.29
+
+Contest Link: [Hello Barcelona Autumn 2018 Division A 3D Contest](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002555)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Bootcamp/Contest4/statements.pdf)
+
+Solution Link: [Code for Hello Barcelona Autumn 2018 Division A 3D Contest](https://github.com/wcysai/CodeLibrary/tree/master/Bootcamp/Contest4)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Elementary
+
+> solved (0:03)
+
+Just apply the elementary mixed products of three vectors.
+
+##B. Cross Spider
+
+> solved (0:25 +4)
+
+To check if there exists a plane that can contain all the points, just choose three points that are not colinear and check for each other point if they appear on the plane formed by the three points.
+
+##C. Line Teleportation
+
+> upsolved
+
+Compute the distance between line and line, and between point and line, then the problem is reduced to a single-source problem. Use floyd-warshall to get accepted. (On contest I used Dijkstra but got WA, is it that Dijkstra loses more precision?)
+
+##D. Segment Distance in 3D
+
+> solved (0:52)
+
+Use two ternary searches to determine the answer. Can also be done with case analysis.
+
+##E. 3D Printing
+
+> upsolved
+
+Just reorient the faces and then compute the volume of the polyhedrons.
+
+##F. 3D Model
+
+> unsolved
+
+##G. Asteroids
+
+> unsolved
+
+##H. Connected Rings
+
+> unsolved
+
+##I. Black Hole
+
+> unsolved
+
+##J. The Worm in the Apple
+
+> unsolved
+
+##K. Spheres
+
+> unsolved
+
+##L. Cubes
+
+> unsolved
+
+##M. Another Short Problem
+
+> unsolved
+
+#Replay
+
+To be added.
