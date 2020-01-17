@@ -1,0 +1,108 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia Jiaozuo Regional Contest 
+
+Participation Date: 2018.12.08
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/The%2043rd%20ACM%20ICPC%20Asia%20Jiaozuo%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, Roundgod
+
+Solution Link: [Code for The 43rd ACM ICPC Asia Jiaozuo Regional Contest](https://github.com/wcysai/Calabash/tree/master/The%2043rd%20ACM%20ICPC%20Asia%20Jiaozuo%20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Xu Xiake in Henan Province
+
+> solved by Roundgod (0:08)
+
+Just check the number of nonzero entries.
+
+##B. Ultraman vs. Aodzilla and Bodzilla
+
+> upsolved by sy_chen
+
+Here are some observations of the problem:
+
+1. For given integer $k$ such that $1 \leq k \leq \frac{n(n+1)}{2}$, a subset of the first $n$ positive integers summing up to $k$ always exists;
+2. To minimize the total damage, we would like to kill one monster as soon as possible;
+3. By the above observation, the total number of rounds does not depend on when a monster is killed.
+
+We may compare which monster to kill first is better. For two cases, we may design two different strategies to achieve the lexicographically smallest sequence.
+
+##C. Supreme Command
+
+> solved by Roundgod (4:25 +2)
+
+One may notice that only the leftmost and rightmost columns will be merged, and once they got merged, they will never separate again. The same holds for the uppermost and lowermost rows. So basically we will maintain what are the merged rows/columns, which will quickly lead us to the answer for the first type of queries. To answer the second type of queries, we need to calculate some number of rooks in a rectangle, which can be solved offline using sweepline+binary indexed tree. Time complexity: $O(m\log{n})$.
+
+##D. Keiichi Tsuchiya the Drift King
+
+> solved by Roundgod (1:21)
+
+With some drawings one can figure out that the answer is $\begin{cases} \sqrt{(a+r)^{2}+b^2}-r&d>\arctan{\frac{b}{a+r}}\\ \sqrt{(a+r)^{2}+b^2}\cdot \cos{(d-\arctan{\frac{b}{a+r}})}-r& otherwise \end{cases}$
+
+##E. Resistors in Parallel
+
+> solved by sy_chen (1:05)
+
+Let $m$ be the smallest integer such that the product of first $m$ primes does not exceed $n$. Then the answer is $\sum_{i=1}^m \frac{p_i-1}{p_i}$.
+
+The main trouble of the problem is the big integer. Fortunately, the maximum possible $m$ is not so big, so we can use Python to compute all possible answers locally, and hardcode them into, e.g., a map.
+
+##F. Honeycomb
+
+> solved by sy_chen (0:46 +1)
+
+A simple dfs attacks this problem. One should be careful about the coordinates calculation.
+
+##G. Shortest Paths on Random Forests
+
+> unsolved
+
+##H. Can You Solve the Harder Problem?
+
+> upsolved by sy_chen
+
+We may compute the suffix array of the input sequence along with the height array. We would like to compute the contribution of prefixes of a suffix $S(i)$, whose lengths are at least `h[rk[i]]`. The remaining part is to compute the sum of maximum values of these prefixes. Since we can do it offline, draw a scanline and move it from right to left. With the help of monotonic stack and segment tree, every query can be answered in time logarithmic to input size. 
+
+##I. Distance
+
+> solved by Roundgod (0:44)
+
+One should alternately picking the leftmost/rightmost point. To see why this is true, one can rewrite the formula in case of prefix sums. Time complexity: $O(n)$.
+
+##J. Carpets Removal
+
+> unsolved
+
+##K. Counting Failures on a Trie
+
+> unsolved
+
+##L. Connected Subgraphs
+
+> upsolved by Roundgod
+
+Similar to Problem B in [Petrozavodsk Winter-2017. Xiaoxu Guo Contest 5](https://wiki-calabash.icpc.camp/Petrozavodsk%20Winter-2017.%20Xiaoxu%20Guo%20Contest%205), here we need to classify the different graphs $G_i$ that is a connected subgraph which can be an edge-induced graph of four edges, and compute how many subgraphs that are isomorphic to it in the original graph $G$, which is denoted as $cG(G_i)$. Then the answer is $\sum\limits_{i}c_{G}(G_{i})$, Here we denote $\Delta$ as the number of triangles(i.e, cycles of order 3) in the original graph $G$(Why this symbol? Because it's a triangle...). $\Delta$ can be computed in $O(m\sqrt{m})$ using sqrt-decomposition.
+
+$G_{1}$: A cycle of length 4, $c_{G}(G_{1})$ can also be computed in $O(m\sqrt{m})$ using sqrt-decomposition.
+
+$G_{2}$: A claw of 5 vertices, to be specific, a vertex with degree 4 plus 4 leaves. $c_{G}(G_{2})=\sum\limits_{v}\binom{deg(v)}{4}$
+
+$G_{3}$: A triangle plus an additional edge. $c_{G}(G_{3})=\sum\limits_{\{u,v\},\{v,w\},\{u,w\}\in E} (deg(u)-2)+(deg(v)-2)+(deg(w)-2)$.This can be computed alongside with computing $\Delta$.
+
+$G_{4}$: A $Y-$shaped tree(I guess you can imagine it...). $c_{G}(G_{4})=(\sum\limits_{u,v,\{u,v\}\in E}\binom{deg(u)-1}{2}\cdot (deg(v)-1))-2c_{G}(G_{3})$. 
+
+$G_{5}$: A chain of 5 vertices. $c_{G}(G_{5})=(\sum\limits_{u,v,w,\{u,v\}\in E,\{u,w\}\in E} (deg(v)-1)(deg(u)-1))-4c_{G}(G_{1})-3\Delta-2c_{G}(G_{3})$. This formula can be computed in $O(m)$ easily.
+
+Thus, the overall complexity is $O(m\sqrt{m})$.
+
+#Replay
+
+
