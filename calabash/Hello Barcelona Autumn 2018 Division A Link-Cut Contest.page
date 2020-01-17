@@ -1,0 +1,49 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Hello Barcelona Autumn 2018 Division A Link-Cut Contest
+
+Participating Date: 2018.9.28
+
+Contest Link: [Hello Barcelona Autumn 2018. Both Divisions Contest 2.](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002553)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Bootcamp/Contest3/statements.pdf)
+
+Solution Link: [Code for Hello Barcelona Autumn 2018 Division A Link-Cut Contest](https://github.com/wcysai/CodeLibrary/tree/master/Bootcamp/Contest3)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Garland Checking
+
+> solved (0:27)
+
+Just some basic Link-Cut Tree operations.
+
+##B. Desert Game
+
+> unsolved
+
+##C. Galilei
+
+> unsolved
+
+##D. For Fun and Lulz
+
+> solved (2:05 +1)
+
+It's actually finding the minimum spanning forest while dynamically adding edges, use link-cut tree to maintain the information, when adding an edge, if the two vertices are already connected, the edge with the largest weight should be cut, which can also be done by Link-Cut Tree. 
+
+To convert the edge weight into vertex weight, just add new vertices representing the edges. Time complexity: $O(m\log{n})$.
+
+##E. Link Cut Digraph
+
+> unsolved
+
+
+#Replay
+
+To be added.
