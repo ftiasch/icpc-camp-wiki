@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019, Day 3, Div.A
+
+Participation Date: 2019.02.18
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Apples
+
+> solved by sy_chen (2:55)
+
+This problem asks whether a given number $n$ can be written as the sum of two distinct numbers of form $p^k - p^{k_1} - p^{k_2} \cdots$ where $k > k_1 > k_2 > \cdots$.
+
+First, convert the number into base-p. Then we can dynamic program from lower digit to higher. The dp state can be written as `dp[l][c][u1][u2]` where $l$ is the number of digits considered, $c$ represents borrow from higher digit, $u1$ and $u2$ represent whether the two numbers end.
+
+##B. Brains Eating
+
+> unsolved
+
+##C. Classical Problem
+
+> solved by sy_chen (0:40 +4)
+
+Though a cubic brute-force algorithm can easily pass this problem, this can be solved in $O(n^2 \log n)$ time. First fix a vertex, and sort all other points according to the angles to the fixed point. Then we can apply a rotational sweep line algorithm, maintaining the points in two half-planes. The total number of events (a point moves to the other half line as the sweep line rotates) is linear.
+
+##D. Deep In The Ocean
+
+> upsolved by sy_chen
+
+First, direct the edges according to the Eulerian cycles. Then, we can find a perfect bipartite matching between out-direction and in-direction of each vertex. It can be proved that the perfect matching always exists for given input graph.
+
+##E. Endgame in Reversi
+
+> solved by sy_chen (4:28 +3)
+
+Brute force with simple pruning can pass this problem.
+
+##F. Frozen Orb
+
+> unsolved
+
+##G. Gapless Filling with Tetrominoes
+
+> upsolved by sy_chen
+
+This problem can be solved by state compression dynamic programming with matrix multiplication acceleration. The state is defined as the bitmask of the last 3 rows. The number of reachable states is no more than 100. To make state transition, fill the last row from right to left.
+
+##H. Hand-made Cube
+
+> unsolved
+
+##I. Inverse LCP Problem
+
+> solved by calabash_boy (2:46 +3)
+
+reverse the origin string, then lcp(longest common prefix) becomes lcs(longest common suffix), which is LCA in SAM. And we can searching all answers according to the order.
+
+##J. Just Created Language
+
+> unsolved
+
+##K. Killer
+
+> unsolved
+
+#Replay
+
+To be added.
