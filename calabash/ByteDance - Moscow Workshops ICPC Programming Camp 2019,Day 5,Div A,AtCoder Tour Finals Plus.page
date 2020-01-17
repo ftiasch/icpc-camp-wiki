@@ -1,0 +1,85 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019,Day 5,Div A,AtCoder Tour Finals Plus
+
+Participation Date: 2019.02.21
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Magic
+
+> solved by Roundgod (0:56)
+
+First, we can assume that the magician will only use the trick when he has to, so the problem becomes how we can force the magician to use up all his tricks.
+
+For the first trick, Snuke must iterate over each box at least once, and for the next tricks, Snuke must iterate over at least $n-1$ boxes - all but the last box of the last iteration. Therefore, to check if there's a valid answer, let $d_{i}=max(0,k+1-a_{i})$ be the number of turns that the $i$th box must get 'skipped', we must have $\sum\limits_{i=1}^{s}d_{i}\leq k$ and $d_{i}\leq \lceil \frac{k}{2} \rceil$ for each $i$. If this is satisfied, we can always construct some valid movements.
+
+##B. Multiple of Nine
+
+> unsolved
+
+##C. Triangular Lamps
+
+> unsolved
+
+##D. Distinct Boxes
+
+> unsolved
+
+##E. e
+
+> unsolved
+
+##F. Paths
+
+> upsolved by Roundgod
+
+To find the number of paths of length 4 starting from each vertex, we need to first compute the number of walks of length 4 starting from each vertex and subtract the overcounted part, which needs some case analysis based on the trajectory of the walk.
+
+During the case analysis, the number of cycles of order 3 and order 4 passing through each vertex is needed, which can be calculated in $O(M\sqrt{M})$ with the well-known brute force by the degree of vertices.
+
+##G. Ranges
+
+> unsolved
+
+##H. Simple Game
+
+> unsolved
+
+##I. Union 2SAT
+
+> solved by sy_chen (3:47)
+
+First we may build a binary tree for the input. We may perform heavy-light decomposition and binary search on the answer for each heavy path. The time complexity could be proved to be $O(n \log^2 n)$. A better solution is divide-and-conquer on depth. Let `sat(u)` denote a function to check the answer for subtree $u$. The solution works as follows, where `[l, r]` denotes the range of depth, `v` denote the set of vertices to process
+
+```
+solve(l, r, v)
+  if v is empty then return
+  m = (l+r)/2
+  for each vertex u in v of depth m
+    if sat(u)
+      label all vertices in v below u as satisfiable
+    else
+      label all vertices in v above u as unsatisfiable
+  move all unlabeled vertices in v with depth less than m to v1
+  move all unlabeled vertices in v with depth greater than m to v2
+  solve(l, m-1, v1)
+  sovle(m+1, r, v2)
+```
+
+The solution clearly runs in $O(n \log n)$ time.
+
+#Replay
+
+To be added.
