@@ -1,0 +1,91 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Siberia
+
+Practicing Date: 2019.4.30
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Siberia](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010397)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Siberia](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##1. GUI
+
+> solved by sy_chen (0:05)
+
+Some simple case analysis.
+
+##2. Searching on the Cube
+
+> solved by sy_chen (2:45 +1)
+
+First, go straight forward until we find a point closest to the target. Then we rotate left, and go straight forward. There are two points locally closest to the target, but only one of them is the target. If the number of closer responses is more than farther responses since the last locally closest point, the current point is the target; otherwise the other is the target.
+
+##3. Mirrors
+
+> unsolved
+
+##4. Roads to cinematography
+
+> solved by Roundgod (3:23 +2)
+
+Note the we must orient the first point to east, and the last point to south. The remaining part can be solved using dynamic programming: Let $dp_{l,r}$ denote the minimum length of roads to be built to connect points in the range $[l,r]$ if we orient the $l-1$th point to east, and $r+1$th point to south.
+
+##5. Geometric solver
+
+> solved by sy_chen (0:43)
+
+This can be solved by disjoint set union, maintaining the relations of the lines.
+
+##6. Monsters
+
+> unsolved
+
+##7. Regular expressions
+
+> upsolved by sy_chen
+
+Note that there is a universal regexp `((a|(g|(t|c)))*)`, hence we may generate all possible regexps shorter than 16 characters. There are about 100k such regexps. We may remove some useless regexps, such as using the commutativity and associativity of or, associativity of concatenation and idempotence of Kleene closure and removing 0. After applying these regular algebraic properties there are still hundreds of thousands of regexps, still too much. Another strong pruning is that, we can only examine the regexps such that the set of terminal characters is equal to the set of characters of given strings. With these optimizations all remaining regexps can be easily checked by using builtin regexp engine.
+
+##8. WSO-2017 soccer team
+
+> solved by sy_chen and Roundgod (2:15)
+
+Let $x_i = a_i - d_i$, $y_i = a_i + d_i$, then the problem asks find the sum of $y_i$ in this interval, plus the sum of the $k$ largest $x_i$ in this interval, minus the $k$ smallest $x_i$ in this interval.
+
+##9. Primitive divisors
+
+> solved by Roundgod (0:59 +1)
+
+After precomputing all primes $p$, we need to find those such that $p^n\equiv 1(\mod p)$ and $p^m\not \equiv 1(\mod p)$ for any $m\leq n$. One may conjecture that the number of $p$s satisfying $p^n\equiv 1(\mod p)$ is not much, which turns 
+out to be true. To verify $n$ is the minimum number that satisfies the equation, one may note that, according to Fermat's little theorem $a^{p-1}\equiv 1(\mod p)$, thus we only need to check the divisors of $p-1$.
+
+##10. Tickets
+
+> solved by sy_chen (0:08)
+
+Count the number of characters differ and decide which one is larger.
+
+##11. Logarithm smoothing
+
+> solved by sy_chen (3:48)
+
+We may binary search on the answer. Each segment of the polyline is the tangent of the lower curve. Starting from the upper-left point we may iteratively drawing a tangent and find the intersection with the upper curve. All remaining part is analytic geometry and numerical computation.
+
+##12. Outer space signals
+
+> solved by calabash_boy (0:23)
+
+#Replay
+
+To be added.
