@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2016 ACM-ICPC World Finals.
+
+Practicing Date: 2019.03.31
+
+Contest Link: [2016 ACM-ICPC World Finals](https://codeforces.com/gym/101242)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2016%20ACM-ICPC%20World%20Finals/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2016 ACM-ICPC World Finals](https://github.com/wcysai/Calabash/tree/master/2016%20ACM-ICPC%20World%20Finals)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Balanced Diet
+
+> solved by calabash_boy (4:30 +1)
+
+##B. Branch Assignment
+
+> solved by Roundgod (2:54)
+
+After computing the shortest path from the headquarter two times(one time with reversed edge), and call the sum of the two distances for some vertex $v$ as $f(v)$, one may find this problem is reduced to: partitioning the $b$ vertices into $s$ sets $S_{1},S_{2},\dots,S_{s}$, minimizing $\sum\limits_{i=1}^{s}(\vert S_i \vert-1) \sum\limits_{v\in S} f(v)$, which is a traditional dynamic programming problem after sorting all vertices according to the $f(v)$ value. This takes $O(sb^2)$ normally, but can be optimized to $O(sb\log{b})$ applying divide-and-conquer optimization. 
+
+##C. Ceiling Function
+
+> solved by Roundgod (0:47)
+
+Just implement the binary tree structure, and when comparing the tree structures, do it recursively.
+
+##D. Clock Breaking
+
+> solved by sy_chen (4:11 +6)
+
+Enumerate all possible starting time, and for each starting time, test the status of every segment. A starting time is valid if every segment either always on or off, or it works. A segment definitely works iff in all valid starting time, it works and it is not always on or off. A segment is burnt in iff it doesn't work in all valid starting time and it is always on. Burnt out segments are tested likewise. In all other cases the status can not be determined.
+
+##E. Forever Young
+
+> solved by sy_chen (0:40 +1)
+
+We may enumerate all possible bases up to 1000000. For larger bases, the result has no more than 3 digits. So we just try all possible 2-digit and 3-digit numbers, and the bases can be solved via a linear or quadratic equation, respectively. Pay attention to the potential overflow.
+
+##F. Longest Rivers
+
+> upsolved by sy_chen
+
+The given structure obviously forms a tree. The problem equivalently asks, for each given leaf, after removing the path from the leaf to root, the minimum possible paths whose lengths are more than the one moved can be formed. If there is only one query, this is a simple dynamic program on tree, followed by a simple greedy algorithm: if there is one child path exceeds the limit, we extend this path; otherwise, we extend the shortest one.
+
+Actually, removing the path from to leaf to root is unnecessary, it does not change the answer. If there are many queries, just maintain the paths formed. We compute the time of any path change event, and process all events and queries in order.
+
+##G. Oil
+
+> solved by sy_chen (1:20 +2)
+
+Assume the straight line passes through one end point of some deposit, wlog. Try all such endpoint. Consider rotating sweep line algorithm, we may transform each deposit to two events, one is addition in some slope and the other is subtraction in some other slope. Integer arithmetics are useful to prevent precision issue. Also proper tie-breaking rule must be considered.
+
+##H. Polygonal Puzzle
+
+> unsolved
+
+##I. Road Times
+
+> upsolved by Roundgod
+
+After decomposing paths into optimal edges, the problem is reduced to a linear programming problem, which can be solved using simplex algorithm.
+
+##J. Spin Doctor
+
+> unsolved
+
+##K. String Theory
+
+> solved by calabash_boy (2:10 +2)
+
+##L. Swap Space
+
+> solved by Roundgod (1:34 +4)
+
+One first needs to decide the order when reformatting drives, where the "exchange argument" technique is needed. One should be careful with the order, and so some case analysis to be safe.
+
+##M. What Really Happened on Mars?
+
+> upsolved by sy_chen
+
+This is a plain and dry implementation problem. Just implement according to the specifications in problem statement.
+
+#Replay
+
+To be added.
