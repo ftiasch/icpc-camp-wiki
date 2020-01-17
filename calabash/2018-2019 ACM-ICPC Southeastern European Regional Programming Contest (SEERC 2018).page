@@ -1,0 +1,92 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018-2019 ACM-ICPC Southeastern European Regional Programming Contest (SEERC 2018)
+
+Participation Date: 2018.11.04
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018-2019%20ACM-ICPC%20Southeastern%20European%20Regional%20Programming%20Contest%20(SEERC%202018)/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018-2019 ACM-ICPC Southeastern European Regional Programming Contest (SEERC 2018)](https://github.com/wcysai/Calabash/tree/master/2018-2019%20ACM-ICPC%20Southeastern%20European%20Regional%20Programming%20Contest%20(SEERC%202018))
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Numbers
+
+> unsolved
+
+##B. Broken Watch
+
+> solved by sy_chen (1:39)
+
+First, the lengths of the hands mean nothing but only affect the number of permutations of three vertices of a triangle. Specifically, if there are 3 (2, 1, resp.) different lengths, then the number of permutations is 6 (3, 1, resp.). The number of valid positions of the arms is a polynomial of degree 3 about $n$ when $n$ is odd or even, respectively.
+
+##C. Tree
+
+> solved by calabash_boy (1:15)
+
+binary search the biggest length of path, use dp to check whether some length limit is legal, $dp[i][j]$ means consider all nodes in i's subtree, the most nodes we could choose such that the longest length between i and a black node in i's subtree. when union all sons of a node u, we should make sure the length between two black node in two subtree not exceed the limit of length.
+
+##D. Space Station
+
+> unsolved
+
+##E. Fisherman
+
+> solved by Roundgod (0:43)
+
+We may count the contribution for each fish separately, which would be a consecutive interval in the sorted array of fishermen, which can be converted into single point update in the difference array. Time complexity: $O(n\log{n})$.
+
+##F. Min Max Convert
+
+> upsolved by sy_chen
+
+First, merge adjacent identical elements in target sequence. The answer exists iff the resulting sequence is a subsequence of the original sequence.
+
+To produce the sequence of operations, various ways exist. One of them which is relatively easier to implement I think is to move each element of subsequence in the original sequence to its correct position, then propagate its value in its interval.
+
+##G. Matrix Query
+
+> solved by sy_chen (1:04)
+
+Consider the (imaginary) quad tree that partitions the matrix. Set the initial contribution of each node to 1. For a non-leaf node such that the submatrix it represents is painted with only one color, the extra contribution is -4. We want to maintain the number of such nodes.
+
+Note that the matrix can be constructed by a Cartesian-like product of a row vector and a column vector. Hence, we may use segment tree to maintain the row vector and column vector, and take note of the number of pure-color node for each level. The number of pure-color submatrices equals the product of numbers of pure-color nodes of the same level in two segment trees.
+
+##H. Modern Djinn
+
+> solved by calabash_boy (3:09)
+
+This problems requires to find a subset of edges of size at least $|M|/4+1$, such that each vertex has no in-degree or no out-degree.
+
+We may randomly decide the type of each vertex. The expected number of edges that can be selected is $|M| / 4$. So, with high probability, we may find an answer within a few iterations.
+
+##I. Inversion
+
+> solved by sy_chen (2:08)
+
+The concept of independent-dominant set looks overwhelming, however, since the graph is derived from the inversion pairs, which form a *partially-ordered set*, an independent set is actually an *antichain* of the poset, and an independent-dominant set is actually a *maximal antichain*, which is a maximal increasing subsequence of the given permutation.
+
+We may easily deduce a comparison table from the given graph; furthermore, we can reconstruct the permutation. The remaining part is easy: just do a simple dynamic programming to find out the number of maximal increasing subsequence.
+
+##J. Rabbit vs Turtle
+
+> unsolved
+
+##K. Points and Rectangles
+
+> upsolved by sy_chen
+
+The problem requires us to use some data structures to maintain the positions of points and corners of rectangles. When inserting the points or rectangles, query the number of related rectangles or points, then update the answer. 
+
+To maintain a set of 2D points, one may use nested trees. I used BIT as upper layer and splay (provided in pb_ds) as lower layer, which gets time limit by a factor of less than 10%, probably due to the large constant factor of splay. However, we may discretize both dimensions, and use BIT in both upper layer and lower layer. This reduces constant factor by about a half, making it successfully pass the time limit.
+
+#Replay
+
+To be added.
