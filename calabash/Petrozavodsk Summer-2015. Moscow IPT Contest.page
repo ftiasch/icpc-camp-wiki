@@ -1,0 +1,88 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2015. Moscow IPT Contest
+
+Practicing Date: 2018.11.14
+
+Contest Link: [Petrozavodsk Summer-2015. Moscow IPT Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001464)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2015.%20Moscow%20IPT%20Contest./statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2015. Moscow IPT Contest](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2015.%20Moscow%20IPT%20Contest.)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Rectangle Query
+
+> upsolved by sy_chen
+
+One may use bitset to record all occurrences of x-coordinates of a row. Then the answer is the number of 1s in the some range of or-sum of corresponding rows. One may divide the points into groups of size about 1000, and preprocess all possible or-sums of consecutive blocks. Hence it is very easy to restore the required bitset for each query.
+
+##B. Game with A Fairy
+
+> solved by sy_chen (0:49)
+
+This is a fake interactive problem, because the response of the interactor provides no information. For each $0 \leq i < \log_2 n$, we can just randomly select $2^i$ bits and set them to 1, and we may repeat this process until we find an answer. After some analysis we may find out that this works with high probability.
+
+> A brief analysis
+
+> Since the interactor is non-adaptive, we may assume the number of trunks is $k$. Assume $n/k = q = 2^t$ a power of 2, otherwise round to the nearest power. The probability that we randomly selecting $q/2$ items succeeds is $kq/2n(1-q/2n)^{k-1} = 1/2(1-1/2k)^{k-1} \approx 1/4$, which is a considerable constant rate.
+
+##C. Portkeys
+
+> solved by Roundgod (1:01 +1)
+
+Naive construction of the graph will lead to $O(n^{2})$ vertices, which is not affordable. However, we can optimize the construction using a segment tree, and find the shortest path from the first vertex using $0/1$ Breadth First Search. Time complexity: $O(n\log{n})$.
+
+##D. Maximal Common Subpair
+
+> solved by calabash_boy and Roundgod (4:45 +3)
+
+Build the SAM using S#T, for each node in SAM, we update a pair(ST1,ST2), meaning the leftmost position this node appearing in S and T. Samely, reverse S and T, build another SAM, for each node in SAM, we update a pair(ED1,ED2), meaning the rightmost position this node appearing in S and T. Then for each tuple ( (ST1,ST2) , (ED1,ED2) ), if there being ST1 <= ED1 && ST2 <= ED2, then we the two SAM node can be a legal answer. 
+
+##E. $k$-transpositions
+
+> solved by sy_chen (2:05 +1)
+
+The answer can be written as $\sum_{i=0}^{k} S(n, n - i)$. For fixed $k$, it is a polynomial of degree about $2k$ with respect to $n$. We may compute the first few terms and use Lagrange's interpolation formula to evaluate at arbitrary point.
+
+##F. PQ Tree
+
+> unsolved
+
+##G. Random Walking 
+
+> solved by Roundgod (3:20 +4)
+
+First for each directed edge, we need to compute the expected number of times needed to traverse it. We should use two dynamic programming on trees to compute the values, one from top to bottom, and the other from bottom to top. Then fo each query, we just need to add the expected numbers on the chain together, which can be done in $O(n\log{n})$ using binary lifting.
+
+##H. Sasha and Swag Strings
+
+> upsolved by calabash_boy
+
+Use C-SAM(also called cdwag ?) to solve this problem.
+
+In brief, firstly build Suffix Automaton of string $S$. Then compress those nodes who have only one transform edge, it's easy to see that the total length of transform edge in the result compressed DAG is the same as the original DAG, which is $O(3*n)$. The result compressed DAG is compressed Suffix-Tree by union edges whose string are the same. So we can build Suffix Automaton for every edge in compressed DAG to calculate the number of different substrings.
+
+Total complexity is $O(26\cdot 3 \cdot 2 \cdot n)$. 
+
+##I. Tree Confrontation
+
+> unsolved
+
+##J. Two Airlines
+
+> upsolved by sy_chen
+
+We may maintain to stacks of edges, one containing a chain of 'A' edges, the other containing 'W' ones, and the are connected at the bottom. To extend an edge, first query the color between the top of the two stacks, and, if it is 'A', try to extend the top of 'W'. After some case analysis we may extend one edge in exactly two queries. Note there are some special cases to deal with, e.g. one of the stacks are empty. 
+
+#Replay
+
+To be added.
