@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2016. Warsaw U Contest, XVI Open Cup Onsite
+
+Practicing Date: 2019.9.3
+
+Contest Link: [Petrozavodsk Summer-2016. Warsaw U Contest, XVI Open Cup Onsite](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001486)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2016.%20Warsaw%20U%20Contest%2C%20XVI%20Open%20Cup%20Onsite/statements.pdf)
+
+Participants: sy_chen, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2016. Warsaw U Contest, XVI Open Cup Onsite](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2016.%20Warsaw%20U%20Contest%2C%20XVI%20Open%20Cup%20Onsite)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Gambling
+
+> upsolved by sy_chen
+
+The operation seqence on a person is a coset of the whole sequence. For each coset one may preprocess the prefix sums, and store the indices for each value of the prefix sums. We may compute the time of a person who loses all money and simply takes the minimum over them. To compute that value, simulate the operation sequence. To speed up the simulation, one may use binary search on the index array to find the first time that all money is lost.
+
+##B. Colourings
+
+> upsolved by Roundgod
+
+For each used color in the beautiful coloring which is only used once, we make all vertices with the same color in the smart coloring to share the same color also in the beautiful coloring. In this manner we can always get a coloring that is both beautiful and smart in the end. The time complexity is $O(n)$ since each node may get updated at most once. Note that the graph structure is useless and the answer is always yes.
+
+##C. Counter-manifestation
+
+> unsolved
+
+##D. Championships
+
+> solved by sy_chen (0:39)
+
+Just remove the vertices with degree less than $k$ and then repeat.
+
+##E. Neon
+
+> solved by Roundgod (4:28 +2)
+
+Let's instead of computing the number of subsequences satisfying $j_m-j_1\geq k$, compute the number of all subsequences satisfying $w_{j_1}w_{j_2}\cdots w_{j_m}=s$ in $O(nm)$ time, and subtract from it the satisfying $j_m-j_1<k$. Fix the position $i$ of the first element in $s$, then we need to find how many subsequences from $s_{i+1,i+2,\cdots,i+k-1}$ equals to $t_{2,3,\cdots m}$. We consider the dynamic programming transition as a matrix, split $s$ in intervals of length $k-1$ and for each of them maintain the prefix/suffix product. This should run in $O(nm^3)$, which can hardly fit into time limit. But noting that there are only $O(m)$ nonzero entries of each matrix, so we can precompute the prefix/suffix poduct in $O(nm^2)$. Also when answering each query, we always multiply square matrix to the vector to get $O(m^2)$ each time. The overall complexity should be $O(nm^2)$.
+
+##F. Robots
+
+> unsolved
+
+##G. Equation
+
+> solved by sy_chen (0:12)
+
+Since $f(n)$ is not too large, we may enumerate the value of $f(n)$.
+
+##H. Hay
+
+> solved by Roundgod (1:45 +3)
+
+Note that the relative order of the hays would never change, thus after sorting the sequence, we need to support set value of a suffix, add $\Delta d\cdot a_i$ on a prefix, find the leftmost position that exceeds $b$, and query the sum of all elements, which can be solved in $O(n\log{n})$ using a segment tree.
+
+##I. Gym
+
+> unsolved
+
+##J. Triangles
+
+> solved by sy_chen (1:19)
+
+We may enumerate the right angle point of the triangle. Then classify all vectors by their slope. Try the second vertex and the number of possible third vertices can be computed via binary search.
+
+#Replay
