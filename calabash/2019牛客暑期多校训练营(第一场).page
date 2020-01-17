@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第一场)
+
+Practicing Date: 2019.7.18
+
+Contest Link: [2019牛客暑期多校训练营(第一场)](https://ac.nowcoder.com/acm/contest/881#description)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第一场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%B8%80%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Equivalent Prefixes
+
+> solved by sy_chen (0:39 +1)
+
+This is a standard binary search problem. Two prefixes are equivalent iff their Cartesian trees are identical.
+
+##B. Integration
+
+> solved by sy_chen (1:00)
+
+##C. Euclidean Distance
+
+> solved by sy_chen (2:59)
+
+One can find via Lagrange multiplier that some components are 0, while others have the property that $x_i - a_i$ is fixed. Using binary search or any other technique to find the answer.
+
+##D. Parity of Tuples
+
+> unsolved
+
+##E. ABBA
+
+> solved by Roundgod (1:52)
+
+One can prove that, the given constraint is equivalent to: for each prefix of the string, the number of $A$s minus the number of $B$s is not greater than $n$, and not smaller than $-m$, which yields a trivial $O(n+m)^2$ dynamic programming solution for each query.
+
+Also, after some precomputing, this problem can be solved $O(1)$ each query using Gessel-Viennot Lemma.
+
+##F. Random Point in Triangle
+
+> solved by sy_chen (0:33)
+
+##G. Substrings 2
+
+> unsolved
+
+##H. XOR
+
+> solved by Roundgod (2:15 +2)
+
+Compute the linear basis of the numbers, and then we have two types of numbers, that is a basis, and that isn't. For each number $a_i$ that isn't a basis, it can be represented as a set of linear basis, which can be denoted as $mask_i$ and for a fixed set of numbers $S$ that aren't a basis, the set of numbers that has xor sum equal to zeros with them is $\bigoplus\limits_{v\in S}mask_{v}$. Therefore we can calculate the two parts of the answers separately. For computing the linear basis part, we should calculate the contribution for each basis and add it to the answer.
+
+##I. Points Division
+
+> upsolved by Roundgod
+
+After coordinate compress and sort the points according first by $x$ then by $y$, the answer can be found maintaining some dynamic programming values, which can be optimized to $O(n\log{n})$ using segment tree.
+
+##J. Fraction Comparison
+
+> solved by sy_chen (0:04)
+
+#Replay
+
+
