@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIV Open Cup named after E.V. Pankratiev. GP of SPb
+
+Participating Date: 2019.08.11
+
+Contest Link: [XIV Open Cup named after E.V. Pankratiev. GP of SPb](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010231)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/XIV%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20SPb/statements.pdf)
+
+Solution Link: [Code for XIV Open Cup named after E.V. Pankratiev. GP of SPb](https://github.com/wcysai/CodeLibrary/tree/master/Contests/XIV%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20SPb)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Bracket Expression
+
+> solved (0:05 +1)
+
+Use a stack to compute the positions of matched brackets.
+
+##B. Checkers
+
+> solved (1:03)
+
+Just brute force.
+
+##C. Convex and Compact
+
+> unsolved
+
+##D. Forbidden Words
+
+> upsolved 
+
+Encode bitmasks to run in $O(\frac{n\cdot 2^n}{w})$ time. For more details refer to [Elegant brute force](https://wcysai.github.io/2019/08/12/Elegant-Brute-force/) (in simplified Chinese)
+
+##E. Four Prime Numbers
+
+> solved (0:13)
+
+First compute the number of ways to divide a number into two prime numbers, then the answer can be easily found. Time complexity is $O(\frac{n^2}{(\ln n)^2})$.
+
+##F. Set Intersection
+
+> solved (0:42 +3)
+
+Use logarithms to avoid precision issues in computing factorials.
+
+##G. Medals
+
+> solved (4:00)
+
+Can be modelled as maximum-flow problem.
+
+##H. Reachability
+
+> solved (3:09 +1)
+
+Use std::bitset to accelerate the computing of reachability. Time complexity is $O(\frac{n^3q}{w})$.
+
+##I. Revolving Lasers
+
+> unsolved
+
+##J. Snakes on the Stone
+
+> solved (1:42)
+
+Each time make the snake run above the already-occupied cell. One can prove that in this manner the snakes can always be untangled.
+
+##K. Dependent Subsets
+
+> solved (3:50 +6)
+
+Fix a choice of a vector, then sort all other vectors, after eliminating by this vector. Then one can only take a set of dependent vectors. Take the maximum answer among all possible choices.
+
+# Replay
+
+To be added.
