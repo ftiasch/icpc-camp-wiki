@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIX Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia, Division 1.
+
+Practicing Date: 2018.10.15
+
+Contest Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia, Division 1](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010434)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Eurasia/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XIX Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia, Division 1](https://github.com/wcysai/Calabash/tree/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Eurasia)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##1. Trampler
+
+> solved by Roundgod (0:21 +1)
+
+Just simulate the process.
+
+##2. Video Buffering
+
+> unsolved
+
+##3. Package
+
+> solved by calabash_boy (1:41)
+
+Firstly, delete these software existing a version that doesn't appear in any conflict equivalence class, and choose this version of the software.
+
+Secondly, run a bipartite matching between software and conflict equivalence class, if all software find a match, there exists solutions, otherwise there is no solution.
+
+A software matching a conflict equivalence class means this equivalence should choose a version of this software, and not choose any else in the class.
+
+##4. Vasya's Graph
+
+> solved by sy_chen (1:27 +4)
+
+##5. Quadratic Equation
+
+> solved by sy_chen (0:10)
+
+Either $(x - 1)(x + Y)$ or $(x -1)(x - Y)$ is feasible.
+
+##6. Alignment
+
+> unsolved
+
+##7. Rocket
+
+> unsolved
+
+##8. Cabbage
+
+> solved by Roundgod (0:46)
+
+Simply binary search for the answer.
+
+##9. Segments
+
+> solved by sy_chen (4:55 +8)
+
+Notwithstanding the lengthy statement and the odd way of data generation, it is enough to implement an online algorithm supporting adding a point and counting the number of points in an interval. This can be solved by segment tree with nodes allocated dynamically.
+
+##10. Civilization 
+
+> solved by Roundgod (3:53 +1)
+
+Similar to Dijkstra's algorithm, we store in each tile a pair $(least number of rounds used, number of MP used in the current round)$. The relaxation process should be based on the terrain and feature of two tiles. Carefully implement the algorithm. Note that the grid is a hexagon, so this tile has at most six adjacent tiles.
+
+##11. Ecliptic
+
+> solved by sy_chen (2:57)
+
+If $\phi > \alpha$, the beamer never cross the ecliptic plane, and the closest point occurs 6 hours later; otherwise, they may cross after an angle of $\arcsin(\tan \phi / \tan \alpha)$.
+
+#Replay
+
+To be added.
