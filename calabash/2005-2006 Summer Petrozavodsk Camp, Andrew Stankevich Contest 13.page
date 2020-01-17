@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 13
+
+Participating Date: 2019.05.14
+
+Contest Link: [2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 13](https://codeforces.com/gym/100216)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC13/statements.pdf)
+
+Solution Link: [Code for 2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 13](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC13)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Generalized Assignment
+
+> solved (1:05 +5)
+
+Recall for the case when $k=1$, which is a typical problem that can be solved using Kuhn's algorithm. In the general case, this can be solved using Min-Cost-Maximum-Flow. Mark all rows and columns as vertices, add an edge from the $i$th row to the $j$th column with capacity $1$ and cost $a_{i,j}$, an edge from the source to each row with capacity $k$ and cost $0$, an edge from each column to the sink with capacity $k$ and cost $0$. Then the min-cost flow from the source to the sink with capacity $nk$ is the answer. 
+
+##B. Bandits
+
+> solved (0:29 +1)
+
+Go backwards and maintain the final proposal if we take the last $i$ bandits into account. For each bandit, he needs to bribe at least half of the remaining bandits, i.e., propose one more diamond for them or no if they were meant to die. Since he may want to keep the most for himself, he should bribe those with the smallest requirements. If he can't make enough diamonds for half of the remaining bandits, he should die. One thing to note is that, if at some time, some bandits share the same required diamonds, since they would accept the proposal if they are **certain** of getting the same number of diamonds or more in the future, it may be enough to offer them one diamond only.
+
+##C. Matrix Game
+
+> solved (4:02 +2)
+
+After binary search on the answer, the problem is reduced to checking if there's a possible solution to the set of linear constraints, which can be solved using Simplex algorithm.
+
+##D. Paper Mosaic
+
+> unsolved
+
+##E. Shortest Path
+
+> solved (1:55 +3)
+
+Typical shortest path problem, where one should also mark all vertices that are in some negative loop, or reachable from a vertex in some negative loop, as no shortest path. To find out the shortest path and vertices in the negative loop, Bellman-Ford algorithm is enough, which runs in $O(nm)$. 
+
+##F. Cutting Puzzle
+
+> solved (1:13 +1)
+
+The answer is $\lceil \log_2{a} \rceil + \lceil \log_2{b} \rceil + \lceil \log_2{c} \rceil$, one can prove this bound is both sufficient and necessary.
+
+##G. Pyraminx
+
+> unsolved
+
+##H. Sand-Glass
+
+> solved (1:26)
+
+Let's say the current height of the subcone is $h'$, and the current volume of the subcone is $V'$ then the equation holds that $V'=\frac{\pi {h'}^3r^2}{3h^2}$.
+
+##I. Solid Tilings
+
+> solved (3:02 +1)
+
+If one only consider the constraint that there's no vertical line, then a solution with dynamic programming on broken file  can solve the problem in $O(nm2^m)$, with maintaining the states on the broken file as a bitmask. Taking the constraint that there's no horizontal line into account, one should add another mask as a new dimension, to check for each horizontal line if it becomes unseparable. This solution runs in $O(nm2^{2m})$. Since direct implementation without space optimization may not fit into memory limit, I hardcoded the answers to get accepted.
+
+##J. Lucky Tickets
+
+> upsolved
+
+Note that for every vertex, at most one flight should end at it, and at most one flight should start at it. For each flight that starts at $u$ and ends at $v$ , if there exists an edge $(u,v)$ that is consistent with this flight, we may use this edge to finish the flight, or if there exists an vertex $w$ with neither flight starting or ending at it, we may use edges $(u,w)$ and $(w,v)$ to finish the flight. Therefore the problem can be converted into bipartite matching.
+
+#Replay
+
+To be added.
