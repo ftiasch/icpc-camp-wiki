@@ -1,0 +1,97 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVII Open Cup named after E.V. Pankratiev. Grand Prix of America (NAIPC-2017)
+
+Practicing Date: 2018.9.19
+
+Contest Link: [XVII Open Cup named after E.V. Pankratiev. Grand Prix of America (NAIPC-2017)](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010376)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20America%20(NAIPC-2017)/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVII Open Cup named after E.V. Pankratiev. Grand Prix of America (NAIPC-2017)](https://github.com/wcysai/Calabash/tree/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20America%20(NAIPC-2017))
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Pieces of Parentheses
+
+> solved by Roundgod (0:53)
+
+First sort the strings by the order we would concatenate any two of them, it can be shown that this forms a total order. Then let $dp[i][j]$ denote the maximum length we can get when we are currently at the $i$th string and the number of differences between the left parentheses and the number of the right parentheses is $j$. The answer can be found in $dp[n][0]$. Time complexity is $O(n^{3})$.
+
+##B. Stars in a Can
+
+> unsolved
+
+##C. Stretching Streamers
+
+> solved by sy_chen (2:02)
+
+We number the streamers clockwise, and regard each edge as an interval. A spanning tree adheres to the condition described in problem statement can be written as a nested structure of intervals; specifically, such structures can be generated according to any of the following rules:
+
+- An empty sequence is valid;
+- If A and B are valid, then AB is also valid;
+- If A and B are valid, then [AxB] is also valid, where x denotes the gap between arbitrary adjacent elements.
+
+For example, the spanning tree described in the first picture can be written as
+
+~~~
+ [[[ ] ] ]
+   0 1 2 3
+~~~
+
+Hence a standard interval dynamic programming may work.
+
+##D. Heaps from Trees
+
+> solved by sy_chen (1:21)
+
+This problem can be solved in various ways. A solution easy to come up but hard to implement is to use balanced binary search trees to maintain the answers for each root node value. The simplest one is using multiset. When processing some node, we merge the multisets of child trees, then delete the smallest element no less than the value of current node, if any, and insert the value of current node to the multiset. Finally, the size of the multiset is the answer. Use the small-to-large trick to merge multisets, we may achieve $O(n \log^2 n)$ time complexity.
+
+The rationale of the solution is described below. We define a partial order on the nodes of the trees. We say $a \preceq b$ if $b$ is an ancestor of $a$ and the value of $b$ is no greater than $a$. Note that what we want is a maximum set where every two elements are incomparable, i.e. antichain. Recall Dilworth's theorem, which says that the size of maximum antichain in a poset equals to the size of minimum chain cover in that poset. We can construct the minimum chain cover greedily, and the multiset is used to store the heads of the chains in the current minimum chain cover.
+
+##E. Blazing New Trails
+
+> solved by Roundgod (4:32 +8)
+
+Observing that if we increase the weight of the special edges, when selecting a minimum spanning tree of the given graph, the number of special edges chosen will decrease, and will increase vice versa. So we can do a binary search of the critical point when we can choose exactly $w$ edges, then computing the weight of the minimum spanning tree minus the added weight will finally yield the answer.
+
+##F. Incremental Double Free Strings
+
+> unsolved
+
+##G. Apple Market
+
+> unsolved
+
+##H. Maximum Color Clique
+
+> upsolved by sy_chen
+
+It can be proved that there must exist some vertex where all the incident edges have the same color. Otherwise, for every vertex, we take two different colored edges incident to that vertex, then the resulting graph must contain a cycle, and every two adjacent edges of that cycle must have different colors.
+
+After observing this important fact, we may repeatedly remove such vertices, obtaining a sequence of vertices associated with some colors. Also, after some analysis we may discover that for some set of vertices, the size of maximum clique is the maximum number of vertices except the last one which are associated with the same color, plus one. It remains to compute the number of sets for each possible size of maximum clique, which is not very hard actually.
+
+##I. Sky Resort
+
+> unsolved
+
+##J. Yin and Yang Stones
+
+> solved by sy_chen (0:10)
+
+The answer is yes iff the string contains the same nubmer of 'W's and 'B's.
+
+##K. Unbalanced Parentheses
+
+> unsolved
+
+#Replay
+
+To be added.
