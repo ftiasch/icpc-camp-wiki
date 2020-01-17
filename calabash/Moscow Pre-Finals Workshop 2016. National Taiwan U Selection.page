@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Moscow Pre-Finals Workshop 2016. National Taiwan U Selection
+
+Practicing Date: 2019.10.24
+
+Contest Link: [Moscow Pre-Finals Workshop 2016. National Taiwan U Selection](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006282)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Moscow%20Pre-Finals%20Workshop%202019.%20KAIST%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Moscow Pre-Finals Workshop 2016. National Taiwan U Selection](https://github.com/wcysai/Calabash/tree/master/Moscow%20Pre-Finals%20Workshop%202016.%20National%20Taiwan%20U%20Selection)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. As Easy As Possible
+
+> solved by sy_chen (0:53)
+
+For each position $l$, define $f(l)$ as the minimum value such that range $[l, f(l))$ contains a subsequence `easy`. Then we may use binary lifting and answer each query very efficiently.
+
+##B. Be Friends
+
+> solved by sy_chen (3:42)
+
+We can compute the minimum spanning tree by Boruvka's algorithm. To compute the shortest edge from each component, just use binary trie.
+
+##C. Coprime Heaven
+
+> unsolved
+
+##D. Drawing Hell
+
+> solved by sy_chen (1:28)
+
+If the number of points strictly within the convex hull is even, the second player wins; otherwise the first player wins.
+
+##E. Easiest Game
+
+> upsolved by Roundgod
+
+Assume wlog that $n\leq m$. The conclusion is that a pair $(s,t)(s\leq t)$ is valid if and only if $gcd(s+t,s-t)=1$, $s+t\leq n$ and $2t\leq m$. The remaining can be solved in $O(\sqrt{\max{(n,m})})$ per test case using Mobieus inversion and number theory sqrt decomposition.
+ 
+##F. Fibonacci of Fibonacci
+
+> solved by Roundgod (0:40 +2)
+
+It can be observed that $F_{n}$ modulo $20160519$ has a period of $26880696$ without preperiod. The remaining is a simple matrix exponentiation.
+
+##G. Global Warming
+
+> unsolved
+
+##H.  Hash Collision
+
+> solved by sy_chen (3:17)
+
+Let $F_n(x)$ be the ordinary generating function for the number of strings of length $n$ for each hash value. Note that $F_{s + t}(x) = F_s(x^{p^t})F_t(x) \mod x^m$. Note that $F_s(x^{p^t})$ can be computed by permuting the coefficients of the polynomial $F_s(x)$.
+
+##I. Increasing or Decreasing
+
+> solved by Roundgod (3:18)
+
+I solved this problem using digit dynamic programming with some precalculations in $O(T\log{\max{(l,r)}})$ during the contest. A much easier method is to precompute all possible numbers, whose amount doesn't exceed $2\times 10^6$, and use binary search to find the answer.
+
+##J.  Just Convolution
+
+> solved by sy_chen (0:28 +1)
+
+Update the answer by the top $n \ln n$ elements in the Minkowski sum of the two sequences. For the remaining elements in the result sequence, compute the value by brute force.
+
+#Replay
