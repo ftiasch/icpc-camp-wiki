@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019, Day 4, Div.A
+
+Participation Date: 2019.02.19
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Another LCA Problem
+
+> solved by sy_chen (2:51 +3)
+
+LCT.
+
+##B. Bar
+
+> unsolved
+
+##C. Counting Palindromes
+
+> solved by calabash_boy (1:42)
+
+To be added.
+
+##D. Drawing Triangles
+
+> unsolved
+
+##E. European Football Championship
+
+> upsolved by Roundgod
+
+F**king implementation problem. Skip it.
+
+##F. Filling Out
+
+> unsolved
+
+##G. Graph Theory Problem
+
+> unsolved
+
+##H. Hatto Nero
+
+> unsolved
+
+##I. Invasion
+
+> solved by sy_chen (4:27 +3)
+
+The problem can be transformed to the following one: given $n$ vectors starting from the origin, find a plane passing the origin such that the number of vectors pointing to one part of the space partitioned by the plane is maximized.
+
+Without loss of generality we may assume that some vector lies in the plane. We fix this vector. The possible plane rotates around the vector. Compute the directions of all other vectors projected to the plane perpendicular to the fixed vector. The remaining part can be solved by a rotational sweep line algorithm on the plane. The overall complexity is $O(n^2 \log n)$.
+
+##J. Jailing Rabbits
+
+> upsolved by sy_chen
+
+This problem can be solved by dynamic programming.
+
+For the sake of clarity, assume that the boundary of the original grid has already been painted with a unique color. Consider a bounded subrectangle $[xl, xr] \times [yl, yr]$ of the grid as a subproblem. We may record the expected lengths of movements of rabbits inside the rectangle, until all of them reach the corners of the rectangle, along with the expected number of rabbits that will reach each corner. To make state transitions, just try each hole strictly inside the rectangle. The total time complexity is $O(n^3 m^3)$.
+
+##K. Key Arrays
+
+> solved by sy_chen (2:07 +1) 
+
+BBST with lazy tags.
+
+#Replay
+
+To be added.
