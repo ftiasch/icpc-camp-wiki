@@ -1,0 +1,98 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIX Open Cup named after E.V. Pankratiev. Grand Prix of China
+
+Practicing Date: 2019.3.23
+
+Contest Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of China](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010455)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20China/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of China](https://github.com/wcysai/Calabash/tree/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20China)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Array
+
+> solved by sy_chen (1:44 +2)
+
+##B. Chiaki Chain
+
+> unsolved
+
+##C. Cut the Plane
+
+> unsolved
+
+##D. Edges Counting
+
+> solved by Roundgod (2:20)
+
+First we would specify how many connected graphs of $n$ vertices that contain at most one loop are there. If there is no loop, then according to [Cayley's formula](https://en.wikipedia.org/wiki/Cayley's_formula), there are $n^{n-2}$ such graphs. If there is a loop that contains $m$ vertices, then according to the generalization of Cayley's formula, we can view that graph as combining the root of trees of a forest into a cycle, therefore the number of graphs should be $\binom{n}{m}\frac{m!}{2}n^{n-m-1}$.
+
+The remaining part is much easier. In general, we need to calculate $f(n),g(n),h(n),l(n)$, which are the number of connected graphs of $n$ vertices that contain at most one loop, the number of graphs of $n$ vertices such that each connected part contains at most one loop, the overall weight over all connected graphs of $n$ vertices that contain at most one loop, and the answer to the problem.
+
+The overall complexity is $O(n^2)$.
+
+##E. Equanimous
+
+> unsolved
+
+##F. Fighting Against Monsters
+
+> upsolved by calabash_boy
+
+Do a dp. let dp[i][j][k] be the lowest damage after $i$ round, and the first monster has got $j$ damage, and the second monster has got $k$ damage. It's true that the two small brother monster will die before 102 round. So after 102 round, we can use greedy method.
+
+##G. Mysterious Triple Sequence
+
+> unsolved
+
+##H. Inner Product
+
+> upsolved by calabash_boy
+
+Let us call the first tree T1, and the second tree T2.
+
+Perform Divide and conquer of point in tree T1. Each time, we find a center, and calculate the answer of point pair whose path in T1 contains that center, and what we need to do is put them on T2, and perform a DP in virtual tree of these points.
+
+So the complexity is $O(nlog^2n)$.
+
+##I. Counting Polygons
+
+> upsolved by Roundgod
+
+One lemma needed for this problem: a set of edges can form a convex polygon iff the length of the longest edge is smaller than a hlaf of the perimeter of the polygon. The proof is omitted here. 
+
+Obviously, one should apply Burnside's Lemma for this problem, which is, $$\vert M \vert=\frac{1}{\vert G \vert}\sum\limits_{g\in G} \vert X_{g} \vert$$, where $G$ is a group acting on $X$, $M$ is the set of patterns, and $X_{g}$ is the fixed-point set of $g\in G$. Here $G$ is the dihedral group for this problem, i.e, including rotations and reflections. Here we want to count the number of fixed points for each $g$.
+
+If $g$ doesn't include a reflection, this is a typical problem. We just need to enumerate over the divisors $d$ of $m$, and count the number of patterns of period $d$, which may involve inclusion-exclusion principle to subtract the invalid cases. Then we need to multiply it by $\varphi(\frac{m}{d})$. 
+
+If $g$ contains a reflection, then more cases need to be analyzed: If $m$ is odd, then in all $g$s formed this way, we have $\frac{m-1}{2}$ cycles of length $2$ and one cycle of length $1$. If $m$ is even, then in half of the $g$s, we have $\frac{m}{2}$ cycles of length $2$. For another half, there are $\frac{m}{2}-1$ cycles of length $2$ and two cycles of length $1$. To calculate the number of fixed points, more work is needed, but the idea is similar.
+
+Finally, the overall time complexity: $O(n+T\sqrt{m})$.
+
+##J. Square Graph
+
+> upsolved by calabash_boy
+
+This problem can be splitted into two subproblems.
+
+The first problem is : given a string, find all the 2-power substring, where 2-power substring can be representing as UU. We can use a classical $nlogn$ algorithm to do this job. More specifically, for 2-power substring of length 2L, we call the char at position of 0, L, 2L, 3L,....$\lfloor \frac{n}{L}\rfloor L$ the key-char, each 2-power substring of length 2L has two and only two Contiguous key-char, so we could check each two such pair's LCS and LCP.
+
+The second problem is :given $nlogn$ tuples <L,R,k>, meaning each point $i\in[L,R]$, there exists an edge between $i$ and $i+w$, the length of which is $w[k]$. for each interval with length of 2's power, we create a point. And for the intervals of the same length, we use a Union-Find-Set to maintain the Connectivity, when two points are connected, it means that each positions in the two intervals are connected in order. Then follow kruskal's mst algorithm. 
+
+##K. Three Dimensions
+
+> unsolved
+
+#Replay
+
+Unbalanced contest with uninteresting problems, seems that the setters are more into showing off than setting problems.
