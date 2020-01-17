@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2011-2012 Summer Petrozavodsk Camp, Warsaw U Contest
+
+Participating Date: 2019.08.12
+
+Contest Link: [2011-2012 Summer Petrozavodsk Camp, Warsaw U Contest](https://codeforces.com/gym/101097)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/2011-2012%20Summer%20Petrozavodsk%20Camp%2C%20Warsaw%20U%20Contest/statements.pdf)
+
+Solution Link: [Code for 2011-2012 Summer Petrozavodsk Camp, Warsaw U Contest](https://github.com/wcysai/CodeLibrary/tree/master/Contests/2011-2012%20Summer%20Petrozavodsk%20Camp%2C%20Warsaw%20U%20Contest)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Chocolate
+
+> solved
+
+Consider the distance of each border to the forbidden cell as nim piles. After that use a digit dynamic programming to calculate the answer. 
+
+##B. Programming Contest
+
+> solved
+
+A fact is that, for each turn, greedily make the maximum problem solved is always optimal. Therefore we can run Hungarian algorithm in each round, which would exceed time limit. An observation is that if at some round a person can't solve any proble, then he can't solve any problem in any of the next rounds. Therefore the time complexity is again $O((n+m)nm)$.
+
+##C. Drawing
+
+> unsolved
+
+##D. Evacuation
+
+> solved 
+
+For each update run a SPFA-like thing, then the overall complexity over all queries is $O(nm)$.
+
+##E. Inspection
+
+> solved
+
+Only the at most two centroid can have an answer other than $-1$. Do a tree dynamic programming on these vertices, be careful with the edge cases.
+
+##F. Meteors
+
+> solved 
+
+Classical problem of parallel binary search.
+
+##G. Party
+
+> solved
+
+By each time erasing two vertices that don't have an edge between them, we erase at least one vertex from the non-clique part. After at most $n/3$ such steps, the remaining part is a clique.
+
+##H. Periodicity
+
+> unsolved
+
+##I. Sticks
+
+> solved
+
+First sort all sticks according to their length, then go from the shortest to the longest, maintaining for each color the longest two sticks with different colors that their colors are both different from this one. Time complexity should be $O(kn)$.
+
+##J. Trams
+
+> solved
+
+# Replay
+
+To be added.
