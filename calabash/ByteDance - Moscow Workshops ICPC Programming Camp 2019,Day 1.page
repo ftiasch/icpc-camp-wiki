@@ -1,0 +1,95 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019, Day 1
+
+Participation Date: 2019.02.16
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Annual Beauty Contest
+
+> upsolved by sy_chen
+
+We may simulate the process according to the input, with the contestant selected by Vasya noted by an empty space. If Katya appears in the list, then the rank of Katya is that in the list. Otherwise, the rank of Katya is 1.
+
+##B. Chess
+
+> unsolved
+
+##C. Concatenation
+
+> upsolved by calabash_boy
+
+Using SAM, we could calculate all distinct substrings of $S$, then there occurrences as well, then we could calculate $sum[i][j]$ representing the total length of substrings of $S$ whose prefix is equal to the substring that equals to node $i$ in SAM and $j$ length. After that, we can process queries online. Complexity $O(nq)$. Attention : use $vector<int> sum[maxn]$ rather than 2-dimension array $sum[maxn][maxn]$to avoid MLE.
+
+##D. Dictionary
+
+> solved by sy_chen and calabash_boy (3:29 +8)
+
+Use DP. $dp[i][j]$ meaning that consider $S[1..j]$ and the last word is $S[i,j]$, how many methods we can get. For $dp[i][j]$, next word will be some $S[j+1][k]$, where $k$ should be large enough to satisfy the lexicographical order(possibly not exist). $O(n^2logn)$ can not pass. One should initialize all suffix's LCP between each other in $O(n^2)$ time.
+
+##E. Friends' Friends
+
+> solved by sy_chen (2:05 +1)
+
+First, decode the input. Then, compute the symmetric closure of the binary relation. Finally, iterate over all pair of rows, and test whether the bitwise and of the rows are zero. The total complexity is cubic, divided by wordsize.
+
+##F. Game Initialization
+
+> solved by Roundgod (1:15 +1)
+
+Let $dp[v][i]$ be the answer for the subtree rooted at $v$, such that the smallest distance from $v$ to any chosen vertex is $i$. Originally it takes $O(nc^2)$, but using suffix sums, this can be optimized to $O(nc)$.
+
+##G. Orders
+
+> solved by Roundgod (2:21 +1)
+
+Typical problem which can be solved by Segment Tree Beats.
+
+##H. Oriental Puzzle
+
+> unsolved
+
+##I. Data Packets
+
+> unsolved
+
+##J. Quartet Distance
+
+> unsolved
+
+##K. Rectangles
+
+> solved by sy_chen (3:36 +6)
+
+We may binary search for the answer. To check whether a specific value $v$ can be achieved, we may design an algorithm similar to one that solves the maximum submatrix sum problems: fix the upper and lower bounds of the matrix (hence the problem becomes one-dimensional), then the condition can be written as
+$$ \frac{S_i - S_j}{i - j + h} \geq v $$
+where $h$ is difference of upper and lower bounds. This can be further rewritten as 
+$$ (S_i - v i) - (S_j - v j) \geq vh $$
+By iterating over $S_i - vi$ this can be easily solved in linear time. The total complexity is $O(n^3 \log \epsilon)$, which can fit in time limit by squeezing the constant factor.
+
+To remove the logarithmic factor, we may solve each one dimensional subproblems independently. Randomly shuffle and iterate over the subproblems. 
+First, check whether the current subproblem could improve the current answer. If so, binary search for the answer and update the current best value. The expected number of subproblems that may improve the answer is the (natural) logarithm of the total number of subproblems. Hence the total complexity is $O(n^3 + n \log n \log \epsilon)$, which fits well in the time limit.
+
+Another class of solutions use convex hulls. Such solutions may obtain precise fractional answer, but they are much harder to implement.
+
+##L. Christmas Tree 
+
+> solved by Roundgod (4:33)
+
+After some trivial observations, this problem turns into - given some weighted points in the Cartesian plane, one need to answer some queries which asks one to find the maximum weight in a rectangle, which can be solved by KD-Tree.
+
+#Replay
+
+To be added.
