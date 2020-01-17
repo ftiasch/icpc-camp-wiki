@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 9
+
+Participating Date: 2019.4.19
+
+Contest Link: [2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 9](https://codeforces.com/gym/100211)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC9/statements.pdf)
+
+Solution Link: [Code for 2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 9](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC9)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Chip Designing
+
+> upsolved
+
+Constructive problem. Refer to the code for one possible way of construction.
+
+##B. Electricity
+
+> upsolved
+
+Since the graph is acyclic, then we may compute any topologic order of the graph. To construct the answer, we may try to swap some consecutive pair of vertices $(u,v)$ in the topologic order of the graph, that is, if there's an edge between them, reverse its direction, otherwise do nothing. It can be proved that this way yields the correct answer in most cases. The only case where there's no solution is that there are more than one edges between a same pair of vertices and more than one of them need to be reversed.
+
+##C. Numbers to Numbers
+
+> upsolved
+
+Hardcode implementation problem. Also dynamic programming is needed to perform the transformation in such a way that as many words as possible are transformed to numbers, and in case of tie, the first number should be as great as possible. Refer to the code for more implementation details.
+
+##D. Police Cities
+
+> solved (1:55 +1)
+
+After condensing the graph, the nodes with indegree $0$ or outdegree $0$ should own at least one police station, apply dynamic programming to get the answer. Biginteger operations needed.
+
+##E. Quadratic Equation
+
+> solved (3:40 +1)
+
+Note that in $\mathbb{Z}/2\mathbb{Z}$, if $p(x)=\sum\limits_{i=1}^{n}x^{a_i}$, then $(p(x))^2=\sum\limits_{i=1}^{n}x^{2a_i}$, thus we may construct a set of linear equations, which can be solved using Gaussian Elimination in $O(n^3)$.
+
+##F. Restore the Tree 
+
+> solved (4:22)
+
+Firstly the distance matrix should satisfy that for each three distinct leaves $i,j,k$, we have $d(i,j)+d(i,k)+d(j,k)$ is even, and $d(i,j)+d(i,k)>d(j,k)$. (If $d(i,j)+d(i,k)=d(j,k)$, then $i$ isn't a leaf) We may construct the tree recursively, for each $i$ finding the pair of vertices $(u,v)$ that gives the smallest $d(i,u)+d(i,v)-d(u,v)$ and append $i$ to the vertex with distance $d(u,i)-\frac{d(i,u)+d(i,v)-d(u,v)}{2}$ from vertex $u$ on the chain $(u,v)$. The overall complexity is $O(n^3)$.
+
+##G. Unrhymable Rhymes
+
+> solved (0:49 +6)
+
+Greedily pick the rhyme that ends the earliest. Should be easy after precomputing the next occurence for each numer at every position.
+
+##H. Selling Tickets
+
+> upsolved 
+
+At first sight this problem can only be solved with brute force, however there are cleverer methods. Note that we may never divide a group of four into a group of three and another group of one, thus we may enumerate over the set of groups of three and groups of four, the remaining part can be solved with greedy.
+
+##I. Traces
+
+> solved (1:16 +1)
+
+Apart from the length and number of occurence of each letter must be the same, the necessary and sufficient condition for the answer to be 'YES' is: for each pair of $(i,j)$ that $(i,j)\notin I$, the longest subsequence consisting of $i$ and $j$ should be the same for both strings.
+
+##J. Ray Tracing
+
+> upsolved
+
+Stereometry problem. To precisely compute the intersection point may be painful, but one can apply ternary search, and the problem is reduced to finding the distance between a point and a cylinder, which can be solved using some case analysis and basic stereometry methods. Since the distance function isn't exactly bitonic(with an interval of zero in the middle), one should be careful to deal with the choice of ternary search.
+
+#Replay
+
+To be added.
