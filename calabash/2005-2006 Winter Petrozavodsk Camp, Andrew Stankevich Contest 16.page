@@ -1,0 +1,74 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 16
+
+Participating Date: 2019.07.03
+
+Contest Link: [2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 16](https://codeforces.com/gym/100220)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC16/statements.pdf)
+
+Solution Link: [Code for 2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 16](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC16)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Cactusability
+
+> solved (4:11)
+
+This problem can be solved by dynamic programming on trees. Let $f_{v}$ be the answer for the subtree rooted at $v$, $g_{v}$ be the number of ways to make the subtree rooted at $v$ a cactus as well as choosing a vertex available to direct upwards except for $v$, $h_{v}$ be the number of ways to make the subtree rooted at $v$ a cactus as well as choosing a vertex available to direct upwards including $v$. Since every vertex can only lie on at most one simple cycle, there are in all three cases: do nothing, connect one vertex with $v$, or connect the two vertices in two different subtrees. Apply transition according to each case. The time complexity is $O(n)$ ignoring the needed biginteger operations.
+
+##B. Darts
+
+> solved (0:32)
+
+Apply depth first search to generate all solutions.
+
+##C. Domino in Casino
+
+> solved (1:57)
+
+The constraints that $\neq m$ may lure people to apply dynamic programming on broken files, but it takes $O(nmk2^m)$, which is way too slow. The correct approach is to use min-cost-maximum-flow. Bicolor the graph and add edges to the adjacent vertices with capacity one and cost equal to the product of the integers on them. To deal with negative weights, one can apply Bellman-Ford in implementation of min-cost-maximum-flow, or add an offset to each edge and minus them back when calculating the final answer.
+
+##D. Love Is...
+
+> unsolved
+
+##E. Set Partitions
+
+> unsolved
+
+##F. Pipe Layout
+
+> solved (2:24)
+
+This is a very classic problem of dynamic programming on broken files. Thereare at most three states in each grid, and the time complexity is $O(3^{\min(n,m)}nm)$.
+
+##G. Word Square
+
+> solved (1:14 +2)
+
+ry all subset of $n$ strings, and then use depth-first search to check whetheris's possible. There are at most $\binom{20}{10}=184756$ possible subsets, and depth-first search ideally takes constant time since it is guaranteed that all words are the English words.
+
+##H. Subword
+
+> unsolved
+
+##I. HTML Table
+
+> unsolved
+
+##J. Wheel of Fortune
+
+> upsolved
+
+Just the basic dynamic programming. Let $dp_{mask,pos,i}$ be the probability for Paul's friend to win the game if the set of suggested letters of the boxes are denoted by $mask$, the current player guessing is $pos$ and there are $i$ letters still not suggested. One may think that there exists some cyclic dependence in the transition, but this is not true, since each time $i$ decreases by one. 
+
+#Replay
+
+To be added.
