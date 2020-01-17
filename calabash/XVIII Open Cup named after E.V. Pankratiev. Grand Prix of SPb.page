@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of SPb
+
+Practicing Date: 2018.10.29
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of SPb](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010394)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPb/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of SPb](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPb)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Base $i-1$ Notation
+
+> solved by Roundgod (0:45)
+
+Since $2=(i-1)^{3}+(i-1)^{2}$, when encountering a digit that is more than two, we do the carry by the former formula, time complexity is $O(n)$.
+
+##B. Squaring a Bit
+
+> solved by sy_chen (0:14)
+
+Since there are only ~10^9 square numbers, we may build up and hardcode a lookup table, thus answering a query takes $O(1)$ time.
+
+##C. Chickens
+
+> solved by Roundgod (0:26)
+
+First sort the chickens and eggs by their size. We make choices for each chicken from the largest size to the smallest size, then the answer can be easily calculated in $O(n\log{n})$.
+
+##D. Lights at a Crossing
+
+> unsolved
+
+##E. Decimal Form
+
+> solved by sy_chen (4:38 +1)
+
+We want to find a fraction $a/b$ $(0 \leq a < b \leq 10^9)$ in `[x - 5e-19, x + 5e19)`. Some teams' code libraries may contain ready codes to do this. In case that one doesn't have such code, just convert the two decimals into continued fractions, and find a fraction with minimum denominator between them.
+
+UPD: In `fractions` module of python, there is a method called `limit_denominator` for Fraction class, which can be directly used to solve this problem.
+
+##F. Martian Maze
+
+> unsolved
+
+##G. Wet Mole
+
+> solved by sy_chen (0:53 +2)
+
+Just run a simple dfs algorithm as specified in problem statement, and find arbitrary position which is not filled with water.
+
+##H. Oddities
+
+> unsolved
+
+##I. Sorting on the Plane
+
+> solved by sy_chen (3:03 +1)
+
+The key observation is that, we may choose arbitrary vector as pivot, dividing the whole plane into two half-planes, and partition all vectors in two sets, according to which half-plane they are in. The vectors in each set form a total order, and thus we may use any standard sorting algorithm to sort them. Finally, compare the first vector in the first set and the last vector in the other set, we may decide whether all vectors lie in the same half-plane. The combination of sorted vectors of two sets may function as either a sorted list of vectors if all of them lie in the same half-plane, or a proof that they do not lie in the same half-plane.
+
+A trick in implementation: to sort the vectors, one may call `std::sort()` in C++, and write your own comparator as an interface with the interactor.
+
+##J. Center of List of Sums
+
+> solved by Roundgod (2:10 +2)
+
+First we can binary search on what number lies on the left boundary of the segment, by using a two pointers technique when calculating the number of entries that is less than or equal to some given number, this can be done in $O(n\log{n})$. Then we need to find the next $n$ consevutive entries. To do this, we should first recover the positions of pointers in an array at the position of the left boundary, and then use a priority queue to maintain the next number for each pointer. Keep extracting the smallest number in the priority queue, one can get the full list in $O(n\log{n})$ time.
+
+##K. Cookies
+
+> solved by calabash_boy (3:41 +3)
+
+Store each word as a 26 demension tuple, representing the number of each character in this word, then each word can transform to at most 26 other words, what's more this graph is a DAG, so we preprocess the whole DAG, and answer the questions.
+
+##L. Xor-fair Division
+
+> solved by Roundgod (0:17)
+
+If the xor sum of all elements doesn't equal to $0$, then there's no way to form a xor-fair division.
+
+Otherwise, any division such that each one gets a non-empty set is valid, there are in all $2^{n}-2$ ways to do this.
+
+#Replay
+
+To be added.
