@@ -1,0 +1,119 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2016. JAG Contest
+
+Practicing Date: 2019.11.3
+
+Contest Link: [Petrozavodsk Winter-2016. JAG Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001472)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2016.%20JAG%20Contest/statements.pdf)
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for Petrozavodsk Winter-2016. JAG Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2016.%20JAG%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Merges and Acquisitions
+
+> solved by calabash_boy (0:25)
+
+##B. Change a Password
+
+> solved by Roundgod (0:16)
+
+Just enumerate all possibilities. The time complexity is $O(10\times 10!)$.
+
+##C. Delete Files
+
+> solved by sy_chen (3:37 +2)
+
+Consider deleting all files that we want to delete in a consecutive segment of files. Find the longest file we don't want to delete. We have two choices: delete the files in the two sides separately; delete all files longer than the longest file that we don't want to delete. By recording a threshold $t$ which indicates that all files longer than $t$ have been already deleted, we can solve the problem in $O(n^2)$ time.
+
+##D. Linear Gimmick
+
+> solved by calabash_boy (1:18)
+
+##E. Shifting a Matrix
+
+> solved by sy_chen (0:59)
+
+First write a recursive descent parser to parse the input. Then we need to implement the composition of two permutations. For repetition, we may use repeated squaring. The total time complexity is $O(N^2 L)$.
+
+##F. Modern Announce Network
+
+> solved by Roundgod (3:16 +1)
+
+Consider any steiner tree that connectsthe three groups, there must exist a vertex such that the tree path from this vertex to the three groups are disjoint. Any vertex that lies in some shortest path from this vertex to a group can be the answer. Run breadth first search three times. The time complexity is $O(N+M)$.
+
+##G. Cube Dividing
+
+> upsolved by sy_chen
+
+We may find all 26-connected components of removed cubes. For each such component, find all cubes not removed and 26-connected to this component. The contribution is the number of 6-connected components of these not removed cubes, minus 1. Don't forget to add 1 to the final answer. 
+
+##H. Donut Decoration
+
+> solved by Roundgod and sy_chen (2:13 +2)
+
+Use segment tree to maintain the hash values, the time complexity is $O(n\log{n})$.
+
+##I. Shortest Bridge
+
+> unsolved
+
+##J.  Longest Shortest Path
+
+> upsolved by sy_chen
+
+The problem can be written as a linear program: let $p_u$ denote the final distance from $s$ to $u$, $x_e$ denote the incremental length of edge $e$,
+
+$$
+\begin{align*}
+\max_{p_{u \in V}, x_{e \in E}} \quad & p_t - p_s \\
+\text{s.t.} \quad & p_v - p_u - x_e \leq d_e \quad \forall (u, v) = e \in E \\
+& \sum_{e \in E} c_e x_e \leq p \\
+& x_e \geq 0
+\end{align*}
+$$
+
+Consider the dual program:
+
+$$
+\begin{align}
+\min_{f_{e \in E}, y} \quad & \sum d_e f_e + Py \\
+\text{s.t.} \quad & \sum_{e = uv \in E} f_e - \sum_{e = vu \in E} f_e = 0 \quad \forall u \in V \setminus\{s, t\} \\
+& \sum_{e = su \in E} f_e - \sum_{e = vs \in E} f_e = 1 \\
+& \sum_{e = tu \in E} f_e - \sum_{e = vt \in E} f_e = -1  \\
+& c_e y \geq f_e \quad \forall e \in E\\
+& f_e, y \geq 0 \quad \forall e \in E
+\end{align}
+$$
+
+By replacing $y$ with $1/m$ and $f_e$ with $f_e' / m$ we obtain
+
+$$
+\begin{align}
+\min_{f'_{e \in E}, m} \quad & (\sum d_e f'_e + P) / m \\
+\text{s.t.} \quad & \sum_{e = uv \in E} f_e - \sum_{e = vu \in E} f_e = 0 \quad \forall u \in V \setminus\{s, t\} \\
+& \sum_{e = su \in E} f'_e - \sum_{e = vs \in E} f'_e = m \\
+& \sum_{e = tu \in E} f'_e - \sum_{e = vt \in E} f'_e = -m  \\
+& 0 \leq f'_e \leq c_e \quad \forall e \in E\\
+& m \geq 0
+\end{align}
+$$
+
+Now we may see the program has the form of minimum cost flow, where $d_e$ is the unit cost and $c_e$ is the capacity of edge $e$. Due to the minimum cost flow property $\min (\sum d_e f'_e + P)$ is a convex function with respect to $m$, hence we only need to find the tangent from the origin to that convex hull.
+
+##K. Optimal Tournament
+
+> solved by Roundgod (3:50)
+
+One may observe that it's optimal to battlein some sorted intervals, then come up with a $O(N^3K)$ dynamic programming solution. Use Knuth's optimization to make it $O(N^2K)$. 
+
+#Replay
