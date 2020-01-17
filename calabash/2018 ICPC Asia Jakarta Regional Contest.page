@@ -1,0 +1,99 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018 ICPC Asia Jakarta Regional Contest
+
+Practicing Date: 2018.12.05
+
+Contest Link: [2018 ICPC Asia Jakarta Regional Contest](https://codeforces.com/gym/102001/standings/friends/true)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018%20ICPC%20Asia%20Jakarta%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018 ICPC Asia Jakarta Regional Contest](https://github.com/wcysai/Calabash/tree/master/2018%20ICPC%20Asia%20Jakarta%20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Edit Distance
+
+> solved by sy_chen (0:16 +2)
+
+When the numbers of occurrences of 0 and 1 differ, just output a string containing only 0 or 1 depending which one is less frequent. Otherwise, flip the first bit, and all the other bits are set to the first bit of the original string.
+
+##B. Rotating Gears
+
+> unsolved
+
+##C. Smart Thief
+
+> unsolved
+
+##D. Icy Land
+
+> solved by Roundgod (0:52 +5)
+
+First we may assume that both $h\geq 3$ and $w\geq 3$, in this case, all grids not on the border must not be icy unless it would be unreachable. Also there must exist at least one dry land on the border but not in the corner.
+
+The cases with one dimension less than $3$ should be further discussed, but similar anyway.
+
+##E. Artilleries and Defensive Walls
+
+> unsolved
+
+##F. Popping Balloon
+
+> solved by sy_chen (4:20 +1)
+
+A greedy strategy applies here: once Ayu receives a balloon, he should use it at the end of the Budi's longest task among all possible choices. 
+
+##G. Go and Make it Complete
+
+> solved by sy_chen (1:38)
+
+We may use a heap to store all possible completions, using degree sum as key. Since one completion may introduce $O(n)$ potential new completions (edges incident to the completed edge), there are at most $O(n^3)$ heap insertions. A standard binary heap may get TLE here, since $n$ can be up to 500. Note that we are using the heap in a monotonic fashion since we focus only on the maximum key of popped elements, hence a naive implementation of priority queue (named [bucket queue](https://en.wikipedia.org/wiki/Bucket_queue) ?) magically works here.
+
+##H. Lexical Sign Sequence
+
+> solved by Roundgod (2:11)
+
+First to make the sequence lexicographically smallest, we should greedily check if each prefix is possible. To do this, we should maintain all the restrictions, and the operations are: find the minimum element, insert an element, delete an element, and decrease all elements by one, which can be done in $O(n\log{n})$ using a set. 
+
+##I. Lie Detector 
+
+> solved by Roundgod (0:21)
+
+If there are odd occurrences of LIE, just output LIE, otherwise output TRUTH.
+ 
+##J. Future Generation
+
+> solved by sy_chen (2:01)
+
+Mathematically speaking, this problem asks the maximum increasing subsequence of length $n$ of a two-dimensional partially ordered set (one dimension is the lexicographical order of the strings, the other is the ages of the children). A generic solution to such sort of problem is to find an appropriate topological order of the poset and do dynamical programming. Hence we may come up two different but both feasible solutions:
+
+- sort by the lexicographical order of strings, then dynamical programming over the children's ages;
+- sort by the ages of children, then dynamical programming, on the basis of some data structures storing the strings.
+
+since, the second one requires the data structure to support query of maximum value of strings less than specific string, the first one is much more easier to implement.
+
+## K. Boomerangs 
+
+> solved by sy_chen (3:05)
+
+If the graph is tree, this problem is very easy.
+
+Consider each connected component separately. We may expand the graph to tree. First, make a spanning tree of the graph. For every edge that is not in the spanning tree, make an additional node and 'hang' it on the tree.
+
+## L. Binary String
+
+> solved by sy_chen (0:30)
+
+Delete 1 from left to right, then delete 0 one by one. Once the number is less than $K$, print the number of bits deleted.
+
+#Replay
+
+To be added.
