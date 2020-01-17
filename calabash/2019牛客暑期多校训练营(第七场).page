@@ -1,0 +1,85 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第七场)
+
+Practicing Date: 2019.8.8
+
+Contest Link: [2019牛客暑期多校训练营(第七场)](https://ac.nowcoder.com/acm/contest/885#description)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第七场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%B8%83%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. String
+
+> solved by calabash_boy (1:24)
+
+##B. Irreducible Polynomial
+
+> solved by sy_chen (0:16)
+
+For $n \geq 3$ the answer is always `Yes`. For $n = 2$ and $\Delta >= 0$ the answer is also `Yes`. All other cases have the answer `No`.
+
+##C. Governing sand
+
+> solved by sy_chen (1:35 +1)
+
+Simply try every possible height.
+
+##D. Number
+
+> solved by Roundgod (0:07)
+
+Just append zeroes if there are not enough digits.
+
+##E. Find the median
+
+> solved by Roundgod (2:05)
+
+After discretize the intervals, the problem can be solved in $O(N\log{N})$ by descent on the segment tree.
+
+##F. Energy Stones
+
+> solved by sy_chen (4:45 +2)
+
+We may swap the coordinates: imagine we are processing contributions of each stone, not each time. We may use `std::set` to maintain the operations and Fenwick trees to maintain the number of intervals. All other parts can be done accordingly.
+
+##G. Make Shan Happy
+
+> upsolved by calabash_boy
+
+##H. Pair
+
+> solved by Roundgod (1:07)
+
+Classical digit dynamic programming problem.
+
+##I. Chessboard
+
+> solved by Roundgod (4:35 +1)
+
+After some analysis, each grid can be viewed as the sum of the number of its column and its row, then the answer can be calculated using some combinatoric arguments and inclusion-exclusion principle.
+
+##J. A+B Problem
+
+> solved by sy_chen (0:10)
+
+Just implement accordingly.
+
+##K. Function
+
+> solved by sy_chen (3:14 +1)
+
+The problem requires to compute the prefix sum of a multiplicative function. We may hardcode answers for every 1000000; the remaining part is a classic interval sieve.
+
+#Replay
+
