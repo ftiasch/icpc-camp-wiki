@@ -1,0 +1,92 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018-2019 ACM-ICPC, Asia Seoul Regional Contest
+
+Practicing Date: 2019.05.07
+
+Contest Link: [2018-2019 ACM-ICPC, Asia Seoul Regional Contest](https://codeforces.com/gym/101987)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018-2019%20ACM-ICPC%2C%20Asia%20Seoul%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018-2019 ACM-ICPC, Asia Seoul Regional Contest](https://github.com/wcysai/Calabash/tree/master/2018-2019%20ACM-ICPC%2C%20Asia%20Seoul%20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Circuits
+
+> solved by Roundgod (1:55)
+
+Use scanline technique with a segment tree supporting range add and maximum query, coordinate compression is also required. Time complexity is $O(n\log{n})$.
+
+##B. Cosmetic Survey
+
+> solved by Roundgod (1:33 +2)
+
+Use modified Floyd Warshall algorithm to compute every $S(i,j)$. The overall time complexity is $O(n^3)$.
+
+##C. Disks Arrangement
+
+> solved by sy_chen (2:29)
+
+In graph theoretical language, the problem asks to find a longest Hamiltonian path in a complete graph with weight function $w_{ij} = (\sqrt{a_i} - \sqrt{a_j})^2$ (the gain of making $i$ and $j$ adjacent). If we sort the radii in ascending order, the weight function is Supnick (i.e. symmetric Monge). The problem can thus be reduced to Supnick TSP problem which has explicit constructive solution. (see: Computational Problems that can be Solved Without Computation)
+
+##D. Go Latin
+
+> solved by Roundgod (0:06)
+
+Just implement it.
+
+##E. LED
+
+> solved by sy_chen (1:38 +2)
+
+Binary search on the answer, then remove first elements greedily. The remaining part can be solved by trying all possible split points.
+
+##F. Parentheses
+
+> solved by sy_chen (0:18)
+
+Implement a recursive descent parser.
+
+##G. Secret Code
+
+> solved by sy_chen (4:23 +5)
+
+A simple probability exercise.
+
+##H. Simple Polygon
+
+> unsolved
+
+##I. Square Root
+
+> unsolved
+
+##J. Starwars
+
+> solved by Roundgod (3:02 +1)
+
+Consider the process backwards, mark the positions of two points as states and apply multisource breadth-first search. The overall complexity should be $O(N^2C+M^2)$.
+
+##K. TV Show Game
+
+> solved by sy_chen (1:15)
+
+This problem can be reduced to 2SAT.
+
+##L. Working Plan
+
+> solved by Roundgod (0:48 +1)
+
+Just simulate the whole process, with each time making the person who has the most work needed to work, which can be maintained using a priority queue.
+
+#Replay
+
+To be added.
