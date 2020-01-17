@@ -1,0 +1,100 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Romania
+
+Practicing Date: 2018.9.23
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Romania](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010391)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Romania/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Romania](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Romania)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Balance
+
+> solved by sy_chen (4:40 +3)
+
+It can be proved that any balanced matrix $B$ has the form $B_{ij} = x_i + y_j$, where $x$, $y$ are two fixed arrays. Hence, the constraints can be modeled as minimum vertex cover of a weighted bipartite graph. By the duality of linear programming, it can be solved by maximum weighted bipartite matching, which can be further solved by Kuhn-Munkres algorithm.
+
+##B. Entanglement
+
+> unsolved
+
+##C. Gravity
+
+> upsolved by sy_chen
+
+The first thing to do is to run floodfill to find out all connected components. For the sake of convenience we may add a row of '#' below the matrix. We can model the problem as a graph-theoretical problem, where each vertex represents a connected component. For each cell of '#', we can find the lowest '#' above it, if any, and add an edge between the two components with their distance as the length. Then we run single-source shortest path from the bottom. The distance from the bottom to some component is the number of rows it descends before it stop falling.
+
+Since maximum distance is no more than 2000, the single-source shortest path problem can be solved in $O(MN)$ time with a careful implementation of Dijkstra's algorithm.
+
+##D. Infinite Pattern Matching
+
+> upsolved by sy_chen
+
+We may analyze some cases about how the given string is formed.
+
+1. The given string is part of some number. In this case, the first occurrence of this string is the number itself, if the string starts with 1; or prepending 1 at the beginning if it starts with 0;
+
+2. The given string contains some entire number. In this case, we may brute force the substrings of the string starting with 1 as the given number; for each of such substrings, we may check the consistency with the remaining part of the string;
+
+3. Neither the given string is  a part of some number, nor it contains any number. In this case, the string must be the concatenation of a suffix and a prefix of two consecutive numbers. We may brute force the suffix starting with 1, increment the prefix by 1, put it to the end of the suffix, and attempt to eliminate a maximum common overlap.
+
+Among all possible positions mentioned above, take the minimum one as the answer.
+
+##E. Inheritance
+
+> unsolved
+
+##F. Movies
+
+> unsolved
+
+##G. Origami
+
+> upsolved by sy_chen
+
+First of all, one may discover that the two dimensions are independent. So we can solve two one-dimensional problem, and multiply the two answers. The one-dimensional problem can be easily solved by Manacher.
+
+##H. Qnp
+
+> unsolved
+
+##I. Salaj
+
+> unsolved
+
+##J. Taxi
+
+> solved by sy_chen (3:56 +1)
+
+For each edge, we may count how many times the edge is counted, which depends only on the size of the two subtrees split by the edge. In order to maximize the total distance, the app always attempts to match a customer with a taxi in two different subtrees. Specifically, if there are $x$ taxis in some subtree, $y$ customers in another subtree, then only $|x - y|$ paths do not pass through the current edge. The remaining part is purely combinatorial, which is omitted here.
+
+##K. Tris
+
+> upsolved by sy_chen
+
+We may put these pieces in an approximately rectangular-shaped cycle. Hence we may put these pieces in a symmetrical way. Now we have to consider the remaining pieces, the number of which is modulo 2 or 4. This can be solved by careful case analysis.
+
+##L. Xormites
+
+> upsolved by Roundgod
+
+We first calculate the xor sum of all elements of the array, if that value is zero, then the answer should br $Draw$ since the point of both players must equal. Otherwise, the answer can only be $First$ or $Second$.
+
+Let's call the xor sum of all elements $s$, the point of the first player $a$ and the point of second player $b$. Since $s=a\oplus b$, it only matters if the most significant bit in $s$ is in $a$ or $b$, thus we can then replace each element in the array with $1$ or $0$ by if it has the most significant bit in $s$ or not. Then the answer can be written as follows: Given an array consisting of $0$s and $1$s, each player can only take elements from the left side or the right side, determine if the first player can obtain an odd number of $1$s or not. There's another property that the number of $1$s is odd because of the construction stated above.
+
+Then, how to solve this converted problem? First we consider the case when the length of the array is even. In this case, we can color the array with black in all even positions and white in all odd positions, then the first player can choose to take all black numbers \textbf{or} all white numbers, depending on which color has an odd number of $1$s. This is a very important observation that can lead to the solution to this problem. In this case, the first player always wins. What if the case when the length of the array is odd? In this case, if both ends of the array is $0$, then whichever side the first player takes, as stated above, the second player always has a winning strategy, in this case the second player wins. Otherwise, the first player must choose a side with its end $1$. In the following steps, whatever the second player takes, the first player must take the same number with the second player, otherwise it would be the case with odd number of $1$s and even length of the array, therefore the second player always wins. How to determine if the first player can always take the same number as the second player? Just do it greedily and check if it's possible. The time complexity is $O(n)$.
+
+#Replay
+
+To be added.
