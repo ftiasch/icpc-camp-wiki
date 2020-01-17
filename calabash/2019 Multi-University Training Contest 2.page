@@ -1,0 +1,109 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 Multi-University Training Contest 2
+
+Practicing Date: 2019.7.24
+
+Contest Link: [2019 Multi-University Training Contest 2](http://acm.hdu.edu.cn/contests/contest_show.php?cid=849)
+
+PDF Statements: No pdf statements available
+
+Participants: calabash_boy, Roundgod
+
+Solution Link: [2019 Multi-University Training Contest 2](https://github.com/wcysai/Calabash/tree/master/2019%20Multi-University%20Training%20Contest%202)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Another Chess Problem
+
+> unsolved
+
+##B. Beauty Of Unimodal Sequence
+
+> unsolved
+
+##C. Coefficient
+
+> unsolved
+
+##D. Double Tree
+
+> unsolved
+
+##E. Everything Is Generated In Equal Probability
+
+> solved by calabash_boy (1:20)
+
+$$F[i] = i * (i - 1) / 3$$
+
+$$ans[n] = \frac{1}{n} \cdot \sum_{i=1}^{n}F[i] $$
+
+##F. Fantastic Magic Cube
+
+> unsolved
+
+##G. Game
+
+> upsolved by Roundgod
+
+Dynamic programming with bitmasks. Some basic knowledge about surreal number is needed for transferring.
+
+##H. Harmonious Army
+
+> upsolved by calabash_boy
+
+consider each pair, use Min-Cut Model, let's build a graph: <s,u,a> <s,v,b> <u,t,c> <v,t,d> <u,v,e> <v,u,e>.(<a,b,c> means node a has an edge to node b and its flow is c). S is source representing Mages, T is terminal representing Warrior. If u and v both belong to Warrior, then nodes u and v should be connected to T(Warrior) but not S(mages), so the edges <s,u,a> and <s,v,b> should be cut, then the scores we lose is B + C. Similarly, we can get totally four equations :
+$$
+\begin{cases}
+a + b = B + C\\
+c + d = A + B\\
+a + e + d = A + C\\
+b + e + c = A + C
+\end{cases}
+$$
+
+one of the solutions is:
+
+$$
+\begin{cases}
+a = b = \frac{(B + C)}{2} \\
+c = d = \frac{(A + B)}{2} \\
+e = \frac{(A + C)}{2} - B
+\end{cases}
+$$
+
+And then we can use naive Max-Flow Algorithm to solve it.
+
+##I. I Love Palindrome String
+
+> solved by calabash_boy (0:46 +3)
+
+The number of distinct palindromes is less than |S| which can be obtained by pam(palindrome automaton), and then check each of them.
+
+##J. Just Skip The Problem
+
+> solved by calabash_boy (0:57 +1)
+
+The answer is n!
+
+##K. Keen On Everything But Triangle
+
+> solved by calabash_boy (4:39 +16)
+
+We can sort the number in the querying interval, and then check each consecutive three of them. However, we just need to check the biggest 45 of the number, because in the range [1,1e9], we can at most choose 44 number where there doesn't exist three of them can Constitute a triangle (Fibonacci sequence). Use persistent segment-tree to gao.
+
+##L. Longest Subarray
+
+> solved by Roundgod (3:32 +1)
+
+Fix the left boundary of the segment, set the value of first $k-1$ occurences of each number as $-1$ and the $k$th occurence of $k-1$. Then any valid boundary has value $0$ in the prefix sum. Maintain the maximum of prefix sum and the rightmost position in a segment tree. Moving of the left boundary can be viewed as addition on a segment. Thus the problem can be solved in $O(n\log{n})$.
+
+
+#Replay
+
+
