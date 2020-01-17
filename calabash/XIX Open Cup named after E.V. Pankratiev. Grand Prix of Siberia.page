@@ -1,0 +1,113 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia
+
+Practicing Date: 2019.3.10
+
+Contest Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010437)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XIX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia](https://github.com/wcysai/Calabash/tree/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##1. Product
+
+> solved by sy_chen (0:40 +6)
+
+If 0 is in the input, the answer is `Yes` if there are multiple 0s. Otherwise, compute the product of these numbers, and check, if there is any number, whose square is equal to the product. Note that, during multiplying these numbers, if the result exceeds 1e18, the answer must be `No`.
+
+##2. Driving the Gnu
+
+> solved by sy_chen (4:32 +3)
+
+The best case is, either 
+
+- the acceleration is opposite to the speed, which is something like vertical projectile motion under gravity; or
+- the trajectory passes through the topmost point of the barrier.
+
+For the second case, ternary search may work. 
+
+##3. Crazy Minesweeper
+
+> solved by sy_chen (3:32)
+
+Since there are 10000 different seeds, there are at most so many different cases. We may randomly attempt some points, until we can uniquely determine the case.
+
+##4. Error in code
+
+> solved by sy_chen (0:35)
+
+The incorrect code omits the last vertex. We may rerun the correct version of Floyd's algorithm, and pass all triples $(w, u, v)$ such that none of them is $N$, which is equivalent to no-op.
+
+##5. Birthday
+
+> solved by Roundgod (2:32)
+
+A both sufficient and neccessary condition is that $k$ don't exceeds the sum of $d+1$ over all connnected components, where $d$ for a connected component is the diameter of it. If we fix a shortest path $(u,v)$ in some connected component, then we can partition this connected component into $d(u,v)+1$ parts for each vertex $w$ according to the length of shortest path between $w$ and $v$.
+
+The remaining question is to find all-pair shortest paths, which usually takes $O(n^3)$ using Floyd-Warshall algorithm. However, since this graph is unweighted, one can use breadth-first-search starting at each vertex, and use std::bitset to optimize the process. The time complexity is $O(\frac{n^3}{w})$, where $w$ is word size.
+
+##6. Gas Penalties
+
+> upsolved by Roundgod
+
+Build a graph with two vertices for each point: one represents that we are currently at this point with tank full, the other represents that we are currently at this point with tank empty.
+
+The possible edges are:
+
+1) Empty $i$ to full $i$ (fill at $i$)
+
+2) Empty $i$ to empty $j$ (fill at $i$)
+
+3) Full $i$ to full $j$ (fill at $j$)
+
+4) Full $i$ to empty $j$ via some intermediate point $k$ (fill at $k$)
+
+After that run Floyd-Warshall algorithm to get the answer. Time complexity is $O(n^3)$.
+
+##7. Level check
+
+> upsolved by Roundgod
+
+Another interpretation of the problem: Consider grids as vertexes, and add an edge between any two adjacent vertices. Then the queries are of the following two forms: delete a vertex, or ask if two vertices are connected, which can be modeled as dynamic programming problem, which can be solved in $O(N\log{N}\log{Q})$ offline using divide and conquer together with union find that supports the undo operation. One can compress all "add_edge" operations together to achieve a better running time.
+
+##8. Intersection Graph
+
+> unsolved
+
+##9. In search of the chair
+
+> unsolved
+
+##10. Office
+
+> solved by calabash_boy (1:12)
+
+##11. Recursive Circuit
+
+> solved by sy_chen (2:23)
+
+We may iteratively maintain the connectivity of topmost two layers in an incremental fashion. When extending the nest level, we may add the new connectivity relations of the input contacts of the external circuit to the subcircuits. Using small-to-large trick to merge and process all queries, the total time complexity should be linearithmic.
+
+##12. Subsequences
+
+> solved by Roundgod (3:14 +4)
+
+Consider the dynamic programming method one usually uses when computing the number of distince subsequences in a string, i.e, $dp[S][c]=$ the number of distinct subsequences that end in character $ch$. If we append a character $x$ to $S$, we update the dp: $dp[S+x][c]=dp[S][c](x!=c)$ and $dp[S+x][x]=1+\sum\limits_{c}dp[S][c]$.
+
+Since the only thing that matters is the parity, we may observe that, at any time, there's at most one character $c$ such that $dp[S][c]$ is odd. Therefore, we can apply the following dynamic programming to this problem: $dp[mask][i]=$ the number of permutations if we take the set bits in $mask$ into account, such that the current state $i$, whose possible values, as I stated above, doesn't exceed 27. The transferring is trivial.
+
+Time complexity is $O(n2^{n}\vert \Sigma \vert+\vert \Sigma \vert \vert S \vert )$, where $\vert \Sigma \vert$ is the alphabet size and $\vert S \vert$ is the sum over lengths of all strings. Due to the technical error of opentrains, the solution must be highly optimized to get accepted during the training.
+
+#Replay
+
+To be added.
