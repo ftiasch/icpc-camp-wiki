@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 7
+
+Participating Date: 2019.4.11
+
+Contest Link: [2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 7](https://codeforces.com/gym/100197)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC7/statements.pdf)
+
+Solution Link: [Code for 2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 7](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC7)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Nonoptimal Assignments
+
+> solved (0:05)
+
+Many solutions exist. For me, I made a matrix with $a_{i,j}=\begin{cases} 99& i=1\text{ and }j=1\\ 0 & j=1\text{ and }i\neq 1\\ 100& \text{otherwise} \end{cases}$.
+
+##B. Cryptography
+
+> solved (0:47 +4)
+
+Use segment tree for range queries.
+
+##C. Fibonnaci Sequence
+
+> solved (1:17 +5)
+
+Let $dp_{i,j}$ be the length of longest fibonacci subsequence with last two elements $a_i$ and $a_j$ respectively. With some careful implementation, this should work in $O(m^2)$. Be careful with the memory limit.
+
+##D. Hexagon and Rombic Dominoes
+
+> upsolved
+
+This normally should be solved using bitmask dp with lots of case analysis and careful implementation. But according to the bijection between rombic tilings of hexagons and plane partitions, the calculation may become way easier. Also, there's [MacMahon Formula](http://page.math.tu-berlin.de/~felsner/Lehre/TilingSlides/Poster_Enumeration.pdf) that solves the problem in polynomial time.
+
+##E. Strange Limit
+
+> solved (1:50)
+
+Apply Euler's formula to get the answer, the number of recursions should be small.
+
+##F. Little Mammoth
+
+> solved (4:43 +4)
+
+Triangulate the rectangle with respect to the center of the circle, so the problem becomes finding the common area between a circle and a triangle with one vertex at the center. There are still many cases to be handled, so be careful.
+
+##G. Network Wars
+
+> solved (3:55 +2)
+
+Binary search on the answer, adjust the weight and then run maximum flow to check if the minimum cut exceeds zero. Remember to directly add to the answer if the weight of some edge becomes less than zero.
+
+##H. Oil Deal
+
+> solved (0:18)
+
+Construct a maximum spanning tree, and pick the discarded edges greedily for the smallest weight to the largest.
+
+##I. Bishops on a Toral Board
+
+> solved (0:23)
+
+The answer is just the greatest common divisor of $n$ and $m$.
+
+#Replay
+
+To be added.
