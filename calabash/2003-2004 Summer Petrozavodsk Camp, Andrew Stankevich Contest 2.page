@@ -1,0 +1,72 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 2
+
+Participating Date: 2019.3.28
+
+Contest Link: [2003-2004 Summer Petrozavodsk Camp, Andrew Stankevich Contest 2](https://codeforces.com/gym/100197)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC2/statements.pdf)
+
+Solution Link: [Code for 2003-2004 Summer Petrozavodsk Camp, Andrew Stankevich Contest 2](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC2)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Non Absorbing DFA
+
+> solved (3:06 +8)
+
+After some precomputations, we can convert the given DFA into a normal one, and then we can do some classical dynamic programming to solve the problem.
+
+##B. The Towers of Hanoi Revisited
+
+> solved (4:31 +1)
+
+Considering the moves when finishing the towers of hanoi, one should always move some of the discs onto an empty peg, move the rest onto another peg, and then put the first-moved discs onto them. Thus a recurrence is established:
+$$dp_{i,j}=\min\limits_{k=1}^{i-1}2dp_{k,j}+dp_{i-k}{j-1}$$
+where $dp_{i,j}$ denotes the number of moves one need to solve the problem with $i$ discs and $j$ pegs. After that one still need another recurrence the output the sequence of moves.
+
+##C. Hyperhuffman
+
+> solved (0:25 +3)
+
+Is indeed the huffman problem, can be solved using a priority queue, merging two nodes with the minimum weight each time.
+
+##D. Little Jumper
+
+> upsolved
+
+After some calculations and analyses, one may find the answer is bitonic with respect to the landing position in the second interval, thus one may apply ternary search to find out the answer.
+
+##E. Quantization Problem
+
+> solved (2:10)
+
+A classical dynamic programming problem.
+
+##F. Roads
+
+> upsolved
+
+After listing the requirements in the form of linear programming, one can find out its form is exactly the same with minimum weight vertex cover in bipartite graph, which is just the maximum weight matching. Apply Kuhn-Munkres algorithm to solve the problem.
+
+##G. Robbers
+
+> solved (0:48 +4)
+
+First give all gangsters the desired amount of money rounded down, then greedily give money to those whose difference between the desired amount and the actual amount is the largest.
+
+##H. Tickets
+
+> solved (1:44 +1)
+
+Typical problem that can be solved using Burnside's Lemma, Biginteger operations are needed.
+
+#Replay
+
+To be added.
