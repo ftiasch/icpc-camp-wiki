@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XV Open Cup named after E.V. Pankratiev. GP of Siberia
+
+Participating Date: 2019.08.17
+
+Contest Link: [XV Open Cup named after E.V. Pankratiev. GP of Siberia](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010272)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/XV%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Siberia/statements.pdf)
+
+Solution Link: [Code for XV Open Cup named after E.V. Pankratiev. GP of Siberia](https://github.com/wcysai/CodeLibrary/tree/master/Contests/XV%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20GP%20of%20Siberia)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##1.  ICPC Contest Resolver
+
+> unsolved
+
+##2.  Horns and Hooves
+
+> solved (0:13)
+
+After discretize the numbers, the answer can be calculated easily.
+
+##3. String
+
+> solved (3:55 +2)
+
+One can see that we only need to check $O(\log{n})$ numbers whether the string forms a period-like structure bases on these numbers. After precomputing the Z-functions, this can be solved in $O(n\log{n})$ time.
+
+##4. Books
+
+> solved (2:11 +2)
+
+Typical application of Fast Walsh-Hadamard Transform.
+
+##5. Big Bed
+
+> solved (4:20)
+
+Enumerate on two of the dimensions, then the remaining is to check connectivity, which can be accelerated using std::bitset. Time complexity is $O(\frac{n^3}{w})$.
+
+##6. Antichamber
+
+> unsolved 
+
+##7. The weasel in the hen coop
+
+> upsolved
+
+Can be modeled as maximum flow with lower bound on capacities.
+
+##8. Colonization
+
+> solved (3:57 +9)
+
+Just implementation.
+
+##9. Triangles
+
+> unsolved
+
+##10. Swimming
+
+> unsolved
+
+##11. Faster Than Light
+
+> unsolved
+
+##12. Construction of Chand Baori
+
+> solved (0:27 +2)
+
+The number of possible ways equals to $\prod\limits_{i=1}^{n}2i$, note that this may exceed the range of 64-bit integer.
+
+#Replay
+
+To be added.
