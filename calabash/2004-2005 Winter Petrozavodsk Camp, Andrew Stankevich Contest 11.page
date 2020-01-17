@@ -1,0 +1,92 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 11
+
+Participating Date: 2019.05.01
+
+Contest Link: [2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 11](https://codeforces.com/gym/100213)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC11/statements.pdf)
+
+Solution Link: [Code for 2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 11](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC11)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Beer Problem
+
+> solved (3:54)
+
+A classical min-cost-flow problem, since there exists edges with negative weight in the graph, one should apply Bellman-Ford or SPFA when computing the shortest path. Also end the process when the length of shortest path from the source to the sink is positive.
+
+##B. Another Brick in the Wall
+
+> upsolved
+
+It can be observed that in rows with odd index(counting from bottom) the number of bricks cannot exceed $m$ while in rows with even index the number of bricks cannot exceed $m+1$. Use a bitmask with $2m+1$ bits to encode the state of the topmost two rows and apply dynamic programming. The straightforward implementation runs in $O(nm2^{3m})$, which may not fit into time limit. But one can run locally and hardcode the answer into the program. 
+
+##C. Black and White
+
+> solved (0:46 +1)
+
+One may decompose the polygon into rectangles with respect to the x-axis. To avoid case analysis, one may add a large even number (i.e.,$10^9$) to all coordinates so that every point lies in the first quadrant.
+
+##D. Integer numbers
+
+> solved (0:08)
+
+Find the largest number of occurences of $a_i-i$.
+
+##E. Islands
+
+> solved (2:44 +2)
+
+Use disjoint set union (DSU) to maintain connectivity. Encode the direction vector for the six directions. If after adding some vertex the size of connected component exceeds $s$, one should rollback the DSU operations. Two things worth mentioning:
+
+1. The direction vector for rows with different parity is different.
+
+2. To support rollback operation, ONE SHOULD NOT USE PATH COMPRESSION when implementing disjoint set union, just the rank heuristics. Therefore the time complexity is $O(n\log{n})$.
+
+##F. Counterfeit Money
+
+> solved (3:29 +2)
+
+After eumerating all possible shifts for the second matrix with respect to the first one, the problem is reduced to: Given a binary matrix, find the rectangle with the largest area that consists solely of '1's, which is a classic problem that can be solved in $O(n^2)$ using monotone stack. The overall complexity is $O(n^4)$.
+
+##G. Chinese New Year
+
+> unsolved
+
+##H. Saving Princess 
+
+> solved (1:58 +2)
+
+Let $dp_{i,j,k}$ be the maximum health point remaining, if Ivan has beaten the first $i$ monsters, of which $j$ were defeated, and the current mana point is $k$. The overall complexity is $O(n^3)$.
+
+##I. Radio Waves
+
+> solved (1:22 +1)
+
+Extract all possible distances between every pair of points, sorting them in increasing order, adding them one by one, and maintaining a disjoint set union to check at what point a contradiction is reached, which runs in $O(n^2\log{n})$ time.
+
+The are other solutions, e.g., binary search for the answer and then check if the graph formed is bipartite, which also runs in $O(n^2\log{n})$.
+
+##J. Cheater's Shuffle
+
+> upsolved
+
+Use meet-in-the-middle technique. Precompute the first $p^{\lceil\frac{t}{2}\rceil}$ combinations of shuffles, and the last $p^{\lfloor\frac{t}{2}\rfloor}$ combinations of shuffles. One need to check if there exists two same permutations in the two sets, which can be solved using hash. The time limit for this problem is rather strict, be careful.
+
+##K. Gone Swimming
+
+> upsolved
+
+Careful implementation needed.
+
+#Replay
+
+To be added.
