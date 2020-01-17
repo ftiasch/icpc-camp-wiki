@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 China Collegiate Programming Contest, Qinhuangdao Site
+
+Practicing Date: 2019.9.29
+
+Contest Link: N/A
+
+PDF Statements: TBA
+
+Participants: sy_chen, Roundgod
+
+Solution Link: [Code for 2019 China Collegiate Programming Contest, Qinhuangdao Site](https://github.com/wcysai/Calabash/tree/master/2019%20China%20Collegiate%20Programming%20Contest%2C%20Qinhuangdao%20Site)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Angle Beats
+
+> solved by sy_chen (0:23 +1)
+
+There are two cases: the query point is the vertex of the right angle, and the query point is not the vertex of the right angle. For the first case, one may sort all other vertices by the angles to the query point and use two pointers to iterate over these vertices; for the latter case, we may preprocess the vectors of each vertex to all other vertices, and use hashmap or something similar to find the answer.
+
+##B. The Tree of Haruhi Suzumiya
+
+> unsolved
+
+##C. Sakurada Reset
+
+> upsolved by sy_chen
+
+##D. Decimal
+
+> solved by sy_chen (0:01)
+
+The decimal representation of $1/n$ is finite if and only if $n$ is not divisible by primes other than 2 and 5.
+
+##E. Escape
+
+> upsolved by Ronudgod
+
+Obeserving that no two robots would ever pass the same grid with same/opposite direction, one can easily build a flow model to solve the problem.
+
+##F. Forest Program
+
+> solved by sy_chen (0:57)
+
+The answer is $2^m \prod (2^{c_i} - 1)$, where $c_i$ is the length of a cycle and $m$ is the number of non-cycle edges.
+
+##G. Game on Chessboard
+
+> solved by sy_chen (3:58)
+
+The lower bound of the remaining chessboard forms a monotone path from the top left corner to the bottom right corner. We may do dymanic programming on the monotone path. One may use a sequence of move right and move down instructions to represent the path. The overall time complexity is $O(4^n n^{1.5})$.
+
+##H. Houraisan Kaguya
+
+> unsolved
+
+##I. Invoker
+
+> solved by Roundgod (0:40)
+
+Simple dynamic programming. One need to hardcode all states and possible transitions.
+
+##J. MUV LUV EXTRA
+
+> solved by sy_chen (1:38 +1)
+
+One may use Knuth-Morris-Pratt algorithm to find the shortest peroid for each suffix. The remaining part is trivial.
+
+##K. MUV LUV UNLIMITED
+
+> solved by Roundgod (1:09 +1)
+
+The first player can always win a game if the father of a leaf has at least two children by strategy stealing. Following this logic. the first player loses if and only if the distance of every leaf to the first ancestor with at least two children is even. This givens a simple $O(n)$ algorithm.
+
+##L. MUV LUV ALTERNATIVE
+
+> unsolved
+
+#Replay
