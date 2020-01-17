@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2015. Xudyh Contest
+
+Practicing Date: 2019.12.04
+
+Contest Link: [Petrozavodsk Summer-2015. Xudyh Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001462)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2015.%20Xudyh%20Contest/statements.pdf)
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for Petrozavodsk Summer-2015. Xudyh Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2015.%20Xudyh%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Expression
+
+> solved by sy_chen (0:50)
+
+We may use dynamic programming on intervals.
+
+##B. Hack It!
+
+> unsolved
+
+##C. GCD Tree
+
+> solved by Roundgod (3:20)
+
+Use link-cut tree to dynamically maintain the maximum spanning tree. Time complexity is $O(n(\log{n})^2)$
+
+##D. Too Simple
+
+> solved by Roundgod (0:39 +1)
+
+If some function is not one-on-one, then the answer is $0$, otherwise, if there is at least one remaining function that is yet undetermined, we can choose all functions to be arbitrary one-on-one functions except one, and the last function is uniquely deteremined. If all functions are determined, one also needs to check if they are valid.
+
+##E. Arithmetic Sequence
+
+> solved by sy_chen (0:20 +1)
+
+We may compute the adjacent differences of the array, then do some case analysis.
+
+##F. Persistent Link/cut Tree
+
+> solved by sy_chen (1:40 +2)
+
+Just write two functions: the distance between two vertices in a tree, and the total distances of vertices in a tree to a specified vertex. Both functions can be computed recursively. Use memoization to avoid exponential explosion.
+
+##G. Travelling Salesman Problem
+
+> solved by Roundgod (1:53)
+
+Color the chessboard in black and white. If one of the dimensions is odd, one can easily traverse all the grids, otherwise, one should discard one grid that has different color with the starting one, having the minimum number on it, and solutions in this case can be found constructively.
+
+##H. Goldbach’s Conjecture
+
+> unsolved
+
+##I. Random Inversion Machine
+
+> unsolved
+
+##J. Sometimes Naive
+
+> solved by sy_chen (4:22 +2)
+
+This can be solved by heavy-light decomposition.
+
+#Replay
