@@ -1,0 +1,81 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第六场)
+
+Practicing Date: 2019.8.3
+
+Contest Link: [2019牛客暑期多校训练营(第六场)](https://ac.nowcoder.com/acm/contest/884#description)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第六场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E5%85%AD%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Garbage Classification
+
+> solved by Roundgod (0:16)
+
+Just implement it.
+
+##B. Shorten IPv6 Address
+
+> solved by sy_chen (0:20 +1)
+
+Enumerate all possible intervals to delete and print the lexicographically smallest among the shortest ones.
+
+##C. Palindrome Mouse
+
+> solved by calabash_boy (2:48 +8)
+
+##D. Move
+
+> solved by sy_chen (1:22 +2)
+
+A lower bound for the answer is $\frac{\sum v}{k}$. Just try from the lower bound until we find a feasible capacity.
+
+##E. Androgynos
+
+> solved by sy_chen (1:06 +2)
+
+The answer exists only if $n \equiv 0, 1 \mod 4$. For $n = 0, 1$, the answer is trivial. Given an $n$-point self complementary graph, we may construct an $n+4$-point one: just add a $P_4$, with the middle two points connecting to all points in the $n$-point self complementary graph.
+
+##F. K-ary Heap
+
+> solved by Roundgod (4:40 +1)
+
+Usually when determining the lexicographical order of some array, we use the technology of determining for each position, and compute the number of valid configurations for each possible prefix of the array. The common way to do this takes $O(n^3)$, where there are $O(n^2)$ prefixes to determine since for each position with $a[i]=x$ we need to compute the number of configurations for all prefixes with $a[i]<x$. However, if we instead compute the number of configurations for all prefixes with $a[i]\geq x$, and subtract it from all possible $a[i]$s, the complexity becomes $O(n^2)$.
+
+##G. Is Today Friday?
+
+> solved by sy_chen (2:03 +1)
+
+Remove duplicate ones in input and then randomly shuffle them, then try all possibilities.
+
+##H. Train Driver
+
+> solved by sy_chen (3:08 +2)
+
+We may enumerate $u \in S_A, v \in S_B$. Let $w_x = d(u, x) + d(v, x)$, then relax the answers by $w_u \leftarrow \min\{w_u, w_v + 1\} (uv \in E)$.
+
+##I. Can They Go to Galar?
+
+> solved by sy_chen (4:36 +1)
+
+Just do some dynamic programming on the cactus.
+
+##J. Upgrading Technology
+
+> solved by Roundgod (0:47 +2)
+
+Enumerate on the minimum level of all technologies, and do a maximum-continuous-subarray-sum-like dynamic programming. The overall running time for each testcase is $O(nm)$.
+
+#Replay
+
