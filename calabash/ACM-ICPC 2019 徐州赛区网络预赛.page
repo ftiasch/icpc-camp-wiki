@@ -1,0 +1,87 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2019 徐州赛区网络预赛
+
+Participation Date: 2019.9.7
+
+Contest Link: [ACM-ICPC 2019 徐州赛区网络预赛](https://www.jisuanke.com/contest/3005?view=challenges)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for ACM-ICPC 2019 徐州赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202019%20%E5%BE%90%E5%B7%9E%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Who is better?
+
+> solved by sy_chen (1:57)
+
+##B. so easy
+
+> solved by sy_chen (0:24 +2)
+
+##C. Buy Watermelon
+
+> solved by sy_chen (0:10 +4)
+
+##D. Carneginon
+
+> solved by Roundgod (1:02)
+
+Use Knuth-Morris-Pratt algorithm for linear substring search.
+
+##E. XKC's basketball team
+
+> solved by Roundgod (1:16)
+
+Easy Fenwick tree.
+
+##F. Little M's attack plan
+
+> solved by sy_chen (4:46 +13)
+
+##G. Colorful String
+
+> solved by sy_chen (1:07 +2)
+
+##H. function
+
+> solved by Roundgod (3:39 +1)
+
+After number theoretical sqrt-decompostion, one is required to compute the number of primes, and the sum of primes in a interval, which can be computed efficiently using Min_25 sieve. Cases when numbers are powers of primes can be solved by brute force.
+
+
+##I. query
+
+> solved by sy_chen (1:29)
+
+##J. Random Access Iterator
+
+> solved by Roundgod (1:49 +1)
+
+Easy tree dynamic programming.
+
+##K. Center
+
+> solved by sy_chen (1:41)
+
+##L. Dice
+
+> solved by sy_chen (2:34)
+
+##M. Longest subsequence
+
+> solved by Roundgod (1:34 +5)
+
+Enumerate on the length of common prefix and solve the problem accordingly. Some preprocess is needed.
+
+#Replay
+
+To be added.
