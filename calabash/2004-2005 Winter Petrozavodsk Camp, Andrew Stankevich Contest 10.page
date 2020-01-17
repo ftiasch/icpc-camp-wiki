@@ -1,0 +1,108 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 10
+
+Participating Date: 2019.4.22
+
+Contest Link: [2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 10](https://codeforces.com/gym/100212)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC10/statements.pdf)
+
+Solution Link: [Code for 2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 10](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC10)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. The Smart Bomb
+
+> solved (0:08 +1)
+
+The maximum is obtained when three circles are pairwise tangent.
+
+##B. I Just Called...
+
+> upsolved
+
+Just implement it. Use trie for string search.
+
+##C. Order-Preserving Codes
+
+> solved (0:22 +2)
+
+Usual dynamic programming works in $O(n^3)$. Apply Knuth's optimization to reduce it two $O(n^2)$.
+
+##D. More Divisors
+
+> solved (0:39)
+
+Add prime divisors one by one and maintain the possible set, which wouldn't be much.
+
+##E. Long Dominoes
+
+> solved (1:18 +1)
+
+Apply dynamic programming, use bitmasks to represent the states. Hardcode is needed to pass the memory limit.
+
+##F. The Magic Wheel 
+
+> solved (4:19 +4)
+
+The threads between the upper part and the middle part, and between the middle part and the lower part can be solved separately. Sort the points by angle, and since threads can't intersect due to exchange argument, one can easily solve the problem in $O(n^3)$.
+
+##G. Cracking SSH
+
+> solved (0:51)
+
+Classic Dynamic Programming Problem.
+
+##H. Periodic Tilings 
+
+> upsolved
+
+To solve this problem, the following information is helpful, present in the statement of ICPC World Finals 2004/2005, Shanghai, Proble G: 
+
+> G. Tiling the Plane
+
+> You might find the following information useful: 
+
+> It is known that there are only two fundamentally different tilings of the plane, the regular tiling by squares (chessboard tiling) and the tiling by regular hexagons (honeycomb tiling). A polygon can therefore tile the plane if and only if it satisfies one of the following two conditions:
+
+> 1. There are points A, B, C, D in order on the polygon boundary (the points are not necessarily vertices of the polygon) such that the polygon boundaries from A to B and from D to C are congruent and the boundaries from B to C and from A to D are congruent. This leads to a tiling equivalent to the square tiling.
+
+> 2. There are points A, B, C, D, E, F in order on the polygon boundary, such that the boundary pairs AB and ED, BC and FE, CD and AF are congruent. This leads to a tiling equivalent to the hexagon tiling.`
+
+
+
+Therefore, after extracting the borders into strings represented by the directions 'S','N','W','E' of length $2m$, one need to check if one of the above two conditions are satisfied. Consider the graph where there is an edge between vertex $i$ and vertex $j$ iff substr(i,j)=reverse(substr(i+m,j+m)). And if there exists some $i$ where the length of the shortest path from $i$ to $i+m$ is smaller than or equal to $3$, the answer is YES, otherwise NO. 
+
+##I. Traces
+
+> solved (3:01 +7)
+
+Can be reduced to a min-flow problem with lowerbounds on capacities. Apply the technique used in ASC2 to determine if the flow is feasible, after that run another maximum flow from sink to source to make the flow minimum.
+
+##J. Counting Triangulations
+
+> upsolved
+
+One can note that If two pretriangulations aren't the same, then the eventual consecutive triangulation of the set of points cannot be the same, also pretriangulation is just separating the convex hull of the set of points of $n$ points into $n-2$ triangulations. Therefore, after computing the convex hull, we need to find out the number of consecutive triangulations for each pretriangulation.
+
+If the pretriangulation is a single triangle $\Delta ABC$, then we can compute the number of consecutive triangulations using the dynamic programming as $f_{ABC}=\begin{cases} \sum\limits_{P\text{ inside }\Delta ABC} f_{APB}\cdot f_{APC} \cdot f_{BPC} & \exists P \in \Delta ABC \\ 1 & \not \exists P \in \Delta ABC \end{cases}$
+
+To compute the answer for the whole set of points, another dynamic programming can be applied, where $g_{l,r}$ equals to the number of consecutive triangulations considering the interval $[l,r]$ of the set of points of the convex hull in some order(clockwise or counterclockwise), the transition can be established by enumerating the point that is eventually in the same triangle with $l$ and $r$ in the final pretriangulation: $g_{l,r}=\sum\limits_{i=l+1}^{r-1}g_{l,i}\cdot f_{l,r,i}\cdot g_{i,r}$.
+
+The overall complexity is $O(n^4)$, Biginteger needed.
+
+##K. Unfair Contest
+
+> solved (3:22)
+
+Just implement it.
+
+#Replay
+
+To be added.
