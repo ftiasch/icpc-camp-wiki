@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第八场)
+
+Practicing Date: 2019.8.10
+
+Contest Link: [2019牛客暑期多校训练营(第八场)](https://ac.nowcoder.com/acm/contest/888#description)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第八场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E5%85%AB%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. All-one Matrices
+
+> solved by Roundgod (0:56 +1)
+
+If we fix the lower boundary of the submatrix, we can use monotone stack to find each maximum all-1 matrix in $O(nm)$. Also remember to check if the lower boundary can be extended. Time complexity is $O(nm)$.
+
+##B. Beauty Values
+
+> solved by sy_chen (0:17)
+
+One may compute the contribution of every number separately.
+
+##C. CDMA
+
+> solved by sy_chen (0:08)
+
+Just construct an $n \times n$ Hadamard matrix, which has a recursion:
+
+$$ M_n = \begin{bmatrix} M_{n/2} & M_{n/2} \\ M_{n/2} & -M_{n/2} \end{bmatrix}$$
+
+##D. Distance
+
+> solved by Roundgod (4:25 +4)
+
+Use periodic rebuilding technique (square-root decomposition on queries).  Divide the queries into $O(\sqrt{q})$ blocks. After processing each block, use multiple-source breadth first search to precompute the answer in $O(n\times h\times w)$, which takes $O((n\times h\times w)\sqrt{q})$ overall. Handling the contribution of in-block updates also takes $O(q\sqrt{q})$ time. The overall complexity is thus $O((n\times h\times w)\sqrt{q})+q\sqrt{q})$.
+
+##E. Explorer
+
+> solved by Roundgod (2:03)
+
+After discretize the intervals, the problem becomes the well-known [Dynamic Connectivity Offline Problem](https://codeforces.com/gym/100551/problem/A), which can be solved in $O(n\log{n})$ using descent on segment tree or divide and conquer technique.
+
+##F. Flower Dance
+
+> unsolved
+
+##G. Gemstones
+
+> solved by sy_chen (0:21)
+
+Just implement accordingly.
+
+##H. How Many Schemes
+
+> unsolved
+
+##I. Inner World 
+
+> solved by sy_chen (2:05 +2)
+
+If we view the index of the trees as timeline, the corresponding interpretations of the operations are :
+
+1. adding/deleting a leaf;
+2. querying the sum of sizes of a subtree at every moment till now.
+
+Note that the contribution of a single vertex is a piecewise linear function. Hence we may use Fenwick trees to maintain the sum of these functions. When querying a subtree, just computing the value of sum of the functions in the subtree at current time.
+
+##J. Just Jump
+
+> solved by Roundgod (1:32 +1)
+
+Consider applying inclusion-exclusion principle, the problem can be solved in $O(L+m^2)$ using dynamic programming.
+
+#Replay
+
