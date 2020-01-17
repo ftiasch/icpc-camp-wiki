@@ -1,0 +1,108 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018-2019 ICPC, NEERC, Southern Subregional Contest
+
+Practicing Date: 2018.10.20
+
+Contest Link: [2018-2019 ICPC, NEERC, Southern Subregional Contest](http://codeforces.com/contest/1070)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018-2019%20ICPC%2C%20NEERC%2C%20Southern%20Subregional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018-2019 ICPC, NEERC, Southern Subregional Contest](https://github.com/wcysai/Calabash/tree/master/2018-2019%20ICPC%2C%20NEERC%2C%20Southern%20Subregional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Find a Number
+
+> solved by sy_chen (1:41 +1)
+
+We may build a graph for each state $(S, r)$, where $S$ means the sum of remaining digits and $r$ means the current number modulo $d$. An edge in the graph means the operation of appending a digit at the end of the number. Hence, each vertex has an outdegree of at most 10. Note that the smallest number must be shortest. Hence we may run BFS to find the shortest path from the original state to final state and build a shortest path DAG. Finally build a path in this DAG by choosing each digit greedily.
+
+##B. Berkomnadzor
+
+> solved by sy_chen (0:59 +1)
+
+Build a trie for all subnets. If a subtree is marked black and one of its subtree is marked white, or vice versa, then there exists an IPv4 address matches both the whitelist and the blacklist. Otherwise, traverse the trie by dfs, and once we reach a subtree contains only subnets in blacklist, output the subnet to the optimized blacklist.
+
+##C. Cloud Computing
+
+> solved by Roundgod (1:11)
+
+Separate each tariff plan into two events. Also build a segment tree with respect to prices maintaining number of cores and total prices for each segment. We need to deal with single point update and ask for the minimal price needed, which both can be done in $O(n\log{n})$ by descending down the segment tree. 
+
+##D. Garbage Disposal
+
+> solved by Roundgod (0:27 +3)
+
+Greedily pack all the garbages if they can be packed in a full bag, if there's any remaining, propagate them to the next day.
+
+##E. Getting Deals Done
+
+> solved by Roundgod (2:16)
+
+Let's say the number of tasks Polycarp can complete is $f(d)$. One can easily find out that, before Polycarp can complete all tasks with difficulty $\leq d$, $f(d)$ increases with respect to $d$. After Polycarp can complete all tasks with difficulty $\leq d$, $f(d)$ increases with respect to $d$. So all we need to do is to use a binary search to find out where the separating point is.
+
+##F. Debate
+
+> solved by calabash_boy (2:00 +8)
+
+Firstly, choose all 11.
+
+Secondly, sort 01,10,00 separately.
+
+Thirdly, choose min(num(01),num(10)) 01 and 11, a pair of (01,10) can be seen as a 11.
+
+Fourthly, put all not chosen person into one list, sort it ,choose at most min(num(01),num(10)) + num(11) ones.
+
+##G. Monsters and Potions
+
+> solved by sy_chen (4:50 +6)
+
+Consider each possible rally point cell. Scan from the rally point to left (or right, similarly), and for each hero we meet, if it could safely reach the rally point, then let him move immediately; otherwise, let him move at last. If, the last hero cannot safely reach the rally point, then there does not exist feasible approach to move them to the rally point.
+
+##H. BerOS File Suggestion
+
+> solved by calabash_boy (0:39 +1)
+
+Build a AC-Automaton using all query strings.
+
+use all dictionary strings run in AC-Automaton to calculate the time of occurrences in every Node.
+
+##I. Privatization of Roads in Berland
+
+> unsolved
+
+To be added.
+
+##J. Streets and Avenues in Berhattan
+
+> solved by sy_chen (4:20 +3)
+
+What is not to hard to discover in this problem is that at most one letter appears in both the names of avenues and streets, and we want to minimize the number of occurences of that letter. Enumerate which character appears in both the names of avenues and streets, then do a knapsack to pack all other letters. 
+
+##K. Video Posts
+
+> solved by Roundgod (0:32 +2)
+
+If $k$ is not a divisor of the sum of all elements, the answer is no.
+
+Otherwise, we can compute the sum of each group, use a single pointer to simulate the process.
+
+##L. Odd Federalization
+
+> unsolved
+
+##M. Algoland and Berland
+
+> unsolved 
+
+#Replay
+
+To be added.
