@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2014. Warsaw U Contest
+
+Participating Date: 2019.08.21
+
+Contest Link: [Petrozavodsk Winter-2014. Warsaw U Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001434)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Petrozavodsk%20Winter-2014.%20Warsaw%20U%20Contest/statements.pdf)
+
+Solution Link: [Code for Petrozavodsk Winter-2014. Warsaw U Contest](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Winter-2014.%20Warsaw%20U%20Contest)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Different Words
+
+> solved (1:48)
+
+[Blogewoosh](https://codeforces.com/blog/entry/61205) explains it really well. Also there exists solutions that use std::bitset. 
+
+##B. Electrical Circuit
+
+> solved (1:14 +2)
+
+After taking all edges with negative weights, what should remain is the maximum spanning tree of the graph.
+
+##C. The Feast
+
+> unsolved
+
+##D. The Furniture
+
+> solved (4:26 +1)
+
+Notice that there's at one type of furniture of type $i$ that we may take $x_i$ pieces where $0<x_i<c_i$(not fully taken). We may use divide and conquer to compute the knapsack dynamic programming array without each type of furniture in $O(nM\log{n})$. Another important property is that if we enumerate on the number $x$ of pieces of the not-fully-take type, only the $\lfloor\frac{M}{x}\rfloor$ type of furniture with the minimum value of $x$ taken pieces can be such furniture. Therefore the problem is solved in $O(nM\log{n}+QM\log{M})$ time.
+
+##E. Hexagons
+
+> solved (1:30)
+
+If we take the block in the middle of the hexagon aside, the remaining number of blocks is a triangular number multiplied by 6. Therefore we separate the input into $n\mod 6$ and $\lfloor\frac{n}{6}\rfloor$, and check if the second part can be represented as the sum of 0/1/2 triangular numbers, then construct the answer accordingly.
+
+##F. The Mine
+
+> upsolved
+
+by dividing mines and excavation pits into four two-directional bounded rectangles with different orientations, then the problem can be solved with sweep line and maintaining some data structures 4 BITs for my implementation).  
+
+##G. Nim3
+
+> upsolved 
+
+A theorem states that a person who moves is sure to get third if and only if that, consider the binary representation of the number all piles of stone, the sum fo ones on each bit is divisible by three. Therefore we can easily check if the first player can get first,second or third. For more details and formal proof please refer to [the paper](https://link.springer.com/article/10.1007/BF01763118)
+
+##H. The Sorting Machine
+
+> solved (0:08 +1)
+
+Use a sliding window(monotone deque) to compute the minimum of each interval with length $k$ in $O(n)$ time. 
+
+##I. Space Mission
+
+> solved (0:50 +6)
+
+It can be proved that the best strategy is to take the leaf $v$ with maximum $\max\limits_{u\in ancstor(v)} depth_u+a_u$ each time.
+
+##J. Turtles
+
+> solved (2:41 +1)
+
+A classical theorem in these kinds of coin flipping game is that the Sprague-Grundy value of each position is independent. Therefore we only need to calculate the Sprague-Grundy value of each bit, and the final value if the bitwise-xor of the value of all set bits. Time complexity should be $O(n^2\log{n})$.
+
+#Replay
+
+To be added.
