@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2013 ACM-ICPC World Finals.
+
+Practicing Date: 2018.10.24
+
+Contest Link: [2013 ACM-ICPC World Finals](https://codeforces.com/gym/101208)
+
+PDF Statements: [Statements](https://codeforces.com/gym/101208/attachments/download/5017/2013-acmicpc-world-finals-en.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2013 ACM-ICPC World Finals](https://github.com/wcysai/Calabash/tree/master/2013%20ACM-ICPC%20World%20Finals)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Self-Assembly
+
+> solved by sy_chen (2:12)
+
+Since molecules are allowed to rotate or reflect, the geometrical layout of the structure does not matter. The structure is unbounded if and only if we can find a infinite chain of molecules where every two of them are connected by compatible edges. We may build a graph for each pair of letter and sign. For each molecule, add edges between all pairs of labels with the sign of one of them changed. Finally, check whether the resulting graph contains cycle. If so, the structure can be unbounded since we may repeat the cycle periodically; otherwise, the structure must be bounded.
+
+##B. Hey, Better Bettor
+
+> unsolved
+
+##C. Surely You Congest
+
+> solved by calabash_boy (4:15 +3)
+
+Firstly, build the $shortest path DAG$, only these edges in this DAG are useful, all others can be deleted. Let $Dis[x]$ be the shortest distance between x and 1.
+
+Consider two cars(car1 starts from x, car2 start from y) which are conflict, that is to say two cars locate at the same node z at the same time. However, car1 needs $Dis[x] - Dis[z]$ time to go from x to z, and car2 needs $Dis[y] - Dis[z]$, and $Dis[x] - Dis[z] = Dis[y] - Dis[z] => Dis[x] = Dis[y]$. So we find out that only these cars whose $Dis$ are equal may conflict.
+
+So we group cars by there $Dis$, for each group, we use Max-Flow to decide the max number of cars which not conflict each other.
+
+Because $C <= 1000$, Max-Flow algorithm only need to find at most 1000 augmented paths. So the complexity is $O(C*(N+M)+ MlogN)$
+
+##D. Factors
+
+> solved by calabash_boy (2:07 +1)
+
+It's obviously that there doesn't exist a better algorithm than brute force. Additionally, it's easy to see that there exist a lot of pruning method, so let we write a program to search all possible $n$, and we find that there only about $19k$ valid $n$, and this program runs very fast, so we commit this one, and get AC.
+
+##E. Harvard
+
+> unsolved
+
+##F. Low Power
+
+> solved by sy_chen (0:38)
+
+Since if it is possible for some $d = d_0$, it must be possible for all $d' > d0$, we may binary search the answer. For specific $d$, sort the input and pick two adjacent numbers with differenct no more than $d$ greedily. Finally check whether it is possible to assign all remaining batteries.
+
+##G. Map Tiles
+
+> unsolved
+
+##H. Matryoshkas
+
+> solved by Roundgod (2:58)
+
+We can observe that when merging two set of matryoshkas, only those consecutive minimum ones are not opened. Let $dp_{l,r}$ denote the minimum number of operations needed if we are to merge the matryoshkas in the interval $[l,r]$ into a full set. This would cost $O(n^{4})$ normally, but with some precomputations, it can be reduced to $O(n^{3})$. At last, we need to partition the matryoshkas into sets, which involves another dp that cost linear time. 
+
+##I. Pirate Chest
+
+> unsolved
+
+##J. Pollution Solution
+
+> solved by sy_chen and Roundgod (3:23)
+
+We may trianglulate the polygon with the origin as center (as how we compute the area of a polygon). Hence the problem becomes computing the area of intersection of a triangle and a circle, where one vertex of the triangle is the center of the circle. This can be solved by some careful case analysis.
+
+##K. Up a Tree
+
+> unsolved
+
+#Replay
+
+To be added.
