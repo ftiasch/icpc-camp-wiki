@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia Xuzhou Regional Contest 
+
+Participation Date: 2018.10.28
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/The%2043rd%20ACM%20ICPC%20Asia%20Xuzhou%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [TBA]
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Rikka with Minimum Spanning Trees
+
+> solved by sy_chen (0:24 +2)
+
+To be added.
+
+##B. Rikka with Line Graphs
+
+> unsolved
+
+##C. Rikka with Consistency
+
+> unsolved
+
+##D. Rikka with Subsequences
+
+> unsolved
+
+##E. Rikka with Data Structures
+
+> unsolved
+
+##F. Rikka with Nice Counting Striking Back
+
+> unsolved
+
+##G. Rikka with Intersections of Paths
+
+> solved by Roundgod and sy_chen (1:01 +2)
+
+##H. Rikka with A Long Colour Palette
+
+> solved by Roundgod (4:09 +7)
+
+One can prove that all area that is contained by at least $k$ segments can be DREAM. To find out one possible way to color the segments, one can sort the segments by their left end then right end, and greedily choose the color that is first to disappear.
+
+##I. Rikka with Sorting Networks
+
+> unsolved
+
+##J. Rikka with An Unnamed Temple
+
+> unsolved
+
+##K. Rikka with Ants
+
+> unsolved
+
+##L. Rikka with Grid Graphs
+
+> unsolved
+
+##M. Rikka with Illuminations
+
+> unsolved
+
+#Replay
+
+Sad story :(
