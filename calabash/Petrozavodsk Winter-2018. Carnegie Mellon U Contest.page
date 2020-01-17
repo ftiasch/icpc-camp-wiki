@@ -1,0 +1,91 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2018. Carnegie Mellon U Contest.
+
+Practicing Date: 2018.10.19
+
+Contest Link: [Petrozavodsk Winter-2018 Carnegie Mellon U Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001519)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2018.%20Carnegie%20Mellon%20U%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Winter-2018 Carnegie Mellon U Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2018.%20Carnegie%20Mellon%20U%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Mines
+
+> upsolved by Roundgod
+
+Add an edge from $u$ to $v$ if detonating $u$ with cause $u$ to explode, then we get a graph. After condensing it, we need to detonate those connected components with no incoming edges. For each connected component, only the mine with the lowest cost is to be detonated. To resolve the issue that the number of edges may be too large, we need to use segment tree to optimize the graph.
+
+In case of permanent changes, we can use a multiset to hold all costs for each connected component.
+
+##B. Balls
+
+> solved by Roundgod (0:16)
+
+First note that, if two ball collides, we can view them as they crossed each other, and the original ball moves left one unit. So after rolling a ball, we can assume that it rolls to the rightmost point, and all other balls move one unit to the left.
+
+##C. Flip a Coin
+
+> solved by calabash_boy (3:31 +1)
+
+In a multiply strings matching problem, the status is $O(\sum{Len(s)})$, because only the status in ACAM is useful, so in this problem, useful status is at most 40, then we calculate every transform edge, construct an automaton, translate it into transform matrix, and calculate inf power of the matrix, for example, calculate $2^80$ power of the matrix, which can satisfy the precision.  
+
+##D. Octagons
+
+> solved by sy_chen (1:00 +2)
+
+Apply the two rules until none of them can apply:
+
+- `"ABABA" -> "BAB"`
+- `"AA" -> ""`
+
+where `A` and `B` stand for two different characters. The path is closed if and only if the resulting string is empty.
+
+##E. Tree Paths
+
+> upsolved by sy_chen
+
+The first observation is that, the vertices of a path form a contiguous region iff its maximum minus minimum equals the length of the path. Consider centroid decomposition. We may find out all paths to root, sort them by its maximum, and combine two such paths to form a pass across the centroid. When enumerating one path, counting the number of possible paths to combine can be done by some data structure such as balanced search tree or Fenwick tree. The overall time complexity is $O(n \log^2 n)$, one log for centroid decomposition, the other for data structure.
+
+##F. Very New York
+
+> solved by sy_chen (2:06 +2)
+
+This problem recalls the classic conclusion that the two-dimensional Chebyshev metric and taxicab metric are equivalent. Hence, by rotating the coordinate system by an angle of $\pi / 4$, the problem becomes counting the number of points within a given rectangle. This can be efficiently done offline, by sorting all queries and points and scanning from left to right.
+
+##G. Sheep
+
+> unsolved
+
+##H. Bin Packing
+
+> solved by Roundgod (1:32 +1)
+
+Let $dp_{mask}$ stores the pair $(\text{minimum number of bins used}, \text{the smallest capacity occupied in each bin})$, then one may iterate over the possible placement for each element. Time complexity is $O(n\times 2^{n})$.
+
+##I. Statistics
+
+> unsolved
+
+To be added.
+
+##J. Zigzag
+
+> unsolved
+
+##K. Knapsack
+
+> unsolved
+
+#Replay
+
+To be added.
