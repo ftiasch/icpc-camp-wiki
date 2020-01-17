@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018-2019 ICPC, NEERC, Northern Eurasia Finals
+
+Participation Date: 2018.12.12
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018-2019%20ICPC%2C%20NEERC%2C%20Northern%20Eurasia%20Finals/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018-2019 ICPC, NEERC, Northern Eurasia Finals](https://github.com/wcysai/Calabash/tree/master/2018-2019%20ICPC%2C%20NEERC%2C%20Northern%20Eurasia%20Finals)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Alice The Fan
+
+> solved by Roundgod (2:44 +2)
+
+One may use $dp[now][win][a][b]$ denote if it's possible to create such sequence of $now$ matches, such that Team A wins $win$ of them, and the current sum of the score of Team A is $a$, and the current sum of the score of Team B is $b$. Then we can use this information to construct the answer. Be careful with the condition that the game ends if some team has won three games. The time complexity is related to the possible number of scores in one game, which should fit into time limit, since I got accepted using this method. However, noticing that the possible inputs will not exceed $200^{2}=40000$, one can hardcode all possible answers.
+
+##B. Bimatching
+
+> solved by Roundgod (4:42 +1)
+
+One may first try to solve this problem in its line graph, but would eventually find it hard to do so. Due to the small constraint, one should try to come up with some ideas that involve matching/flows, which involves some tricky technique of building graphs. My solution is as follows: Assume in the original graph, the cavaliers are labeled $v_{1},v_{2},\cdots,v_{n}$, and the ladies are labeled $u_{1},u_{2},\cdots,u_{m}$. Then we split each $v_{i}$ into two vertices, $v_{i}$ and $v_{i}'$, and add an undirected edge between them. For each edge $(v_{i},u_{j})$ in the original graph, we add two edges $(v_{i},u_{j})$ and $(v_{i}',u_{j})$, in the new graph. Then the answer to the original problem is the cardinality of the maximum matching in the new graph minus $n$, which can be solved using blossom algorithm in $O(n^{3})$. One reasonable idea why this is correct is that, if no triples are available, then the maximum matching in the graph is simply $n$, otherwise, if any triple can be formed, the it's obvious to see that the cardinality of the maximum matching can be increased by one. I basically guessed this idea in the contest without proof, to see some formal proof, you can refer to the official tutorial.
+
+##C. Cactus Search
+
+> upsolved by sy_chen
+
+To be added.
+
+##D. Distance Sum
+
+> unsolved
+
+##E. Easy Chess
+
+> solved by calabash_boy (1:08)
+
+To be added.
+
+##F. Fractions
+
+> solved by Roundgod (1:22) 
+
+One can easily prove that there's no solution if $n$ is a prime or a prime raised to some certain power.
+
+Otherwise, we can factorize $n=pq$, where $gcd(p,q)=1$. We can show that the solution always exists by solving the equation $\frac{a}{p}+\frac{b}{q}=\frac{pq-1}{pq}$, which is equivalent to $aq+bq=pq-1$. The solution can be found using Extended Eucilidean algorithm.  
+
+##G. Guest Student
+
+> solved by Roundgod (0:23 +1)
+
+Just enumerate all possible starting points and find the minimum answer.
+
+##H. Harder Satisfiability
+
+> unsolved
+
+##I. Interval-Free Permutations
+
+> unsolved
+
+##J. JS Minification
+
+> upsolved by sy_chen
+
+To be added.
+
+##K. King Kog's Reception
+
+> solved by sy_chen (1:49)
+
+Build a segment tree over starting times. For each node, record the ending time, considering only events starting between the range. In addition record the total time of events in the range. After some case analysis one may find out the way to merge the information.
+
+##L. Lazyland
+
+> solved by sy_chen (0:15)
+
+Remove all but cheapest ones that pick the same job, then persuade the cheapest ones to do jobs that no one select. One can easily prove that the greedy algorithm works.
+
+##M. Minegraphed
+
+> solved by sy_chen (3:44)
+
+Like many other constructive problems, there are many completely different ways to attack this problem. My solution basically builds two floors for every vertex, then dig vertical well for each edge. One floor of a vertex is for landing, the other is for going down. For vertices that belong to the same strongly connected component, lay them on the same floor.
+
+#Replay
+
+To be added.
