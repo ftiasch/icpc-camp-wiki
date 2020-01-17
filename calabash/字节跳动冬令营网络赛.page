@@ -1,0 +1,70 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 字节跳动冬令营网络赛
+
+Participation Date: 2018.12.01
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 字节跳动冬令营网络赛](https://github.com/wcysai/Calabash/tree/master/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%86%AC%E4%BB%A4%E8%90%A5%E7%BD%91%E7%BB%9C%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Aloha
+
+> unsolved
+
+##B. Origami
+
+> solved by sy_chen (2:15 +3)
+
+One may image the shape of the origami: numbers are connected in order, at left side and right side, alternately. Hence, a permutation is valid if all connections at one side does not cross.
+
+##C. Countinued Story
+
+> solved by Roundgod (2:49 +4)
+
+This problem is a variation of green hackenbush. A theorem says that a cycle of odd length has the same Sprague-Grundy value as an edge, and a cycle of even length has the same Sprague-Grundy value as if the vertices are shrinked into one. Therefore,say that $u$ is a direct son of $v$, when calculating the Sprague-Grundy value of $v$, we can be done as follows: $SG(v)=SG(v)\oplus\begin{cases}SG(u)+1&w(u,v)=1\\ SG(u)&w(u,v)\text{ is even}\\ SG(u)\oplus1&otherwise \end{cases}$. Therefore, we can use a depth-first search to find out the Sprague-Grundy value for each subtree, and use another depth-first search to determine which edges can be removed.
+
+##D. The Easiest One
+
+> solved by Roundgod (4:38)
+
+After some analysis, one may find out that the answer equal to the number of $1$s in $x$ minus the number of $1$s in $y$ plus the last position $i$ where $x_{i}=1$ and $y_{i}=0$, which is before the first position $j$ such that $x_{i}=0$ and $y_{i}=1$ (one may try to solve $x=1100$ and $y=0011$ to understand why this is true. Therefore, we can construct such dynamic programming $dp[now][last][less][greater][has]$, which $now$ stands for the current position, $last$ stand for the last $i$ where $x_{i}=1$ and $y_{i}=0$, $less$ denotes whether $x<n$, $greater$ stands for whether $y<x$ and $has$ stands for whether there has already exists an $i$ where $x_{i}=1$ and $y_{i}=0$. To find out the total number of steps, for each $dp$ state we should store a pair $(steps,ways)$, the transferring take constant time. So the overall complexity is $O(n^{2})$. Actually this can be optimizied to $O(n)$, but there's no need to do that.
+
+##E. Set
+
+> unsolved
+
+##F. Old Problem
+
+> unsolved
+
+##G. Periodic Palindrome
+
+> upsolved by calabash_boy
+
+The hardest thing is to find the number of perlindrome periodic for each prefix. It's known that all border of a string as well as the palindrome suffix can represent as at most logn  arithmetic progressions, then the intersection of these two  arithmetic progression sequences are the perlindrome periodic of this prefix. Because the two  arithmetic progression sequences are both sorted and disjoint, we can calculate the intersetion using algorithm like merge sort. To calculate two  arithmetic progressions's intersection, we should use exgcd to solve a linear equation in two unknowns. So the complexity is $O(nlog^2n)$, but actually, these two logn is very small, and the worst complexity can not be reached. It's very fast.
+
+##H. Accel World
+
+> unsolved
+
+##I. Hello, Hello and Hello
+
+> unsolved
+
+##J. Sortable Path on Tree
+
+> unsolved
+
+#Replay
+
+
