@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 14
+
+Participating Date: 2019.05.16
+
+Contest Link: [2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 14](https://codeforces.com/gym/100217)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC14/statements.pdf)
+
+Solution Link: [Code for 2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 14](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC14)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Finite Automata
+
+> solved (2:49 +2)
+
+Consider solving the problem using dynamic programming on broken files, construct such automatons according to the states in dynamic programming, with the number of states equals to $m2^m+1$, which $1$ stands for the state that always reject the string.
+
+##B. Bacteria
+
+> upsolved
+
+There are basically three cases where the intersection point between the square and the line locates: on the opposite edges(2 cases), or on the upper and right edge(1 case). For each case, the problem can be solved using nested ternary search. One also need to manually compute the integral to check the answer. Quite hard work, be careful.  
+
+##C. Express Trains
+
+> upsolved
+
+Let's assume that the first railway connects $A$ and $B$, while the second railway connects $C$ and $D$. Let $dp_{u,v}$ denote whether its possible to reach the state where the first railway is at $u$ and the second railway is at $v$. If neither of $u$ and $v$ is at the endpoint (i.e.,$B$ and $D$), then one should make transition using the node of smaller topological order, otherwise one should make the transition using the node that's not at the endpoint.
+
+##D. Merge Sort
+
+> upsolved
+
+For each merging process of length $k$, the number of comparisons reach the maximum $k-1$ if and only if the largest and second largest elements are in different sides, therefore we can easily count the maximum number of comparisons and construct one such sequence with the smallest lexicographic order. To find the total number of such sequences, another dynamic programming is needed.
+
+##E. Guarding the Place of the Murder
+
+> upsolved
+
+After extracting all points on common tangent lines between each pair of circles, the final answer should be the perimeter of the convex hull of those set of points, while changing straight line into arcs when the two adjacent points on the convex hull are on the same circle.
+
+##F. Wall Painting
+
+> solved (4:09)
+
+Consider some tangent plane of the vessel, and compute the angle corresponding to the unseen part. To compute the surface area, manual integration is needed.
+
+##G. Palindromes
+
+> solved (1:10 +1)
+
+First use some method(i.e.,brute force of manacher algorithm) to find out all occurences of palindrome substrings of maximal length, and then insert them into a trie to compute the number of occurences. The space needed can be proven to fit into memory limit.
+
+##H. Prime Sum
+
+> solved (1:25 +1)
+
+Brute force to get all solutions, and hardcode them into the program.
+
+##I. Sharing the Sweets
+
+> solved (0:43 +3)
+
+The answer is just partition number $p(n,k)$. Use dynamic programming $p(i,j)=p(i-1,j-1)+p(i-j,j)$ to get the answer. Biginteger needed.
+
+##J. Tree Analysis
+
+> solved (2:02 +2)
+
+Use some decent tree hash to compute the answer in linear time.
+
+#Replay
+
+To be added.
