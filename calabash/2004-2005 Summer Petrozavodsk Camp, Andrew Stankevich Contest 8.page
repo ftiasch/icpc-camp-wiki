@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 8
+
+Participating Date: 2019.4.13
+
+Contest Link: [2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 8](https://codeforces.com/gym/100197)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC8/statements.pdf)
+
+Solution Link: [Code for 2004-2005 Summer Petrozavodsk Camp, Andrew Stankevich Contest 8](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC8)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Crazy Bishops
+
+> upsolved
+
+One simple observation: If the two bishops are located at $(x_1,y_1)$ and $(x_2,y_2)$, with $x_1+y_1$ and $x_2+y_2$ sharing the same parity, then the game always end in draw, since the black king can safely move to grids with the other grid so that it'll never be checkmated by the two bishops.
+
+Otherwise, in the long run, one can imagine that the white player can always force the black king to move to some corner and thus win the game. The only chance for the black player to make the game end in draw is to attack some unprotected bishop or make itself stalemated. To check if these cases can be reached, one can apply some recursive search, restricting the overall number of moves to a very small number(3 is enough in this problem).
+
+##B. Divide and conquer
+
+> solved (4:20)
+
+One may easily find out the polynomial is of degree $m+1$, and the first $m+1$ values of the polynomial is that $f(i)=2^i$, where one can apply interpolation method or use Gaussian elimination to figure out the coefficients of the polynomial. Biginteger operations are needed in this case. In case the solution may not finish in time, one can hardcode the results to get accepted.
+
+Also, there is a direct formula for the polynomial, which is $\sum\limits_{i=0}^{m}\binom{n}{i}$, one can refer to [discussion](https://math.stackexchange.com/questions/409518/how-many-resulting-regions-if-we-partition-mathbbrm-with-n-hyperplanes) for more information.
+
+##C. Martians' DNA Analysis
+
+> upsolved
+
+Clearly the solution should take $O(n^2)$ time. But the naive implementation record the previous character and the next character could result in TLE because of the large constant of std::unordered_map or std::unordered_set. Here's one possible optimization that gets accepted: fix the gap between strings while finding the longest same substring in the original string, and thus the std::unordered_map is no longer needed.
+
+##D. Drawing Problem
+
+> unsolved
+
+##E. Fibonacci Period
+
+> solved (1:15)
+
+A fact is that the period of fibonacci sequence modulo $r$ is periodic with period no more than $6r$. After considering the matrix form of Fibonacci sequence, one can see that this actually is a problem quite similar to [Discrete Logarithm](https://en.wikipedia.org/wiki/Discrete_logarithm), which can be solved by Baby-step-giant-step method in $O(\sqrt{r})$ time.
+
+Also, there's a more general formula about this period that involves some knowledge of number thoery. One may refer to [Pisano Period](https://en.wikipedia.org/wiki/Pisano_period) for more information.
+
+##F. Parallel Processes
+
+> solved (2:17)
+
+A simple dynamic programming problem. Biginteger operations are needed.
+
+##G. Beautiful Permutation
+
+> solved (0:13)
+
+According to [Dilworth's Theorem](https://en.wikipedia.org/wiki/Dilworth's_theorem), the answer should be $\lceil \sqrt{n} \rceil$, and constructing the answer with the smallest lexicographic order is trivial.
+
+##H. Build more roads!
+
+> solved (0:44 +1)
+
+The optimal solution is complete $r-1$-partite graph with the number of vertices in each part as close as possible.
+
+##I. Secret Lab
+
+> upsolved
+
+After enumerating the set of researchers that James should kill, one can try to apply dynamic programming, but would result in TLE normally. One should then only do dynamic programming for some specific time point, whose overall size should be about $O(n^2k)$, and the transferring each time takes $O(m)$. The overall complexity should be $O(2^nn^2km)$, which should pass with really careful implementation. Tough indeed.
+
+##J. Snooker
+
+> upsolved
+
+First increase the radius of all balls except the white one by one, and then we may view the white ball as a point. For each target ball we would like to find out whether it's blocked by some balls of the different color. It can be seen we only need to consider the balls that has a closer distance to the white ball. Consider the interval of possible angles, the ball is blocked iff the interval of hitting angles is fully covered by the balls of the differenct color, which can be checked by extracting borders of the interval, mark them as $+1/-1$, go in some sorted order, and see whether there exists a moment when the partial sum becomes negative.
+
+#Replay
+
+To be added.
