@@ -1,0 +1,66 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2019 南昌赛区网络预赛
+
+Participation Date: 2019.9.8
+
+Contest Link: [ACM-ICPC 2019 南昌赛区网络预赛](https://www.jisuanke.com/contest/3870?view=challenges)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for ACM-ICPC 2019 南昌赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202019%20%E5%8D%97%E6%98%8C%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Enju With math problem
+
+> solved by sy_chen (1:10 +2)
+
+##B. Fire-Fighting Hero
+
+> solved by Roundgod (1:02)
+
+Multiple-source shortest path problem.
+
+##C. Hello 2019
+
+> solved by Roundgod (2:16 +2)
+
+Consider the dynamic programming solution for the problem, the $(\min,+)$ operation can be viewed as a kind of matrix multiplication. Use segment tree to maintain the product of matrices.
+
+##D. Interesting Series
+
+> solved by Roundgod (2:44)
+
+It can be seen that $F_n=\frac{a^n}{a-1}-\frac{1}{a-1}$. For each query $k$, Let $t=[x^k]\prod\limits_{i=1}^{N}(1+a^{s_i}x)$. Then the answer is $\frac{t-\binom{N}{k}}{a-1}$. Use divide-and-conquer together with Fast Fourier Transform to calculate the coeficients in $O(n(\log{n})^2)$ time.
+
+##E. Magic Master
+
+> solved by sy_chen (2:00 +1)
+
+##F. Megumi With String
+
+> solved by calabash_boy (1:13)
+
+##G. Pangu Separates Heaven and Earth
+
+> solved by sy_chen(0:07)
+
+##H. The Nth Item
+
+> solved by sy_chen (0:27)
+
+##I. Yukino With Subinterval
+
+> solved by sy_chen (4:10 +2)
+
+#Replay
+
+To be added.
