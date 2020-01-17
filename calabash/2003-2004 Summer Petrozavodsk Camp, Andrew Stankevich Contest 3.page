@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2003-2004 Summer Petrozavodsk Camp, Andrew Stankevich Contest 3
+
+Participating Date: 2019.4.2
+
+Contest Link: [2003-2004 Summer Petrozavodsk Camp, Andrew Stankevich Contest 3](https://codeforces.com/gym/100198)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC3/statements.pdf)
+
+Solution Link: [Code for 2003-2004 Summer Petrozavodsk Camp, Andrew Stankevich Contest 3](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC3)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Area
+
+> upsolved
+
+Extract all intersection points. Enumerate over all starting edges, and move to an edge leftmost to it iteratively until we find a closed polygon. This is just a basic idea, and implementation may be painful, so be careful.
+
+##B. Beloved Sons
+
+> solved (1:08 +2)
+
+Apply Kuhn-Munkres algorithm to find the maximum weighted matching.
+
+##C. Strange Counter
+
+> solved (3:56 +3)
+
+Just maintain the invariant that there's at least one $0$ between two $2$s. At most $3$ moves are needed using this method.
+
+##D. Data Transmission
+
+> upsolved
+
+This problem requires one to find a blocking flow efficiently, which is exactly what Dinic's algorithm does. Typically, this takes $O(nm)$ time and would get Time Limit Exceeded, but one can optimize is to $O(m\log{n})$ using Link-Cut Tree. See the implementation for more details.
+
+##E. Strong Defence
+
+> solved (2:09)
+
+The number of crystal types equals to the shortest distance from $S$ and $T$, and edges are classified according to their type in the shortest path tree from $S$ to $T$.
+
+##F. Weird Dissimilarity
+
+> solved (1:55 +6)
+
+Standard dynamic programming problem. Let $dp_{i,j}$ be the minimum dissimilarity if we are current at the $i$ character of $\lambda$ and $j$th character of $\mu$. Transferring is trivial.
+
+##G. PL/Cool
+
+> upsolved
+
+Can be implemented with some careful case analysis.
+
+##H. Royal Federation
+
+> solved (2:53 +1)
+
+While tranversing the tree in depth-first-order, maintain a stack, and greedily make provinces while there's enough in some subtree.
+
+##I. Two Cylinders
+
+> solved (0:43)
+
+Use Simpson's formula to calculate the integral numerically
+
+#Replay
+
+To be added.
