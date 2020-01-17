@@ -1,0 +1,98 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2017. UESTC Selection
+
+Practicing Date: 2019.10.21
+
+Contest Link: [Petrozavodsk Summer-2017. UESTC Selection](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001508)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2017.%20UESTC%20Selection/statements.pdf)
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for Petrozavodsk Summer-2017. UESTC Selection](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2017.%20UESTC%20Selection)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Master Zhu and Magic Numbers
+
+> upsolved by sy_chen
+
+This a reading comprehension and implementation problem. Using `std::bitset` can easily pass this problem.
+
+##B. Master Zhu and Chessboard
+
+> upsolved by sy_chen
+
+##C. Master Zhu and Candies
+
+> solved by Roundgod (0:14 +1)
+
+Let $SG(x)$ be the Grundy value for a pile of $x$ candies, then $$SG(x)=\begin{cases} x+1 & x\equiv 7 (\mod 8)\\ x-1 & x\equiv 0 (\mod 8)\\ x & \text{otherwise}\\ \end{cases}$$
+
+##D. Master Zhu and Rikka
+
+> upsolved by sy_chen
+
+This can be solved by Mo's algorithm on tree.
+
+##E. Master Zhu and Palindromes
+
+> upsolved by calabash_boy
+
+To get the answer of interval $[L,R,x]$, we need to calculate the answer $F(R) = [1,R,x]$ and $F(L-1) = [1,L-1,x]$ and $\Delta = \sum_{l\le L-1,L \le r}[tails\; of\; S[l,r]\; has\; x\; as\; prefix]$. Then the final answer will be $F(R) - F(L-1) - \Delta$.
+
+$\Delta$ can be calculate in $O(20)$ because the palindrome center must in range $[L-10,L+10]$
+
+To calculate $F(R)$, we need to discuss the palindrome center $C$, if $C \le R - 10$, then we can use a Trie, and insert all palindrome into it whose palindrome center $C \le R - 10$, this operation is $O(10)$. For those legal palindrome whose center $C > R - 10$, we can just brute force, this operation is also $O(10)$.
+
+So the overall complexity is $O(20 \cdot (n + q) )$, better than std. 
+
+##F. Master Zhu and Video
+
+> solved by sy_chen (1:38 +4)
+
+It is trivial when $p < q$; otherwise, not too much up instructions are issued. So just try all possible number of up instructions.
+
+##G. Master Zhu and Polygons
+
+> upsolved by Roundgod
+
+Note that the polygon cannot consists of more than $3$ acute angles, and it is possible to have $3$ acute angles only when $m=3$. For $k=1$ and $k=2$, one can establish a summation formula and later optimize it to $O(1)$ using, like, hockey-stick formula. 
+
+##H. Master Zhu and Root
+
+> solved by Roundgod (2:10)
+
+It can be observed that $n$ has at most $8$ distinct prime divisors, let's solve forn each of them separately. After comuting the primitive root, apply Baby-Step-Giant-Step algorithm, with block size equal to $\sqrt{nq}$, so that the algorithm runs in $O(\sqrt{nq})$ time. The overall complexity is $O(8\sqrt{nq})$.
+
+##I. Master Zhu and Binary Trees
+
+> solved by Roundgod (2:40)
+
+Calculate $dp[i][j]=$ the number of ways to form $i$ binary trees with $j$ vertices in $O(n^3)$. The remaining is implementation.
+
+##J. Master Zhu and Instability
+
+> solved by sy_chen (1:18)
+
+Consider the binary representation of the two adjacent numbers. Only the bit where the two numbers differ will affect the differences of the two numbers, and the effect depends on the highest different bit. So we can determine $X$ from higher to lower, and use dynamic programming to compute the total effects.
+
+##K. Master Zhu and Math Problem
+
+> upsolved by Roundgod
+
+Use digit dynamic programming to calculate the answer, the time complexity should be $O(T\log{\max{(A,B,C,D)}})$.
+
+##L. Master Zhu and the Leaper
+
+> solved by Roundgod (0:55 +1)
+
+Precalculate the number of ways to move from the upper-left corner of a matrix to the lower-right corner of a matrix, which is exactly a binomial coefficient, can be calculated using Lucas's Theorem due to small modulo. To calculate the number of ways that doesn't touch any obstacles, which can be done using inclusion-exclusion principlewith dynamic programming, after sorting the obstacles by their coordinates.
+
+#Replay
