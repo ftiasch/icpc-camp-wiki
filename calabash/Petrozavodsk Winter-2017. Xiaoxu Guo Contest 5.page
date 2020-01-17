@@ -1,0 +1,116 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2017. Xiaoxu Guo Contest 5
+
+Practicing Date: 2018.10.19
+
+Contest Link: [Petrozavodsk Winter-2017. Xiaoxu Guo Contest 5](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001492)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2017.%20Xiaoxu%20Guo%20Contest%205/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Winter-2017. Xiaoxu Guo Contest 5](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2017.%20Xiaoxu%20Guo%20Contest%205)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Even Three is Odd
+
+> unsolved
+
+##B. Walk of Length 6
+
+> upsolved by Roundgod
+
+This problem is really a harsh one...embrace yourself!
+
+One straight forward idea is to compute the number of all closed walks of length 6 minus the number of cycles of length 6, this method, however, will result in TLE in both parts.
+
+Therefore, we need to classify the different graphs $G_{i}$ that can be resulted by a closed walk of length 6, and compute how many subgraphs that are isomorphic to it in the original graph $G$, which is denoted as $c_{G}(G_{i})$. Also, for each possible $G_{i}$, one may need to write a brute force of dynamic programming to find out how many possible walks that can form this graph, which is denoted as $k(G_{i})$. I wrote a dynamic programming one (see 'brute.cpp' in the code link) , where $dp[step][mask][st][now]$ represents we have currently moved $step$ edges, the state that if each edge has been visited is denoted by $mask$, we started the walk from $st$, and we are at vertex $now$.Then Athe ans is $\sum\limits_{i}c_{G}(G_{i})k(G_{i})$.
+
+And there comes the harsh part: The classification of all closed walks of length 6,except the cycle of length $6$. Here we denote $deg(u)$ as the degree of vertex $u$, and $common(u,v)$ as the number of vertices that share an edge with both $u$ and $v$. This can be computed for all pairs of $(u,v)$ in $O(\frac{n^{3}}{w})$ using std::bitset.
+
+$G_{1}$: A cycle of length 3, $c_{G}(G_{1})=\frac{\sum\limits_{\{u,v\}\in E} common(u,v)}{3}$, $k(G_{1})=24$
+
+$G_{2}$: A cycle of length 4, $c_{G}(G_{2})=\frac{\sum\limits_{u,v}common(u,v)}{4}$, $k(G_{2})=48$
+
+$G_{3}$: A chain of 2 vertices, $c_{G}(G_{3})=\vert E \vert$, $k(G_{3})=2$
+
+$G_{4}$: A chain of 3 vertices, $c_{G}(G_{4})=\sum\limits_{u}\binom{deg(u)}{2}$, $k(G_{4})=12$
+
+$G_{5}$: A chain of 4 vertices, $c_{G}(G_{5})=(\sum\limits_{\{u,v\}\in E} (deg(u)-1)(deg(v)-1))-3c_{G}(G_{1})$, $k(G_{5})=6$
+
+$G_{6}$: A claw of 4 vertices, $c_{G}(G_{6})=\sum\limits_{u}\binom{deg(u)}{3}$, $k(G_{6})=12$
+
+$G_{7}$: A square with a diagonal, $c_{G}(G_{7})=\sum\limits_{\{u,v\}\in E}\binom{common(u,v)}{2}$, $k(G_{7})=36$
+
+$G_{8}$: A square with one additional edge hanged on one of the vertices, $c_{G}(G_{8})=(\sum\limits_{u,v}\binom{common(u,v)}{2}(deg(u)-2))-c_{G}(G_{7})$, $k(G_{8})=12$
+
+$G_{9}$: two cycles of 3 vertices that share a common vertex, $c_{G}(G_{9})=(\sum\limits_{u}\binom{\sum\limits_{v,\{u,v\}\in E}common(u,v)/2}{2})-2c_{G}(G_{7})$, $k(G_{9}))=24$
+
+##C. City United
+
+> upsolved by Roundgod
+
+If the problem requires us to find the exact number of the answer, then it is unsolvable in the time limit. However, since we are only required to find out the parity of the answer, some tricky things can be done.
+
+Consider computing $\sum\limits_{S\subseteq V,S\neq \varnothing} 2^{c(S)}\mod{4}$ where $c(S)$ denote the number of connected components in the induced subgraph of $S$. Since $2^{x}\equiv 0\mod{4}$ for $x>1$, only connected subgraph has a contribution of $2$ to the formula, so the problem can be converted into computing the formula above, where the answer to the original problem is just that formula divided by $2$.
+
+How to compute that formula? Some further tricks are needed. The formula can be restated as the sum of number of $2$-colorings of the induced graph of $S$, where each connected component share the same color, or, the number of $3$-colorings:black,white and gray, of the graph, if we view the unchosen vertices as gray such that no two vertices with color black and white are adjacent. Due to the property that the two incident vertices of an edge has a label difference of at most 13, this can be solved using a simple dynamic programming in $O(13\cdot 3^{13})$, where $dp[now][mask]$ denotes we currently consider all vertices with label $\leq now$, and the color of the vertices with label in the interval $[now-12,now]$ are denoted by $mask$. 
+
+##D. Coins 2
+
+> upsolved by Roundgod
+
+First let $m=lcm(1,2,\cdots,n)$, then it's not hard to prove that, if some value $x$ with $x\geq nm$ can be formed, then $x-m$ also can be formed. (Hint: Proof by contradiction. Similarly, let $s=\sum\limits_{i=1}^{n} a_{i}\cdot i$, then if some value $x$ with $x\leq s-nm$ can be formed, then $x+m$ also can be formed. Therefore, we can reduced the value needed to be checked from $O(s)$ to $O(nm)$ and then can naively using multiple backpack to get the answer. The overall time complexity is $O(n^{2}m)$ for the multiple backpack. Here we don't need to save the dequeue as we normally do in multiple backpack. Here all values are 0/1, so many simpler implementations are allowed. 
+
+##E. Lowest Common Ancestor
+
+> solved by calabash_boy (0:55 +3)
+
+Use Heavy-Light-Decomposition, then for each node i in range(1,n), we count the sum_of_weight in the path 1-i, then for each node j in the path 1-i, we add the weight_of_j by a[j], using Segment_Tree. Complexity is $O(nlog^2n)$
+
+##F. Multi-stage Marathon
+
+> solved by sy_chen (4:42 +4)
+
+Maintain probability distributions of the number of players at each position. Preprocessing the first some (say, $k$) powers of the transition matrix. Given the proper power of the transition matrix, updating the distributions from some moment to some moment requires $O(n^2)$ time. Also, computing the expected number of players at checkpoint $n$ at some moment based on the distributions at some previous moment takes $O(n)$ time, if the difference of the moments does not exceed $k$. Once the difference exceeds $k$ or some new player enters, perform an update on the distributions. The total time complexity is therefore $O(n^3k + n^2 T/k + nT + n^2m)$.
+
+##G. Matrix Recurrence
+
+> solved by sy_chen (1:32 +1)
+
+It is easy to come up with an $m^3 n \log n$ algorithm if we use some data structure to query the product of some consecutive matrices. However, this might be a little bit slow, and we can actually shave off the $\log n$ term.
+
+Note that the range queries form a monotone sliding window. We may split the range into some consecutive segments, such that no segment contains an entire range except their borders touch, and no query contains an entire segment except their borders touch. Hence, each query can be answered by combining the suffix product of some segment and the prefix sum of the next segment. By computing the prefix sums and suffix sums in each segment, each query can be answered by one multiplication.
+
+The aforementioned technique applies to sliding window range queries on any semigroup.
+
+##H. Permutation and noitatumreP
+
+> solved by Roundgod (2:28)
+
+One can guess that the answer forms a linear recurrence. Just brute force for the first terms and then plug them into your template of Berlekamp-Massey, emmmm... nice problem.
+
+##I. Compressed LCS
+
+> unsolved
+
+##J. Circular Sectors
+
+> unsolved
+
+##K. Welcome to ICPCCamp 2017
+
+> solved by Roundgod (4:07)
+
+One should first consider the problem when there are no final, assume there are $x_{1}$ team whose best rank is first, $x_{2}$ team whose best rank is second, then the answer is simply $(\sum 2^{x_{i}}-1)+1$. Next we solve the original problem. Enumerate $Y$, and erase the teams who has already proceeded from $x_{i}$ To avoid overcounting, we should make sure that the next team in the leaderboard of Final don't proceed to ICPCCamp. Segment Tree or Fenwick Tree is needed to maintain the $x_{i}$ array and calculate the answer. Time complexity: $O(m\log(m))$
+
+#Replay
+
+To be added.
