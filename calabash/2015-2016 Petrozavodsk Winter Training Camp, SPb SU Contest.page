@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2015-2016 Petrozavodsk Winter Training Camp, SPb SU Contest
+
+Practicing Date: 2019.05.04
+
+Contest Link: [2015-2016 Petrozavodsk Winter Training Camp, SPb SU Contest](https://codeforces.com/gym/100956)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2015-2016%20Petrozavodsk%20Winter%20Training%20Camp%2C%20SPb%20SU%20%2B%20SPb%20AU%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2015-2016 Petrozavodsk Winter Training Camp, SPb SU Contest](https://github.com/wcysai/Calabash/tree/master/2015-2016%20Petrozavodsk%20Winter%20Training%20Camp%2C%20SPb%20SU%20%2B%20SPb%20AU%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Random Points on the Circle
+
+> unsolved
+
+##B. Lines
+
+> solved by sy_chen (2:44)
+
+Binary search for the answer. After some coordinate transformation the problem becomes counting points in 2-dimensional rectangular regions.
+
+##C. Fraction Factory
+
+> upsolved by Roundgod
+
+After doing a prime decomposition of the modulo, if for some prime of the modulo, the exponents of the denominator exceeds the exponents of the numerator, the answer should be 'DIVISION BY ZERO'. Otherwise, the remaining part can be just multiplied together, using extended Euclid's algorithm for computing the modulo inverse. The main overhead of the program should be the prime decomposition part, where basically two methods can be applied:
+
+Method one: Precompute all prime divisors less than $10^6$, after dividing by all primes less than $10^6$, the remaining part can only be one, a prime, or the multiplication of two primes. Use Miller-Rabin primality test along with Pollard-Rho's prime decomposition algorithm to decompose this number. Theoretically this runs in $O(\sqrt{10^9})$, and should pass the problem, however, due to the large constant of Pollard-Rho's prime decomposition algorithm, this method didn't pass during the contest.
+
+Method two: The first steps are the same, and now we are facing one, a prime, or the multiplication of two primes. Let this remaing number be $x$, if no $a_i$ or $b_j$ shares a greatest common divisor $g$ where $1<g<x$ with $x$, then we may consider $x$ as a prime and still get the rgiht results, otherwise, we may check the greatest common divisor of $x$ with every $a_i$ and $b_j$ to get the prime decomposition of $x$, this works in $O(10000\log{10^{18}})$, which seems close to $O(\sqrt{10^9})$, but get passed in less than one second.
+
+##D. Greedy Game 
+
+> solved by Roundgod (0:18)
+
+Sort the items first by $a_i$, then by $b_i$, in decreasing order. A set of items taken by the second player is valid iff for every prefix, the number of items not taken is not greater than the number of items taken. Thus we may maintain a priority_queue, each time extract the maximum number after pushing two numbers.
+
+##E. Odd Grammar
+
+> solved by sy_chen (4:04 +5)
+
+This can be solved by maintaining and updating the possible parities for each nonterminal.
+
+##F. Colored Path
+
+> solved by Roundgod (0:51)
+
+Enumerate on the set of colors used, in increasing order, use dynamic programming to check if it's valid. Time complexity is $O(n^22^k)$.
+
+##G. Pencil of Wishing
+
+> unsolved
+
+##H. Points
+
+> upsolved by Roundgod
+
+Due to the small constraint, this problem can be resolved using randomized method. First randomly shuffle all vectors, then keep adjusting the choice to get one local optimum. Repeat a few times to get the global optimum.
+
+##I. Set Intersection
+
+> solved by sy_chen (2:06)
+
+This can be solved by randomization.
+
+##J. Sort It!
+
+> solved by Roundgod (1:39 +1)
+
+One can see the original array is sorted if and only if the set of numbers occurs in it forms an increasing subsequence in $p$. Therefore we need to determine, for each $x$, how many increasing subsequences of length $x$ are there in $p$. which can be solved in $O(n^2\log{n})$ by maintaining dynamic programming with a fenwick tree. After that we need to calculate for each $x$ how many arrays of length $n$ with size of the set of numbers occurs in it exactly equals to $x$ are there, which can solved by inclusion-exclusion easily.
+
+##K. Two Strings
+
+> solved by calabash_boy (4:18 +4)
+
+##L. Triangle
+
+> upsolved by Roundgod
+
+According to Heron's formula for computing the area $A$ of a triangle: $A=\sqrt{p(p-a)(p-b)(p-c)}$ where $p=\frac{a+b+c}{2}$,we may assume, wlog, that $a<b<c$, then $\frac{\partial A}{\partial a}=4a(b^2+c^2-a^2)>0$, thus if we fix $b$ and $c$, the area decreases as $a$ increases. Also if we let $c-b=d$, we can also see that if we fix $a$ and $d$, then the area decreases as $d$ decreases.
+
+So here's a solution that works in $O(\frac{n^2}{32})$ that uses the above conclusion: iterate over all possible $d$s, then to minimize the area, $a$ should be the minimum integer in the set that is greater than $d$, which can be computed in linear time use two-pointers, technique. After that, we should find the smallest $b$ such that both $b$ and $b+d$ are in the set, satisfying $b\geq c$, which can be computed efficiently using std::bitset.
+
+#Replay
+
+To be added.
