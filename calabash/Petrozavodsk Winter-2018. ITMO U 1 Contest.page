@@ -1,0 +1,94 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2018. ITMO U 1 Contest
+
+Practicing Date: 2018.10.17
+
+Contest Link: [Petrozavodsk Winter-2018. ITMO U 1 Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001512)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2018.%20ITMO%20U%201%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Winter-2018. ITMO U 1 Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2018.%20ITMO%20U%201%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Airport Check-in
+
+> unsolved
+
+##B. Beyond the Rescue
+
+> unsolved
+
+##C. Casino Cheating
+
+> solved by Roundgod (4:03 +2)
+
+If the number of rounds equals to one, one can directly obatin two thirds of the chocolate.
+
+Otherwise, one may first choose one third of the chocolate, and obtain two thirds of the choclate of size two thirds, which is $\frac{4}{9}$ at the last round, which means we only need to obatin $0.11$ more chocolate during the previous round. Greedily taking two thirds of the biggest piece(excluding the piece of size two thirds) of the croupier would do.
+
+##D. DotA Quals
+
+> solved by sy_chen (3:00 +2)
+
+To be added.
+
+##E. Enumeration of Tournaments
+
+> upsolved by Roundgod
+
+With some mathematical calculation one may get the formula below:
+
+$f(2n)=(2n-1)!!f(n)$ and $f(2n+1)=(2n+1)!!f(n+1)$
+
+So the problem is reduced to how to calculate $(n)!! \mod 2^{64}$ quickly. One can use $\times 2, + 1$ technique here. Let $P_{k}(x)=\prod\limits_{i=1}^{k}(2i+2x-1)$, and what we want is $P_{n}(0)$. It can be observed that $P_{k}(x)$ is a polynomial for $x$, since $x$ always appear in the form of $2x$ and we are computing the value modulo $2^{64}$, we can ignore all coefficients except the first 64. We have $P_{1}(x)=2x+1$,$P_{2k}(x)=P_{k}(x)\cdot P_{k}(x+k)$ and $P_{k+1}(x)=(2k+2x+1)P_{k}(x)$. With these formula, we can compute $(n)!! \mod 2^{64}$ in $O(64^{2}\log{n})$ and the full solution in $O(64^{2}\log^{2}{n})$
+
+##F. Fresh Matrix
+
+> upsolved by Roundgod
+
+Noticing $N$ is small, one ingmay think of us the dynamic programming on broken files to compute the value, maintaining states by their colors altogether with connectivity. Use dsu to make transitions, unordered_map or hashmap to encode states, and bfs to generate all possible states(around 2 thousand). However, since the transition matrix is quite large, matrix exponentiation wouldn't fit in time, thus one should use Berlekamp-Massey algorithm to quickly compute the $m$th value of the linear recurrence.
+
+##G. Game of Chairs
+
+> solved by Roundgod (1:09 +3)
+
+Solve for each color independently, one can notice that each time we need to add an arithmetic progression to an interval, which can be done in $O(1)$ by taking the second-order difference of the array.
+
+##H. Hung Fu
+
+> upsolved by sy_chen
+
+##I. Is it a p-drome?
+
+> solved by sy_chen (3:20 +6)
+
+This problem asks to check some given property for each substring of fixed length. This is somewhat similar to what FFT does. Hence we would like to design a kernel to check whether a pattern is p-drome. Consider vector $x = (a_1, a_2, \cdots, a_m)$, where all values are initialized to 0. For position $i$, pick a random number $r_i$, add it to $a_i$ and subtract it from $r_{p_i}$. Obviously, if the inner product of $x$ and a given substring is nonzero, then the given substring is sure not to be p-drome; on the contrary, if the inner product is zero, then the substring is p-drome with high probability. The inner product of $x$ with every substring of length $m$ can be computed in batch by convolving the reverse of $x$ with the original string. If we do it over finite field $\mathbb{F}_p$ by using NTT, the probability of error for specific position is $1/p$, and, by union bound, the total error probability does not exceed $n/p$. This can be proved by applying Schwartz-Zippel lemma to a multivariate polynomial, where the variables are the random numbers chosen in constructing vector $x$.
+
+##J. Journey
+
+> solved by Roundgod (2:11 +4)
+
+The main focus of this problem is to avoid overcounting Let $dp_{i}$ denote the number of ways reaching to grid $i$, with the length of last jump \textbf{doesn't equal to} $a_{i}$. During the transferring, one may use brute force for $k\geq \sqrt{N}$ and saves a table for remainder $\leq \sqrt{N}$, in order to achieve the $N\sqrt{N}$ complexity. For the sake of simplicity, one may set $a_{n}=\infty$.
+
+##K. Kid's Nightmare
+
+> unsolved
+
+##L. Lazy Student
+
+> upsolved by Roundgod
+
+By solving a quadratic equation, one may get the recurrence $f(n+1)=f(n)-\frac{f(n)^{2}}{4}$. It can be guessed that $f(n)$ has a relatively small period. To get the final $P$ and $Q$, one can first solve $Q$ and $\frac{P}{Q}$ instead.
+
+#Replay
+
+To be added.
