@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2013. Gennady Korotkevich Contest 1
+
+Participating Date: 2019.08.18
+
+Contest Link: [Petrozavodsk Summer-2013. Gennady Korotkevich Contest 1](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001421)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Petrozavodsk%20Summer-2013.%20Gennady%20Korotkevich%20Contest%201/statements.pdf)
+
+Solution Link: [Code for Petrozavodsk Summer-2013. Gennady Korotkevich Contest 1](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Summer-2013.%20Gennady%20Korotkevich%20Contest%201)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Analyzing Bit (Yet Special) Strings
+
+> upsolved(by calabash_boy)
+
+Application of Suffix Automaton.
+
+##B. Bits Are Dangerous
+
+> solved (0:12 +3)
+
+It can be seen that one should firstly shift in one direction and then in another, check all possible cases and take the minimum answer. Some edge cases should be handled carefully.
+
+##C. Counting Amusing Numbers
+
+> solved (3:55 +2)
+
+Just apply dynamic programming. Implementation could be painful.
+
+##D. Degree Of Number's Eccentricity
+
+> upsolved
+
+First form as many $9$s as possible as prefixes, enumerate on the pair of the next digit, and some implemention after that would be enough.
+
+##E. Exact Number of Drops
+
+> solved (4:21)
+
+Use Extended Euclidean's Algorithm to find the number of fill/empty operations, plus some case analysis.
+
+##F. Figures Of Simple Sense
+
+> unsolved 
+
+##G. Gowk's Errand for Master
+
+> solved (2:59 +3)
+
+Consider what numbers can remain fixed, they must form a non-decreasing subsequence and their value should form a continuous range among all values. Consider all such maximal ranges and take the maximum among them. Also some edge cases should be considered.
+
+##H. Handicapped Onsite Prediction
+
+> solved (1:02 +4)
+
+Binary search on the answer, then use two-pointers technique to find the maximum result.
+
+##I. Icy Roads Of Nomel
+
+> upsolved
+
+Finding out the cross product is the determining factor considering the cases when $n=1$ and $m=1$, we extract two set of points $S_1=\{(i,a_i)\vert 0\leq i\leq n\}$ and $S_2=\{(i,a_i)\vert 0\leq i\leq m\}$. It's not hard to prove that only points on the lower convex hull should be taken. After computing the convex hull, it also can be proved that greedily taking moves is optimal.
+
+##J. Jelly-Oxygen Beans
+
+> solved (1:40 +4)
+
+The statement is equivalent to: Given $N$, find $M$ such that $N \mod M=K$ and $K$ is a divisor of $M$. We can count by enumerating $K$s, and add the number of divisors of $K-1$ to the answer.
+
+#Replay
+
+To be added.
