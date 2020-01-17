@@ -1,0 +1,104 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019-2020 ICPC Southeastern European Regional Programming Contest (SEERC 2019)
+
+Participation Date: 2019.11.01
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019-2020%20ICPC%20Southeastern%20European%20Regional%20Programming%20Contest%20(SEERC%202019)/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019-2020 ICPC Southeastern European Regional Programming Contest (SEERC 2019)](https://github.com/wcysai/Calabash/tree/master/2019-2020%20ICPC%20Southeastern%20European%20Regional%20Programming%20Contest%20(SEERC%202019))
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Max or Min
+
+> solved by Roundgod (3:04 +1)
+
+It's obvious that only numbers $x$ that are orignally present in the array are valid. Otherwise, we denote other numbers that are less than $x$ as $0$, and numbers that are greater than $x$ as $1$. One can observe that the minimum number of moves relates strongly with the length of patterns $010101\dots 01$ in the string, which can be maintained using a segment tree. The detailed information maintained can be found in the solution. The overall time complexity is $O(n\log{n}+m\log{n})$.
+
+##B. Level Up
+
+> solved by sy_chen (1:33）
+
+We may sort the objects by their experience in the first level in ascending order. Then we may make a dynamic programming. For each object, we can choose not to kill it, to kill it in the first level or to kill it in the second level. The states of the dynamic programming is `dp[n][s1][s2]`, denoting that after considering the first $n$ objects, the minimum time needed to obtain exactly `s1` experience in the first level and `s2` experience in the second level. The state transition can be done in constant time. Hence the total time complexity is $O(ns_1s_2)$. Note that we should use wrapped array to avoid excessive memory usage.
+
+##C. Find the Array
+
+> upsolved by Roundgod
+
+The key to is problem is to locate the position of maximum/minimum $pos$ using binary search, then one can use set difference operation to find the set of differences between a set $S$ and $a[pos]$ using two queries. The remaining is easy to do with either divide-and-conqueror binary packings. 
+
+##D.  Cycle String?
+
+> solved by calabash_boy (1:11)
+
+There is always a solution unless there is a character with occurrence of $2 \cdot n -1$ or there is a character with occurrence of $2 \cdot n - 2$ and the remaining characters are the same.
+
+If there is no character with occurrence $>n$, then we can gather all the same character together. Otherwise, there is only one character $c$ with occurrence $>n$, we can place character $c$ $n$ times first, and then place another one arbitrary character, then the rest all character $c$, then all the rest other characters. 
+
+##E. Life Transfer
+
+> solved by Roundgod (2:04)
+
+After sorting the whole array of ages, one can enumerate on the number of cars rented, and check if its possible and calculate the answer in $O(1)$, if preprocessed some prefix sums.
+
+##F. Game on a Tree
+
+> solved by sy_chen (3:41 +2)
+
+We may connect an edge between two vertices if one is the ancestor of the other. Note taht Bob wins iff the resulting graph contains a perfect matching. We may make a dynamic programming on subtrees, maintaining the minimum number of unmatched vertices in the subtree.
+
+##G.  Projection
+
+> solved by sy_chen (2:15)
+
+If we have to maximize the number, just remove all cubes that will affect some point in the projections. If we have to minimize the number, we only need to solve the problem layer-by-layer. One may need some case analysis, to find the lexicographically smallest solution.
+
+##H. Tree Permutations
+
+> upsolved by calabash_boy
+
+Firstly, for a fixed $k$, how we can get the largest sum of weight between $1$ and $k$, the optimizest way is: find the **lexicographically smallest strictly increasing sequence of length k**, and let these node be the path between $1$ and $n$, so now we can ensure the tree is a $k-tree$.
+
+After that, we should leave the larger number to become the weight of edge, so that we can make it $k-perfect$.
+
+Additionally, we need to ensure the graph is a tree, the necessary and sufficient condition is: $\forall i$, $p[i] < i$ holds. so we just find the **lexicographically smallest sequence of length $n - 1 - k$ using the rest number**, and the sum of biggest $k$ remaining number is the answer to $k-perfect-tree$. 
+
+The last matter is: for $k$ from $1$ to $n-1$, we should quickly perform the above procedure. The solution is: sort all number in non-decreasing order in advance, and for each $a[i]$, we record $idx[i]$ meaning that the number $a[i]$ is $p[idx[i]]$(a[i] is the father of idx[i] in the tree). Let $b[i] = a[i] - idx[i]$. The $k-tree$ exists if and only if $\forall i \in [2,n-1]$, $b[i]<0$ holds, so we can use a segment-tree to maintain the Max value of array $b$.
+
+Now, consider iteration. Suppose we have known the answer of $k$, how could we get the answer of $k+1$? Let's call the father of $n$ in $k-tree$ is **a[preidx]** It's easy to known the position **idx** of next strictly bigger number. So we should let $p[n] = a[idx]$ and $p[a[idx]] = a[preidx]$, which will make some difference in our array $b$.
+
+After much careful thinking, we can find that we should do three operations in one iteration: $\forall i \in [idx+1,p[preidx]-1]$, let $b[i] = b[i] - 1$ which means **the idx of these position should be increased by one**, let $b[idx] = a[idx] - n$ which means **we should make $p[n] = a[idx]$** and let $b[preidx] = a[preidx] - a[idx]$ which means **we should make $p[a[idx]] = a[preidx]$**.
+
+As for the Max sum of weight of $k-perfect-tree$, we can simply use a pointer and BIT to maintain. 
+
+The overall complexity is $O(n\cdot logn)$.
+
+The standard solution to this problem is much easier, because there is more conditions that I didn't discover.
+
+##I. Absolute Game
+
+> solved by Roundgod (0:08)
+
+The answer is $\max\limits_{i=1}^{n}\min\limits_{j=1}^{n}\vert a_i-b_j\vert$, which can be proved by induction.
+
+##J. Graph and Cycles
+
+> solved by sy_chen (1:03)
+
+For each vertex, sort all its incident edges, and match adjacent pairs.
+
+##K. Stranded Robot
+
+> unsolved
+
+#Replay
+
+To be added.
