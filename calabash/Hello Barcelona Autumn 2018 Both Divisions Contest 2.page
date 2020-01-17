@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Hello Barcelona Autumn 2018. Both Divisions Contest 2.
+
+Participating Date: 2018.9.27
+
+Contest Link: [Hello Barcelona Autumn 2018. Both Divisions Contest 2.](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002552)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Bootcamp/Contest2/statements.pdf)
+
+Solution Link: [Code for Hello Barcelona Autumn 2018. Both Divisions Contest 2.](https://github.com/wcysai/CodeLibrary/tree/master/Bootcamp/Contest2)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Alice and Maze
+
+> solved (4:43 +9)
+
+Just some modification of the traditional single-source shortest path problem, usd $Bellman-Ford$ or $SPFA$ algorithm to check negative loops(in this problem loops that increase total cost).
+
+Make sure to check if $1$ and $n$ are in the same connected component.
+
+##B. Buggy Stack Machine
+
+> solved (3:20 +7)
+
+Just implement the data structure, using rolling hashes to check if the condition is satisfied.
+
+##C. Constellation
+
+> unsolved
+
+##D. Domination
+
+> solved (1:39)
+
+Since the condensation of a [tournament](https://en.wikipedia.org/wiki/Tournament_(graph_theory)) is a transitive tournament, so we can find the strongly connected components using $Tarjan$ or $Korasaju$, then the tournament can be ordered as $c_{1},c_{2},...,c_{k}$, the answer is then $\vert c_{1} \vert$.
+
+##E. Elevator
+
+> solved (0:46 +2)
+
+Process the number from bottom to top, check for each floor if it can be merged with the upper floor, if not, the answer increases by one.
+
+##F. Flow Strikes Back
+
+> unsolved
+
+##G. Good Substring
+
+> unsolved
+
+##H. House Selection
+
+> solved (3:02 +1)
+
+THe problem can be reduced to finding the number of paths with length $p+q$ in a tree, which can be solved by centroid decomposition in $O(n\log{n}^{2})$, or $O(n\log{n})$ by the property that every edge has length $1$. 
+
+This problem can also be solved by a tree dynamic programming in $O(n(p+q))$ since $p$ and $q$ are small.
+
+##I. Intelligence and Magic
+
+> unsolved
+
+##J. Jack Barmer
+
+> unsolved
+
+##K. Knockout Tournament
+
+> unsolved
+
+##L. Love Power Plant
+
+> solved (0:50)
+
+Greedily grabbing the letters would do.
+
+#Replay
+
+To be added.
