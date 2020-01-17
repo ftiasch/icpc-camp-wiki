@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 6
+
+Participating Date: 2019.4.8
+
+Contest Link: [2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 6](https://codeforces.com/gym/100197)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC6/statements.pdf)
+
+Solution Link: [Code for 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 6](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC6)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Little Brackets
+
+> solved (0:52 +3)
+
+Use dynamic programming. Let $dp_{i,j}$ be the number of bracket sequences with depth less than or equal to $j$. The recurrence is $dp_{i,j}=\sum\limits_{k=0}^{i-1}dp_{k,j-1}\cdot dp_{i-1-k,j}$. Biginteger operations are needed.
+
+##B. Under Control
+
+> solved (2:44)
+
+Apply breadth first search to add all possible grids one by one.
+
+##C. Holidays
+
+> upsolved
+
+After handling all the fuss of the dates, this is actually a easy dynamic programming problem. Let $dp_{i,j}$ denote the maximum number of holidays considering first $i$ records and the current year is denoted by $j$. The overall complexity is $O(nm^2)$, where $m=Y_f-Y_s$ is the maximum span of the years.
+
+##D. Laboratory
+
+> solved (3:59 +2)
+
+Note that the area at least two of the grids should reach there upper bound, enumerate over all possible combinations to find out the answer. In case the two grids are not adjacent, ternary search may be applied.
+
+##E. Maps
+
+> upsolved
+
+The transformation can be viewed as a combination of scaling, rotating and translation. Given the largest and smallest rectangle, we can uniquely determine the position of fixed point, thus the only thing remains is to determine a medium triangle such that the fixed point is still fixed, the medium rectangle completely lies within the largest rectangle, and the smallest rectangle lies within it. Since the constriants are small, we can enumerate on the rotating angle and check whether it satisfies the above constraints.
+
+##F. Crazy Painter
+
+> upsolved
+
+The requirement of the painting thing can be restated as follows: for each grid, either it has to be painted(cost $s$), or some consecutive grids of its row/column has to be painted.(cost $h$ or $v$).
+
+Let's reduce this problem to minimum cut. Consider each consecutive grids with the same color in some row/column as vertices, for every two intersecting consecutive grids, add an edge from the source to the horizontal consecutive grids with capacity $h$, an edge from the vertical consecutive grids to the source with capacity $v$, and an edge from the horizontal consecutive grids to the vertical consecutive grids with capacity $s$. The the minimum cut of the graph is the answer. Use any maximum-flow algorithm to compute it.
+
+To construct a way of painting, one essentially should construct a minimum cut, which can be done by separating vertices into sets that can/cannot be reached from source using edges in the residue graph.
+
+##G. Puzzle
+
+> solved (2:23)
+
+Enumerate on the direction to separate the two pieces.
+
+##H. Quest
+
+> upsolved
+
+Embrace yourself.
+
+##I. Stable Sets
+
+> solved (4:43 +3)
+
+Consider the case where there's only one polynomial. The answer is $2^x$ where $x$ is the number of cycles in the graph of edges $(i,p(i) )$. For two polynomials, one still need to check the number of cycles that is both present in two polynomials, can be done with disjoint set union. Biginteger operation is needed.
+
+#Replay
+
+To be added.
