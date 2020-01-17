@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 17
+
+Participating Date: 2019.07.04
+
+Contest Link: [2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 17](https://codeforces.com/gym/100221)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC17/statements.pdf)
+
+Solution Link: [Code for 2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 17](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC17)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Brackets Subsequences
+
+> solved (0:13 +1)
+
+Similar to the dynamic programming solution in counting the number of distinct subsequences of a string, here we let $dp_{i,j,k}$ be the number of distinct subsequences of the firstn $i$ characters of string, the number of (left brackets-right brackets) is $j$, and the last character of the subsequence is $k$ ($($ or $)$). Biginteger operations should be supported.
+
+##B. Deadlock
+
+> unsolved
+
+##C. Forbidden Subwords
+
+> unsolved
+
+##D. Puzzle Championship
+
+> solved (0:32 +3)
+
+Do some paper-and-pencil work and harcode the answers.
+
+##E. Compact Relations Encoding
+
+> solved (1:06)
+
+Without loss and generality, we are assume all $g(x)$s form a permutation of $n$. Then we need to identify the relative order of the $g(x)$s, and then can uniquely determine the $f(x)$s. The answer is no if there exists $x_1,x_2$ and $y_1,y_2$ such that $f(x_1)\leq y_1,f(x_1)> y_2$ and $f(x_2)> y_1,f(x_2)\leq y_2$. Otherwise, we can determine the relative order of the $y$s by the set bit in each column. These all can be done using std::bitset in $O(\frac{n^3}{w})$. 
+
+##F. Peaceful Rooks
+
+> solved (1:41)
+
+Instead of determining the whole board with rooks of both colors using dynamic programming on broken profiles, which would be too slow for this problem, we can first determine the positions of rooks of one color. Without loss of generality, let's first determine the positions of black rooks, then after doing this, let's say there are $r$ rows unoccupied by black rooks and $c$ columns unoccupied by black rooks, then the number of ways we can put white rooks equals to $\binom{r\times c}{k}$. Thus we can let $dp_{i,j,k}$ be the number of ways to put black rooks such that we are currently at the $i$th row, there are $j$ occupied rows and $k$ occupied columns. Enumerate on the rooks put on this row for transition. Time complexity is $O(n^5)$ without considering Biginteger operation.
+
+##G. Secret Photo
+
+> upsolved
+
+Split the whole circumference into smart arcs, do ternary search on each part, and choose the maximum of all.
+
+##H. TEX Assistant
+
+> solved (2:23 +1)
+
+Boring implementation problem.
+
+##I. Crazy Wall
+
+> solved (2:50)
+
+The problem can be easily modeled as maximum flow with capacity constraint on vertices.
+
+##J. Die Young
+
+> unsolved
+
+#Replay
+
+To be added.
