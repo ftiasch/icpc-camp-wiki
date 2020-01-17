@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: NWERC 20109
+
+Practicing Date: 2019.11.21
+
+Contest Link: Not Available Yet
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/NWERC%202019/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [NWERC 2019](https://github.com/wcysai/Calabash/tree/master/NWERC%202019)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Average Rank
+
+> solved by calabash_boy (1:57)
+
+##B. Balanced Cut
+
+> unsolved
+
+##C. Canvas Line
+
+> solved by sy_chen (0:18)
+
+Just add pegs greedily.
+
+##D. Disposable Switches
+
+> solved by sy_chen (2:36 +1)
+
+We may compute, for every possible $d$, the minimum total length of $d$ cables from source to destination. Every such value represents a function linear to $c$. Then we find the lower convex hull of these linear functions. Finally, recover the switches that can possibly be passed.
+
+##E. Expeditious Cubing
+
+> solved by sy_chen (0:06)
+
+Just do some case analysis.
+
+##F. Firetrucks Are Red
+
+> solved by calabash_boy (0:27)
+
+##G. Gnoll Hypothesis
+
+> solved by sy_chen (1:35)
+
+We may use the linearity of expectation to find out the answers.
+
+##H. Height Profile
+
+> solved by sy_chen (3:15 +2)
+
+For each possible $g$, we may change $h_i$ to $h_i - gi$, then we may use sweep line to find the longest possible interval.
+
+##I. Inverted Deck
+
+> solved by Roundgod (0:20 +1)
+
+Find the first and last position that doesn't satisfy the nondecreasing contraint, try to reverse it and check if it's valid.
+
+##J.  Jackdaws And Crows
+
+> solved by Roundgod (3:43 +3)
+
+Consider the dynamic programming solution when there's only erase solution. The transition can be viewed as $(\min,+)$ matrix multiplication. Use a segment tree to maintain the overall product, time complexity is $O(n\log{n})$. 
+
+##K. Kitesurfing
+
+> solved by Roundgod (4:42 +14)
+
+Extract the interesting positions and run dynamic programming. The maximum number of interesting positions is $O(n^2)$, and each transition takes $O(n)$ time, so the overall complexity is $O(n^3)$. Handle the transition smartly and only maintaining reachable states can greatly reduce running time.
+
+#Replay
+
+To be added.
