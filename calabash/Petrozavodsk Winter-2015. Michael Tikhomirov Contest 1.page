@@ -1,0 +1,79 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2015. Michael Tikhomirov Contest 1
+
+Participating Date: 2019.08.20
+
+Contest Link: [Petrozavodsk Winter-2015. Michael Tikhomirov Contest 1](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001459)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Petrozavodsk%20Winter-2015.%20Michael%20Tikhomirov%20Contest%201/statements.pdf)
+
+Solution Link: [Code for Petrozavodsk Winter-2015. Michael Tikhomirov Contest 1](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Winter-2015.%20Michael%20Tikhomirov%20Contest%201)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Aarelia Mountains
+
+> solved (2:46 +2)
+
+Consider the difference array, then the problem can be easily modeled as a min-cost-maximum-flow problem.
+
+##B. Bar "Duck"
+
+> unsolved
+
+##C. Collections In Containers
+
+> unsolved
+
+##D. 1D Spreadsheet
+
+> unsolved
+
+##E. Even Separation
+
+> solved (1:41 +1)
+
+We can obtain a linear equation for each vertex. Solve this system of linear-equations with Gauss Elimination.
+
+##F. Fibonnaci's Nightmare
+
+> upsolved 
+
+Simple probability argument(or maybe not that simple?). Let $E(n)=E[a_n],Esum(n)=\sum\limits_{i=0}^{n}E[a_i],E2(n)=E[{a_n}^2],Esum2(n)=\sum\limits_{i=0}^{n}E[{a_i}^2],Eprod(n)=\sum\limits_{i=0}^{n}\sum\limits_{j=i+1}^{n}E[a_i a_j]$.
+Then we have:
+$$E(n)=\frac{2}{n}Esum(n-1)$$
+$$Esum(n)=Esum(n-1)+E(n)$$
+$$E2(n)=\frac{1}{n^2}\sum\limits_{i=0}^{n-1}\sum\limits_{j=0}^{n-1}E[(a_i+a_j)^2]=\frac{2n+2}{n^2}E2(n-1)+\frac{4}{n^2}Eprod(n-1)$$
+$$Esum2(n)=Esum2(n-1)+E2(n)$$
+$$Eprod(n)=Eprod(n-1)+\sum\limits_{i=0}{n-1}E[a_i a_n]=Eprod(n-1)+\frac{2}{n}Esum2(n-1)+\frac{4}{n}Eprod(n-1)=\frac{2}{n}Esum2(n-1)+\frac{n+4}{n}Eprod(n-1)$$
+Thus be precomputing modular inverses in linear time, the answer can be found in $O(n)$ time.
+
+##G. Guess The String
+
+> solved (0:52)
+
+If we know the relative order between every two characters, we can find the string using topological sort. Therefore, we may use binary search with small-to-large to find the relative orders. The maximum number of questions needed is $O(N^2\log{N})$, divided by a constant factor. 
+
+##H. Hilbert's Maze
+
+> unsolved
+
+##I. Infinite Binary Embedding
+
+> unsolved
+
+##J. Jitterbug
+
+> solved (0:12)
+
+Just construct a clique with size $100$ connected with a chain of lenghth $100$. It can be proved that this suffices.
+
+#Replay
+
+To be added.
