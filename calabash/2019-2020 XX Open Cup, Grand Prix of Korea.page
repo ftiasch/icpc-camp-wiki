@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019-2020 XX Open Cup, Grand Prix of Korea
+
+Practicing Date: 2019.11.8
+
+Contest Link: [2019-2020 XX Open Cup, Grand Prix of Korea](https://codeforces.com/gym/102391)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019-2020%20XX%20Open%20Cup%2C%20Grand%20Prix%20of%20Korea/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019-2020 XX Open Cup, Grand Prix of Korea](https://github.com/wcysai/Calabash/tree/master/2019-2020%20XX%20Open%20Cup%2C%20Grand%20Prix%20of%20Korea)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. 6789
+
+> solved by sy_chen (0:08)
+
+##B. Bigger Sokoban 40k
+
+> unsolved
+
+##C. Cleaning
+
+> unsolved
+
+##D. Container
+
+> unsolved
+
+##E. Dead Cacti Society
+
+> unsolved
+
+##F. Hilbert’s Hotel
+
+> solved by sy_chen (3:17 +7)
+
+For query of type 2, the room numbers of a group form an arithmetic sequence, so we can use segment tree or matrix multiplication to maintain the sequences; for query of type 3, we only need to consider the very last 30 infinite groups, except for the zeroth room.
+
+##G. Lexicographically Minimum Walk
+
+> solved by calabash_boy (0:40 +1)
+
+##H. Maximizer
+
+> solved by sy_chen (0:51)
+
+We always match a large number to a small number, and any such matching will achieve the same answer. When $n$ is odd, we may try all possibilities about the middle number.
+
+##I. Minimum Diameter Spanning Tree
+
+> solved by Roundgod (0:29 +1)
+
+Classical problem. After finding the absolute center of the graph, the shortest path tree from it is the answer. The absolute center can be found in $O(n^3)$. Refer to the code for more details.
+
+##J. Parklife
+
+> solved by Roundgod (3:42 +1)
+
+Construct a tree structure for the intervals, then maintain $dp_i-dp_{i-1}$ in std::priority_queue,the time complexity is $O(n\log{n})$.
+
+##K. Wind of Change
+
+> upsolved by Roundgod
+
+Do centroid decomsposition on the first tree, then compute the auxiliary tree on the second tree. Then the problem is reduced to the case of a single tree, but with vertex weights, which could be resolved using another centroid decomposition. The time complexity is $O(n(\log{n})^2)$, with large constant. Worked hard to squeeze it into time limit.
+
+#Replay
+
+To be added.
