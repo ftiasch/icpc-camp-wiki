@@ -1,0 +1,112 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVII Open Cup named after E.V. Pankratiev. XXI Ural Championship
+
+Practicing Date: 2019.5.28
+
+Contest Link: [XVII Open Cup named after E.V. Pankratiev. XXI Ural Championship](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010378)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20XXI%20Ural%20Championship/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XVII Open Cup named after E.V. Pankratiev. XXI Ural Championship](https://github.com/wcysai/Calabash/tree/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20XXI%20Ural%20Championship)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Apple
+
+> solved by Roundgod (0:34 +1)
+
+The sufficient and necessary condition is: the graph is connected and there's only one vertex of degree one, one vertex of degree three, and the remaining vertices are of degree two.
+
+##B. Bar charts
+
+> solved by Roundgod (2:38)
+
+Consider the constraints as inequalities on prefix sums, then the problem becomes determining if there's a valid solution given a system of inequalities, which can be solved by modelling the problem as a graph and check if there exists a negative cycle using Bellman-Ford algorithm.
+
+##C. Construction sets
+
+> solved by sy_chen (1:08 +2)
+
+We may binary search on the answer. If we would like to construct $k$ duplicates, divide all quantities by $k$. The remaining part is a standard knapsack problem.
+
+##D. Dinner party
+
+> solved by Roundgod (1:43)
+
+Let $dp_{i,j}$ be if there exists a valid arrangement of tables such that their total area is $i$ while there total perimeter is $j$. The transferring can be accerlerated using std::bitset. One feasible solution can be constructed in a similar manner.
+
+##E. Expression on dice
+
+> solved by Roundgod (4:46 +6)
+
+To construct a statement(not necessarily true), two things should be guaranteed, that the number of digits should be more than the number of operators plus one, and that the number of left brackets should be equal to the number of right brackets.
+
+To construct a true statement, there are many methods, one of which is to get two zeros and one multplication operator to make one side of the statement exactly zero. To be one may follow the steps below:
+
+1. Roll dices of type 4 a few times to get enough numbers
+
+2. Roll dices of type 2 until the number of left brackets and right brackets are equal.
+
+3. Roll dices of type 3 until one gets two zeros
+
+4. Roll dices of type 5 until one gets a multiplication operator
+
+5. Construct!
+
+##F. Flight trip
+
+> unsolved
+
+##G. Glasses with solutions
+
+> solved by sy_chen (0:33 +1)
+
+The problem requires to count the number of subsets $S$ of pairs $(x_i, y_i)$ such that 
+$$\frac{\sum_{i \in S} x_i}{\sum_{i \in S} y_i} = \frac{a}{b} $$
+or equivalently, 
+$$b\sum_{i \in S} x_i=a\sum_{i \in S} y_i.$$
+This can be solved by meet-in-the-middle trick.
+
+##H. Hamburgers
+
+> solved by calabash_boy (1:35 +3)
+
+##I. Intricate Path
+
+> unsolved
+
+##J. Jumps through the Hyperspace
+
+> solved by sy_chen (2:30 +1)
+
+We can safely assume that we visit every planet at most once. If, in some optimal solution, a planet is visited multiple times, we may stay at that planet from the first visit to the last visit. 
+
+Since there are at most 50 different types of hyperjump, we may precompute, for each typeof hyperjump, the minimum travel time at current time $t$ modulo $c_i$, denoted by $d_i[t]$. This can be done by repeatedly relaxing $d_i[t] = \min\{d_i[t], d_i[t+1] + 1\}$ (the time is always modulo $c_i$).
+
+Now, we can run Dijkstra's algorithm. The graph is generated on-the-fly, that is, we could only determine the outgoing edges from a vertex upon visiting that vertex.
+
+##K. King's island
+
+> solved by sy_chen (1:26)
+
+The main idea is to construct a polygon where all edges are of integer lengths and edges parallel to axes are allowed. Then, performing a linear transformation using Pythagorean triple.
+
+##L. Lexica
+
+> unsolved
+
+##M. Maximal Paths
+
+> solved by sy_chen (3:08)
+
+At first glance this is a very simple dynamic programming. The main issue is, the answer could be very large, which does not even fit in 64-bit integer. Therefore, the space for storing intermediate values of all nodes is not enough, despite that big integer arithmetics could fit in time limit. However, not all intermediate values should be stored. We may add the leafs from left to right to a stack, and, if, at any time, the topmost two nodes have the same parent, merge them and add their parent to the stack, and do this recursively. The depth of the stack is proportional to the height of the tree.
+
+#Replay
