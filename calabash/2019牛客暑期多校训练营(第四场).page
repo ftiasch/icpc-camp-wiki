@@ -1,0 +1,74 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第四场)
+
+Practicing Date: 2019.7.27
+
+Contest Link: [2019牛客暑期多校训练营(第四场)](https://ac.nowcoder.com/acm/contest/883#description)
+
+PDF Statements: No pdf statements available
+
+Participants: calabash_boy, Roundgod
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第四场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E5%9B%9B%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. meeting
+
+> solved by calabash_boy (2:08 +1)
+
+##B. xor
+
+> upsolved by calabash_boy 
+
+##C. sequence
+
+> solved by Roundgod (4:05 +2)
+
+Fix the position of minimum value of $a$, using monotone deque to linearly compute the valid segment. The remaining is to query for maximum and minimum in some interval of prefix sum of $b$. Use segment tree to solve the problem in $O(n\log{n})$.
+
+##D. triples I
+
+> solved by Roundgod (3:28 +17)
+
+Simple case analysis.
+
+##E. triples II
+
+> upsolved by Roundgod
+
+After applying inclusion-exclusion principle, the remaining is just some precomputing and combinatorial arguments.
+
+##F. merge
+
+> unsolved
+
+##G. tree
+
+> unsolved
+
+##H. RNGs
+
+> unsolved
+
+##I. string 
+
+> solved by calabash_boy (1:24)
+
+##J. free
+
+> solved by calabash_boy (0:24)
+
+##K. number
+
+> solved by calabash_boy (0:09)
+
+#Replay
+
+
