@@ -1,0 +1,83 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2018 青岛赛区网络预赛
+
+Participation Date: 2018.9.15
+
+Contest Link: [ACM-ICPC 2018 青岛赛区网络预赛](http://acm.zju.edu.cn/onlinejudge/searchProblem.do?contestId=1&titlefrom=0&authorfrom=0&sourcefrom=0&query=The+2018+ACM-ICPC+Asia+Qingdao+Regional+Contest%2C+Online)
+
+PDF Statements: [Statements](http://acm.zju.edu.cn/contest-materials/qdol2018/qdol2018_problems.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ACM-ICPC 2018 青岛赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202018%20%E9%9D%92%E5%B2%9B%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Live Love
+
+> solved by Roundgod (0:10 1A)
+
+The answer is $(m,(m-1)/(n-m+1)+1)$.
+
+##B. Red Black Tree
+
+> solved by sy_chen (4:02 +3)
+
+For each query, to achieve better result, we must flip some node on the path from the most expensive node in query to its lowest red ancestor. Also, the node to flip must be the LCA of the most expensive node and some other node in query. Hence, we can enumerate all possible nodes to flip and choose the best one as the answer.
+
+##C. Halting Problem
+
+> solved by sy_chen (0:19 1A)
+
+The only state of the machine is the number stored in the register along with the program counter. So the machine is essentially a finite state machine, and the program will halt iff no state is visited twice.
+
+##D. Pixel Art
+
+> unsolved
+
+##E. Infinite Parenthesis Sequence
+
+> unsolved
+
+##F. Chaleur
+
+> unsolved
+
+##G. Couleur
+
+> solved by Roundgod (3:18 +3)
+
+This problem requires the inverse operation of disjoint set union. Use a set to maintain the disjoint segments and use persistent segment tree to efficiently compute the answer after each split. Use small-to-large technique so that each element would only be computed at mose $O(\log{n})$ times, then the time complexity is $O(n\log^{2}{n})$.
+
+##H. Traveling on the Axis
+
+> solved by Roundgod (0:43 1A)
+
+We can first easily compute the travelling time without halt, and then compute the halt time for waiting for red lights. We consider the answer separately for each position. We maintain two variables, $change$ and $unchange$, which denotes the number of prefixes so that when we arrive at the current position, if the light would change or not. Then the answer can be easily computed in linear time.
+
+##I. Kuririn MIRACLE
+
+> unsolved
+
+##J. Press the Button
+
+> solved by sy_chen (1:09 1A)
+
+The first thing to solve is that the process is periodic. Hence, this can be solved by simulating all events in one period, because there are no more than $O(a+c)$ events in one period.
+
+##K. XOR Clique
+
+> solved by sy_chen (0:06 1A)
+
+The key point is that, for positive integers $a, b$, $a \oplus b < \min(a, b)$ whenever $a, b$ have the same *most significant bits*.
+
+#Replay
+
+To be added.
+
