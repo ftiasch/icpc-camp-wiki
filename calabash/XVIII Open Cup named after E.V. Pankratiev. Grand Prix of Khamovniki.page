@@ -1,0 +1,102 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Khamovniki
+
+Practicing Date: 2018.9.12
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Khamovniki](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010411)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Khamovniki/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Khamovniki](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Khamovniki)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Ability Draft
+
+> solved by Roundgod(0:53)
+
+This is truly the Ability Draft mode in Dota2......
+
+Let $dp[cur][mask]$ represent now at person number $cur$ and the ith bit in $mask$ is set to 1 if and only if the ith person has already chosen an ultimate ability. The transferring of states is trivial. The time complexity is $O({(2n)}^2 2^{2n})$.
+
+##B. Short Random Problem
+
+> unsolved
+
+##C. Block, Stock and Two Smoking Galaxy Notes
+
+> solved by sy_chen(1:36)
+
+This problem is equivalent to the following graph theoretical problem: given a graph, does there exist a rooted spanning tree, where every subtree of the root is either a single vertex, or two vertices connected by a single edge?
+
+We may enumerate the root, then perform a bipartite matching between the vertices adjacent to the root and all other vertices. Note that no more than $O(m/n)$ vertices are eligible to become a root: every root must have a degree of at least $(n-1)/2$. The total time complexity depends on the maximum matching algorithm. If we use Dinic's max-flow algorithm, the total time is $O(m^2/\sqrt{n}) = O(m^{7/4})$.
+
+##D. Lunch Queue
+
+> upsolved by Roundgod
+
+Use segment tree to maintain the lunch queue, each position representing a consecutive group, storing the number of positions in the group. Also, maintain a list of group numbers for each color. Each time when a new person comes to the queue, use binary search on the segment tree to determine the leftmost group it can reach and determine its final position by binary searching in the list of its color. At last, restore the final position in the queue for each person by processing backwards. The time complexity is $O(n\log{n})$ and there's no need to use any advanced data structures.
+
+##E. Oneness
+
+> unsolved
+
+##F. Shuffle
+
+> solved by calabash_boy(4:57 +16)
+
+Consider the permutation P, P(x) = y means that char at $Index_x$ will appear at $Index_y$ after one transform, and we link an edge from x to y. It's easy to known that this graph contains n nodes and n edges, besides, every node has and only has one out_edge and one in_edge, that is to say the graph only consists of  several loops. For every loop whose length is $len$, we break it, then double it, so every substring with $len$ length is a possible transform result of the loop, and the $start-Index$ of the substring is the transform time. After that, we get several Congruence equation, and we want to find the min answer of them. It can be proved that every loop's length can divide $n-2$, that is to say the answer won't exceed $n-2$, additionally, there will be at most $\sigma_0{(n-2)}$ which is less than $O(\sqrt{n-2})$ different length of loop. Time limit is tight, so use KMP instead of Hash. Complexity is $O(\sigma_0{(n-2)}*n)$
+
+##G. Piecewise Linearity
+
+> solved by sy_chen(4:24 +5)
+
+We focus on the changes of the slope. A change $\Delta k$ of the slope at $x=x0$ indicates the existence of $\frac{\Delta k}{2}|x-x0|$ term. Hence we may reconstruct the function. Note that a potentially existent linear function might be wiped off; hence it is necessary to ensure that the slopes at positive and negative infinity are opposite, plus verifying an arbitrary given point is indeed on the reconstructed curve. Note that evaluating with floating-point may run into precision issue, but using modular arithmetic instead can avoid this problem.
+
+##H. Sketch
+
+> solved by Roundgod(2:41 +1)
+
+No wonder the sketch must appear as a subsequence in the original array, so the problem becomes how many elements can be add to the array at most without changing the sketch of the array? Here the greedy solution works: We put the sketch at the rightmost part of the array, then greedily adding the maximum element to the left of the array without changing the sketch. If the number of elements we can add is greater than or equal to $n-k$, then the answer is yes, otherwise no.
+
+Note that there are two special cases here: If $k>n$, the answer is absolutely no, cause the length of sketch can't exceed the length of the original array. If the sketch isn't non-decreasing, then the answer is no,either(Got an Wrong Answer verdict because of this case).
+
+##I. ≤ or ≥
+
+> upsolved by sy_chen
+
+It is obvious that choosing a very big or very small number is bad. However, choosing the medium of the these numbers can't solve, because the adversary may always select the same side, making it take more than 50 moves to clear. So we must take the sizes of the stacks into consideration. Intuitively, we would like to assign weight to each element and choose the weighted medium, where the weight is a function of the number of remaining elements. The correct weight function is exponential ($2^{k-1}$): it is not hard to prove that the total weight decreases by at least a quarter after each move, hence 50 moves are enough to clear all stacks.
+
+##J. Stairways
+
+> upsolved by Roundgod
+
+Assume all values have been discretized. Let $dp(i,j)$ be the minimum value if we've processed first $i$ people, and the stairway with the second maximum has maximum $j$. Then if $t[i+1]$ is the maximum among $t[1],t[2],\dots,t[i+1]$, then clearly $dp(i+1,j)=dp(i,j)$, otherwise let $k$ be the position of $t[i+1]$ after discretization, $$dp(i+1,j)=\begin{cases} \min(dp(i,x)) \text{ for all }x\leq j & j=k\\ dp(i,j)+\max(t[1],t[2],\dots,t[i+1])-t[i+1]  & j<k\\ dp(i,j)+f[j]-t[i+1]  & j>k \end{cases}$$ where $f[j]$ represents the $j$th minimum value after discretization.
+
+In all, we need to efficiently maintain the $dp$ values, which supports: add on an interval, for each $j$ add $f[j]$ on an interval, ask the value of some position, and change the value of some position. This can be done by sqrt-decomposition while maintaining the convex hull structure in each block. The overall complexity is $O(n\sqrt{n})$. However, since the convex-hull building operation is costly, one may need to adjust the block size to get accepted.
+
+Also, there exists solution that runs in $O(n\log{n})$, by defining $dp(i,j)$ be the minimum value if we've processed first $i$ people, and the stairway with the second maximum has maximum $\geq j$ and some observationson states of transitions, then use Segment Tree Beats to achieve that complexity.
+ 
+##K. Hiding a Tree
+
+> solved by Roundgod(2:11 +1)
+
+Since changing the label of nodes of even degree won't affect the answer, we only focus on changine the nodes of odd degree. If the xor sum of all numbers(we denote it as $s$) equals to 0, we just need to output yes. Otherwise, we need to do some case analysis:
+
+If there is only one node of label $x$ of odd degree that can be changed, its label must be changed to $x\bigoplus s$, then if the node of this label doesn't exist or it has an even degree and can be changed.
+
+If there are two nodes of odd degree that can be changed, labelled $x$ and $y$, respectively. then we should change their labels to $x'$ and $y'$, satisfying $x'\bigoplus y'\bigoplus x\bigoplus y\bigoplus s=0$,we can do this by choosing a number that's a large power of two, say $2^{20}$, then letting $x'=2^{20}+x$ and $y'=2^{20}+y$ will do, except for the case that $x\bigoplus y\bigoplus s=0$, in this case the answer is no.
+
+If there are more than two nodes of odd degree that can be changed, then we choose two of them such that there xor doesn't equal to $s$^[It can always be done.], and construct the answer using the method introduced in the case of two odd-degree nodes. 
+
+#Replay
+
+To be added.
