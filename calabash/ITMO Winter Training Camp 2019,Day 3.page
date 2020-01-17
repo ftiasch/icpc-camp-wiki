@@ -1,0 +1,89 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ITMO Winter Training Camp 2019,Day 3
+
+Participation Date: 2019.01.23
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/ITMO%20Winter%20Camp%202019/Day3/20190123.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ITMO Winter Training Camp 2019,Day 3](https://github.com/wcysai/Calabash/tree/master/ITMO%20Winter%20Camp%202019/Day3)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Cut!
+
+> solved by Roundgod (0:18 +1)
+
+Fill in the numbers in the snake order so that each component is connected.
+
+##B. DNA
+
+> solved by sy_chen (0:07)
+
+##C. Bandits
+
+> solved by Roundgod (3:36 +5) 
+
+We can notice that the optimal strategy for each bandit is to bride other bandits with the minimum diamonds, leaving all the remaining diamond for himself. If he don't have enough diamonds to bribe them, he dies. One thing to notice is that if there are some bandits that can be bribed with some equal cost, and someone wanted to bribe some, but not all of them. Then for each 'to-be-bribed' bandit, he has a risk of getting no diamonds, thus he will accept an assignment if he has at least one diamond, that is, can be bribed using only one diamond.
+
+##D. Network Wars
+
+> solved by sy_chen (3:30 +6)
+
+Binary search on the answer. To check whether given mean weight $r$ could be achieved, select all edges whose weights are less than $r$. For all other edges, subtract $r$ from their weights and run a s-t cut. If the minimum cut is no more than the the sum of $r$ minus weights of light edges then $r$ could be achieved.
+
+##E. Numbers to Numbers
+
+> unsolved
+
+##F. Beautiful Permutation
+
+> solved by Roundgod (0:59)
+
+Using Dilworth's theorem, one can find out that the minimum ugliness of a permutation with length $n$ is $\lceil \sqrt{n} \rceil$. Let's denote this number as $t$. To construct an answer with the smallest lexicographic order, one can see that the permutation consists of $t$ groups of consecutive decreasing numbers, with the size of each group $\leq t$, thus the answer can be constructed greedily.
+
+##G. Flipping Bits
+
+> solved by calabash_boy (2:31 +5)
+
+Let K be the number of different values k, which equals to $(n+m-1)/m$. Then K * m = n + m - 1, also (K-1)*m = n-1 <= 300. So at least one statement is true among $K <=19$ and $m <= 18$.
+
+In case of $K<=19$, we could use $2^K$ times to enumerate which prefixs are flipped, then we should make every BLOCK the same, it's easy to see that each position is independent, so this part of times is $\sum_{i=0}^{m}{min(cnt[i][0],cnt[i][1])}$, where $cnt[i][x] = \sum_{i=1}^{n}{[s'[i] == x]}$ and $s'[i]$ is the char after segment fliping procedure.
+
+In case of $m <= 18$, we could use $2^m$ times to enumerate the first m characters, so we can generate the target string $T$ after operations(let us call the origin string $S$). After that, it is the same if we perform the operations 1,2 on the origin string $S$ and on the bitwise-xor string $S \oplus T$, clearly we could use a DP to solve this part.
+
+So, total complexity is $O(2^{\sqrt{n}}*n)$
+
+
+##H. Puzzle
+
+> solved by Roundgod (2:32 +2)
+
+For each graph, one need to find the shortest path with odd/even length from the starting vertex to the terminating vertex, which can be done by creating a copy for each vertex, represented as the odd/even vertex. 
+
+##I. String
+
+> solved by sy_chen (0:15)
+
+##J. Shooting Game
+
+> unsolved
+
+##K. String Equations
+
+> unsolved
+
+##L. Doubly-sorted Grid
+
+> unsolved
+
+#Replay
+
+To be added.
