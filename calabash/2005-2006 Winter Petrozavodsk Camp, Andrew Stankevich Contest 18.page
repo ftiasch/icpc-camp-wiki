@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 18
+
+Participating Date: 2019.07.08
+
+Contest Link: [2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 18](https://codeforces.com/gym/100222)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC18/statements.pdf)
+
+Solution Link: [Code for 2005-2006 Winter Petrozavodsk Camp, Andrew Stankevich Contest 18](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC18)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Addictions
+
+> solved (1:03)
+
+One can note that all addictions that can remove must be a prefix if the addictions are sorted by increasing order of strength. Therefore, we may for each addiction compute how many weeks are needed to remove it, using dynamic programming on $O(nd)$.
+
+##B. Chess Tableaux
+
+> solved (2:03)
+
+Enumerate on all partitions. For each partition, we need to check if it can be converted to a chess tableau, which can be done by recursively trying to choose one grid to be the last grid of the tableau. This should fit into time limit, however, one can also hardcode all the answers.
+
+##C. Decoding Martian Messages
+
+> solved (1:32 +2)
+
+Classic dynamic programming problem.
+
+##D. Gas Problem
+
+> solved (3:21 +1)
+
+Minimum-cost flow with lower bounds on capacities, can be solved int the same way as maximum flow with lower bounds on capacities.
+
+##E. Infinity Sect
+
+> solved (3:57 +1)
+
+Maintain the deleted index for each part using fenwick tree. Descend on the fenwick tree to get the newly erased index in $O(n\log{n})$ time. Some case analyzes are needed.
+
+##F. Polymorphism
+
+> upsolved
+
+Yet another boring implementation problem.
+
+##G. Refrain
+
+> solved (0:30)
+
+After computing the suffix array and the longest common prefix (lcp) array of the string, the problem is to reduced to finding the rectangle of maximum area in the given histogram, which can be solved in linear time using monotone stack.
+
+##H. Star Polygon
+
+> unsolved
+
+##I. Superinvolutions
+
+> upsolved
+
+The number of involutions pf length $n$, is equal to the number of matchings in an $n$-complete graph, which can be computed in linear time by recurrence $I_{n}=I_{n-1}+(n-1)I_{n-2}$, which is given by the cases of matching the $n$th vertex of not.
+
+A crucial imformation to this problem, is that the permutation $\beta$ contains only integers from $1$ to $k$, and thus only a suffix of it can be matched to the remaining numbers from $k+1$ to $n$. We iterate over the length of matched suffix $i$, and check if the prefix of length $k-i$ can form an involution itself. If so, we add $I_{n-k-i}\cdot \binom{n-k}{i}$ to the answer. Biginteger operations needed here.  
+
+##J. Truth
+
+> solved (0:50)
+
+#Replay
+
+To be added.
