@@ -1,0 +1,99 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2019, Japanese Contest
+
+Practicing Date: 2019.2.28
+
+Contest Link: [Petrozavodsk Winter-2019, Japanese Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001533)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2019.%20Japanese%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Petrozavodsk Winter-2019, Japanese Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2019.%20Japanese%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Digits Are Not Just Characters
+
+> solved by sy_chen (0:32)
+
+Tokenize the input and compare lexicographically.
+
+##B. Arithmetic Progressions
+
+> solved by sy_chen (2:50 +1)
+
+First, sort the input in ascending order. Let `dp[i][j]` denote the length of longest arithmetic progression ending with $a_i$ and $a_j$. To make state transition, one may binary search for the previous number in the arithmetic progression. This should work in $O(n^2 \log n)$ time. There is also an implementation in square time.
+
+##C. Emergency Evacuation
+
+> solved by sy_chen (4:19 +1)
+
+First, compute the distance, for each passenger, to the exit. Sort these distances in ascending order. Iterate over the distances, update the answer to the current distance, or the old answer plus one, depending on which one is larger.
+
+##D. Shortest Common Non-Subsequence
+
+> solved by sy_chen (2:09 +3)
+
+This can be done with dynamic programming. Let `dp[i][j]` denote the shortest subsequences of the first $i$ terms of the first string, and the first $j$ terms of the second string. Also we may set a special state for each string indicating failure to be a subsequence. State transition can be made in constant time.
+
+##E. Eulerian Flight Tour
+
+> upsolved by Roundgod
+
+With the fact that the sufficient and neccesary condition for a graph to have a Eulerian tour, the graph must be connected, with the degree of all vertices even, the following solution is proposed.
+
+First let's deal with the even-degree condition. Since the graph is required to have no multiple edges, the only edges we may add is the ones in the complement graph, one can solve some linear equations which should run in $O(n^3)$ time. However, for each connected component, extracting any spanning tree is sufficient for us to make the degree of all vertices even. Just follow some tree-dynamic-programming like procedure.
+
+After making the degree of all vertices even, we should make the graph connected. If the graph only consists of one connected component, we are done. If the graph consists of more than two connected components, we can draw a cycle connecting these components. If the number of connected components is exactly two, we should do some case analysis, which is omitted here. Just note that after making the degree of all vertices even, the no-solution condition is that we are initially given a odd-complete graph and a single point.
+
+Time complexity: $O(n^2)$.
+
+##F. Fair Chocolate-Cutting
+
+> unsolved
+
+##G. What Goes Up Must Come Down
+
+> solved by calabash_boy (1:27)
+
+Consider the number as increasing order, of course, every number should go to either the leftmost position or the rightmost position, and which side one number goes doesn't matter when the distances is equal. Use bit to do this job. $O(nlogn)$.
+
+##H. Four-Coloring
+
+> upsolved by sy_chen
+
+##I. Ranks
+
+> unsolved
+
+##J. Colorful Tree
+
+> solved by sy_chen (3:54)
+
+Observe that coloring a vertex $v$ with color $c$ will increase the answer for color $c$ by
+
+1. the distance between new and old LCAs of vertices of this color;
+2. the distance between $v$ and the topmost ancestor such that no vertex of color $c$ before $v$ is colored in the subtree of the ancestor, if any.
+
+The decrease of the answer when removing the color for some vertex is similar. One may use whatever he likes to compute these distances.
+
+##K. Sixth Sense
+
+> solved by Roundgod (4:20 +7)
+
+To calculate the maximum possible number of winning tricks, one should first sort the two arrays in increasing order, and match some prefix of the first player with some suffix fo the second player, accordingly.
+
+To achieve the lexicographically largest sequence, the invariant should be maintained, and one should carefully check all possible cases :(
+
+The time complexity should be $O(n^2)$. 
+
+#Replay
+
+To be added.
