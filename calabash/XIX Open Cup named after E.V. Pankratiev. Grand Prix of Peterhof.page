@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIX Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof
+
+Practicing Date: 2019.4.16
+
+Contest Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010439)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Peterhof/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof](https://github.com/wcysai/Calabash/tree/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Peterhof)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Alice and Path 
+
+> solved by calabash_boy (0:21)
+
+##B. John and the Magic Box
+
+> upsolved by sy_chen 
+
+Traditional data structure for range aggregation often carries a logarithmic overhead, either in preprocessing or in query. To shave of the logarithmic factor, one may employ something like the method of 4 Russians. We may divide the $n$ elements into $n/\log n$ sections, each having $\log n$ elements, and preprocess the prefix sums, suffix sums and total sum of these elements, which takes 2 operations per element. Build a segment tree for these sections, such that in each node, recording all suffix sums of its first half of sections and all prefix sums of its second half of sections. This segment tree can be built in at most $2\frac{n}{\log n} \log \frac{n}{\log n} \leq 2n$ operations, and any sum of consecutive sections can be done by concatenating a prefix sum and a suffix sum of sections, which takes one operation.
+
+Each query can be decomposed to the sum of $k+1$ intervals. With high probability, such interval spans over multiple sections, if we randomly shuffle the indices properly. In such case, we may further decompose the interval into the sum of consecutive sections, a within section prefix sum and a suffix sum, exactly 4 operations per interval. In rare case the interval may fall entirely in a section, but brute force computation may work, especially when we fine tune the parameters in preprocessing stage to make some room for such case.  
+
+##C. Anti-Distance
+
+> solved by Roundgod (3:12 +5)
+
+Careful case analysis needed.
+
+##D. Machines on the Moon
+
+> unsolved
+
+##E. Coin Tournament
+
+> solved by calabash_boy (0:22 +1)
+
+##F. Fizz and Buzz
+
+> solved by sy_chen (0:13 +1)
+
+We classify a multiple of 5 as 'B', otherwise 'F'.
+
+##G. Game on Tree
+
+> solved (0:08)
+
+Since the second player would never go towards the root, one may apply the dynamic programming on tree: let $dp_{v}$ be the number of marked leaves in the subtree $v$ in order for the first player to win if the piece is at vertex $v$. Transition is $dp_v=max(0,\sum\limits_{u\in son[v]}dp_u - )$. The first move can be constructed in a similar manner.
+
+##H. Jack and Jill
+
+> solved by Roundgod (0:27)
+
+Always choose the direction where the longest possible values are preserved.
+
+##I. Laws
+
+> solved by sy_chen (0:57)
+
+Just run a 0/1 shortest path on the implicit graph.
+
+##J. Cubic Path
+
+> solved by Roundgod (1:36 +1)
+
+Run bruteforce solution locally, hardcode the case for $n=6$.
+
+##K. Red-Black Tree
+
+> solved by sy_chen (1:54 +1)
+
+This can be solved by dynamic programming.
+
+#Replay
