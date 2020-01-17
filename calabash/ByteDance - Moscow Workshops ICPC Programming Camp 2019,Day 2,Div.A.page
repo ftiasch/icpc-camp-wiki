@@ -1,0 +1,92 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019, Day 2, Div.A
+
+Participation Date: 2019.02.17
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Always Return a Value
+
+> unsolved
+
+##B. Cheese
+
+> upsolved by sy_chen
+
+For each pair $(V_i, M_i)$, image a rectangle with width $V_i$ and area $M_i$. Sort the rectangles with height as key, and place the rectangles one right next to another. Now image a sliding window of width $\sum V_i / 2$ moving from left to right. The area of rectangles within the sliding window changes monotonically. Surprisingly, the sliding window intersects with at most two rectangles, so the answer always exists and can be solved by binary search.
+
+##C. Colored Graph
+
+> unsolved
+
+##D. Cross-section
+
+> upsolved by sy_chen
+
+This problem can be done by translating the plane such that the given point becomes the origin. Let the polygon be $A_1A_2 \cdots A_n$, we consider the contributions of triangles $OA_1A_2, OA_2A_3, \cdots, OA_nA_1$, with signs assigned properly. This is something like the Shoelance formula used to compute the area of simple polygon. The contribution of every single triangle can be solved by some paper and pencil work.
+
+##E. Grouping by Prefixes
+
+> solved by sy_chen (4:11 +2)
+
+Build the Trie tree for the input. Remove vertices below a node with represents a input word. The problem becomes counting the number of antichains of size $M$ of the poset defined by the ancestor and descendant relations. From the point of view of generating function, this can be written as
+
+$$ f_u(x) = \prod_{c : \text{child of } u} f_c(x) + x $$
+
+the convolution can be done by brute force, e.g. in time $O(m_1 m_2)$ for two polynomials of size $m_1$ and $m_2$. This seems like a cubic time complexity, but it can be proved that the total running time is actually squared. Note that the root node should be specially treated because the set cannot contain empty string.
+
+##F. Inserting Lines
+
+> unsolved
+
+##G. Paths in Tree
+
+> unsolved
+
+##H. Restoring Points
+
+> unsolved
+
+##I. Security Policy
+
+> unsolved
+
+##J. Encryption
+
+> solved by Roundgod (3:02 +3)
+
+After some mathematical computations, one can find that $f(n)=\frac{1}{2}n\varphi(n)$ where $\varphi(n)$ is the Euler totient function. And given $n$, we need to find such $x$ where $f(x)=n$.
+
+One possible thinking is to first factorize $n$. However, since $n$ can be up to $10^18$, any method that directly factorizes $n$, or Pollard-Rho algorithm, could lead to time limit exceeded verdict. We need some tricky methods here.
+
+After eliminating all prime factors of $n$ which is less than $10^6$, The remaining number is either a prime $p$ of a product of two distinct primes $pq$, where $p$ comes from the factorization of $\varphi(q)=q-1$. To handle the second case, we can find that the remaining part except from $pq$ in $n$ is rather small, thus we can enumerate on the remaining part $i$, divide $n$ by $i\varphi(i)$, and check if the remaining part can be written as $\frac{p(p-1)}{2}$ where $p$ is a prime number and $gcd(i,p)=1$. Iteration up to a few thousands should then get the accepted verdict.
+
+##K. Triangle and Segment
+
+> solved by sy_chen (1:22 +2)
+
+There are several fantastic solutions to this problem with time complexity ranging from $O(n^3)$ to $O(n^4)$. I'll discuss a couple of them.
+
+We may classify the placements into two categories depending on whether the segment lies inside or outside the triangle. 
+
+For the latter case, we may iterate over all possible pairs of points which divides the total plane into two half planes. Choose any two points in one half plane and any one in the other, along with the pair of points, they may form a triangle and a segment. The line decided by the pair of points is actually one internal common tangent of the triangle and segment. Since no three points are collinear, there are exactly two internal common tangents for any  pair of disjoint segment and triangle. This part works in cubic time.
+
+Now comes the former part. We may simply enumerate the triangle, and count the number of points inside the triangle. This works in $O(n^4)$, which may exceed time limit. Note that the region of the triangle is exactly the intersection of three half plane, we may use bitset to record the points in every possible half planes, and take the bitwise and of the three bitsets. This reduces the time complexity by the word size. Actually, this part can be done in cubic time as well. We may preprocess the number of points vertically below every possible segment in cubic time. To compute the number of points within the triangle, just sum up the numbers of points vertically below the edges, with signs assigned properly. Hence each query can be done in constant time.
+
+Another class of solutions compute the number of illegal placement instead. This may still run into case analysis, such as count the number of intersecting segment pairs and the number of intersecting pairs of segment and "V" shape.
+
+#Replay
+
+To be added.
