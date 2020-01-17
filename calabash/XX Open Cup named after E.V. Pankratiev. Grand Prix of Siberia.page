@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia
+
+Practicing Date: 2019.11.13
+
+Contest Link: [XX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010477)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XX Open Cup named after E.V. Pankratiev. Grand Prix of Siberia](https://github.com/wcysai/Calabash/tree/master/XX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Siberia)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##1. Painting roofs
+
+> solved by Roundgod (0:04)
+
+Just check the two possible cases and take the minimum.
+
+##2. Game map
+
+> solved by Roundgod (3:03 +1)
+
+Dynamic programming on broken files, refer to the code for transition details. Time complexity is $O(2^{N}NW)$, space can be optimized to $O(2^N(N+W))$ by using rolling arrays and reuse the space for recording the optimal choice.
+
+##3. Cone lights
+
+> unsolved
+
+##4. Cubic polynomials
+
+> solved by sy_chen (4:39 +7)
+
+Note that the absolute values of roots never exceed $10^9$. Firstly, find any integer root of the cubic equation. This can be done via binary search on every monotone interval. Modding out the factor yields a quadratic equation, which can be solved by formula.
+
+##5. Steve’s perfectionism
+
+> solved by sy_chen (0:06)
+
+Greedily fill the array with the minimum multiple greater than the previous value.
+
+##6. Tote
+
+> solved by calabash_boy (1:06)
+
+##7. Olmec
+
+> solved by sy_chen (1:16)
+
+This can be solved row-wise. For each row, we may compute a binary lifting table that supports querying the minimum number of operations taken to clear an interval.
+
+##8. Cloud computing
+
+> solved by sy_chen (0:25 +1)
+
+We may design a divide and conquer algorithm that computes the minimum value of an array: just take the minimum of the minimum of the left half and the minimum of the right half. The second minimum number must be compared to the minimum value during that process. There are only $\lceil \log n \rceil$ such candidates.
+
+##9. Game of strings
+
+> unsolved
+
+##10. Symmetric matrix
+
+> upsolved by Roundgod
+
+Consider the case when no diagonal line is presented. Then we need to find each cycle and fix them respectively. When the diagonal line is introduced, there are three more cases of cycles: cycles where one element is in the diagonal line, cycles where two elements are in the diagonal line where no elements that should be in the diagonal occur, and cycles where two elements are in the diagonal line where exactly two elements that should be in the diagonal occur. The first case can be solved independently. To achieve the optimal number of swaps, we need to pair cycles of the two latter cases together, which can be shown to have equal numbers.
+
+##11. Wooden pipeline
+
+> solved by Roundgod (0:57)
+
+Classical tree dynamic programming. Need two depth first searches to compute the answer for every root.
+
+#Replay
