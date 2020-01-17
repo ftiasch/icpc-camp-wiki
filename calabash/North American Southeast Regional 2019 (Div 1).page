@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: North American Southeast Regional 2019 (Div 1)
+
+Practicing Date: 2019.11.20
+
+Contest Link: [North American Southeast Regional 2019 (Div 1)](http://codeforces.com/gym/102423)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/North%20American%20Southeast%20Regional%202019%20(Div%201)/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for North American Southeast Regional 2019 (Div 1)](https://github.com/wcysai/Calabash/tree/master/North%20American%20Southeast%20Regional%202019%20(Div%201))
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Carryless Square Root
+
+> solved by sy_chen (1:04)
+
+We may decide each digit from left to right.
+
+##B. Computer Cache
+
+> solved by sy_chen (3:14)
+
+We may implement the pieces of data via partially persistent binary indexed tree, then implement a segment tree for cache. For cache load operation, just assign the range with the timestamp and position of the data.
+
+##C. Elven Efficiency
+
+> solved by Roundgod (3:07)
+
+For each number $k$, store all positions with stones that is a multiple of $k$, and process using brute force when handling queries. It can be found (or conjectured) that the overall number of operations needed is not too much. 
+
+##D. Swap Free
+
+> solved by sy_chen (0:41)
+
+For two words, connect an edge between them if one of them can be obtained by swapping a pair of letters of the other. The resulting graph is bipartite. Then find the maximum independent set of the bipartite graph.
+
+##E. Fixed Point Permutations
+
+> solved by Roundgod (2:12)
+
+Let $dp[i][j][k]$ be the number of ways to fill $i$ numbers, with $j$ numbers possible to form a fixed point, and $k$ fixed point needed. The transition is $$dp[i][j][k]=\begin{cases} i! & j=0,k=0\\ 0 & j=0,k\neq 0\\ dp[i-1][j-1][k-1]+(j-2)dp[i-1][j-2][k]+(i-j)dp[i-1][j-1][k] & \text{otherwise} \end{cases}$$. It's easy to find the lexicographically $k$th permutation satisfying the constraints using the dp computed above.  
+
+##F. Interstellar Travel
+
+> solved by Roundgod (4:03 +1)
+
+Consider each star as some events(addition/subtraction in slope) while rotating the chosen angle. Be careful when computing the initial answer and slope.
+
+##G. Jumping Path
+
+> solved by calabash_boy (2:28 +2)
+
+##H. Levenshtein Distance
+
+> solved by sy_chen (0:19 +1)
+
+Just implement it.
+
+##I. Maze Connect
+
+> solved by sy_chen (1:38)
+
+The answer is the number of vertices in the dual graph, which is equal to the number of faces of the original graph, which is again equal to the number of edges minus the size of the spanning tree.
+
+##J. One of Each
+
+> solved by calabash_boy (1:18)
+
+##K. Windmill Pivot
+
+> solved by sy_chen (4:23 +1)
+
+We build a directed graph where each vertex represents a line passing through two points. And there is an edge from one vertex to another if that is the first state reached by rotating the line. Then we may traverse the graph and find the answer.
+
+#Replay
+
+To be added.
