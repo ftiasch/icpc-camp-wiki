@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XX Open Cup named after E.V. Pankratiev. Grand Prix of SPb
+
+Practicing Date: 2019.11.14
+
+Contest Link: [XX Open Cup named after E.V. Pankratiev. Grand Prix of SPb](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010473)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPb/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XX Open Cup named after E.V. Pankratiev. Grand Prix of SPb](https://github.com/wcysai/Calabash/tree/master/XX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPb)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Polynomial in a Black Box
+
+> solved by sy_chen (0:12)
+
+After each query, we may compute the polynomial interpolation. If the coefficient of the highest order of term is zero, the degree of the current polynomial is the answer; otherwise, issue a new query on a different point.
+
+##B. Board Trick
+
+> solved by Roundgod (0:34 +2)
+
+The strategy for Mia is to make the secret nuumber the bitwise xor of all positions with $1$ on it, which can always be done.
+
+##C. Connectivity
+
+> solved by sy_chen (1:56 +1)
+
+We can always ask the vertex with the maximum conditional probability that the number of connected components decreases.
+
+##D. Absolute Pairwise Distance
+
+> solved by Roundgod (3:27 +1)
+
+Use sqrt decomposition, divide the array into $O(\sqrt{n})$ blocks of size $O(\sqrt{n})$. Note that for two sorted arrays with lengths $n$ and $m$, when can find the distance between them in $O(n+m)$, we can then sort the whole array and all prefixes of each block, then precomputing the answer between each element and each block in $O(n\sqrt{n})$ time. The by calculating prefix sumes, the problem is solved in $O(n\sqrt{n})$ time and $O(n\sqrt{n})$ space.
+
+##E. Multiplication and Division by 2
+
+> solved by sy_chen (0:21)
+
+Consider the binary representation of $x$ and $y$. We may trim off the leading and trailing zeros in $y$. The answer is `yes` iff $y$ is the substring of $x$.
+
+##F. Festive Baobab
+
+> solved by sy_chen and calabash_boy (2:36)
+
+##G. Flatland Elections
+
+> unsolved
+
+##H. Eggs
+
+> solved by Roundgod (1:17 +1)
+
+Make the position of eggs be a consecutive segment(may be circular). When we eat an egg we eat its leftmost one, and when buying eggs we append to the end of the segment.
+
+##I. Removing Pairs
+
+> solved by Roundgod (0:31)
+
+Just check if $s$ is a subsequence of $t$ with alternating parities.
+
+##J. Boxes on a Shelf
+
+> solved by calabash_boy (0:53 +1)
+
+##K. Two Slicers
+
+> solved by sy_chen (0:56 +1)
+
+We may divide the circle into $2ab$ sectors. Then we may enumerate all possible configurations of the two slicers.
+
+#Replay
