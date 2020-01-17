@@ -1,0 +1,72 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XX Open Cup named after E.V. Pankratiev. Grand Prix of Kazan
+
+Practicing Date: 2019.10.12
+
+Contest Link: [XX Open Cup named after E.V. Pankratiev. Grand Prix of Kazan](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010377)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Kazan/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XX Open Cup named after E.V. Pankratiev. Grand Prix of Kazan](https://github.com/wcysai/Calabash/tree/master/XX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Kazan)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Apollonian Network
+
+> unsolved
+
+##B. Bitwise Xor
+
+> solved by Roundgod (1:55 +1)
+
+One can find out that the minimum of pairwise bitwise xor only happens for adjacent numbers in sorted order. Thus the problem can be solved by a simple dynamic programming, while maintaining dynami programming values in a 0/1 trie. Complexity should be $O(nA)$,where $A=60$.
+
+##C. Counting Cactus
+
+> unsolved
+
+##D. Determinant
+
+> unsolved
+
+##E. Easy Win
+
+> solved by Roundgod (4:03)
+
+The Eulerian-circuit-constraint says that the degree of all chosen vertices should be even. Therefore the problem is reduced to: each time add a weighted vector with length $n+60$, find a set of vectors with  the largest sum of weights. With the help of Gaussian elimination and std::bitset, thiscan be solved in $O(\frac{q(n+60)^2}{w})$.
+
+##F. Fast Spanning Tree
+
+> unsolved
+
+##G. Grammarly
+
+> solved by calabash_boy and sy_chen (4:52 +1)
+
+##H. Honorable Mention
+
+> unsolved
+
+##I. Interactive Vertex
+
+> solved by Roundgod (1:10 +2)
+
+Each time find the centroid, query all vertices that are adjacent to it, and use binary search to determine the subtree that the hidden vertex is in. Use weighted binary search to make sure that the size of the tree decreases to half each time.
+
+##J. Jiry Matchings
+
+> unsolved
+
+##K. K-pop Strings
+
+> unsolved
+
+#Replay
