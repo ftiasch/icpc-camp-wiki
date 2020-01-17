@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ITMO Winter Training Camp 2019,Day 4
+
+Participation Date: 2019.01.24
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/ITMO%20Winter%20Camp%202019/Day4/20190124.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ITMO Winter Training Camp 2019,Day 4](https://github.com/wcysai/Calabash/tree/master/ITMO%20Winter%20Camp%202019/Day4)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Digits and Bases
+
+> solved by sy_chen (0:04)
+
+To be added.
+
+##B. Balloons
+
+> solved by sy_chen (0:20 +1)
+
+To be added.
+
+##C. ICPC History
+
+> solved by sy_chen (0:11)
+
+To be added.
+
+##D. Yellow Code
+
+> solved by calabash_boy (0:47)
+
+Consider Recursion, when we already obtain the answer for some even n, we could using the following steps to obtain the answer for n+1: copy the answer list to its end, then for the first half add 0 to the highest bit, for the second half add 1 to the highest bit. When we obtain the answer for some odd n, then we copy the answer list to its end, for the first half, add 0.1.0.1...to their highest bit, for the second half, add 1.0.1.0...to their highest bit. It's easy to prove it.
+
+##E. Human Knot
+
+> solved by calabash_boy (2:50)
+
+Firstly, we extract the loop, so we can confirm the relative order of people. Then we enumerate the person who do not move, after which we consider the two direction: clockwise and anticlockwise, the problem becomes: given two permutations, use the least steps to transform the first permutations to the second one, which equals $n - LCS$.Complexity is $O(n^3)$.
+
+##F. Margaritas on the River Walk
+
+> solved by calabash_boy (2:08 +1)
+
+Sort the items as their price in increasing order. Enumerate the cheapest item which we don't choose, so for the cheaper items than it, we must choose them, and for the more expensive items, we should calculate the methods of backpacking. But we needn't do this backpacking job repeatingly, we could pre-calculate the array $dp[i][j] =$ ways to get a $j$-volume backpack using items from $i$ to $n$.Complexity is $O(vdT)$
+
+##G. Angle Beats
+
+> unsolved
+
+##H. Beat Subsequence
+
+> unsolved
+
+##I. Cool pairs
+
+> solved by sy_chen (4:10)
+
+To be added.
+
+##J. Dates
+
+> unsolved
+
+##K. Expected Value
+
+> unsolved
+
+#Replay
+
+To be added.
