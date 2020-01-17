@@ -1,0 +1,105 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2017. Ruyi Li Contest 2
+
+Practicing Date: 2018.12.09
+
+Contest Link: [Petrozavodsk Summer-2017. Ruyi Li Contest 2](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001504)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2017.%20Ruyi%20Li%20Contest%202/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Petrozavodsk Summer-2017. Ruyi Li Contest 2](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2017.%20Ruyi%20Li%20Contest%202)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Candies
+
+> solved by sy_chen (2:11 +3)
+
+Since we only need answers modulo 2, we may use bitset to store answers because addition modulo 2 is equivalent to exclusive-or. The answer can be computed by enumerating all $(k, b)$ pairs s.t. $kb \leq 50000$, then all $a_i - kb$  less than $b$ contributes to answer. This can be computed by shift-and and discarding some higher bits.
+
+##B. Binary Strings
+
+> solved by sy_chen (3:23 +2)
+
+This is a standard counting problem over Aho-Corasick automaton. Each of the given strings may occur in the first or second half of the target string, or lie across the middle. For the first cases, just insert these strings and their antisymmetric counterparts into ACAM. For the second case, enumerating the split point of the string, and if a valid split point is found, insert the larger part (or its antisymmetric string, if the larger part lies in the latter half) into the ACAM.
+
+Now we can do dynamic programming over ACAM. We may use `dp[l][i][mask]` to present the number of the strings of length $l$, containing the set `mask` of given strings as substrings, and it lies in state $i$ of ACAM. Finally, adding the strings that lie in the middle part to `mask` and summing up all the numbers. The total complexity is $O(n 2^n |S|^2 L)$.
+
+##C. Sequence
+
+> upsolved by sy_chen
+
+This can be solved by persistent balanced binary search tree. However, considering the difficulty writing such data structure, we may consider a light weight substitute, persistent block list.
+
+Operations of kind 1 and 3 are easy to implement. Operations 2 can be implemented in by doubling algorithm: concatenating the period itself repeatedly. A straightforward implementation takes $O( n^{1.5}\log n)$ time (assuming $m = \Theta(n)$), which is enought to pass the time limit. After some careful choice of block size the time complexity can be reduced to $O(n \sqrt{n \log n})$. Furthermore, there exists a more clever implementation that completely shaves off the logarithmic factor.
+
+##D. Rock-Paper-Scissors
+
+> upsolved by Roundgod
+
+Fist we can write the formula as 
+
+$$ans=3^{n}\sum\limits_{i+j\leq n}gcd(i,j)\binom{n}{i,j}$$
+
+A straight forward idea is to enumerate the $gcd$ part. Let $f(n)=\sum\limits_{i+j\leq n,gcd(i,j)=d} \binom{n}{i,j}$, $g(n)=\sum\limits_{i+j\leq n,d|gcd(i,j)} \binom{n}{i,j}=\sum\limits_{id+jd\leq n}\binom{n}{id,jd}$. Then by M&ouml;bius inversion formula, $f(n)=\sum\limits_{n|d}\mu(\frac{d}{n})g(d)$, and the formula can be rewritten as
+$$ans=3^{n}\sum\limits_{d=1}^{n} f(d)$$
+
+$$=3^{n}\sum\limits_{d=1}^{n} \sum\limits_{d|x} \mu(\frac{x}{d})g(d)$$
+
+$$=3^{n}\sum\limits_{d=1}^{n} \sum\limits_{x|d} \mu(\frac{d}{x})g(d)\text{(swap $x$ and $d$)}$$
+
+$$=3^{n}\sum\limits_{d=1}^{n} \varphi(d)g(d)\text{ (use $\sum\limits_{d|n}\mu(\frac{n}{d})\cdot d=\varphi(n)$,i.e., $I=\mu\ast \varphi$})$$
+
+$$=3^{n}n!\sum\limits_{d=1}^{n} \frac{\varphi(d)}{(n-d)!}\sum\limits_{id+jd\leq n}\frac{1}{(id)!(jd)!}$$
+
+Then we may enumerate on all possible $d$s, the second sum can be computed using Fast Fourier Transform. Remember to exclude the case where $i=j=0$. Time complexity: $\sum\limits_{i=1}^{n}O(\frac{n}{i}\log{n})=O(n\log^{2}{n})$.
+
+##E. Criminals
+
+> unsolved
+
+##F. Build The Graph
+
+> solved by Roundgod (0:30)
+
+For first $n-1$ edges, one should add it between vertex $1$ and vertex $i+1$. Then each edge will reduce the answer by 2. After $\frac{n(n-1)}{2}$ edges are added. More edges wouldn't affect the answer.
+
+##G. Match
+
+> upsolved by Roundgod
+
+One can easily formulate the idea of dynamic programming: Let $dp[i][j][0/1]$ denote the answer if we are currently at the subtree of vertex $j$, the number of maximum matching is $j$ modulo $m$, and the vertex $i$ is/isn't already matched. One can iteratively adding childs to update the $dp$ array. A simple upperbound for this algorithm seems to be $O(nm^{2})$. But one may prove a tighter upperbound of $O(nm)$ with some calculations, to which the proof is omitted here.
+
+##H. Subsequence Sums
+
+> solved by Roundgod (0:49)
+
+Just iteratively find the minimum element and maintain the information of the array.
+
+##I. Nice Numbers
+
+> solved by calabash_boy (4:55 +8)
+
+Consider the $d$ base and the $d+1$ base, it's easy to see that all good number under $d+1$ base is greater than those under $d$ base, so, we firstly use binary search to get the biggest $d$ such that all good number under this base is within range. Then we use a digit dp to calculate the number of good number under $d+1$ base. BigInteger is needed. If you use Java, you should save your constant as much as possible.
+
+##J. K-Matching
+
+> unsolved
+
+##K. Competition
+
+> solved by Roundgod (0:14)
+
+Just sort the array in increasing and check if each player can beat the one on the right of it. Terminate when there's someone can't.
+
+#Replay
+
+To be added.
