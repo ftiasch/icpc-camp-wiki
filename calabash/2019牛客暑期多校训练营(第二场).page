@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第二场)
+
+Practicing Date: 2019.7.20
+
+Contest Link: [2019牛客暑期多校训练营(第二场)](https://ac.nowcoder.com/acm/contest/882#description)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第二场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Eddy Walker
+
+> solved by Roundgod (2:11)
+
+One can find that except the starting point, the probability for every other point is the same. One may find this result either by paper and pencil, or by proving through mathematical induction.
+
+##B. Eddy Walker 2
+
+> solved by Roundgod (2:01 +1)
+
+Apply Berlekamp-Massey algorithm and win.
+
+##C. Go on strike!
+
+> unsolved
+
+##D. Kth Minimum Clique
+
+> solved by sy_chen (0:49)
+
+This can be solved by just enumerating all cliques from smaller to larger. To enumerate the cliques, sort all vertices by their weights. Then, using priority queue to store the cliques. In each iteration, pop the minimum clique in the priority queue, trying to add a vertex ranked greater than any of the vertex in the clique to form a new clique, and add the new clique into the priority queue.
+
+##E. MAZE
+
+> upsolved by Roundgod
+
+Each row can be characterized by an $M\times M$ matrix. The final answer can be extracted from the product of all matrices. Using segment tree, one can maintain this product in $O(Q\log{Q}M^3)$ time.
+
+##F. Partition Problem
+
+> solved by sy_chen (1:10)
+
+This can be solved in $O(\binom{2N}{N}N) = O(4^N \sqrt{N})$ time. But, since this is an optimization problem, using 2-exchange local search with randomized restart technique suffices to pass this problem.
+
+##G. Polygons
+
+> unsolved
+
+##H. Second Large Rectangle
+
+> solved by Roundgod (0:47 +1)
+
+Similar to the algorithm for computing largest rectangle, enumerate the lower bound and use monotone deque to compute the answer.
+
+##I. Inside A Rectangle
+
+> solved by sy_chen (4:47 +7)
+
+Consider all possible cases of two rectangles. For each case the problem can be solved in $O(n^4)$ time, though $O(n^5)$ is also acceptable.
+
+##J. Subarray
+
+> upsolved by calabash_boy
+
+The key position that can be left/right bound of the interval is only O(k). So find them all and check.
+
+We can calculate all the good intervals in O(N) time of an array of length N with only 1s and -1s in it 
+
+#Replay
+
+
