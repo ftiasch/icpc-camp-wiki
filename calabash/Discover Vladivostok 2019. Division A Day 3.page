@@ -1,0 +1,90 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Discover Vladivostok 2019. Division A Day 3
+
+Practicing Date: 2019.7.23
+
+Contest Link: [Discover Vladivostok 2019. Division A Day 3](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002607)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%203/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Discover Vladivostok 2019. Division A Day 2](https://github.com/wcysai/Calabash/tree/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%203)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Maximal Difference
+
+> solved by sy_chen (0:27)
+
+The bigger number is obtained by setting the first half of digits to $b-1$ and next digit to 1, with all other digits being 0; the smaller one is obtained by setting the first digit to 1 and the last half of digits to $b-1$, with all other digits being 0. The answer is the difference of them.
+
+##B. Polygon Construction
+
+> unsolved
+
+##C. Beautiful Patterns
+
+> solved by Roundgod (3:54 +1)
+
+The problem can be easily reduced to finding a rank of a matrix, where each row consists of three nonzero entries. Further investigation shows that, if we construct a bipartite graph with two parts represent rows and columns, and for each known vertex in $(r,c)$ we add an edge between $r$ and $c$,then the rank is relevant to the connected components of the bipartite graph.
+
+##D. String without repetitions
+
+> solved by sy_chen (1:17)
+
+It is possible to construct arbitrarily long square-free words with an alphabet of size 3.
+
+##E. Beans gathering
+
+> solved by Roundgod (0:21 +3)
+
+One may see that for the gathering to be possible, the maximal $i_k$ shouldn't be larger than, i.e., $10^6$, the remaining is simple simulation.
+
+##F. Reverse beans gathering
+
+> solved by Roundgod (0:44)
+
+After a few observations, one may notice that we should only leave $K\mod(i+1)$ beans in grid $i$ if we currently have $K$ beans.
+
+##G. Equation
+
+> solved by Roundgod (1:50 +4)
+
+One should see that the answer can be written in the from of $ap+b$. We iterate over $b$ from $0$ to $p-1$, and can uniquely determine $a$ then.
+
+##H. Competition
+
+> solved by calabash_boy (1:06)
+
+Let F(x) be the score gotten by choose the biggest x number from team B and the smallest x number from team A and let them compete.
+It's not hard to observe that F(x) is a unimodal function, so triply search.
+
+##I. The incircle
+
+> solved by sy_chen (2:50 +19)
+
+Binary search on the answer, then use half-plane intersection to check feasibility.
+
+##J. The Dividing Line
+
+> unsolved
+
+##K. Stringangulation
+
+> unsolved
+
+##L. Building a cube
+
+> unsolved
+
+
+#Replay
+
+
