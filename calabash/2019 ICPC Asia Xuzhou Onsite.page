@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 ICPC Asia Xuzhou Onsite
+
+Practicing Date: 2019.12.07
+
+Contest Link: [2019 ICPC Asia Xuzhou Onsite](https://www.jisuanke.com/contest/5529?view=challenges)
+
+PDF Statements:Not Available Yet
+ 
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019 ICPC Asia Xuzhou Onsite](https://github.com/wcysai/Calabash/tree/master/2019%20ICPC%20Asia%20Xuzhou%20Onsite)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Cat
+
+> solved by sy_chen (1:12)
+
+##B. Cats line up
+
+> solved by Roundgod (3:49)
+
+The state of dynamic programming should be(the last $K$ elements are adjacent/not adjacent, in the first position/last position/neither), then after generating all permutations with length $2K+1$ and finding their transitions, halving the number of states by observing the symmetry, the number of states for $K=3$ can be reduced to $C=33$, and the transition matrix has only $X=70# nonzero entries. The the problem can be solved in $O(TX)$ time.
+
+##C. <3 numbers
+
+> solved by Roundgod (0:14)
+
+If $R-L+1$ is large, then the answer is always yes, otherwise one can check using brute force.
+
+##D. Polycut
+
+> unsolved
+
+##E. Multiply
+
+> solved by Roundgod (1:52 +3)
+
+After factorizing $Y$ using Pollard-Rho, the remaining is trivial.
+
+##F. The Answer to the Ultimate Question of Life, The Universe, and Everything.
+
+> solved by sy_chen (1:22 +1)
+
+##G. Factory
+
+> unsolved
+
+##H. Yuuki and a problem
+
+> solved by sy_chen (4:17)
+
+##I. Interesting game
+
+> solved by sy_chen (4:59)
+
+##J. Loli, Yen-Jen, and a graph problem
+
+> solved by Roundgod (4:55)
+
+One can construct the case when $N$ is even by partitioning $K_{N}$ into $\frac{N}{2}$ chains with length $N$, and then split the chains for the answer. The odd case can be constructed by appending vertices to the even case.
+
+##K. K-rectangle
+
+> unsolved
+
+##L. Loli, Yen-Jen, and a cool problem
+
+> solved by sy_chen (0:46)
+
+##M. Kill the tree
+
+> solved by sy_chen (1:45)
+
+#Replay
