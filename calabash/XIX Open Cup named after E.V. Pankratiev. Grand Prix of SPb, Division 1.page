@@ -1,0 +1,94 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIX Open Cup named after E.V. Pankratiev. Grand Prix of SPb, Division 1
+
+Practicing Date: 2018.12.07
+
+Contest Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of SPb, Division 1](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010433)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPb%2C%20Division%201./statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XIX Open Cup named after E.V. Pankratiev. Grand Prix of SPb, Division 1](https://github.com/wcysai/Calabash/tree/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20SPb%2C%20Division%201.)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Create The Best Pet
+
+> solved by Roundgod (2:27)
+
+Since 1234567893 and $2^{31}$ are coprime, we can brute force over all possible initial $Seed$ locally, which takes $O(2^{31})$ time, pretty fast. Therefore we can get that $Salt=1748665573$, therefore the problem can be solved with brute force in $O(120\times 10000)$.
+
+##B. Graph and Machine
+
+> unsolved
+
+##C. Clique Festival
+
+> unsolved
+
+##D. Distance in Crosses
+
+> solved by Roundgod (1:00 +1)
+
+First find the coordinate of the center of the cross each point belongs to, which can be done using the property that the coordinate of a center of a cross is a linear combination of $(2,1)$ and $(-1,2)$. After that, we change the coordinate system by converting $(x,y)$ to $(x',y')$, such that $x'=\frac{2x+y}{5}$ and $y'=\frac{2y-x}{5}$. Then the answer is simply the Manhattan distance between the new points in the new coordinate system.
+
+##E. Lui and Lines
+
+> solved by sy_chen (4:35 +2)
+
+This problem requires some paper-and-pencil work. If the two lines are not parallel, we would like to find a line perpendicular to both lines. Find the two intersections and compute their distance. If the two lines are parallel, just compute the distance of any point to the other line.
+
+The results may exceed 128-bit integer, which renders this problem annoying.
+
+##F. Dominating Subarray
+
+> solved by sy_chen (1:05 +2)
+
+We could find the minimum number for each position of the result. Then we sort these numbers and do a shift-and with bitset. The total complexity is $O(N^2/64)$. Theoretically better solution exists. For example, we may find the lexicographically greatest subarray, any check if it is the answer.
+
+##G. Least Number
+
+> solved by Roundgod (0:32)
+
+One can greedily solve this problem by first minimizes the number of digits, and then greedily choose the smallest possible number from the most significant bit to the least significant bit, which requires us to write a function $f(i,j)$ to check if it's possible that we can construct a number with $i$ digits can the sum of its digits equal to $j$. The implementation of $f(i,j)$ is simply case analysis, which I will ignore here. Be careful with leading zeroes.
+
+##H. Galactic Governments
+
+> upsolved by Roundgod
+
+Like many problems that require us to find an answer with the smallest lexicographic order, we will do greedily here. Basically, we need to check if it's possible to choose some prefix of the answer. Since $n$ is small here, we can use inclusion-exclusion principle to find the measure of union of some superrectangles. Also, we may use binary search for each position. The total complexity is $O(2^{n}\cdot n\cdot k\cdot \log{C})$, which can fit into time limit if well-written.
+
+##I. Multiplication
+
+> solved by sy_chen (2:00 +4)
+
+Randomly select some odd numbers and compute their multiplicative inverse. Then we randomly sample some numbers from the previous odd numbers, multiplying its inverse to each of the returned number, and put the result into a multiset. The most frequent number in the multiset tends to be the answer.
+
+##J. Guess Two Strings
+
+> solved by sy_chen (4:21 +11)
+
+First, we can check whether a solution is valid: compute the distance of each query to either strings, if any of them equals 15, then, with high probability the answer is valid.
+
+We may count the number of 1s in each position for all queries. If the number is greater than 76 or less than 24, then both of the strings are 1 or 0 in that position. If the number is between 36 and 64, the two strings differ in that position. Otherwise, it is of less significant what type it is. There are not many such positions, so we can just try all possibilities.
+
+##K. Beautiful Tables
+
+> upsolved by Roundgod
+
+What actually the property tells us is that every row and column of the matrix form an arithmetic progression. Therefore, there are only four free variables here: The number in the upper-left corner $a$, the difference of adjacent elements in the first row $d_1$, the difference of adjacent elements in the second row $d_2$, and the difference increase between the first row and the second row $d_3$. In this way, for each element $a_{i,j}$, it gives us an equation that $a+d_{1}\cdot i+d_2\cdot j+d_3\cdot i\cdot j=a_{i,j}$(here both $i$ and $j$ are 0-based). So it only remains for us the solve the system of linear equations use Gauss-Jordan elimination algorithm. Be careful with the case where $n=1$ or $m=1$.
+
+##L. Three Balls
+
+> unsolved
+
+#Replay
+
+To be added.
