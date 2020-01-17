@@ -1,0 +1,90 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia Xuzhou Regional Contest 
+
+Participation Date: 2018.10.28
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/The%2043rd%20ACM%20ICPC%20Asia%20Xuzhou%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for The 43rd ACM ICPC Asia Xuzhou Regional Contest](https://github.com/wcysai/Calabash/tree/master/The%2043rd%20ACM%20ICPC%20Asia%20Xuzhou%20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Rikka with Minimum Spanning Trees
+
+> solved by sy_chen (0:24 +2)
+
+Since the weights of edges are randomly generated 64-bit integers, there are at most one minimum spanning trees with high probability. Pay attention to the case that the spanning tree does not exist.
+
+##B. Rikka with Line Graphs
+
+> unsolved
+
+##C. Rikka with Consistency
+
+> upsolved by sy_chen
+
+This, is a straightforward shortest path problem. The number of vertices in the graph, actually, is not too much, since the y-coordinates must coincide. Hence it can be beaten by a careful implementation of, e.g., Dijkstra's algorithm.
+
+##D. Rikka with Subsequences
+
+> upsolved by sy_chen
+
+For the sake of clarity, here a subsequence refers only to the numbers in the subsequence, while a subsequence occurrence refers to the indices of the elements of subsequence in original sequence.
+
+To count the sum of cube of the number of occurrences over all subsequences, one may count the number of triples of occurrences of the same subsequence. One may attack this problem by doing some dynamic programmings, e.g. `dp[i][j][k][a]` as the number of triples of occurrences, such that the first is before $i$, the second before $j$, the third before $k$ and the common ending is $a$. This, however, runs in $O(n^4)$, which is still not affordable. To reduce the complexity, one may try to optimize out a dimension in dynamic programming. Consider extending the subsequence occurrences one by one, one may set up some auxiliary arrays, e.g. `f[i][j][k]` meaning the first one has already extended, and the second and the third not yet. By using prefix sum these arrays can be computed in cubic time.
+
+##E. Rikka with Data Structures
+
+> unsolved
+
+##F. Rikka with Nice Counting Striking Back
+
+> unsolved
+
+##G. Rikka with Intersections of Paths
+
+> solved by Roundgod and sy_chen (1:01 +2)
+
+One can easily use difference method to compute for each vertex $v$ the number of paths it is in,$a_{v}$ . To avoid overcounting, we should only count for each $k$ intersecting paths on the vertex with the lowest depth they share, so we need to compute another array $b$ such that $b_{v}$ is equal to the  number of paths that don't have $v$ as the lowest common ancestor, then the answer is, $\sum\limits_{v}\binom{a_{v}}{k}-\binom{b_{v}}{k}$. Time complexity mainly comes from the LCA part, which is $O(n\log{n})$ normally, but can be optimized to $O(n)$ offline.
+
+##H. Rikka with A Long Colour Palette
+
+> solved by Roundgod (4:09 +7)
+
+One can prove that all area that is contained by at least $k$ segments can be DREAM. To find out one possible way to color the segments, one can sort the segments by their left end then right end, and greedily choose the color that is first to disappear.
+
+##I. Rikka with Sorting Networks
+
+> upsolved sy_chen
+
+This is, actually a very simple brute-force algorithm. The first thing to discover is that, an almost sorted permutation is either a sorted one, or a sorted one but a cyclic shift of any interval. Hence there are at most $O(n^2)$ different almost sorted permutation. Once we get the permutation we may reverse the sorting network, and, when passing through a comparator backward, first check whether it is sorted, and if so, try two possibilities. The overall time is $O(n^2 2^k)$ per test case.
+
+##J. Rikka with An Unnamed Temple
+
+> unsolved
+
+##K. Rikka with Ants
+
+> unsolved
+
+##L. Rikka with Grid Graphs
+
+> unsolved
+
+##M. Rikka with Illuminations
+
+> upsolved by sy_chen
+
+For each illuminant one may first precompute the range of edges of polygon it can light up. Then the problem becomes computing the minimum cover of some intervals. One may enumerate all possible starting positions, and cover the entire polygon greedily. This problem can be solved in linearithmic time actually, however, this problem allows quadratic solutions, which can dramatically reduce the difficulty of implementation.
+
+#Replay
+
+Sad story :(
