@@ -1,0 +1,90 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2019. Yandex Cup 2019
+
+Practicing Date: 2019.3.30
+
+Contest Link: [Petrozavodsk Winter-2019. Yandex Cup 2019](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001534)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2019.%20Yandex%20Cup%202019/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Petrozavodsk Winter-2019, Yandex Cup 2019](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2019.%20Yandex%20Cup%202019)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Takeover
+
+> solved by calabash_boy (2:05 +1)
+
+Easily, one can thinks out the binary search and check. Because the left and bottom bound of the rectangle are constant, besides, the top and right bound of the rectangle are increasing, consider the top-right point of rectangle, the whole plane is divided into four parts, and three of them are useful, use three priority queue to maintain the min value in each part. 
+
+Now, we can see, in the check, the answer we assume doesn't mean anything. So just go go go without the stupid binary search.
+
+##B. Unfair Card Deck
+
+> solved by sy_chen (4:56 +19)
+
+Without loss of generality, we may assume that there is only one card for each type of card, because in case that there are multiple cards of one type, we may retain only the first occurrence of this type, and divide its weight by the number of cards at last.
+
+For type $i$ and $j$, we may use $\frac{N(i, j)}{N(j, i)}$ to estimate $\frac{X_i}{X_j}$, where $N(i, j)$ is the number of games, where card $i$ occurs before $j$. The closer $X_i$ and $X_j$, the more precise the estimation will be. Hence, we may sort the cards by the average place of occurrence, and apply this estimation only on two adjacent cards in sorted array. Experiments show that, such estimation works well, if only the weights are non-singular.
+
+There do exist singular test cases, that is $X_i$ and $X_j$ differ greatly. In such case, it is possible that in all games card $j$ occurs before card $i$. However, observing the answer comparison rule, we may simply set the ratio to an arbitrary large number in such case.
+
+##C. Diverse Singing
+
+> solved by Roundgod (3:02)
+
+After some routine graph-building, this problem can be easily reduced to a maximum flow with lower bounds of capacity, on some of the edges, which can be handles using the techniques introduced in Andrew Stankevich Contest 1(ASC1) problem B.
+
+##D. Pick Your Own Nim
+
+> upsolved by sy_chen
+
+This problem can be reduced to the matroid intersection of a partition matroid and a linear matroid.
+
+##E. Permutasino
+
+> unsolved
+
+##F. Planar Max Cut
+
+> unsolved
+
+##G. Battle Royale
+
+> unsolved
+
+##H. Jeopardy
+
+> solved by sy_chen (0:17)
+
+The answer is the maximum of the minimum of each row.
+
+##I. Slippers
+
+> solved by Roundgod (0:49 +1)
+
+Let's assign number from $0-3$ for each direction, clockwise or counterclockwise. One can see that the sum of all numbers is an invariant, and there's no constraints other than that.
+
+Compute the maximum matching of the graph, if the maximum matching is a perfect matching, one also need to check if such matching is possible, if it isn't, we need to subtract one from the answer.
+
+Time complexity: $O(n^4)$ or $O(n^3)$, depending on the implementation of the bipartite matching algorithm.
+
+##J. The Good, the Bad and the Ugly
+
+> solved by Roundgod (1:34 +1)
+
+Note that if we reach $0$ at some time, we then need at most three jumps to find out the answer, then the problem is reduced to reach $0$ for each possible type of the player.
+
+After some analysis one may find the following strategy should work: say '+' once, then '-' three times, then '+' nine times, then '-' twenty-seven times...
+
+#Replay
+
+To be added.
