@@ -1,0 +1,74 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Discover Vladivostok 2019. Division A Day 2
+
+Practicing Date: 2019.7.16
+
+Contest Link: [Discover Vladivostok 2019. Division A Day 2](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002606)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%202/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Discover Vladivostok 2019. Division A Day 2](https://github.com/wcysai/Calabash/tree/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%202)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Cleaning Robot
+
+> unsolved
+
+##B. Tree Coloring
+
+> solved by Roundgod (0:16)
+
+Simple tree dynamic programming.
+
+##C. Where Do Identity Permutations Come From
+
+> solved by sy_chen (4:17 +4)
+
+The first thing to do is to figure out the cycle structure of the permutation. For each cycle of length $l$ where numbers are consecutive, if the number of inversions is $l-1$ (the number can't be smaller), then we may use $l-1$ adjacent swaps instead of $l$ replacements.
+
+##D. Secret Community Card Game
+
+> solved by Roundgod (0:30)
+
+Simple application of bipartite matching.
+
+##E. Partition
+
+> solved by sy_chen (3:09)
+
+Our solution is based on a not-yet-proven proposition: the optimal answer can be obtained by deleting some rows or some columns. To find such an answer, just run dynamic programming to find the minimum cost.
+
+##F. Matrix Consistency
+
+> solved by Roundgod (1:22 +1)
+
+First notice that the asnwer equals to $\frac{1}{2}-\frac{1}{2^{r+1}}$ where $r$ is the rank of the given matrix. However, even with std::bitset, it takes $O(\frac{n^3}{w})$ to compute the rank of the matrix, which is way too slow. But one can stop computing once $r$ reaches around $C=30$, which doesn't affect the answer. Therefore the complexity becomes $O(\frac{Cn^2}{w})$.
+
+##G. MST of Random Points
+
+> solved by sy_chen (2:11 +10)
+
+For each point, find some points close to the point and only consider these edges.
+
+##H. Rolling a Die
+
+> unsolved
+
+##I. Statistics
+
+> solved by Roundgod (0:52)
+
+Let's calculate the probability for each object that it isn't touched when the first object has already been touched $k$ times, and denote it as $P_k$. Then we have the recurrence $P_{k}=(1-p)^{2}P_{k}+p(1-p)P_{k-1}$, which can be solved as $P_{k}=\frac{1-p}{2-p}P_{k-1}$. Therefore the answer equals to $(n-1)(1-(\frac{1-p}{2-p})^{k})+1$.
+
+#Replay
+
+
