@@ -1,0 +1,103 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ByteDance - Moscow Workshops ICPC Programming Camp 2019,Day 5,Div A,AtCoder Tour Finals Plus
+
+Participation Date: 2019.02.21
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Algorithm Was Applied
+
+> solved by sy_chen (4:57)
+
+We orient each edge from smaller vertex to larger, and the resulting graph must be acyclic. The first observation is, in an oriented completed graph, every vertex, along with the vertices it can reach in one step (direct successors), must form a clique. Hence, we may color the vertices in reverse order, and, for current vertex $u$, its colored adjacent vertices must be successors of $u$. Moreover, these vertices must share mutually different color because they lie in one clique. Hence the number of possible colors for $u$ is $n - \text{odeg}(u)$, and the total number of possible colorings is the product of the values for all vertices.
+
+The problem remains to find, for each vertex, the out-degree. For each vertex, we maintain a set of all its direct successors. We process vertices in order. For current vertex $u$, the size of set for $u$ is exactly its outdegree. Then, remove the least element, say $v$, and merge the remaining part of the set to the set for $v$. Using small to large trick, the overall time complexity should be $O(n \log^2 n)$.
+
+##B. Balanced Rainbow Sequence
+
+> unsolved
+
+##C. Called Convergient
+
+> unsolved
+
+##D. Doesn’t Contain Loops or Multiple Edges
+
+> solved by sy_chen (0:19)
+
+Just check if we could recolor one vertex to obtain a different proper coloring.
+
+##E. Equal Adjacent Elements
+
+> solved by sy_chen (1:21)
+
+One may use interval dynamic programming to solve this problem. Let `dp[i][j]` be the number of different ways to eliminate the sequence between $i$ and $j$. To make state transition, enumerate the last element removed in this range which would not result in equal adjacent elements with $i-1$ or $r+1$, after all other elements in the interval removed. The contribution of this transition is product of the numbers of ways to eliminate the two parts, multiplying a binomial coefficient for interleaving the two sequences.
+
+##F.  Formally, You Choose Three Integers
+
+> solved by sy_chen (2:19)
+
+First we may discover that it is possible to shift `a[i], a[i+2], a[i+4]` cyclically for every possible $i$. On the other hand, the operations defined in the problem statement can always be implemented as a sequence of such cyclic shifts. Hence, we treat the odd and even indices of the array separately. It can be proved that a permutation can be written as the product of cycles of three adjacent elements iff the permutation is even. Hence we may only check the parity of the permutations. If we count the number of inversion pairs, the solution works in $O(n \log n)$ time. If we find the cycle structure of the permutation, the solution will work in linear time. Note that if a sequence contains duplicated elements then the permutation could be either odd or even because we may filp the parity by swapping the two elements without changing the sequence itself.
+
+##G. Game
+
+> unsolved
+
+##H. Hat With An Integer
+
+> unsolved
+
+##I.  Intersect With Other Balls
+
+> upsolved by sy_chen
+
+##J. J The Attacker Has
+
+> unsolved
+
+##K. K Integers
+
+> solved by sy_chen (1:08 +1)
+
+We may produce the answer in reverse order, since if we could improve a suffix of the answer, then we could improve the entire answer. The remaining part is to carefully implement a greedy strategy. 
+
+##L. Labeled Connected Graphs
+
+> upsolved by Roundgod
+
+We try to build the graph layer by layer. Let $ways[i][j]$ denote the number of ways to build a connected graph of $i$ vertices such that the number of vertices in the last layer is $j$. Also let $dp[i][j]$ denote the sum over distances from all vertices to vertex $1$ over all possible connected graphs of $i$ vertices such that the number of vertices in the last layer is $j$, assuming the distance of the remaining $n-i$ vertices to vertex $1$ is equal to the distance from any vertex in the last layer to vertex $1$.
+
+The transition is then as follows:
+
+$$ways[i][j]=\sum\limits_{k=1}^{i-j}ways[i-j][k]\cdot (2^k-1)^j\cdot 2^{\frac{j(j-1)}{2}}\cdot \binom{n-(i-j)}{j}$$
+
+$$dp[i][j]=ways[i][j]\cdot(n-i+j)+\sum\limits_{k=1}^{i-j}dp[i-j][k]\cdot (2^k-1)^j\cdot 2^{\frac{j(j-1)}{2}}\cdot \binom{n-(i-j)}{j}$$
+
+##M. Moves You Need to Make
+
+> solved by Roundgod (1:50)
+
+If we swap the first and last number, where the first number is $u$ and the last number is $v$, the contribution to the answer is $2u-2v-2$. Then we only to discuss which vertices should be moved to the first/last position and then swapped. Both the process and the calculation of inversions can be done in $O(n\log{n})$ time using a binary indexed tree.
+
+##N. Number Of Vertices
+
+> solved by Roundgod (1:25)
+
+Observe that to split the graph into zigzag cycles, it is necessary for each vertex to have an even number of edges connecting to a vertex with a larger index, and an even number of edges connecting to a vertex with a smaller index, which can also bu proved as sufficient.
+
+
+#Replay
+
+To be added.
