@@ -1,0 +1,70 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 4
+
+Participating Date: 2019.4.5
+
+Contest Link: [2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 4](https://codeforces.com/gym/100200)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC4/statements.pdf)
+
+Solution Link: [Code for 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 4](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC4)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Unique Attack
+
+> solved (2:27 +1)
+
+The problem asks to check if some graph has a unique minimum cut, which can be solved by comparing the minimum cut computed from a single depth-first-search from source/sink.
+
+##B. Burning Bridges
+
+> solved (1:29)
+
+Apply Tarjan's algorithm for finding bridges.
+
+##C. Circles
+
+> upsolved
+
+Use Euler's formula for planar graphs, then the problem is reduced to computing the number of intersecting vertices and connected components, which is way easier.
+
+##D. Linear Programming Dual
+
+> upsolved
+
+A problem with pure implementation. The hardest point is to handle the input.
+
+##E. DVD
+
+> solved (1:08)
+
+A classical dynamic programming problem. 
+
+##F. Think Positive
+
+> solved (1:42)
+
+Concatenate the array with itself to get rid of the cyclic condition. Compute the prefix sum $sum_i$ of the new array, if a starting position $i$ is valid,  then $sum_i>\min_{k=i+1}^{i+n}sum_{k}$. Use a segment tree(or anything else) to compute the minimum overall interval.
+
+##G. Ranking
+
+> solved (4:11 +1)
+
+Tough implemention needed.
+
+##H. Driving Straight
+
+> solved (3:15 +3)
+
+After computing the shortest path, just follow the given instructions.
+
+#Replay
+
+To be added.
