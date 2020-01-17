@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2014. Andrew Stankevich Contest 46
+
+Practicing Date: 2018.11.23
+
+Contest Link: [Petrozavodsk Summer-2014. Andrew Stankevich Contest 46](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001448)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2014.%20Andrew%20Stankevich%20Contest%2046/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2014. Andrew Stankevich Contest 46](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2014.%20Andrew%20Stankevich%20Contest%2046)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Astronomy Problem
+
+> solved by sy_chen (1:07 +3)
+
+We may precompute the tuple $(a, b, c)$ for all possible pairs, then queries are made easy. Do be careful with the constant factor.
+
+##B. Bipartite Bicolored Graphs
+
+> solved by Roundgod (2:32)
+
+Let $dp_{i}$ denote the number bipartite bicolored graphs with $n$ vertices, to do a transition, we may enumerate on the size of connected bipartite graph the last vertex is in and how many vertices are in each part. To manage this, we should compute two things: $f_{p,q}$, which denote the number of bipartite bicolored graphs with $p$ vertices in one part and $q$ vertices in another, one can easily see that $f_{p,q}=3^{pq}$. Also, with the help of $f_{p,q}$, we can compute $g_{p,q}$, which denote the number of **connected** bipartite bicolored graphs with $p$ vertices in one part and $q$ vertices in another. The transition is similar, just enumerate  on the size of connected bipartite graph the last vertex is in and how many vertices are in each part. After that, the answer is trivial. Time complexity: $O(n^{4})$, with an extremely small constant.
+
+##C. Catalan Numbers
+
+> unsolved
+
+##D. Dichromatic Trees
+
+> solved by Roundgod (4:56)
+
+Let $red_{i,j}$ be the number of dichromatic trees with $i$ vertices and with black height equal to $j$, root colored red, and $black_{i,j}$ be the number of dichromatic trees with $i$ vertices and with black height equal to $j$, root colored black. One can easily see that both $red_{i}$ and $black_{i}$ are polynomials and the transferring form a convolution. So if we use Fast Fourier Transform to compute the coefficients, then the time complexity is $O(34n\log{n})$ with a large constant, which is enough to get accepted. Note that the modulo is not a friendly one, so you either choose to split the modulo using Chinese Remainder Theorem, or split the coefficients into the larger half and smaller half when doing polynomial multiplications, so that there will be no precision error.
+
+##E. Ebola Virus
+
+> solved by sy_chen (4:09)
+
+The movement can be divided into several segments. In each segment, you always move to the rightmost village, curing some of the villages, then move to leftmost one, curing some of the villages, finally move to the next segment. Hence a 1D/1D dynamic programming becomes clear.
+
+The remaining part is to decide, for each village in one segment, whether to cure it when moving rightward or leftward. After some paper-and-pencil simulation one may discover that, when the right border of the segment is fixed, this can be decided in left-to-right order. When deciding the current village, we may count the effect to the remaining villages, hence the cost of the remaining villages has nothing to do with the current village. This, makes the transition possible.
+
+##F. Figure Skating
+
+> solved by Roundgod (1:51)
+
+Note that the tranferring can be written in forms of matrix multiplication, time complexity: $O(\log{n})$.
+
+##G. Game of Col on Bamboo Forests
+
+> solved by sy_chen (2:20)
+
+The SG value of the game is the xor-sum of those of all subgames. Hence we may only focus on the SG value for specific $a_i$.
+
+After trying some first values one may discover that the SG value is 1 if $a_i = 1$, otherwise SG is 0. For even $a_i$, SG must be 0, because the second player can always copy the first player in an antisymmetric way, so the first player is doomed to lose. For odd $a_i > 1$, I didn't find a rigorous proof actually. However, one may imagine that the first player must conquer the center, otherwise he will lose the game similar to the even case. Once the center is conquered, the game is divided into two subgames, and the two subgames are bad to the first player. So we may guess the first player will still lose the game.
+
+##H. Heavy-Light Decomposition
+
+> unsolved
+
+##I. Interactive Memory Management
+
+> upsolved by sy_chen 
+
+The memory management policy is quite simple: all memory blocks of same size are arranged contiguously, the blocks of size 1 are allocated from left to right, the blocks of size 3 are allocated from right to left, the blocks of size 2 are allocated at the middle. After some discussion one may discover that for each operation, maintaining the aforementioned properties takes at most two moves.
+ 
+##J. Jingles of a String
+
+> solved by calabash_boy (0:47)
+
+Firstly, it costs $26n$ time to calculate $dp[i][j]$ meaning the first character 'j' 's position after position i. Then for each position, we can use 26 time to calculate the different $J(s)$. Finally use a map to store the longest length of each $J(s)$. 
+
+#Replay
+
+To be added.
