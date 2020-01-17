@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 5
+
+Participating Date: 2019.4.8
+
+Contest Link: [2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 5](https://codeforces.com/gym/100201)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC5/statements.pdf)
+
+Solution Link: [Code for 2003-2004 Winter Petrozavodsk Camp, Andrew Stankevich Contest 5](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC5)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Ackerman's Function
+
+> solved (3:23 +4)
+
+By Euler's formula $a^{x}=a^{x\mod \varphi(m)+\varphi(m)} (\mod m)$ if $x\geq \varphi(m)$, one can see that the number of recursions is very small, and thus repetively apply this formula until the modulo becomes one should yield the correct answer.
+
+##B. The Minimal Angle
+
+> upsolved
+
+The rotation angle should be the average of the sum over all angles.
+
+##C. Yellow Code
+
+> solved (0:07)
+
+It's easy to come up with building a solution for code of length $n+2$ from code of length $n$.
+
+##D. Yet Another Digit
+
+> solved (0:59 +4)
+
+Use dynamic programming, let $dp_{i,0/1/2/3}$ be the number of ways if we are at the $i$th digit and its value is $0/1/2/3$ in the binary representation. Biginteger is needed.  
+
+##E. Graduated Lexicographical Ordering
+
+> upsolved
+
+Digit dynamic programming with a lot of case handling and edge cases.
+
+##F. GSM
+
+> upsolved
+
+The formula is not hard to come up with. To get the precise answer, one should use Python/Java or implement the BigDecimal type and use some numerical methods to calculate the answer. For me, I used Taylor expansion to compute trigometric functions and BBP formula to compute $\pi$.
+
+##G. Warehouse Keeper
+
+> solved (4:43 +7)
+
+Can be reduced to a minimum weighted matching problem, be careful not to forget the constraint that one is not allowed to dispose goods.
+
+##H. Don't Go Left
+
+> solved (2:05 +2)
+
+The problem is just determining whether one could reach a state that can go left, which can be done by a simple breadth first search after building the graph. Note that empty input should be handled separately.
+
+##I. Railroad Sort
+
+> solved (1:25 +1)
+
+For each dead-end, split the cars into two sets of equal size and solve the problem separately.
+
+#Replay
+
+To be added.
