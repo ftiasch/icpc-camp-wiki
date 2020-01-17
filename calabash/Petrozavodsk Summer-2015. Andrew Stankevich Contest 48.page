@@ -1,0 +1,70 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2015. Andrew Stankevich Contest 48
+
+Practicing Date: 2018.11.22
+
+Contest Link: [Petrozavodsk Summer-2015. Andrew Stankevich Contest 48](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001469)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2015.%20Andrew%20Stankevich%20Contest%2048/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2015. Andrew Stankevich Contest 48](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2015.%20Andrew%20Stankevich%20Contest%2048)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. A+B
+
+> unsolved
+
+##B. Break Free
+
+> unsolved
+
+##C. Covering Words with Carrying
+
+> solved by Roundgod (1:07 +1)
+
+Enumerate on the length of the covering string and find how many strings of length $n$ it can cover. Say that the length of the covering string is $k$, then condition holds only when $n$ has a border of length $k-n%k$, therefore we can find the answer easily. 
+
+##D. Decisions
+
+> solved by sy_chen (1:01 +3)
+
+This problem requires to process online query about 01-knapsack for an interval. A known trick for 01-knapsack is to use bitset and shift-or to accelerate dp transition. Here we may use this trick to precompute dp values for all intervals. Hence queries can be easily done. Due to the extremely low constant factor for bitset, one may safely believe that this runs in time limit.
+
+##E. Enigmatic Matrix
+
+> unsolved
+
+##F. Four Russians on a Tree
+
+> unsolved
+
+##G. Grundy
+
+> unsolved
+
+##H. Hardware Hashing
+
+> unsolved
+
+##I. Interactive Proofs
+
+> unsolved
+
+##J. Jackpot
+
+> solved by sy_chen (2:43 +1)
+
+This is a quite straightforward minimum cost flow problem. Since all tokens are taken in order, the cost of a card at specific time is fixed. Hence we may build a graph and compute the minimum cost flow.
+
+#Replay
+
+To be added.
