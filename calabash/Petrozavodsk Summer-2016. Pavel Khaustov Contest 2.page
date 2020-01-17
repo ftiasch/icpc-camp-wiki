@@ -1,0 +1,66 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2016. Pavel Khaustov Contest 2
+
+Participating Date: 2019.08.13
+
+Contest Link: [Petrozavodsk Summer-2016. Pavel Khaustov Contest 2](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001482)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Summer-2016.%20Pavel%20Khaustov%20Contest%202)
+
+Solution Link: [Code for Petrozavodsk Summer-2016. Pavel Khaustov Contest 2](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Summer-2016.%20Pavel%20Khaustov%20Contest%202)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Alone in the Cactus
+
+> unsolved
+
+##B. Binary Neural Network
+
+> upsolved
+
+After knowing the constructiong of bitwise and/or/not, the whole construction is simple.
+
+##C. Chess Puzzle
+
+> unsolved
+
+##D. Dominoes
+
+> solved (4:35 +7)
+
+One can see only the number of two-green-cell-dominoes and one-green-cell dominoes matter, therefore dynamic programming on broken files suits this problem. Also note that since the number of green cells is fixed, we can save one dimension from the dynamic programming.
+
+##E. Experience is Worth It
+
+> solved (3:06)
+
+##F. Fix the Matrix
+
+> solved (1:51 +1)
+
+The key is to find a matrix such that the edit distance between any two rows/columns is at least $3$. Run brute force to find such matrix, the remaining is trivial.
+
+##G. Guess the Data Structure
+
+> unsolved
+
+##H. Hovercraft
+
+> unsolved
+
+##I. Izhevsk Training Camp
+
+> upsolved
+
+Consider the contribution of two teams in some triple, either they will form $0$ inversions in each of the three pairs of the triple, which contributes one to the answer, or they will form $2$ inversions, which contributes $0$ to the answer. Thus we only need to compute the number of inversions for each pair of permutations, where the time complexity is $9\cdot 9\cdot n\log{n}$.
+
+# Replay
+
+To be added.
