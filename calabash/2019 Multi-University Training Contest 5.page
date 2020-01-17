@@ -1,0 +1,75 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 Multi-University Training Contest 5
+
+Practicing Date: 2019.8.5
+
+Contest Link: [2019 Multi-University Training Contest 5](http://acm.hdu.edu.cn/contests/contest_show.php?cid=852)
+
+PDF Statements: No pdf statements available
+
+Participants:  calabash_boy, Roundgod
+
+Solution Link: [2019 Multi-University Training Contest 5](https://github.com/wcysai/Calabash/tree/master/2019%20Multi-University%20Training%20Contest%205)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. fraction
+
+> solved by Roundgod (4:10)
+
+Direct application of Farey sequence.
+
+##B. three arrays
+
+> solved by calabash_boy (2:52 +5)
+
+##C. geometric problem
+
+> unsolved
+
+##D. equation
+
+> solved by Roundgod (2:06 +4)
+
+Another implementation problem.
+
+##E. permutation 1
+
+> solved by Roundgod (0:53 +2)
+
+Simple implementation problem. 
+
+##F. string matching
+
+> solved by Roundgod (0:27)
+
+Direct application of Z's algorithm.
+
+##G. permutation 2
+
+> solved by Roundgod (1:10)
+
+Simple dynamic programming.
+
+##H. line symmetric
+
+> unsolved
+
+##I. discrete logarithm algorithm
+
+> unsolved
+
+##J. find hidden array
+
+> unsolved
+
+
+#Replay
+
+
