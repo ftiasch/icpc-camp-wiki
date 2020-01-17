@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: NWERC 2018
+
+Practicing Date: 2019.3.5
+
+Contest Link: [NWERC 2018](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006314)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/NWERC%202018/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [NWERC 2018](https://github.com/wcysai/Calabash/tree/master/NWERC%202018)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Access Points
+
+> solved by sy_chen (2:35)
+
+We may solve the problem in both dimensions independently. For each dimension, we would like to minimize $\sum_i (a_i-x_i)^2$, such that $x_i$ is a monotonically increasing sequence. 
+
+Basic observations:
+1. when $a_i$ is monotonically increasing, we may set $x_i = a_i$ and the value is 0;
+2. when $a_i$ is monotonically decreasing, set $x_i = \sum_i {a_i} / n$.
+
+We may combine the two ideas: for each continuous decreasing subsequence, replace them with the same number of copies of their average, until all the numbers are monotonically increasing.
+
+##B. Brexit Negotiations
+
+> solved by calabash_boy (1:41 +1)
+
+##C. Circuit Board Design
+
+> solved by sy_chen (0:54 +1)
+
+We may divide the plane into sectors, with the central angles proportional to the number of leaves in the subtree.
+
+##D. Date Pickup
+
+> unsolved
+
+##E. Equality Control
+
+> solved by sy_chen (1:18 +1)
+
+Parse the input and construct the resulting list, and recording that the numbers in some intervals are unordered.
+
+Operations within `shuffle` and `sort` are irrelevant. For `shuffle` operation, we may record that the result is unordered, except that the numbers in the list are all identical.
+
+Compare the resulting list along with recorded intervals, two programs are equivalent iff the results compare equal.
+
+##F. Fastest Speedrun
+
+> solved by sy_chen (3:32 +1)
+
+Implement a minimum spanning aborescence algorithm in $O(\vert V \vert ^2)$ time.
+
+##G. Game Design
+
+> solved by calabash_boy (3:12 +1)
+
+##H. Hard Drive
+
+> solved by Roundgod (0:27)
+
+If the required number is odd, fill the leftmost grid with $1$, otherwise $0$. For the rest of the grids, alternately fill with $0$ and $1$ until no more bit changes is required.
+
+##I. Inflation
+
+> solved by sy_chen (0:21)
+
+Sort the input in ascending order. Compute $a_i / i$, if any is greater than 1, the result is `impossible`. Otherwise, output the minimum.
+
+##J. Jinxed Betting
+
+> solved by Roundgod (2:06 +1)
+
+For each betting, instead of the points of all other bettors except the $\lceil \frac{k}{2} \rceil$ bettors with the maximum points where $k$ is the number of bettors with the maximum points get increased by one, we can regard it as the points of both Julia and the $\lfloor \frac{k}{2} \rfloor$ bettors with the maximum points get decreased by one. 
+
+Therefore, after $\lfloor \log_{2}^{k}+1 \rfloor$ bets, all other bettors with the maximum points got all their points decreased by one. Implementing this idea should get an $O(n\log{n})$ solution, where the main complexity comes from the sorting part.
+
+##K.  Kleptography
+
+> solved by Roundgod (0:19)
+
+Generate the answer from the last letter to the first.
+
+#Replay
+
+To be added.
