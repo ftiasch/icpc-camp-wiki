@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2019. Petrozavodsk SU Contest
+
+Practicing Date: 2019.4.09
+
+Contest Link: [Petrozavodsk Winter-2019. Petrozavodsk SU Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001538)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2019.%20Petrozavodsk%20SU%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Winter-2019. Petrozavodsk SU Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2019.%20Petrozavodsk%20SU%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. DIY Radar
+
+> solved by Roundgod (1:31 +1)
+
+With two repeated query at point $(-1000,0)$(of course many other query points are fine) and checking the difference between the answer to the first query and the second query, one can uniquely determine the original position.
+
+##B. Word Squared
+
+> solved by sy_chen (0:05)
+
+The matrix has size $(2n-1) \times (2n-1)$ and can be explicitly written as $A_{ij} = P_{(i+j) \bmod n}$.
+
+##C. Quoridor
+
+> unsolved
+
+##D. Game X
+
+> solved by Roundgod (0:23)
+
+The problem can be restated as follows: given $n$, find $a,b$ such that $a+b=n,\binom{a}{2}\leq k\leq \binom{a}{2}+ab$, maximizing $\binom{a}{2}+\binom{b}{2}$. Since the maximum point of the function lies on the border, we only need to compute the border of the given constraints. Two binary searches will do for this problem. 
+
+##E. 5-Path
+
+> solved by sy_chen (2:39 +7)
+
+Binary search on the answer, then test if there is a simple path of length 5 in between $a$ and $b$.
+
+##F. Nightmare
+
+> upsolved by sy_chen
+
+For each pothole, find the earliest time of hitting, if any. This can be solved by finding the intersection of a half-line and a segment. The $k+1$-th smallest time is the answer. 
+
+##G. String Transformation
+
+> unsolved
+
+##H. Employees
+
+> solved by Roundgod (2:37)
+
+Using the linearity of expectations, one just need to compute, for each pair of $i,j$, what is the probability that the employee $i$ leaves before the employee $j$, which is simply a combinatorics argument that can be computed in $O(n)$ time. Thus the overall complexity is $O(n^3)$. 
+
+##I. Modulo-magic squares
+
+> unsolved
+
+##J. Count the Sequences
+
+> unsolved
+
+#Replay
+
+To be added.
