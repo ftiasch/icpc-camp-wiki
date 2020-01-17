@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2002-2003 Winter Petrozavodsk Camp, Andrew Stankevich Contest 1
+
+Participating Date: 2019.3.26
+
+Contest Link: [2002-2003 Winter Petrozavodsk Camp, Andrew Stankevich Contest 1](https://codeforces.com/gym/100199)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC1/statements.pdf)
+
+Solution Link: [Code for 2002-2003 Winter Petrozavodsk Camp, Andrew Stankevich Contest 1](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC1)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Chinese Girls' Amusement
+
+> solved (0:10)
+
+It can be seen that the answer is $\begin{cases}
+\frac{N-1}{2} & N\text{ is odd}\\
+\frac{N}{2}-1 & N \equiv 0(\mod 4)\\
+\frac{N}{2}-2 & N \equiv 2(\mod 4)\\
+\end{cases}$
+
+Some Biginteger operations are needed, including checking the parity, divide by two and subtract by one.
+
+##B. Reactor Cooling
+
+> solved (3:46 +5)
+
+Classical problem that requires one to find a circulation flow with both lower bounds and upper bounds on each edge, with some tricks this can somehow be reduced to a maximum-flow problem. 
+
+##C. New Year Bonus Grant
+
+> solved (0:56)
+
+Maximum matching on trees, can be solved with tree dynamic programming in $O(n)$.
+
+##D. Matrix Multiplication
+
+> solved (0:20 +1)
+
+With some simple calculation one may find that the answer is $\sum\limits_{i=1}^{n} cnt_i^{2}$ where $cnt_i$ is the occurences of number $i$ in the input.
+
+##E. Nice Patterns Strike Back
+
+> solved (1:20)
+
+Classical dynamic programming problem, use bitmasks to encode states of each column, check the compatibility of two consecutive columns, accerlate the solution using fast matrix exponentiation.
+
+Some Biginteger operations are needed.
+
+##F. Get Out!
+
+> upsolved
+
+This is the most interesting problem in the set. First one can view Kolobok as a single point if the radius of all other circles are enlarged by $r_{N}$, then the problem is reduced to determining whether Kolobok is enclosed in a finite region by these circles, which, if we connect the center of every pair of intersecting circles by a segment, is equivalent to determining whether Kolobok is enclosed in a finite region by these segments.
+
+Here comes the tricky part, we need to determine if a point is inside some enclosed region. Consider how we determine if some point is insider some polygon: iterate over the edges of the polygon in some order(i.e., clockwise or counterclockwise), and accumulate the angle of the edge with respect to the point, if the overall angle is $2\pi$ or $-2\pi$, then the point is insider the polygon, otherwise(the overall angle is $0$) the point is outside the polygon.
+
+So basically the solution looks like this: add two arcs between every pair of intersecting circles, with the weight equals to the angle which the segment between the center of the two circles has with respective to the point where Kolobok locates. If there is a negative cycle in the loop, the Kolobok is enclosed in a finite region, otherwise not.
+
+To detect if there is a negative cycle in the loop, one can apply Bellman-Ford's algorithm which runs in $O(NM)=O(N^3)$.
+
+##G. Beautiful People
+
+> solved (2:07 +1)
+
+After sorting by $S_i$, the problem is basically equivalent to finding the Longest Increasing Subsequence(LIS)(not exactly the same, thus one may need some extra case analyses), which can be solved in $O(n\log{n})$. 
+
+##H. Cracking RSA
+
+> solved (0:40)
+
+If we view the prime decomposition of each number as a vector with respect to the first $100$ primes, then the answer is $2^{r}-1$, where $r$ is the rank of the set of the vectors, which can be solved by Gaussian Elimination in $O(t^3)$ time.
+
+#Replay
+
+To be added.
