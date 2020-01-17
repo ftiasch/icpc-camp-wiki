@@ -1,0 +1,90 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Asia-Tsukuba 2017.
+
+Practicing Date: 2018.10.21
+
+Contest Link: [Asia-Tsukuba 2017.](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006308)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Asia-Tsukuba%202017./statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Asia-Tsukuba 2017.](https://github.com/wcysai/Calabash/tree/master/Asia-Tsukuba%202017.)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Secret of Chocolate Poles
+
+> solved by Roundgod (0:12)
+
+Brute force over all possible number of disks and thick disks, precompute some binomial coefficients to get the answer.
+
+##B. Parallel Lines
+
+> solved by sy_chen (0:33 +1)
+
+Just enumerate all possible matching between these points, which can be done in a recursive way. The time complexity is $O((n-1)!! n)$.
+
+##C. Medical Checkup
+
+> solved by sy_chen (0:47)
+
+The $i$-th student gets stuck at the $j$-th checkup item in time interval $[S_i +M_i(j - 1), S_i +M_i j)$, where $S_i = \sum_{k = 0}^{i - 1} h_k$ and $M_i = \max_{1 \leq k \leq i} h_k$.
+
+##D. Making Perimeter of the Convex Hull Shortest
+
+> unsolved
+
+##E. Black or White
+
+> solved by Roundgod (2:56 +1)
+
+One observation is when converting a painted segment(that is, when the whole segment shares the same color) to the final state, the number of brush strokes needed equals to the number of toggles in the final state of the segment.
+
+Thus, by precomputing the prefix sum of the number of toggles in the final state, let $dp_{i}$ denote the minimum number of strokes needed when we are at brick $i$, then we have the transferring equation: $dp_{i}=\min\limits_{i-k\leq j<i}dp_{j}+\lfloor\frac{s_{i}-s_{j}}{2}\rfloor$, where $s_{x}$ is the prefix sum of the number of toggles in the final state that I mentioned above. It can be easily observed that this dp can be optimized to $O(n)$ by using a monotone deque to maintain the interval minimum.
+
+##F. Pizza Delivery
+
+> solved by calabash_boy (3:17 +6)
+
+Build the "shortest path DAG",if an edge is the necessary edge from S to T in this DAG(that is to say delete this edge, then there not exists a path from S to T), then he'll be sad, if an edge is not necessary edge in this DAG(that is to say, delete this edge, there also exists a path from S to T in this DAG), then he'll be just soso.
+
+if an edge is not in this DAG, assume the origin edge be (u->v), after reversing, it becomes (v->u), we only need to check whether the path S->v->u->T is shorter than the origin shortest path, if yes, he'll be happy, else soso.
+
+##G. Rendezvous on a Tetrahedron
+
+> solved by sy_chen (4:11)
+
+Things will become much easier if we unfold the tetrahedron into a planar regular triangle. The triangle can be further expanded by rotation and translation, which forms a periodic and infinite pattern. What remains now is a simple 2-dimensional geometric problem.
+
+##H. Homework
+
+> unsolved
+
+##I. Starting a Scenic Railroad Service
+
+> solved by Roundgod (1:31)
+
+For the first answer, it can be easily proved that $k$ seats is sufficient if and only if for every interval, the number of intervals that intersect it don't exceed $k-1$. Therefore, for each interval, we may find the number of intervals that intersect it and take the maximum.
+
+For the second answer, it can be proved that it equals to the maximum number of intervals that overlap in one point.
+
+##J. String Puzzle
+
+> unsolved
+
+##K. Counting Cycles
+
+> upsolved by Roundgod
+
+We can view the graph as a tree plus at most 16 edges that are not on the tree. Iterate over all edges that are not on the tree, and check if they can form a simple graph with the tree edges. This can be done by using the xor trick to construct the needed edges, and then check the degree of each vertex and use dsu to check the connectivity. To reduce the complexity, this must be done on the virtual tree. Time complexity: $O(16\times 2^{16})$.
+
+#Replay
+
+To be added.
