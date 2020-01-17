@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2017. JOI TST 2012 Selection
+
+Practicing Date: 2018.11.12
+
+Contest Link: [Petrozavodsk Summer-2017. JOI TST 2012 Selection](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001509)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2017.%20JOI%20TST%202012%20Selection/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2017. JOI TST 2012 Selection](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2017.%20JOI%20TST%202012%20Selection)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Building
+
+> upsolved by Roundgod
+
+Recall that when solving the trivial longest increasing subsequence problem in $O(n\log{n})$, we maintain an array $dp$ such that $dp_{i}$ records the minimum last number of all increasing subsequences of length $i$. Here we basically do the same thing, maintain two arrays for each node $v$ recording the answer for each chain ending at $v$, then calculating the answer is just repeatedly combining the results of two arrays, also we need to merge those arrays. This can be done in $O(n\log{n})$ with binary search, also when combining/merging two arrays, we apply the small-to-large technique, leading to the overall complexity of $O(n\log^{2}{n})$.
+
+##B. Fish
+
+> solved by sy_chen and calabash_boy (2:36)
+
+For each $L \in [1,n]$, we can easily find the rightmost position R such that $[L,R]$ is legal but $[L,R+1]$ is illegal, then we count the count of Rs, Gs, and Bs in [L,R], representing as tuple (R,G,B), then we should calculate how many tuple(r,g,b) satisfing there exist a tuple (R,G,B), R>=r && G>=g && B>=b, there are a lot many methods to do this job. For example, sort all tuple as the R increasing order, then for each r, we should calculate how many legal pair (g,b).It's easy to find out that the legal area of the two-dimension point (g,b) is unioned by several rectangle start from (0,0) to (g,b), use set to maintain this.
+
+##C. JOI Flag
+
+> solved by sy_chen (1:13)
+
+One may use quad tree with dynamic memory allocation to store the information of the input. A simple recursive algorithm can solve the entire problem.
+
+##D. Constellation
+
+> upsolved by Roundgod
+
+One can notice that if there are intersecting types of $1$ and $2$ on the convex hull of the points, then the answer is obviously $0$. For the other case, one just need some leap of faith to guess that the non-intersecting spanning tree can always be constructed. Therefore we only need to compute the convex hull and then find a number of ways to fill in the $0$s such that there are no intersecting $1$s and $2$s, which is just case analysis. One should note that the set of $1$s and $2$s are required to be non-empty. Overall time complexity: $O(n\log{n})$.
+
+##E. Rotate
+
+> upsolved by Roundgod
+
+If one maintain a data structure for each row and column, then a rotate operation is a split/merge operation for each data structure. If we maintain it with treap/splay, we would get a $O(nq\log{n})$, which is too slow due to the high constant. However, if one use a linked list to maintain the data structure, then the complexity is reduced to $O(nq)$.
+
+##F. Fortune Telling
+
+> solved by Roundgod (2:01)
+
+This is a standard problem which can be solved by sweepline+ segment tree. Since the range of coordinates is quite large, one should use coordinate compression technique.
+
+##G. Kangaroo
+
+> solved by Roundgod
+
+First sort all kangaroos by decreasing $A_{i}$, Let $dp_{i,j,k}$ denote: considering the first $i$ kangaroos, the number of ways to separate them into $j$ groups such that there are exactly $k$ groups of kangaroos that are enable to put another group in its pocket. When it comes to a new kangaroo $i+1$, it can be in a separate group, or in the $k$ groups, or the remaining groups that are able to put it in its pocket. To do this transfer in $O(1)$ time, one should precompute, for each kangaroo, how many kangaroos are able to pus it in their pocket. Overall Time complexity: $O(n^{3})$. Also one should use rolling array in order to fit into the memory limit.
+
+##H. Sokoban
+
+> unsolved
+
+##I. Chinese
+
+> unsolved
+
+##J. Invitation
+
+> unsolved
+
+#Replay
+
+To be added.
