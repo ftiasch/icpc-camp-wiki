@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 Multi-University Training Contest 3
+
+Practicing Date: 2019.7.29
+
+Contest Link: [2019 Multi-University Training Contest 3](http://acm.hdu.edu.cn/contests/contest_show.php?cid=850)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [2019 Multi-University Training Contest 3](https://github.com/wcysai/Calabash/tree/master/2019%20Multi-University%20Training%20Contest%203)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Azshara's deep sea
+
+> unsolved
+
+##B. Blow up the city
+
+> solved by Roundgod (2:01)
+
+Reverse all edges and add a root that connects to all commander points. Build the dominator tree according to this root, the answer is the number of vertices between the two query vertices minus one.
+
+##C. Yukikaze and Demons
+
+> unsolved
+
+##D. Distribution of books
+
+> unsolved
+
+##E. Easy Math Problem
+
+> upsolved by Roundgod
+
+After some simple reformulations, we can find out that we need to compute $$\sum\limits_{d\text{ is prime}}d^{k+1}f(\lfloor \frac{n}{d}\rfloor)$$ where $$f(n)=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}ij\cdot[gcd(i,j)==1]$$.One can find out that $$f(n)=\sum\limits_{i=1}^{n}i^2\varphi(i)$$ after some investigations, and thus $$f(i)=\sum\limits_{i=1}^{n}i^3-\sum\limits_{i=1}^{n}i^{2}f(\lfloor \frac{n}{i}\rfloor)$$ which can thus be solved in $$O(n^{\frac{2}{3}})$$.
+
+For the other part, we can use Min\_25 sieve to precompute $d^{k+1}$ for at the $O(\sqrt{n})$ positions in $O(\frac{n^{\frac{3}{4}}}{\log{n}})$. Therefore the final complexity is $O(n^{\frac{2}{3}}+\frac{n^{\frac{3}{4}}}{\log{n}}+k\sqrt{n})$.
+
+##F. Fansblog
+
+> solved by sy_chen (0:25)
+
+##G. Find the answer
+
+> solved by sy_chen (1:07)
+
+##H. Game
+
+> upsolved by Roundgod
+ 
+Simple application of Mo's algorithm with queries. Time complexity is $O(n^{\frac{5}{3}})$,
+
+##I. K Subsequence
+
+> unsolved
+
+##J. Sindar's Art Exhibition
+
+> unsolved
+
+##K. Squrirrel
+
+> unsolved
+
+#Replay
+
+
