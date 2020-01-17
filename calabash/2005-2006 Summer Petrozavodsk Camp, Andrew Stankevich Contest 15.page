@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 15
+
+Participating Date: 2019.06.19
+
+Contest Link: [2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 15](https://codeforces.com/gym/100218)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC15/statements.pdf)
+
+Solution Link: [Code for 2005-2006 Summer Petrozavodsk Camp, Andrew Stankevich Contest 15](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC15)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Perfect Bombing
+
+> solved (2:08 +1)
+
+Reverse the whole process, for each newly added point, one need to check, if all of its already added neighbours are pairwise directly connected. Naive checking would be too slow, however, let's say the newly added points is $u$, and the **latest** added point that is a neighbour of $u$ is $v$, then it's sufficient to only check is $v$ is directly connected to all of its already added neighbours of $v$. The proof is trivial and omitted here.
+
+##B. Fixed Point
+
+> unsolved 
+
+##C. Paragraph Formatting
+
+> unsolved
+
+##D. Young Hackers
+
+> solved (3:54)
+
+Classical application of suffix array, concatenate the two strings together with a special character in between, compute the suffix array and the longest common prefix array of this string. Then for each starting point in $p$, one can check the previous and next suffix in the suffix array that is a suffix of $t$, which takes $O(1)$ amortized. The overall complexity is $O(nlog^{2}{n})$, $O(nlog{n})$ or $O(n)$ depending on the implementation of construction of suffix array.
+
+##E. Mazes Exit Guide
+
+> solved (2:58 +2)
+
+Consider state $(v_1,v_2)$ as vertices where $v_1$ is the position in the first maze while $v_2$ is the position in the second maze. Apply depth-first search to check reachability, then greedily choose the letter of the smallest index to construct the lexicographically smallest answer. If a cycle is detected, then there's no lexicographically smallest answer.
+
+##F. Nonequal Parts
+
+> solved (0:55 +2)
+
+After some brute force one can find the Sprague-Grundy number for each integer increases by one each time, except when $n=1$, $n=2$, $n=4$ or $n=8$ the Sprague-Grundy number is zero. I computed all the moves for $N\leq 300$ using some depth-first search with pruning locally, and hardcoded them into the solution. There also exists a simpler and neater solution with dynamic programming, though.
+
+##G. Primitive Product
+
+> solved (1:12 +3)
+
+Apply depth-first search after factorizing $n$.
+
+##H. Rent A Car
+
+> solved (1:44 +3)
+
+Typical problem that can be solved by Minimum-cost-maximum-flow.
+
+##I. Roundtrip
+
+> unsolved
+
+##J. Yet Another Minimal Triangle
+
+> solved (3:12)
+
+There exists a solution with $O(n^2\log{n})$ complexity that first fixes one point, then sort all other points by polar angle with respect to that point, using a circular sweep line that sweeps across the whole plane while maintaining the set of points of two halfplanes. This is really tough and painful, however, the brute force solution that runs in $O(n^3)$ has a constant factor of $\frac{1}{6}$, and thus can easily pass the time limit.
+
+#Replay
+
+To be added.
