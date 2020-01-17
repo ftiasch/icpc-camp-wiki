@@ -1,0 +1,122 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XIX Open Cup named after E.V. Pankratiev. Grand Prix of America
+
+Practicing Date: 2019.3.19
+
+Contest Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of America](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010454)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20America/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XIX Open Cup named after E.V. Pankratiev. Grand Prix of America](https://github.com/wcysai/Calabash/blob/master/XIX%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20America)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Piece of Cake
+
+> solved by sy_chen (0:34)
+
+Recall the shoelace formula and linearity of expectation, this problem can be decomposed into computing the contributions of every two adjacent selected vertices and their respective probability, which is a simple probability and combinatorics exercise.
+
+##B. Busy Board
+
+> upsolved by Roundgod
+
+First we check if the initial can final configuration are the same. Then, note that once we hammer some peg down in some row/column, the number of pegs that is up in that column/row can be at most one. So if there are two of more pegs in some row/column that are up in the final configuration, that column/row can never be hit. Following this idea, more rules can be found out:
+
+If there is a peg that needs $X \rightarrow X$ and *one of* its row/col is not hittable, then the other one isn't hittable either.
+
+If there is a peg that needs $O \rightarrow X$, then *both* row and column must be hittable.
+
+If there is a peg that needs $X \rightarrow O$, then *at least one* of its row or column must be hittable.
+
+Apart from all the conditions above, in the region of hittable cells, there must be at least one $X$ in the final configuration and at least one $O$ in the initial configuration. If all these are satisfied, then the answer is yes, and one can see that such way of hitting can indeed be constructed. 
+
+Time complexity: $O(rc)$.
+
+##C. Cost of Living
+
+> unsolved
+
+##D. It’s a Mod, Mod, Mod, Mod World
+
+> solved by Roundgod (0:43)
+
+Note that $\sum\limits_{i=1}^{n}(pi \mod q)=\sum\limits_{i=1}^{n}pi-\sum\limits_{i=1}^{n}\lfloor\frac{pi}{q}\rfloor q=\frac{n(n+1)p}{2}-q\sum\limits_{i=1}^{n}\lfloor\frac{pi}{q}\rfloor$, where the latter term can be computed in $O(\log{n})$ using some techniques similar to the Euclidean's algorithm for computing GCD.
+
+##E. Monotony
+
+> solved by sy_chen (3:16 +8)
+
+Iterating over all nonempty subsets of rows, we may do dynamic programming on columns. Specifically, we may build a complete DAG for valid columns, every edge from left to right weighs their less/greater relations of respective elements, then count the number of paths where the edges have identical weights. This can be done in overall $O(2^r rc)$ time.
+
+During the contest, I defined a 2-dimensional array to make dp transitions, and repeatedly got TLE. After changing the size of the second dimension (from 2^20 to 1500000) the program runs much faster. This is because, when the size of the second dimension is a power of 2, during iteration the first dimension for fixed index of second dimension, their addresses hash to the same cache line, resulting in a high cache miss rate. This led to performance degeneracy of at least 40x in judging machine (>10s vs 0.25s). A good lesson to learn!
+
+##F. Heaps of Fun
+
+> upsolved by sy_chen
+
+Let $f_u(x)$ denote the probability that the subtree rooted at $u$ form a heap with root value greater than $x$. Then
+
+$$
+f_u(x) = \frac{1}{b_u}\int_{x}^{+\infty} \prod_{v \in \text{ch}(u)} f_v(t) [0 \leq t \leq b_u] \text{d} t .
+$$
+
+This is a piecewise polynomial, which could be integrated easily. If we multiply the polynomials in $O(s_1 s_2)$ time, the amortized complexity is $O(n^2)$ per piece, and the total time is $O(n^3)$.
+
+##G. Intersecting Rectangles
+
+> solved by sy_chen (0:52)
+
+We may only have to detect horizontal-vertical intersections, which could be attacked by a simple sweep line algorithm. We scan from left to right, use some data structure (`std::set` is enough here) to maintain the y-coordinates of active horizontal segments, and find if there are any  y-coordinates inside the range whenever the scan line reaches a horizontal segment.
+
+##H. Rocket Powered Hovercraft
+
+> unsolved
+
+##I. Cutting Strings
+
+> solved by calabash_boy (3:14)
+
+Consider we have enough chances to cut the string, then we should find the biggest letter, keep all of them, to achieve that, we should cut the segments between two such letters, after that, consider the suffix of the string which starts from the last occurrence of the biggest letter, we should make this suffix string biggest, so this is a recursion problem.
+
+But what if we don't have enough chances? It is true that we can use one chance to get a segment of biggest letters. So we could calculate how many biggest letters we can get most(the chances are not enough to get them all). Then the string remained will be several biggest letters and a suffix of the origin string, so we use SA to get the biggest one.
+
+Many other details need to be take care of. See my code in github. For example, if there a segment of biggest letter at the beginning of our string, we can collect them for free.
+
+##J. Subsequences in Substrings
+
+> solved by Roundgod (0:23)
+
+Fix the left border of the string, and greedily go find each letter of $t$ in $s$. which can be computed in $O(\vert s \vert \vert \Sigma \vert)$ time using memoization. 
+
+Overall time complexity: $O(\vert s \vert \vert \Sigma \vert+\vert s \vert \vert t \vert)$.
+
+##K. Knight of The Tarot Cards
+
+> unsolved
+
+##L. Planes, Trains, but not Automobiles
+
+> solved by Roundgod (4:32 +6)
+
+The problem can be modelled as finding minimum path cover in a DAG(Directed Acyclic Graph), which is well-known as $n-1-k$ where $k$ is the maximum matching in the converted bipartite graph, with complexity $O(\vert E \vert \sqrt {\vert V \vert})$ using Hopcroft-Karp algorithm.
+
+Apart from the case where only one path is need, the second step can be modelled as to find the set of indices that may not be matched in some maximum matching, which can be solved as finding the alternating path in any maximum matching. Time complexity is $O(\vert V \vert +\vert E \vert)$ in this step.   
+
+##M. XOR Sequences
+
+> solved by sy_chen (1:19 +1)
+
+First, every number will be used at least once, for their complement. Then, we may divide and conquer. If the left part is identical to the right part, the answer is multiplied by 2; otherwise, the numbers in the left part and right part must be disjoint.
+
+#Replay
+
+To be added.
