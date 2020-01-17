@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof
+
+Practicing Date: 2019.5.14
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010399)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Peterhof/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Peterhof](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Peterhof)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. City Wall
+
+> solved by sy_chen (0:48)
+
+Consider the inverse problem: what is the maximum area given the perimeter. Then binary search for the answer.
+
+It can be observed from induction and dimensional analysis that the inverse function is polynomial of degree 2 for every perimeter modulo 6. So we may find the first 18 values and use polynomial interpolation to find the polynomials.
+
+##B. Domino Colorings
+
+> upsolved by Roundgod
+
+Let the dp states be the color and the matching states on the broken file. The reachable states is not large, also, we can hardcode all the answers.
+
+##C. Counterquestion
+
+> solved by calabash_boy (1:17 +1)
+
+##D. Galaxy Center
+
+> solved by Roundgod (2:46 +1)
+
+Enumerate on the layer where the two person meet, with careful implementation needed.
+
+##E. IBM 1403
+
+> solved by sy_chen (0:22 +1)
+
+We may print the text greedily. For each line, we need to find the character with maximum wait time. This can be efficiently done by preprocessing the next occurrence of some character from every position.
+
+##F. Line Tracing
+
+> unsolved
+
+##G. The Queen and the Knight
+
+> unsolved
+
+##H. Product of Roots
+
+> upsolved by Roundgod
+
+Note that after taking logarithm of the polynomial(which is also a polynomial, using Taylor series), we have
+
+$$\ln{f(x)}=\sum\limits_{j\geq 1}\frac{(-1)^{j+1}}{j}x^j\sum\limits_{i=1}^{n}a_i^j$$
+
+$$\ln{g(x)}=\sum\limits_{j\geq 1}\frac{(-1)^{j+1}}{j}x^j\sum\limits_{k=1}^{m}b_k^j$$
+
+$$\ln{h(x)}=\sum\limits_{j\geq 1}\frac{(-1)^{j+1}}{j}x^j(\sum\limits_{i=1}^{n}a_i^j\sum\limits_{k=1}^{m}b_k^j)$$
+
+Note that for each fixed $j$, $(\sum\limits_{i=1}^{n}a_i^j)\cdot (\sum\limits_{k=1}^{m}b_k^j)=(\sum\limits_{i=1}^{n}a_i^j\sum\limits_{k=1}^{m}b_k^j)$, therefore we can construct $\ln{h(x)}$ from $\ln{f(x)}$ and $\ln{g(x)}$, and then get $h(x)$ by exponentiating $\ln{h(x)}$. Here polynomial logarithm and polynomial exponentiation can be done in $O(n\log{n})$ using Newton's method.
+
+##I. Safe Landing
+
+> solved by Roundgod (0:26 +1)
+
+Simple case analysis.
+
+##J. Perfect Square
+
+> solved by Roundgod (0:13)
+
+Take a few primes and check if there exists some quadratic residue modulo each prime $p$.
+
+#Replay
