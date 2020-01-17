@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 Multi-University Training Contest 1
+
+Practicing Date: 2019.7.22
+
+Contest Link: [2019 Multi-University Training Contest 1](http://acm.hdu.edu.cn/contests/contest_show.php?cid=848)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [2019 Multi-University Training Contest 1](https://github.com/wcysai/Calabash/tree/master/2019%20Multi-University%20Training%20Contest%201)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Blank
+
+> upsolved by Roundgod
+
+Simple dynamic programming. Let $dp_{i,j,k,l}$ be the number of valid configurations such that the last appearance of $0-3$ is $i,j,k,l$ respectively, in sorted order. It takes $O(n^4)$ divided by a large constant factor, thus runs in time.
+
+##B. Operation
+
+> solved by Roundgod (1:43)
+
+For each position, maintain the linear basis for the prefix. If there are many, maintain the one that appears in the leftmost position. One can prove this is always optima. Overall complexityis $O((n+m)\log{10^9})$.
+
+##C. Milk
+
+> unsolved
+
+##D. Vacation
+
+> solved by Roundgod (2:22)
+
+Simple recurrence would solve the problem.
+
+##E. Path
+
+> solved by Roundgod (1:00 +1)
+
+After extracting the shortest path DAG of the graph, run any efficient maximum-flow algorithm to get the minimum cut between vertex $1$ and vertex $n$.
+
+##F. Typewritter
+
+> unsolved
+
+##G. Meteor
+
+> unsolved
+
+##H. Desert
+
+> unsolved
+
+##I. String
+
+> upsolved by calabash\_boy
+
+Use the greedy algorithm. In each step, we choose the smallest character that can be chosen which means the number of each character can reach the lower bound but not exceed the high bound.
+
+##J. Kingdom
+
+> unsolved
+
+##K. Function
+
+> upsolved by Roundgod
+
+$$\sum\limits_{i=1}^{n}gcd(\lfloor\sqrt[3]{x}\rfloor,i)$$
+$$=\sum\limits_{i={\lfloor\sqrt[3]{x}\rfloor}^{3}}^{n}gcd(\lfloor\sqrt[3]{x}\rfloor,i)+\sum\limits_{a=1}^{r}\sum\limits_{i=a}^{(a+1)^3-1}gcd(a,i)$$
+$$=\sum\limits_{i={\lfloor\sqrt[3]{x}\rfloor}^{3}}^{n}\sum\limits_{T\mid {\lfloor\sqrt[3]{x}\rfloor}}\lfloor\frac{n}{T}\rfloor\sum\limits_{d\mid T}d\mu(\frac{T}{d})+\sum\limits_{a=1}^{r}\sum\limits_{T\mid a}(\lfloor\frac{(a+1)^3-1}{T}\rfloor-\lfloor\frac{a^3-1}{T}\rfloor)\sum\limits_{d\mid T}d\mu(\frac{T}{d})$$
+$$=\sum\limits_{i={\lfloor\sqrt[3]{x}\rfloor}^{3}}^{n}\sum\limits_{T\mid {\lfloor\sqrt[3]{x}\rfloor}}\lfloor\frac{n}{T}\rfloor\varphi(T)+\sum\limits_{a=1}^{r}\sum\limits_{T\mid a}(\frac{3a^3+3a}{T}+1)\varphi(T)$$
+$$=\sum\limits_{i={\lfloor\sqrt[3]{x}\rfloor}^{3}}^{n}\sum\limits_{T\mid {\lfloor\sqrt[3]{x}\rfloor}}\lfloor\frac{n}{T}\rfloor\varphi(T)+\sum\limits_{a=1}^{r}(3a\sum\limits_{T\mid a}\varphi(T)\frac{a}{T}+a)$$
+
+We can solve the former part in $O(\sqrt[6]{x})$ for each test case. For the latter part, if we precomputed $\varphi(x)$ and $f(x)\sum\limits_{d\mid x}\varphi(d)\frac{x}{d})$, which are both multiplicative functions, in linear time, can be solved in $O(1)$ for each testcase. Therefore, the problem can be solved in $O(T\sqrt[6]{x}+\sqrt[3]{x})$.
+
+##L. Sequence
+
+> solved by Roundgod (3:35 +5)
+
+Let's say the polynomial in the input is $f(x)$. Then the final answer is the first $n$ terms of $f(x)\prod\limits_{i=1}^{3}(\frac{1-(x^i)^n}{1-x})^{c_i}$ where $c_i$ is the occurence of the $i-th$ operation. One can easily see that the given power of polynomials in the formula can be solved in linear time using some combinatorial argument, after that just apply Fast Fourier Transform to multiply two polynomials in $O(n\log{n})$.
+
+##M. Code
+
+> solved by sy_chen (0:42)
+
+#Replay
+
+
