@@ -1,0 +1,88 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019-2020 ICPC, NERC, Northern Eurasia Finals
+
+Practicing Date: 2019.12.1
+
+Contest Link: [2019-2020 ICPC, NERC, Northern Eurasia Finals](https://codeforces.com/contest/1267)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/tree/master/2019-2020%20ICPC%2C%20NERC%2C%20Northern%20Eurasia%20Finals/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019-2020 ICPC, NERC, Northern Eurasia Finals](https://github.com/wcysai/Calabash/tree/master/2019-2020%20ICPC%2C%20NERC%2C%20Northern%20Eurasia%20Finals)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Apprentice Learning Trajectory
+
+> solved by sy_chen (2:12)
+
+The main algorithm is greedy: just pick the one who finishes as soon as possible. Then we may use data structures to accelerate the simulation.
+
+##B. Balls of Buma
+
+> solved by Roundgod (0:15)
+
+Just iteratively erasing the prefix and suffix with the same letter until there's only one segment left.
+
+##C. Cactus Revenge
+
+> unsolved
+
+##D. DevOps Best Practices
+
+> solved by sy_chen (4:34)
+
+For each server, if opening its test will obtain a new set of features, then open; otherwise do not open. Also we may join the output of several servers to obtain a new set of features.
+
+##E. Elections
+
+> solved by calabash_boy (0:35) 
+
+##F. Foolprüf Security
+
+> solved by Roundgod (2:29)
+
+It's not hard to show that any full Prüfer code with first sequence of length $m-1$ and second sequence of length $m-1$ leads to a unique bipartite tree, thus we can fill the sequences to their full length, and simluate the process to construct the bipartite tree using std::priority_queue in $O(n\log{n})$. 
+
+##G. Game Relics
+
+> upsolved by Roundgod
+
+An obaservation is that one should never get randomly after buying any relic, and another is that the optimal strategy always minimizes the expected cost, which can be computed given the remaining number of relics and the sum of their values. To compute the final answer, linearity of expectation works magically here. By considering the expectation at each step and choosing the choice that minimizes the outcome, the problem can be easily solved by precaculating a knapsack-like dp in $O(n^2\sum c_i)$.
+
+##H. Help BerLine
+
+> unsolved
+
+##I. Intriguing Selection
+
+> solved by sy_chen (3:23)
+
+##J. Just Arrange the Icons
+
+> solved by sy_chen (1:06 +1)
+
+Assume $x$ is the minimum number of items of the same category. Then try all possible capacities from 2 to $x+1$.
+
+##K. Key Storage
+
+> solved by Roundgod (1:17)
+
+After computing the fingerprint, the remaining is pure combinatorics, which is not hard.
+
+##L. Lexicography
+
+> solved by sy_chen (0:38)
+
+Just generate the strings greedily.
+
+#Replay
+
+To be added.
