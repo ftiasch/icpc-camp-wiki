@@ -1,0 +1,89 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Moscow Pre-Finals Workshop 2019. KAIST Contest
+
+Practicing Date: 2019.10.13
+
+Contest Link: [Moscow Pre-Finals Workshop 2019. KAIST Contest](https://codeforces.com/gym/102201)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Moscow%20Pre-Finals%20Workshop%202019.%20KAIST%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Moscow Pre-Finals Workshop 2019. KAIST Contest](https://github.com/wcysai/Calabash/tree/master/Moscow%20Pre-Finals%20Workshop%202019.%20KAIST%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. A Plus Equal B
+
+> solved by sy_chen (0:25)
+
+Consider the binary representations of `A` and `B`. Note that the operation `A+=A` is equivalent to remove one trailing 0 of $B$; likewise for `B+=B`. Hence we may use these operations to remove all trailing zeros of `A` and `B`, which means both `A` and `B` are odd. Assume `A > B`, we can perform `A+=B` and `B+=B` (which is effectively `A/=2`). Now the difference between `A` and `B` is decreased by half, so it terminates after at most $\log N$ operations.
+
+##B. Bohemian Rhaksody
+
+> unsolved
+
+##C. Cactus Determinant
+
+> upsolved by sy_chen (1:21)
+
+Assume we cover the vertices of the graph with disjoint edges and cycles. The determinant of the adjacency matrix is $2^a(-2)^b(-1)^c$, summed over all possible covers, where $a, b, c$ are the numbers of odd cycles, even cycles, and edges in the cover, respectively. The remaining part is a dynamic program on a cactus graph, which can be done by traversing the block-cut tree of the cactus.
+
+##D. Dijkstra Is Playing At My House
+
+> unsolved
+
+##E. Eat Economically
+
+> solved by sy_chen (1:21)
+
+This can be modeled as a min-cost flow problem. When adding a new menu, for example, a dinner one, there are only 2 cases:
+
+1. add an unselected menu as a dinner menu;
+2. change a selected lunch menu to a dinner one, then add an unselected menu as a lunch one.
+
+This enables us to compute the min-cost flow greedily: using priority queues to maintain the cost of all candidate operations. The overall time complexity is $O(N \log N)$.
+ 
+##F. Fruit Tree
+
+> solved by Roundgod (3:00 +3)
+
+Use the Boyer-Moore algorithm together with binary lifting to get the possible candidate for each query. After that, run a DFS to check if the candidates are valid.
+
+##G. Good Set
+
+> upsolved by Roundgod
+
+According to the bijection between topology on $U=\{0,1,\dots,k-1\}$ and transitive digraph on $k$ vertices, the problem can be reduced to counting valid transitive digraphs, which can be done by simple recursive search.
+
+##H. Hard To Explain
+
+> upsolved by calabash_boy
+
+Use persistent LiChao-Segment Tree to solve it. Each vertex owns a persistent LiChao-Segment Tree which records all lines in the path from 1 to itself.
+
+##I. Increasing Sequence
+
+> solved by calabash_boy (4:12 +6)
+
+They call this dominant tree.
+
+To solve this problem, you just follow the $O(n \log n)$ algorithm to calculate LIS, and in the algorithm, you can know for each value, who are the prev value of him, then you calculate their LCA, let that LCA be the father of this value in dominator tree.
+
+##J. Jealous Teachers
+
+> solved by sy_chen (4:41 +7)
+
+Note that the problem can itself be modeled as a max-flow problem. However, running standard max-flow algorithms, e.g. Dinic's, will time out.
+
+Assume it is possible. Note that for every subset $A$ of students, at least $|A| + 1$ teachers could receive flowers. It follows from the Hall's Marriage Theorem that there must be a perfect matching between the students and the teachers.
+
+Compute a perfect matching by the Hopcroft-Karp algorithm (which takes $O(\sqrt{V}E)$ time). Now comes to the original max-flow model, we fill each edge in perfect matching with a flow of $N-1$. Observe that the current residual network contains one source with $N-1$ supply and $N-1$ sinks with 1 demand each. We can remove all capacity constraints other than those for sinks, and thus the maximum flow is full if and only if the all sinks are reachable from the source in the residual network. To get the actual flow for each edge, just compute a spanning arborescence and then collect all sink demands.
+
+#Replay
