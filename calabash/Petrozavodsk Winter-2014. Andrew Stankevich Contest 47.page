@@ -1,0 +1,88 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2014. Andrew Stankevich Contest 47
+
+Practicing Date: 2018.12.02
+
+Contest Link: [Petrozavodsk Winter-2014. Andrew Stankevich Contest 47](https://codeforces.com/gym/100608)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2014.%20Andrew%20Stankevich%20Contest%2047/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Winter-2014. Andrew Stankevich Contest 47](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2014.%20Andrew%20Stankevich%20Contest%2047)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Ambitious Plan
+
+> upsolved by Roundgod
+
+One may intially find this problem hard to tackle with. One straightforward idea is try to enumerate all the drones $D$, since they are all on one sider of the $x$-axis, which, however, will obfuscate the problem. To solve this problem, one should think about the given constraints: Why do all forts and towers are all below the $x$-axis while all drones are above the $x$-axis? 
+
+After a few thoughts, one will see that if we enumerate all the forts $F$, then one number of sets $\{D,F,T_{1},T_{2}\}$ will be counted if and only if their polar angles with respect to $F$ are in the order $T_{1},F,T_{2}$ or $T_{2},F,T_{1}$. Also the polar angle difference between $T_{1}$ and $T_{2}$ should be less than $\pi$. This can be easily done by first sorting by the polar angle with respect to $D$ and then use a two-pointers technique to count the answer.
+
+The time complexity is $O(n^{2}\log{n})$, due to the sorting process.
+
+##B. Borderless Words
+
+> upsolved by Roundgod
+
+When it comes to a problem that requires you to determine the $k$th-minimum lexicographic string, one should always use the greedy strategy. Then the problem is reduced to find, for a given prefix, what is the number of borderless strings of length $n$? Let $dp_{i}$ be the number of borderless strings if we consider the first $i$ characters. One may do the transfer by enumerating the smallest border, which requires the prefix itself to be borderless. Also we need to check if the tranfer is valid. Thus the time complexity for each test case is $O(n^{3})$.
+
+##C. Catalan Combinatorial Objects
+
+> unsolved
+
+##D. Decomposable Single Word Languages
+
+> unsolved
+
+##E. Elegant Square
+
+> solved by sy_chen (3:08)
+
+The problem is named `elegant`, and there do exist many ways of constructions, but I don't at all think any of them is elegant, though. First, one may use some primes to construct two arrays of distinct square-free numbers `p[]` and `q[]` where `p[i]` and `q[j]` are relatively prime for all possible `i` and `j`. One may write `a[i][j] = p[i+j]q[i-j]` (the indices are modulo $n$). This construction works for odd number. For even number, the number located at $(i, j)$ and $(i+n/2, j+n/2)$ coincides. Hence we may multiply another number at some positions of the matrix to distinguish them. The positions multiplied with the number must form a permutation.
+
+##F. Four Colors
+
+> solved by Roundgod (3:33 +1)
+
+First note that only vertices with degree $\geq 4$ matters. So we first only consider coloring the vertices with degree $\geq 4$. Due to the property of trees, it can be proved that greedily coloring the vertex $v$ with the most number of different neighbouring colors will finally yield a feasible coloring of the tree. Time complexity: $O(n\log{n})$.
+
+##G. Greater Number Wins
+
+> solved by Roundgod (3:27 +6)
+
+The two variants are complelety different problems, we try to solve each separately.
+
+For the first invariant, we use a number in base $b$ to represent the state of each players's row, where $x$ in the $i$th bit is $0$ denotes that this grid is unfilled, otherwise this grid is filled by $x-1$. Let $dp[mask1][mask2][0/1]$ denote the winning probability of George if the state of the row of George is currently denoted by $mask1$, the state of the row of Gorden is currently denoted by $mask1$, and the last dimension stands for whose turn is it. There tranferring is $O(nd)$, and there are $O(3000^{2})$ states, therefore the overall complexity is $O(3000^2nd)$. However, lots of states are unreachable, so the bound is quite loose.
+
+For the second invariant, we first compute, for each final state that George gets, what is the winning probability of George if Gordon acts optimally. Then we can also decide the optimal move of George based on this probability. Both process can be done with dynamic programming. The time complexity is also $O(3000^2nd)$.
+
+However, since the possible $(d,b)$s are extremely few(36,to be exact), therefore we can hardcode the answer, and thus get the answer in $O(1)$.
+
+##H. Higher Math Lesson
+
+> unsolved
+
+##I. Isomorphism
+
+> unsolved
+ 
+##J. Jinxiety of a Polynomino
+
+> upsolved by Roundgod
+
+Due to symmetry, we should only consider two cases: one can move right/down, or one can move left/down. We can solve the two cases separately and then take the maximum of the two as the answer.
+
+Consider the case where one can only move right/down, let $l[i][j]$ be the smallest $j$ index that can be reached by moving left from $(i,j)$, and $u[i][j]$ be the smallest $i$ index that can be reached by moving up from $(i,j)$, then any grid in the rectangle bounded by $(u[i][j],l[i][j])$ and $(i,j)$ can move to $(i,j)$ using at most one turn. Therefore we can do the dynamic programming $dp[i][j]=max(dp[i][j],dp[u[i][j]][l[i][j]]+1)$ and find out the maximum $dp$ value as the answer. Be careful to check the case that there's no available grid in the upperleft area of $(i,j)$ so that one don't need any turn to reach $(i,j)$. Time complexity:$O(hw)$.
+
+#Replay
+
+To be added.
