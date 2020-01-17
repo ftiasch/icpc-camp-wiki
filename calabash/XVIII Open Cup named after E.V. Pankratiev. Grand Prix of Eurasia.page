@@ -1,0 +1,94 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia
+
+Practicing Date: 2018.10.12
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010393)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Eurasia/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Eurasia](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Eurasia)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##1. Signal processing
+
+> solved by sy_chen (0:14)
+
+Group all digits to group of size 4 from right to left, with remaining digits as the last group. Then translate each group to a hex digit.
+
+##2. Innovative keyboard
+
+> solved by sy_chen (0:19)
+
+Sort all strings by their length, and check whether every string is a prefix of the longest one. If so, the length of the longest string is the answer; otherwise, the answer is `Impossible`.
+
+##3. Rocket
+
+> unsolved
+
+##4. Universities
+
+> solved by calabash_boy (1:14 +1)
+
+##5. Sheet music
+
+> solved by sy_chen (4:48)
+
+After some analysis one may find that the cost of moving a sheet is exactly 1. Consider a graph where each edge denotes a sheet, and it is from the initial position of that sheet to the final position of that sheet. Then the graph consists of some vertex-disjoint cycles and paths.
+
+Now the problem becomes how to sort these sheets. This can be solved by dynamic programming. Let `dp[i]` denote the number of sheets that don't move, if the i-th composition don't move. This is a 1D/1D dynamic programming; however, if state j can contribute to state i, it must be the case that the number of spaces before the i-th composition is no less than that before the j-th. Hence, we may use some data structure to find the optimal state transition.
+
+##6. Split the sandwich
+
+> unsolved
+
+##7. Collisions search
+
+> unsolved
+
+##8. Chair quest
+
+> solved by sy_chen (1:28 +1)
+
+We can first find all positions of x-coordinates where there exists chair by binary search. Then for each x-coordinates, bisect the y-coordinates. By careful arrangement of the order of search, this can be done in $2 \log (2 \times 10 ^ 6) n$ queries.
+
+##9. Vim
+
+> unsolved
+
+##10. Acceleration
+
+> solved by Roundgod (0:34)
+
+Sort the accelerators by decreasing $a_{i}$ and simulate the process using some simple physics formula.
+
+##11. Unlucky Island
+
+> upsolved by Roundgod
+
+One may consider two cases and do some dynamic programming over subsets for each case.
+
+First case: When the number acquaintances of Uef is $\leq 20$, let $dp_{mask}$ denote the maximum friends Uef can make if the set of current listed acquaintances is denoted by $mask$. Iterate over the next acquaintance for tranferring. The answer is in $dp_{0}$.
+
+Second Case: When the number acquaintances of Uef is $> 20$, which means the number of people that are not acquainted to Uef is $\leq 20$. We let $dp_{mask}$ denote the maximum friends Uef can make if the set of people that are not acquainted to Uef whose relationship with Uef are also not determined is denoted by $mask$. Preprocess all possible next acquaintances for transferring. The ans is in $dp_{(1<<cnt)-1}$, when $cnt$ is the number of people that are not acquainted to Uef.
+
+Overall time complexity: $O(2^{\lfloor \frac{n}{2} \rfloor}\times (\lfloor \frac{n}{2} \rfloor)^{2}))$, but can be reduced to $O(2^{\lfloor \frac{n}{2} \rfloor}\times \lfloor \frac{n}{2} \rfloor$ using a 64-bit number to encode sets, one can also further reduce the complexity using bitset.
+
+##12. UTF-8
+
+> solved by sy_chen (2:31 +2)
+
+Due to the elegant property of UTF-8 encoding, we may construct every maximal decodable consequent bytes greedily.
+
+#Replay
+
+To be added.
