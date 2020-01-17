@@ -1,0 +1,103 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2018 徐州赛区网络预赛
+
+Participation Date: 2018.9.9
+
+Contest Link: [ACM-ICPC 2018 徐州赛区网络预赛](https://www.jisuanke.com/contest/1557?view=challenges)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ACM-ICPC 2018 徐州赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202018%20%E5%BE%90%E5%B7%9E%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Hard to prepare
+
+> solved by Roundgod(2:39 +1)
+
+This problem has many solutions. One can use dynamic programming or inclusion-exclusion principle and many other methods to solve this problem. The method of the solution code is built purely of combinatorics.
+
+The problem can be restated as follows: There are $n$ people in a circle, each with a mask between $0$ and $2^{k}-1$, find the number of arrangements satisfying no two adjacent masks $x$ and $y$ satisfying that $x+y==2^{k}-1$. Consider filling the mask from person $1$ to person $n$. If the second last person doesn't share the same mask with the first person, then there are $2^{k}-1$ choices for the last person, otherwise $2^{k}-2$ choices. so we can compute as if there are $2^{k}-1$ choices and then subtract the number of valid arragements such that the second last person shares the same mask with the first person. We may do case analysis based on the parity of $n$. The final answer is as follows(let $t=2^{k}-1$):
+
+$$ans=\begin{cases} 
+		(t+1)\cdot t^{n-1}-(t^{n-2}-1)\cdot\frac{t}{t+1}, & n\ even\\
+		(t+1)\cdot t^{n-1}-(t^{n-1}-1)\cdot\frac{1}{t+1}, & n\ odd	
+	\end{cases}$$
+
+##B. BE, GE or NE
+
+> solved by sy_chen(2:06 1A)
+
+To be added.
+
+##C. Cacti Lottery
+
+> solved by calabash_boy(4:48 1A)
+
+##D. Easy Math
+
+> solved by Roundgod(1:23 +3)
+
+This problem is similar to [Project Euler 432](https://projecteuler.net/problem=432).
+
+Let $S(n,m)$ denote $\sum\limits_{i=1}^{m}\mu(in)$. It's obvious that if $n$ isn't squarefree^[[Square-free integer](https://en.wikipedia.org/wiki/Square-free_integer)], then we have $S(n,m)=0$, otherwise $n$ is the product of at most 11 primes. Then we proceed as follows:
+
+Note that $S(n,m)=\sum\limits_{i=1}^{m}\mu(in)=\mu(n)\sum\limits_{i=1}^{m}\mu(i)[gcd(n,i)==1]$, we let $f(x)=\sum\limits_{i=1}^{m}[gcd(i,n)==x]\cdot \mu(i)$, and $g(x)=\sum\limits_{i=1}^{m}[x|gcd(i,n)]\cdot\mu(i)=\sum\limits_{i=1}^{\lfloor\frac{m}{x}\rfloor}\mu(ix)[x|n]=S(x,\lfloor\frac{m}{x}\rfloor)$. And by applying M&ouml;bius inversion, we have $f(x)=\sum\limits_{x|d}\mu(\frac{d}{x})g(d)$. 
+
+Thus we may get the following recursion:
+
+$$S(n,m)=\mu(n)f(1)=\mu(n)\sum\limits_{i=1}^{m}\mu(i)g(i)=\mu(n)\sum\limits_{x|n}\mu(x)S(x,\lfloor\frac{m}{x}\rfloor)$$.
+
+If at some step we get $n=1$, then we can compute the prefix sum of $\mu$ in $O(m^{\frac{2}{3}})$ by precomputing the first $O(m^{\frac{2}{3}})$ terms of the prefix sum of $\mu$ and apply the formula $M(n)=\sum\limits_{i=1}^{n}\mu(i)=1-\sum\limits_{i=2}^{n}M(\lfloor\frac{n}{i}\rfloor)$.^[This is a well-know technique for efficiently computing prefix sum for a kind of multiplicative functions. For more details of this method, refer to [link](https://blog.csdn.net/skywalkert/article/details/50500009).] And if at some step we get $m=0$, we just return 0 as the value. It can be conjectured that the number of iterations won't be too much after memorizing the value of the function. 
+
+##E. End Fantasy VIX
+
+> unsolved
+
+##F. Features Track
+
+> solved by sy_chen(1:00 1A)
+
+To be added.
+
+##G. Trace
+
+> solved by sy_chen(1:28 1A)
+
+To be added.
+
+##H. Ryuji doesn't want to study
+
+> solved by sy_chen(0:44 1A)
+
+To be added.
+
+##I. Characters with Hash
+
+> solved by sy_chen(0:20 1A)
+
+To be added.
+
+##J. Maze Designer
+
+> solved by sy_chen(3:48 1A)
+
+To be added.
+
+##K. Morgana Net
+
+> solved by sy_chen(2:45 +6)
+
+To be added.
+
+#Replay
+
+To be added.
