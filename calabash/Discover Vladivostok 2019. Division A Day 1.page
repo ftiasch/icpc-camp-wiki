@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Discover Vladivostok 2019. Division A Day 1
+
+Practicing Date: 2019.7.13
+
+Contest Link: [Discover Vladivostok 2019. Division A Day 1](http://opentrains.mipt.ru/~ejudge/team.cgi?contest_id=002605)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%201/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Discover Vladivostok 2019. Division A Day 1](https://github.com/wcysai/Calabash/tree/master/Discover%20Vladivostok%202019.%20Division%20A%20Day%201)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Engine called Thomas
+
+> solved by Roundgod (4:48 +3)
+
+If there is a reachable cycle from the locomotive that has length $\geq k$, then the answer should cover all vertices. Otherwise, one should erase all wagons of the locomotive, then the answer covers all vertices reachable from the locomotive. Finding the length of each cycle can be done using Tarjan's algorithm for finding bridges in linear time.
+
+##B. Broken line
+
+> upsolved by Roundgod
+
+Note that all the given points form a convex polygon. First we need to sort them in clockwise or counterclockwise order of the polygon, which can be done by taking any point (e.g., average of all points) inside the polygon and sort points according to the angle between them and the point inside the polygon. The case where all points form a degenerate polygon (i.e., a line), should alsobe taken care of.
+
+Since all the given points form a convex polygon, thus the optimal broken line shouldn't intersect itself. We can then compute $dp_{i,j}(i<j)=$shortest length of broken line that connects points in the interval $[i,j]$ if $i$ is one end of the broken line and $dp_{j,i}(i<j)=$shortest length of broken line that connects points in the interval $[i,j]$  if $j$ is one end of the broken line. The whole $dp$ array can be computed in $O(n^2)$ time, with transitions connecting points $i$ and $i+1$ or points $i$ and $j$.
+
+Then we need to compute the final answer, which involves lots of case handling. Let's fix the point $n$. It may be one end of the broken line or not, and either of these two needs some further case analysis. Embrace yourself.
+
+##C. Columns
+
+> unsolved
+
+##D. Zebra
+
+> solved by sy_chen (0:50)
+
+The problem asks us to compute $\iint_{D} I(x, y) dxdy$ where $D$ is the region of the polygon, $I$ is the indicator function (indicating whether the point is white). By using Green's formula this can be rewritten as $\oint_{\partial D} I(x, y) ydy$. The boundary of the region is a polyline, hence the path integration can be computed piecewise. The geometrical interpretation is to partition the polygon into several signed trapezoids, and compute their contributions respectively.
+
+##E. Plus and minus
+
+> solved by sy_chen (1:28)
+
+The answer can be written as the linear combination of the input if we view - as 1, + as 0. Actually the coefficients are binomial.
+
+##F. Towers of Hanoi
+
+> solved by Roundgod (1:22 +1)
+
+Process towers from the largest to the smallest. For each tower we record which rod it should be moved to. If it's alreay in place, we do nothing. Otherwise we add $2^{i-1}$ to the answer if it's the $i$th largest tower, and for the next tower change the rod it should be moved to.
+
+##G. Interesting sequence
+
+> solved by Roundgod (3:35 +1)
+
+Note that $a_i$ for a certain $i$ equals to the number of different consecutive digits in the binary representation of $i$. Thus one can binary search for the answer, and using a digit dynamic programming to compute the number of $i$s with $a_i=n$ in a certain range $[1,x]$.
+
+##H. Transformation on numbers
+
+> solved by sy_chen (3:09 +5)
+
+The solution is basically dynamic programming. Let $f(i, c)$ denote the minimum cost to make the last $i$ digits identical, where $c$ means carry to the next digit. The transition needs careful case analysis.
+
+##I. Kingdom Division
+
+> unsolved
+
+##J. Domino Sets
+
+> unsolved
+
+#Replay
+
+
