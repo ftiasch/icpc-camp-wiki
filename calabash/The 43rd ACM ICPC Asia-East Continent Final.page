@@ -1,0 +1,81 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia-East Continent Final
+Participation Date: 2018.12.16
+
+
+PDF Statements: To be added.
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: To be added.
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Exotic ... Ancient City
+
+> unsolved
+
+##B. Mysterious ... Host
+
+> unsolved
+
+##C. Heretical ... M&ouml;bius
+
+> solved by sy_chen and Roundgod (2:53 +1)
+
+Thanks to the typesetting of sample test case, we may discover some periodicity: there is a 0 for every four digits. It is not something heretical but simply because of the square factor 4. This inspires us the solution: we may filter all potential value of answer modulo 4, 9, 25, 49, 121, 169, then use the Chinese remainder theorem to obtain the candidate answers. For each candidate answer, we may check it by enumerating all possible squares of prime numbers. Note that if there are too many candidates the answer must be no.
+
+##D. Deja vu of ... Go Players
+
+> solved by sy_chen (0:04)
+
+If $n \leq m$ the answer is `Yes`, otherwise `No`.
+
+##E. Immortal ... Universe
+
+> unsolved
+
+##F. Interstellar ... Fantasy
+
+> solved by sy_chen (1:08)
+
+If the segment between two points does not pass through the obstacle, then the answer is their distance. Otherwise, the shortest path must lie in the plane determined by the two points and the center of the ball. Actually the shortest path contains two tangents and an arc between tangent points.
+
+##G. Omnipotent ... Garland
+
+> unsolved
+
+##H. Saintly ... Coins
+
+> unsolved
+
+##I. Misunderstood ... Missing
+
+> solved by Roundgod (1:23)
+
+One can see the contribution of the operation of the third type is only related to the number of attacks in the following moves, and the contribution of the operation of the second type is related to the sum of positions of the following attacks. Therefore one may design the following dynamic programming states: $dp[i][j][k]$ denotes we are currently at position $i$, there are $j$ attacks to go, and the sum of their positions is $k$. Calculate the $dp$ backwards, the overall time complexity is $O(n^{4})$.
+
+##J. Philosophical ... Balance
+
+> solved by calabsh_boy (4:51 +1)
+
+To be added.
+
+##K. Desperate ... Fire Survive
+
+> unsolved
+
+##L. Eventual ... Journey
+
+> solved by Roundgod (0:39 +2)
+
+This problem is simply about case analysis. First discard all edges that are between the same kind of stations. Then there are only three possible distances: 1,2, and 3. Do some trivial calculations to get the answer. Time complexity: $O(n+m)$.
+
+
+#Replay
