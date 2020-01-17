@@ -1,0 +1,110 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018-2019 XIX Open Cup, Grand Prix of Korea
+
+Practicing Date: 2019.2.26
+
+Contest Link: [2018-2019 XIX Open Cup, Grand Prix of Korea](https://codeforces.com/gym/102059)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018-2019%20XIX%20Open%20Cup%2C%20Grand%20Prix%20of%20Korea/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018-2019 XIX Open Cup, Grand Prix of Korea](https://github.com/wcysai/Calabash/tree/master/2018-2019%20XIX%20Open%20Cup%2C%20Grand%20Prix%20of%20Korea)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Coloring Roads
+
+> solved by sy_chen (3:29)
+
+One may employ heavy-light decomposition, and use `std::map` to store the color information. Specifically, we store intervals with same color. The amortized time complexity per operation is $O(\log^2 n)$, since only constant number of new intervals are inserted for each heavy path.
+
+##B. Dev, Please Add This!
+
+> upsolved by Roundgod
+
+Notice that if the last move was along some vertical/horizontal line, one can immediately move back and forth along the incoming route, so that all stars along the path are obtained. Engaging this idea, one may build a graph where each vertex is some consecutive vertical/horizontal available grids. And the edges are added depending on the reachabilty. 
+
+To check if all stars can be obtained, any star can be obtained iff one of the following condition is satisfied: the horizontal line it lies in is visited, or the vertical line it lies in is visited. One may smell the scent of some 2-SAT in this condition, and yes it is! One should also take the starting position and the reachability of the graph into accout. For the first case, one should mark all unreachble vertices from the starting point as false. And for the second case, a restriction is added iff two vertices both can't reach each other.
+
+The main complexity for this problem is the transitive closure in the graph with $O(n^2)$ vertices. Since there are only $O(n^2)$ edges in the graph, the overall time complexity is $O(n^4)$.
+
+##C. Dstorv
+
+> upsolved by Roundgod
+
+Note that if we fix the position of the last surviving hand object, then all $B$ surviving hand objects come from the prefix, and all $A$ surviving flower objects come from the suffix. If we precompute the answer for each prefix/suffix, the problem is solved.
+
+Let $dp[i][j]$ denote the probabilty for the prefix of length $i$, if there are additional $j$ hand objects coming from right, that there will be $B$ hand objects and no flower objects surviving. The transferring is trivial. We can calculate the dynamic programming for the suffix in a similar manner.
+
+So far, the problem is solved in $O(n^2)$.
+
+##D. Dumae
+
+> solved by sy_chen (2:07 +1)
+
+First, we may build a directed graph for relative position constraints. For each node, set the right bound of interval to the minimum of that of all its successors (including itself), both direct ones and indirect ones. Then, we may topologically sort the graph: pick vertex with no incoming edges, such that the current position of output lies in the interval of the vertex, append it to the output, and then delete it from the graph. If no such vertex exists, the answer does not exist.
+
+##E. Electronic Circuit
+
+> solved by calabash_boy (1:32 +1)
+
+##F. Fake Plastic Trees
+
+> solved by sy_chen (0:56 +1)
+
+We may branch a tree of size $n$ to two with sizes $\lceil n/2 \rceil$ and $\lfloor n/2 \rfloor$. By reusing the trees of the same size, we may fit well in the number limit.
+
+##G. Fascination Street
+
+> solved by Roundgod (1:38)
+
+Let $dp[i][j][k][0/1/2]$ denote the minimum cost until position $i$, we've chosen $j$ street lights to be swapped and $k$ non-street lights to be swapped, and the last dimension denotes the longest suffix of consecutive non-street light blocks. The transferring is simple, time complexity is $O(nk^2)$.
+
+##H. Fractions
+
+> solved by Roundgod (0:32)
+
+Iterate over all possible fractions and accumulate the sum.
+
+##I. Game on Plane
+
+> solved by Roundgod (0:22 +1)
+
+First notice that one can each operation makes two vertices unavailable, and then the game is splitted into two disjoint parts. Use Sprague-Grundy function to calculate the outcome of all possible states. Time complexity is $O(n^2)$.
+
+##J. Histogram Sequence
+
+> upsolved by sy_chen
+
+Cartesian tree + binary search.
+
+##K. Interesting Drug
+
+> upsolved by Roundgod
+
+One should first come up with a straight forward dynamic programming solution: let $dp[l][r]$ denote the maximum possible damage one can take if the drug in the interval $[l,r]$ is already taken. Update requires $O(1)$ time. However, this solution wouldn't fit into TL nor ML.
+
+By analyzing the dp transferring chart, one can find a grid graph with only $O(n)$ weighted edges. If one computes the dp row by row/or column by column, correctly handling the updating of horizontal/vertical edges, the only needed operations is modify an element and ask for the maximum in some prefix interval. All can be done with a fenwick tree/segment tree. Therefore we have arrived at a solution with $O(nlogn)$ time complexity. 
+
+##L. Timesort
+
+> solved by sy_chen (0:46)
+
+For each vertex, preprocess the rightmost position it can extend to. Use memoization to answer queries, the total complexity should be $O(n \log n)$.
+
+##M. Utilitarianism
+
+> solved by Roundgod (3:00)
+
+Use IOI Aliens trick, i.e, binary search on the slope, the remaining part is a simple dynamic programming on tree problem. Time complexity is $O(n\log{MAX})$ where $MAX$ is the limit on the binary search (should be $O(nC)$).
+
+#Replay
+
+To be added.
