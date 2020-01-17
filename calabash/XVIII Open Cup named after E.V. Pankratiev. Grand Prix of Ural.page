@@ -1,0 +1,92 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ural
+
+Practicing Date: 2018.10.10
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ural](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010392)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Urals/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ural](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Urals)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Nutella's Life
+
+> upsolved by Roundgod
+
+Let $dp_{i}$ denote the maximum fun Oleg can obtain at the time of $i$th contest,if he is to participate in the $i$th contest. Then the tranferring equation is simple: $dp_{i}=\max\limits_{j<i,a_{j}\leq a_{i}}dp_{j}+\frac{(i-j)(i-j-1)}{2}$. One can notice that, without the restriction of strictly increasing $a_{i}$, this problem is a simply dynamic programming that can be optimized with [Convex Hull Trick](https://wcipeg.com/wiki/Convex_hull_trick). To resolve the issue with the restriction, one may use cdq divide and conquer, or build a segment tree with respect to the values of $a_{i}$ and maintain the convex hull consisting of functions with values $a_{i}$ in a certain prefix. Time complexity: $O(n\log^{2}{n})$.
+
+##B. Oleg and Data Science
+
+> solved by Roundgod (1:14 +3)
+
+Let $S \mod {Q}=R$, then the equation turns out to be $R \mod {X}= S \mod {X}$, which implies that $X$ is a divisor of $S-R$. Therefore if $L- L \mod {Q}$ is equal to $R- R \mod {Q}$, then the answer is equal to the number of divisors of $L- L \mod {Q}$, otherwise the answer is equal to the number of divisors of $Q$.
+
+##C. Christmas Garland
+
+> solved by sy_chen (2:20 +9)
+
+This problem can be modeled as a graph-theoretic problem. We may connect an edge between the colors of every two adjacent bulbs, and we should maintain a cut of the graph; specifically, we would like to maintain the number of edges across the two halves, which indicates the number of changes of the states of the bulbs from left to right. The operation we need to implement is to move a vertex from one half to the other. This can be done by a square root decomposition: we classify the vertices by their degrees into heavy ones and light ones. Then we maintain the edges in the cut set between heavy nodes, between a heavy node and a light node and between light nodes separately. To move a light node, just brute force its neighbors. To move a heavy node, brute force its heavy neighbors, add the number of edges to light nodes in the old half, then subtract the number of edges to light nodes in the new half. This yields an overall $O(n + q\sqrt{n})$ solution. Do be careful with the existence of multiple edges between heavy nodes, the number of which can be very large.
+
+##D. Anna and Lucky Tickets
+
+> solved by Roundgod (2:26 +2)
+
+When $n$ is even, the answer is simply $10^{\frac{n}{2}}$.
+
+
+When $n$ is odd, we need to find the number of solutions for $x_{1}-x_{2}+x_{3}-x_{4}+...x_{\lfloor \frac{n}{2} \rfloor} \in [0,4]$ where all $x_{i}$ are in the range of $[0,9]$. If we add all $x_{i}$ with even index by 9, then the problem becomes finding the number of non-negative solutions $\sum x_{i}=m$, where all  $x_{i}\leq 9$, which can be done by inclusion-exclusion in linear time.
+
+##E. Octopus
+
+> upsolved by sy_chen
+
+This is obviously a case analysis problem.
+
+1. There exists vertex of 4-degree. Enumerate all edges adjacent to that vertex, try to remove one edge and check if the remaining part is an octopus.
+2. There does not exist vertex of 4-degree. There are two subcases:
+    a. There are two independent cycles. We may break one of its cycles. If there is one 3-degree vertex in the cycle, we may break any edge in the cycle adjacent to that vertex. If there are two adjacent 3-degree vertices, we may break the edge between them.
+    b. There exist two vertices, between which there are three edge-disjoint paths. We may break one of these paths. If the path consists of only one edge, just remove this edge. If the path contains one 3-degree vertex (except the start and end point), remove a path edge adjacent to that vertex. If the path contains two adjacent 3-degree vertex, remove the edge between them.
+
+##F. Secret Permutation
+
+> upsolved by sy_chen
+
+The key point is to find where $0$ and $1$ lie. Once we get the position of $1$ we may make queries like $(p^{-1}(1), p^{-1}(a), p^{-1}(1))$ to get thee positions of all remaining integers.
+
+We can find $0$ in a random way. First pair these $n$ integers randomly. For $(u, v)$ pair, emit a query $(u, v, 0)$, if it returns 0, it means $p(u)$ or $p(v)$ is potentially zero. Hence we may get a list of candidates. For each candidate $u$, we may choose a random value $x$ to check whether $p(x)p(u) + p(0) = p(0)$. A nonzero integer fails this test with probability of at least half. Hence after a few times of repeating only the true zero remains.
+
+The process of finding $1$ is similar. Just check that $1 \times x + 0 = x$ for all $x$.
+
+##G. Polygon Rotation
+
+> unsolved
+
+##H. Mikhail's Problem
+
+> unsolved
+
+##I. Rat-O-Matic
+
+> unsolved
+
+##J. Readability
+
+> unsolved
+
+##K. Robotobor
+
+> unsolved
+
+#Replay
+
+To be added.
