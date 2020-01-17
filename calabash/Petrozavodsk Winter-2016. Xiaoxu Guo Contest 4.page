@@ -1,0 +1,78 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2016. Xiaoxu Guo Contest 4
+
+Practicing Date: 2019.10.25
+
+Contest Link: [Petrozavodsk Winter-2016. Xiaoxu Guo Contest 4](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001477)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2016.%20Xiaoxu%20Guo%20Contest%204/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Winter-2016. Xiaoxu Guo Contest 4](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2016.%20Xiaoxu%20Guo%20Contest%204)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Aho-Corasick Automaton
+
+> solved by calabash_boy (3:35 +5)
+
+##B. All Pair Shortest Path
+
+> solved by Roundgod (0:13 +1)
+
+Use breadth first search starting from each vertex, and use std::bitset to optimize the process. The overall running time is $O(\frac{n^3}{w})$.
+
+##C. Chessboard
+
+> unsolved
+
+##D. Around the World
+
+> solved by sy_chen (0:37)
+
+We may perform a depth first search on the spanning tree of the graph. If the depth of the current vertex is odd, print the vertex after visiting its subtrees; otherwise, before.
+
+##E. Intersection
+
+> unsolved
+
+##F. Data Structure You’ve Never Heard Of
+
+> solved by Roundgod 
+
+Separate the mask into first $8$ bits and last $\frac{k}{2}=8$ bits. We maintain in $dp[mask1][mask2]$ to be the number of subsequences ending in bitmask $mask$ where the first $8$ bits of $mask$ is the subset of $mask1$ and the laszt $8$ bits of $mask$ equals to $mask2$. Each update takes $O(2^8)$ time. The overall running time is $O(n2^{\frac{k}{2}})$.
+
+##G. Huffman Coding
+
+> solved by calabash_boy (2:11 +1)
+
+##H. Non-Descending Sequence
+
+> solved by sy_chen (1:36)
+
+First, relax $a_i$ to $\min\{a_i, a_{i+1}\}$. The problem can be viewed as counting the number of monotone paths in a lattice-like graph where the $i$-th column has height $a_i$. If we reflex the graph, it can be viewed as $n$ stairs. We may compute at each upstair position, the number of ways to reach every possible height. The state transition can be written as a convolution, so the overall time complexity is $O(n^2 \log n)$.
+
+Noting that the number can also be counted by the number of monotone paths in a complete rectangle lattice, minus the number of invalid paths, which can be counted in the first place where it leaves the actual lattice. This takes $O(n^2)$ time.
+
+##I. Perfect Matching
+
+> upsolved by sy_chen
+
+We may search for how the first 6 vertices match. For the remaining 24 vertices, we may use dynamic programming to count the number of ways to match every possible vertex subsets.
+
+##J. 24 Data Structures You’ve Ever Heard Of
+
+> upsolved by sy_chen
+
+We may enumerate all valid pairs of first two numbers. Also, if we view the last two numbers as a point in a plane, the number of valid last two numbers, given the first two numbers, is in a rectangular region. We may use 2-dimensional binary indexed tree to maintain the pairs of the last two numbers. The total time complexity is thus $O(n^2 \log^2 n)$.
+
+#Replay
+
+To be added.
