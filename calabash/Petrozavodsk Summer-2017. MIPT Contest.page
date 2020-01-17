@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2017. MIPT Contest
+
+Practicing Date: 2018.11.9
+
+Contest Link: [Petrozavodsk Summer-2017. MIPT Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001505)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2017.%20MIPT%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2017. MIPT Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2017.%20MIPT%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. A Place For My Head
+
+> unsolved
+
+##B. New Divide
+
+> solved by Roundgod (2:46)
+
+Notice that this problem can be converted into a certain update-query problem, that is, one can insert some prefix xor into a set $S$, and for each query, given a number $mask$, query for all elements $x$ in the set $S$, what is the maximum outcome of $x\oplus mask+x$. 
+
+This can be done in $O(20\times 2^{20})$ using 'SOS dp' technique, where 'SOS' is short for 'Sum over Subsets'. For each number $mask$, we store in its dp value what is the minimum time there exists a number $x$ such that $mask\subseteq x$ in the set $S$. Then for each query, we need to greedily pick $1$ from the highest bit to lowest bit when there's $0$ on this bit of $mask$. Checking if the minimum time of the dp value is less than or equal to the current time will do.
+
+##C. Lying From You
+
+> unsolved
+
+##D. Don't Stay
+
+> unsolved
+
+##E. In The End
+
+> unsolved
+
+##F. From The Inside
+
+> unsolved
+
+##G. Numb
+
+> upsolved by Roundgod
+
+The problem can be reduced to find a Hamiltonian cycle of a certain graph. Several solutions exist for this problem, here's the one I think is the most neat and elegant.\\
+
+Group the numbers into $n/2$ groups of the form $(2n,2n+1)$, add an edge from $(2n,2n+1)$ to $(2m,2m+1)$ if there exists an edge in the original graph between the pairs. One can see that there exists two incoming edges and two outgoing edges for each group, therefore one can find an Eulerian cycle of the new graph and convert it into a Hamiltonian cycle in the original graph easily. Time complexity: $O(n)$.
+
+##H. One Step Closer
+
+> upsolved by Roundgod
+
+The number of pluses on the first iteration can be enumrated using sweepline+segment tree, this can be done in $O(n\log{n})$.
+
+Let us denote $row_{i}$ as the parity of pluses in the $i$th row, and $col_{j}$ as the parity of pluses in the $j$th column. Then one can find out that after one iteration, the grid $A_{i,j}$ will become $row_{i}\oplus col_{j}$, where we consider $'+'$ as $1$ and $'-'$ as $0$. Also we may notice that rearranging the grids wouldn't change the answer, so after the first iteration, we can rearrange the grids into 1/2/4 rectangle areas, which will be easy for us to do the case analysis:
+
+If there are no pluses after the first iteration, we can just output the answer obtained during the sweepline process.
+
+Otherwise, if both $n$ and $m$ are odd, the answer will be $-1$, since grids of different colors will always remain different.
+
+If both $n$ and $m$ are even, then one can see that after the second iteration, the table will contain all pluses or all minuses, for which will would add them to the answer.
+
+If exactly one of them is odd, then the table shouldn't contain more than 2 areas, and the black part after the second iteration should have both odd sides or both even sides.
+
+##I. Invisible
+
+> solved by sy_chen (4:15 +5)
+
+Several solutions exist for solving this problem, yet all of them originates from the persistent data structure for range k-th query, that every version records the number of occurrences of a number in a prefix. Here we may similarly use bitsets to record the parity of occurrences of every number of some prefixes, hence we may easily restore such a bitset for aribtrary range. Every bit 1 indicates that the number occurs odd many times. This runs in linear time, with very very small constant factor per query, which, is enough to pass the given time limit.
+
+Anothe solution adds some randomization. We may randomly map the number to, e.g. 32-bit integers. If the xor-sum of a given range is zero, then, with high probability there is no number occurs odd many times. On the other hand, there must be such number. In this case, we may use binary search to locate this number. With proper implementation, every query can be processed in $O(\log^2 n)$ time.
+
+##J. Leave Out All The Rest
+
+> solved by Roundgod (0:30)
+
+One can easily prove that the maximum length of the longest increasing subsequence of the interleaved array is the sum of the length of the longest increasing subsequence of the two original arrays, respectively. Time complexity: $O(n\log{n})$.
+
+##K. Faint
+
+> solved by Roundgod (1:53)
+
+We separately count the numbers of increasing by 1 and decreasing. The former case is trivial. For the latter case, enumerate the case when the last $k$ elements ae consectively $n-k+1,n-k+2,...n-k$, one can write the summation $\sum\limits_{i=1}^{n-k+1}i\times \sum\limits_{j=1}^{m-1}\binom{n-k+m-1-i+j}{j-1}$. Using the identity $\sum\limits_{k\leq n}\binom{s+k}{k}=\binom{s+n+1}{n}$, this formula can be rewritten as $\sum\limits_{i=1}^{n-k+1} i\times \binom{n-k+m-2-i}{m-2}$, which can be computed in $O(n)$ time with precomputing of the factorials. So the final formula is $\binom{n-k+m}{m}+\binom{n-k+m-1}{m-1}+\sum\limits_{i=1}^{n-k+1} i\times \binom{n-k+m-2-i}{m-2}$,including the first case.
+
+#Replay
+
+To be added.
