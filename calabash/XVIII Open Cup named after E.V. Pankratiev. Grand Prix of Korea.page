@@ -1,0 +1,91 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Korea
+
+Practicing Date: 2018.9.13
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Korea](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010410)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Kprea/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Korea](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Korea)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Donut
+
+> solved by sy_chen and Roundgod(4:59 +4)
+
+This can be solved by scanline. For fixed $x$-coordinate of the center of the donut, we maintain the score of the donut of every possible $y$. We may set up four events of updating the scores of the donut for every possible $y$. Then we just scan the x-coordinates, process the events, update current maximum value. Special attention need to be paid during discretization because it might be possible that no point lies on the border of the optimal donut due to the existence of negatively-scored points.
+
+##B. Circular Arrangement
+
+> upsolved by Roundgod
+
+It we fix the number of consecutive segments formed by each number, we can calculate their contribution via a simple dynamic programming, and the number of ways to form them is a classical problem, i.e., given the occurences of each number, find the number of different arrays formed without having adjacent same numbers, which can be solved by inclusion-exclusion principle and dynamic programming. Therefore we can mix them in a whole dynamic programming $dp[i][j]=$the answer if we consider the first $i$ numbers and they formed at most $j$ distinct parts(i.e., at least $\sum\limits_{k=1}^{i}c[k]-j$ adjacent same numbers). The time complexity is $O(n^2C^2)$ where $C=100$.  
+
+To handle the circular thing, we imagining shift the array clockwise until we have number $n$ in the beginning, and no number $n$ in the end. This can be fixed by changing some transition of the above dynamic programming. Therefore the overall complexity is $O(n^2C^2)$.
+
+##C. Earthquake
+
+> solved by Roundgod(2:12 +2)
+
+First it's easy to see that it's always optimal to continuously checking bridges of one route until one can decide that if this route is connected or not. When checking one route, one should first check the bridge with the lowest probability to become intact after the earthquake, it's not hard to come up with that. Then we need to determine the order of checking each route, of course the relations form a total ordered set. Then let's say, for an arbitrary route $x$, the probability of this route being intact is $x.p$, and the expectation of the number of inspections needed to check this route is $x.E$. Then for any two routes $x$ and $y$, if $x.E+(1-x.p)y.E$ is less than $y.E+(1-y.p)x.E$, then we check route $x$ before route $y$.
+
+##D. Dynamic Input Tool
+
+> solved by sy_chen(0:38)
+
+Generate each character greedily.
+
+##E. Central Lake
+
+> unsolved
+
+##F. Computing MDSST
+
+> solved by sy_chen(3:09)
+
+Consider the process of constructing a tree: every (rooted) tree can be constructed by attaching its subtrees to its root. So we may apply dynamic programming: when a tree is attached to another tree, the number of paths passing through the newly-formed edge is known, and we may record the minimum total cost of edges in a spanning tree for each subset of vertices rooted at some specific vertex. When doing dynamic programming, just enumerate every possible subset of vertices and the child root as subtree. The total complexity is $O(3^n Poly(n))$.
+
+##G. MST with Metropolis
+
+> upsolved by calabash_boy
+
+Firstly, get the MST using *Kruskal* or any other MST algorithm. Then, easily use *Link-Cut-Tree*, for every node x, for every edge not existing in MST and connecting this node, for example [u,i], we should Cut the max_weight edge in the chain u-i(expect the edge [v-i] in chain), and Link the edge [i,u]. In this way, we can calculate  MST with Metropolis. When we calculate a  MST with Metropolis, we should recovery to MST's status. The complexity is $O(nlogn)$ with big constant. 
+
+##H. Number of Cycles
+
+> unsolved
+
+##I. Sum of Squares of the Occurrence Counts
+
+> solved by calabash_boy(2:39)
+
+Consider how to calculate the sum of squares of  occurrence number of different substrings。 It's easy to use SAM to calculate every SAM_Node's occurrence number, let $weight[SAM\_Node] = len[SAM\_Node] - len[fail[SAM\_Node]]$,then the answer is equal to $\sum_{SAM\_Node} {num[SAM\_Node]^2*weight[SAM\_Node]}$.  When we calculate every prefix's answer, we can easily calculate the increment between $prefix_i$ and $prefix_{i+1}$, actually, $prefix_{i+1}$ only adds 1 to the occurrence number of the SAM_Nodes in the *fail_chain* of the SAM_Node belonged to $prefix_{i+1}$ . Consider such a SAM_Node in the fail_chain, its contribution to answer changes from $num[SAM\_Node]^2*weight[SAM\_Node]$  to $(num[SAM\_Node]+1)^2*weight[SAM\_Node]$, so the increment is $(2*num[SAM\_Node]+1)*weight[SAM\_Node]$ , then the total increment brought from $prefix_{i+1}$ is equal to $\sum_{SAM\_Node \; in \; fail\_chain}{2*num[SAM\_Node]*weight[SAM\_Node]} + \sum_{SAM\_Node \; in \; fail\_chain}{weight[SAM\_Node]}$, so we can use a $Tree\_Chain\_Division \; Algorithm$ widh $Segment\_Tree$ to mainten and calculate that. Code is very long. The complexity is $O(26n + n{logn}^2)$.
+
+
+##J. Game of Sorting
+
+> upsolved by Roundgod
+
+##K. Subsequence Queries
+
+> upsolved by Roundgod
+
+##L. XOR Transformation
+
+> upsolved by sy_chen
+
+The key point of this problem is that $(\sum_{i=0}^{k-1} x^i)^2 = \sum_{i=0}^{k-1} x^{2i} \mod 2$. Using prefix xor sum, it is easy to address the case when $T$ is a power of 2. For arbitrary $T$, use the technique similar to repeated squaring to decompose $T$ into some powers of 2.
+
+#Replay
+
+To be added.
