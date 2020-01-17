@@ -1,0 +1,76 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 ICPC Asia Yinchuan Onsite
+
+Practicing Date: 2019.10.28
+
+Contest Link: Not Available Yet
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019%20ICPC%20Asia%20Nanjing%20Onsite/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for The 44th ICPC Asia Nanjing Regional Contest](https://github.com/wcysai/Calabash/tree/master/2019%20ICPC%20Asia%20Nanjing%20Onsite)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. A Hard Problem
+
+> solved by sy_chen (0:14 +2)
+
+##B. Chessboard
+
+> solved by sy_chen (3:32)
+
+##C. Digital Path
+
+> solved by sy_chen (1:32 +1)
+
+##D. Holes
+
+> upsolved by Roundgod
+
+Use principal component method to reduce the number of variables to $O(n)$ and then run Gaussian Elimination for the answer.
+
+##E. Observation
+
+> upsolved by Roundgod
+
+After some brute force, one can observe that $\frac{f_d}{6}$ is multiplicative, and thus can be solved using a segment sieve in $O(\sqrt{R-L}\log{(R-L)})$.
+
+##F. Paper Grading
+
+> upsolved by sy_chen
+
+##G. Poker Game
+
+> upsolved by calabash_boy
+
+##H. Prince and Princess
+
+> solved by Roundgod (0:43 +1)
+
+Simple analysis. Take care of the case when $a=1,b=0,c=0$.
+
+##I. Space Station
+
+> upsolved by Roundgod
+
+Note that $\sum\limits_{i=1}^{50}p(i)\leq 2\cdot 10^6$, one can encode all the partitions and do dynamic programming on them.
+
+##J. Spy
+
+> solved by Roundgod (1:22)
+
+Simple Kuhn-Munkres problem.
+
+##K. Triangle
+
+> solved by sy_chen (2:39 +5)
+
+#Replay
