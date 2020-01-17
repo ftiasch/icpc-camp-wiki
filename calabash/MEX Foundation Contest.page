@@ -1,0 +1,68 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: MEX Foundation Contest
+
+Practicing Date: 2019.12.06
+
+Contest Link: [MEX Foundation Contest](https://codeforces.com/gym/102412)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/MEX%20Foundation%20Contest/statements.pdf)
+
+Participants: sy_chen, Roundgod, calabash_boy
+
+Solution Link: [Code for MEX Foundation Contest](https://github.com/wcysai/Calabash/tree/master/MEX%20Foundation%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. The One Polynomial Man
+
+> solved by sy_chen (2:56)
+
+##B. Alexey the Sage of The Six Paths
+
+> unsolved
+
+##C. Steel Ball Run
+
+> upsolved by Roundgod
+
+This problem can be solved by either Heavy Light Decomposition or Centroid Decomposition, who shares an idea of efficiently jumping on the heavy chain/centroid decomposition tree, and maintaining the distance information using segment tree/centroid decomposition tree. Both data structures has a complexity of $O(q(\log{n})^2)$. Refer to the code for more details. 
+
+##D. The Jump from Height of Self-importance to Height of IQ Level
+
+> unsolved 
+
+##E. Minimums on the Edges
+
+> solved by Roundgod (1:32)
+
+Each operation can be viewed as an addition on the suffix, apply a complete-knapsack-like dynamic programming to solve the problem in $O(2^n\cdot n\cdot s)$. 
+
+##F. IQ Test
+
+> solved by sy_chen (0:05)
+
+##G. AtCoder Quality Problem
+
+> solved by Roundgod (3:44)
+
+Observe that for some subset, if we want to color it, then there's at most one another maximal subset that has a different color, then we can solve the problem via dynamic programming in $O(2^n\cdot n)$.
+
+##H. Mex on DAG
+
+> solved by sy_chen (2:09 +5)
+
+##I. Find the Vertex
+
+> solved by sy_chen (0:11)
+
+##J. Yet Another Mex Problem
+
+> unsolved
+
+#Replay
