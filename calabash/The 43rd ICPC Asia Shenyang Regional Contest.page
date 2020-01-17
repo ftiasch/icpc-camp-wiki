@@ -1,0 +1,91 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia Xuzhou Regional Contest 
+
+Participation Date: 2018.10.28
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/The%2043rd%20ACM%20ICPC%20Asia%20Shenyang20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for The 43rd ACM ICPC Asia Xuzhou Regional Contest](https://github.com/wcysai/Calabash/blob/master/The%2043rd%20ACM%20ICPC%20Asia%20Shenyang20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Sockpuppets
+
+> unsolved
+
+##B. Sequences Generator
+
+> unsolved
+
+##C. Insertion Sort
+
+> solved by Roundgod (1:03 +3)
+
+By listing some recurrence one can find out that the number of permutations of $1$ to $n$ that is almost sorted equals to $(n-1)^{2}+1$. With the restrictions given in the problem, one can do some case analysis of the consistution of the first $k$ elements. The final formula is $k!((n-k-1)^{2}+1)+k!\cdot k(n-k)+k!\cdot(n-k-1)$. Note that the answer is $n!$ when $k\geq n$. 
+
+##D. Diameter of a Tree
+
+> unsolved
+
+##E. The Kouga Ninja Scrolls
+
+> solved by sy_chen (3:45 +1)
+
+Obviously, this problem is just a combination of several relatively independent subtasks. The first thing to do is rotating the coordinate system by $\pi / 4$, thus converting the Manhattan distance to Chebyshev distance. Hence the query can be done separately in two dimensions, and the maximum of them is final answer.
+
+To get the answer in one dimension, consider segment tree. It can be proved (by contradiction) that one of the pair of most distant ninjas has either minimum or maximum magnitude in this dimension. Hence, for each segment, maintain the smallest magnitude of a ninja and its clan, and the smallest magnitude of a ninja belonging to a different clan, and the largest ones, likewise. The information of two adjacent ranges can be merged, making the query and update of segment tree realizable.
+
+##F. Counting Sheep in Ami Dongsuo
+
+> unsolved
+
+##G. Best ACMer Solves the Hardest Problem
+
+> solved by sy_chen (0:42)
+
+There are not too many different integer points whose distance to specific point equals $\sqrt{k}$. By precomputing all these points, every thing can be done by brute force.
+
+##H. Rainbow Graph
+
+> unsolved
+
+##I. Distance Between Sweethearts
+
+> solved by Roundgod (4:17)
+
+Let's say that $max\{\vert I_{boy}-I_{girl} \vert,\vert A_{boy}-A_{girl} \vert,\vert G_{boy}-G_{girl} \vert\}=d$. Iterate over all possible $d$ from $0$ to $2000$, It may not be easy to find out all possible outcomes of $I_{boy}\oplus I_{girl}\oplus A_{boy}\oplus A_{girl}\oplus G_{boy}\oplus G_{girl}$ under the restriction $d=x$ directly, but one can find out the answer under the restriction that $d\leq x$ for some $x$ applying Walsh-Hadamard Transformation, then minus the answer with $d\leq x-1$ will yield the answer for $d=x$. Overall time complexity: $O(n^{2}\log{n})$ where $n=2048$.
+
+
+##J. How Much Memory Your Code is Using?
+
+> solved by sy_chen (0:18)
+
+Implementation trick: one may use `strtok()` function to tokenize the input.
+
+##K. Let the Flames Begin
+
+> solved by calabash_boy (2:27 +1)
+
+To be added.
+
+##L. Machining Disc Rotors
+
+> solved by sy_chen (4:55 +2)
+
+The maximum distance must be either the diameter of the circle, or between two intersection points. Since it is guaranteed that the affected areas of any two arms share no intersection, the unaffected arcs can be found out easily.
+
+##M. Renaissance Past in Nancy
+
+> unsolved
+
+#Replay
+
+To be added.
