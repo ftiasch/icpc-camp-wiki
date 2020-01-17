@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ACM-ICPC 2018 焦作赛区网络预赛
+
+Participation Date: 2018.9.15
+
+Contest Link: [ACM-ICPC 2018 焦作赛区网络预赛](https://www.jisuanke.com/contest/1558?view=challenges)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ACM-ICPC 2018 焦作赛区网络预赛](https://github.com/wcysai/Calabash/tree/master/ACM-ICPC%202018%20%E7%84%A6%E4%BD%9C%E8%B5%9B%E5%8C%BA%E7%BD%91%E7%BB%9C%E9%A2%84%E8%B5%9B)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Magic Mirror
+
+> solved by sy_chen (0:10)
+
+Just get it done.
+
+##B. Mathematical curse
+
+> solved by sy_chen (2:28 +4)
+
+Dynamic programming with intermediate states defined as minimum and maximum possible values. Since all operators are monotone, that's enough.
+
+##C. Password
+
+> unsolved
+
+##D. Sequence
+
+> unsolved
+
+##E. Jiu Yuan wants to eat
+
+> solved by Roundgod (3:23 +3)
+
+The key point is how to deal with the negate operation, we can view the negate operation as 'minus by $2^{64}-1$', the it can be viewed as the combination of multiplication and addition, so we only have to consider the first and the second case now.
+
+Do heavy-light composition to the tree and maintain three values: the answer, the lazy tag for addition, and the lazy tag for multiplication. This is routine. Time complexity is $O(m\log^{2}n)$.
+
+##F. Modular Production Line
+
+> solved by calabash_boy (1:39 1A)
+
+let $0$ be the source, $n+1$ be the sink, and for every segment $(l,r)$, link an edge with cost $=-v[i]$，capacity = $1$，between node $l$ and node $r$, for every $i$ in range $[0,n]$ link an edge with cost $=0$，capacity = $k$，between node $i$ and node $i+1$. Then the min-cost maximum flow with flow capacity $k$ form the source to the sink is the answer.
+
+##G. Give Candies
+
+> solved by sy_chen (0:22 1A)
+
+One may prove that the answer is $2^{N-1}$, which can be calculated by Fermat's little theorem.
+
+##H. String And Times
+
+> solved by calabash_boy (0:26 1A)
+
+Easily use SAM or SA to solve it.
+
+##I. Save the Room
+
+> solved by sy_chen (0:08 1A)
+
+The answer is no iff all dimensions are odd.
+
+##J. Participate in E-sports
+
+> solved by sy_chen (0:58 +1)
+
+Square numbers can be tested by quadratic residue with randomly selected primes.
+
+##K. Transport Ship
+
+> solved by Roundgod (1:53 +4)
+
+My bad... misread the statements for an hour...
+
+Split the $2^{C[i]}-1$ ships of the same kind into $C[i]$ groups, each with $2^{0},2^{1},...,2^{C[i]-1}$, then the problem is converted into the simple backpack problem and can be solved by straightforward dynamic programming.
+
+##L. Poor God Water
+
+>solved by Roundgod (0:20 1A)
+
+Let $dp[n][i][j]$ be the answer at hour $n$ when the last digit is $i$, and the second last digit is $j$, then the transition of states can be viewed as multiplying a $9\times 9$ matrix, use fast matrix multiplcation to speed up. The time complexity is $O(9^{3}\log{N})$.
+
+#Replay
+
+To be added.
