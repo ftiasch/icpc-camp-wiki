@@ -1,0 +1,92 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Gomel
+
+Practicing Date: 2018.9.11
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Gomel](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010412)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Gomel/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Gomel](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Gomel)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Aftermath
+
+> solved by Roundgod(0:15)
+
+Note that $a=\frac{\sigma_{1}(n)}{\sigma_{0}(n)}$ and $h=\frac{n\sigma_{0}(n)}{\sigma_{1}(n)}$, thus $n=ah$.
+
+##B. Believer
+
+> solved by Roundgod(0:47 +1)
+
+It can be conjectured that it's always optimal to make the binary representation of the number of occurrences of each number solely consistes of $1$s, so  the sum each number $x$ occurred can be rewritten as $x,2x,4x...$, then we can do a binary search on the largest number $k$ occurred, and at last add the maximum number of $k+1$s that can be added to the answer. 
+
+##C. Chalk Outline
+
+> unsolved
+
+##D. Do I wanna know?
+
+> upsolved by Roundgod
+
+This is indeed a interesting problem. I tried in the 5 hours for some time finding the relation between $f(k)$ and $f(k+1)$ but failed. The solution goes like this:
+
+let $f(n,k)$ denote the probability that in a tournament for $n$ players, there are $k$ players who defeated each of the remaining $n−k$ players, then by considering adding the last player and the first player respectively, we can derive two formulas:
+
+$$f(n+1,k)=f(n,k)·p^{k}+f(n,k−1)·(1−p)^{n−k+1}$$ 
+
+$$f(n+1,k)=f(n,k)·(1-p)^{k}+f(n,k−1)·p^{n−k+1}$$ 
+
+Then, magically,$f(n+1,k)$ get cancelled, and then we derived$$f(n,k)·(p^{k}-(1-p)^{k})=f(n,k−1)·(p^{n−k+1}-(1−p)^{n−k+1})$$, then the problem can be solved in linear time.
+
+Note that when $p=\frac{1}{2}$ we can't use the above formula, but we can use combinatorics to calculate that $f(n,k)=\binom{n}{k}·\frac{1}{2^{k(n-k)}}$.
+
+##E. Exit Song
+
+> unsolved
+
+##F. Forever and always
+
+> solved by calabash_boy(1:46 +5)
+
+An obvious idea is that let 101 person have the highest score, before every round, assume there is k person having the highest score, after that round, we want there will be exactly (k-1) person having the highest score, assume the one who is no longer having the highest score be $Mr.Poor_X$, in the next round, these person who voted for $Mr.Poor_x$ will no longer vote for him, and vote for that (k-1) person. So we can construct as follow: for each i in range(1,100), there is 101 person who will firstly vote for i, and 100 person who will firstly vote for 101. then for each i in range(1,100), for each j in range(1,j-2) there is a person who will firstly vote for i, secondly vote for j. The situation is that There was enmity between the the fans of $Mr.I$ and the fans of $Mr.I-1$, so when $Mr.I$ is no longer the highest, the fans of $Mr.I$ in next round will vote for every highest person except $Mr.I-1$, and make $Mr.I-1$ no longer the highest in the next round. 
+
+##G. Gate 21
+
+> unsolved
+
+##H. Hamilton
+
+> unsolved
+
+##I. I've got friends
+
+> unsolved
+
+##J. Joke
+
+> solved by Roundgod(2:57)
+
+This problem is truly a joke...
+
+Note that if the covering player doesn't hold two jokers in his hand initially, then he can refuse to cover all the time and at last the starting player will end up holding at least one joker in his hand and therefore loses the game. Otherwise, since at most one joker can be used to cover in one turn, the covering player would lose.
+
+##K. Kids aren't alright
+
+> solved by sy_chen(4:41 +10)
+
+Define the answer as $f(m)$. Also define $g(m)$ as the number of sets where their gcd divides m. It is not hard to find that $g(m) = \sum_{q | m} \sum_{r | q} f(r)$, so $f(m)$ can be obtained by applying Mobius inversion twice, i.e. $f = g * \mu * \mu$. To compute $f$, factorize $m$ and enumerate all its factors. In fact, $\mu * \mu$ vanishes at an integer with cubic factor, so it is sufficient to enumerate all cube-free factors of $m$.
+
+#Replay
+
+To be added.
