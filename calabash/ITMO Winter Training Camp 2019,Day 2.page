@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ITMO Winter Training Camp 2019,Day 2
+
+Participation Date: 2019.01.22
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/ITMO%20Winter%20Camp%202019/Day2/20190122.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ITMO Winter Training Camp 2019,Day 2](https://github.com/wcysai/Calabash/tree/master/ITMO%20Winter%20Camp%202019/Day2)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Scoreboard
+
+> solved by Roundgod (0:07)
+
+Just count the number of rows with '+'s.
+
+##B. Aisle seat please
+
+> solved by Roundgod (0:38)
+
+Enumerate on the number of aisles to find the maximum possible solution. 
+
+##C. Bridge
+
+> solved by sy_chen (2:50)
+
+It can be proved that there must exist a shortest bridge passing through one turning point of one river bank. Hence $O(mn)$ runs of point-segment distance algorithm will solve this problem.
+
+##D. Almost non-prefix codes
+
+> solved by sy_chen (0:30 +2)
+
+Greedily select the strings in lexicographical order. To prove the correctness, one may image the Trie of these strings.
+
+##E. Cut the cake!
+
+> upsolved by sy_chen
+
+It can be proved that the either the optimal line is horizontal, or it must pass two types of points. In the latter case, it can be further proved that the optimal line must passing through the minimum common convex hull of these two types of points. This gives a linearithmic solution based on convex hull algorithm.
+
+##F. Depth First Search 
+
+> solved by calabash_boy (3:05 +1)
+
+To be added.
+
+##G. Gems
+
+> solved by sy_chen (0:48 +1)
+
+##H. Interesting Numbers
+
+> solved by Roundgod (0:25 +1)
+
+Binary search on the answer, use inclusion-exclusion to avoid overcounting.
+
+##I. Optimize
+
+> solved by Roundgod (1:22 +1)
+
+Let's show what's the conditiobn that two numbers can be swapped. Let's denote the first number as $x$, with the sum over elements of the set it belongs to $A$, and for the second number we have $y$ and $B$, respectively. We can safely assume that $B>A$ since we only want to count each pair once. Therefore we have three inequalities to satisfy: $B>A$, $y>x$, and $A-x+y<B$. One can observe that if the last two inequalities are satified, then the first inequality is also satisfied. Therefore we are only left with a two-dimension poset problem. Sort according to one dimension and use some data structure to maintain another. Time complexity is $O(n\log{n})$.
+
+##J. Shelves
+
+> solved by Roundgod (2:09)
+
+Since intervals in each half don't intersect. We combine all intervals together, and the answer is the maximum number of non-intersecting intervals, which is a pretty classical problem, and can be easily solved using dynamic programming after grouping intervals accorrding to the right border of interval. Time complexity is $O(n)$.
+
+##K. Prince
+
+> unsolved
+
+##L. Sum 
+
+> solved by sy_chen (1:50 +1)
+
+Note that the difference of length of either $a'$ or $b'$ and $c'$ is at most one. Hence we can only try some constant number of possibilities.
+
+##M. Delivery
+
+> solved by Roundgod (0:18)
+
+Just calculate the answer for all stores and take the minimum.
+
+#Replay
+
+To be added.
