@@ -1,0 +1,90 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019-2020 ACM-ICPC Latin American Regional Programming Contest
+
+Practicing Date: 2019.11.22
+
+Contest Link: [2019-2020 ACM-ICPC Latin American Regional Programming Contest](http://codeforces.com/gym/102428)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019-2020%20ACM-ICPC%20Latin%20American%20Regional%20Programming%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019-2020 ACM-ICPC Latin American Regional Programming Contest](https://github.com/wcysai/Calabash/blob/master/2019-2020%20ACM-ICPC%20Latin%20American%20Regional%20Programming%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Algorithm Teaching
+
+> upsolved by Roundgod
+
+After extracting masks and add an edge from a mask to its maximal submasks, the problem is reduced to finding the smallest chain cover in a directed acyclic graph, which can be modeled as bipartite matching, and thus can be solved in $O(E\sqrt{V})$ time.
+
+##B. Build the Perfect House
+
+> solved by Roundgod (4:41 +5)
+
+Binary search on the answer, to check if some answer is valid, convert each point into a range of angles and determine if all ranges have some common intersection.
+
+##C. Cut Inequality Down
+
+> solved by sy_chen (0:38)
+
+##D. Dazzling Stars
+
+> solved by sy_chen (2:10 +3)
+
+##E. Eggfruit Cake
+
+> solved by Roundgod (0:27 +1) 
+
+Find all consecutive $P$s and sum up some arithmetic progressions.
+
+##F. Fabricating Sculptures
+
+> solved by sy_chen (1:43)
+
+##G. Gluing Pictures
+
+> solved by calabash_boy (1:04)
+
+##H. Hold or Continue?
+
+> solved by Roundgod (3:05 +1)
+
+Iteratively update the answer, it can be conjectured that the answer converges to the need precision after a few hundred rounds.
+
+##I. Improve SPAM
+
+> solved by calabash_boy (0:43)
+
+##J. Jumping Grasshopper
+
+> upsolved by Roundgod
+
+Let's say we jump starting from position $x$, except for the case when the grasshopper cannot jump at all, let $lmax$ be the maximum value in the range $[1,x]$, and $rmax$ be the maximum value in the range $[x,n]$. If $lmax<rmax$, then the destination would be the leftmost position in the range $[x,n]$ with value $>lmax$, and would be the rightmost position in the range $[1,x]$ with value $>rmax$ otherwise. All operations can be done in $O(\log{n})$ by a segment tree supporting range max, single point update and descending on the tree.
+
+##K. Know your Aliens
+
+> solved by Roundgod (1:33 +2)
+
+For each two consecutive different letters, we multiply a monomial satisfying the sign-changing requirement, which can be proved to be optimal.
+
+##L. Leverage MDT
+
+> solved by sy_chen (1:34)
+
+##M. Mountain Ranges
+
+> solved by Roundgod (0:07)
+
+Just find the longest consecutive parts with difference $\leq X$.
+
+#Replay
+
+To be added.
