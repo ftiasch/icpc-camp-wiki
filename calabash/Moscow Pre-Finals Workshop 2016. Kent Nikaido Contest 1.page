@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Moscow Pre-Finals Workshop 2016. Kent Nikaido Contest 1
+
+Practicing Date: 2019.6.2
+
+Contest Link: [Moscow Pre-Finals Workshop 2016. Kent Nikaido Contest 1](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006283)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Moscow%20Pre-Finals%20Workshop%202016.%20Kent%20Nikaido%20Contest%201/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Moscow Pre-Finals Workshop 2016. Kent Nikaido Contest 1](https://github.com/wcysai/Calabash/tree/master/Moscow%20Pre-Finals%20Workshop%202016.%20Kent%20Nikaido%20Contest%201)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Tetris Puzzle
+
+> solved by sy_chen (0:21)
+
+Computing the parity of $|\{i : (x_i - y_i) \bmod 4 = t\}|$ for every $0 \leq t < 4$ where $(x_i, y_i)$ are coordinates of nonempty cells.
+
+##B. Shift and Paint
+
+> solved by Roundgod (2:33 +2)
+
+Case analysis should be applied here. When $N=L$, one may use Burnside's lemma to calculate the number of distinct configurations in $O(N)$ time.
+
+When $L<N$, one may prove that only the parity of $L$ matters, that if $L$ is odd, then the answer is equal to when $L=3$, otherwise the answer is equal to when $L=2$. Use some combinatoric arguments to solve the cases separately.
+
+##C. Pianist
+
+> unsolved
+
+##D. Driving
+
+> solved by sy_chen (0:57)
+
+This is a special case of Chinese postman problem where edge weights are powers of 2. Since every edge is visited either once or twice, we may use greedy algorithm. Build a minimum spanning tree of the graph. An edge in the tree should be duplicated if there are odd number of odd vertices in either of its components after removing the edge.
+
+##E. Coins
+
+> unsolved
+
+##F. Forbidden Puzzle
+
+> unsolved
+
+##G. TRAX
+
+> upsolved by Roundgod
+
+Note that the color in opposite edges are the opposite, therefore one can uniquely determine the whole map given the colors in the leftmost column and uppermost row. Also, each constraint can be converted into constraints on the colors in the leftmost column and uppermost row.
+
+To avoid cycles, there are basically two cases, one case is that the graph is a whole cyclic shift, which can be counted using basic inclusion-exclusion. The other case is a bit more complicated, which should be calculated using dynamic programming.
+
+##H. Pyramid Decoration
+
+> solved by sy_chen (1:52 +2)
+
+The color of the topmost stone can be written as linear combination of the bottom layer stones, possibly with an extra constant item. The coefficients can be found by observing the first few terms.
+
+##I. 2D Pyramid
+
+> upsolved by Roundgod
+
+After transfering coordinates $(i,j)\rightarrow (i,i-j)$, the problem is reduced to counting the number of valid orderings of Young's diagram, which is trivial if one's acquianted to hook-length formula. After precomputing the factorials and some consecutive multiplication of factorials and their inverses, the complexity of answering each query can be reduced to $O(1)$.
+
+##J. Foot Game
+
+> solved by calabash_boy (0:28)
+
+##K. Pyramid Game
+
+> solved by Roundgod (0:23 +1)
+
+If $N$ is odd, one can see the parity of the sum over the number of stones always changes, so if the sum of stones is odd, Iori wins, otherwise Yayoi wins.
+
+If $N$ is even, if there exists a pile that contains no stones, the same argument as above can be applied. Otherwise let's assume the pile that contains the smallest number of stones contains exactly one stone, the Iori can make it equal to zero and arbitrarily choose the parity of the sum of all stones, thus winning the game. If the pile that contains the smallest number of stones contains more than one stones, we may decrease the number of stones contained in all piles by two, which doesn't change the answer.
+
+#Replay
