@@ -1,0 +1,84 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2013. Moscow IPT Contest
+
+Participating Date: 2019.08.15
+
+Contest Link: [Petrozavodsk Summer-2013. Moscow IPT Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001423)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Petrozavodsk%20Summer-2013.%20Moscow%20IPT%20Contest/statements.pdf)
+
+Solution Link: [Code for Petrozavodsk Summer-2013. Moscow IPT Contest](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Summer-2013.%20Moscow%20IPT%20Contest)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Coloring
+
+> solved (2:03 +5)
+
+Merge all vertices with same set of adjacent vertices, and run a breadth-first-search to determine their labels.
+
+##B. Robot
+
+> unsolved
+
+##C. Cosine
+
+> solved (2:06 +3)
+
+Convert cosines into sines and use sine's formula: $\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}$.
+
+##D. Billiard
+
+> unsolved
+
+##E. Queue
+
+> solved (3:00 +1)
+
+Case analysis plus some elementary combinatorics.
+
+##F. Rank
+
+> solved (3:10 +5)
+
+Consider a row with two ones at positions $i$ and $j$ as an edge $(i,j)$, then two columns $u$ and $v$ is equivalent iff there is a path with odd edges from $u$ to $v$. These information can be maintained using a disjoint set union. Time complexity is $O(n\alpha{n})$.
+
+##G. Remarkable Substrings
+
+> upsolved(by calabash_boy)
+
+Typical application of Lorentz&Maine algorithm.
+
+##H. Moderate Numbers
+
+> upsolved 
+
+One can see that the digits other than $1$ won't be too much. Precompute all of them, and maintaining occurences of each digit. While deciding each digit of the lexicographical order, one should also maintain the multinomial coefficients.
+
+##I. Sum of Powers
+
+> solved (0:37)
+
+Just mark positions with odd set bits as $A$, while others as $B$. One can prove this is always correct.
+
+##J. Tree Distance
+
+> solved (4:15 +3)
+
+Use centroid decomposition altogether with Fast Fourier Transform. Time complexity is $O(n\log^{2}{n})$.
+
+##K. Dot Product
+
+> solved (0:20 +2)
+
+Classical segment tree with lazy updates.
+
+# Replay
+
+To be added.
