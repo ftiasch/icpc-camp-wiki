@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ITMO Winter Training Camp 2019,Day 5
+
+Participation Date: 2019.01.25
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/ITMO%20Winter%20Camp%202019/Day5/20190125.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for ITMO Winter Training Camp 2019,Day 5](https://github.com/wcysai/Calabash/tree/master/ITMO%20Winter%20Camp%202019/Day5)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Accountant Notes
+
+> unsolved
+
+##B. Better and faster!
+
+> solved by sy_chen (1:07)
+
+Note that bit shift distributes over any bitwise operation. So each position has some fixed weight. The answer is just the xor-sum of the weights of set bits.
+
+##C. Cave
+
+> solved by Roundgod (2:07 +1)
+
+Maintain the tuple of (current position of fuel, length of the segment, minimum height of ceiling) in a monotone stack, in the decreasing order of the first variant. Can be done with some case analysis. Time complexity is $O(n)$.
+
+##D. Decision
+
+> solved by Roundgod (0:38)
+
+Simply build the graph and count the number of connected components. Can be done using dfs or whatever.
+
+##E. Everybody may get lost in space
+
+> unsolved
+
+##F. (False) faces
+
+> unsolved
+
+##G. Garlands
+
+> solved by sy_chen (4:17 +1)
+
+What is not hard to discover is that we may binary search for the answer. To check a specific limit, consider dynamic programming. The answer is not monotonic with respect to the number of segments, e.g. consider the sequence `[1, 1, 1, 100, 100, 1, 1, 1]`. However, if we view odd and even terms separately, the sequences do be monotonic. This lead us a 1D/1D dynamic programming algorithm: let `dp[n][parity]` denote the minimum segments for the first $n$ terms, with `parity` be the parity of the number of segments. The overall time complexity is $O(mn \log w)$. With some heuristics this can pass all test data. One may also optimize the dynamic programming to obtain a quasilinear algorithm.
+
+##H. Hyperviser MacrOS
+
+> unsolved
+
+##I. Islands
+
+> solved by sy_chen (0:27)
+
+We fill the cells in reverse order. When a cell is filled, we first build a singleton set for this cell, then merge it with all filled cells adjacent to it.
+
+##J. Jack's socks
+
+> solved by sy_chen (2:09)
+
+This can be solved by Edmond's general graph maximum matching algorithm. Also note that the maximum matching is unique iff there does not exist alternating cycle. One may directly check whether such cycle exists. Another implementation random shuffles the input, and check if the output of the algorithm does not change.
+
+There is also a deterministic divide and conquer algorithm. If the graph does not contain bridge, then the answer is `NO`. Otherwise, remove arbitrary bridge $uv$ yielding two connected components. If the size of each component is odd, then remove the vertices $u$ and $v$. Repeatedly doing this, and if the graph contains a unique perfect matching then all vertices will be removed.
+
+##K. Knowledge for the masses
+
+> unsolved
+
+#Replay
+
+To be added.
