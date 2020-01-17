@@ -1,0 +1,80 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two Capitals
+
+Practicing Date: 2019.5.19
+
+Contest Link: [XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two Capitals](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010375)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [XVII Open Cup named after E.V. Pankratiev. Grand Prix of Two Capitals](https://github.com/wcysai/Calabash/tree/master/XVII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Two%20Capitals)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Artifact Guarding 
+
+> solved by Roundgod (1:54 +1)
+
+The set of guards of indices $S=\{a_1,a_2,...,a_m\}$ is valid iff $\max_{i\in S} x_i+y_i<\sum\limits_{i\in S} x_i$. Enumerate on all possible sums and maintain the $x_i$s in a segment tree. Time complexity is $O(n\log{n})$. 
+
+##B. Book Pages
+
+> solved by sy_chen (4:08 +1)
+
+##C. Regular Bracket Sequence
+
+> solved by Roundgod (0:04)
+
+Simple construction.
+
+##D. Brick Counting
+
+> solved by sy_chen (4:14 +5)
+
+For each row from down to up, merge the bricks into continuous segments, then, pull all segments upwards, and shrink each segment by 1, both left and right. The total time complexity can be proved to be $O(n \log n)$.
+
+##E. Cross on a Plane
+
+> unsolved
+
+##F. Lights
+
+> solved by sy_chen (1:21 +1)
+
+This can be solved by greedy algorithm. Maintain the rightmost light that can reach. For each reached light, go back and shutdown as many lights as possible.
+
+##G. Pigeonhole Principle
+
+> unsolved
+
+##H. Sophie's Sets
+
+> solved by Roundgod (3:58 +1)
+
+Apply inclusion-exclusion principle on the $m$ constraints. And for each of the combination of the constriants, since the two choices of each constraint lead to non-intersecting pairs of $(X,Y)$, one can enumerate all such possibilities and calculate the answer using some combinatorial arguments. With std::bitset this can be optimized to $O(\frac{nm3^m}{w})$. By using recursion instead of mask, one may reach the complexity of $O(\frac{n3^m}{w})$, which passed along with some trivial prunings.
+
+##I. Puzzle with Tables
+
+> unsolved
+
+##J. Travelling to Random Cities
+
+> solved by sy_chen (2:40 +2)
+
+It can be proved that bidirectional breadth-first search runs in expected $O(\sqrt{n})$ time per query.
+
+##K. Cypher
+
+> solved by Roundgod (0:39)
+
+Let $dp_{i,mask}$ be if we fulfill the constraint if we are currently at the $i$th bit, and the $[i,i+18]$ bit of the sum needed is denoted by $mask$, by computing this dynamic programming one can solve this problem in $O(60n)$.
+
+#Replay
