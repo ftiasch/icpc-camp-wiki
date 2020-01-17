@@ -1,0 +1,94 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2017. Songyang Chen Contest 1
+
+Practicing Date: 2019.4.23
+
+Contest Link: [Petrozavodsk Summer-2017. Songyang Chen Contest 1](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001501)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2017.%20Songyang%20Chen%20Contest%201/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2017. Songyang Chen Contest 1](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2017.%20Songyang%20Chen%20Contest%201)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Little Q and Big Integers
+
+> unsolved
+
+##B. Classic Quotation
+
+> solved by calabash_boy (2:14 +2)
+
+##C. Counting Divisors
+
+> solved by Roundgod (0:35 +1)
+
+First sieve out primes no more than $10^6$, then apply a sieve-like method on the given segment, time complexity is $O(\sqrt{r}+T(r-l)\log{(r-l)})$.
+
+##D. Dirt Ratio 
+
+> solved by Roundgod (3:00)
+
+Binary search on the answer, enumerate on the starting point, use segment tree to maintain prefix sums. Time complexity is $O(n\log{n}\log{\epsilon^{-1}})$
+
+##E. Lazy Running
+
+> solved by Roundgod (1:26 +2)
+
+After some case analysis, the problem is reduced to find nonnegative integer coefficients $c_i$ such that $\sum\limits_{i=1}c_ix_i\geq K$ and $\sum\limits_{i=1}c_ix_i$ is minimum possible. By considering the answer modulo the smallest $x_i$, the problem is reduced to finding the shortest path to each possible modulos. 
+
+##F. Logical Chain
+
+> upsolved by Roundgod
+
+Use Kosaraju's algorithm with bitset optimization. Time complexity is $O(\frac{n^2m}{w})$ where $w$ is the word size.
+
+##G. Matching In Multiplication
+
+> solved by sy_chen (2:36 +1)
+
+Remove all edges incident to leaf. The resulting graph must be union of some cycles.
+
+##H. Phone Call
+
+> solved by calabash_boy (4:05)
+
+##I. Questionnaire
+
+> solved by sy_chen (0:06)
+
+Take $ m= 2$.
+
+##J. Security Check
+
+> solved by sy_chen (3:02)
+
+The difference of lengths of the two queues can not exceed $k^2$.
+
+##K. Time to get up!
+
+> solved by sy_chen (0:15)
+
+Hardcode all these digits.
+
+##L. Wavel Sequence
+
+> solved by Roundgod (4:40 +7)
+
+Let $f_{i,j,0/1}$ be the number of possible configurations such that the last element for the two subsequences are $a_i$ and $b_j$, respectively, and the length of the two subsequences are equal, and $g_{i,j,0/1}$ be the number of possible configurations such that the last element for the two subsequences are $a_i$ and $b_j$, respectively, and the length of the first subsequence is exactly one greater than the length of the second subsequence. The last dimension for both $f$ and $g$ denotes the relation between the last element of the first subsequence and the second last element of the first subsequence (i.e.,$<$ or $>$). To efficient update the $f$ and $g$, some data structures are needed, (e.g., fenwick tree of segment tree), and the time complexity is $O(nm\log{\max a_i})$.
+
+##M. Yuno And Claris
+
+> unsolved
+
+#Replay
+
+To be added.
