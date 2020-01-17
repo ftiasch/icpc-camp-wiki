@@ -1,0 +1,79 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019牛客暑期多校训练营(第五场)
+
+Practicing Date: 2019.8.1
+
+Contest Link: [2019牛客暑期多校训练营(第五场)](https://ac.nowcoder.com/acm/contest/884#description)
+
+PDF Statements: No pdf statements available
+
+Participants: sy_chen, Roundgod
+
+Solution Link: [Code for 2019牛客暑期多校训练营(第五场)](https://github.com/wcysai/Calabash/tree/master/2019%E7%89%9B%E5%AE%A2%E6%9A%91%E6%9C%9F%E5%A4%9A%E6%A0%A1%E8%AE%AD%E7%BB%83%E8%90%A5%EF%BC%88%E7%AC%AC%E4%BA%94%E5%9C%BA%EF%BC%89)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. digits 2
+
+> solved by sy_chen (0:03)
+
+Randomly generate a multiple of $n$ and repeat.
+
+##B. generator 1
+
+> solved by sy_chen (0:20)
+
+This can be solved by matrix fast power mod.
+
+##C. generator 2
+
+> solved by Roundgod (3:37 +4)
+
+Except for some edge cases, the problem can be solved by Baby Step Giant Step algorithm. If the constant is chosen properly, the algorithm should run in $O(T\sqrt{pQ})$.
+
+##D. generator 3
+
+> unsolved
+
+##E. independent set 1
+
+> solved by sy_chen (3:54 +3)
+
+This can be solved by dynamic programming with bitmask operations.
+
+##F. maximum clique 1
+
+> solved by sy_chen (1:20)
+
+The maximum clique is the maximum independent set of the complement graph, which is bipartite. In a bipartite graph, the maximum independent set is all vertices minus the minimum vertex cover, which equals the maximum bipartite matching.
+
+##G. subsequence 1
+
+> solved by Roundgod (1:01)
+
+Simple dynamic programming problem.
+
+##H. subsequence 2
+
+> solved by Roundgod (1:46)
+
+After checking some basic cases. Consider each appearance of each letter as vertices and add edges for the relationship described in this subsequence. There exists a valid string if and only if the graph can be topologically sorted, and their topological order is the final answer.
+
+##I. three points 1
+
+> solved by sy_chen (2:20 +1)
+
+This is similar to hdu-6398.
+
+##J. three points 2
+
+> unsolved
+
+#Replay
+
