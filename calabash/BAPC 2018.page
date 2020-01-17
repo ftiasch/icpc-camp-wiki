@@ -1,0 +1,88 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: BAPC 2018
+
+Practicing Date: 2019.4.27
+
+Contest Link: [BAPC 2018](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006313)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/BAPC%202018/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [BAPC 2018](https://github.com/wcysai/Calabash/tree/master/BAPC%202018)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. A Prize No One Can Win
+
+> solved by sy_chen (0:09)
+
+Sort the list and pick the numbers greedily.
+
+##B. Birthday Boy
+
+> solved by sy_chen (0:22)
+
+Just a simple implementation task.
+
+##C. Cardboard Container
+
+> solved by Roundgod (0:11)
+
+Just iterate over all possible divisors.
+
+##D. Driver Disagreement
+
+> upsolved by sy_chen
+
+This can be solved by Hopcroft-Karp's DFA equivalence test algorithm.
+
+##E. Entirely Unsorted Sequences
+
+> solved by Roundgod (4:02)
+
+Let $dp_i$ be the answer for the first $i$ numbers in the sorted sequence. To compute a specific $dp_i$, the answer is the number of all combinations subtract the cases where there exists some position that is sorted, enumerate on that position yields an $O(n^2)$ solution.
+
+##F. Financial Planning
+
+> solved by Roundgod (0:30)
+
+Binary search for the answer, be careful with the overflow issue.
+
+##G. Game Night
+
+> solved by sy_chen (1:58 +1)
+
+This can be solved by sliding window algorithm.
+
+##H. Harry the Hamster
+
+> upsolved by sy_chen
+
+Reverse the edges and run a modified version of Dijkstra's shortest path.
+
+##I. In Case of an Invasion, Please... 
+
+> solved by calabash_boy (2:59 +3)
+
+##J. Janitor Troubles
+
+> solved by Roundgod (0:40)
+
+Ternery search for the length of a diagonal and use Heron's formula to compute the answer.
+
+##K. Kingpin Escape
+
+> solved by Roundgod (1:01)
+
+Clearly we need at least $\lceil \frac{l}{2} \rceil$ number of edges, where $l$ is the number of leaves. We may also construct a way where this number of edges is sufficient to make the graph biconnected: root the tree in any vertex with degree $\geq 2$, then do a depth-first traversal, say the leaves $v_1,v_2,\dots,v_l$ are sorted by their order in the depth-first traversal, we may connect $v_i$ to $v_{i+\lceil \frac{l}{2} \rceil}$ for any $1\leq i\leq \lfloor \frac{l}{2} \rfloor$. In case $l$ is odd, we may also need to connect $v_{\lceil \frac{l}{2} \rceil}$ to the root.
+
+#Replay
+
+To be added.
