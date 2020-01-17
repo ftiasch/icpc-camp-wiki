@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019-2020 ICPC, Asia Jakarta Regional Contest
+
+Practicing Date: 2019.10.30
+
+Contest Link: [2019-2020 ICPC, Asia Jakarta Regional Contest](https://codeforces.com/contest/1252)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019-2020%20ICPC%2C%20Asia%20Jakarta%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019-2020 ICPC, Asia Jakarta Regional Contest](https://github.com/wcysai/Calabash/tree/master/2019-2020%20ICPC%2C%20Asia%20Jakarta%20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Copying Homework
+
+> solved by sy_chen (0:01)
+
+We may add the numbers by $\lfloor n/2 \rfloor$, with overflowed numbers wrapped around.
+
+##B. Cleaning Robots
+
+> solved by Roundgod (3:05)
+
+What we need to do is dynamic programming on tree. We need to maintain for each subtree rooted at some vertex $v$ three states: the chain passing $v$ cannot/can/must be extended. The transition can be done by calculating some prefix/suffix products to avoid division by zero.
+
+##C. Even Path
+
+> solved by Roundgod (0:09)
+
+One can move to an adjacent grid if and only if both the parity of the row&column of the two grids are the same. So each dimension is divided into some blocks consisting of consecutive indices. Two grids are reachable from each other if and only if they are in the same block in both dimensions.
+
+##D. Find String in a Grid
+
+> solved by sy_chen (4:55)
+
+We may build Aho-Corasick automata for query strings and reversed query strings, respectively. We may enumerate the character where the direction of the string changes (the turning character), which effectively decomposes a query string $S$ into $|S|$ separate queries, each containing a prefix and a suffix of $S$, which overlap exactly at the turning character. We may record the states of the prefix and the suffix on the Tries of the two automata. Then, for the input grid, we may run it on the ACAM of query strings from left to right, and run it on the ACAM of reversed query strings from bottom to top. Every grid point (which is expected to be the turning point) can be represented by a pair of states of the two automata, and the query whose states are the descendants of the states of the turning point, respectively, could be an answer. By relabeling the nodes of the Tries with depth-first order, the problem can thus be reduced to 2D orthogonal query for points, which can be solved by sweep line with data structures like Fenwick tree.
+
+The problem can also be solved by suffix sorting for horizontal strings and vertical strings, and then applying the binary search for each query string to find the 2D interval. The remaining part is identical. 
+
+##E. Songwriter
+
+> solved by Roundgod (0:43)
+
+Maintain the possible segment backwards, then greedily choose the lexicographically minumum feasible number.
+
+##F. Regular Forestation
+
+> solved by sy_chen (2:03 +6)
+
+The good cut point must be the unique centroid of the tree. Remove the centroid and check if all remaining trees are isomorphic.
+
+##G. Performance Review
+
+> solved by calabash_boy (1:21)
+
+##H. Twin Buildings
+
+> solved by sy_chen (0:45)
+
+There are two cases: the half of the area of any single land, or maximal equal sub-rectangle of two lands. For the latter case, assume $L_i \leq R_i$ wlog, sort all lands by $L_i$ in descending order, and note prefix maximum of $R_i$, then update the answer with the product of current $L_i$ and previous prefix maximum of $R_i$.
+
+##I. Mission Possible
+
+> unsolved
+ 
+##J. Tiling Terrace
+
+> solved by Roundgod (2:22 +2)
+
+Do a dynamic programming consisting states of the number of the type-3 blocks choosing, and the number of consecutive segments with odd number of soils. Then check all valid states and do some case analysis. 
+
+##K. Addition Robot 
+
+> solved by sy_chen (1:31)
+
+The two operations can basically be represented by matrix: $\begin{pmatrix}1 & 1 \\ 0 & 1 \end{pmatrix}$ and $\begin{pmatrix}1 & 0 \\ 1 & 1 \end{pmatrix}$, respectively. We may use a segment tree for asking the range multiplication of an interval of matrices. There are two ways to perform the update: 
+1. maintain two copies of matrices, one for the real operation and one for the toggled operation; when updating, just swapping the two versions of matrices;
+2. note that the two operation matrices are congruent with $\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, so we only have to left- and right-multiply that $\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ (whose inverse is itself) if we need to toggle, which is effectively flipping the row and column indices.
+
+##L. Road Construction
+
+> solved by sy_chen (3:29)
+
+This is basically a maximum matching problem: we need to find a matching where each non-cycle edge is assigned to a worker, and all cycle edges except at most one are assigned to workers. We may introduce a dummy worker for all cycle edges, and it is feasible if the new graph contains a perfect matching for all roads.
+
+#Replay
+
+To be added.
