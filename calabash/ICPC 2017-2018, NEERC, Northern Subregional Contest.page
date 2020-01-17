@@ -1,0 +1,96 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: ICPC 2017-2018, NEERC, Northern Subregional Contest
+
+Practicing Date: 2019.11.10
+
+Contest Link: [ICPC 2017-2018, NEERC, Northern Subregional Contest](http://codeforces.com/gym/101612)
+
+PDF Statements: [Statements](http://codeforces.com/gym/101612/attachments/download/6287/20172018-acmicpc-neerc-northern-subregional-contest-en.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [ICPC 2017-2018, NEERC, Northern Subregional Contest](https://github.com/wcysai/Calabash/tree/master/2017-2018%20ACM-ICPC%2C%20NEERC%2C%20Northern%20Subregional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Auxiliary Project
+
+> solved by Roundgod (0:08)
+
+For optimality, there are three possible choices: digit $1$, digit $4$, and digit $7$. Also, one should not choose more than one digit $1$, therefore we may brute force the answer.
+
+##B. Boolean Satisfability
+
+> solved by sy_chen (0:17)
+
+If both a variable and its negation appears as clauses, the answer is 2 raised to the power of the number of variables; otherwise, minus 1.
+
+##C. Consonant Fencity
+
+> solved by sy_chen (0:35)
+
+Build a complete graph where vertices are consonants and edges are weighted by the number of adjacent pairs of the two consonants. Then find a max-cut of the graph.
+
+##D. Dividing Marbles
+
+> upsolved by Roundgod
+
+Consider reversing the process, we'll gonna create the shortest [addition chain](https://en.wikipedia.org/wiki/Addition_chain) $a_{1}=1,a_{2},\dots,a_{k}=n$ that ends with $n=2^{d_1}+2^{d_2}+2^{d_3}+2^{d_4}$. An easy construction shows that the length of shortest addition chain that ends with $n$ should never exceed $s+t-1$, where $s$ is the number of binary digits of $n$ and $t$ is the number of $1$s in the binary representation of $n$, by constructing $2^{i}$ using repeated squaring and combine them into $n$. Therefore, we only need to find the addition chains with $a_{i}\leq 2^{i-2}$ using brute force. If we can't find one, construct using the method above. 
+
+##E. Equal Numbers
+
+> solved by Roundgod (1:40)
+
+Say that we want to transform some numbers into eqaul numbers, there are two cases, that also numbers changed are divisors of some other number, or else. Consider the two cases separately for the final answer.
+
+##F. Fygon 2.0
+
+> solved by Roundgod (3:43)
+
+Construct the directed graph with arcs representing partial relations, after combining strongly connected coimponents, the number of vertices in the graph indicates $k$. For finding $c$, one need to find out the number of possible permutations, which can be solved using bitmask dynamic programming.
+
+##G. Grand Test
+
+> solved by sy_chen (2:33 +1)
+
+Find any edge-biconnected component where edges are more than vertices. Then find any cycle in the component. Finally find a path connecting two vertices in the cycle.
+
+##H. Hidden Supervisors
+
+> solved by sy_chen (2:59)
+
+For each tree in the forest make a dynamic program to find out the maximum matching. If the removing the root of a tree won't affect the answer, we may connect it to any free vertex in some other tree to increase the answer. We may first work out all free vertices in all other trees. Then we may connect the root of some tree to a free vertex, and add all its free vertices; if there is no free vertex, make the root free. We may first connect the root of a tree with more free vertices.
+
+##I. Intelligence in Perpendicularia
+
+> solved by Roundgod (0:39)
+
+The answer is the perimter of the polygon minus the perimeter of the bounding box of the polygon.
+
+##J. Joker
+
+> upsolved by Roundgod
+
+After doing sqrt-decomposition, one need to maintain the convex hull for each block. Each operation can be viewed as changing on the suffix, rebuild the convex hull when needed. The time complexity is $O(n\sqrt{n}\log{n})$, if sorting every time when rebuilding the convex hull, which is already enough to pass. It can be further optimized to $O(n\sqrt{n\log{n}})$ if replacing the sort by a linear process that combines two sorted arrays.
+
+##K. Kotlin Island
+
+> solved by Roundgod (0:24)
+
+Enumerate all possible divisors of $n$ and check if it's possible.
+
+##L. Little Difference
+
+> solved by sy_chen (1:02 +1)
+
+If $n$ is a power of 2, the answer is -1. Otherwise, we may solve $x^2=n$ and $x(x+1)=n$; for more than 2 factors, just enumerate all possible factors up to $10^6$.
+
+#Replay
+
+To be added.
