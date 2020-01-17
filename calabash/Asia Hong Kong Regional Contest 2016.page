@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Asia Hong Kong Regional Contest 2016 
+
+Participation Date: 2019.11.06
+
+PDF Statements: No statements available
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Asia Hong Kong Regional Contest 2016](https://github.com/wcysai/Calabash/tree/master/Asia%20Hong%20Kong%20Regional%20Contest%202016)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Colourful Graph 
+
+> solved by sy_chen (4:15 +4)
+
+The answer is impossible if and only if there exists a color in the target coloring that does not appear in the initial coloring. If it is possible, we can first change the color of some vertices such that the multiset of all colors equals that in the target coloring. Then we can move each color to its correct position. We can swap the color of two adjacent vertices in one step. For simplicity, we may compute a spanning tree of the given graph, and make a leaf of the spanning tree colored correctly.
+
+##B. Doors
+
+> solved by sy_chen (1:12 +3)
+
+We may find some key points and key segments and compute the minimum distance between them.
+
+##C. Playing with Numbers 
+
+> solved by Roundgod (0:38 +2)
+
+WLOG, we show how to solve the maximum case. Since we can get both maximums on the exponents when we have at least $2$ lcm operations, we only need to take of the case when we have only $1$ lcm operation($0$ lcm operation is trivial). Enumerate on the number to save fot the lcm, precalculate the gcd of prefix/suffix, and take logarithms when comparing numbers.
+
+##D. Peak Tram
+
+> upsolved by Roundgod
+
+Observe that there are only $O(n^2)$ possible value of heights, therefore the problem can easily be solved using dynamic programming that runs in $O(n^4)$.
+
+##E. Peak Tower
+
+> upsolved by sy_chen
+
+The target function is piecewise quadratic with respect to time. We may find all $O(n^2)$ key time points and between any adjacent key time points compute the minimum of a quadratic function in a given interval. The latter task can be easily done in $O(n^2)$ time via sweep line, though faster algorithms do exist.
+
+##F. Perfect k-ary Tree
+
+> upsolved by Roundgod
+
+Since the height of a perfect k-ary tree cannot exceed $O(\log{n})$, we can apply dynamic programming on tree: $dp[i][j]$ be the number of perfect k-ary trees rooted at vertex $i$ with depth $j$. The transition is not hard. In order to count the number of perfect k-ary trees for each root, we need to do some computation of prefix/suffixes in order to propagate the $dp$ value from a vertex to its children. The time complexity should be $O(nk\log{n})$. Remember to reuse the space in order not to get Memory Limit Exceeded verdict.
+
+##G. Scaffolding
+
+> upsolved by Roundgod
+
+Consider the process backwards, and one can easily come up with a solution with interval dynamic programming. Notice that only intervals that can be represented by vertices on Descartes Tree matter. Build the Descartes Tree of the array and do dynamic programming on tree. Time complexity is $O(n)$.
+
+##H. Slim Cut 
+
+> solved by Roundgod (4:25 +2)
+
+Sort all edges by their weights and add then in decreasing order, then we need to maintain the knapsack-like results, which can be solved using divide-and-conquer(like in dynamic connectivity) and std::bitset. The time complexity should be $O(\frac{nm\log{m}}{w})$.
+
+##I. Special Tour 
+
+> upsolved by Roundgod
+
+Assume WLOG that $n\leq m$. If $n=1$, there exists a solution only when $m=5$ or $m\geq 10$, which the latter case can be constructed by combining two chains from both ends. Also, notice that when $m\geq 5$, we can unwrap the grid to reuse the construction when $n=1$. The other cases can be constructed manually.
+
+##J. Taboo 
+
+> upsolved by calabash_boy
+
+##K. Team Up
+
+> solved by Roundgod (1:30 +1)
+
+The relation described in the statement forms a tree structure, where a easy tree dynamic programming algorithm can apply. The time complexity is $O(m\log{m})$ due to the sorting process. 
+
+#Replay
+
+Boom.
