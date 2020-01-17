@@ -1,0 +1,85 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2017. Warsaw U Contest, XVII OpenCup Onsite
+
+Practicing Date: 2018.11.11
+
+Contest Link: [Petrozavodsk Summer-2017. Warsaw U Contest, XVII OpenCup Onsite](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001506)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Summer-2017.%20Warsaw%20U%20Contest%2C%20XVII%20OpenCup%20Onsite/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Petrozavodsk Summer-2017. Warsaw U Contest, XVII OpenCup Onsite](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Summer-2017.%20Warsaw%20U%20Contest%2C%20XVII%20OpenCup%20Onsite)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Connectivity
+
+> upsolved by calabash_boy
+
+For each point in each color's graph, we random a ULL value to it, representing as  weight[i][t]. then we accept each edge in time order, and using Union-Find-Set to maintain the connectivity, such that if fa[x] == fa[y] then, x and y is connected.
+For each point, we calculate $H[i] = \sum_{t=1}^{t<=T}{weight[fa[i]][t]}$, if $H[x] == H[y]$, then we consider x and y are connected in each color's graph. 
+
+##B. Hotter-colder
+
+> unsolved
+
+##C. Painting 
+
+> solved by sy_chen (0:57)
+
+First, preprocess the positions of first occurrence and last occurrence of each color which forms an interval. For every sequence of adjacent intervals, the stroke may extend left of right. One may use interval dynamic programming to decide the maximum cost. Since either the leftmost interval extends to right, or the rightmost interval extends to left, this is a 2D/0D dp.
+
+##D. Ones
+
+> solved by sy_chen (0:12)
+
+One may use the *2/+1 trick to construct arbitrary number.
+
+##E. Seats
+
+> upsolved by sy_chen
+
+To be added.
+
+##F. Ants
+
+> unsolved
+
+##G. Permutation
+
+> solved by sy_chen (3:20 +1)
+
+This can be done greedily by maintaining the increasing and decreasing sequences. If the current number can be appended to exactly one sequence, append it to that sequence. If it can be appended to none of the sequences, the answer is `NO`. If it can be appended to both sequences, considering the next number. If the next number is greater than the current number, append the current number to the increasing sequence, otherwise the decreasing one.
+
+##H. Primes
+
+> solved by Roundgod (0:52 +2)
+
+We count the contribution for each prime. For a prime $p$, let $x=\lfloor \frac{b}{p} \rfloor- \lfloor \frac{a-1}{p} \rfloor$, then its contribution to the answer is $\frac{x(x-1)}{2}$. Since there are not more than $2\sqrt{a-1}+2\sqrt{b}$ possible values of $x$, we can iterate over this value and thus calculate the answer. Total complexity: $O(q\sqrt{10^6})$.
+
+##I. Vertex Covers
+
+> unsolved
+
+##J. Scheduling
+
+> solved by sy_chen (2:57)
+
+Discretize the time and one may use network flow to solve this problem.
+
+##K. Shuffle 
+
+> solved by Roundgod (0:14)
+
+A shuffle actually reverses the array, so only the parity of $t$ matters.
+
+#Replay
+
+To be added.
