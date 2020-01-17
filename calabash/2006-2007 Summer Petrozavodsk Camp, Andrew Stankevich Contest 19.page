@@ -1,0 +1,86 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2006-2007 Summer Petrozavodsk Camp, Andrew Stankevich Contest 19
+
+Participating Date: 2019.07.09
+
+Contest Link: [2006-2007 Summer Petrozavodsk Camp, Andrew Stankevich Contest 19](https://codeforces.com/gym/100324)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC19/statements.pdf)
+
+Solution Link: [Code for 2006-2007 Summer Petrozavodsk Camp, Andrew Stankevich Contest 19](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC19)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Almost Palindromic Numbers
+
+> solved (2:44 +2)
+
+For the numbers that have less digit than the given number, one may precompute the number of almost palindromic numbers using some mathematical argument. The remaining part can be solved using digit dynamic programming.
+
+##B. Cartesian Tree
+
+> solved (1:39)
+
+One may see that all $x_i$ configurations are unique, and the one only matters is how to assign the $y_i$s such that the heap condition is satisfied. One can see that this equals to $\sum\limits_{v}\binom{l_{v}+r_{v}}{l_v}}$ where $l_v$ and $r_v$ and the number of vertices in the left subtree of $v$ and right subtree of $v$, respectively.
+
+##C. Casino
+
+> solved (4:11 +1)
+
+One may notice that the choices of lines doesn't matter, since all choices are independent and have the same expected winning. Therefore we only to compute the expected winnning for any choice of line, which is quite easy. Also note that Biginteger operations are needed.
+
+##D. DNA Analysis
+
+> solved (0:15 +1)
+
+Simple application of meet-in-the-middle techinique.
+
+##E. Formula 1
+
+> unsolved
+
+##F. Surface Genus
+
+> solved (3:06 +1)
+
+According to [Genus (mathematics)](https://en.wikipedia.org/wiki/Genus_(mathematics)), we only need to compute the Euler characteristic of the given triangulation, which can be done easily maintaining the set of vertices and edges.
+
+##G. Matrix Multiplication
+
+> solved (1:29 +9)
+
+This can be solved by [Freivalds' algorithm](https://en.wikipedia.org/wiki/Freivalds%27_algorithm) in $O(n^2)$, which is still to slow for the constraints of this problem. One should also use std::bitset to get accepted.
+
+##H. Colorful Pebbles
+
+> solved (0:34)
+
+A very elementary problem related to surreal numbers.
+
+##I. Princess Dilemma
+
+> solved (1:59)
+
+Another classical problem. The best strategy is to ignore first $r$ young men, and from now on, if some men is most handsome among all men that the princess already meete, pick him. Enumerate all possible $r$ to get the maximum answer. 
+
+##J. Crossing the River
+
+> upsolved
+
+View the final configuration as some segments in two sides of the river. One configuration is valid iff the following conditions hold:
+
+1. No two segments in the same side intersect
+
+2. The starting point and ending point is not srictly contained in any segment.
+
+Then we can start searching for the final answer. The answer isn't large since $f(16)=1011576$. Carefully implemented brute force should get accepted. Also one can hardcode all the answers.
+
+#Replay
+
+To be added.
