@@ -1,0 +1,91 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 Multi-University Training Contest 6
+
+Practicing Date: 2019.8.7
+
+Contest Link: [2019 Multi-University Training Contest 6](http://acm.hdu.edu.cn/contests/contest_show.php?cid=852)
+
+PDF Statements: No pdf statements available
+
+Participants:  sy_chen, calabash_boy, Roundgod
+
+Solution Link: [2019 Multi-University Training Contest 6](https://github.com/wcysai/Calabash/tree/master/2019%20Multi-University%20Training%20Contest%206)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Salty Fish
+
+> unsolved
+
+##B. Nonsense Time
+
+> solved by sy_chen (1:23 +2)
+
+The expected length of LIS of a permutation is $O(\sqrt{n})$. Hence, we may binary search for where the answer changes. Since finding the LIS takes $O(n \log n)$ time, the total time complexity is $O(n^{1.5} \log^2 n)$, which can pass this problem after some constant squeezing.
+
+The correct solution is to consider the reverse process. Deleting a number not in LIS won't change the answer. Otherwise, recompute the current LIS. The total time complexity is $O(n^{1.5} \log n)$.
+
+##C. Milk Candy
+
+> unsolved
+
+##D. Speed Dog
+
+> solved by sy_chen (3:31 +1)
+
+We may sort all tasks by $t_a / t_b$. Binary search for the point where the left part and the right part take the same time for the two people respectively. To dynamically answer the query, one may use Fenwick tree to maintain these numbers.
+
+##E. Snowy Smile
+
+> solved by Roundgod (1:41)
+
+Enumerate on the upper bound and lower bound, use segment tree to maintain maximum consecutive subarray sum. Time complexity is $O(n^2\log{n})$.
+
+##F. Faraway
+
+> solved by sy_chen (2:00)
+
+The $[0, m] \times [0, m]$ areas can be divided into $(n+1) \times (n+1)$ subareas. Each subarea has period $60 \times 60$.
+
+##G. Support or Not
+
+> unsolved
+
+##H. TDL
+
+> solved by Roundgod (0:33)
+
+It can be seen that $f(n,m)-n$ won't be too large. Enumerate this value and check if it's valid.
+
+##I. Three Investigators
+
+> upsolved by Roundgod
+
+Recall the method using Young's tableaux when computing the $k$-longest increasing subsequences, here we consider $a_i$ as $a_i$ duplicates of $a_i$ in the non-weighted version. Maintain numbers together with their counts in each row of the tableaux. It can be proved that the time complexity is $O(2^kn\log{n})$. 
+
+##J. Ridiculous Netizens
+
+> solved by sy_chen (3:59)
+
+##K. 11 Dimensions
+
+> solved by Roundgod (3:33 +5)
+
+It can be conjectured that only the last $O(\log{k})$ question marks matter. The remaining is routine work.
+
+##L. Stay Real
+
+> solved by Roundgod (0:18 +1)
+
+Just greedily take the leaf with maximum value.
+
+
+#Replay
+
+
