@@ -1,0 +1,119 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Winter-2019. Oleksandr Kulkov Contest
+
+Practicing Date: 2019.3.12
+
+Contest Link: [Petrozavodsk Winter-2019. Oleksandr Kulkov Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001537)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Petrozavodsk%20Winter-2019.%20Oleksandr%20Kulkov%20Contest./statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Petrozavodsk Winter-2019, Oleksandr Kulkov Contest](https://github.com/wcysai/Calabash/tree/master/Petrozavodsk%20Winter-2019.%20Oleksandr%20Kulkov%20Contest.)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Tritwise Mex
+
+> upsolved by sy_chen
+
+The problem asks to compute the "mex3" convolution of two sequences. We denote the convolution as $\circ$. Like FFT or FWT, we want to find some transformation $U$ and inverse transformation $V$, such that $a \circ b = V(U(a) \cdot U(b))$, where $\cdot$ means pointwise multiplication. The mex3 convolution for one digit is
+
+$$
+\begin{cases}
+c_0 = a_1b_1 + a_1b_2 + a_2b_1 + a_2b_2 \\
+c_1 = a_0b_0 + a_0b_2 + a_2b_0 \\
+c_2 = a_0b_1 + a_1b_0
+\end{cases}
+$$
+
+Unfortunately, such transformation does not exist in base-3 form. By introducing new variable, we may find such xform:
+
+$$
+\begin{cases}
+c_0 = (a_1 + a_2)(b_1 + b_2) \\
+c_0 + c_1 + c_2 = (a_0 + a_1 + a_2)(b_0 + b_1 + b_2) \\
+c_1 + c3 = (a_0 + a_2)(b_0 + b_2) \\
+c_3 = a_2b_2
+\end{cases}
+$$
+
+
+##B. Associativity Degree
+
+> unsolved
+
+##C. Medium Hardron Collider
+
+> unsolved
+
+##D. Basis Change
+
+> solved by sy_chen (2:53 +1)
+
+Let $x_i$ denote the vector $[F_i; F_{i+1}; \cdots; F_{i+k-1}]$. There exists linear transformation $M$ such that $x_{i+1} = Mx_i$ We have
+
+1. $x_n = M^n x_0$
+2. $x_n = \sum_{i=1}^k c_i M^{n-b_i} x_0$
+
+Randomly pick $x_0$ and take sufficient large $n$, we may set up a system of linear equations, which may be solved in cubic time. To obtain the equations, one may preprocessing $M$ raised to the power of $2^i$ in $O(k^3 \log n)$ time, and $M^{n-b_i} x_0$ can be transformed into some matrix-vector multiplications, which can also be done in $O(k^3 \log n)$ time.
+
+##E. Scored Nim
+
+> solved by Roundgod (0:03)
+
+One can find that the color of heaps with more than stones doesn't matter, therefore each person can guarantee one stone at each time, therefore the answer is $\lceil\frac{\sum\limits_{i=1}^{n}a_i}{2}\rceil$.
+
+##F. Milliarium Aureum
+
+> solved by Roundgod (3:23 +2)
+
+Consider each minor edge $(u,v)$, if the minimum weight along the tree path from $u$ to $v$(let's denote it as $x$) is not less than the weight of the minor edge, then it's useless. Otherwise all vertices than can reach $u$ or $v$ with weights greater than $x$ are unavailable to become Rome.
+
+Therefore, we can view those minor edges as queries, then after precomputing each of the $x$s using binary lifting in $O(n\log{n})$, we should solve it offline: Add edges in the decreasing order of weights and maintain a disjoint set union. We need to ass some tags to mark a set of vertices as unable to become Rome, which can be implemented in $O(n\log{n})$ using small-to-large technique.
+
+Overall time complexity: $O(n\log{n})$.
+
+##G. Permutant
+
+> unsolved
+
+##H. Game of Chance
+
+> solved by Roundgod (0:51 +1)
+
+Apparently, for some prefix of small numbers, one should choose to keep the choice and for other large numbers one should yield the choice and take the number.
+
+Assume the strategy is to yield when the number is among the $k$-largest. After establishing the equation one would get the expected difference $E=m+\frac{1}{2}-(\frac{k}{2}+\frac{m^2+m}{4k})$, which reaches its peak when $4k^{2}=2(m^2+m)$. Use binary search to check the two nearest integer $k$s from the peak. Use integer calculation to avoid precision issues.
+
+Time complexity: $O(t\log{m})$.
+
+##I. Incomparable Pairs
+
+> unsolved
+
+##J. The Zong of The Zee
+
+> solved by Roundgod (4:28 +4)
+
+If all positions are determined, note that for each column, we should match its prefix of length $n-1$ with suffix of length $n-1$ of some other column, then the answer is the product over the factorial of size over all such equivalence classes. Use hash to check such equivalence classes.
+
+If we can't determine the symbol some question marks are representing, one thing to be sure is that they all represent some same symbol. We can check all possible choices and erase the overcountings. Also, since there are at mose one question mark for each row, we can easily propagate the hash values in $O(\vert \Sigma \vert)$ time, where $\vert \Sigma \vert$ is the alphabet size.
+
+Overall time complexity: $O(n^2+n\vert \Sigma \vert)$.
+
+##K. Expected Value
+
+> solved by sy_chen (0:07 +1)
+
+The answer is $a_1 - a_2$.
+
+#Replay
+
+To be added.
