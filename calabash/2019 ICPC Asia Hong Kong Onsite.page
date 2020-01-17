@@ -1,0 +1,75 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 ICPC Asia Hong Kong Onsite
+
+Practicing Date: 2019.12.11
+
+Contest Link: [2019 ICPC Asia Hong Kong Onsite](https://codeforces.com/gym/102452)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2019%20ICPC%20Asia%20Hong%20Kong%20Onsite/statements.pdf)
+ 
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2019 ICPC Asia Hong Kong Onsite](https://github.com/wcysai/Calabash/tree/master/2019%20ICPC%20Asia%20Hong%20Kong%20Onsite)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Axis of Symmetry
+
+> solved by sy_chen (4:25 +2)
+
+##B. Binary Tree
+
+> solved by sy_chen (0:29 +1)
+
+##C. Constructing Ranches
+
+> upsolved by calabash_boy
+
+##D. Defining Labels
+
+> solved by Roundgod (0:38 +1)
+
+Carefully implement it.
+
+##E. Erasing Numbers
+
+> solved by Roundgod (4:19 +3)
+
+For each position we want to know if it can remain until last. Let's denote numbers less than this number as $0$ as numbers larger than this number as $1$, this number can remain if we can make number of $0$s less than or equal to the number of $1$s, and we can make number of $1$s less than or equal to the number of $0$s, both of which can be checked in $O(N)$ time. Therefore the overall complexity is $O(N^2)$.
+
+##F. Falling Objects
+
+> unsolved
+
+##G. Game Design
+
+> solved by sy_chen (1:01 +1)
+
+##H. Hold the Line
+
+> unsolved
+
+##I. Incoming Asteroids
+
+> upsolved by Roundgod
+
+By setting alarms at threshold $\lceil \frac{y}{k} \rceil$, the number remains at most $\frac{2}{3}$ each time, therefore the time complexity is $O(m\log{m}\log{y})$ if maintaining by std::set.
+
+##J. Junior Mathematician
+
+> solved by Roundgod (1:44 +2)
+
+Digit dynamic programming, optimize a lot to get it passed.
+
+##K. Key Project
+
+> unsolved
+
+
+#Replay
