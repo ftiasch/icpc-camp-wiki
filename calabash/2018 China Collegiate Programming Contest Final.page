@@ -1,0 +1,83 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2018 China Collegiate Programming Contest Final
+
+Participation Date: 2018.11.25
+
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/2018%20China%20Collegiate%20Programming%20Contest%20Final%20(CCPC-Final%202018)/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for 2018 China Collegiate Programming Contest Final](https://github.com/wcysai/Calabash/tree/master/2018%20China%20Collegiate%20Programming%20Contest%20Final%20(CCPC-Final%202018))
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Mischievous Problem Setter
+
+> solved by Roundgod (0:09 +1)
+
+Just simulate the process.
+
+##B. Balance of the Force
+
+> solved by sy_chen (2:27 +1)
+
+To be added.
+
+##C. GCD Land
+
+> unsolved
+
+##D. Cube
+
+> upsolved by Roundgod
+
+Hardcore tree dynamic programming. One need to record for each vertex: the answer in this subtree if this vertex is visited once, the answer in this subtree if this vertex is visited twice ,the probability of going to the father,the expectation if never returning to the father. Refer to the code with comments for more details. 
+
+##E. Mr. Panda and Cactus
+
+> unsolved
+
+##F. Cones
+
+> unsolved
+
+##G. Pastoral Life in Stardew Valley
+
+> solved by sy_chen (0:41)
+
+To be added.
+
+##H. Game on the Tree
+
+> unsolved
+
+##I. Cockroaches
+
+> solved by sy_chen (3:15 +2)
+
+To be added.
+
+##J. Mr. Panda and Sequence Puzzle
+
+> unsolved
+
+##K. Mr. Panda and Kakin
+
+> solved by sy_chen (4:11 +1)
+
+To be added.
+
+##L. Ultra Weak Goldbach’s Conjecture
+
+> solved by sy_chen (0:36)
+
+To be added.
+
+#Replay
