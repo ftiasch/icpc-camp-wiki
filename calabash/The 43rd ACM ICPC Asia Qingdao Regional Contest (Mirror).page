@@ -1,0 +1,90 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia Qingdao Regional Contest (Mirror)
+
+Participation Date: 2018.11.10
+
+PDF Statements: [Statements](http://acm.zju.edu.cn/contest-materials/qd2018/qd2018_problems.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for The 43rd ACM ICPC Asia Qingdao Regional Contest (Mirror)](https://github.com/wcysai/Calabash/tree/master/The%2043rd%20ACM%20ICPC%20Asia%20Qingdao%20Regional%20Contest%20(Mirror))
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Sequence and Sequence
+
+> unsolved
+
+##B. Kawa Exam
+
+> unsolved
+
+##C. Flippy Sequence
+
+> solved by Roundgod (0:18)
+
+Just some simple case analysis. 
+
+##D. Magic Multiplication
+
+> solved by sy_chen (1:53)
+
+This is a quite interesting problem. The key point is, the result of multiplications $ax$, where $a$ is a fixed digits and $x$ varies over all possible single digits, form a prefix code. Hence, we may try what $a_0$ is, and restore $b$, and then restore the entire $a$. Note that there are some special cases, e.g. $a = 0$ or $b = 0$.
+
+To be added.
+
+##E. Plants vs. Zombies
+
+> solved by Roundgod (2:55)
+
+Binary search on the answer, the we may calculate for each grid, how many times we need to jummp on it. One can find out the optimal answer can be constructed by jumping between two consecutively grids repeatedly, thus the checking process can be done in $O(n)$ time. Overall time complexity: $O(n\log{n})$.
+
+##F. Tournament
+
+> solved by sy_chen (3:59 +1)
+
+Note that the maximum number of possible rounds is lowbit(n) - 1. Change the numbers to 0-based form, and we may discover that the result is the multiplication table of xor without the first row.
+
+##G. Repair the Artwork
+
+> unsolved
+
+##H. Mirror
+
+> unsolved
+
+##I. Soldier Game
+
+> unsolved
+
+##J. Books
+
+> solved by sy_chen (1:18 +2)
+
+First remove all 0s since they are always bought. The result is the sum of first $m$ items, plus the minimum of the remaining ones, minus 1.
+
+##K. Airdrop
+
+> unsolved
+
+##L. Sub-cycle Graph
+
+> solved by Roundgod (2:18 +1)
+
+If $m>n$ then the answer is clearly $0$. if $n=m$, then the answer is the number of simple cycles with $n$ vertices, which is $\frac{(n-1)!}{2}$. Otherwise, let $f(x)=\sum\limits_{i\geq 0}\frac{a_{i}}{i!}x^{i}$ be the exponential generating function of a chain with $i$ vertices, then we have the coefficients $a_{0}=0,a_{1}=1$ and $a_{i}=\frac{1}{2}$ for all $i\geq 2$. The answer lies in $[x^{n}](f(x))^{n-m}$. Enumerate on the number of occurences of $a_{1}$, the remaining part is the number of integer solutions of a equation, which can be represented by a binomial coefficent. Time complexity: $O(n)$.
+
+##M. Function and function
+
+> solved by sy_chen (0:05)
+
+After a few iterations the value may trap into the loop of 0 and 1. Hence the parity decides what the value is.
+
+#Replay
+
+To be added.
