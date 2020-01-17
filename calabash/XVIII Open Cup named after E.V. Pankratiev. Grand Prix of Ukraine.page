@@ -1,0 +1,109 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ukraine
+
+Practicing Date: 2018.11.07
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ukraine](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010396)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Ukraine/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Grand Prix of Ukraine](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Grand%20Prix%20of%20Ukraine)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Accomodation Plan
+
+> upsolved by Roundgod
+
+First, to avoid counting repetitively, one should only count a way to arrange guests by the possible room with the lowest depth. That is, for each vertex $v$ we should count two numbers: $a$, which represents how many vertices are of distance less than or equal to $L$ with $v$; and $b$, which represents how many vertices are of distance less than or equal to $L$ with both $v$ are its parent. Then the answer is $\sum\limits_{v}\binom{a}{K}-\binom{b}{K}$.
+
+To calculate $a$, one can use centroid decomposition, time complexity is $O(n\log{n}^{2})$ due to the sorting process.
+
+It may not be easy to directly calculate $b$, but one can find $a-b$ easily for each vertex $v$, since it is just the number of vertices in its subtree with depth in range $(dep_{v}+L-dis(v,fa(v)),dep_{v}+L]$. By euler ordering, this problem can be reduced to 'counting points on a 2d plane', which can be solved in $O(n\log{n})$ with offline scanline technique, using a binary indexed tree to maintain values.
+
+Overall complexity:$O(n\log^{2}{n})$.
+ 
+##B. Card Game
+
+> solved by Roundgod (0:17 +1)
+
+Iterate over all possible divisors of $n$ to check if it's valid. Time complexity: $O(\sqrt{n})$. 
+
+##C. The most expensive gift
+
+> solved by calabash_boy (3:05 +1)
+
+According to the Pigeonhole Principle, there is a character's occurence is at least $n/3$, so the answer is at least $\frac{n^2}{9}$, then if some subsequence's answer is bigger than $\frac{n^2}{9}$, then it should sitisfy $\frac{N^2}{9} <= \frac{L^2}{C} <= \frac{N^2}{C}$
+, which means $C<= 9$, so we  enumerate C from 1 to 9 and for some C, $3^C$ enumerate every possible period to find the biggest answer.
+
+##D. Cut the Cake
+
+> solved by Roundgod (0:35)
+
+By counting horizontally and vertically, the places of the cut can be uniquely determined. Check if there's exactly one candle in each area.
+
+##E. Message 
+
+> unsolved
+
+##F. Bad Word
+
+> solved by calabash_boy (1:22)
+
+To be added.
+
+##G. Zenyk, Marichka and Interesting Game
+
+> solved by Roundgod (1:20)
+
+If $A=B$, then the problem is reduced to the case where each player is allowed to take only one stone, check the parity will do.
+
+Otherwise, let's assume $A>B$, for each pile of stone we take it modulo $(A+B)$. If the remainder $r$ satisfies $B\leq r <A$, then Marichka wins the game. If $r<B$, we ignore this pile. Else $r\geq A$ and $r \geq B$, if $r\leq 2B$, then this pile can be consider as one extre stone, otherwise Zenyk must take this pile on the first turn, otherwise if Marichka does, it will become  $B\leq r <A$. Do some case analysis to find out the final answer.
+
+When $A<B$, the case analysis is similar, with some simple modifications.
+
+##H. Frog Jumping
+
+> solved by Roundgod (3:02)
+
+If $d\geq n-1$, the the answer is definitely $0$.
+
+Otherwise, if there's a path from $1$ to $n$, with each jump distance less than or equal to $d$, then there exists a way to step on all needed stones, the problem is how many frogs can be send to stone $n$ with zero cost. This can be reduced to a maximum flow problem, however, by maximum flow-min cut theorem, the answer is just the minimum stones in an interval of length $d$, so a two pointer technique would work in this case.
+
+If there's no path from $1$ to $n$, then we'll just send the frog with the lowest cost to step on all stones.
+
+##I. Slot Machine
+
+> upsolved by sy_chen 
+
+First we may remove all duplicated colors in a box, since if we get two same colors, we win. 
+
+There are actually two strategies: repeatedly get balls from a same box where two identical balls exist, expecting we get two identical colors. This takes "the number of different colors plus one" draws in worst case. The second is to draw some (different) colors from a box, then draw another ball from another box.
+
+##J. Half is Good
+
+> solved by sy_chen (3:52 +2)
+
+For each vertex, record the minimum weight edge incident to that vertex. All these vertices contributes to at least half of the edges of the minimum spanning tree. This runs in linear time.
+
+##K. Dance
+
+> unsolved
+
+##L. Impress Her
+
+> solved by sy_chen (1:38)
+
+The tricky part of the problem is the condition that "all cells which contain the same value are 4-side connected". This implies that if the minimum bounding box of a color is $m \times n$, then there are at least $O(m + n)$ cells of this color. So, we may check all cells in the minimum bounding box brute force, then find out the number of different colors that entirely lie in the box. This implies an overall cubic time solution, with a small constant factor.
+
+#Replay
+
+To be added.
