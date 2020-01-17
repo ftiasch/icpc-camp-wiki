@@ -1,0 +1,116 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: The 43rd ACM ICPC Asia Nanjing Regional Contest (Unofficial Participation)
+
+Participation Date: 2018.10.14
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/The%2043rd%20ACM%20ICPC%20Asia%20Nanjing%20Regional%20Contest/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for The 43rd ACM ICPC Asia Nanjing Regional Contest](https://github.com/wcysai/Calabash/tree/master/The%2043rd%20ACM%20ICPC%20Asia%20Nanjing%20Regional%20Contest)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.
+
+##A. Adrien and Austin
+
+> solved by sy_chen (0:02)
+
+If $N\leq K$, then Adrien is sure to win because he can take all the stones in the first move.
+
+Otherwise, if $K\geq 2$, the Adrien also wins because he can separate the stones into two equal parts and copy the opponent's move.
+
+If $K=1$, Adrien only wins if and only if $N$ is odd, due to the same reason.
+
+##B. Tournament
+
+> upsolved by Roundgod
+
+This problem this problem aims to seperate an array into $k$ parts, such that the sum over the distance of every position to the median of its part is minimal. To solve this kind of problem in less than $O(nk)$ time, we must assume that it satisfies the inequality $ans(i)-ans(i-1)\leq ans(i+1)-ans(i)$, and therefore we can do a binary search on the slope.
+
+And thus, the problem is reduced to the version of no restriction on the number of parts, and thus we may let $dp_{x}$ denote the answer for the first $x$ numbers, and the transferring equation is $dp_{i}=\min\limits_{j<i}dp_{j}+f(j+1,i)+k$ where $k$ is the slope we have binary searched on, $f(l,r)$ is the cost of an interval with is exactly $f(l,r)=sum_{r}-sum_{mid}-sum_{mid-1}+sum_{l-1}$ where $sum$ is the array of partial sum and $mid=\lfloor\frac{l+r}{2}\rfloor$.
+
+Apparently we should solve this DP in less than $O(n^{2})$ time. An observation is that this DP satisfies quadruple inequality: that is, for any $l\leq a\leq b\leq r$, $f(a,b)+f(l,r)\leq f(l,a)+f(b,r)$, and therefore we can use a well-known technique to solve it in $O(nlog{n})$ time by maintaining the possible interval for each decision, and use a deque and binary search when tranferring, the overall complexity is $O(n\log{n}^{2})$. Also, this problem can be solved in $O(n\log{n})$, either by applying an $O(n)$ time algorithm for solving dynamic programming satisfying quadruple inequality, or apply Conxex Hull Trick.
+
+##C. Cherry and Chocolate
+
+> unsolved
+
+##D. Country Meow
+
+> solved by sy_chen (1:48)
+
+Since the input size and error tolerance are really generous, this problem can be passed by some standard optimization algorithm, e.g., simulated annealing, stochastic gradient descent or hill climbing.
+
+However, the target function is convex with respect two all three dimensions, hence this can be solved by a triple nested ternary search, which runs in $O(n \log^3 \epsilon^{-1})$. One can also use the random incremental construction for minimum bounding sphere, which runs in expected linear time, but this is much harder to implement.
+
+
+##E. Eva and Euro coins
+
+> solved by sy_chen (4:54 +1)
+
+Eliminate every $k$ consecutive identical coins greedily. If the resulting strings are equal, then the answer is `Yes`; otherwise the answer is `No`.
+
+##F. Frank
+
+> unsolved
+
+##G. Pyramid
+
+> solved by sy_chen (0:45 +1)
+
+One can easily find out that the answer is $\binom{n+3}{4}$ using some combinatorics.
+
+##H. Huge Discount
+
+> solved by Roundgod (4:08 +4)
+
+One should note that if the number $d$ of one digit exceed $x$ half the number of all digits $len$, the remaining sequence should be $2x-len$ consecutive $d$s. Otherwise, we can always eliminate the sequence until there's only one or none. One case that may lead to problem is when we are left with only one digit, we need to check if we can leave a 0 or 1. This can be done by a segment tree. Also, since the constant can be optimized to about $\frac{1}{32}$, an $O(n^{2})$ solution can also pass.
+
+##I. Magic Potion
+
+> solved by Roundgod (1:27)
+
+A very easy flow problem. The construction of the graph is trivial.
+
+##J. Prime Game
+
+> solved by Roundgod (0:27)
+
+Solve for each prime number separately. For a prime, its contribution is $\frac{n(n+1)}{2}$ minus the number of intervals that it is not present, which can be calculated by looking at the interval of its adjacent occurences. 
+
+##K. Kangaroo Puzzle
+
+> solved by sy_chen (3:58 +2)
+
+The key observation is that, once two kangaroos stand in the same position, it is impossible to separate them. So we can repeatedly merging two kangaroos. To merge two kangaroos, just run bfs to find the shortest instruction sequence, since the number of states is not too big.
+
+Actually, a randomly generated sequence of length 40000 can pass this problem, and this is practically unhackable.
+
+##L. Lagrange the Chef
+
+> upsolved by Roundgod
+
+Without loss of generality, let's set $b_{i}=\begin{cases} 0&a_{i}=X\\ 1&a_{i}=Y\\ 2&otherwise\\ \end{cases}$, then we aim to move some elements of array $b$ such that no pair of $0$ and $1$ is adjacent.
+
+Then we basically need to pull some $0$s, some $1$s, and some $2$s out and then insert them back. The answer equals to the number of elements pulled out. We need to handle cases when we need to pull out all $0$s or all $1$s specially. After that, we may assume that at least one $0$ and at least one $1$ is unmoved. So we assume that intially all $2$s are pulled out, then we can do the dynamic programming as follows: $dp_{now,rem,last,mask}$ represents we are currently at element $now$, there are still $rem$ $2$s to be inserted, the most recent element is $last$, and a two-bit mask $mask$ is used to represent whethrer there is at least one $0$ and one $1$ unmoved. Say that the number of $2$s in the array is $cnt_{2}$, then we may initialize the dp with $dp_{0,cnt2,2,0}=cnt2$, then final answer is $\min\limits_{i=0}^{cnt2}dp_{n,i,0/1/2,3}$. Remember to take the cases when we need to pull out all $0$s or all $1$s into consideration.
+
+
+##M. Mediocre String Problem
+
+> solved by calabash_boy (2:03 +5) 
+
+reverse S, for every suffix in S, use Hash or EX-KMP to  calculate the LCP between this suffix and T. 
+
+Secondly, for every pos X, use Manacher to calculate the number of palindromes starting from pos X.
+
+The answer equals to the sum of number of palindromes starting from pos X multiplied by LCP between Suffix[x] and T.
+
+#Replay
+
+
