@@ -1,0 +1,94 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Warsaw U Contest, Urozero 2015 Day 4
+
+Practicing Date: 2018.11.15
+
+Contest Link: [Warsaw U Contest, Urozero 2015 Day 4](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=006256)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/Warsaw%20U%20Contest%2C%20Urozero%202015%20Day%204/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for Warsaw U Contest, Urozero 2015 Day 4](https://github.com/wcysai/Calabash/tree/master/Warsaw%20U%20Contest%2C%20Urozero%202015%20Day%204)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Salad Bar
+
+> solved by Roundgod (1:15)
+
+First for every position $i$ we want to calculate $L_{i}$ and $R_{i}$, that is, the last position we can extend from $i$ to the left/right, then we need to find the maximum $j-i+1(i<=j)$ satisfying $L{j}\leq i$ and $R{i}\geq j$, which can be easily solved using a set in $O(n\log{n})$ time.
+
+##B. Hotels
+
+> upsolved by sy_chen
+
+To be added.
+
+##C. Bricks
+
+> solved by sy_chen (2:36 +4)
+
+This constructive problem can be passed by some sort of greedy algorithm. We may scan from left to right and choose the most frequent number from the remaining numbers which can select. If multiple most frequent numbers exist, choose any one differs from the number of right border. Finally check if the resulting sequence is valid. Note that one may need special check for small length.
+
+##D. Couriers
+
+> solved by sy_chen (0:54 +3)
+
+There are two ways to solve this problem. The way I used during the contest is randomization. We may draw a number in specified range uniformly at random, and check if it is a dominating number. Repeat this procedure for about $\Theta(\log m)$ times. If a number is dominating, then with the probability of at least $1/2$ we may get that number in a draw. Hence this answers all queries correctly with high probability. A naive implementation may get TLE due to the large size of test data. However, if we make some optimization, e.g. skip the number that we have already checked, the program can run within time limit.
+
+Another way to solve this problem is based on the so-called *Boyer-Moore majority voting algorithm*. Since the state of the algorithm is mergable, we may use some data structure to merge the information and check whether the result is indeed a dominating number.
+
+##E. Solar Lamps
+
+> upsolved by Roundgod
+
+First, we may rearrange the coordinates such that the lamp at $(x,y)$ will illuminate the lamp at $(x',y')$ if and only if $x\leq x'$ and $y \leq y'$. The case when the two rays are collinear are a special and should be treated differently, without much effort.
+
+Then, let $solve(l,r,S)$ denote that the current set of lamps to which the time interval of their time to produce light is in the interval $[l,r]$. To form a transition, we let $mid=(l+r)/2$ and make all lights in the set with time $\leq mid$ produce light, and then use an offline sweepline+fenwick tree technique to check if other lights may produce light, we can therefore separate the sets into two sets $S_{1}$ and $S_{2}$, depending on whether they will produce light before time $mid$ or not, then call $solve(S_{1},l,mid)$ and $solve(S_{2},mid+1,r)$ separately, the time complexity is $O(n\log^{2}{n})$. 
+
+##F. Solar Panels
+
+> solved by Roundgod (0:12)
+
+We want to find the maximum $g$, where exists $x\in [a,b]$ and $y\in [c,d]$ such that $g=gcd(x,y)$, which is equivalent to find the maximum $g$ such that both $\lfloor \frac{b}{g} \rfloor - \lfloor \frac{a-1}{g} \rfloor>0$ and $\lfloor \frac{d}{g} \rfloor - \lfloor \frac{c-1}{g} \rfloor>0$, since there are no more than $O(\sqrt{a}+\sqrt{b}+\sqrt{c}+\sqrt{d})$ possible values, we can iterate over it and find the maximum answer.
+
+##G. Criminals
+
+> solved by Roundgod and sy_chen (3:40 +3)
+
+Note that each color can only appear once in the robbing sequence, so we can record the appearance of each color in the original array and iterate over the array to find out the possible prefix and suffix for each ending position. The only thing left is to calculate the number of valid positions, which also can be computed by iterating over the array. Overall complexity: $O(\sqrt{n})$, be careful with the memory limit. 
+
+##H. Rally
+
+> upsolved by sy_chen
+
+First, relabel each vertex according to topological order. For each vertex $u$, we may find out the length of longest path starting at $u$ (ending at $u$, resp.), denoted by $d_s[u]$ ($d_t[u]$, resp.). For each edge $uv$, maximize $a[x] (u \leq x \leq v)$ to $d_s[u] + d_t[v] + 1$. The value $a[x]$ denotes the longest path after removing vertex $x$. $a[x]$ needs to be initialized with longest paths in vertices $1$ to $x-1$ and $x+1$ to $n$.
+
+##I. Supercomputer
+
+> upsolved by Roundgod
+
+After a few trials, one may found that the optimal solution always work like this: Before we finish picking all vertices of depth less than or equal to some fixed depth $d$, we can pick all of them in $d$ moves, and after that we can pick $k$ vertices at a time. denote $s_{i}$ as the number of vertices that has depth $\geq i$, the answer is simply $\max\limits_{i=0}^{maxdepth} i+\lfloor\frac{s_{i+1}}{k}\rfloor=\max\limits_{i=0}^{maxdepth}\lfloor\frac{ki+s_{i+1}}{k}\rfloor$. One can easily see that this problem can be reduced to: given some set of lines $y=kx$ on the plane, each time find the maximum $y$ at some given $x$ coordinate, which can be solved using Convex Hull Trick in $O(n\log{n})$ time.
+
+##J. Tourism
+
+> upsolved by Roundgod
+
+For each connected component, root the tree at any vertex, by the condition given in the statement, the depth of the tree should be no more than 10(actually we can purposefully choose the root to make the depth of the tree no more than 5, but rooting at an arbitrary vertex is enough to solved this problem). We encode the state $S$ as a ternery number, where for each bit, $0$ represent that this vertex this chosen, $1$ represent that this vertex is not chosen, but yet covered, and $2$ represent that this vertex is neither chosen nor covered. Let $dp_{v,S}$ denote the minimum cost if we are currently at vertex $v$, and the state of each vertex on the chain is encoded as $S$, from top to bottom. To do the transferring, then we can use the trick when optimizing knapsack on tree: do the dynamic programming in the order of depth first search. When currently visiting a vertex, propagate the $dp$ value of the father to the son, and when returning to the father, update the $dp$ value of the father using the $dp$ value of the son. The time complexity is $O(3^{10}(n+m))$, but this is a very loose upper bound, so the solution should pass.
+
+##K. Freight
+
+> upsolved by Roundgod
+
+First, we can make $a_{i}=max(a_{i-1}+1,a_{i})$ without affecting the answer, so that $a_{i}$ becomes strictly increasing. Let $dp_{i}$ denote the minimum time needed for the first $i$ trains to finish, the transferring is simple: $dp_{i}=\min\limits_{j<i}\{\max(dp_{j}+i-j-1,a_{i})+2s+i-j-1\}$, also can be rewritten as $dp_{i}=\min\limits_{j<i}\{\max(dp_{j}-j-1,a_{i}-i)+2s+2i-j-1\}$. Noting that $a_{i}$ is strictly increasing, therefore $a_{i}-i$ is not decreasing, therefore we can maintain two sets for the cases where $dp_{j}-j-1\leq a_{i}-i$ and $dp_{j}-j-1> a_{i}-i$, then the $dp$ value lies in the smaller of two. However, due to the strict memory limit, this may not get accepted. Another observation is that $dp_{i}-dp_{i-1}\geq 2$, therefore both $dp_{j}-j-1$ and $dp_{j}-2j-1$ is not increasing, therefore the optimal choice for $j$ is the peak of a unimodal function, and the optimal choice for $j$ never decreases, therefore a solution with $O(n)$ time and small memory usage is obtained.
+
+#Replay
+
+To be added.
