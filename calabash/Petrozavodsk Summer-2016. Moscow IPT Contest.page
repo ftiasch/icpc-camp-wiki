@@ -1,0 +1,82 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: Petrozavodsk Summer-2016. Moscow IPT Contest
+
+Participating Date: 2019.08.19
+
+Contest Link: [Petrozavodsk Summer-2016. Moscow IPT Contest](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=001483)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Petrozavodsk%20Summer-2016.%20Moscow%20IPT%20Contest/statements.pdf)
+
+Solution Link: [Code for Petrozavodsk Summer-2016. Moscow IPT Contest](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Petrozavodsk%20Summer-2016.%20Moscow%20IPT%20Contest)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A.  Almost Longest Increasing Subsequence
+
+> solved (0:33 +3)
+
+It's proven that the expected length of LIS of a random permutation is $O(\sqrt{n})$, so we can take this as an estimate and each time make a decision towards the larger expected value. Also use a binary indexed tree to efficiently calculate how many larger numbers still exist.
+
+##B. Bitwise Queries
+
+> solved (4:30)
+
+A typical application of [Segment Tree Beats](https://codeforces.com/blog/entry/57319). Maintain the common bitmasks of $0$s and $1$s in each interval, put tags whenever we can, and return whenever we can. It can be proved that the time complexity is $O(q\log{n}\log{A})$ where $A=2^{30}$.
+
+##C. Cocktails
+
+> solved (3:02 +2)
+
+Imagine first choose which intervals to cover and then sawpping jars(clearly we should swap jars of larger cost into chosen intervals), which gives rise to the following dynamic programming solution: Let $dp_{i,j,k}$ be the smallest time needed if we are currently at $i$th jar, the next $j$ jars are covered, and there are $k$ jars to be swapped into the chosen intervals(negative $k$ represents that $-k$ jars should be swapped outside the chosen intervals). With index shifting to represent negative indices, the problem can be solved in $O(n^3)$.
+
+##D. Downhill
+
+> solved (0:46 +1)
+
+Go in reverse direction and keep the rope in a way that it's the longest.
+
+##E. Expected LCP
+
+> solved (1:43)
+
+The answer is $\sum\limits_{i=1}^{\infty}Prob(f(s_1,s_2,\dots,s_n)\geq i)=\sum\limits_{i=1}^{\infty}(1-\frac{\binom{2^i}{n}}{(2^i)^n})$.
+
+By expanding the numerator and maintain the coefficient of $\frac{(2^{i})^x}{(2^i)^n}$ for each $x$ and calculate them as a geometric progression, we can easily solve the problem in $O(n^2)$.
+
+##F. Finite Walking
+
+> unsolved 
+
+##G. Guess the Distribution
+
+> unsolved
+
+##H. Hash Table
+
+> unsolved
+
+##I. Immigration
+
+> unsolved
+
+##J. Jumping on a Tree
+
+> upsolved
+
+Use long path decomposition to maintain the information and use DSU to merge vertices in the same class. The complexity should be $O(n)$.
+
+##K. King's Roads
+
+> solved (1:33 +1)
+
+Apply Boruvka's algorithm for computing minimum spanning trees. Each time for each connected component compute the minimum weight of edge connected to itb. Trivially this takes $O(n\log{n})$ each time. But if we sort the vertices according to there weights beforehand, and each time precomputing the vertex with a minimum weight in a different compute, then using two-pointers technique, the running time for each phase can be reduced to $O(n)$. Therefore the overall running time is $O(n\log{n})$.
+
+#Replay
+
+To be added.
