@@ -1,0 +1,98 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 12
+
+Participating Date: 2019.05.02
+
+Contest Link: [2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 12](https://codeforces.com/gym/100215)
+
+PDF Statements: [Statements](https://github.com/wcysai/CodeLibrary/blob/master/Contests/Andrew%20Stankevich%20Contests/ASC12/statements.pdf)
+
+Solution Link: [Code for 2004-2005 Winter Petrozavodsk Camp, Andrew Stankevich Contest 12](https://github.com/wcysai/CodeLibrary/tree/master/Contests/Andrew%20Stankevich%20Contests/ASC12)
+
+#Editorials
+
+Below are the editorials provided by Roundgod, refer to the solution link for more details.  
+
+##A. Brackets
+
+> solved (0:44 +4)
+
+Really nice problem. Similar to the process when computing regular bracket sequences, we need to maintain a stack of left brackets, also one need to store in each position what is the longest bracket sequence ending at it for the maximum answer.
+
+##B. Dividing a Chocolate
+
+> solved (1:20)
+
+Consider the process backwards, one may notice that if in the end the size of the chocolate is $a\times b$, then the original chocolate is $f(x)a\times b$, where $x$ is some fibonnaci number. Check all possible $f(x)$s for the answer.
+
+##C. Thermal Death of the Universe
+
+> solved (2:21 +5)
+
+One need to implement a segment tree that supports setting a range $[l,r]$ to some letter $v$, and asks for the sum for a range $[l,r]$. One need to be careful with integer division rounded up/down, when negative numbers exist, which cost me a lot of time to figure out.
+
+##D. Equations System
+
+> solved (3:42 +2)
+
+If the two equations are linearly independent, we can uniquely determine $x(t)$ and $y(t)$, otherwise we may need to use Extended Euclid's algorithm to solve for a particular solution. There are many edge cases to be analyzed, also one need to implement something like multiplication/division/modulo of polynomials in $\mathbb{F}_2$, where std::bitset can help a lot.
+
+##E. Fool's Game
+
+> solved (4:19 +1)
+
+Fix the set of ranks played in the game, the covering player can win iff there exists a set of ranks, that there exists a matching so that every card of the starting player are covered. Hungarian's algorithm would do.
+
+##F. Lottery
+
+> solved (2:44)
+
+The denominator is $\binom{n}{x}$ where $x$ is the length of the winning word. We only need to compute the numerator: the number of combinations that may contains the winning word as a multiset. We generate the word letter by letter, and maintaining $dp_i,j$: the maximum(minimum) number of combinations that contains the winning word as a multiset considering the first $i$ letters, and $j$ letters are filled in the word currently. Biginteger needed. 
+
+##G. Two Pipelines
+
+> solved (1:52 +1)
+
+After computing the distances $d_{1i}$ and $d_{2i}$ for each point to the two pipelines, we first assume that all points are connected to the first pipeline, so that changing the pipeline for some point changes the cost by $x_i(d_{2i}-d_{1i})$ where $x_i$ is the demand for the $i$th point. Sort the points by this value and enumerate the number of points that need to change its pipeline. The overall complexity is $O(n\log{n})$.
+
+##H. Manhattan Police
+
+> solved (4:59 +6)
+
+The solution for this problem consists of two parts: for the first part, we need to specify for each crossing which region it belongs to, or it is the area of fight. The naive idea is to check manhattan distance for each point to each center of regions, which takes $O(nmr)$, but one can use a multi-source breadth first search, keeping only the first two region labels when encountering the area of fight, which runs in $O(nm)$. 
+
+After specifying regions, we may view streets and avenues as vertices, crossings as edges, so the problem is reduced to a minimum spanning tree problem, which is $O(nm\log{nm})$ using Kruskal's algorithm. Since there are only $O(r)$ different values, the final complexity should be $O(nm+r\log{r})$, while $O(nm\log{nm})$ can pass as well. 
+
+##I. Regular Words
+
+> solved (1:10 +2)
+
+Let $dp_{i,j,k}$ be the number of words with $i$ As, $j$ Bs and $k$ Cs, satisfying the second condition. The transferring is trivial. Biginteger needed.
+
+##J. Great Siberian Wall
+
+> upsolved
+
+After computing the convex hull of the set of points, we need to find out the minimum enclosing triangle for the polygon. according to [An Optimal Algorithm for Finding Minimal Enclosing Triangles](http://prografix.narod.ru/source/orourke1986.pdf), two theorems are important for this problem. Let's say the polygon is $P$, and the triangle is $T$, here are the two theorems:
+
+Theorem 1: If $T$ is a local minimum among triangles containing $P$ , then the midpoint of each side of $T$ touches $P$.
+
+Theorem 2: If $T$ is a local minimum among triangles containing $P$ , then at least one side of $T$ is flush with $P$.
+
+Therefore, we only need to check two cases: All sides of $T$ are flush with $P$, or two of the three sides of $T$ are flush with $P$. (Since the polygon is convex, cases with one side of $T$ is flush with $P$ is impossible). Check all combinations of the above, construct the triangle, and check if it's valid. In case of two of the three sides of $T$ are flush with $P$, one may need to draw a parallelogram to construct the triangle. During the process, many geometry techniques are involved, and precision issues need to be take great care of.
+
+The time complexity of this method is $O(n^3)$. There also exists algorithm that works in $O(n)$. Refer to the link above for more details.
+
+##K. Words Game
+
+> upsolved
+
+Just implement it.
+
+#Replay
+
+To be added.
