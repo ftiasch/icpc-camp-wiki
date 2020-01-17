@@ -1,0 +1,91 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: XVIII Open Cup named after E.V. Pankratiev. Eastern Grand Prix.
+
+Practicing Date: 2018.10.31
+
+Contest Link: [XVIII Open Cup named after E.V. Pankratiev. Eastern Grand Prix.](http://opentrains.snarknews.info/~ejudge/team.cgi?contest_id=010394)
+
+PDF Statements: [Statements](https://github.com/wcysai/Calabash/blob/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Eastern%20Grand%20Prix/statements.pdf)
+
+Participants: sy_chen, calabash_boy, Roundgod
+
+Solution Link: [Code for XVIII Open Cup named after E.V. Pankratiev. Eastern Grand Prix.](https://github.com/wcysai/Calabash/tree/master/XVIII%20Open%20Cup%20named%20after%20E.V.%20Pankratiev.%20Eastern%20Grand%20Prix)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. Artifacts
+
+> unsolved
+
+##B. Brackets and Dots
+
+> solved by sy_chen (3:48)
+
+My solution uses a balanced binary search tree to maintain all consecutive segments of the same type of brackets. Each segment stores a linked list of all indices of brackets in this segment. For each query, delete all adjacent matched bracket pairs. With the aid of data structure, this can be done in logarithmic time.
+
+Another solution, which most participants give, maintains a set of all adjacent matched bracket pairs. The time complexity is similar, but it might be easier to implement.
+
+##C. Crossword
+
+> solved by calabash_boy (3:01 +2)
+
+There are a lot of method to solve this interesting problem, if you can't think out one, read my code in the above github link.
+
+##D. Digit
+
+> solved by Roundgod (0:25 +1)
+
+Observing that except $0$ which will never be the answer, the number of times a digit $k$ will be no less than $k+1$, so we can check, from the first digit to the last, what's the remaining digits that share the same number of occurrences.
+
+##E. Enormous Table
+
+> solved by sy_chen (0:08)
+
+Every skew line from top-right to bottom-left forms a sequence of consecutive integer. To find the value of given position, first identify the skew line, then identify the element in the skew line.
+
+##F. Funny Language
+
+> unsolved
+
+##G. Game of Tic-Tac-Toc
+
+> solved by sy_chen (1:26 +1)
+
+Since the total number of situations are very limited (no more than tens of thousands), we may build a decision tree. Then, just play with the interactor according to the decision tree :)
+
+##H. Hill and Subhill
+
+> unsolved
+
+##I. It is panic?
+
+> solved by sy_chen (0:18 +1)
+
+##J. JokeCoin
+
+> solved by calabash_boy (0:39)
+
+Let $dp[i]$ be the max value we can get only considering the time_stamp 0-i. And we have a item (L,i,V) meanings that this item last for (L,i) whose value is V, then the Transfer equation is $dp[i] = max^{j<=L-1}_{j=0}(dp[j]) + V$.
+So we can use Segment_Tree to optimize. Complexity is $O(nlogn)$.
+
+##K. King and ICPC
+
+> solved by Roundgod (2:43 +2)
+
+Use divide and conquer technique together with parallel binary search. To find out the answer for a certain interval $[l,r]$, we split queries into three types: queries that completely lies in $[l,mid]$, queries that completely lies in $[mid+1,r]$, and the queries that contain $mid$. We solve the first two cases recursively, for the second case, we compute the $dp$ values for a prefix and a suffix extending from $mid$ in $[l,r]$, so that all queries that contain $mid$ can be view as a concatenation of a prefix and a suffix, and thus can be answered in $O(D)$ time. Total complexity: $O(ND\log{N}+MD+M\log{N})$.
+
+##L. Longest Simple Paths
+
+> solved by Roundgod (4:41 +1)
+
+First use Dijkstra to compute the shortest path from source to each node, then use dfs to construct the shortest path tree in lexicographic order. The remaining problem is to find the maximum length of path that consists of $k$ nodes and find the number of such paths, which can be solved by centroid decomposition. Total complexity:$O(n\log{n}+m\log{n})$.
+
+#Replay
+
+To be added.
