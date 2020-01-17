@@ -1,0 +1,75 @@
+---
+format: Markdown
+...
+#Contest Info
+
+Contest Name: 2019 Multi-University Training Contest 4
+
+Practicing Date: 2019.7.31
+
+Contest Link: [2019 Multi-University Training Contest 4](http://acm.hdu.edu.cn/contests/contest_show.php?cid=851)
+
+PDF Statements: No pdf statements available
+
+Participants:  calabash_boy, Roundgod
+
+Solution Link: [2019 Multi-University Training Contest 4](https://github.com/wcysai/Calabash/tree/master/2019%20Multi-University%20Training%20Contest%204)
+
+#Editorials
+
+Below are the editorials provided by the problem solver/upsolver, refer to the solution link for more details.  
+
+##A. AND Minimum Spanning Tree
+
+> solved by Roundgod (0:23 +1)
+
+It can be proven that if $N=2^k-1$ for some $k$, then the answer is $1$, otherwise the answer is $0$. The lexicographically smallest spanning tree can thus be easily constructed.
+
+##B. Colored Tree
+
+> unsolved
+
+##C. Divide the Stones
+
+> solved by Roundgod (2:28)
+
+The sufficient condition is that $k$ divides $\frac{n(n+1)}{2}$ and $k\leq \frac{n+1}{2}$. For construction, the cases whene $n/k$ is even is trivial. For cases when $n/k$ is odd, it can solved by constructing a case for $n/k=3$ and easily reduce to the general odd case.
+
+##D. Enveloping Convex
+
+> unsolved
+
+##E. Good Numbers
+
+> unsolved
+
+##F. Horse
+
+> solved by Roundgod (3:59)
+
+A crucial observation is that the contribution of the two operations to the answer is independent. Therefore we can solve each case separately. For the case of 'have a break', we may need to apply convex hull trick to make our dynamic programming runs in $O(NK)$.
+
+##G. Just an Old Puzzle
+
+> solved by Roundgod (1:24 +3)
+
+One may conjecture that the moves is enough to reach all possible states. Therefore we only need to verify if a state is reachable from the starting position, which can be done by looking at the parity of the permutation.
+
+##H. K-th Closest Distance
+
+> solved by calabash_boy (1:26 +2)
+
+##I. Linear Functions
+
+> unsolved
+
+##J. Minimal Power of Prime
+
+> solved by Roundgod (0:53 +2)
+
+First sieve out all primes not exceeding $N^{\frac{1}{5}}$. Then some case analysis is enough.
+
+
+#Replay
+
+
